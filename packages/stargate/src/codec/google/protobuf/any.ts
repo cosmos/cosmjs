@@ -124,15 +124,19 @@ const baseAny: object = { typeUrl: "" };
 
 export const Any = {
   encode(message: Any, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.typeUrl);
-    writer.uint32(18).bytes(message.value);
+    if (message.typeUrl !== "") {
+      writer.uint32(10).string(message.typeUrl);
+    }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Any {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseAny) as Any;
+    const message = { ...baseAny } as Any;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -151,7 +155,7 @@ export const Any = {
   },
 
   fromJSON(object: any): Any {
-    const message = Object.create(baseAny) as Any;
+    const message = { ...baseAny } as Any;
     if (object.typeUrl !== undefined && object.typeUrl !== null) {
       message.typeUrl = String(object.typeUrl);
     } else {
@@ -161,6 +165,14 @@ export const Any = {
       message.value = bytesFromBase64(object.value);
     }
     return message;
+  },
+
+  toJSON(message: Any): unknown {
+    const obj: any = {};
+    message.typeUrl !== undefined && (obj.typeUrl = message.typeUrl);
+    message.value !== undefined &&
+      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Any>): Any {
@@ -177,14 +189,6 @@ export const Any = {
     }
     return message;
   },
-
-  toJSON(message: Any): unknown {
-    const obj: any = {};
-    message.typeUrl !== undefined && (obj.typeUrl = message.typeUrl);
-    message.value !== undefined &&
-      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -194,7 +198,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

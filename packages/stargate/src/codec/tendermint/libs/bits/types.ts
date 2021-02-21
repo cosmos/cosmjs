@@ -13,7 +13,9 @@ const baseBitArray: object = { bits: Long.ZERO, elems: Long.UZERO };
 
 export const BitArray = {
   encode(message: BitArray, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.bits);
+    if (!message.bits.isZero()) {
+      writer.uint32(8).int64(message.bits);
+    }
     writer.uint32(18).fork();
     for (const v of message.elems) {
       writer.uint64(v);
@@ -25,7 +27,7 @@ export const BitArray = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BitArray {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseBitArray) as BitArray;
+    const message = { ...baseBitArray } as BitArray;
     message.elems = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -52,7 +54,7 @@ export const BitArray = {
   },
 
   fromJSON(object: any): BitArray {
-    const message = Object.create(baseBitArray) as BitArray;
+    const message = { ...baseBitArray } as BitArray;
     message.elems = [];
     if (object.bits !== undefined && object.bits !== null) {
       message.bits = Long.fromString(object.bits);
@@ -65,6 +67,17 @@ export const BitArray = {
       }
     }
     return message;
+  },
+
+  toJSON(message: BitArray): unknown {
+    const obj: any = {};
+    message.bits !== undefined && (obj.bits = (message.bits || Long.ZERO).toString());
+    if (message.elems) {
+      obj.elems = message.elems.map((e) => (e || Long.UZERO).toString());
+    } else {
+      obj.elems = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<BitArray>): BitArray {
@@ -81,17 +94,6 @@ export const BitArray = {
       }
     }
     return message;
-  },
-
-  toJSON(message: BitArray): unknown {
-    const obj: any = {};
-    message.bits !== undefined && (obj.bits = (message.bits || Long.ZERO).toString());
-    if (message.elems) {
-      obj.elems = message.elems.map((e) => (e || Long.UZERO).toString());
-    } else {
-      obj.elems = [];
-    }
-    return obj;
   },
 };
 

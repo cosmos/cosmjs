@@ -66,17 +66,25 @@ const basePageRequest: object = { offset: Long.UZERO, limit: Long.UZERO, countTo
 
 export const PageRequest = {
   encode(message: PageRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
-    writer.uint32(16).uint64(message.offset);
-    writer.uint32(24).uint64(message.limit);
-    writer.uint32(32).bool(message.countTotal);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
+    if (!message.offset.isZero()) {
+      writer.uint32(16).uint64(message.offset);
+    }
+    if (!message.limit.isZero()) {
+      writer.uint32(24).uint64(message.limit);
+    }
+    if (message.countTotal === true) {
+      writer.uint32(32).bool(message.countTotal);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PageRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePageRequest) as PageRequest;
+    const message = { ...basePageRequest } as PageRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -101,7 +109,7 @@ export const PageRequest = {
   },
 
   fromJSON(object: any): PageRequest {
-    const message = Object.create(basePageRequest) as PageRequest;
+    const message = { ...basePageRequest } as PageRequest;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -121,6 +129,16 @@ export const PageRequest = {
       message.countTotal = false;
     }
     return message;
+  },
+
+  toJSON(message: PageRequest): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.offset !== undefined && (obj.offset = (message.offset || Long.UZERO).toString());
+    message.limit !== undefined && (obj.limit = (message.limit || Long.UZERO).toString());
+    message.countTotal !== undefined && (obj.countTotal = message.countTotal);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<PageRequest>): PageRequest {
@@ -147,31 +165,25 @@ export const PageRequest = {
     }
     return message;
   },
-
-  toJSON(message: PageRequest): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.offset !== undefined && (obj.offset = (message.offset || Long.UZERO).toString());
-    message.limit !== undefined && (obj.limit = (message.limit || Long.UZERO).toString());
-    message.countTotal !== undefined && (obj.countTotal = message.countTotal);
-    return obj;
-  },
 };
 
 const basePageResponse: object = { total: Long.UZERO };
 
 export const PageResponse = {
   encode(message: PageResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.nextKey);
-    writer.uint32(16).uint64(message.total);
+    if (message.nextKey.length !== 0) {
+      writer.uint32(10).bytes(message.nextKey);
+    }
+    if (!message.total.isZero()) {
+      writer.uint32(16).uint64(message.total);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PageResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePageResponse) as PageResponse;
+    const message = { ...basePageResponse } as PageResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -190,7 +202,7 @@ export const PageResponse = {
   },
 
   fromJSON(object: any): PageResponse {
-    const message = Object.create(basePageResponse) as PageResponse;
+    const message = { ...basePageResponse } as PageResponse;
     if (object.nextKey !== undefined && object.nextKey !== null) {
       message.nextKey = bytesFromBase64(object.nextKey);
     }
@@ -200,6 +212,14 @@ export const PageResponse = {
       message.total = Long.UZERO;
     }
     return message;
+  },
+
+  toJSON(message: PageResponse): unknown {
+    const obj: any = {};
+    message.nextKey !== undefined &&
+      (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
+    message.total !== undefined && (obj.total = (message.total || Long.UZERO).toString());
+    return obj;
   },
 
   fromPartial(object: DeepPartial<PageResponse>): PageResponse {
@@ -216,14 +236,6 @@ export const PageResponse = {
     }
     return message;
   },
-
-  toJSON(message: PageResponse): unknown {
-    const obj: any = {};
-    message.nextKey !== undefined &&
-      (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
-    message.total !== undefined && (obj.total = (message.total || Long.UZERO).toString());
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -233,7 +245,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

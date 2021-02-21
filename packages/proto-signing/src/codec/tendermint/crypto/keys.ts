@@ -26,7 +26,7 @@ export const PublicKey = {
   decode(input: _m0.Reader | Uint8Array, length?: number): PublicKey {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePublicKey) as PublicKey;
+    const message = { ...basePublicKey } as PublicKey;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -45,7 +45,7 @@ export const PublicKey = {
   },
 
   fromJSON(object: any): PublicKey {
-    const message = Object.create(basePublicKey) as PublicKey;
+    const message = { ...basePublicKey } as PublicKey;
     if (object.ed25519 !== undefined && object.ed25519 !== null) {
       message.ed25519 = bytesFromBase64(object.ed25519);
     }
@@ -53,6 +53,15 @@ export const PublicKey = {
       message.secp256k1 = bytesFromBase64(object.secp256k1);
     }
     return message;
+  },
+
+  toJSON(message: PublicKey): unknown {
+    const obj: any = {};
+    message.ed25519 !== undefined &&
+      (obj.ed25519 = message.ed25519 !== undefined ? base64FromBytes(message.ed25519) : undefined);
+    message.secp256k1 !== undefined &&
+      (obj.secp256k1 = message.secp256k1 !== undefined ? base64FromBytes(message.secp256k1) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<PublicKey>): PublicKey {
@@ -69,15 +78,6 @@ export const PublicKey = {
     }
     return message;
   },
-
-  toJSON(message: PublicKey): unknown {
-    const obj: any = {};
-    message.ed25519 !== undefined &&
-      (obj.ed25519 = message.ed25519 !== undefined ? base64FromBytes(message.ed25519) : undefined);
-    message.secp256k1 !== undefined &&
-      (obj.secp256k1 = message.secp256k1 !== undefined ? base64FromBytes(message.secp256k1) : undefined);
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -87,7 +87,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

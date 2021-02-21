@@ -268,7 +268,7 @@ export const HistoricalInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): HistoricalInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseHistoricalInfo) as HistoricalInfo;
+    const message = { ...baseHistoricalInfo } as HistoricalInfo;
     message.valset = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -288,7 +288,7 @@ export const HistoricalInfo = {
   },
 
   fromJSON(object: any): HistoricalInfo {
-    const message = Object.create(baseHistoricalInfo) as HistoricalInfo;
+    const message = { ...baseHistoricalInfo } as HistoricalInfo;
     message.valset = [];
     if (object.header !== undefined && object.header !== null) {
       message.header = Header.fromJSON(object.header);
@@ -301,6 +301,17 @@ export const HistoricalInfo = {
       }
     }
     return message;
+  },
+
+  toJSON(message: HistoricalInfo): unknown {
+    const obj: any = {};
+    message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
+    if (message.valset) {
+      obj.valset = message.valset.map((e) => (e ? Validator.toJSON(e) : undefined));
+    } else {
+      obj.valset = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<HistoricalInfo>): HistoricalInfo {
@@ -318,33 +329,28 @@ export const HistoricalInfo = {
     }
     return message;
   },
-
-  toJSON(message: HistoricalInfo): unknown {
-    const obj: any = {};
-    message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
-    if (message.valset) {
-      obj.valset = message.valset.map((e) => (e ? Validator.toJSON(e) : undefined));
-    } else {
-      obj.valset = [];
-    }
-    return obj;
-  },
 };
 
 const baseCommissionRates: object = { rate: "", maxRate: "", maxChangeRate: "" };
 
 export const CommissionRates = {
   encode(message: CommissionRates, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.rate);
-    writer.uint32(18).string(message.maxRate);
-    writer.uint32(26).string(message.maxChangeRate);
+    if (message.rate !== "") {
+      writer.uint32(10).string(message.rate);
+    }
+    if (message.maxRate !== "") {
+      writer.uint32(18).string(message.maxRate);
+    }
+    if (message.maxChangeRate !== "") {
+      writer.uint32(26).string(message.maxChangeRate);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommissionRates {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCommissionRates) as CommissionRates;
+    const message = { ...baseCommissionRates } as CommissionRates;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -366,7 +372,7 @@ export const CommissionRates = {
   },
 
   fromJSON(object: any): CommissionRates {
-    const message = Object.create(baseCommissionRates) as CommissionRates;
+    const message = { ...baseCommissionRates } as CommissionRates;
     if (object.rate !== undefined && object.rate !== null) {
       message.rate = String(object.rate);
     } else {
@@ -383,6 +389,14 @@ export const CommissionRates = {
       message.maxChangeRate = "";
     }
     return message;
+  },
+
+  toJSON(message: CommissionRates): unknown {
+    const obj: any = {};
+    message.rate !== undefined && (obj.rate = message.rate);
+    message.maxRate !== undefined && (obj.maxRate = message.maxRate);
+    message.maxChangeRate !== undefined && (obj.maxChangeRate = message.maxChangeRate);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CommissionRates>): CommissionRates {
@@ -404,14 +418,6 @@ export const CommissionRates = {
     }
     return message;
   },
-
-  toJSON(message: CommissionRates): unknown {
-    const obj: any = {};
-    message.rate !== undefined && (obj.rate = message.rate);
-    message.maxRate !== undefined && (obj.maxRate = message.maxRate);
-    message.maxChangeRate !== undefined && (obj.maxChangeRate = message.maxChangeRate);
-    return obj;
-  },
 };
 
 const baseCommission: object = {};
@@ -430,7 +436,7 @@ export const Commission = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Commission {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCommission) as Commission;
+    const message = { ...baseCommission } as Commission;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -449,7 +455,7 @@ export const Commission = {
   },
 
   fromJSON(object: any): Commission {
-    const message = Object.create(baseCommission) as Commission;
+    const message = { ...baseCommission } as Commission;
     if (object.commissionRates !== undefined && object.commissionRates !== null) {
       message.commissionRates = CommissionRates.fromJSON(object.commissionRates);
     } else {
@@ -457,21 +463,6 @@ export const Commission = {
     }
     if (object.updateTime !== undefined && object.updateTime !== null) {
       message.updateTime = fromJsonTimestamp(object.updateTime);
-    } else {
-      message.updateTime = undefined;
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<Commission>): Commission {
-    const message = { ...baseCommission } as Commission;
-    if (object.commissionRates !== undefined && object.commissionRates !== null) {
-      message.commissionRates = CommissionRates.fromPartial(object.commissionRates);
-    } else {
-      message.commissionRates = undefined;
-    }
-    if (object.updateTime !== undefined && object.updateTime !== null) {
-      message.updateTime = object.updateTime;
     } else {
       message.updateTime = undefined;
     }
@@ -488,24 +479,49 @@ export const Commission = {
       (obj.updateTime = message.updateTime !== undefined ? message.updateTime.toISOString() : null);
     return obj;
   },
+
+  fromPartial(object: DeepPartial<Commission>): Commission {
+    const message = { ...baseCommission } as Commission;
+    if (object.commissionRates !== undefined && object.commissionRates !== null) {
+      message.commissionRates = CommissionRates.fromPartial(object.commissionRates);
+    } else {
+      message.commissionRates = undefined;
+    }
+    if (object.updateTime !== undefined && object.updateTime !== null) {
+      message.updateTime = object.updateTime;
+    } else {
+      message.updateTime = undefined;
+    }
+    return message;
+  },
 };
 
 const baseDescription: object = { moniker: "", identity: "", website: "", securityContact: "", details: "" };
 
 export const Description = {
   encode(message: Description, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.moniker);
-    writer.uint32(18).string(message.identity);
-    writer.uint32(26).string(message.website);
-    writer.uint32(34).string(message.securityContact);
-    writer.uint32(42).string(message.details);
+    if (message.moniker !== "") {
+      writer.uint32(10).string(message.moniker);
+    }
+    if (message.identity !== "") {
+      writer.uint32(18).string(message.identity);
+    }
+    if (message.website !== "") {
+      writer.uint32(26).string(message.website);
+    }
+    if (message.securityContact !== "") {
+      writer.uint32(34).string(message.securityContact);
+    }
+    if (message.details !== "") {
+      writer.uint32(42).string(message.details);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Description {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDescription) as Description;
+    const message = { ...baseDescription } as Description;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -533,7 +549,7 @@ export const Description = {
   },
 
   fromJSON(object: any): Description {
-    const message = Object.create(baseDescription) as Description;
+    const message = { ...baseDescription } as Description;
     if (object.moniker !== undefined && object.moniker !== null) {
       message.moniker = String(object.moniker);
     } else {
@@ -560,6 +576,16 @@ export const Description = {
       message.details = "";
     }
     return message;
+  },
+
+  toJSON(message: Description): unknown {
+    const obj: any = {};
+    message.moniker !== undefined && (obj.moniker = message.moniker);
+    message.identity !== undefined && (obj.identity = message.identity);
+    message.website !== undefined && (obj.website = message.website);
+    message.securityContact !== undefined && (obj.securityContact = message.securityContact);
+    message.details !== undefined && (obj.details = message.details);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Description>): Description {
@@ -591,16 +617,6 @@ export const Description = {
     }
     return message;
   },
-
-  toJSON(message: Description): unknown {
-    const obj: any = {};
-    message.moniker !== undefined && (obj.moniker = message.moniker);
-    message.identity !== undefined && (obj.identity = message.identity);
-    message.website !== undefined && (obj.website = message.website);
-    message.securityContact !== undefined && (obj.securityContact = message.securityContact);
-    message.details !== undefined && (obj.details = message.details);
-    return obj;
-  },
 };
 
 const baseValidator: object = {
@@ -615,32 +631,46 @@ const baseValidator: object = {
 
 export const Validator = {
   encode(message: Validator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.operatorAddress);
+    if (message.operatorAddress !== "") {
+      writer.uint32(10).string(message.operatorAddress);
+    }
     if (message.consensusPubkey !== undefined) {
       Any.encode(message.consensusPubkey, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).bool(message.jailed);
-    writer.uint32(32).int32(message.status);
-    writer.uint32(42).string(message.tokens);
-    writer.uint32(50).string(message.delegatorShares);
+    if (message.jailed === true) {
+      writer.uint32(24).bool(message.jailed);
+    }
+    if (message.status !== 0) {
+      writer.uint32(32).int32(message.status);
+    }
+    if (message.tokens !== "") {
+      writer.uint32(42).string(message.tokens);
+    }
+    if (message.delegatorShares !== "") {
+      writer.uint32(50).string(message.delegatorShares);
+    }
     if (message.description !== undefined) {
       Description.encode(message.description, writer.uint32(58).fork()).ldelim();
     }
-    writer.uint32(64).int64(message.unbondingHeight);
+    if (!message.unbondingHeight.isZero()) {
+      writer.uint32(64).int64(message.unbondingHeight);
+    }
     if (message.unbondingTime !== undefined) {
       Timestamp.encode(toTimestamp(message.unbondingTime), writer.uint32(74).fork()).ldelim();
     }
     if (message.commission !== undefined) {
       Commission.encode(message.commission, writer.uint32(82).fork()).ldelim();
     }
-    writer.uint32(90).string(message.minSelfDelegation);
+    if (message.minSelfDelegation !== "") {
+      writer.uint32(90).string(message.minSelfDelegation);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseValidator) as Validator;
+    const message = { ...baseValidator } as Validator;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -686,7 +716,7 @@ export const Validator = {
   },
 
   fromJSON(object: any): Validator {
-    const message = Object.create(baseValidator) as Validator;
+    const message = { ...baseValidator } as Validator;
     if (object.operatorAddress !== undefined && object.operatorAddress !== null) {
       message.operatorAddress = String(object.operatorAddress);
     } else {
@@ -743,6 +773,27 @@ export const Validator = {
       message.minSelfDelegation = "";
     }
     return message;
+  },
+
+  toJSON(message: Validator): unknown {
+    const obj: any = {};
+    message.operatorAddress !== undefined && (obj.operatorAddress = message.operatorAddress);
+    message.consensusPubkey !== undefined &&
+      (obj.consensusPubkey = message.consensusPubkey ? Any.toJSON(message.consensusPubkey) : undefined);
+    message.jailed !== undefined && (obj.jailed = message.jailed);
+    message.status !== undefined && (obj.status = bondStatusToJSON(message.status));
+    message.tokens !== undefined && (obj.tokens = message.tokens);
+    message.delegatorShares !== undefined && (obj.delegatorShares = message.delegatorShares);
+    message.description !== undefined &&
+      (obj.description = message.description ? Description.toJSON(message.description) : undefined);
+    message.unbondingHeight !== undefined &&
+      (obj.unbondingHeight = (message.unbondingHeight || Long.ZERO).toString());
+    message.unbondingTime !== undefined &&
+      (obj.unbondingTime = message.unbondingTime !== undefined ? message.unbondingTime.toISOString() : null);
+    message.commission !== undefined &&
+      (obj.commission = message.commission ? Commission.toJSON(message.commission) : undefined);
+    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Validator>): Validator {
@@ -804,27 +855,6 @@ export const Validator = {
     }
     return message;
   },
-
-  toJSON(message: Validator): unknown {
-    const obj: any = {};
-    message.operatorAddress !== undefined && (obj.operatorAddress = message.operatorAddress);
-    message.consensusPubkey !== undefined &&
-      (obj.consensusPubkey = message.consensusPubkey ? Any.toJSON(message.consensusPubkey) : undefined);
-    message.jailed !== undefined && (obj.jailed = message.jailed);
-    message.status !== undefined && (obj.status = bondStatusToJSON(message.status));
-    message.tokens !== undefined && (obj.tokens = message.tokens);
-    message.delegatorShares !== undefined && (obj.delegatorShares = message.delegatorShares);
-    message.description !== undefined &&
-      (obj.description = message.description ? Description.toJSON(message.description) : undefined);
-    message.unbondingHeight !== undefined &&
-      (obj.unbondingHeight = (message.unbondingHeight || Long.ZERO).toString());
-    message.unbondingTime !== undefined &&
-      (obj.unbondingTime = message.unbondingTime !== undefined ? message.unbondingTime.toISOString() : null);
-    message.commission !== undefined &&
-      (obj.commission = message.commission ? Commission.toJSON(message.commission) : undefined);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
-    return obj;
-  },
 };
 
 const baseValAddresses: object = { addresses: "" };
@@ -840,7 +870,7 @@ export const ValAddresses = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValAddresses {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseValAddresses) as ValAddresses;
+    const message = { ...baseValAddresses } as ValAddresses;
     message.addresses = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -857,22 +887,11 @@ export const ValAddresses = {
   },
 
   fromJSON(object: any): ValAddresses {
-    const message = Object.create(baseValAddresses) as ValAddresses;
-    message.addresses = [];
-    if (object.addresses !== undefined && object.addresses !== null) {
-      for (const e of object.addresses) {
-        message.addresses.push(String(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<ValAddresses>): ValAddresses {
     const message = { ...baseValAddresses } as ValAddresses;
     message.addresses = [];
     if (object.addresses !== undefined && object.addresses !== null) {
       for (const e of object.addresses) {
-        message.addresses.push(e);
+        message.addresses.push(String(e));
       }
     }
     return message;
@@ -887,21 +906,36 @@ export const ValAddresses = {
     }
     return obj;
   },
+
+  fromPartial(object: DeepPartial<ValAddresses>): ValAddresses {
+    const message = { ...baseValAddresses } as ValAddresses;
+    message.addresses = [];
+    if (object.addresses !== undefined && object.addresses !== null) {
+      for (const e of object.addresses) {
+        message.addresses.push(e);
+      }
+    }
+    return message;
+  },
 };
 
 const baseDVPair: object = { delegatorAddress: "", validatorAddress: "" };
 
 export const DVPair = {
   encode(message: DVPair, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorAddress !== "") {
+      writer.uint32(18).string(message.validatorAddress);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DVPair {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDVPair) as DVPair;
+    const message = { ...baseDVPair } as DVPair;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -920,7 +954,7 @@ export const DVPair = {
   },
 
   fromJSON(object: any): DVPair {
-    const message = Object.create(baseDVPair) as DVPair;
+    const message = { ...baseDVPair } as DVPair;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
     } else {
@@ -932,6 +966,13 @@ export const DVPair = {
       message.validatorAddress = "";
     }
     return message;
+  },
+
+  toJSON(message: DVPair): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<DVPair>): DVPair {
@@ -948,13 +989,6 @@ export const DVPair = {
     }
     return message;
   },
-
-  toJSON(message: DVPair): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
-  },
 };
 
 const baseDVPairs: object = {};
@@ -970,7 +1004,7 @@ export const DVPairs = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DVPairs {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDVPairs) as DVPairs;
+    const message = { ...baseDVPairs } as DVPairs;
     message.pairs = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -987,22 +1021,11 @@ export const DVPairs = {
   },
 
   fromJSON(object: any): DVPairs {
-    const message = Object.create(baseDVPairs) as DVPairs;
-    message.pairs = [];
-    if (object.pairs !== undefined && object.pairs !== null) {
-      for (const e of object.pairs) {
-        message.pairs.push(DVPair.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<DVPairs>): DVPairs {
     const message = { ...baseDVPairs } as DVPairs;
     message.pairs = [];
     if (object.pairs !== undefined && object.pairs !== null) {
       for (const e of object.pairs) {
-        message.pairs.push(DVPair.fromPartial(e));
+        message.pairs.push(DVPair.fromJSON(e));
       }
     }
     return message;
@@ -1017,22 +1040,39 @@ export const DVPairs = {
     }
     return obj;
   },
+
+  fromPartial(object: DeepPartial<DVPairs>): DVPairs {
+    const message = { ...baseDVPairs } as DVPairs;
+    message.pairs = [];
+    if (object.pairs !== undefined && object.pairs !== null) {
+      for (const e of object.pairs) {
+        message.pairs.push(DVPair.fromPartial(e));
+      }
+    }
+    return message;
+  },
 };
 
 const baseDVVTriplet: object = { delegatorAddress: "", validatorSrcAddress: "", validatorDstAddress: "" };
 
 export const DVVTriplet = {
   encode(message: DVVTriplet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorSrcAddress);
-    writer.uint32(26).string(message.validatorDstAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorSrcAddress !== "") {
+      writer.uint32(18).string(message.validatorSrcAddress);
+    }
+    if (message.validatorDstAddress !== "") {
+      writer.uint32(26).string(message.validatorDstAddress);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DVVTriplet {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDVVTriplet) as DVVTriplet;
+    const message = { ...baseDVVTriplet } as DVVTriplet;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1054,7 +1094,7 @@ export const DVVTriplet = {
   },
 
   fromJSON(object: any): DVVTriplet {
-    const message = Object.create(baseDVVTriplet) as DVVTriplet;
+    const message = { ...baseDVVTriplet } as DVVTriplet;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
     } else {
@@ -1071,6 +1111,14 @@ export const DVVTriplet = {
       message.validatorDstAddress = "";
     }
     return message;
+  },
+
+  toJSON(message: DVVTriplet): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
+    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<DVVTriplet>): DVVTriplet {
@@ -1092,14 +1140,6 @@ export const DVVTriplet = {
     }
     return message;
   },
-
-  toJSON(message: DVVTriplet): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    return obj;
-  },
 };
 
 const baseDVVTriplets: object = {};
@@ -1115,7 +1155,7 @@ export const DVVTriplets = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DVVTriplets {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDVVTriplets) as DVVTriplets;
+    const message = { ...baseDVVTriplets } as DVVTriplets;
     message.triplets = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1132,22 +1172,11 @@ export const DVVTriplets = {
   },
 
   fromJSON(object: any): DVVTriplets {
-    const message = Object.create(baseDVVTriplets) as DVVTriplets;
-    message.triplets = [];
-    if (object.triplets !== undefined && object.triplets !== null) {
-      for (const e of object.triplets) {
-        message.triplets.push(DVVTriplet.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<DVVTriplets>): DVVTriplets {
     const message = { ...baseDVVTriplets } as DVVTriplets;
     message.triplets = [];
     if (object.triplets !== undefined && object.triplets !== null) {
       for (const e of object.triplets) {
-        message.triplets.push(DVVTriplet.fromPartial(e));
+        message.triplets.push(DVVTriplet.fromJSON(e));
       }
     }
     return message;
@@ -1162,22 +1191,39 @@ export const DVVTriplets = {
     }
     return obj;
   },
+
+  fromPartial(object: DeepPartial<DVVTriplets>): DVVTriplets {
+    const message = { ...baseDVVTriplets } as DVVTriplets;
+    message.triplets = [];
+    if (object.triplets !== undefined && object.triplets !== null) {
+      for (const e of object.triplets) {
+        message.triplets.push(DVVTriplet.fromPartial(e));
+      }
+    }
+    return message;
+  },
 };
 
 const baseDelegation: object = { delegatorAddress: "", validatorAddress: "", shares: "" };
 
 export const Delegation = {
   encode(message: Delegation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorAddress);
-    writer.uint32(26).string(message.shares);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorAddress !== "") {
+      writer.uint32(18).string(message.validatorAddress);
+    }
+    if (message.shares !== "") {
+      writer.uint32(26).string(message.shares);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Delegation {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDelegation) as Delegation;
+    const message = { ...baseDelegation } as Delegation;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1199,7 +1245,7 @@ export const Delegation = {
   },
 
   fromJSON(object: any): Delegation {
-    const message = Object.create(baseDelegation) as Delegation;
+    const message = { ...baseDelegation } as Delegation;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
     } else {
@@ -1216,6 +1262,14 @@ export const Delegation = {
       message.shares = "";
     }
     return message;
+  },
+
+  toJSON(message: Delegation): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    message.shares !== undefined && (obj.shares = message.shares);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Delegation>): Delegation {
@@ -1237,22 +1291,18 @@ export const Delegation = {
     }
     return message;
   },
-
-  toJSON(message: Delegation): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.shares !== undefined && (obj.shares = message.shares);
-    return obj;
-  },
 };
 
 const baseUnbondingDelegation: object = { delegatorAddress: "", validatorAddress: "" };
 
 export const UnbondingDelegation = {
   encode(message: UnbondingDelegation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorAddress !== "") {
+      writer.uint32(18).string(message.validatorAddress);
+    }
     for (const v of message.entries) {
       UnbondingDelegationEntry.encode(v!, writer.uint32(26).fork()).ldelim();
     }
@@ -1262,7 +1312,7 @@ export const UnbondingDelegation = {
   decode(input: _m0.Reader | Uint8Array, length?: number): UnbondingDelegation {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseUnbondingDelegation) as UnbondingDelegation;
+    const message = { ...baseUnbondingDelegation } as UnbondingDelegation;
     message.entries = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1285,7 +1335,7 @@ export const UnbondingDelegation = {
   },
 
   fromJSON(object: any): UnbondingDelegation {
-    const message = Object.create(baseUnbondingDelegation) as UnbondingDelegation;
+    const message = { ...baseUnbondingDelegation } as UnbondingDelegation;
     message.entries = [];
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
@@ -1303,6 +1353,18 @@ export const UnbondingDelegation = {
       }
     }
     return message;
+  },
+
+  toJSON(message: UnbondingDelegation): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.entries) {
+      obj.entries = message.entries.map((e) => (e ? UnbondingDelegationEntry.toJSON(e) : undefined));
+    } else {
+      obj.entries = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<UnbondingDelegation>): UnbondingDelegation {
@@ -1325,37 +1387,31 @@ export const UnbondingDelegation = {
     }
     return message;
   },
-
-  toJSON(message: UnbondingDelegation): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    if (message.entries) {
-      obj.entries = message.entries.map((e) => (e ? UnbondingDelegationEntry.toJSON(e) : undefined));
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
 };
 
 const baseUnbondingDelegationEntry: object = { creationHeight: Long.ZERO, initialBalance: "", balance: "" };
 
 export const UnbondingDelegationEntry = {
   encode(message: UnbondingDelegationEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.creationHeight);
+    if (!message.creationHeight.isZero()) {
+      writer.uint32(8).int64(message.creationHeight);
+    }
     if (message.completionTime !== undefined) {
       Timestamp.encode(toTimestamp(message.completionTime), writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(26).string(message.initialBalance);
-    writer.uint32(34).string(message.balance);
+    if (message.initialBalance !== "") {
+      writer.uint32(26).string(message.initialBalance);
+    }
+    if (message.balance !== "") {
+      writer.uint32(34).string(message.balance);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): UnbondingDelegationEntry {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseUnbondingDelegationEntry) as UnbondingDelegationEntry;
+    const message = { ...baseUnbondingDelegationEntry } as UnbondingDelegationEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1380,7 +1436,7 @@ export const UnbondingDelegationEntry = {
   },
 
   fromJSON(object: any): UnbondingDelegationEntry {
-    const message = Object.create(baseUnbondingDelegationEntry) as UnbondingDelegationEntry;
+    const message = { ...baseUnbondingDelegationEntry } as UnbondingDelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
       message.creationHeight = Long.fromString(object.creationHeight);
     } else {
@@ -1402,6 +1458,18 @@ export const UnbondingDelegationEntry = {
       message.balance = "";
     }
     return message;
+  },
+
+  toJSON(message: UnbondingDelegationEntry): unknown {
+    const obj: any = {};
+    message.creationHeight !== undefined &&
+      (obj.creationHeight = (message.creationHeight || Long.ZERO).toString());
+    message.completionTime !== undefined &&
+      (obj.completionTime =
+        message.completionTime !== undefined ? message.completionTime.toISOString() : null);
+    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
+    message.balance !== undefined && (obj.balance = message.balance);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<UnbondingDelegationEntry>): UnbondingDelegationEntry {
@@ -1428,37 +1496,31 @@ export const UnbondingDelegationEntry = {
     }
     return message;
   },
-
-  toJSON(message: UnbondingDelegationEntry): unknown {
-    const obj: any = {};
-    message.creationHeight !== undefined &&
-      (obj.creationHeight = (message.creationHeight || Long.ZERO).toString());
-    message.completionTime !== undefined &&
-      (obj.completionTime =
-        message.completionTime !== undefined ? message.completionTime.toISOString() : null);
-    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
-    message.balance !== undefined && (obj.balance = message.balance);
-    return obj;
-  },
 };
 
 const baseRedelegationEntry: object = { creationHeight: Long.ZERO, initialBalance: "", sharesDst: "" };
 
 export const RedelegationEntry = {
   encode(message: RedelegationEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.creationHeight);
+    if (!message.creationHeight.isZero()) {
+      writer.uint32(8).int64(message.creationHeight);
+    }
     if (message.completionTime !== undefined) {
       Timestamp.encode(toTimestamp(message.completionTime), writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(26).string(message.initialBalance);
-    writer.uint32(34).string(message.sharesDst);
+    if (message.initialBalance !== "") {
+      writer.uint32(26).string(message.initialBalance);
+    }
+    if (message.sharesDst !== "") {
+      writer.uint32(34).string(message.sharesDst);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RedelegationEntry {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseRedelegationEntry) as RedelegationEntry;
+    const message = { ...baseRedelegationEntry } as RedelegationEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1483,7 +1545,7 @@ export const RedelegationEntry = {
   },
 
   fromJSON(object: any): RedelegationEntry {
-    const message = Object.create(baseRedelegationEntry) as RedelegationEntry;
+    const message = { ...baseRedelegationEntry } as RedelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
       message.creationHeight = Long.fromString(object.creationHeight);
     } else {
@@ -1505,6 +1567,18 @@ export const RedelegationEntry = {
       message.sharesDst = "";
     }
     return message;
+  },
+
+  toJSON(message: RedelegationEntry): unknown {
+    const obj: any = {};
+    message.creationHeight !== undefined &&
+      (obj.creationHeight = (message.creationHeight || Long.ZERO).toString());
+    message.completionTime !== undefined &&
+      (obj.completionTime =
+        message.completionTime !== undefined ? message.completionTime.toISOString() : null);
+    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
+    message.sharesDst !== undefined && (obj.sharesDst = message.sharesDst);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<RedelegationEntry>): RedelegationEntry {
@@ -1531,27 +1605,21 @@ export const RedelegationEntry = {
     }
     return message;
   },
-
-  toJSON(message: RedelegationEntry): unknown {
-    const obj: any = {};
-    message.creationHeight !== undefined &&
-      (obj.creationHeight = (message.creationHeight || Long.ZERO).toString());
-    message.completionTime !== undefined &&
-      (obj.completionTime =
-        message.completionTime !== undefined ? message.completionTime.toISOString() : null);
-    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
-    message.sharesDst !== undefined && (obj.sharesDst = message.sharesDst);
-    return obj;
-  },
 };
 
 const baseRedelegation: object = { delegatorAddress: "", validatorSrcAddress: "", validatorDstAddress: "" };
 
 export const Redelegation = {
   encode(message: Redelegation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorSrcAddress);
-    writer.uint32(26).string(message.validatorDstAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorSrcAddress !== "") {
+      writer.uint32(18).string(message.validatorSrcAddress);
+    }
+    if (message.validatorDstAddress !== "") {
+      writer.uint32(26).string(message.validatorDstAddress);
+    }
     for (const v of message.entries) {
       RedelegationEntry.encode(v!, writer.uint32(34).fork()).ldelim();
     }
@@ -1561,7 +1629,7 @@ export const Redelegation = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Redelegation {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseRedelegation) as Redelegation;
+    const message = { ...baseRedelegation } as Redelegation;
     message.entries = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1587,7 +1655,7 @@ export const Redelegation = {
   },
 
   fromJSON(object: any): Redelegation {
-    const message = Object.create(baseRedelegation) as Redelegation;
+    const message = { ...baseRedelegation } as Redelegation;
     message.entries = [];
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
@@ -1610,6 +1678,19 @@ export const Redelegation = {
       }
     }
     return message;
+  },
+
+  toJSON(message: Redelegation): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
+    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
+    if (message.entries) {
+      obj.entries = message.entries.map((e) => (e ? RedelegationEntry.toJSON(e) : undefined));
+    } else {
+      obj.entries = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Redelegation>): Redelegation {
@@ -1637,19 +1718,6 @@ export const Redelegation = {
     }
     return message;
   },
-
-  toJSON(message: Redelegation): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    if (message.entries) {
-      obj.entries = message.entries.map((e) => (e ? RedelegationEntry.toJSON(e) : undefined));
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
 };
 
 const baseParams: object = { maxValidators: 0, maxEntries: 0, historicalEntries: 0, bondDenom: "" };
@@ -1659,17 +1727,25 @@ export const Params = {
     if (message.unbondingTime !== undefined) {
       Duration.encode(message.unbondingTime, writer.uint32(10).fork()).ldelim();
     }
-    writer.uint32(16).uint32(message.maxValidators);
-    writer.uint32(24).uint32(message.maxEntries);
-    writer.uint32(32).uint32(message.historicalEntries);
-    writer.uint32(42).string(message.bondDenom);
+    if (message.maxValidators !== 0) {
+      writer.uint32(16).uint32(message.maxValidators);
+    }
+    if (message.maxEntries !== 0) {
+      writer.uint32(24).uint32(message.maxEntries);
+    }
+    if (message.historicalEntries !== 0) {
+      writer.uint32(32).uint32(message.historicalEntries);
+    }
+    if (message.bondDenom !== "") {
+      writer.uint32(42).string(message.bondDenom);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseParams) as Params;
+    const message = { ...baseParams } as Params;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1697,7 +1773,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = Object.create(baseParams) as Params;
+    const message = { ...baseParams } as Params;
     if (object.unbondingTime !== undefined && object.unbondingTime !== null) {
       message.unbondingTime = Duration.fromJSON(object.unbondingTime);
     } else {
@@ -1724,6 +1800,17 @@ export const Params = {
       message.bondDenom = "";
     }
     return message;
+  },
+
+  toJSON(message: Params): unknown {
+    const obj: any = {};
+    message.unbondingTime !== undefined &&
+      (obj.unbondingTime = message.unbondingTime ? Duration.toJSON(message.unbondingTime) : undefined);
+    message.maxValidators !== undefined && (obj.maxValidators = message.maxValidators);
+    message.maxEntries !== undefined && (obj.maxEntries = message.maxEntries);
+    message.historicalEntries !== undefined && (obj.historicalEntries = message.historicalEntries);
+    message.bondDenom !== undefined && (obj.bondDenom = message.bondDenom);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Params>): Params {
@@ -1755,17 +1842,6 @@ export const Params = {
     }
     return message;
   },
-
-  toJSON(message: Params): unknown {
-    const obj: any = {};
-    message.unbondingTime !== undefined &&
-      (obj.unbondingTime = message.unbondingTime ? Duration.toJSON(message.unbondingTime) : undefined);
-    message.maxValidators !== undefined && (obj.maxValidators = message.maxValidators);
-    message.maxEntries !== undefined && (obj.maxEntries = message.maxEntries);
-    message.historicalEntries !== undefined && (obj.historicalEntries = message.historicalEntries);
-    message.bondDenom !== undefined && (obj.bondDenom = message.bondDenom);
-    return obj;
-  },
 };
 
 const baseDelegationResponse: object = {};
@@ -1784,7 +1860,7 @@ export const DelegationResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegationResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDelegationResponse) as DelegationResponse;
+    const message = { ...baseDelegationResponse } as DelegationResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1803,7 +1879,7 @@ export const DelegationResponse = {
   },
 
   fromJSON(object: any): DelegationResponse {
-    const message = Object.create(baseDelegationResponse) as DelegationResponse;
+    const message = { ...baseDelegationResponse } as DelegationResponse;
     if (object.delegation !== undefined && object.delegation !== null) {
       message.delegation = Delegation.fromJSON(object.delegation);
     } else {
@@ -1815,6 +1891,15 @@ export const DelegationResponse = {
       message.balance = undefined;
     }
     return message;
+  },
+
+  toJSON(message: DelegationResponse): unknown {
+    const obj: any = {};
+    message.delegation !== undefined &&
+      (obj.delegation = message.delegation ? Delegation.toJSON(message.delegation) : undefined);
+    message.balance !== undefined &&
+      (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<DelegationResponse>): DelegationResponse {
@@ -1831,15 +1916,6 @@ export const DelegationResponse = {
     }
     return message;
   },
-
-  toJSON(message: DelegationResponse): unknown {
-    const obj: any = {};
-    message.delegation !== undefined &&
-      (obj.delegation = message.delegation ? Delegation.toJSON(message.delegation) : undefined);
-    message.balance !== undefined &&
-      (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
-    return obj;
-  },
 };
 
 const baseRedelegationEntryResponse: object = { balance: "" };
@@ -1849,14 +1925,16 @@ export const RedelegationEntryResponse = {
     if (message.redelegationEntry !== undefined) {
       RedelegationEntry.encode(message.redelegationEntry, writer.uint32(10).fork()).ldelim();
     }
-    writer.uint32(34).string(message.balance);
+    if (message.balance !== "") {
+      writer.uint32(34).string(message.balance);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RedelegationEntryResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseRedelegationEntryResponse) as RedelegationEntryResponse;
+    const message = { ...baseRedelegationEntryResponse } as RedelegationEntryResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1875,7 +1953,7 @@ export const RedelegationEntryResponse = {
   },
 
   fromJSON(object: any): RedelegationEntryResponse {
-    const message = Object.create(baseRedelegationEntryResponse) as RedelegationEntryResponse;
+    const message = { ...baseRedelegationEntryResponse } as RedelegationEntryResponse;
     if (object.redelegationEntry !== undefined && object.redelegationEntry !== null) {
       message.redelegationEntry = RedelegationEntry.fromJSON(object.redelegationEntry);
     } else {
@@ -1887,6 +1965,16 @@ export const RedelegationEntryResponse = {
       message.balance = "";
     }
     return message;
+  },
+
+  toJSON(message: RedelegationEntryResponse): unknown {
+    const obj: any = {};
+    message.redelegationEntry !== undefined &&
+      (obj.redelegationEntry = message.redelegationEntry
+        ? RedelegationEntry.toJSON(message.redelegationEntry)
+        : undefined);
+    message.balance !== undefined && (obj.balance = message.balance);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<RedelegationEntryResponse>): RedelegationEntryResponse {
@@ -1902,16 +1990,6 @@ export const RedelegationEntryResponse = {
       message.balance = "";
     }
     return message;
-  },
-
-  toJSON(message: RedelegationEntryResponse): unknown {
-    const obj: any = {};
-    message.redelegationEntry !== undefined &&
-      (obj.redelegationEntry = message.redelegationEntry
-        ? RedelegationEntry.toJSON(message.redelegationEntry)
-        : undefined);
-    message.balance !== undefined && (obj.balance = message.balance);
-    return obj;
   },
 };
 
@@ -1931,7 +2009,7 @@ export const RedelegationResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): RedelegationResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseRedelegationResponse) as RedelegationResponse;
+    const message = { ...baseRedelegationResponse } as RedelegationResponse;
     message.entries = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1951,7 +2029,7 @@ export const RedelegationResponse = {
   },
 
   fromJSON(object: any): RedelegationResponse {
-    const message = Object.create(baseRedelegationResponse) as RedelegationResponse;
+    const message = { ...baseRedelegationResponse } as RedelegationResponse;
     message.entries = [];
     if (object.redelegation !== undefined && object.redelegation !== null) {
       message.redelegation = Redelegation.fromJSON(object.redelegation);
@@ -1964,6 +2042,18 @@ export const RedelegationResponse = {
       }
     }
     return message;
+  },
+
+  toJSON(message: RedelegationResponse): unknown {
+    const obj: any = {};
+    message.redelegation !== undefined &&
+      (obj.redelegation = message.redelegation ? Redelegation.toJSON(message.redelegation) : undefined);
+    if (message.entries) {
+      obj.entries = message.entries.map((e) => (e ? RedelegationEntryResponse.toJSON(e) : undefined));
+    } else {
+      obj.entries = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<RedelegationResponse>): RedelegationResponse {
@@ -1981,33 +2071,25 @@ export const RedelegationResponse = {
     }
     return message;
   },
-
-  toJSON(message: RedelegationResponse): unknown {
-    const obj: any = {};
-    message.redelegation !== undefined &&
-      (obj.redelegation = message.redelegation ? Redelegation.toJSON(message.redelegation) : undefined);
-    if (message.entries) {
-      obj.entries = message.entries.map((e) => (e ? RedelegationEntryResponse.toJSON(e) : undefined));
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
 };
 
 const basePool: object = { notBondedTokens: "", bondedTokens: "" };
 
 export const Pool = {
   encode(message: Pool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.notBondedTokens);
-    writer.uint32(18).string(message.bondedTokens);
+    if (message.notBondedTokens !== "") {
+      writer.uint32(10).string(message.notBondedTokens);
+    }
+    if (message.bondedTokens !== "") {
+      writer.uint32(18).string(message.bondedTokens);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Pool {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePool) as Pool;
+    const message = { ...basePool } as Pool;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2026,7 +2108,7 @@ export const Pool = {
   },
 
   fromJSON(object: any): Pool {
-    const message = Object.create(basePool) as Pool;
+    const message = { ...basePool } as Pool;
     if (object.notBondedTokens !== undefined && object.notBondedTokens !== null) {
       message.notBondedTokens = String(object.notBondedTokens);
     } else {
@@ -2038,6 +2120,13 @@ export const Pool = {
       message.bondedTokens = "";
     }
     return message;
+  },
+
+  toJSON(message: Pool): unknown {
+    const obj: any = {};
+    message.notBondedTokens !== undefined && (obj.notBondedTokens = message.notBondedTokens);
+    message.bondedTokens !== undefined && (obj.bondedTokens = message.bondedTokens);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Pool>): Pool {
@@ -2053,13 +2142,6 @@ export const Pool = {
       message.bondedTokens = "";
     }
     return message;
-  },
-
-  toJSON(message: Pool): unknown {
-    const obj: any = {};
-    message.notBondedTokens !== undefined && (obj.notBondedTokens = message.notBondedTokens);
-    message.bondedTokens !== undefined && (obj.bondedTokens = message.bondedTokens);
-    return obj;
   },
 };
 

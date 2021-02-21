@@ -342,8 +342,12 @@ const baseExistenceProof: object = {};
 
 export const ExistenceProof = {
   encode(message: ExistenceProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
-    writer.uint32(18).bytes(message.value);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
     if (message.leaf !== undefined) {
       LeafOp.encode(message.leaf, writer.uint32(26).fork()).ldelim();
     }
@@ -356,7 +360,7 @@ export const ExistenceProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ExistenceProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseExistenceProof) as ExistenceProof;
+    const message = { ...baseExistenceProof } as ExistenceProof;
     message.path = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -382,7 +386,7 @@ export const ExistenceProof = {
   },
 
   fromJSON(object: any): ExistenceProof {
-    const message = Object.create(baseExistenceProof) as ExistenceProof;
+    const message = { ...baseExistenceProof } as ExistenceProof;
     message.path = [];
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
@@ -401,6 +405,21 @@ export const ExistenceProof = {
       }
     }
     return message;
+  },
+
+  toJSON(message: ExistenceProof): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.value !== undefined &&
+      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    message.leaf !== undefined && (obj.leaf = message.leaf ? LeafOp.toJSON(message.leaf) : undefined);
+    if (message.path) {
+      obj.path = message.path.map((e) => (e ? InnerOp.toJSON(e) : undefined));
+    } else {
+      obj.path = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<ExistenceProof>): ExistenceProof {
@@ -428,28 +447,15 @@ export const ExistenceProof = {
     }
     return message;
   },
-
-  toJSON(message: ExistenceProof): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.value !== undefined &&
-      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
-    message.leaf !== undefined && (obj.leaf = message.leaf ? LeafOp.toJSON(message.leaf) : undefined);
-    if (message.path) {
-      obj.path = message.path.map((e) => (e ? InnerOp.toJSON(e) : undefined));
-    } else {
-      obj.path = [];
-    }
-    return obj;
-  },
 };
 
 const baseNonExistenceProof: object = {};
 
 export const NonExistenceProof = {
   encode(message: NonExistenceProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     if (message.left !== undefined) {
       ExistenceProof.encode(message.left, writer.uint32(18).fork()).ldelim();
     }
@@ -462,7 +468,7 @@ export const NonExistenceProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): NonExistenceProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseNonExistenceProof) as NonExistenceProof;
+    const message = { ...baseNonExistenceProof } as NonExistenceProof;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -484,7 +490,7 @@ export const NonExistenceProof = {
   },
 
   fromJSON(object: any): NonExistenceProof {
-    const message = Object.create(baseNonExistenceProof) as NonExistenceProof;
+    const message = { ...baseNonExistenceProof } as NonExistenceProof;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -499,6 +505,16 @@ export const NonExistenceProof = {
       message.right = undefined;
     }
     return message;
+  },
+
+  toJSON(message: NonExistenceProof): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.left !== undefined && (obj.left = message.left ? ExistenceProof.toJSON(message.left) : undefined);
+    message.right !== undefined &&
+      (obj.right = message.right ? ExistenceProof.toJSON(message.right) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<NonExistenceProof>): NonExistenceProof {
@@ -519,16 +535,6 @@ export const NonExistenceProof = {
       message.right = undefined;
     }
     return message;
-  },
-
-  toJSON(message: NonExistenceProof): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.left !== undefined && (obj.left = message.left ? ExistenceProof.toJSON(message.left) : undefined);
-    message.right !== undefined &&
-      (obj.right = message.right ? ExistenceProof.toJSON(message.right) : undefined);
-    return obj;
   },
 };
 
@@ -554,7 +560,7 @@ export const CommitmentProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CommitmentProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCommitmentProof) as CommitmentProof;
+    const message = { ...baseCommitmentProof } as CommitmentProof;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -579,7 +585,7 @@ export const CommitmentProof = {
   },
 
   fromJSON(object: any): CommitmentProof {
-    const message = Object.create(baseCommitmentProof) as CommitmentProof;
+    const message = { ...baseCommitmentProof } as CommitmentProof;
     if (object.exist !== undefined && object.exist !== null) {
       message.exist = ExistenceProof.fromJSON(object.exist);
     } else {
@@ -601,6 +607,18 @@ export const CommitmentProof = {
       message.compressed = undefined;
     }
     return message;
+  },
+
+  toJSON(message: CommitmentProof): unknown {
+    const obj: any = {};
+    message.exist !== undefined &&
+      (obj.exist = message.exist ? ExistenceProof.toJSON(message.exist) : undefined);
+    message.nonexist !== undefined &&
+      (obj.nonexist = message.nonexist ? NonExistenceProof.toJSON(message.nonexist) : undefined);
+    message.batch !== undefined && (obj.batch = message.batch ? BatchProof.toJSON(message.batch) : undefined);
+    message.compressed !== undefined &&
+      (obj.compressed = message.compressed ? CompressedBatchProof.toJSON(message.compressed) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CommitmentProof>): CommitmentProof {
@@ -627,36 +645,34 @@ export const CommitmentProof = {
     }
     return message;
   },
-
-  toJSON(message: CommitmentProof): unknown {
-    const obj: any = {};
-    message.exist !== undefined &&
-      (obj.exist = message.exist ? ExistenceProof.toJSON(message.exist) : undefined);
-    message.nonexist !== undefined &&
-      (obj.nonexist = message.nonexist ? NonExistenceProof.toJSON(message.nonexist) : undefined);
-    message.batch !== undefined && (obj.batch = message.batch ? BatchProof.toJSON(message.batch) : undefined);
-    message.compressed !== undefined &&
-      (obj.compressed = message.compressed ? CompressedBatchProof.toJSON(message.compressed) : undefined);
-    return obj;
-  },
 };
 
 const baseLeafOp: object = { hash: 0, prehashKey: 0, prehashValue: 0, length: 0 };
 
 export const LeafOp = {
   encode(message: LeafOp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int32(message.hash);
-    writer.uint32(16).int32(message.prehashKey);
-    writer.uint32(24).int32(message.prehashValue);
-    writer.uint32(32).int32(message.length);
-    writer.uint32(42).bytes(message.prefix);
+    if (message.hash !== 0) {
+      writer.uint32(8).int32(message.hash);
+    }
+    if (message.prehashKey !== 0) {
+      writer.uint32(16).int32(message.prehashKey);
+    }
+    if (message.prehashValue !== 0) {
+      writer.uint32(24).int32(message.prehashValue);
+    }
+    if (message.length !== 0) {
+      writer.uint32(32).int32(message.length);
+    }
+    if (message.prefix.length !== 0) {
+      writer.uint32(42).bytes(message.prefix);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LeafOp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseLeafOp) as LeafOp;
+    const message = { ...baseLeafOp } as LeafOp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -684,7 +700,7 @@ export const LeafOp = {
   },
 
   fromJSON(object: any): LeafOp {
-    const message = Object.create(baseLeafOp) as LeafOp;
+    const message = { ...baseLeafOp } as LeafOp;
     if (object.hash !== undefined && object.hash !== null) {
       message.hash = hashOpFromJSON(object.hash);
     } else {
@@ -709,6 +725,17 @@ export const LeafOp = {
       message.prefix = bytesFromBase64(object.prefix);
     }
     return message;
+  },
+
+  toJSON(message: LeafOp): unknown {
+    const obj: any = {};
+    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
+    message.prehashKey !== undefined && (obj.prehashKey = hashOpToJSON(message.prehashKey));
+    message.prehashValue !== undefined && (obj.prehashValue = hashOpToJSON(message.prehashValue));
+    message.length !== undefined && (obj.length = lengthOpToJSON(message.length));
+    message.prefix !== undefined &&
+      (obj.prefix = base64FromBytes(message.prefix !== undefined ? message.prefix : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<LeafOp>): LeafOp {
@@ -740,33 +767,28 @@ export const LeafOp = {
     }
     return message;
   },
-
-  toJSON(message: LeafOp): unknown {
-    const obj: any = {};
-    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
-    message.prehashKey !== undefined && (obj.prehashKey = hashOpToJSON(message.prehashKey));
-    message.prehashValue !== undefined && (obj.prehashValue = hashOpToJSON(message.prehashValue));
-    message.length !== undefined && (obj.length = lengthOpToJSON(message.length));
-    message.prefix !== undefined &&
-      (obj.prefix = base64FromBytes(message.prefix !== undefined ? message.prefix : new Uint8Array()));
-    return obj;
-  },
 };
 
 const baseInnerOp: object = { hash: 0 };
 
 export const InnerOp = {
   encode(message: InnerOp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int32(message.hash);
-    writer.uint32(18).bytes(message.prefix);
-    writer.uint32(26).bytes(message.suffix);
+    if (message.hash !== 0) {
+      writer.uint32(8).int32(message.hash);
+    }
+    if (message.prefix.length !== 0) {
+      writer.uint32(18).bytes(message.prefix);
+    }
+    if (message.suffix.length !== 0) {
+      writer.uint32(26).bytes(message.suffix);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InnerOp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseInnerOp) as InnerOp;
+    const message = { ...baseInnerOp } as InnerOp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -788,7 +810,7 @@ export const InnerOp = {
   },
 
   fromJSON(object: any): InnerOp {
-    const message = Object.create(baseInnerOp) as InnerOp;
+    const message = { ...baseInnerOp } as InnerOp;
     if (object.hash !== undefined && object.hash !== null) {
       message.hash = hashOpFromJSON(object.hash);
     } else {
@@ -801,6 +823,16 @@ export const InnerOp = {
       message.suffix = bytesFromBase64(object.suffix);
     }
     return message;
+  },
+
+  toJSON(message: InnerOp): unknown {
+    const obj: any = {};
+    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
+    message.prefix !== undefined &&
+      (obj.prefix = base64FromBytes(message.prefix !== undefined ? message.prefix : new Uint8Array()));
+    message.suffix !== undefined &&
+      (obj.suffix = base64FromBytes(message.suffix !== undefined ? message.suffix : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<InnerOp>): InnerOp {
@@ -822,16 +854,6 @@ export const InnerOp = {
     }
     return message;
   },
-
-  toJSON(message: InnerOp): unknown {
-    const obj: any = {};
-    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
-    message.prefix !== undefined &&
-      (obj.prefix = base64FromBytes(message.prefix !== undefined ? message.prefix : new Uint8Array()));
-    message.suffix !== undefined &&
-      (obj.suffix = base64FromBytes(message.suffix !== undefined ? message.suffix : new Uint8Array()));
-    return obj;
-  },
 };
 
 const baseProofSpec: object = { maxDepth: 0, minDepth: 0 };
@@ -844,15 +866,19 @@ export const ProofSpec = {
     if (message.innerSpec !== undefined) {
       InnerSpec.encode(message.innerSpec, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).int32(message.maxDepth);
-    writer.uint32(32).int32(message.minDepth);
+    if (message.maxDepth !== 0) {
+      writer.uint32(24).int32(message.maxDepth);
+    }
+    if (message.minDepth !== 0) {
+      writer.uint32(32).int32(message.minDepth);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofSpec {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseProofSpec) as ProofSpec;
+    const message = { ...baseProofSpec } as ProofSpec;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -877,7 +903,7 @@ export const ProofSpec = {
   },
 
   fromJSON(object: any): ProofSpec {
-    const message = Object.create(baseProofSpec) as ProofSpec;
+    const message = { ...baseProofSpec } as ProofSpec;
     if (object.leafSpec !== undefined && object.leafSpec !== null) {
       message.leafSpec = LeafOp.fromJSON(object.leafSpec);
     } else {
@@ -899,6 +925,17 @@ export const ProofSpec = {
       message.minDepth = 0;
     }
     return message;
+  },
+
+  toJSON(message: ProofSpec): unknown {
+    const obj: any = {};
+    message.leafSpec !== undefined &&
+      (obj.leafSpec = message.leafSpec ? LeafOp.toJSON(message.leafSpec) : undefined);
+    message.innerSpec !== undefined &&
+      (obj.innerSpec = message.innerSpec ? InnerSpec.toJSON(message.innerSpec) : undefined);
+    message.maxDepth !== undefined && (obj.maxDepth = message.maxDepth);
+    message.minDepth !== undefined && (obj.minDepth = message.minDepth);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<ProofSpec>): ProofSpec {
@@ -925,17 +962,6 @@ export const ProofSpec = {
     }
     return message;
   },
-
-  toJSON(message: ProofSpec): unknown {
-    const obj: any = {};
-    message.leafSpec !== undefined &&
-      (obj.leafSpec = message.leafSpec ? LeafOp.toJSON(message.leafSpec) : undefined);
-    message.innerSpec !== undefined &&
-      (obj.innerSpec = message.innerSpec ? InnerSpec.toJSON(message.innerSpec) : undefined);
-    message.maxDepth !== undefined && (obj.maxDepth = message.maxDepth);
-    message.minDepth !== undefined && (obj.minDepth = message.minDepth);
-    return obj;
-  },
 };
 
 const baseInnerSpec: object = {
@@ -953,18 +979,28 @@ export const InnerSpec = {
       writer.int32(v);
     }
     writer.ldelim();
-    writer.uint32(16).int32(message.childSize);
-    writer.uint32(24).int32(message.minPrefixLength);
-    writer.uint32(32).int32(message.maxPrefixLength);
-    writer.uint32(42).bytes(message.emptyChild);
-    writer.uint32(48).int32(message.hash);
+    if (message.childSize !== 0) {
+      writer.uint32(16).int32(message.childSize);
+    }
+    if (message.minPrefixLength !== 0) {
+      writer.uint32(24).int32(message.minPrefixLength);
+    }
+    if (message.maxPrefixLength !== 0) {
+      writer.uint32(32).int32(message.maxPrefixLength);
+    }
+    if (message.emptyChild.length !== 0) {
+      writer.uint32(42).bytes(message.emptyChild);
+    }
+    if (message.hash !== 0) {
+      writer.uint32(48).int32(message.hash);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InnerSpec {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseInnerSpec) as InnerSpec;
+    const message = { ...baseInnerSpec } as InnerSpec;
     message.childOrder = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1003,7 +1039,7 @@ export const InnerSpec = {
   },
 
   fromJSON(object: any): InnerSpec {
-    const message = Object.create(baseInnerSpec) as InnerSpec;
+    const message = { ...baseInnerSpec } as InnerSpec;
     message.childOrder = [];
     if (object.childOrder !== undefined && object.childOrder !== null) {
       for (const e of object.childOrder) {
@@ -1034,6 +1070,24 @@ export const InnerSpec = {
       message.hash = 0;
     }
     return message;
+  },
+
+  toJSON(message: InnerSpec): unknown {
+    const obj: any = {};
+    if (message.childOrder) {
+      obj.childOrder = message.childOrder.map((e) => e);
+    } else {
+      obj.childOrder = [];
+    }
+    message.childSize !== undefined && (obj.childSize = message.childSize);
+    message.minPrefixLength !== undefined && (obj.minPrefixLength = message.minPrefixLength);
+    message.maxPrefixLength !== undefined && (obj.maxPrefixLength = message.maxPrefixLength);
+    message.emptyChild !== undefined &&
+      (obj.emptyChild = base64FromBytes(
+        message.emptyChild !== undefined ? message.emptyChild : new Uint8Array(),
+      ));
+    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<InnerSpec>): InnerSpec {
@@ -1071,24 +1125,6 @@ export const InnerSpec = {
     }
     return message;
   },
-
-  toJSON(message: InnerSpec): unknown {
-    const obj: any = {};
-    if (message.childOrder) {
-      obj.childOrder = message.childOrder.map((e) => e);
-    } else {
-      obj.childOrder = [];
-    }
-    message.childSize !== undefined && (obj.childSize = message.childSize);
-    message.minPrefixLength !== undefined && (obj.minPrefixLength = message.minPrefixLength);
-    message.maxPrefixLength !== undefined && (obj.maxPrefixLength = message.maxPrefixLength);
-    message.emptyChild !== undefined &&
-      (obj.emptyChild = base64FromBytes(
-        message.emptyChild !== undefined ? message.emptyChild : new Uint8Array(),
-      ));
-    message.hash !== undefined && (obj.hash = hashOpToJSON(message.hash));
-    return obj;
-  },
 };
 
 const baseBatchProof: object = {};
@@ -1104,7 +1140,7 @@ export const BatchProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BatchProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseBatchProof) as BatchProof;
+    const message = { ...baseBatchProof } as BatchProof;
     message.entries = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1121,22 +1157,11 @@ export const BatchProof = {
   },
 
   fromJSON(object: any): BatchProof {
-    const message = Object.create(baseBatchProof) as BatchProof;
-    message.entries = [];
-    if (object.entries !== undefined && object.entries !== null) {
-      for (const e of object.entries) {
-        message.entries.push(BatchEntry.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<BatchProof>): BatchProof {
     const message = { ...baseBatchProof } as BatchProof;
     message.entries = [];
     if (object.entries !== undefined && object.entries !== null) {
       for (const e of object.entries) {
-        message.entries.push(BatchEntry.fromPartial(e));
+        message.entries.push(BatchEntry.fromJSON(e));
       }
     }
     return message;
@@ -1150,6 +1175,17 @@ export const BatchProof = {
       obj.entries = [];
     }
     return obj;
+  },
+
+  fromPartial(object: DeepPartial<BatchProof>): BatchProof {
+    const message = { ...baseBatchProof } as BatchProof;
+    message.entries = [];
+    if (object.entries !== undefined && object.entries !== null) {
+      for (const e of object.entries) {
+        message.entries.push(BatchEntry.fromPartial(e));
+      }
+    }
+    return message;
   },
 };
 
@@ -1169,7 +1205,7 @@ export const BatchEntry = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BatchEntry {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseBatchEntry) as BatchEntry;
+    const message = { ...baseBatchEntry } as BatchEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1188,7 +1224,7 @@ export const BatchEntry = {
   },
 
   fromJSON(object: any): BatchEntry {
-    const message = Object.create(baseBatchEntry) as BatchEntry;
+    const message = { ...baseBatchEntry } as BatchEntry;
     if (object.exist !== undefined && object.exist !== null) {
       message.exist = ExistenceProof.fromJSON(object.exist);
     } else {
@@ -1200,6 +1236,15 @@ export const BatchEntry = {
       message.nonexist = undefined;
     }
     return message;
+  },
+
+  toJSON(message: BatchEntry): unknown {
+    const obj: any = {};
+    message.exist !== undefined &&
+      (obj.exist = message.exist ? ExistenceProof.toJSON(message.exist) : undefined);
+    message.nonexist !== undefined &&
+      (obj.nonexist = message.nonexist ? NonExistenceProof.toJSON(message.nonexist) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<BatchEntry>): BatchEntry {
@@ -1215,15 +1260,6 @@ export const BatchEntry = {
       message.nonexist = undefined;
     }
     return message;
-  },
-
-  toJSON(message: BatchEntry): unknown {
-    const obj: any = {};
-    message.exist !== undefined &&
-      (obj.exist = message.exist ? ExistenceProof.toJSON(message.exist) : undefined);
-    message.nonexist !== undefined &&
-      (obj.nonexist = message.nonexist ? NonExistenceProof.toJSON(message.nonexist) : undefined);
-    return obj;
   },
 };
 
@@ -1243,7 +1279,7 @@ export const CompressedBatchProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedBatchProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCompressedBatchProof) as CompressedBatchProof;
+    const message = { ...baseCompressedBatchProof } as CompressedBatchProof;
     message.entries = [];
     message.lookupInners = [];
     while (reader.pos < end) {
@@ -1264,7 +1300,7 @@ export const CompressedBatchProof = {
   },
 
   fromJSON(object: any): CompressedBatchProof {
-    const message = Object.create(baseCompressedBatchProof) as CompressedBatchProof;
+    const message = { ...baseCompressedBatchProof } as CompressedBatchProof;
     message.entries = [];
     message.lookupInners = [];
     if (object.entries !== undefined && object.entries !== null) {
@@ -1275,23 +1311,6 @@ export const CompressedBatchProof = {
     if (object.lookupInners !== undefined && object.lookupInners !== null) {
       for (const e of object.lookupInners) {
         message.lookupInners.push(InnerOp.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<CompressedBatchProof>): CompressedBatchProof {
-    const message = { ...baseCompressedBatchProof } as CompressedBatchProof;
-    message.entries = [];
-    message.lookupInners = [];
-    if (object.entries !== undefined && object.entries !== null) {
-      for (const e of object.entries) {
-        message.entries.push(CompressedBatchEntry.fromPartial(e));
-      }
-    }
-    if (object.lookupInners !== undefined && object.lookupInners !== null) {
-      for (const e of object.lookupInners) {
-        message.lookupInners.push(InnerOp.fromPartial(e));
       }
     }
     return message;
@@ -1311,6 +1330,23 @@ export const CompressedBatchProof = {
     }
     return obj;
   },
+
+  fromPartial(object: DeepPartial<CompressedBatchProof>): CompressedBatchProof {
+    const message = { ...baseCompressedBatchProof } as CompressedBatchProof;
+    message.entries = [];
+    message.lookupInners = [];
+    if (object.entries !== undefined && object.entries !== null) {
+      for (const e of object.entries) {
+        message.entries.push(CompressedBatchEntry.fromPartial(e));
+      }
+    }
+    if (object.lookupInners !== undefined && object.lookupInners !== null) {
+      for (const e of object.lookupInners) {
+        message.lookupInners.push(InnerOp.fromPartial(e));
+      }
+    }
+    return message;
+  },
 };
 
 const baseCompressedBatchEntry: object = {};
@@ -1329,7 +1365,7 @@ export const CompressedBatchEntry = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedBatchEntry {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCompressedBatchEntry) as CompressedBatchEntry;
+    const message = { ...baseCompressedBatchEntry } as CompressedBatchEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1348,7 +1384,7 @@ export const CompressedBatchEntry = {
   },
 
   fromJSON(object: any): CompressedBatchEntry {
-    const message = Object.create(baseCompressedBatchEntry) as CompressedBatchEntry;
+    const message = { ...baseCompressedBatchEntry } as CompressedBatchEntry;
     if (object.exist !== undefined && object.exist !== null) {
       message.exist = CompressedExistenceProof.fromJSON(object.exist);
     } else {
@@ -1360,6 +1396,15 @@ export const CompressedBatchEntry = {
       message.nonexist = undefined;
     }
     return message;
+  },
+
+  toJSON(message: CompressedBatchEntry): unknown {
+    const obj: any = {};
+    message.exist !== undefined &&
+      (obj.exist = message.exist ? CompressedExistenceProof.toJSON(message.exist) : undefined);
+    message.nonexist !== undefined &&
+      (obj.nonexist = message.nonexist ? CompressedNonExistenceProof.toJSON(message.nonexist) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CompressedBatchEntry>): CompressedBatchEntry {
@@ -1376,23 +1421,18 @@ export const CompressedBatchEntry = {
     }
     return message;
   },
-
-  toJSON(message: CompressedBatchEntry): unknown {
-    const obj: any = {};
-    message.exist !== undefined &&
-      (obj.exist = message.exist ? CompressedExistenceProof.toJSON(message.exist) : undefined);
-    message.nonexist !== undefined &&
-      (obj.nonexist = message.nonexist ? CompressedNonExistenceProof.toJSON(message.nonexist) : undefined);
-    return obj;
-  },
 };
 
 const baseCompressedExistenceProof: object = { path: 0 };
 
 export const CompressedExistenceProof = {
   encode(message: CompressedExistenceProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
-    writer.uint32(18).bytes(message.value);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
     if (message.leaf !== undefined) {
       LeafOp.encode(message.leaf, writer.uint32(26).fork()).ldelim();
     }
@@ -1407,7 +1447,7 @@ export const CompressedExistenceProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedExistenceProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCompressedExistenceProof) as CompressedExistenceProof;
+    const message = { ...baseCompressedExistenceProof } as CompressedExistenceProof;
     message.path = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1440,7 +1480,7 @@ export const CompressedExistenceProof = {
   },
 
   fromJSON(object: any): CompressedExistenceProof {
-    const message = Object.create(baseCompressedExistenceProof) as CompressedExistenceProof;
+    const message = { ...baseCompressedExistenceProof } as CompressedExistenceProof;
     message.path = [];
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
@@ -1459,6 +1499,21 @@ export const CompressedExistenceProof = {
       }
     }
     return message;
+  },
+
+  toJSON(message: CompressedExistenceProof): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.value !== undefined &&
+      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    message.leaf !== undefined && (obj.leaf = message.leaf ? LeafOp.toJSON(message.leaf) : undefined);
+    if (message.path) {
+      obj.path = message.path.map((e) => e);
+    } else {
+      obj.path = [];
+    }
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CompressedExistenceProof>): CompressedExistenceProof {
@@ -1486,28 +1541,15 @@ export const CompressedExistenceProof = {
     }
     return message;
   },
-
-  toJSON(message: CompressedExistenceProof): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.value !== undefined &&
-      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
-    message.leaf !== undefined && (obj.leaf = message.leaf ? LeafOp.toJSON(message.leaf) : undefined);
-    if (message.path) {
-      obj.path = message.path.map((e) => e);
-    } else {
-      obj.path = [];
-    }
-    return obj;
-  },
 };
 
 const baseCompressedNonExistenceProof: object = {};
 
 export const CompressedNonExistenceProof = {
   encode(message: CompressedNonExistenceProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     if (message.left !== undefined) {
       CompressedExistenceProof.encode(message.left, writer.uint32(18).fork()).ldelim();
     }
@@ -1520,7 +1562,7 @@ export const CompressedNonExistenceProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedNonExistenceProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCompressedNonExistenceProof) as CompressedNonExistenceProof;
+    const message = { ...baseCompressedNonExistenceProof } as CompressedNonExistenceProof;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1542,7 +1584,7 @@ export const CompressedNonExistenceProof = {
   },
 
   fromJSON(object: any): CompressedNonExistenceProof {
-    const message = Object.create(baseCompressedNonExistenceProof) as CompressedNonExistenceProof;
+    const message = { ...baseCompressedNonExistenceProof } as CompressedNonExistenceProof;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -1557,6 +1599,17 @@ export const CompressedNonExistenceProof = {
       message.right = undefined;
     }
     return message;
+  },
+
+  toJSON(message: CompressedNonExistenceProof): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.left !== undefined &&
+      (obj.left = message.left ? CompressedExistenceProof.toJSON(message.left) : undefined);
+    message.right !== undefined &&
+      (obj.right = message.right ? CompressedExistenceProof.toJSON(message.right) : undefined);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CompressedNonExistenceProof>): CompressedNonExistenceProof {
@@ -1578,17 +1631,6 @@ export const CompressedNonExistenceProof = {
     }
     return message;
   },
-
-  toJSON(message: CompressedNonExistenceProof): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.left !== undefined &&
-      (obj.left = message.left ? CompressedExistenceProof.toJSON(message.left) : undefined);
-    message.right !== undefined &&
-      (obj.right = message.right ? CompressedExistenceProof.toJSON(message.right) : undefined);
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -1598,7 +1640,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

@@ -24,14 +24,16 @@ const basePubKey: object = {};
 
 export const PubKey = {
   encode(message: PubKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PubKey {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePubKey) as PubKey;
+    const message = { ...basePubKey } as PubKey;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -47,11 +49,18 @@ export const PubKey = {
   },
 
   fromJSON(object: any): PubKey {
-    const message = Object.create(basePubKey) as PubKey;
+    const message = { ...basePubKey } as PubKey;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
     return message;
+  },
+
+  toJSON(message: PubKey): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<PubKey>): PubKey {
@@ -63,27 +72,22 @@ export const PubKey = {
     }
     return message;
   },
-
-  toJSON(message: PubKey): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    return obj;
-  },
 };
 
 const basePrivKey: object = {};
 
 export const PrivKey = {
   encode(message: PrivKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PrivKey {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(basePrivKey) as PrivKey;
+    const message = { ...basePrivKey } as PrivKey;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -99,11 +103,18 @@ export const PrivKey = {
   },
 
   fromJSON(object: any): PrivKey {
-    const message = Object.create(basePrivKey) as PrivKey;
+    const message = { ...basePrivKey } as PrivKey;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
     return message;
+  },
+
+  toJSON(message: PrivKey): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<PrivKey>): PrivKey {
@@ -115,13 +126,6 @@ export const PrivKey = {
     }
     return message;
   },
-
-  toJSON(message: PrivKey): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -131,7 +135,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

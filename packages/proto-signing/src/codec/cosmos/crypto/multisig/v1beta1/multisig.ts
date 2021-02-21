@@ -37,7 +37,7 @@ export const MultiSignature = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MultiSignature {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseMultiSignature) as MultiSignature;
+    const message = { ...baseMultiSignature } as MultiSignature;
     message.signatures = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -54,22 +54,11 @@ export const MultiSignature = {
   },
 
   fromJSON(object: any): MultiSignature {
-    const message = Object.create(baseMultiSignature) as MultiSignature;
-    message.signatures = [];
-    if (object.signatures !== undefined && object.signatures !== null) {
-      for (const e of object.signatures) {
-        message.signatures.push(bytesFromBase64(e));
-      }
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<MultiSignature>): MultiSignature {
     const message = { ...baseMultiSignature } as MultiSignature;
     message.signatures = [];
     if (object.signatures !== undefined && object.signatures !== null) {
       for (const e of object.signatures) {
-        message.signatures.push(e);
+        message.signatures.push(bytesFromBase64(e));
       }
     }
     return message;
@@ -84,21 +73,36 @@ export const MultiSignature = {
     }
     return obj;
   },
+
+  fromPartial(object: DeepPartial<MultiSignature>): MultiSignature {
+    const message = { ...baseMultiSignature } as MultiSignature;
+    message.signatures = [];
+    if (object.signatures !== undefined && object.signatures !== null) {
+      for (const e of object.signatures) {
+        message.signatures.push(e);
+      }
+    }
+    return message;
+  },
 };
 
 const baseCompactBitArray: object = { extraBitsStored: 0 };
 
 export const CompactBitArray = {
   encode(message: CompactBitArray, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint32(message.extraBitsStored);
-    writer.uint32(18).bytes(message.elems);
+    if (message.extraBitsStored !== 0) {
+      writer.uint32(8).uint32(message.extraBitsStored);
+    }
+    if (message.elems.length !== 0) {
+      writer.uint32(18).bytes(message.elems);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompactBitArray {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseCompactBitArray) as CompactBitArray;
+    const message = { ...baseCompactBitArray } as CompactBitArray;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -117,7 +121,7 @@ export const CompactBitArray = {
   },
 
   fromJSON(object: any): CompactBitArray {
-    const message = Object.create(baseCompactBitArray) as CompactBitArray;
+    const message = { ...baseCompactBitArray } as CompactBitArray;
     if (object.extraBitsStored !== undefined && object.extraBitsStored !== null) {
       message.extraBitsStored = Number(object.extraBitsStored);
     } else {
@@ -127,6 +131,14 @@ export const CompactBitArray = {
       message.elems = bytesFromBase64(object.elems);
     }
     return message;
+  },
+
+  toJSON(message: CompactBitArray): unknown {
+    const obj: any = {};
+    message.extraBitsStored !== undefined && (obj.extraBitsStored = message.extraBitsStored);
+    message.elems !== undefined &&
+      (obj.elems = base64FromBytes(message.elems !== undefined ? message.elems : new Uint8Array()));
+    return obj;
   },
 
   fromPartial(object: DeepPartial<CompactBitArray>): CompactBitArray {
@@ -143,14 +155,6 @@ export const CompactBitArray = {
     }
     return message;
   },
-
-  toJSON(message: CompactBitArray): unknown {
-    const obj: any = {};
-    message.extraBitsStored !== undefined && (obj.extraBitsStored = message.extraBitsStored);
-    message.elems !== undefined &&
-      (obj.elems = base64FromBytes(message.elems !== undefined ? message.elems : new Uint8Array()));
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -160,7 +164,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

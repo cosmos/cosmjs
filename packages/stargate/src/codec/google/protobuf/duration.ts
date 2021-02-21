@@ -86,15 +86,19 @@ const baseDuration: object = { seconds: Long.ZERO, nanos: 0 };
 
 export const Duration = {
   encode(message: Duration, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.seconds);
-    writer.uint32(16).int32(message.nanos);
+    if (!message.seconds.isZero()) {
+      writer.uint32(8).int64(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      writer.uint32(16).int32(message.nanos);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Duration {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseDuration) as Duration;
+    const message = { ...baseDuration } as Duration;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -113,7 +117,7 @@ export const Duration = {
   },
 
   fromJSON(object: any): Duration {
-    const message = Object.create(baseDuration) as Duration;
+    const message = { ...baseDuration } as Duration;
     if (object.seconds !== undefined && object.seconds !== null) {
       message.seconds = Long.fromString(object.seconds);
     } else {
@@ -125,6 +129,13 @@ export const Duration = {
       message.nanos = 0;
     }
     return message;
+  },
+
+  toJSON(message: Duration): unknown {
+    const obj: any = {};
+    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
+    message.nanos !== undefined && (obj.nanos = message.nanos);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Duration>): Duration {
@@ -140,13 +151,6 @@ export const Duration = {
       message.nanos = 0;
     }
     return message;
-  },
-
-  toJSON(message: Duration): unknown {
-    const obj: any = {};
-    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
-    message.nanos !== undefined && (obj.nanos = message.nanos);
-    return obj;
   },
 };
 

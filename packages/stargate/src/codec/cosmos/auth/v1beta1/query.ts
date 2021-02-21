@@ -31,14 +31,16 @@ const baseQueryAccountRequest: object = { address: "" };
 
 export const QueryAccountRequest = {
   encode(message: QueryAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseQueryAccountRequest) as QueryAccountRequest;
+    const message = { ...baseQueryAccountRequest } as QueryAccountRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -54,19 +56,9 @@ export const QueryAccountRequest = {
   },
 
   fromJSON(object: any): QueryAccountRequest {
-    const message = Object.create(baseQueryAccountRequest) as QueryAccountRequest;
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
-    } else {
-      message.address = "";
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<QueryAccountRequest>): QueryAccountRequest {
     const message = { ...baseQueryAccountRequest } as QueryAccountRequest;
     if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
+      message.address = String(object.address);
     } else {
       message.address = "";
     }
@@ -77,6 +69,16 @@ export const QueryAccountRequest = {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
     return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryAccountRequest>): QueryAccountRequest {
+    const message = { ...baseQueryAccountRequest } as QueryAccountRequest;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
+    }
+    return message;
   },
 };
 
@@ -93,7 +95,7 @@ export const QueryAccountResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseQueryAccountResponse) as QueryAccountResponse;
+    const message = { ...baseQueryAccountResponse } as QueryAccountResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -109,19 +111,9 @@ export const QueryAccountResponse = {
   },
 
   fromJSON(object: any): QueryAccountResponse {
-    const message = Object.create(baseQueryAccountResponse) as QueryAccountResponse;
-    if (object.account !== undefined && object.account !== null) {
-      message.account = Any.fromJSON(object.account);
-    } else {
-      message.account = undefined;
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<QueryAccountResponse>): QueryAccountResponse {
     const message = { ...baseQueryAccountResponse } as QueryAccountResponse;
     if (object.account !== undefined && object.account !== null) {
-      message.account = Any.fromPartial(object.account);
+      message.account = Any.fromJSON(object.account);
     } else {
       message.account = undefined;
     }
@@ -133,6 +125,16 @@ export const QueryAccountResponse = {
     message.account !== undefined &&
       (obj.account = message.account ? Any.toJSON(message.account) : undefined);
     return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryAccountResponse>): QueryAccountResponse {
+    const message = { ...baseQueryAccountResponse } as QueryAccountResponse;
+    if (object.account !== undefined && object.account !== null) {
+      message.account = Any.fromPartial(object.account);
+    } else {
+      message.account = undefined;
+    }
+    return message;
   },
 };
 
@@ -146,7 +148,7 @@ export const QueryParamsRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseQueryParamsRequest) as QueryParamsRequest;
+    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -159,11 +161,6 @@ export const QueryParamsRequest = {
   },
 
   fromJSON(_: any): QueryParamsRequest {
-    const message = Object.create(baseQueryParamsRequest) as QueryParamsRequest;
-    return message;
-  },
-
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     return message;
   },
@@ -171,6 +168,11 @@ export const QueryParamsRequest = {
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    return message;
   },
 };
 
@@ -187,7 +189,7 @@ export const QueryParamsResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseQueryParamsResponse) as QueryParamsResponse;
+    const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -203,19 +205,9 @@ export const QueryParamsResponse = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    const message = Object.create(baseQueryParamsResponse) as QueryParamsResponse;
-    if (object.params !== undefined && object.params !== null) {
-      message.params = Params.fromJSON(object.params);
-    } else {
-      message.params = undefined;
-    }
-    return message;
-  },
-
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
-      message.params = Params.fromPartial(object.params);
+      message.params = Params.fromJSON(object.params);
     } else {
       message.params = undefined;
     }
@@ -226,6 +218,16 @@ export const QueryParamsResponse = {
     const obj: any = {};
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+    const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromPartial(object.params);
+    } else {
+      message.params = undefined;
+    }
+    return message;
   },
 };
 

@@ -33,14 +33,16 @@ export const ValidatorSet = {
     if (message.proposer !== undefined) {
       Validator.encode(message.proposer, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).int64(message.totalVotingPower);
+    if (!message.totalVotingPower.isZero()) {
+      writer.uint32(24).int64(message.totalVotingPower);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSet {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseValidatorSet) as ValidatorSet;
+    const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -63,7 +65,7 @@ export const ValidatorSet = {
   },
 
   fromJSON(object: any): ValidatorSet {
-    const message = Object.create(baseValidatorSet) as ValidatorSet;
+    const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
     if (object.validators !== undefined && object.validators !== null) {
       for (const e of object.validators) {
@@ -81,6 +83,20 @@ export const ValidatorSet = {
       message.totalVotingPower = Long.ZERO;
     }
     return message;
+  },
+
+  toJSON(message: ValidatorSet): unknown {
+    const obj: any = {};
+    if (message.validators) {
+      obj.validators = message.validators.map((e) => (e ? Validator.toJSON(e) : undefined));
+    } else {
+      obj.validators = [];
+    }
+    message.proposer !== undefined &&
+      (obj.proposer = message.proposer ? Validator.toJSON(message.proposer) : undefined);
+    message.totalVotingPower !== undefined &&
+      (obj.totalVotingPower = (message.totalVotingPower || Long.ZERO).toString());
+    return obj;
   },
 
   fromPartial(object: DeepPartial<ValidatorSet>): ValidatorSet {
@@ -103,39 +119,31 @@ export const ValidatorSet = {
     }
     return message;
   },
-
-  toJSON(message: ValidatorSet): unknown {
-    const obj: any = {};
-    if (message.validators) {
-      obj.validators = message.validators.map((e) => (e ? Validator.toJSON(e) : undefined));
-    } else {
-      obj.validators = [];
-    }
-    message.proposer !== undefined &&
-      (obj.proposer = message.proposer ? Validator.toJSON(message.proposer) : undefined);
-    message.totalVotingPower !== undefined &&
-      (obj.totalVotingPower = (message.totalVotingPower || Long.ZERO).toString());
-    return obj;
-  },
 };
 
 const baseValidator: object = { votingPower: Long.ZERO, proposerPriority: Long.ZERO };
 
 export const Validator = {
   encode(message: Validator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.address);
+    if (message.address.length !== 0) {
+      writer.uint32(10).bytes(message.address);
+    }
     if (message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).int64(message.votingPower);
-    writer.uint32(32).int64(message.proposerPriority);
+    if (!message.votingPower.isZero()) {
+      writer.uint32(24).int64(message.votingPower);
+    }
+    if (!message.proposerPriority.isZero()) {
+      writer.uint32(32).int64(message.proposerPriority);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseValidator) as Validator;
+    const message = { ...baseValidator } as Validator;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -160,7 +168,7 @@ export const Validator = {
   },
 
   fromJSON(object: any): Validator {
-    const message = Object.create(baseValidator) as Validator;
+    const message = { ...baseValidator } as Validator;
     if (object.address !== undefined && object.address !== null) {
       message.address = bytesFromBase64(object.address);
     }
@@ -180,6 +188,18 @@ export const Validator = {
       message.proposerPriority = Long.ZERO;
     }
     return message;
+  },
+
+  toJSON(message: Validator): unknown {
+    const obj: any = {};
+    message.address !== undefined &&
+      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
+    message.pubKey !== undefined &&
+      (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
+    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || Long.ZERO).toString());
+    message.proposerPriority !== undefined &&
+      (obj.proposerPriority = (message.proposerPriority || Long.ZERO).toString());
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Validator>): Validator {
@@ -206,18 +226,6 @@ export const Validator = {
     }
     return message;
   },
-
-  toJSON(message: Validator): unknown {
-    const obj: any = {};
-    message.address !== undefined &&
-      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
-    message.pubKey !== undefined &&
-      (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || Long.ZERO).toString());
-    message.proposerPriority !== undefined &&
-      (obj.proposerPriority = (message.proposerPriority || Long.ZERO).toString());
-    return obj;
-  },
 };
 
 const baseSimpleValidator: object = { votingPower: Long.ZERO };
@@ -227,14 +235,16 @@ export const SimpleValidator = {
     if (message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(10).fork()).ldelim();
     }
-    writer.uint32(16).int64(message.votingPower);
+    if (!message.votingPower.isZero()) {
+      writer.uint32(16).int64(message.votingPower);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SimpleValidator {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseSimpleValidator) as SimpleValidator;
+    const message = { ...baseSimpleValidator } as SimpleValidator;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -253,7 +263,7 @@ export const SimpleValidator = {
   },
 
   fromJSON(object: any): SimpleValidator {
-    const message = Object.create(baseSimpleValidator) as SimpleValidator;
+    const message = { ...baseSimpleValidator } as SimpleValidator;
     if (object.pubKey !== undefined && object.pubKey !== null) {
       message.pubKey = PublicKey.fromJSON(object.pubKey);
     } else {
@@ -265,6 +275,14 @@ export const SimpleValidator = {
       message.votingPower = Long.ZERO;
     }
     return message;
+  },
+
+  toJSON(message: SimpleValidator): unknown {
+    const obj: any = {};
+    message.pubKey !== undefined &&
+      (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
+    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || Long.ZERO).toString());
+    return obj;
   },
 
   fromPartial(object: DeepPartial<SimpleValidator>): SimpleValidator {
@@ -281,14 +299,6 @@ export const SimpleValidator = {
     }
     return message;
   },
-
-  toJSON(message: SimpleValidator): unknown {
-    const obj: any = {};
-    message.pubKey !== undefined &&
-      (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || Long.ZERO).toString());
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -298,7 +308,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

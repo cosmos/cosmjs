@@ -28,15 +28,19 @@ const baseApp: object = { protocol: Long.UZERO, software: "" };
 
 export const App = {
   encode(message: App, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.protocol);
-    writer.uint32(18).string(message.software);
+    if (!message.protocol.isZero()) {
+      writer.uint32(8).uint64(message.protocol);
+    }
+    if (message.software !== "") {
+      writer.uint32(18).string(message.software);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): App {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseApp) as App;
+    const message = { ...baseApp } as App;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -55,7 +59,7 @@ export const App = {
   },
 
   fromJSON(object: any): App {
-    const message = Object.create(baseApp) as App;
+    const message = { ...baseApp } as App;
     if (object.protocol !== undefined && object.protocol !== null) {
       message.protocol = Long.fromString(object.protocol);
     } else {
@@ -67,6 +71,13 @@ export const App = {
       message.software = "";
     }
     return message;
+  },
+
+  toJSON(message: App): unknown {
+    const obj: any = {};
+    message.protocol !== undefined && (obj.protocol = (message.protocol || Long.UZERO).toString());
+    message.software !== undefined && (obj.software = message.software);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<App>): App {
@@ -83,28 +94,25 @@ export const App = {
     }
     return message;
   },
-
-  toJSON(message: App): unknown {
-    const obj: any = {};
-    message.protocol !== undefined && (obj.protocol = (message.protocol || Long.UZERO).toString());
-    message.software !== undefined && (obj.software = message.software);
-    return obj;
-  },
 };
 
 const baseConsensus: object = { block: Long.UZERO, app: Long.UZERO };
 
 export const Consensus = {
   encode(message: Consensus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.block);
-    writer.uint32(16).uint64(message.app);
+    if (!message.block.isZero()) {
+      writer.uint32(8).uint64(message.block);
+    }
+    if (!message.app.isZero()) {
+      writer.uint32(16).uint64(message.app);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Consensus {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseConsensus) as Consensus;
+    const message = { ...baseConsensus } as Consensus;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -123,7 +131,7 @@ export const Consensus = {
   },
 
   fromJSON(object: any): Consensus {
-    const message = Object.create(baseConsensus) as Consensus;
+    const message = { ...baseConsensus } as Consensus;
     if (object.block !== undefined && object.block !== null) {
       message.block = Long.fromString(object.block);
     } else {
@@ -135,6 +143,13 @@ export const Consensus = {
       message.app = Long.UZERO;
     }
     return message;
+  },
+
+  toJSON(message: Consensus): unknown {
+    const obj: any = {};
+    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
+    message.app !== undefined && (obj.app = (message.app || Long.UZERO).toString());
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Consensus>): Consensus {
@@ -150,13 +165,6 @@ export const Consensus = {
       message.app = Long.UZERO;
     }
     return message;
-  },
-
-  toJSON(message: Consensus): unknown {
-    const obj: any = {};
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    message.app !== undefined && (obj.app = (message.app || Long.UZERO).toString());
-    return obj;
   },
 };
 

@@ -117,15 +117,19 @@ const baseTimestamp: object = { seconds: Long.ZERO, nanos: 0 };
 
 export const Timestamp = {
   encode(message: Timestamp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.seconds);
-    writer.uint32(16).int32(message.nanos);
+    if (!message.seconds.isZero()) {
+      writer.uint32(8).int64(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      writer.uint32(16).int32(message.nanos);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Timestamp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = Object.create(baseTimestamp) as Timestamp;
+    const message = { ...baseTimestamp } as Timestamp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -144,7 +148,7 @@ export const Timestamp = {
   },
 
   fromJSON(object: any): Timestamp {
-    const message = Object.create(baseTimestamp) as Timestamp;
+    const message = { ...baseTimestamp } as Timestamp;
     if (object.seconds !== undefined && object.seconds !== null) {
       message.seconds = Long.fromString(object.seconds);
     } else {
@@ -156,6 +160,13 @@ export const Timestamp = {
       message.nanos = 0;
     }
     return message;
+  },
+
+  toJSON(message: Timestamp): unknown {
+    const obj: any = {};
+    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
+    message.nanos !== undefined && (obj.nanos = message.nanos);
+    return obj;
   },
 
   fromPartial(object: DeepPartial<Timestamp>): Timestamp {
@@ -171,13 +182,6 @@ export const Timestamp = {
       message.nanos = 0;
     }
     return message;
-  },
-
-  toJSON(message: Timestamp): unknown {
-    const obj: any = {};
-    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
-    message.nanos !== undefined && (obj.nanos = message.nanos);
-    return obj;
   },
 };
 
