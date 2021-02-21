@@ -34,7 +34,7 @@ describe("DirectSecp256k1Wallet", () => {
 
   describe("signDirect", () => {
     it("resolves to valid signature", async () => {
-      const { sequence, bodyBytes } = testVectors[1];
+      const { accountNumber, sequence, bodyBytes } = testVectors[1].inputs;
       const wallet = await DirectSecp256k1Wallet.fromKey(defaultPrivkey);
       const accounts = await wallet.getAccounts();
       const pubkey = {
@@ -44,7 +44,6 @@ describe("DirectSecp256k1Wallet", () => {
       const fee = coins(2000, "ucosm");
       const gasLimit = 200000;
       const chainId = "simd-testing";
-      const accountNumber = 1;
       const signDoc = makeSignDoc(
         fromHex(bodyBytes),
         makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),
