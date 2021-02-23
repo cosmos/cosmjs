@@ -1,5 +1,5 @@
 // Note: all exports in this module are publicly available via
-// `import { tendermint34 } from "@cosnjs/tendermint-rpc"`
+// `import { tendermint34 } from "@cosmjs/tendermint-rpc"`
 
 export { Tendermint34Client } from "./tendermint34client";
 export {

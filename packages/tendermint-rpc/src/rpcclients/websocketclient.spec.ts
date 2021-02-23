@@ -55,7 +55,7 @@ describe("WebsocketClient", () => {
         expect(event.query).toEqual(query);
 
         if (events.length === 2) {
-          // make sure they are consequtive heights
+          // make sure they are consecutive heights
           const eventHeight = (index: number): number =>
             Uint53.fromString(events[index].data.value.header.height).toNumber();
           expect(eventHeight(1)).toEqual(eventHeight(0) + 1);
