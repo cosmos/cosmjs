@@ -49,10 +49,17 @@ import {
 export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
   readonly delegate: StdFee;
+  readonly undelegate: StdFee;
+  readonly withdraw: StdFee;
 }
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000, delegate: 160000 };
+const defaultGasLimits: GasLimits<CosmosFeeTable> = {
+  send: 80000,
+  delegate: 160000,
+  undelegate: 160000,
+  withdraw: 160000,
+};
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -146,6 +153,35 @@ export class SigningStargateClient extends StargateClient {
       value: MsgDelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
     };
     const response = await this.signAndBroadcast(senderAddress, [delegateMsg], this.fees.delegate, memo);
+    assertIsBroadcastTxSuccess(response);
+    return response;
+  }
+
+  public async undelegateTokens(
+    senderAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxSuccess> {
+    const undelegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+      value: MsgUndelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+    };
+    const response = await this.signAndBroadcast(senderAddress, [undelegateMsg], this.fees.undelegate, memo);
+    assertIsBroadcastTxSuccess(response);
+    return response;
+  }
+
+  public async withdrawRewards(
+    senderAddress: string,
+    validatorAddress: string,
+    memo = "",
+  ): Promise<BroadcastTxSuccess> {
+    const withdrawMsg = {
+      typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: senderAddress, validatorAddress }),
+    };
+    const response = await this.signAndBroadcast(senderAddress, [withdrawMsg], this.fees.withdraw, memo);
     assertIsBroadcastTxSuccess(response);
     return response;
   }
