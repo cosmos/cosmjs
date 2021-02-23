@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Adaptor } from "../../adaptor";
-import { hashBlock, hashTx } from "./hasher";
+import { hashBlock, hashTx } from "../../hasher";
 import { Params } from "./requests";
 import { Responses } from "./responses";
 

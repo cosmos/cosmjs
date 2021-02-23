@@ -17,10 +17,10 @@ import {
   may,
   optional,
 } from "../../encodings";
+import { hashTx } from "../../hasher";
 import * as responses from "../../responses";
 import { SubscriptionEvent } from "../../rpcclients";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
-import { hashTx } from "./hasher";
 
 interface AbciInfoResult {
   readonly response: RpcAbciInfoResponse;
