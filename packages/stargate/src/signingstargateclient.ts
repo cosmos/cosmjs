@@ -66,10 +66,11 @@ import { BroadcastTxResponse, StargateClient } from "./stargateclient";
  */
 export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
+  readonly delegate: StdFee;
 }
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
+const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000, delegate: 160000 };
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -196,6 +197,19 @@ export class SigningStargateClient extends StargateClient {
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
+  }
+
+  public async delegateTokens(
+    senderAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const delegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+      value: MsgDelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(senderAddress, [delegateMsg], this.fees.delegate, memo);
   }
 
   public async signAndBroadcast(
