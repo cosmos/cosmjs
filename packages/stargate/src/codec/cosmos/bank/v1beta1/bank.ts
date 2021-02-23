@@ -83,7 +83,9 @@ export const Params = {
     for (const v of message.sendEnabled) {
       SendEnabled.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    writer.uint32(16).bool(message.defaultSendEnabled);
+    if (message.defaultSendEnabled === true) {
+      writer.uint32(16).bool(message.defaultSendEnabled);
+    }
     return writer;
   },
 
@@ -125,6 +127,17 @@ export const Params = {
     return message;
   },
 
+  toJSON(message: Params): unknown {
+    const obj: any = {};
+    if (message.sendEnabled) {
+      obj.sendEnabled = message.sendEnabled.map((e) => (e ? SendEnabled.toJSON(e) : undefined));
+    } else {
+      obj.sendEnabled = [];
+    }
+    message.defaultSendEnabled !== undefined && (obj.defaultSendEnabled = message.defaultSendEnabled);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     message.sendEnabled = [];
@@ -140,25 +153,18 @@ export const Params = {
     }
     return message;
   },
-
-  toJSON(message: Params): unknown {
-    const obj: any = {};
-    if (message.sendEnabled) {
-      obj.sendEnabled = message.sendEnabled.map((e) => (e ? SendEnabled.toJSON(e) : undefined));
-    } else {
-      obj.sendEnabled = [];
-    }
-    message.defaultSendEnabled !== undefined && (obj.defaultSendEnabled = message.defaultSendEnabled);
-    return obj;
-  },
 };
 
 const baseSendEnabled: object = { denom: "", enabled: false };
 
 export const SendEnabled = {
   encode(message: SendEnabled, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.denom);
-    writer.uint32(16).bool(message.enabled);
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    if (message.enabled === true) {
+      writer.uint32(16).bool(message.enabled);
+    }
     return writer;
   },
 
@@ -198,6 +204,13 @@ export const SendEnabled = {
     return message;
   },
 
+  toJSON(message: SendEnabled): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.enabled !== undefined && (obj.enabled = message.enabled);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SendEnabled>): SendEnabled {
     const message = { ...baseSendEnabled } as SendEnabled;
     if (object.denom !== undefined && object.denom !== null) {
@@ -212,20 +225,15 @@ export const SendEnabled = {
     }
     return message;
   },
-
-  toJSON(message: SendEnabled): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    return obj;
-  },
 };
 
 const baseInput: object = { address: "" };
 
 export const Input = {
   encode(message: Input, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     for (const v of message.coins) {
       Coin.encode(v!, writer.uint32(18).fork()).ldelim();
     }
@@ -270,6 +278,17 @@ export const Input = {
     return message;
   },
 
+  toJSON(message: Input): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    if (message.coins) {
+      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.coins = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Input>): Input {
     const message = { ...baseInput } as Input;
     message.coins = [];
@@ -285,24 +304,15 @@ export const Input = {
     }
     return message;
   },
-
-  toJSON(message: Input): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.coins = [];
-    }
-    return obj;
-  },
 };
 
 const baseOutput: object = { address: "" };
 
 export const Output = {
   encode(message: Output, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     for (const v of message.coins) {
       Coin.encode(v!, writer.uint32(18).fork()).ldelim();
     }
@@ -347,6 +357,17 @@ export const Output = {
     return message;
   },
 
+  toJSON(message: Output): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    if (message.coins) {
+      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.coins = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Output>): Output {
     const message = { ...baseOutput } as Output;
     message.coins = [];
@@ -361,17 +382,6 @@ export const Output = {
       }
     }
     return message;
-  },
-
-  toJSON(message: Output): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.coins = [];
-    }
-    return obj;
   },
 };
 
@@ -415,6 +425,16 @@ export const Supply = {
     return message;
   },
 
+  toJSON(message: Supply): unknown {
+    const obj: any = {};
+    if (message.total) {
+      obj.total = message.total.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.total = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Supply>): Supply {
     const message = { ...baseSupply } as Supply;
     message.total = [];
@@ -425,24 +445,18 @@ export const Supply = {
     }
     return message;
   },
-
-  toJSON(message: Supply): unknown {
-    const obj: any = {};
-    if (message.total) {
-      obj.total = message.total.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.total = [];
-    }
-    return obj;
-  },
 };
 
 const baseDenomUnit: object = { denom: "", exponent: 0, aliases: "" };
 
 export const DenomUnit = {
   encode(message: DenomUnit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.denom);
-    writer.uint32(16).uint32(message.exponent);
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    if (message.exponent !== 0) {
+      writer.uint32(16).uint32(message.exponent);
+    }
     for (const v of message.aliases) {
       writer.uint32(26).string(v!);
     }
@@ -495,6 +509,18 @@ export const DenomUnit = {
     return message;
   },
 
+  toJSON(message: DenomUnit): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.exponent !== undefined && (obj.exponent = message.exponent);
+    if (message.aliases) {
+      obj.aliases = message.aliases.map((e) => e);
+    } else {
+      obj.aliases = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<DenomUnit>): DenomUnit {
     const message = { ...baseDenomUnit } as DenomUnit;
     message.aliases = [];
@@ -515,30 +541,24 @@ export const DenomUnit = {
     }
     return message;
   },
-
-  toJSON(message: DenomUnit): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.exponent !== undefined && (obj.exponent = message.exponent);
-    if (message.aliases) {
-      obj.aliases = message.aliases.map((e) => e);
-    } else {
-      obj.aliases = [];
-    }
-    return obj;
-  },
 };
 
 const baseMetadata: object = { description: "", base: "", display: "" };
 
 export const Metadata = {
   encode(message: Metadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.description);
+    if (message.description !== "") {
+      writer.uint32(10).string(message.description);
+    }
     for (const v of message.denomUnits) {
       DenomUnit.encode(v!, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(26).string(message.base);
-    writer.uint32(34).string(message.display);
+    if (message.base !== "") {
+      writer.uint32(26).string(message.base);
+    }
+    if (message.display !== "") {
+      writer.uint32(34).string(message.display);
+    }
     return writer;
   },
 
@@ -596,6 +616,19 @@ export const Metadata = {
     return message;
   },
 
+  toJSON(message: Metadata): unknown {
+    const obj: any = {};
+    message.description !== undefined && (obj.description = message.description);
+    if (message.denomUnits) {
+      obj.denomUnits = message.denomUnits.map((e) => (e ? DenomUnit.toJSON(e) : undefined));
+    } else {
+      obj.denomUnits = [];
+    }
+    message.base !== undefined && (obj.base = message.base);
+    message.display !== undefined && (obj.display = message.display);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Metadata>): Metadata {
     const message = { ...baseMetadata } as Metadata;
     message.denomUnits = [];
@@ -620,19 +653,6 @@ export const Metadata = {
       message.display = "";
     }
     return message;
-  },
-
-  toJSON(message: Metadata): unknown {
-    const obj: any = {};
-    message.description !== undefined && (obj.description = message.description);
-    if (message.denomUnits) {
-      obj.denomUnits = message.denomUnits.map((e) => (e ? DenomUnit.toJSON(e) : undefined));
-    } else {
-      obj.denomUnits = [];
-    }
-    message.base !== undefined && (obj.base = message.base);
-    message.display !== undefined && (obj.display = message.display);
-    return obj;
   },
 };
 

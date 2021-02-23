@@ -86,8 +86,12 @@ const baseDuration: object = { seconds: Long.ZERO, nanos: 0 };
 
 export const Duration = {
   encode(message: Duration, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.seconds);
-    writer.uint32(16).int32(message.nanos);
+    if (!message.seconds.isZero()) {
+      writer.uint32(8).int64(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      writer.uint32(16).int32(message.nanos);
+    }
     return writer;
   },
 
@@ -127,6 +131,13 @@ export const Duration = {
     return message;
   },
 
+  toJSON(message: Duration): unknown {
+    const obj: any = {};
+    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
+    message.nanos !== undefined && (obj.nanos = message.nanos);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Duration>): Duration {
     const message = { ...baseDuration } as Duration;
     if (object.seconds !== undefined && object.seconds !== null) {
@@ -140,13 +151,6 @@ export const Duration = {
       message.nanos = 0;
     }
     return message;
-  },
-
-  toJSON(message: Duration): unknown {
-    const obj: any = {};
-    message.seconds !== undefined && (obj.seconds = (message.seconds || Long.ZERO).toString());
-    message.nanos !== undefined && (obj.nanos = message.nanos);
-    return obj;
   },
 };
 

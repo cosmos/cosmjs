@@ -201,14 +201,14 @@ export const QueryParamsRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
-    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
-    return message;
-  },
-
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    return message;
   },
 };
 
@@ -216,7 +216,7 @@ const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
   encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.params !== undefined && message.params !== undefined) {
+    if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -250,6 +250,12 @@ export const QueryParamsResponse = {
     return message;
   },
 
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
@@ -258,12 +264,6 @@ export const QueryParamsResponse = {
       message.params = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryParamsResponse): unknown {
-    const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
   },
 };
 
@@ -274,7 +274,9 @@ export const QueryValidatorOutstandingRewardsRequest = {
     message: QueryValidatorOutstandingRewardsRequest,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    writer.uint32(10).string(message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      writer.uint32(10).string(message.validatorAddress);
+    }
     return writer;
   },
 
@@ -310,6 +312,12 @@ export const QueryValidatorOutstandingRewardsRequest = {
     return message;
   },
 
+  toJSON(message: QueryValidatorOutstandingRewardsRequest): unknown {
+    const obj: any = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
+
   fromPartial(
     object: DeepPartial<QueryValidatorOutstandingRewardsRequest>,
   ): QueryValidatorOutstandingRewardsRequest {
@@ -323,12 +331,6 @@ export const QueryValidatorOutstandingRewardsRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryValidatorOutstandingRewardsRequest): unknown {
-    const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
-  },
 };
 
 const baseQueryValidatorOutstandingRewardsResponse: object = {};
@@ -338,7 +340,7 @@ export const QueryValidatorOutstandingRewardsResponse = {
     message: QueryValidatorOutstandingRewardsResponse,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    if (message.rewards !== undefined && message.rewards !== undefined) {
+    if (message.rewards !== undefined) {
       ValidatorOutstandingRewards.encode(message.rewards, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -376,6 +378,13 @@ export const QueryValidatorOutstandingRewardsResponse = {
     return message;
   },
 
+  toJSON(message: QueryValidatorOutstandingRewardsResponse): unknown {
+    const obj: any = {};
+    message.rewards !== undefined &&
+      (obj.rewards = message.rewards ? ValidatorOutstandingRewards.toJSON(message.rewards) : undefined);
+    return obj;
+  },
+
   fromPartial(
     object: DeepPartial<QueryValidatorOutstandingRewardsResponse>,
   ): QueryValidatorOutstandingRewardsResponse {
@@ -389,20 +398,15 @@ export const QueryValidatorOutstandingRewardsResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryValidatorOutstandingRewardsResponse): unknown {
-    const obj: any = {};
-    message.rewards !== undefined &&
-      (obj.rewards = message.rewards ? ValidatorOutstandingRewards.toJSON(message.rewards) : undefined);
-    return obj;
-  },
 };
 
 const baseQueryValidatorCommissionRequest: object = { validatorAddress: "" };
 
 export const QueryValidatorCommissionRequest = {
   encode(message: QueryValidatorCommissionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      writer.uint32(10).string(message.validatorAddress);
+    }
     return writer;
   },
 
@@ -434,6 +438,12 @@ export const QueryValidatorCommissionRequest = {
     return message;
   },
 
+  toJSON(message: QueryValidatorCommissionRequest): unknown {
+    const obj: any = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryValidatorCommissionRequest>): QueryValidatorCommissionRequest {
     const message = { ...baseQueryValidatorCommissionRequest } as QueryValidatorCommissionRequest;
     if (object.validatorAddress !== undefined && object.validatorAddress !== null) {
@@ -443,19 +453,13 @@ export const QueryValidatorCommissionRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryValidatorCommissionRequest): unknown {
-    const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
-  },
 };
 
 const baseQueryValidatorCommissionResponse: object = {};
 
 export const QueryValidatorCommissionResponse = {
   encode(message: QueryValidatorCommissionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.commission !== undefined && message.commission !== undefined) {
+    if (message.commission !== undefined) {
       ValidatorAccumulatedCommission.encode(message.commission, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -489,6 +493,15 @@ export const QueryValidatorCommissionResponse = {
     return message;
   },
 
+  toJSON(message: QueryValidatorCommissionResponse): unknown {
+    const obj: any = {};
+    message.commission !== undefined &&
+      (obj.commission = message.commission
+        ? ValidatorAccumulatedCommission.toJSON(message.commission)
+        : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryValidatorCommissionResponse>): QueryValidatorCommissionResponse {
     const message = { ...baseQueryValidatorCommissionResponse } as QueryValidatorCommissionResponse;
     if (object.commission !== undefined && object.commission !== null) {
@@ -497,15 +510,6 @@ export const QueryValidatorCommissionResponse = {
       message.commission = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryValidatorCommissionResponse): unknown {
-    const obj: any = {};
-    message.commission !== undefined &&
-      (obj.commission = message.commission
-        ? ValidatorAccumulatedCommission.toJSON(message.commission)
-        : undefined);
-    return obj;
   },
 };
 
@@ -517,10 +521,16 @@ const baseQueryValidatorSlashesRequest: object = {
 
 export const QueryValidatorSlashesRequest = {
   encode(message: QueryValidatorSlashesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.validatorAddress);
-    writer.uint32(16).uint64(message.startingHeight);
-    writer.uint32(24).uint64(message.endingHeight);
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.validatorAddress !== "") {
+      writer.uint32(10).string(message.validatorAddress);
+    }
+    if (!message.startingHeight.isZero()) {
+      writer.uint32(16).uint64(message.startingHeight);
+    }
+    if (!message.endingHeight.isZero()) {
+      writer.uint32(24).uint64(message.endingHeight);
+    }
+    if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(34).fork()).ldelim();
     }
     return writer;
@@ -578,6 +588,18 @@ export const QueryValidatorSlashesRequest = {
     return message;
   },
 
+  toJSON(message: QueryValidatorSlashesRequest): unknown {
+    const obj: any = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    message.startingHeight !== undefined &&
+      (obj.startingHeight = (message.startingHeight || Long.UZERO).toString());
+    message.endingHeight !== undefined &&
+      (obj.endingHeight = (message.endingHeight || Long.UZERO).toString());
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryValidatorSlashesRequest>): QueryValidatorSlashesRequest {
     const message = { ...baseQueryValidatorSlashesRequest } as QueryValidatorSlashesRequest;
     if (object.validatorAddress !== undefined && object.validatorAddress !== null) {
@@ -602,18 +624,6 @@ export const QueryValidatorSlashesRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryValidatorSlashesRequest): unknown {
-    const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.startingHeight !== undefined &&
-      (obj.startingHeight = (message.startingHeight || Long.UZERO).toString());
-    message.endingHeight !== undefined &&
-      (obj.endingHeight = (message.endingHeight || Long.UZERO).toString());
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
-  },
 };
 
 const baseQueryValidatorSlashesResponse: object = {};
@@ -623,7 +633,7 @@ export const QueryValidatorSlashesResponse = {
     for (const v of message.slashes) {
       ValidatorSlashEvent.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.pagination !== undefined) {
       PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -667,6 +677,18 @@ export const QueryValidatorSlashesResponse = {
     return message;
   },
 
+  toJSON(message: QueryValidatorSlashesResponse): unknown {
+    const obj: any = {};
+    if (message.slashes) {
+      obj.slashes = message.slashes.map((e) => (e ? ValidatorSlashEvent.toJSON(e) : undefined));
+    } else {
+      obj.slashes = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryValidatorSlashesResponse>): QueryValidatorSlashesResponse {
     const message = { ...baseQueryValidatorSlashesResponse } as QueryValidatorSlashesResponse;
     message.slashes = [];
@@ -682,26 +704,18 @@ export const QueryValidatorSlashesResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryValidatorSlashesResponse): unknown {
-    const obj: any = {};
-    if (message.slashes) {
-      obj.slashes = message.slashes.map((e) => (e ? ValidatorSlashEvent.toJSON(e) : undefined));
-    } else {
-      obj.slashes = [];
-    }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
 };
 
 const baseQueryDelegationRewardsRequest: object = { delegatorAddress: "", validatorAddress: "" };
 
 export const QueryDelegationRewardsRequest = {
   encode(message: QueryDelegationRewardsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorAddress !== "") {
+      writer.uint32(18).string(message.validatorAddress);
+    }
     return writer;
   },
 
@@ -741,6 +755,13 @@ export const QueryDelegationRewardsRequest = {
     return message;
   },
 
+  toJSON(message: QueryDelegationRewardsRequest): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegationRewardsRequest>): QueryDelegationRewardsRequest {
     const message = { ...baseQueryDelegationRewardsRequest } as QueryDelegationRewardsRequest;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -754,13 +775,6 @@ export const QueryDelegationRewardsRequest = {
       message.validatorAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: QueryDelegationRewardsRequest): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
   },
 };
 
@@ -804,6 +818,16 @@ export const QueryDelegationRewardsResponse = {
     return message;
   },
 
+  toJSON(message: QueryDelegationRewardsResponse): unknown {
+    const obj: any = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map((e) => (e ? DecCoin.toJSON(e) : undefined));
+    } else {
+      obj.rewards = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegationRewardsResponse>): QueryDelegationRewardsResponse {
     const message = { ...baseQueryDelegationRewardsResponse } as QueryDelegationRewardsResponse;
     message.rewards = [];
@@ -814,23 +838,15 @@ export const QueryDelegationRewardsResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryDelegationRewardsResponse): unknown {
-    const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => (e ? DecCoin.toJSON(e) : undefined));
-    } else {
-      obj.rewards = [];
-    }
-    return obj;
-  },
 };
 
 const baseQueryDelegationTotalRewardsRequest: object = { delegatorAddress: "" };
 
 export const QueryDelegationTotalRewardsRequest = {
   encode(message: QueryDelegationTotalRewardsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
     return writer;
   },
 
@@ -862,6 +878,12 @@ export const QueryDelegationTotalRewardsRequest = {
     return message;
   },
 
+  toJSON(message: QueryDelegationTotalRewardsRequest): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegationTotalRewardsRequest>): QueryDelegationTotalRewardsRequest {
     const message = { ...baseQueryDelegationTotalRewardsRequest } as QueryDelegationTotalRewardsRequest;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -870,12 +892,6 @@ export const QueryDelegationTotalRewardsRequest = {
       message.delegatorAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: QueryDelegationTotalRewardsRequest): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    return obj;
   },
 };
 
@@ -932,6 +948,21 @@ export const QueryDelegationTotalRewardsResponse = {
     return message;
   },
 
+  toJSON(message: QueryDelegationTotalRewardsResponse): unknown {
+    const obj: any = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map((e) => (e ? DelegationDelegatorReward.toJSON(e) : undefined));
+    } else {
+      obj.rewards = [];
+    }
+    if (message.total) {
+      obj.total = message.total.map((e) => (e ? DecCoin.toJSON(e) : undefined));
+    } else {
+      obj.total = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegationTotalRewardsResponse>): QueryDelegationTotalRewardsResponse {
     const message = { ...baseQueryDelegationTotalRewardsResponse } as QueryDelegationTotalRewardsResponse;
     message.rewards = [];
@@ -948,28 +979,15 @@ export const QueryDelegationTotalRewardsResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryDelegationTotalRewardsResponse): unknown {
-    const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => (e ? DelegationDelegatorReward.toJSON(e) : undefined));
-    } else {
-      obj.rewards = [];
-    }
-    if (message.total) {
-      obj.total = message.total.map((e) => (e ? DecCoin.toJSON(e) : undefined));
-    } else {
-      obj.total = [];
-    }
-    return obj;
-  },
 };
 
 const baseQueryDelegatorValidatorsRequest: object = { delegatorAddress: "" };
 
 export const QueryDelegatorValidatorsRequest = {
   encode(message: QueryDelegatorValidatorsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
     return writer;
   },
 
@@ -1001,6 +1019,12 @@ export const QueryDelegatorValidatorsRequest = {
     return message;
   },
 
+  toJSON(message: QueryDelegatorValidatorsRequest): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegatorValidatorsRequest>): QueryDelegatorValidatorsRequest {
     const message = { ...baseQueryDelegatorValidatorsRequest } as QueryDelegatorValidatorsRequest;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1009,12 +1033,6 @@ export const QueryDelegatorValidatorsRequest = {
       message.delegatorAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: QueryDelegatorValidatorsRequest): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    return obj;
   },
 };
 
@@ -1058,6 +1076,16 @@ export const QueryDelegatorValidatorsResponse = {
     return message;
   },
 
+  toJSON(message: QueryDelegatorValidatorsResponse): unknown {
+    const obj: any = {};
+    if (message.validators) {
+      obj.validators = message.validators.map((e) => e);
+    } else {
+      obj.validators = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryDelegatorValidatorsResponse>): QueryDelegatorValidatorsResponse {
     const message = { ...baseQueryDelegatorValidatorsResponse } as QueryDelegatorValidatorsResponse;
     message.validators = [];
@@ -1068,16 +1096,6 @@ export const QueryDelegatorValidatorsResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryDelegatorValidatorsResponse): unknown {
-    const obj: any = {};
-    if (message.validators) {
-      obj.validators = message.validators.map((e) => e);
-    } else {
-      obj.validators = [];
-    }
-    return obj;
-  },
 };
 
 const baseQueryDelegatorWithdrawAddressRequest: object = { delegatorAddress: "" };
@@ -1087,7 +1105,9 @@ export const QueryDelegatorWithdrawAddressRequest = {
     message: QueryDelegatorWithdrawAddressRequest,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
     return writer;
   },
 
@@ -1119,6 +1139,12 @@ export const QueryDelegatorWithdrawAddressRequest = {
     return message;
   },
 
+  toJSON(message: QueryDelegatorWithdrawAddressRequest): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
+
   fromPartial(
     object: DeepPartial<QueryDelegatorWithdrawAddressRequest>,
   ): QueryDelegatorWithdrawAddressRequest {
@@ -1130,12 +1156,6 @@ export const QueryDelegatorWithdrawAddressRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryDelegatorWithdrawAddressRequest): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    return obj;
-  },
 };
 
 const baseQueryDelegatorWithdrawAddressResponse: object = { withdrawAddress: "" };
@@ -1145,7 +1165,9 @@ export const QueryDelegatorWithdrawAddressResponse = {
     message: QueryDelegatorWithdrawAddressResponse,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    writer.uint32(10).string(message.withdrawAddress);
+    if (message.withdrawAddress !== "") {
+      writer.uint32(10).string(message.withdrawAddress);
+    }
     return writer;
   },
 
@@ -1177,6 +1199,12 @@ export const QueryDelegatorWithdrawAddressResponse = {
     return message;
   },
 
+  toJSON(message: QueryDelegatorWithdrawAddressResponse): unknown {
+    const obj: any = {};
+    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    return obj;
+  },
+
   fromPartial(
     object: DeepPartial<QueryDelegatorWithdrawAddressResponse>,
   ): QueryDelegatorWithdrawAddressResponse {
@@ -1187,12 +1215,6 @@ export const QueryDelegatorWithdrawAddressResponse = {
       message.withdrawAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: QueryDelegatorWithdrawAddressResponse): unknown {
-    const obj: any = {};
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
-    return obj;
   },
 };
 
@@ -1223,14 +1245,14 @@ export const QueryCommunityPoolRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryCommunityPoolRequest>): QueryCommunityPoolRequest {
-    const message = { ...baseQueryCommunityPoolRequest } as QueryCommunityPoolRequest;
-    return message;
-  },
-
   toJSON(_: QueryCommunityPoolRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryCommunityPoolRequest>): QueryCommunityPoolRequest {
+    const message = { ...baseQueryCommunityPoolRequest } as QueryCommunityPoolRequest;
+    return message;
   },
 };
 
@@ -1274,6 +1296,16 @@ export const QueryCommunityPoolResponse = {
     return message;
   },
 
+  toJSON(message: QueryCommunityPoolResponse): unknown {
+    const obj: any = {};
+    if (message.pool) {
+      obj.pool = message.pool.map((e) => (e ? DecCoin.toJSON(e) : undefined));
+    } else {
+      obj.pool = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryCommunityPoolResponse>): QueryCommunityPoolResponse {
     const message = { ...baseQueryCommunityPoolResponse } as QueryCommunityPoolResponse;
     message.pool = [];
@@ -1283,16 +1315,6 @@ export const QueryCommunityPoolResponse = {
       }
     }
     return message;
-  },
-
-  toJSON(message: QueryCommunityPoolResponse): unknown {
-    const obj: any = {};
-    if (message.pool) {
-      obj.pool = message.pool.map((e) => (e ? DecCoin.toJSON(e) : undefined));
-    } else {
-      obj.pool = [];
-    }
-    return obj;
   },
 };
 

@@ -29,8 +29,12 @@ const baseMsgSend: object = { fromAddress: "", toAddress: "" };
 
 export const MsgSend = {
   encode(message: MsgSend, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.fromAddress);
-    writer.uint32(18).string(message.toAddress);
+    if (message.fromAddress !== "") {
+      writer.uint32(10).string(message.fromAddress);
+    }
+    if (message.toAddress !== "") {
+      writer.uint32(18).string(message.toAddress);
+    }
     for (const v of message.amount) {
       Coin.encode(v!, writer.uint32(26).fork()).ldelim();
     }
@@ -83,6 +87,18 @@ export const MsgSend = {
     return message;
   },
 
+  toJSON(message: MsgSend): unknown {
+    const obj: any = {};
+    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
+    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
+    if (message.amount) {
+      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgSend>): MsgSend {
     const message = { ...baseMsgSend } as MsgSend;
     message.amount = [];
@@ -102,18 +118,6 @@ export const MsgSend = {
       }
     }
     return message;
-  },
-
-  toJSON(message: MsgSend): unknown {
-    const obj: any = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.amount = [];
-    }
-    return obj;
   },
 };
 
@@ -144,14 +148,14 @@ export const MsgSendResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgSendResponse>): MsgSendResponse {
-    const message = { ...baseMsgSendResponse } as MsgSendResponse;
-    return message;
-  },
-
   toJSON(_: MsgSendResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgSendResponse>): MsgSendResponse {
+    const message = { ...baseMsgSendResponse } as MsgSendResponse;
+    return message;
   },
 };
 
@@ -208,6 +212,21 @@ export const MsgMultiSend = {
     return message;
   },
 
+  toJSON(message: MsgMultiSend): unknown {
+    const obj: any = {};
+    if (message.inputs) {
+      obj.inputs = message.inputs.map((e) => (e ? Input.toJSON(e) : undefined));
+    } else {
+      obj.inputs = [];
+    }
+    if (message.outputs) {
+      obj.outputs = message.outputs.map((e) => (e ? Output.toJSON(e) : undefined));
+    } else {
+      obj.outputs = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgMultiSend>): MsgMultiSend {
     const message = { ...baseMsgMultiSend } as MsgMultiSend;
     message.inputs = [];
@@ -223,21 +242,6 @@ export const MsgMultiSend = {
       }
     }
     return message;
-  },
-
-  toJSON(message: MsgMultiSend): unknown {
-    const obj: any = {};
-    if (message.inputs) {
-      obj.inputs = message.inputs.map((e) => (e ? Input.toJSON(e) : undefined));
-    } else {
-      obj.inputs = [];
-    }
-    if (message.outputs) {
-      obj.outputs = message.outputs.map((e) => (e ? Output.toJSON(e) : undefined));
-    } else {
-      obj.outputs = [];
-    }
-    return obj;
   },
 };
 
@@ -268,14 +272,14 @@ export const MsgMultiSendResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgMultiSendResponse>): MsgMultiSendResponse {
-    const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
-    return message;
-  },
-
   toJSON(_: MsgMultiSendResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgMultiSendResponse>): MsgMultiSendResponse {
+    const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
+    return message;
   },
 };
 

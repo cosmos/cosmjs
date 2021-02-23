@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 
-import { PubKey } from "./codec/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
-import { Any } from "./codec/google/protobuf/any";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
-import { Registry, TxBodyValue } from "./registry";
-import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
+import { Registry } from "./registry";
+import { makeSignBytes, makeSignDoc } from "./signing";
 import { faucet, testVectors } from "./testutils.spec";
 
 describe("signing", () => {
@@ -16,20 +14,14 @@ describe("signing", () => {
 
   const sendAmount = "1234567";
   const sendDenom = "ucosm";
-  const feeAmount = [
-    {
-      amount: "2000",
-      denom: "ucosm",
-    },
-  ];
   const gasLimit = 200000;
 
-  it("correctly parses test vectors", async () => {
+  it("correctly parses signed transactions from test vectors", async () => {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
     const prefixedPubkeyBytes = Uint8Array.from([0x0a, pubkeyBytes.length, ...pubkeyBytes]);
 
-    testVectors.forEach(({ signedTxBytes }) => {
+    testVectors.forEach(({ outputs: { signedTxBytes } }) => {
       const parsedTestTx = Tx.decode(fromHex(signedTxBytes));
       expect(parsedTestTx.signatures.length).toEqual(1);
       expect(parsedTestTx.authInfo!.signerInfos.length).toEqual(1);
@@ -58,59 +50,30 @@ describe("signing", () => {
     });
   });
 
-  it("correctly generates test vectors", async () => {
-    const myRegistry = new Registry();
+  it("correctly generates sign docs and signed transactions from test vectors", async () => {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-    const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-    const publicKey = PubKey.fromPartial({
-      key: pubkeyBytes,
-    });
-    const publicKeyBytes = PubKey.encode(publicKey).finish();
-
-    const txBodyFields: TxBodyValue = {
-      messages: [
-        {
-          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-          value: {
-            fromAddress: address,
-            toAddress: toAddress,
-            amount: [
-              {
-                denom: sendDenom,
-                amount: sendAmount,
-              },
-            ],
-          },
-        },
-      ],
-    };
-    const txBodyBytes = myRegistry.encode({
-      typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: txBodyFields,
-    });
-
-    const publicKeyAny = Any.fromPartial({
-      typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-      value: publicKeyBytes,
-    });
-    const accountNumber = 1;
+    const [{ address }] = await wallet.getAccounts();
 
     await Promise.all(
-      testVectors.map(async ({ sequence, signBytes, signedTxBytes }) => {
-        const authInfoBytes = makeAuthInfoBytes([publicKeyAny], feeAmount, gasLimit, sequence);
-        const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      testVectors.map(async ({ inputs, outputs }) => {
+        const signDoc = makeSignDoc(
+          fromHex(inputs.bodyBytes),
+          fromHex(inputs.authInfoBytes),
+          chainId,
+          inputs.accountNumber,
+        );
         const signDocBytes = makeSignBytes(signDoc);
-        expect(toHex(signDocBytes)).toEqual(signBytes);
+        expect(toHex(signDocBytes)).toEqual(outputs.signBytes);
 
         const { signature } = await wallet.signDirect(address, signDoc);
         const txRaw = TxRaw.fromPartial({
-          bodyBytes: txBodyBytes,
-          authInfoBytes: authInfoBytes,
+          bodyBytes: fromHex(inputs.bodyBytes),
+          authInfoBytes: fromHex(inputs.authInfoBytes),
           signatures: [fromBase64(signature.signature)],
         });
         const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
         const txBytesHex = toHex(txRawBytes);
-        expect(txBytesHex).toEqual(signedTxBytes);
+        expect(txBytesHex).toEqual(outputs.signedTxBytes);
       }),
     );
   });

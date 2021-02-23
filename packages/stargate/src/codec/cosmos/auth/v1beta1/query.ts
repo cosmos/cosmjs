@@ -31,7 +31,9 @@ const baseQueryAccountRequest: object = { address: "" };
 
 export const QueryAccountRequest = {
   encode(message: QueryAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     return writer;
   },
 
@@ -63,6 +65,12 @@ export const QueryAccountRequest = {
     return message;
   },
 
+  toJSON(message: QueryAccountRequest): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryAccountRequest>): QueryAccountRequest {
     const message = { ...baseQueryAccountRequest } as QueryAccountRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -72,19 +80,13 @@ export const QueryAccountRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryAccountRequest): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    return obj;
-  },
 };
 
 const baseQueryAccountResponse: object = {};
 
 export const QueryAccountResponse = {
   encode(message: QueryAccountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.account !== undefined && message.account !== undefined) {
+    if (message.account !== undefined) {
       Any.encode(message.account, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -118,6 +120,13 @@ export const QueryAccountResponse = {
     return message;
   },
 
+  toJSON(message: QueryAccountResponse): unknown {
+    const obj: any = {};
+    message.account !== undefined &&
+      (obj.account = message.account ? Any.toJSON(message.account) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryAccountResponse>): QueryAccountResponse {
     const message = { ...baseQueryAccountResponse } as QueryAccountResponse;
     if (object.account !== undefined && object.account !== null) {
@@ -126,13 +135,6 @@ export const QueryAccountResponse = {
       message.account = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryAccountResponse): unknown {
-    const obj: any = {};
-    message.account !== undefined &&
-      (obj.account = message.account ? Any.toJSON(message.account) : undefined);
-    return obj;
   },
 };
 
@@ -163,14 +165,14 @@ export const QueryParamsRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
-    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
-    return message;
-  },
-
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    return message;
   },
 };
 
@@ -178,7 +180,7 @@ const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
   encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.params !== undefined && message.params !== undefined) {
+    if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -212,6 +214,12 @@ export const QueryParamsResponse = {
     return message;
   },
 
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
@@ -220,12 +228,6 @@ export const QueryParamsResponse = {
       message.params = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryParamsResponse): unknown {
-    const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
   },
 };
 

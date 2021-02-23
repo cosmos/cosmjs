@@ -56,8 +56,12 @@ const baseMsgSetWithdrawAddress: object = { delegatorAddress: "", withdrawAddres
 
 export const MsgSetWithdrawAddress = {
   encode(message: MsgSetWithdrawAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.withdrawAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.withdrawAddress !== "") {
+      writer.uint32(18).string(message.withdrawAddress);
+    }
     return writer;
   },
 
@@ -97,6 +101,13 @@ export const MsgSetWithdrawAddress = {
     return message;
   },
 
+  toJSON(message: MsgSetWithdrawAddress): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgSetWithdrawAddress>): MsgSetWithdrawAddress {
     const message = { ...baseMsgSetWithdrawAddress } as MsgSetWithdrawAddress;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -110,13 +121,6 @@ export const MsgSetWithdrawAddress = {
       message.withdrawAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: MsgSetWithdrawAddress): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
-    return obj;
   },
 };
 
@@ -147,14 +151,14 @@ export const MsgSetWithdrawAddressResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgSetWithdrawAddressResponse>): MsgSetWithdrawAddressResponse {
-    const message = { ...baseMsgSetWithdrawAddressResponse } as MsgSetWithdrawAddressResponse;
-    return message;
-  },
-
   toJSON(_: MsgSetWithdrawAddressResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgSetWithdrawAddressResponse>): MsgSetWithdrawAddressResponse {
+    const message = { ...baseMsgSetWithdrawAddressResponse } as MsgSetWithdrawAddressResponse;
+    return message;
   },
 };
 
@@ -162,8 +166,12 @@ const baseMsgWithdrawDelegatorReward: object = { delegatorAddress: "", validator
 
 export const MsgWithdrawDelegatorReward = {
   encode(message: MsgWithdrawDelegatorReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.delegatorAddress);
-    writer.uint32(18).string(message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.validatorAddress !== "") {
+      writer.uint32(18).string(message.validatorAddress);
+    }
     return writer;
   },
 
@@ -203,6 +211,13 @@ export const MsgWithdrawDelegatorReward = {
     return message;
   },
 
+  toJSON(message: MsgWithdrawDelegatorReward): unknown {
+    const obj: any = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgWithdrawDelegatorReward>): MsgWithdrawDelegatorReward {
     const message = { ...baseMsgWithdrawDelegatorReward } as MsgWithdrawDelegatorReward;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -216,13 +231,6 @@ export const MsgWithdrawDelegatorReward = {
       message.validatorAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: MsgWithdrawDelegatorReward): unknown {
-    const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
   },
 };
 
@@ -253,14 +261,14 @@ export const MsgWithdrawDelegatorRewardResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgWithdrawDelegatorRewardResponse>): MsgWithdrawDelegatorRewardResponse {
-    const message = { ...baseMsgWithdrawDelegatorRewardResponse } as MsgWithdrawDelegatorRewardResponse;
-    return message;
-  },
-
   toJSON(_: MsgWithdrawDelegatorRewardResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgWithdrawDelegatorRewardResponse>): MsgWithdrawDelegatorRewardResponse {
+    const message = { ...baseMsgWithdrawDelegatorRewardResponse } as MsgWithdrawDelegatorRewardResponse;
+    return message;
   },
 };
 
@@ -268,7 +276,9 @@ const baseMsgWithdrawValidatorCommission: object = { validatorAddress: "" };
 
 export const MsgWithdrawValidatorCommission = {
   encode(message: MsgWithdrawValidatorCommission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      writer.uint32(10).string(message.validatorAddress);
+    }
     return writer;
   },
 
@@ -300,6 +310,12 @@ export const MsgWithdrawValidatorCommission = {
     return message;
   },
 
+  toJSON(message: MsgWithdrawValidatorCommission): unknown {
+    const obj: any = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgWithdrawValidatorCommission>): MsgWithdrawValidatorCommission {
     const message = { ...baseMsgWithdrawValidatorCommission } as MsgWithdrawValidatorCommission;
     if (object.validatorAddress !== undefined && object.validatorAddress !== null) {
@@ -308,12 +324,6 @@ export const MsgWithdrawValidatorCommission = {
       message.validatorAddress = "";
     }
     return message;
-  },
-
-  toJSON(message: MsgWithdrawValidatorCommission): unknown {
-    const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
   },
 };
 
@@ -348,6 +358,11 @@ export const MsgWithdrawValidatorCommissionResponse = {
     return message;
   },
 
+  toJSON(_: MsgWithdrawValidatorCommissionResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
   fromPartial(
     _: DeepPartial<MsgWithdrawValidatorCommissionResponse>,
   ): MsgWithdrawValidatorCommissionResponse {
@@ -355,11 +370,6 @@ export const MsgWithdrawValidatorCommissionResponse = {
       ...baseMsgWithdrawValidatorCommissionResponse,
     } as MsgWithdrawValidatorCommissionResponse;
     return message;
-  },
-
-  toJSON(_: MsgWithdrawValidatorCommissionResponse): unknown {
-    const obj: any = {};
-    return obj;
   },
 };
 
@@ -370,7 +380,9 @@ export const MsgFundCommunityPool = {
     for (const v of message.amount) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    writer.uint32(18).string(message.depositor);
+    if (message.depositor !== "") {
+      writer.uint32(18).string(message.depositor);
+    }
     return writer;
   },
 
@@ -412,6 +424,17 @@ export const MsgFundCommunityPool = {
     return message;
   },
 
+  toJSON(message: MsgFundCommunityPool): unknown {
+    const obj: any = {};
+    if (message.amount) {
+      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.amount = [];
+    }
+    message.depositor !== undefined && (obj.depositor = message.depositor);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MsgFundCommunityPool>): MsgFundCommunityPool {
     const message = { ...baseMsgFundCommunityPool } as MsgFundCommunityPool;
     message.amount = [];
@@ -426,17 +449,6 @@ export const MsgFundCommunityPool = {
       message.depositor = "";
     }
     return message;
-  },
-
-  toJSON(message: MsgFundCommunityPool): unknown {
-    const obj: any = {};
-    if (message.amount) {
-      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.amount = [];
-    }
-    message.depositor !== undefined && (obj.depositor = message.depositor);
-    return obj;
   },
 };
 
@@ -467,14 +479,14 @@ export const MsgFundCommunityPoolResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgFundCommunityPoolResponse>): MsgFundCommunityPoolResponse {
-    const message = { ...baseMsgFundCommunityPoolResponse } as MsgFundCommunityPoolResponse;
-    return message;
-  },
-
   toJSON(_: MsgFundCommunityPoolResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgFundCommunityPoolResponse>): MsgFundCommunityPoolResponse {
+    const message = { ...baseMsgFundCommunityPoolResponse } as MsgFundCommunityPoolResponse;
+    return message;
   },
 };
 

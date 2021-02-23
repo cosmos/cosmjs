@@ -79,8 +79,10 @@ const baseIdentifiedClientState: object = { clientId: "" };
 
 export const IdentifiedClientState = {
   encode(message: IdentifiedClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.clientId);
-    if (message.clientState !== undefined && message.clientState !== undefined) {
+    if (message.clientId !== "") {
+      writer.uint32(10).string(message.clientId);
+    }
+    if (message.clientState !== undefined) {
       Any.encode(message.clientState, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -122,6 +124,14 @@ export const IdentifiedClientState = {
     return message;
   },
 
+  toJSON(message: IdentifiedClientState): unknown {
+    const obj: any = {};
+    message.clientId !== undefined && (obj.clientId = message.clientId);
+    message.clientState !== undefined &&
+      (obj.clientState = message.clientState ? Any.toJSON(message.clientState) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<IdentifiedClientState>): IdentifiedClientState {
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
     if (object.clientId !== undefined && object.clientId !== null) {
@@ -136,24 +146,16 @@ export const IdentifiedClientState = {
     }
     return message;
   },
-
-  toJSON(message: IdentifiedClientState): unknown {
-    const obj: any = {};
-    message.clientId !== undefined && (obj.clientId = message.clientId);
-    message.clientState !== undefined &&
-      (obj.clientState = message.clientState ? Any.toJSON(message.clientState) : undefined);
-    return obj;
-  },
 };
 
 const baseConsensusStateWithHeight: object = {};
 
 export const ConsensusStateWithHeight = {
   encode(message: ConsensusStateWithHeight, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.height !== undefined && message.height !== undefined) {
+    if (message.height !== undefined) {
       Height.encode(message.height, writer.uint32(10).fork()).ldelim();
     }
-    if (message.consensusState !== undefined && message.consensusState !== undefined) {
+    if (message.consensusState !== undefined) {
       Any.encode(message.consensusState, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -195,6 +197,14 @@ export const ConsensusStateWithHeight = {
     return message;
   },
 
+  toJSON(message: ConsensusStateWithHeight): unknown {
+    const obj: any = {};
+    message.height !== undefined && (obj.height = message.height ? Height.toJSON(message.height) : undefined);
+    message.consensusState !== undefined &&
+      (obj.consensusState = message.consensusState ? Any.toJSON(message.consensusState) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<ConsensusStateWithHeight>): ConsensusStateWithHeight {
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
     if (object.height !== undefined && object.height !== null) {
@@ -209,21 +219,15 @@ export const ConsensusStateWithHeight = {
     }
     return message;
   },
-
-  toJSON(message: ConsensusStateWithHeight): unknown {
-    const obj: any = {};
-    message.height !== undefined && (obj.height = message.height ? Height.toJSON(message.height) : undefined);
-    message.consensusState !== undefined &&
-      (obj.consensusState = message.consensusState ? Any.toJSON(message.consensusState) : undefined);
-    return obj;
-  },
 };
 
 const baseClientConsensusStates: object = { clientId: "" };
 
 export const ClientConsensusStates = {
   encode(message: ClientConsensusStates, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.clientId);
+    if (message.clientId !== "") {
+      writer.uint32(10).string(message.clientId);
+    }
     for (const v of message.consensusStates) {
       ConsensusStateWithHeight.encode(v!, writer.uint32(18).fork()).ldelim();
     }
@@ -268,6 +272,19 @@ export const ClientConsensusStates = {
     return message;
   },
 
+  toJSON(message: ClientConsensusStates): unknown {
+    const obj: any = {};
+    message.clientId !== undefined && (obj.clientId = message.clientId);
+    if (message.consensusStates) {
+      obj.consensusStates = message.consensusStates.map((e) =>
+        e ? ConsensusStateWithHeight.toJSON(e) : undefined,
+      );
+    } else {
+      obj.consensusStates = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<ClientConsensusStates>): ClientConsensusStates {
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
     message.consensusStates = [];
@@ -283,29 +300,22 @@ export const ClientConsensusStates = {
     }
     return message;
   },
-
-  toJSON(message: ClientConsensusStates): unknown {
-    const obj: any = {};
-    message.clientId !== undefined && (obj.clientId = message.clientId);
-    if (message.consensusStates) {
-      obj.consensusStates = message.consensusStates.map((e) =>
-        e ? ConsensusStateWithHeight.toJSON(e) : undefined,
-      );
-    } else {
-      obj.consensusStates = [];
-    }
-    return obj;
-  },
 };
 
 const baseClientUpdateProposal: object = { title: "", description: "", clientId: "" };
 
 export const ClientUpdateProposal = {
   encode(message: ClientUpdateProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.title);
-    writer.uint32(18).string(message.description);
-    writer.uint32(26).string(message.clientId);
-    if (message.header !== undefined && message.header !== undefined) {
+    if (message.title !== "") {
+      writer.uint32(10).string(message.title);
+    }
+    if (message.description !== "") {
+      writer.uint32(18).string(message.description);
+    }
+    if (message.clientId !== "") {
+      writer.uint32(26).string(message.clientId);
+    }
+    if (message.header !== undefined) {
       Any.encode(message.header, writer.uint32(34).fork()).ldelim();
     }
     return writer;
@@ -363,6 +373,15 @@ export const ClientUpdateProposal = {
     return message;
   },
 
+  toJSON(message: ClientUpdateProposal): unknown {
+    const obj: any = {};
+    message.title !== undefined && (obj.title = message.title);
+    message.description !== undefined && (obj.description = message.description);
+    message.clientId !== undefined && (obj.clientId = message.clientId);
+    message.header !== undefined && (obj.header = message.header ? Any.toJSON(message.header) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<ClientUpdateProposal>): ClientUpdateProposal {
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
     if (object.title !== undefined && object.title !== null) {
@@ -387,23 +406,18 @@ export const ClientUpdateProposal = {
     }
     return message;
   },
-
-  toJSON(message: ClientUpdateProposal): unknown {
-    const obj: any = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    message.clientId !== undefined && (obj.clientId = message.clientId);
-    message.header !== undefined && (obj.header = message.header ? Any.toJSON(message.header) : undefined);
-    return obj;
-  },
 };
 
 const baseHeight: object = { revisionNumber: Long.UZERO, revisionHeight: Long.UZERO };
 
 export const Height = {
   encode(message: Height, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.revisionNumber);
-    writer.uint32(16).uint64(message.revisionHeight);
+    if (!message.revisionNumber.isZero()) {
+      writer.uint32(8).uint64(message.revisionNumber);
+    }
+    if (!message.revisionHeight.isZero()) {
+      writer.uint32(16).uint64(message.revisionHeight);
+    }
     return writer;
   },
 
@@ -443,6 +457,15 @@ export const Height = {
     return message;
   },
 
+  toJSON(message: Height): unknown {
+    const obj: any = {};
+    message.revisionNumber !== undefined &&
+      (obj.revisionNumber = (message.revisionNumber || Long.UZERO).toString());
+    message.revisionHeight !== undefined &&
+      (obj.revisionHeight = (message.revisionHeight || Long.UZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Height>): Height {
     const message = { ...baseHeight } as Height;
     if (object.revisionNumber !== undefined && object.revisionNumber !== null) {
@@ -456,15 +479,6 @@ export const Height = {
       message.revisionHeight = Long.UZERO;
     }
     return message;
-  },
-
-  toJSON(message: Height): unknown {
-    const obj: any = {};
-    message.revisionNumber !== undefined &&
-      (obj.revisionNumber = (message.revisionNumber || Long.UZERO).toString());
-    message.revisionHeight !== undefined &&
-      (obj.revisionHeight = (message.revisionHeight || Long.UZERO).toString());
-    return obj;
   },
 };
 
@@ -508,6 +522,16 @@ export const Params = {
     return message;
   },
 
+  toJSON(message: Params): unknown {
+    const obj: any = {};
+    if (message.allowedClients) {
+      obj.allowedClients = message.allowedClients.map((e) => e);
+    } else {
+      obj.allowedClients = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     message.allowedClients = [];
@@ -517,16 +541,6 @@ export const Params = {
       }
     }
     return message;
-  },
-
-  toJSON(message: Params): unknown {
-    const obj: any = {};
-    if (message.allowedClients) {
-      obj.allowedClients = message.allowedClients.map((e) => e);
-    } else {
-      obj.allowedClients = [];
-    }
-    return obj;
   },
 };
 

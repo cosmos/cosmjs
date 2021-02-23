@@ -24,7 +24,9 @@ const basePubKey: object = {};
 
 export const PubKey = {
   encode(message: PubKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     return writer;
   },
 
@@ -54,6 +56,13 @@ export const PubKey = {
     return message;
   },
 
+  toJSON(message: PubKey): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<PubKey>): PubKey {
     const message = { ...basePubKey } as PubKey;
     if (object.key !== undefined && object.key !== null) {
@@ -63,20 +72,15 @@ export const PubKey = {
     }
     return message;
   },
-
-  toJSON(message: PubKey): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    return obj;
-  },
 };
 
 const basePrivKey: object = {};
 
 export const PrivKey = {
   encode(message: PrivKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).bytes(message.key);
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
     return writer;
   },
 
@@ -106,6 +110,13 @@ export const PrivKey = {
     return message;
   },
 
+  toJSON(message: PrivKey): unknown {
+    const obj: any = {};
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<PrivKey>): PrivKey {
     const message = { ...basePrivKey } as PrivKey;
     if (object.key !== undefined && object.key !== null) {
@@ -114,13 +125,6 @@ export const PrivKey = {
       message.key = new Uint8Array();
     }
     return message;
-  },
-
-  toJSON(message: PrivKey): unknown {
-    const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    return obj;
   },
 };
 
@@ -131,7 +135,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

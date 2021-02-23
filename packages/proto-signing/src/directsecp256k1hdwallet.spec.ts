@@ -59,7 +59,7 @@ describe("DirectSecp256k1HdWallet", () => {
 
   describe("signDirect", () => {
     it("resolves to valid signature", async () => {
-      const { sequence, bodyBytes } = testVectors[1];
+      const { accountNumber, sequence, bodyBytes } = testVectors[1].inputs;
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const pubkey = {
         typeUrl: "/cosmos.crypto.secp256k1.PubKey",
@@ -68,7 +68,6 @@ describe("DirectSecp256k1HdWallet", () => {
       const fee = coins(2000, "ucosm");
       const gasLimit = 200000;
       const chainId = "simd-testing";
-      const accountNumber = 1;
       const signDoc = makeSignDoc(
         fromHex(bodyBytes),
         makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),

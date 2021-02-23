@@ -79,8 +79,12 @@ const baseQueryBalanceRequest: object = { address: "", denom: "" };
 
 export const QueryBalanceRequest = {
   encode(message: QueryBalanceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
-    writer.uint32(18).string(message.denom);
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
     return writer;
   },
 
@@ -120,6 +124,13 @@ export const QueryBalanceRequest = {
     return message;
   },
 
+  toJSON(message: QueryBalanceRequest): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryBalanceRequest>): QueryBalanceRequest {
     const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -134,20 +145,13 @@ export const QueryBalanceRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryBalanceRequest): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.denom !== undefined && (obj.denom = message.denom);
-    return obj;
-  },
 };
 
 const baseQueryBalanceResponse: object = {};
 
 export const QueryBalanceResponse = {
   encode(message: QueryBalanceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.balance !== undefined && message.balance !== undefined) {
+    if (message.balance !== undefined) {
       Coin.encode(message.balance, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -181,6 +185,13 @@ export const QueryBalanceResponse = {
     return message;
   },
 
+  toJSON(message: QueryBalanceResponse): unknown {
+    const obj: any = {};
+    message.balance !== undefined &&
+      (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryBalanceResponse>): QueryBalanceResponse {
     const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
     if (object.balance !== undefined && object.balance !== null) {
@@ -190,21 +201,16 @@ export const QueryBalanceResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryBalanceResponse): unknown {
-    const obj: any = {};
-    message.balance !== undefined &&
-      (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
-    return obj;
-  },
 };
 
 const baseQueryAllBalancesRequest: object = { address: "" };
 
 export const QueryAllBalancesRequest = {
   encode(message: QueryAllBalancesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.address);
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
+    if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -246,6 +252,14 @@ export const QueryAllBalancesRequest = {
     return message;
   },
 
+  toJSON(message: QueryAllBalancesRequest): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryAllBalancesRequest>): QueryAllBalancesRequest {
     const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -260,14 +274,6 @@ export const QueryAllBalancesRequest = {
     }
     return message;
   },
-
-  toJSON(message: QueryAllBalancesRequest): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
-  },
 };
 
 const baseQueryAllBalancesResponse: object = {};
@@ -277,7 +283,7 @@ export const QueryAllBalancesResponse = {
     for (const v of message.balances) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.pagination !== undefined) {
       PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -321,6 +327,18 @@ export const QueryAllBalancesResponse = {
     return message;
   },
 
+  toJSON(message: QueryAllBalancesResponse): unknown {
+    const obj: any = {};
+    if (message.balances) {
+      obj.balances = message.balances.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.balances = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryAllBalancesResponse>): QueryAllBalancesResponse {
     const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
     message.balances = [];
@@ -335,18 +353,6 @@ export const QueryAllBalancesResponse = {
       message.pagination = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryAllBalancesResponse): unknown {
-    const obj: any = {};
-    if (message.balances) {
-      obj.balances = message.balances.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.balances = [];
-    }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
 };
 
@@ -377,14 +383,14 @@ export const QueryTotalSupplyRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryTotalSupplyRequest>): QueryTotalSupplyRequest {
-    const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
-    return message;
-  },
-
   toJSON(_: QueryTotalSupplyRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryTotalSupplyRequest>): QueryTotalSupplyRequest {
+    const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
+    return message;
   },
 };
 
@@ -428,6 +434,16 @@ export const QueryTotalSupplyResponse = {
     return message;
   },
 
+  toJSON(message: QueryTotalSupplyResponse): unknown {
+    const obj: any = {};
+    if (message.supply) {
+      obj.supply = message.supply.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.supply = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryTotalSupplyResponse>): QueryTotalSupplyResponse {
     const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
     message.supply = [];
@@ -438,23 +454,15 @@ export const QueryTotalSupplyResponse = {
     }
     return message;
   },
-
-  toJSON(message: QueryTotalSupplyResponse): unknown {
-    const obj: any = {};
-    if (message.supply) {
-      obj.supply = message.supply.map((e) => (e ? Coin.toJSON(e) : undefined));
-    } else {
-      obj.supply = [];
-    }
-    return obj;
-  },
 };
 
 const baseQuerySupplyOfRequest: object = { denom: "" };
 
 export const QuerySupplyOfRequest = {
   encode(message: QuerySupplyOfRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).string(message.denom);
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
     return writer;
   },
 
@@ -486,6 +494,12 @@ export const QuerySupplyOfRequest = {
     return message;
   },
 
+  toJSON(message: QuerySupplyOfRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QuerySupplyOfRequest>): QuerySupplyOfRequest {
     const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
     if (object.denom !== undefined && object.denom !== null) {
@@ -495,19 +509,13 @@ export const QuerySupplyOfRequest = {
     }
     return message;
   },
-
-  toJSON(message: QuerySupplyOfRequest): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    return obj;
-  },
 };
 
 const baseQuerySupplyOfResponse: object = {};
 
 export const QuerySupplyOfResponse = {
   encode(message: QuerySupplyOfResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.amount !== undefined && message.amount !== undefined) {
+    if (message.amount !== undefined) {
       Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -541,6 +549,12 @@ export const QuerySupplyOfResponse = {
     return message;
   },
 
+  toJSON(message: QuerySupplyOfResponse): unknown {
+    const obj: any = {};
+    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QuerySupplyOfResponse>): QuerySupplyOfResponse {
     const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
     if (object.amount !== undefined && object.amount !== null) {
@@ -549,12 +563,6 @@ export const QuerySupplyOfResponse = {
       message.amount = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QuerySupplyOfResponse): unknown {
-    const obj: any = {};
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    return obj;
   },
 };
 
@@ -585,14 +593,14 @@ export const QueryParamsRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
-    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
-    return message;
-  },
-
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    return message;
   },
 };
 
@@ -600,7 +608,7 @@ const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
   encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.params !== undefined && message.params !== undefined) {
+    if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -634,6 +642,12 @@ export const QueryParamsResponse = {
     return message;
   },
 
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
@@ -642,12 +656,6 @@ export const QueryParamsResponse = {
       message.params = undefined;
     }
     return message;
-  },
-
-  toJSON(message: QueryParamsResponse): unknown {
-    const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
   },
 };
 

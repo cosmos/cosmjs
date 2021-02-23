@@ -89,16 +89,16 @@ const baseConsensusParams: object = {};
 
 export const ConsensusParams = {
   encode(message: ConsensusParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.block !== undefined && message.block !== undefined) {
+    if (message.block !== undefined) {
       BlockParams.encode(message.block, writer.uint32(10).fork()).ldelim();
     }
-    if (message.evidence !== undefined && message.evidence !== undefined) {
+    if (message.evidence !== undefined) {
       EvidenceParams.encode(message.evidence, writer.uint32(18).fork()).ldelim();
     }
-    if (message.validator !== undefined && message.validator !== undefined) {
+    if (message.validator !== undefined) {
       ValidatorParams.encode(message.validator, writer.uint32(26).fork()).ldelim();
     }
-    if (message.version !== undefined && message.version !== undefined) {
+    if (message.version !== undefined) {
       VersionParams.encode(message.version, writer.uint32(34).fork()).ldelim();
     }
     return writer;
@@ -156,6 +156,19 @@ export const ConsensusParams = {
     return message;
   },
 
+  toJSON(message: ConsensusParams): unknown {
+    const obj: any = {};
+    message.block !== undefined &&
+      (obj.block = message.block ? BlockParams.toJSON(message.block) : undefined);
+    message.evidence !== undefined &&
+      (obj.evidence = message.evidence ? EvidenceParams.toJSON(message.evidence) : undefined);
+    message.validator !== undefined &&
+      (obj.validator = message.validator ? ValidatorParams.toJSON(message.validator) : undefined);
+    message.version !== undefined &&
+      (obj.version = message.version ? VersionParams.toJSON(message.version) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<ConsensusParams>): ConsensusParams {
     const message = { ...baseConsensusParams } as ConsensusParams;
     if (object.block !== undefined && object.block !== null) {
@@ -180,28 +193,21 @@ export const ConsensusParams = {
     }
     return message;
   },
-
-  toJSON(message: ConsensusParams): unknown {
-    const obj: any = {};
-    message.block !== undefined &&
-      (obj.block = message.block ? BlockParams.toJSON(message.block) : undefined);
-    message.evidence !== undefined &&
-      (obj.evidence = message.evidence ? EvidenceParams.toJSON(message.evidence) : undefined);
-    message.validator !== undefined &&
-      (obj.validator = message.validator ? ValidatorParams.toJSON(message.validator) : undefined);
-    message.version !== undefined &&
-      (obj.version = message.version ? VersionParams.toJSON(message.version) : undefined);
-    return obj;
-  },
 };
 
 const baseBlockParams: object = { maxBytes: Long.ZERO, maxGas: Long.ZERO, timeIotaMs: Long.ZERO };
 
 export const BlockParams = {
   encode(message: BlockParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.maxBytes);
-    writer.uint32(16).int64(message.maxGas);
-    writer.uint32(24).int64(message.timeIotaMs);
+    if (!message.maxBytes.isZero()) {
+      writer.uint32(8).int64(message.maxBytes);
+    }
+    if (!message.maxGas.isZero()) {
+      writer.uint32(16).int64(message.maxGas);
+    }
+    if (!message.timeIotaMs.isZero()) {
+      writer.uint32(24).int64(message.timeIotaMs);
+    }
     return writer;
   },
 
@@ -249,6 +255,14 @@ export const BlockParams = {
     return message;
   },
 
+  toJSON(message: BlockParams): unknown {
+    const obj: any = {};
+    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || Long.ZERO).toString());
+    message.maxGas !== undefined && (obj.maxGas = (message.maxGas || Long.ZERO).toString());
+    message.timeIotaMs !== undefined && (obj.timeIotaMs = (message.timeIotaMs || Long.ZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<BlockParams>): BlockParams {
     const message = { ...baseBlockParams } as BlockParams;
     if (object.maxBytes !== undefined && object.maxBytes !== null) {
@@ -268,25 +282,21 @@ export const BlockParams = {
     }
     return message;
   },
-
-  toJSON(message: BlockParams): unknown {
-    const obj: any = {};
-    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || Long.ZERO).toString());
-    message.maxGas !== undefined && (obj.maxGas = (message.maxGas || Long.ZERO).toString());
-    message.timeIotaMs !== undefined && (obj.timeIotaMs = (message.timeIotaMs || Long.ZERO).toString());
-    return obj;
-  },
 };
 
 const baseEvidenceParams: object = { maxAgeNumBlocks: Long.ZERO, maxBytes: Long.ZERO };
 
 export const EvidenceParams = {
   encode(message: EvidenceParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.maxAgeNumBlocks);
-    if (message.maxAgeDuration !== undefined && message.maxAgeDuration !== undefined) {
+    if (!message.maxAgeNumBlocks.isZero()) {
+      writer.uint32(8).int64(message.maxAgeNumBlocks);
+    }
+    if (message.maxAgeDuration !== undefined) {
       Duration.encode(message.maxAgeDuration, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).int64(message.maxBytes);
+    if (!message.maxBytes.isZero()) {
+      writer.uint32(24).int64(message.maxBytes);
+    }
     return writer;
   },
 
@@ -334,6 +344,16 @@ export const EvidenceParams = {
     return message;
   },
 
+  toJSON(message: EvidenceParams): unknown {
+    const obj: any = {};
+    message.maxAgeNumBlocks !== undefined &&
+      (obj.maxAgeNumBlocks = (message.maxAgeNumBlocks || Long.ZERO).toString());
+    message.maxAgeDuration !== undefined &&
+      (obj.maxAgeDuration = message.maxAgeDuration ? Duration.toJSON(message.maxAgeDuration) : undefined);
+    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || Long.ZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<EvidenceParams>): EvidenceParams {
     const message = { ...baseEvidenceParams } as EvidenceParams;
     if (object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null) {
@@ -352,16 +372,6 @@ export const EvidenceParams = {
       message.maxBytes = Long.ZERO;
     }
     return message;
-  },
-
-  toJSON(message: EvidenceParams): unknown {
-    const obj: any = {};
-    message.maxAgeNumBlocks !== undefined &&
-      (obj.maxAgeNumBlocks = (message.maxAgeNumBlocks || Long.ZERO).toString());
-    message.maxAgeDuration !== undefined &&
-      (obj.maxAgeDuration = message.maxAgeDuration ? Duration.toJSON(message.maxAgeDuration) : undefined);
-    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || Long.ZERO).toString());
-    return obj;
   },
 };
 
@@ -405,6 +415,16 @@ export const ValidatorParams = {
     return message;
   },
 
+  toJSON(message: ValidatorParams): unknown {
+    const obj: any = {};
+    if (message.pubKeyTypes) {
+      obj.pubKeyTypes = message.pubKeyTypes.map((e) => e);
+    } else {
+      obj.pubKeyTypes = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<ValidatorParams>): ValidatorParams {
     const message = { ...baseValidatorParams } as ValidatorParams;
     message.pubKeyTypes = [];
@@ -415,23 +435,15 @@ export const ValidatorParams = {
     }
     return message;
   },
-
-  toJSON(message: ValidatorParams): unknown {
-    const obj: any = {};
-    if (message.pubKeyTypes) {
-      obj.pubKeyTypes = message.pubKeyTypes.map((e) => e);
-    } else {
-      obj.pubKeyTypes = [];
-    }
-    return obj;
-  },
 };
 
 const baseVersionParams: object = { appVersion: Long.UZERO };
 
 export const VersionParams = {
   encode(message: VersionParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.appVersion);
+    if (!message.appVersion.isZero()) {
+      writer.uint32(8).uint64(message.appVersion);
+    }
     return writer;
   },
 
@@ -463,6 +475,12 @@ export const VersionParams = {
     return message;
   },
 
+  toJSON(message: VersionParams): unknown {
+    const obj: any = {};
+    message.appVersion !== undefined && (obj.appVersion = (message.appVersion || Long.UZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<VersionParams>): VersionParams {
     const message = { ...baseVersionParams } as VersionParams;
     if (object.appVersion !== undefined && object.appVersion !== null) {
@@ -472,20 +490,18 @@ export const VersionParams = {
     }
     return message;
   },
-
-  toJSON(message: VersionParams): unknown {
-    const obj: any = {};
-    message.appVersion !== undefined && (obj.appVersion = (message.appVersion || Long.UZERO).toString());
-    return obj;
-  },
 };
 
 const baseHashedParams: object = { blockMaxBytes: Long.ZERO, blockMaxGas: Long.ZERO };
 
 export const HashedParams = {
   encode(message: HashedParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int64(message.blockMaxBytes);
-    writer.uint32(16).int64(message.blockMaxGas);
+    if (!message.blockMaxBytes.isZero()) {
+      writer.uint32(8).int64(message.blockMaxBytes);
+    }
+    if (!message.blockMaxGas.isZero()) {
+      writer.uint32(16).int64(message.blockMaxGas);
+    }
     return writer;
   },
 
@@ -525,6 +541,14 @@ export const HashedParams = {
     return message;
   },
 
+  toJSON(message: HashedParams): unknown {
+    const obj: any = {};
+    message.blockMaxBytes !== undefined &&
+      (obj.blockMaxBytes = (message.blockMaxBytes || Long.ZERO).toString());
+    message.blockMaxGas !== undefined && (obj.blockMaxGas = (message.blockMaxGas || Long.ZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<HashedParams>): HashedParams {
     const message = { ...baseHashedParams } as HashedParams;
     if (object.blockMaxBytes !== undefined && object.blockMaxBytes !== null) {
@@ -538,14 +562,6 @@ export const HashedParams = {
       message.blockMaxGas = Long.ZERO;
     }
     return message;
-  },
-
-  toJSON(message: HashedParams): unknown {
-    const obj: any = {};
-    message.blockMaxBytes !== undefined &&
-      (obj.blockMaxBytes = (message.blockMaxBytes || Long.ZERO).toString());
-    message.blockMaxGas !== undefined && (obj.blockMaxGas = (message.blockMaxGas || Long.ZERO).toString());
-    return obj;
   },
 };
 

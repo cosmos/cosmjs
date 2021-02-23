@@ -156,6 +156,16 @@ export const SignatureDescriptors = {
     return message;
   },
 
+  toJSON(message: SignatureDescriptors): unknown {
+    const obj: any = {};
+    if (message.signatures) {
+      obj.signatures = message.signatures.map((e) => (e ? SignatureDescriptor.toJSON(e) : undefined));
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SignatureDescriptors>): SignatureDescriptors {
     const message = { ...baseSignatureDescriptors } as SignatureDescriptors;
     message.signatures = [];
@@ -166,29 +176,21 @@ export const SignatureDescriptors = {
     }
     return message;
   },
-
-  toJSON(message: SignatureDescriptors): unknown {
-    const obj: any = {};
-    if (message.signatures) {
-      obj.signatures = message.signatures.map((e) => (e ? SignatureDescriptor.toJSON(e) : undefined));
-    } else {
-      obj.signatures = [];
-    }
-    return obj;
-  },
 };
 
 const baseSignatureDescriptor: object = { sequence: Long.UZERO };
 
 export const SignatureDescriptor = {
   encode(message: SignatureDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.publicKey !== undefined && message.publicKey !== undefined) {
+    if (message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
-    if (message.data !== undefined && message.data !== undefined) {
+    if (message.data !== undefined) {
       SignatureDescriptor_Data.encode(message.data, writer.uint32(18).fork()).ldelim();
     }
-    writer.uint32(24).uint64(message.sequence);
+    if (!message.sequence.isZero()) {
+      writer.uint32(24).uint64(message.sequence);
+    }
     return writer;
   },
 
@@ -236,6 +238,16 @@ export const SignatureDescriptor = {
     return message;
   },
 
+  toJSON(message: SignatureDescriptor): unknown {
+    const obj: any = {};
+    message.publicKey !== undefined &&
+      (obj.publicKey = message.publicKey ? Any.toJSON(message.publicKey) : undefined);
+    message.data !== undefined &&
+      (obj.data = message.data ? SignatureDescriptor_Data.toJSON(message.data) : undefined);
+    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SignatureDescriptor>): SignatureDescriptor {
     const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
     if (object.publicKey !== undefined && object.publicKey !== null) {
@@ -254,16 +266,6 @@ export const SignatureDescriptor = {
       message.sequence = Long.UZERO;
     }
     return message;
-  },
-
-  toJSON(message: SignatureDescriptor): unknown {
-    const obj: any = {};
-    message.publicKey !== undefined &&
-      (obj.publicKey = message.publicKey ? Any.toJSON(message.publicKey) : undefined);
-    message.data !== undefined &&
-      (obj.data = message.data ? SignatureDescriptor_Data.toJSON(message.data) : undefined);
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
-    return obj;
   },
 };
 
@@ -316,6 +318,15 @@ export const SignatureDescriptor_Data = {
     return message;
   },
 
+  toJSON(message: SignatureDescriptor_Data): unknown {
+    const obj: any = {};
+    message.single !== undefined &&
+      (obj.single = message.single ? SignatureDescriptor_Data_Single.toJSON(message.single) : undefined);
+    message.multi !== undefined &&
+      (obj.multi = message.multi ? SignatureDescriptor_Data_Multi.toJSON(message.multi) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SignatureDescriptor_Data>): SignatureDescriptor_Data {
     const message = { ...baseSignatureDescriptor_Data } as SignatureDescriptor_Data;
     if (object.single !== undefined && object.single !== null) {
@@ -330,23 +341,18 @@ export const SignatureDescriptor_Data = {
     }
     return message;
   },
-
-  toJSON(message: SignatureDescriptor_Data): unknown {
-    const obj: any = {};
-    message.single !== undefined &&
-      (obj.single = message.single ? SignatureDescriptor_Data_Single.toJSON(message.single) : undefined);
-    message.multi !== undefined &&
-      (obj.multi = message.multi ? SignatureDescriptor_Data_Multi.toJSON(message.multi) : undefined);
-    return obj;
-  },
 };
 
 const baseSignatureDescriptor_Data_Single: object = { mode: 0 };
 
 export const SignatureDescriptor_Data_Single = {
   encode(message: SignatureDescriptor_Data_Single, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).int32(message.mode);
-    writer.uint32(18).bytes(message.signature);
+    if (message.mode !== 0) {
+      writer.uint32(8).int32(message.mode);
+    }
+    if (message.signature.length !== 0) {
+      writer.uint32(18).bytes(message.signature);
+    }
     return writer;
   },
 
@@ -384,6 +390,16 @@ export const SignatureDescriptor_Data_Single = {
     return message;
   },
 
+  toJSON(message: SignatureDescriptor_Data_Single): unknown {
+    const obj: any = {};
+    message.mode !== undefined && (obj.mode = signModeToJSON(message.mode));
+    message.signature !== undefined &&
+      (obj.signature = base64FromBytes(
+        message.signature !== undefined ? message.signature : new Uint8Array(),
+      ));
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SignatureDescriptor_Data_Single>): SignatureDescriptor_Data_Single {
     const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
     if (object.mode !== undefined && object.mode !== null) {
@@ -398,23 +414,13 @@ export const SignatureDescriptor_Data_Single = {
     }
     return message;
   },
-
-  toJSON(message: SignatureDescriptor_Data_Single): unknown {
-    const obj: any = {};
-    message.mode !== undefined && (obj.mode = signModeToJSON(message.mode));
-    message.signature !== undefined &&
-      (obj.signature = base64FromBytes(
-        message.signature !== undefined ? message.signature : new Uint8Array(),
-      ));
-    return obj;
-  },
 };
 
 const baseSignatureDescriptor_Data_Multi: object = {};
 
 export const SignatureDescriptor_Data_Multi = {
   encode(message: SignatureDescriptor_Data_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bitarray !== undefined && message.bitarray !== undefined) {
+    if (message.bitarray !== undefined) {
       CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
     for (const v of message.signatures) {
@@ -461,6 +467,18 @@ export const SignatureDescriptor_Data_Multi = {
     return message;
   },
 
+  toJSON(message: SignatureDescriptor_Data_Multi): unknown {
+    const obj: any = {};
+    message.bitarray !== undefined &&
+      (obj.bitarray = message.bitarray ? CompactBitArray.toJSON(message.bitarray) : undefined);
+    if (message.signatures) {
+      obj.signatures = message.signatures.map((e) => (e ? SignatureDescriptor_Data.toJSON(e) : undefined));
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<SignatureDescriptor_Data_Multi>): SignatureDescriptor_Data_Multi {
     const message = { ...baseSignatureDescriptor_Data_Multi } as SignatureDescriptor_Data_Multi;
     message.signatures = [];
@@ -476,18 +494,6 @@ export const SignatureDescriptor_Data_Multi = {
     }
     return message;
   },
-
-  toJSON(message: SignatureDescriptor_Data_Multi): unknown {
-    const obj: any = {};
-    message.bitarray !== undefined &&
-      (obj.bitarray = message.bitarray ? CompactBitArray.toJSON(message.bitarray) : undefined);
-    if (message.signatures) {
-      obj.signatures = message.signatures.map((e) => (e ? SignatureDescriptor_Data.toJSON(e) : undefined));
-    } else {
-      obj.signatures = [];
-    }
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -497,7 +503,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

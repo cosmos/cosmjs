@@ -64,6 +64,16 @@ export const MultiSignature = {
     return message;
   },
 
+  toJSON(message: MultiSignature): unknown {
+    const obj: any = {};
+    if (message.signatures) {
+      obj.signatures = message.signatures.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<MultiSignature>): MultiSignature {
     const message = { ...baseMultiSignature } as MultiSignature;
     message.signatures = [];
@@ -74,24 +84,18 @@ export const MultiSignature = {
     }
     return message;
   },
-
-  toJSON(message: MultiSignature): unknown {
-    const obj: any = {};
-    if (message.signatures) {
-      obj.signatures = message.signatures.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
-    } else {
-      obj.signatures = [];
-    }
-    return obj;
-  },
 };
 
 const baseCompactBitArray: object = { extraBitsStored: 0 };
 
 export const CompactBitArray = {
   encode(message: CompactBitArray, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint32(message.extraBitsStored);
-    writer.uint32(18).bytes(message.elems);
+    if (message.extraBitsStored !== 0) {
+      writer.uint32(8).uint32(message.extraBitsStored);
+    }
+    if (message.elems.length !== 0) {
+      writer.uint32(18).bytes(message.elems);
+    }
     return writer;
   },
 
@@ -129,6 +133,14 @@ export const CompactBitArray = {
     return message;
   },
 
+  toJSON(message: CompactBitArray): unknown {
+    const obj: any = {};
+    message.extraBitsStored !== undefined && (obj.extraBitsStored = message.extraBitsStored);
+    message.elems !== undefined &&
+      (obj.elems = base64FromBytes(message.elems !== undefined ? message.elems : new Uint8Array()));
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<CompactBitArray>): CompactBitArray {
     const message = { ...baseCompactBitArray } as CompactBitArray;
     if (object.extraBitsStored !== undefined && object.extraBitsStored !== null) {
@@ -143,14 +155,6 @@ export const CompactBitArray = {
     }
     return message;
   },
-
-  toJSON(message: CompactBitArray): unknown {
-    const obj: any = {};
-    message.extraBitsStored !== undefined && (obj.extraBitsStored = message.extraBitsStored);
-    message.elems !== undefined &&
-      (obj.elems = base64FromBytes(message.elems !== undefined ? message.elems : new Uint8Array()));
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -160,7 +164,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =

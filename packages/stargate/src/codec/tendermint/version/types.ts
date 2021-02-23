@@ -28,8 +28,12 @@ const baseApp: object = { protocol: Long.UZERO, software: "" };
 
 export const App = {
   encode(message: App, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.protocol);
-    writer.uint32(18).string(message.software);
+    if (!message.protocol.isZero()) {
+      writer.uint32(8).uint64(message.protocol);
+    }
+    if (message.software !== "") {
+      writer.uint32(18).string(message.software);
+    }
     return writer;
   },
 
@@ -69,6 +73,13 @@ export const App = {
     return message;
   },
 
+  toJSON(message: App): unknown {
+    const obj: any = {};
+    message.protocol !== undefined && (obj.protocol = (message.protocol || Long.UZERO).toString());
+    message.software !== undefined && (obj.software = message.software);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<App>): App {
     const message = { ...baseApp } as App;
     if (object.protocol !== undefined && object.protocol !== null) {
@@ -83,21 +94,18 @@ export const App = {
     }
     return message;
   },
-
-  toJSON(message: App): unknown {
-    const obj: any = {};
-    message.protocol !== undefined && (obj.protocol = (message.protocol || Long.UZERO).toString());
-    message.software !== undefined && (obj.software = message.software);
-    return obj;
-  },
 };
 
 const baseConsensus: object = { block: Long.UZERO, app: Long.UZERO };
 
 export const Consensus = {
   encode(message: Consensus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(8).uint64(message.block);
-    writer.uint32(16).uint64(message.app);
+    if (!message.block.isZero()) {
+      writer.uint32(8).uint64(message.block);
+    }
+    if (!message.app.isZero()) {
+      writer.uint32(16).uint64(message.app);
+    }
     return writer;
   },
 
@@ -137,6 +145,13 @@ export const Consensus = {
     return message;
   },
 
+  toJSON(message: Consensus): unknown {
+    const obj: any = {};
+    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
+    message.app !== undefined && (obj.app = (message.app || Long.UZERO).toString());
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<Consensus>): Consensus {
     const message = { ...baseConsensus } as Consensus;
     if (object.block !== undefined && object.block !== null) {
@@ -150,13 +165,6 @@ export const Consensus = {
       message.app = Long.UZERO;
     }
     return message;
-  },
-
-  toJSON(message: Consensus): unknown {
-    const obj: any = {};
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    message.app !== undefined && (obj.app = (message.app || Long.UZERO).toString());
-    return obj;
   },
 };
 

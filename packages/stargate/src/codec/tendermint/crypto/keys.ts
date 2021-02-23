@@ -55,6 +55,15 @@ export const PublicKey = {
     return message;
   },
 
+  toJSON(message: PublicKey): unknown {
+    const obj: any = {};
+    message.ed25519 !== undefined &&
+      (obj.ed25519 = message.ed25519 !== undefined ? base64FromBytes(message.ed25519) : undefined);
+    message.secp256k1 !== undefined &&
+      (obj.secp256k1 = message.secp256k1 !== undefined ? base64FromBytes(message.secp256k1) : undefined);
+    return obj;
+  },
+
   fromPartial(object: DeepPartial<PublicKey>): PublicKey {
     const message = { ...basePublicKey } as PublicKey;
     if (object.ed25519 !== undefined && object.ed25519 !== null) {
@@ -69,15 +78,6 @@ export const PublicKey = {
     }
     return message;
   },
-
-  toJSON(message: PublicKey): unknown {
-    const obj: any = {};
-    message.ed25519 !== undefined &&
-      (obj.ed25519 = message.ed25519 !== undefined ? base64FromBytes(message.ed25519) : undefined);
-    message.secp256k1 !== undefined &&
-      (obj.secp256k1 = message.secp256k1 !== undefined ? base64FromBytes(message.secp256k1) : undefined);
-    return obj;
-  },
 };
 
 declare var self: any | undefined;
@@ -87,7 +87,7 @@ var globalThis: any = (() => {
   if (typeof self !== "undefined") return self;
   if (typeof window !== "undefined") return window;
   if (typeof global !== "undefined") return global;
-  throw new Error("Unable to locate global object");
+  throw "Unable to locate global object";
 })();
 
 const atob: (b64: string) => string =
