@@ -67,6 +67,9 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<a href="block.html" class="tsd-signature-type">Block</a>
+					</li>
+					<li>
+						<span class="tsd-signature-type">Block</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">NewBlockEvent</span>
@@ -82,10 +85,10 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="newblockevent.html#evidence" class="tsd-kind-icon">evidence</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="newblockevent.html#header" class="tsd-kind-icon">header</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="newblockevent.html#lastcommit" class="tsd-kind-icon">last<wbr>Commit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="newblockevent.html#txs" class="tsd-kind-icon">txs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="newblockevent.html#evidence" class="tsd-kind-icon">evidence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="newblockevent.html#header" class="tsd-kind-icon">header</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="newblockevent.html#lastcommit" class="tsd-kind-icon">last<wbr>Commit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="newblockevent.html#txs" class="tsd-kind-icon">txs</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,47 +96,51 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="evidence" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> evidence</h3>
 					<div class="tsd-signature tsd-kind-icon">evidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="evidence.html" class="tsd-signature-type">Evidence</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="newblockevent.html">NewBlockEvent</a>.<a href="newblockevent.html#evidence">evidence</a></p>
+						<p>Overrides Block.evidence</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/db4459893/packages/tendermint-rpc/src/responses.ts#L215">packages/tendermint-rpc/src/responses.ts:215</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/8c8f9b6f0/packages/tendermint-rpc/src/legacy/responses.ts#L215">packages/tendermint-rpc/src/legacy/responses.ts:215</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="header" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> header</h3>
 					<div class="tsd-signature tsd-kind-icon">header<span class="tsd-signature-symbol">:</span> <a href="header.html" class="tsd-signature-type">Header</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="newblockevent.html">NewBlockEvent</a>.<a href="newblockevent.html#header">header</a></p>
+						<p>Overrides Block.header</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/db4459893/packages/tendermint-rpc/src/responses.ts#L212">packages/tendermint-rpc/src/responses.ts:212</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/8c8f9b6f0/packages/tendermint-rpc/src/legacy/responses.ts#L212">packages/tendermint-rpc/src/legacy/responses.ts:212</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="lastcommit" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> last<wbr>Commit</h3>
 					<div class="tsd-signature tsd-kind-icon">last<wbr>Commit<span class="tsd-signature-symbol">:</span> <a href="commit.html" class="tsd-signature-type">Commit</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="newblockevent.html">NewBlockEvent</a>.<a href="newblockevent.html#lastcommit">lastCommit</a></p>
+						<p>Overrides Block.lastCommit</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/db4459893/packages/tendermint-rpc/src/responses.ts#L213">packages/tendermint-rpc/src/responses.ts:213</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/8c8f9b6f0/packages/tendermint-rpc/src/legacy/responses.ts#L213">packages/tendermint-rpc/src/legacy/responses.ts:213</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="txs" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> txs</h3>
 					<div class="tsd-signature tsd-kind-icon">txs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="newblockevent.html">NewBlockEvent</a>.<a href="newblockevent.html#txs">txs</a></p>
+						<p>Overrides Block.txs</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/db4459893/packages/tendermint-rpc/src/responses.ts#L214">packages/tendermint-rpc/src/responses.ts:214</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/8c8f9b6f0/packages/tendermint-rpc/src/legacy/responses.ts#L214">packages/tendermint-rpc/src/legacy/responses.ts:214</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,16 +161,16 @@
 					<li class="current tsd-kind-interface">
 						<a href="newblockevent.html" class="tsd-kind-icon">New<wbr>Block<wbr>Event</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="newblockevent.html#evidence" class="tsd-kind-icon">evidence</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="newblockevent.html#header" class="tsd-kind-icon">header</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="newblockevent.html#lastcommit" class="tsd-kind-icon">last<wbr>Commit</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="newblockevent.html#txs" class="tsd-kind-icon">txs</a>
 							</li>
 						</ul>
