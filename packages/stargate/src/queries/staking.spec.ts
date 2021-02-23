@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { coin, coins } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 
 import { MsgDelegate, MsgUndelegate } from "../codec/cosmos/staking/v1beta1/tx";
@@ -13,8 +13,8 @@ import { setupStakingExtension, StakingExtension } from "./staking";
 
 async function makeClientWithStaking(
   rpcUrl: string,
-): Promise<[QueryClient & StakingExtension, TendermintClient]> {
-  const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
+): Promise<[QueryClient & StakingExtension, Tendermint34Client]> {
+  const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupStakingExtension), tmClient];
 }
 

@@ -12,9 +12,8 @@ import {
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
 import {
-  adaptor34,
   broadcastTxCommitSuccess,
-  Client as TendermintClient,
+  Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
@@ -115,20 +114,20 @@ export function coinFromProto(input: Coin): Coin {
 
 /** Use for testing only */
 export interface PrivateStargateClient {
-  readonly tmClient: TendermintClient;
+  readonly tmClient: Tendermint34Client;
 }
 
 export class StargateClient {
-  private readonly tmClient: TendermintClient;
+  private readonly tmClient: Tendermint34Client;
   private readonly queryClient: QueryClient & AuthExtension & BankExtension;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
-    const tmClient = await TendermintClient.connect(endpoint, adaptor34);
+    const tmClient = await Tendermint34Client.connect(endpoint);
     return new StargateClient(tmClient);
   }
 
-  protected constructor(tmClient: TendermintClient) {
+  protected constructor(tmClient: Tendermint34Client) {
     this.tmClient = tmClient;
     this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
   }

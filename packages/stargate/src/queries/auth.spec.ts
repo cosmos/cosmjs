@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodePubkey } from "@cosmjs/proto-signing";
-import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
@@ -9,8 +9,8 @@ import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } f
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
 
-async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, TendermintClient]> {
-  const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
+async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, Tendermint34Client]> {
+  const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupAuthExtension), tmClient];
 }
 
