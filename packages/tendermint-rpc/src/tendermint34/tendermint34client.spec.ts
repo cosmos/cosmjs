@@ -5,14 +5,15 @@ import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { ExpectedValues, tendermintInstances } from "../config.spec";
 import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
 import {
   buildKvTx,
   chainIdMatcher,
+  ExpectedValues,
   pendingWithoutTendermint,
   randomString,
   tendermintEnabled,
+  tendermintInstances,
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
 import { adaptor34 } from "./adaptors";

@@ -1,5 +1,5 @@
-import { defaultInstance } from "../config.spec";
 import { createJsonRpcRequest } from "../jsonrpc";
+import { defaultInstance } from "../testutil.spec";
 import { HttpClient } from "./httpclient";
 
 function pendingWithoutTendermint(): void {

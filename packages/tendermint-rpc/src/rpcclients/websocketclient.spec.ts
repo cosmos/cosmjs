@@ -2,8 +2,8 @@ import { Uint53 } from "@cosmjs/math";
 import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
-import { defaultInstance } from "../config.spec";
 import { createJsonRpcRequest } from "../jsonrpc";
+import { defaultInstance } from "../testutil.spec";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
