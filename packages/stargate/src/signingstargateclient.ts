@@ -67,10 +67,17 @@ import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
   readonly delegate: StdFee;
+  readonly undelegate: StdFee;
+  readonly withdraw: StdFee;
 }
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000, delegate: 160000 };
+const defaultGasLimits: GasLimits<CosmosFeeTable> = {
+  send: 80000,
+  delegate: 160000,
+  undelegate: 160000,
+  withdraw: 160000,
+};
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -210,6 +217,31 @@ export class SigningStargateClient extends StargateClient {
       value: MsgDelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
     };
     return this.signAndBroadcast(senderAddress, [delegateMsg], this.fees.delegate, memo);
+  }
+
+  public async undelegateTokens(
+    senderAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const undelegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+      value: MsgUndelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(senderAddress, [undelegateMsg], this.fees.undelegate, memo);
+  }
+
+  public async withdrawRewards(
+    senderAddress: string,
+    validatorAddress: string,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const withdrawMsg = {
+      typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: senderAddress, validatorAddress }),
+    };
+    return this.signAndBroadcast(senderAddress, [withdrawMsg], this.fees.withdraw, memo);
   }
 
   public async signAndBroadcast(
