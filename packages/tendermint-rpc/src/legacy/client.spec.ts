@@ -7,38 +7,19 @@ import { Stream } from "xstream";
 
 import { ExpectedValues, tendermintInstances } from "../config.spec";
 import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
-import { chainIdMatcher } from "../testutil.spec";
+import {
+  buildKvTx,
+  chainIdMatcher,
+  pendingWithoutTendermint,
+  randomString,
+  tendermintEnabled,
+  tendermintSearchIndexUpdated,
+} from "../testutil.spec";
 import { Adaptor } from "./adaptor";
 import { adaptorForVersion } from "./adaptors";
 import { Client } from "./client";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
-
-function tendermintEnabled(): boolean {
-  return !!process.env.TENDERMINT_ENABLED;
-}
-
-function pendingWithoutTendermint(): void {
-  if (!tendermintEnabled()) {
-    pending("Set TENDERMINT_ENABLED to enable tendermint-based tests");
-  }
-}
-
-async function tendermintSearchIndexUpdated(): Promise<void> {
-  // Tendermint needs some time before a committed transaction is found in search
-  return sleep(75);
-}
-
-function buildKvTx(k: string, v: string): Uint8Array {
-  return toAscii(`${k}=${v}`);
-}
-
-function randomString(): string {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  return Array.from({ length: 12 })
-    .map(() => alphabet[Math.floor(Math.random() * alphabet.length)])
-    .join("");
-}
 
 function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
   describe("create", () => {
