@@ -10,7 +10,9 @@ import {
 import { BankExtension, setupBankExtension } from "./bank";
 import { QueryClient } from "./queryclient";
 
-async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, Tendermint34Client]> {
+async function makeClientWithBank(
+  rpcUrl: string,
+): Promise<[QueryClient & BankExtension, Tendermint34Client]> {
   const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupBankExtension), tmClient];
 }

@@ -2,7 +2,7 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Tendermint34Client, Header, NewBlockHeaderEvent, ProofOp } from "@cosmjs/tendermint-rpc";
+import { Header, NewBlockHeaderEvent, ProofOp, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 

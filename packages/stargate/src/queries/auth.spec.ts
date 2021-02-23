@@ -9,7 +9,9 @@ import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } f
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
 
-async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, Tendermint34Client]> {
+async function makeClientWithAuth(
+  rpcUrl: string,
+): Promise<[QueryClient & AuthExtension, Tendermint34Client]> {
   const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupAuthExtension), tmClient];
 }
