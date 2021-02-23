@@ -32,9 +32,8 @@ import {
 } from "@cosmjs/stargate";
 import { TxMsgData } from "@cosmjs/stargate/build/codec/cosmos/base/abci/v1beta1/abci";
 import {
-  adaptor34,
   broadcastTxCommitSuccess,
-  Client as TendermintClient,
+  Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
@@ -45,22 +44,22 @@ import { setupWasmExtension, WasmExtension } from "./queries";
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: TendermintClient;
+  readonly tmClient: Tendermint34Client;
   readonly queryClient: QueryClient & AuthExtension & BankExtension & WasmExtension;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: TendermintClient;
+  private readonly tmClient: Tendermint34Client;
   private readonly queryClient: QueryClient & AuthExtension & BankExtension & WasmExtension;
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<CosmWasmClient> {
-    const tmClient = await TendermintClient.connect(endpoint, adaptor34);
+    const tmClient = await Tendermint34Client.connect(endpoint);
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: TendermintClient) {
+  protected constructor(tmClient: Tendermint34Client) {
     this.tmClient = tmClient;
     this.queryClient = QueryClient.withExtensions(
       tmClient,

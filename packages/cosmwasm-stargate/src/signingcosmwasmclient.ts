@@ -43,7 +43,7 @@ import {
 } from "@cosmjs/stargate";
 import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
-import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 import pako from "pako";
 
@@ -118,12 +118,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    const tmClient = await TendermintClient.connect(endpoint, adaptor34);
+    const tmClient = await Tendermint34Client.connect(endpoint);
     return new SigningCosmWasmClient(tmClient, signer, options);
   }
 
   private constructor(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {

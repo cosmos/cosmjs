@@ -1,4 +1,4 @@
-import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 import {
   nonExistentAddress,
@@ -10,8 +10,10 @@ import {
 import { BankExtension, setupBankExtension } from "./bank";
 import { QueryClient } from "./queryclient";
 
-async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, TendermintClient]> {
-  const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
+async function makeClientWithBank(
+  rpcUrl: string,
+): Promise<[QueryClient & BankExtension, Tendermint34Client]> {
+  const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupBankExtension), tmClient];
 }
 

@@ -2,8 +2,8 @@
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
+import { createJsonRpcRequest } from "../../../jsonrpc";
 import { assertNotEmpty, Integer, may } from "../../encodings";
-import { createJsonRpcRequest } from "../../jsonrpc";
 import * as requests from "../../requests";
 
 interface HeightParam {

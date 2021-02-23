@@ -1,10 +1,9 @@
+import { Uint53 } from "@cosmjs/math";
 import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
-import { defaultInstance } from "../config.spec";
-import { Integer } from "../encodings";
 import { createJsonRpcRequest } from "../jsonrpc";
-import { Method } from "../requests";
+import { defaultInstance } from "../testutil.spec";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
@@ -22,10 +21,10 @@ describe("WebsocketClient", () => {
 
     const client = new WebsocketClient(tendermintUrl);
 
-    const healthResponse = await client.execute(createJsonRpcRequest(Method.Health));
+    const healthResponse = await client.execute(createJsonRpcRequest("health"));
     expect(healthResponse.result).toEqual({});
 
-    const statusResponse = await client.execute(createJsonRpcRequest(Method.Status));
+    const statusResponse = await client.execute(createJsonRpcRequest("status"));
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
@@ -56,9 +55,10 @@ describe("WebsocketClient", () => {
         expect(event.query).toEqual(query);
 
         if (events.length === 2) {
-          // make sure they are consequtive heights
-          const height = (i: number): number => Integer.parse(events[i].data.value.header.height);
-          expect(height(1)).toEqual(height(0) + 1);
+          // make sure they are consecutive heights
+          const eventHeight = (index: number): number =>
+            Uint53.fromString(events[index].data.value.header.height).toNumber();
+          expect(eventHeight(1)).toEqual(eventHeight(0) + 1);
 
           subscription.unsubscribe();
 
@@ -132,7 +132,7 @@ describe("WebsocketClient", () => {
     });
 
     client
-      .execute(createJsonRpcRequest(Method.Status))
+      .execute(createJsonRpcRequest("status"))
       .then((startusResponse) => expect(startusResponse).toBeTruthy())
       .catch(done.fail);
   });
@@ -165,12 +165,12 @@ describe("WebsocketClient", () => {
 
     const client = new WebsocketClient(tendermintUrl);
     // dummy command to ensure client is connected
-    await client.execute(createJsonRpcRequest(Method.Health));
+    await client.execute(createJsonRpcRequest("health"));
 
     client.disconnect();
 
     await client
-      .execute(createJsonRpcRequest(Method.Health))
+      .execute(createJsonRpcRequest("health"))
       .then(() => fail("must not resolve"))
       .catch((error) => expect(error).toMatch(/socket has disconnected/i));
   });
@@ -182,7 +182,7 @@ describe("WebsocketClient", () => {
     (async () => {
       const client = new WebsocketClient(tendermintUrl);
       // dummy command to ensure client is connected
-      await client.execute(createJsonRpcRequest(Method.Health));
+      await client.execute(createJsonRpcRequest("health"));
 
       client.disconnect();
 
@@ -198,7 +198,7 @@ describe("WebsocketClient", () => {
 
     const client = new WebsocketClient(tendermintUrl);
 
-    const req = createJsonRpcRequest(Method.Health);
+    const req = createJsonRpcRequest("health");
     expect(() => client.listen(req)).toThrowError(/request method must be "subscribe"/i);
 
     await client.connected();

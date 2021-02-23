@@ -54,6 +54,9 @@
   `MsgFundCommunityPool`, `MsgSetWithdrawAddress`, `MsgWithdrawDelegatorReward`,
   `MsgWithdrawValidatorCommission` and type checker helper functions.
 - @cosmjs/utils: Added `assertDefinedAndNotNull`.
+- @cosmjs/tendermint-rpc: The new `Tendermint34Client` is a copy of the old
+  `Client` but without the automatic version detection. Its usage is encouraged
+  over `Client` if you connect to a Tendermint 0.34 backend.
 
 ### Changed
 

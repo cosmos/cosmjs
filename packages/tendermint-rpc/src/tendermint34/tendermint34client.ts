@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Stream } from "xstream";
 
-import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptorForVersion } from "./adaptors";
-import { createJsonRpcRequest } from "./jsonrpc";
-import * as requests from "./requests";
-import * as responses from "./responses";
+import { createJsonRpcRequest } from "../jsonrpc";
 import {
   HttpClient,
   instanceOfRpcStreamingClient,
   RpcClient,
   SubscriptionEvent,
   WebsocketClient,
-} from "./rpcclients";
+} from "../rpcclients";
+import { Decoder, Encoder, Params, Responses } from "./adaptor";
+import { adaptor34 } from "./adaptors";
+import * as requests from "./requests";
+import * as responses from "./responses";
 
-export class Client {
+export class Tendermint34Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
    *
@@ -22,10 +22,10 @@ export class Client {
    *
    * If the adaptor is not set an auto-detection is attempted.
    */
-  public static async connect(url: string, adaptor?: Adaptor): Promise<Client> {
+  public static async connect(url: string): Promise<Tendermint34Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
     const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
-    return Client.create(rpcClient, adaptor);
+    return Tendermint34Client.create(rpcClient);
   }
 
   /**
@@ -33,13 +33,13 @@ export class Client {
    *
    * If the adaptor is not set an auto-detection is attempted.
    */
-  public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client> {
+  public static async create(rpcClient: RpcClient): Promise<Tendermint34Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
     // (our CI) when skipping the status call before doing other queries. Sleeping a little
     // while did not help. Thus we query the version as a way to say "hi" to the backend,
     // even in cases where we don't use the result.
-    const version = await this.detectVersion(rpcClient);
-    return new Client(rpcClient, adaptor || adaptorForVersion(version));
+    const _version = await this.detectVersion(rpcClient);
+    return new Tendermint34Client(rpcClient);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
@@ -65,10 +65,10 @@ export class Client {
   /**
    * Use `Client.connect` or `Client.create` to create an instance.
    */
-  private constructor(client: RpcClient, adaptor: Adaptor) {
+  private constructor(client: RpcClient) {
     this.client = client;
-    this.p = adaptor.params;
-    this.r = adaptor.responses;
+    this.p = adaptor34.params;
+    this.r = adaptor34.responses;
   }
 
   public disconnect(): void {

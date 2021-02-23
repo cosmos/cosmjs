@@ -2,7 +2,7 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Client as TendermintClient, Header, NewBlockHeaderEvent, ProofOp } from "@cosmjs/tendermint-rpc";
+import { Header, NewBlockHeaderEvent, ProofOp, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 
@@ -29,24 +29,24 @@ export interface ProvenQuery {
 
 export class QueryClient {
   /** Constructs a QueryClient with 0 extensions */
-  public static withExtensions(tmClient: TendermintClient): QueryClient;
+  public static withExtensions(tmClient: Tendermint34Client): QueryClient;
 
   /** Constructs a QueryClient with 1 extension */
   public static withExtensions<A extends object>(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
   ): QueryClient & A;
 
   /** Constructs a QueryClient with 2 extensions */
   public static withExtensions<A extends object, B extends object>(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
   ): QueryClient & A & B;
 
   /** Constructs a QueryClient with 3 extensions */
   public static withExtensions<A extends object, B extends object, C extends object>(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -54,7 +54,7 @@ export class QueryClient {
 
   /** Constructs a QueryClient with 4 extensions */
   public static withExtensions<A extends object, B extends object, C extends object, D extends object>(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -69,7 +69,7 @@ export class QueryClient {
     D extends object,
     E extends object
   >(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -86,7 +86,7 @@ export class QueryClient {
     E extends object,
     F extends object
   >(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -105,7 +105,7 @@ export class QueryClient {
     F extends object,
     G extends object
   >(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -126,7 +126,7 @@ export class QueryClient {
     G extends object,
     H extends object
   >(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
     setupExtensionB: QueryExtensionSetup<B>,
     setupExtensionC: QueryExtensionSetup<C>,
@@ -138,7 +138,7 @@ export class QueryClient {
   ): QueryClient & A & B & C & D & E & F & G & H;
 
   public static withExtensions(
-    tmClient: TendermintClient,
+    tmClient: Tendermint34Client,
     ...extensionSetups: Array<QueryExtensionSetup<object>>
   ): any {
     const client = new QueryClient(tmClient);
@@ -160,9 +160,9 @@ export class QueryClient {
     return client;
   }
 
-  private readonly tmClient: TendermintClient;
+  private readonly tmClient: Tendermint34Client;
 
-  public constructor(tmClient: TendermintClient) {
+  public constructor(tmClient: Tendermint34Client) {
     this.tmClient = tmClient;
   }
 
