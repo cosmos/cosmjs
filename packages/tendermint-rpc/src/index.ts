@@ -1,39 +1,8 @@
-export { Adaptor } from "./adaptor";
-export { adaptor33, adaptor34 } from "./adaptors";
-export { Client } from "./client";
 export {
-  DateTime,
-  ReadonlyDateWithNanoseconds,
-  fromRfc3339WithNanoseconds,
-  fromSeconds,
-  toRfc3339WithNanoseconds,
-  toSeconds,
-} from "./dates";
-export {
-  AbciInfoRequest,
-  AbciQueryParams,
-  AbciQueryRequest,
-  BlockRequest,
-  BlockchainRequest,
-  BlockResultsRequest,
-  BroadcastTxRequest,
-  BroadcastTxParams,
-  CommitRequest,
-  GenesisRequest,
-  HealthRequest,
-  Method,
-  Request,
-  QueryTag,
-  StatusRequest,
-  SubscriptionEventType,
-  TxParams,
-  TxRequest,
-  TxSearchParams,
-  TxSearchRequest,
-  ValidatorsRequest,
-  ValidatorsParams,
-} from "./requests";
-export {
+  adaptor33,
+  adaptor34,
+  Adaptor,
+  Client,
   AbciInfoResponse,
   AbciQueryResponse,
   Attribute,
@@ -78,6 +47,36 @@ export {
   Version,
   Vote,
   VoteType,
-} from "./responses";
+  AbciInfoRequest,
+  AbciQueryParams,
+  AbciQueryRequest,
+  BlockRequest,
+  BlockchainRequest,
+  BlockResultsRequest,
+  BroadcastTxRequest,
+  BroadcastTxParams,
+  CommitRequest,
+  GenesisRequest,
+  HealthRequest,
+  Method,
+  Request,
+  QueryTag,
+  StatusRequest,
+  SubscriptionEventType,
+  TxParams,
+  TxRequest,
+  TxSearchParams,
+  TxSearchRequest,
+  ValidatorsRequest,
+  ValidatorsParams,
+} from "./legacy";
+export {
+  DateTime,
+  ReadonlyDateWithNanoseconds,
+  fromRfc3339WithNanoseconds,
+  fromSeconds,
+  toRfc3339WithNanoseconds,
+  toSeconds,
+} from "./dates";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export { BlockIdFlag, CommitSignature, ValidatorEd25519Pubkey, ValidatorPubkey } from "./types";

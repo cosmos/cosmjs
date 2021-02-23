@@ -1,6 +1,5 @@
 import { defaultInstance } from "../config.spec";
 import { createJsonRpcRequest } from "../jsonrpc";
-import { Method } from "../requests";
 import { HttpClient } from "./httpclient";
 import { instanceOfRpcStreamingClient } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
@@ -31,7 +30,7 @@ describe("RpcClient", () => {
   it("should also work with trailing slashes", async () => {
     pendingWithoutTendermint();
 
-    const statusRequest = createJsonRpcRequest(Method.Status);
+    const statusRequest = createJsonRpcRequest("status");
 
     const httpClient = new HttpClient(tendermintUrl + "/");
     expect(await httpClient.execute(statusRequest)).toBeDefined();

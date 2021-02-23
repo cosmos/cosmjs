@@ -1,7 +1,7 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 
-import { ReadonlyDateWithNanoseconds } from "./dates";
+import { ReadonlyDateWithNanoseconds } from "../dates";
 import { BlockId, Version } from "./responses";
 
 /**

@@ -5,14 +5,14 @@ import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
+import { ExpectedValues, tendermintInstances } from "../config.spec";
+import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
+import { chainIdMatcher } from "../testutil.spec";
 import { Adaptor } from "./adaptor";
 import { adaptorForVersion } from "./adaptors";
 import { Client } from "./client";
-import { ExpectedValues, tendermintInstances } from "./config.spec";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
-import { HttpClient, RpcClient, WebsocketClient } from "./rpcclients";
-import { chainIdMatcher } from "./testutil.spec";
 
 function tendermintEnabled(): boolean {
   return !!process.env.TENDERMINT_ENABLED;

@@ -1,7 +1,7 @@
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { ReadonlyDate } from "readonly-date";
 
-import { ReadonlyDateWithNanoseconds } from "./dates";
+import { ReadonlyDateWithNanoseconds } from "../dates";
 import { hashBlock, hashTx } from "./hasher";
 
 describe("Hasher", () => {

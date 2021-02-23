@@ -1,6 +1,5 @@
 import { defaultInstance } from "../config.spec";
 import { createJsonRpcRequest } from "../jsonrpc";
-import { Method } from "../requests";
 import { HttpClient } from "./httpclient";
 
 function pendingWithoutTendermint(): void {
@@ -16,10 +15,10 @@ describe("HttpClient", () => {
     pendingWithoutTendermint();
     const client = new HttpClient(tendermintUrl);
 
-    const healthResponse = await client.execute(createJsonRpcRequest(Method.Health));
+    const healthResponse = await client.execute(createJsonRpcRequest("health"));
     expect(healthResponse.result).toEqual({});
 
-    const statusResponse = await client.execute(createJsonRpcRequest(Method.Status));
+    const statusResponse = await client.execute(createJsonRpcRequest("status"));
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 

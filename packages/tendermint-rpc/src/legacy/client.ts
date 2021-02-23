@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Stream } from "xstream";
 
-import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptorForVersion } from "./adaptors";
-import { createJsonRpcRequest } from "./jsonrpc";
-import * as requests from "./requests";
-import * as responses from "./responses";
+import { createJsonRpcRequest } from "../jsonrpc";
 import {
   HttpClient,
   instanceOfRpcStreamingClient,
   RpcClient,
   SubscriptionEvent,
   WebsocketClient,
-} from "./rpcclients";
+} from "../rpcclients";
+import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
+import { adaptorForVersion } from "./adaptors";
+import * as requests from "./requests";
+import * as responses from "./responses";
 
 export class Client {
   /**
