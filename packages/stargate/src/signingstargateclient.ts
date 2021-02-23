@@ -2,8 +2,8 @@ import { fromBase64 } from "@cosmjs/encoding";
 import {
   buildFeeTable,
   Coin,
-  CosmosFeeTable,
   encodeSecp256k1Pubkey,
+  FeeTable,
   GasLimits,
   GasPrice,
   makeSignDoc as makeSignDocAmino,
@@ -39,10 +39,20 @@ import {
 } from "./codec/cosmos/staking/v1beta1/tx";
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
-import { BroadcastTxResponse, StargateClient } from "./stargateclient";
+import {
+  assertIsBroadcastTxSuccess,
+  BroadcastTxResponse,
+  BroadcastTxSuccess,
+  StargateClient,
+} from "./stargateclient";
+
+export interface CosmosFeeTable extends FeeTable {
+  readonly send: StdFee;
+  readonly delegate: StdFee;
+}
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
+const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000, delegate: 160000 };
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -123,6 +133,21 @@ export class SigningStargateClient extends StargateClient {
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
+  }
+
+  public async delegateTokens(
+    senderAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxSuccess> {
+    const delegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+      value: MsgDelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+    };
+    const response = await this.signAndBroadcast(senderAddress, [delegateMsg], this.fees.delegate, memo);
+    assertIsBroadcastTxSuccess(response);
+    return response;
   }
 
   public async signAndBroadcast(

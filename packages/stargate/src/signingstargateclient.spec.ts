@@ -44,6 +44,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "80000",
         },
+        delegate: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
       });
     });
 
@@ -75,6 +84,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "80000",
         },
+        delegate: {
+          amount: [
+            {
+              amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
       });
     });
 
@@ -83,6 +101,7 @@ describe("SigningStargateClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasLimits = {
         send: 160000,
+        delegate: 120000,
       };
       const options = { gasLimits: gasLimits };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
@@ -97,6 +116,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "160000",
         },
+        delegate: {
+          amount: [
+            {
+              amount: "3000", // 0.025 * 120_000
+              denom: "ucosm",
+            },
+          ],
+          gas: "120000",
+        },
       });
     });
 
@@ -106,12 +134,22 @@ describe("SigningStargateClient", () => {
       const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
         send: 160000,
+        delegate: 160000,
       };
       const options = { gasPrice: gasPrice, gasLimits: gasLimits };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
+          amount: [
+            {
+              amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        delegate: {
           amount: [
             {
               amount: "502400", // 3.14 * 160_000
