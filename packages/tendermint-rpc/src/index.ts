@@ -80,3 +80,5 @@ export {
 } from "./dates";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export { BlockIdFlag, CommitSignature, ValidatorEd25519Pubkey, ValidatorPubkey } from "./types";
+export * as tendermint34 from "./tendermint34";
+export { Tendermint34Client } from "./tendermint34";
