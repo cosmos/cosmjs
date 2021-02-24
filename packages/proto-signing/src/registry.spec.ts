@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { fromHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
+import { Field, Type } from "protobufjs";
 
 import { MsgSend as IMsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import { TxBody } from "./codec/cosmos/tx/v1beta1/tx";
 import { Any } from "./codec/google/protobuf/any";
-import { Registry } from "./registry";
+import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry";
 
 describe("registry demo", () => {
   it("works with a default msg", () => {
     const registry = new Registry();
-    const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin")!;
-    const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend")!;
+    const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin");
+    const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend");
+    assert(Coin);
+    assert(MsgSend);
+    assert(isTsProtoGeneratedType(Coin));
+    assert(isTsProtoGeneratedType(MsgSend));
 
     const coin = Coin.fromPartial({
       denom: "ucosm",
@@ -49,35 +55,53 @@ describe("registry demo", () => {
     expect(msgSendDecoded.amount).toEqual(msgSend.amount);
   });
 
-  // TODO: Can't autogenerate types from TS code using ts-proto
-  // it("works with a custom msg", () => {
-  //   const typeUrl = "/demo.MsgDemo";
-  //   const registry = new Registry([[typeUrl, MsgDemoType]]);
-  //   const MsgDemo = registry.lookupType(typeUrl)!;
+  it("works with a custom msg", () => {
+    // From https://gist.github.com/fadeev/a4981eff1cf3a805ef10e25313d5f2b7
+    const typeUrl = "/blog.MsgCreatePost";
+    const MsgCreatePostOriginal = new Type("MsgCreatePost")
+      .add(new Field("creator", 1, "string"))
+      .add(new Field("title", 2, "string"))
+      .add(new Field("body", 3, "string"))
+      .add(new Field("attachment", 4, "bytes"));
 
-  //   const msgDemo = MsgDemo.fromPartial({
-  //     example: "Some example text",
-  //   });
-  //   const msgDemoBytes = MsgDemo.encode(msgDemo).finish();
-  //   const msgDemoWrapped = Any.create({
-  //     type_url: typeUrl,
-  //     value: msgDemoBytes,
-  //   });
-  //   const txBody = TxBody.create({
-  //     messages: [msgDemoWrapped],
-  //     memo: "Some memo",
-  //     timeoutHeight: Long.fromNumber(9999),
-  //     extensionOptions: [],
-  //   });
-  //   const txBodyBytes = TxBody.encode(txBody).finish();
+    const registry = new Registry([[typeUrl, MsgCreatePostOriginal]]);
+    const MsgCreatePost = registry.lookupType(typeUrl);
+    assert(MsgCreatePost);
+    assert(isPbjsGeneratedType(MsgCreatePost));
 
-  //   const txBodyDecoded = TxBody.decode(txBodyBytes);
-  //   const msg = txBodyDecoded.messages[0];
-  //   assert(msg.type_url);
-  //   assert(msg.value);
+    const msgDemo = MsgCreatePost.create({
+      creator: "Me",
+      title: "Something with stars",
+      body: "la la la",
+      attachment: fromHex("AABBAABB66FE"),
+    });
+    const msgDemoBytes = MsgCreatePost.encode(msgDemo).finish();
+    const msgDemoWrapped = Any.fromPartial({
+      typeUrl: typeUrl,
+      value: msgDemoBytes,
+    });
+    const txBody = TxBody.fromPartial({
+      messages: [msgDemoWrapped],
+      memo: "Some memo",
+      timeoutHeight: Long.fromNumber(9999),
+      extensionOptions: [],
+    });
+    const txBodyBytes = TxBody.encode(txBody).finish();
 
-  //   const decoder = registry.lookupType(msg.type_url)!;
-  //   const msgDemoDecoded = decoder.decode(msg.value);
-  //   expect(msgDemoDecoded.example).toEqual(msgDemo.example);
-  // });
+    const txBodyDecoded = TxBody.decode(txBodyBytes);
+    const msg = txBodyDecoded.messages[0];
+    assert(msg.typeUrl);
+    assert(msg.value);
+
+    const decoder = registry.lookupType(msg.typeUrl)!;
+    const msgDemoDecoded = decoder.decode(msg.value);
+    expect(msgDemoDecoded).toEqual(
+      jasmine.objectContaining({
+        creator: "Me",
+        title: "Something with stars",
+        body: "la la la",
+      }),
+    );
+    expect(Uint8Array.from(msgDemoDecoded.attachment)).toEqual(fromHex("AABBAABB66FE"));
+  });
 });
