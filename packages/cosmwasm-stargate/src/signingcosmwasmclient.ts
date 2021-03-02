@@ -11,7 +11,7 @@ import {
   UploadResult,
 } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
-import { fromBase64, toAscii, toHex } from "@cosmjs/encoding";
+import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import {
   buildFeeTable,
   Coin,
@@ -190,7 +190,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: senderAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
-        initMsg: toAscii(JSON.stringify(initMsg)),
+        initMsg: toUtf8(JSON.stringify(initMsg)),
         initFunds: [...(options.transferAmount || [])],
         admin: options.admin,
       }),
@@ -267,7 +267,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: senderAddress,
         contract: contractAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
-        migrateMsg: toAscii(JSON.stringify(migrateMsg)),
+        migrateMsg: toUtf8(JSON.stringify(migrateMsg)),
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [msg], this.fees.migrate, memo);
@@ -292,7 +292,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: MsgExecuteContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
-        msg: toAscii(JSON.stringify(handleMsg)),
+        msg: toUtf8(JSON.stringify(handleMsg)),
         sentFunds: [...(transferAmount || [])],
       }),
     };
