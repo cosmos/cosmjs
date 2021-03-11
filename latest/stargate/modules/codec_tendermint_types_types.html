@@ -1,0 +1,2372 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>codec/tendermint/types/types | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@cosmjs/stargate Documentation</a>
+				</li>
+				<li>
+					<a href="codec_tendermint_types_types.html">codec/tendermint/types/types</a>
+				</li>
+			</ul>
+			<h1>Module codec/tendermint/types/types</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-kind-icon">BlockIDFlag</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-kind-icon">Signed<wbr>Msg<wbr>Type</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.blockid.html" class="tsd-kind-icon">BlockID</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.blockmeta.html" class="tsd-kind-icon">Block<wbr>Meta</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.commit.html" class="tsd-kind-icon">Commit</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.commitsig.html" class="tsd-kind-icon">Commit<wbr>Sig</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.data.html" class="tsd-kind-icon">Data</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.header.html" class="tsd-kind-icon">Header</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.lightblock.html" class="tsd-kind-icon">Light<wbr>Block</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.part.html" class="tsd-kind-icon">Part</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.partsetheader.html" class="tsd-kind-icon">Part<wbr>Set<wbr>Header</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.proposal.html" class="tsd-kind-icon">Proposal</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.signedheader.html" class="tsd-kind-icon">Signed<wbr>Header</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.txproof.html" class="tsd-kind-icon">Tx<wbr>Proof</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_tendermint_types_types.vote.html" class="tsd-kind-icon">Vote</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="codec_tendermint_types_types.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-kind-icon">BlockID</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-kind-icon">Block<wbr>Meta</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#commit-1" class="tsd-kind-icon">Commit</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-kind-icon">Commit<wbr>Sig</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#data-1" class="tsd-kind-icon">Data</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#header-1" class="tsd-kind-icon">Header</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-kind-icon">Light<wbr>Block</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#part-1" class="tsd-kind-icon">Part</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-kind-icon">Part<wbr>Set<wbr>Header</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-kind-icon">Proposal</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-kind-icon">Signed<wbr>Header</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-kind-icon">Tx<wbr>Proof</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#vote-1" class="tsd-kind-icon">Vote</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#blockidflagfromjson" class="tsd-kind-icon">blockIDFlag<wbr>FromJSON</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#blockidflagtojson" class="tsd-kind-icon">blockIDFlag<wbr>ToJSON</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#signedmsgtypefromjson" class="tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>FromJSON</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="codec_tendermint_types_types.html#signedmsgtypetojson" class="tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>ToJSON</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="deeppartial" class="tsd-anchor"></a>
+					<h3>Deep<wbr>Partial</h3>
+					<div class="tsd-signature tsd-kind-icon">Deep<wbr>Partial&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Builtin</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">infer </span> U<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> ? </span><a href="codec_tendermint_types_types.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> U<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><a href="codec_tendermint_types_types.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1735">codec/tendermint/types/types.ts:1735</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="blockid-1" class="tsd-anchor"></a>
+					<h3>BlockID</h3>
+					<div class="tsd-signature tsd-kind-icon">BlockID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L387">codec/tendermint/types/types.ts:387</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L398">codec/tendermint/types/types.ts:398</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L388">codec/tendermint/types/types.ts:388</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L419">codec/tendermint/types/types.ts:419</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>partSetHeader<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: number | undefined; hash?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L441">codec/tendermint/types/types.ts:441</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>partSetHeader<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: number | undefined; hash?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> part<wbr>Set<wbr>Header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: number | undefined; hash?: Uint8Array | undefined; }</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L432">codec/tendermint/types/types.ts:432</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#blockid-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockID</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="blockmeta-1" class="tsd-anchor"></a>
+					<h3>Block<wbr>Meta</h3>
+					<div class="tsd-signature tsd-kind-icon">Block<wbr>Meta<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1511">codec/tendermint/types/types.ts:1511</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1528">codec/tendermint/types/types.ts:1528</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1512">codec/tendermint/types/types.ts:1512</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1555">codec/tendermint/types/types.ts:1555</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>blockSize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>numTxs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1590">codec/tendermint/types/types.ts:1590</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>blockSize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>numTxs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>Size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> num<wbr>Txs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1580">codec/tendermint/types/types.ts:1580</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-signature-type" data-tsd-kind="Variable">BlockMeta</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="commit-1" class="tsd-anchor"></a>
+					<h3>Commit</h3>
+					<div class="tsd-signature tsd-kind-icon">Commit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L982">codec/tendermint/types/types.ts:982</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L999">codec/tendermint/types/types.ts:999</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L983">codec/tendermint/types/types.ts:983</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1027">codec/tendermint/types/types.ts:1027</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signatures<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ blockIdFlag?: BlockIDFlag | undefined; validatorAddress?: Uint8Array | undefined; timestamp?: Date | undefined; signature?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1067">codec/tendermint/types/types.ts:1067</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signatures<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ blockIdFlag?: BlockIDFlag | undefined; validatorAddress?: Uint8Array | undefined; timestamp?: Date | undefined; signature?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> signatures<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ blockIdFlag?: BlockIDFlag | undefined; validatorAddress?: Uint8Array | undefined; timestamp?: Date | undefined; signature?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">[]</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1053">codec/tendermint/types/types.ts:1053</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#commit-1" class="tsd-signature-type" data-tsd-kind="Variable">Commit</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="commitsig-1" class="tsd-anchor"></a>
+					<h3>Commit<wbr>Sig</h3>
+					<div class="tsd-signature tsd-kind-icon">Commit<wbr>Sig<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1096">codec/tendermint/types/types.ts:1096</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1113">codec/tendermint/types/types.ts:1113</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1097">codec/tendermint/types/types.ts:1097</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1140">codec/tendermint/types/types.ts:1140</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>blockIdFlag<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_absent" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_ABSENT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_commit" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_COMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_nil" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_NIL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>validatorAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1177">codec/tendermint/types/types.ts:1177</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>blockIdFlag<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_absent" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_ABSENT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_commit" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_COMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_nil" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_NIL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>validatorAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>IdFlag<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_absent" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_ABSENT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_commit" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_COMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#block_id_flag_nil" class="tsd-signature-type" data-tsd-kind="Enumeration member">BLOCK_ID_FLAG_NIL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.blockidflag.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> validator<wbr>Address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1161">codec/tendermint/types/types.ts:1161</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-signature-type" data-tsd-kind="Variable">CommitSig</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="data-1" class="tsd-anchor"></a>
+					<h3>Data</h3>
+					<div class="tsd-signature tsd-kind-icon">Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L742">codec/tendermint/types/types.ts:742</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L750">codec/tendermint/types/types.ts:750</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L743">codec/tendermint/types/types.ts:743</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L769">codec/tendermint/types/types.ts:769</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>txs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L790">codec/tendermint/types/types.ts:790</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>txs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> txs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>Txs that will be applied by state @ block.Height+1.
+																	NOTE: not all txs here are valid.  We&#39;re just agreeing on the order first.
+																This means that block.AppHash does not include these txs.</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L780">codec/tendermint/types/types.ts:780</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#data-1" class="tsd-signature-type" data-tsd-kind="Variable">Data</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="header-1" class="tsd-anchor"></a>
+					<h3>Header</h3>
+					<div class="tsd-signature tsd-kind-icon">Header<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L459">codec/tendermint/types/types.ts:459</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L506">codec/tendermint/types/types.ts:506</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L460">codec/tendermint/types/types.ts:460</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L563">codec/tendermint/types/types.ts:563</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>appHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>chainId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>consensusHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>dataHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>evidenceHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>lastBlockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>lastCommitHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>lastResultsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>nextValidatorsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proposerAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>time<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>validatorsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ block?: Long | undefined; app?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L664">codec/tendermint/types/types.ts:664</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>appHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>chainId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>consensusHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>dataHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>evidenceHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>lastBlockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>lastCommitHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>lastResultsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>nextValidatorsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proposerAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>time<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>validatorsHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ block?: Long | undefined; app?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> app<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>state after txs from the previous block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> chain<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> consensus<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus params for current block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> data<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>transactions</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> evidence<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus info</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> last<wbr>Block<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>prev block info</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> last<wbr>Commit<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>hashes of block data</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> last<wbr>Results<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>root hash of all results from the txs from the previous block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> next<wbr>Validators<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>validators for the next block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proposer<wbr>Address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>original proposer of the block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> time<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> validators<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>hashes from the app output from the prev block</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ block?: Long | undefined; app?: Long | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>basic block info</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L620">codec/tendermint/types/types.ts:620</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#header-1" class="tsd-signature-type" data-tsd-kind="Variable">Header</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="lightblock-1" class="tsd-anchor"></a>
+					<h3>Light<wbr>Block</h3>
+					<div class="tsd-signature tsd-kind-icon">Light<wbr>Block<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1437">codec/tendermint/types/types.ts:1437</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1448">codec/tendermint/types/types.ts:1448</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1438">codec/tendermint/types/types.ts:1438</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1469">codec/tendermint/types/types.ts:1469</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>signedHeader<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ header?: { version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; } | undefined; commit?: { ...; } | undefined; }</span><span class="tsd-signature-symbol">; </span>validatorSet<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ validators?: { address?: Uint8Array | undefined; pubKey?: { ed25519?: Uint8Array | undefined; secp256k1?: Uint8Array | undefined; } | undefined; votingPower?: Long | undefined; proposerPriority?: Long | undefined; }[] | undefined; proposer?: { ...; } | undefined; totalVotingPower?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1493">codec/tendermint/types/types.ts:1493</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>signedHeader<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ header?: { version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; } | undefined; commit?: { ...; } | undefined; }</span><span class="tsd-signature-symbol">; </span>validatorSet<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ validators?: { address?: Uint8Array | undefined; pubKey?: { ed25519?: Uint8Array | undefined; secp256k1?: Uint8Array | undefined; } | undefined; votingPower?: Long | undefined; proposerPriority?: Long | undefined; }[] | undefined; proposer?: { ...; } | undefined; totalVotingPower?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> signed<wbr>Header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ header?: { version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; } | undefined; commit?: { ...; } | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> validator<wbr>Set<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ validators?: { address?: Uint8Array | undefined; pubKey?: { ed25519?: Uint8Array | undefined; secp256k1?: Uint8Array | undefined; } | undefined; votingPower?: Long | undefined; proposerPriority?: Long | undefined; }[] | undefined; proposer?: { ...; } | undefined; totalVotingPower?: Long | undefined; }</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1484">codec/tendermint/types/types.ts:1484</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-signature-type" data-tsd-kind="Variable">LightBlock</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="part-1" class="tsd-anchor"></a>
+					<h3>Part</h3>
+					<div class="tsd-signature tsd-kind-icon">Part<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L299">codec/tendermint/types/types.ts:299</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L313">codec/tendermint/types/types.ts:313</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L300">codec/tendermint/types/types.ts:300</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L337">codec/tendermint/types/types.ts:337</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>bytes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L364">codec/tendermint/types/types.ts:364</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>bytes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> bytes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L355">codec/tendermint/types/types.ts:355</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#part-1" class="tsd-signature-type" data-tsd-kind="Variable">Part</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="partsetheader-1" class="tsd-anchor"></a>
+					<h3>Part<wbr>Set<wbr>Header</h3>
+					<div class="tsd-signature tsd-kind-icon">Part<wbr>Set<wbr>Header<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L228">codec/tendermint/types/types.ts:228</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L239">codec/tendermint/types/types.ts:239</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L229">codec/tendermint/types/types.ts:229</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L260">codec/tendermint/types/types.ts:260</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L281">codec/tendermint/types/types.ts:281</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L273">codec/tendermint/types/types.ts:273</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-signature-type" data-tsd-kind="Variable">PartSetHeader</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="proposal-1" class="tsd-anchor"></a>
+					<h3>Proposal</h3>
+					<div class="tsd-signature tsd-kind-icon">Proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1205">codec/tendermint/types/types.ts:1205</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1231">codec/tendermint/types/types.ts:1231</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1206">codec/tendermint/types/types.ts:1206</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1267">codec/tendermint/types/types.ts:1267</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>polRound<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1322">codec/tendermint/types/types.ts:1322</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>polRound<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> pol<wbr>Round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1305">codec/tendermint/types/types.ts:1305</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#proposal-1" class="tsd-signature-type" data-tsd-kind="Variable">Proposal</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="signedheader-1" class="tsd-anchor"></a>
+					<h3>Signed<wbr>Header</h3>
+					<div class="tsd-signature tsd-kind-icon">Signed<wbr>Header<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1365">codec/tendermint/types/types.ts:1365</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1376">codec/tendermint/types/types.ts:1376</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1366">codec/tendermint/types/types.ts:1366</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1397">codec/tendermint/types/types.ts:1397</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>commit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: Long | undefined; round?: number | undefined; blockId?: { hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; } | undefined; signatures?: { ...; }[] | undefined; }</span><span class="tsd-signature-symbol">; </span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1419">codec/tendermint/types/types.ts:1419</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>commit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: Long | undefined; round?: number | undefined; blockId?: { hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; } | undefined; signatures?: { ...; }[] | undefined; }</span><span class="tsd-signature-symbol">; </span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> commit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: Long | undefined; round?: number | undefined; blockId?: { hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; } | undefined; signatures?: { ...; }[] | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ version?: { block?: Long | undefined; app?: Long | undefined; } | undefined; chainId?: string | undefined; height?: Long | undefined; time?: Date | undefined; ... 9 more ...; proposerAddress?: Uint8Array | undefined; }</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1412">codec/tendermint/types/types.ts:1412</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-signature-type" data-tsd-kind="Variable">SignedHeader</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="txproof-1" class="tsd-anchor"></a>
+					<h3>Tx<wbr>Proof</h3>
+					<div class="tsd-signature tsd-kind-icon">Tx<wbr>Proof<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1618">codec/tendermint/types/types.ts:1618</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1632">codec/tendermint/types/types.ts:1632</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1619">codec/tendermint/types/types.ts:1619</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1656">codec/tendermint/types/types.ts:1656</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span><span class="tsd-signature-symbol">; </span>rootHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1682">codec/tendermint/types/types.ts:1682</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span><span class="tsd-signature-symbol">; </span>rootHash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ total?: Long | undefined; index?: Long | undefined; leafHash?: Uint8Array | undefined; aunts?: Uint8Array[] | undefined; }</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>Hash<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L1672">codec/tendermint/types/types.ts:1672</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#txproof-1" class="tsd-signature-type" data-tsd-kind="Variable">TxProof</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="vote-1" class="tsd-anchor"></a>
+					<h3>Vote</h3>
+					<div class="tsd-signature tsd-kind-icon">Vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L804">codec/tendermint/types/types.ts:804</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L833">codec/tendermint/types/types.ts:833</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L805">codec/tendermint/types/types.ts:805</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L872">codec/tendermint/types/types.ts:872</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol">; </span>validatorAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>validatorIndex<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L934">codec/tendermint/types/types.ts:934</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>blockId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">; </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a><span class="tsd-signature-symbol">; </span>validatorAddress<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>validatorIndex<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> block<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ hash?: Uint8Array | undefined; partSetHeader?: { total?: number | undefined; hash?: Uint8Array | undefined; } | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>zero if vote is nil.</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> round<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> type<span class="tsd-signature-symbol">?: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_unknown" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_UNKNOWN</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_prevote" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PREVOTE</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_precommit" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PRECOMMIT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#signed_msg_type_proposal" class="tsd-signature-type" data-tsd-kind="Enumeration member">SIGNED_MSG_TYPE_PROPOSAL</a><span class="tsd-signature-symbol"> | </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html#unrecognized" class="tsd-signature-type" data-tsd-kind="Enumeration member">UNRECOGNIZED</a></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> validator<wbr>Address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> validator<wbr>Index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L913">codec/tendermint/types/types.ts:913</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_tendermint_types_types.html#vote-1" class="tsd-signature-type" data-tsd-kind="Variable">Vote</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="protobufpackage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> protobuf<wbr>Package</h3>
+					<div class="tsd-signature tsd-kind-icon">protobuf<wbr>Package<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;tendermint.types&quot;</span><span class="tsd-signature-symbol"> = &quot;tendermint.types&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L9">codec/tendermint/types/types.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="blockidflagfromjson" class="tsd-anchor"></a>
+					<h3>blockIDFlag<wbr>FromJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">blockIDFlag<wbr>FromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-signature-type" data-tsd-kind="Enumeration">BlockIDFlag</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L20">codec/tendermint/types/types.ts:20</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-signature-type" data-tsd-kind="Enumeration">BlockIDFlag</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="blockidflagtojson" class="tsd-anchor"></a>
+					<h3>blockIDFlag<wbr>ToJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">blockIDFlag<wbr>ToJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-signature-type" data-tsd-kind="Enumeration">BlockIDFlag</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L41">codec/tendermint/types/types.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-signature-type" data-tsd-kind="Enumeration">BlockIDFlag</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="signedmsgtypefromjson" class="tsd-anchor"></a>
+					<h3>signed<wbr>Msg<wbr>Type<wbr>FromJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>FromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">SignedMsgType</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L67">codec/tendermint/types/types.ts:67</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">SignedMsgType</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="signedmsgtypetojson" class="tsd-anchor"></a>
+					<h3>signed<wbr>Msg<wbr>Type<wbr>ToJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>ToJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">SignedMsgType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/tendermint/types/types.ts#L88">codec/tendermint/types/types.ts:88</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">SignedMsgType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="codec_tendermint_types_types.html">codec/tendermint/types/types</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/codec_tendermint_types_types.blockidflag.html" class="tsd-kind-icon">BlockIDFlag</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/codec_tendermint_types_types.signedmsgtype.html" class="tsd-kind-icon">Signed<wbr>Msg<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.blockid.html" class="tsd-kind-icon">BlockID</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.blockmeta.html" class="tsd-kind-icon">Block<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.commit.html" class="tsd-kind-icon">Commit</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.commitsig.html" class="tsd-kind-icon">Commit<wbr>Sig</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.data.html" class="tsd-kind-icon">Data</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.header.html" class="tsd-kind-icon">Header</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.lightblock.html" class="tsd-kind-icon">Light<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.part.html" class="tsd-kind-icon">Part</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.partsetheader.html" class="tsd-kind-icon">Part<wbr>Set<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.proposal.html" class="tsd-kind-icon">Proposal</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.signedheader.html" class="tsd-kind-icon">Signed<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.txproof.html" class="tsd-kind-icon">Tx<wbr>Proof</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_tendermint_types_types.vote.html" class="tsd-kind-icon">Vote</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="codec_tendermint_types_types.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#blockid-1" class="tsd-kind-icon">BlockID</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#blockmeta-1" class="tsd-kind-icon">Block<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#commit-1" class="tsd-kind-icon">Commit</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#commitsig-1" class="tsd-kind-icon">Commit<wbr>Sig</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#data-1" class="tsd-kind-icon">Data</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#header-1" class="tsd-kind-icon">Header</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#lightblock-1" class="tsd-kind-icon">Light<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#part-1" class="tsd-kind-icon">Part</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#partsetheader-1" class="tsd-kind-icon">Part<wbr>Set<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#proposal-1" class="tsd-kind-icon">Proposal</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#signedheader-1" class="tsd-kind-icon">Signed<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#txproof-1" class="tsd-kind-icon">Tx<wbr>Proof</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#vote-1" class="tsd-kind-icon">Vote</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#blockidflagfromjson" class="tsd-kind-icon">blockIDFlag<wbr>FromJSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#blockidflagtojson" class="tsd-kind-icon">blockIDFlag<wbr>ToJSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#signedmsgtypefromjson" class="tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>FromJSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="codec_tendermint_types_types.html#signedmsgtypetojson" class="tsd-kind-icon">signed<wbr>Msg<wbr>Type<wbr>ToJSON</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

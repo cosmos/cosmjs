@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -47,11 +48,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>@cosmjs/launchpad Documentation</h1>
 		</div>
 	</div>
@@ -84,91 +80,95 @@
 					using testnet credentials only. Integrating it into end user facing products
 				requires serious security review.</p>
 				<p>If you do not yet have a mnemonic, generate a new wallet with a random mnemonic:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Secp256k1HdWallet } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Mnemonic:&quot;</span>, wallet.mnemonic);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Mnemonic:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #001080">mnemonic</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #0070C1">address</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Address:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+</code></pre>
 				<p>Or import an existing one:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Secp256k1HdWallet } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(
-  <span class="hljs-comment">// your mnemonic here 👇</span>
-  <span class="hljs-string">&quot;enlist hip relief stomach skate base shallow young switch frequent cry park&quot;</span>,
-);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">fromMnemonic</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #008000">// your mnemonic here 👇</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;enlist hip relief stomach skate base shallow young switch frequent cry park&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #0070C1">address</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Address:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#sign-and-broadcast-transactions" id="sign-and-broadcast-transactions" style="color: inherit; text-decoration: none;">
 					<h3>Sign and broadcast transactions</h3>
 				</a>
 				<p>A wallet holds private keys and can use them for signing transactions. To do so
 				we stick the wallet into a client:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  Secp256k1HdWallet,
-  SigningCosmosClient,
-  coins,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">SigningCosmosClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coins</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
-<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #0070C1">address</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Address:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Ensure the address has some tokens to spend</span>
+<span style="color: #008000">// Ensure the address has some tokens to spend</span>
 
-<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>;
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lcdApi</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;https://…&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #001080">lcdApi</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">, </span><span style="color: #001080">wallet</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// check our balance</span>
-<span class="hljs-keyword">const</span> account = <span class="hljs-keyword">await</span> client.getAccount();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Account:&quot;</span>, account);
+<span style="color: #008000">// check our balance</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">account</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">getAccount</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Account:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">account</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Send tokens</span>
-<span class="hljs-keyword">const</span> recipient = <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>;
-<span class="hljs-keyword">await</span> client.sendTokens(recipient, coins(<span class="hljs-number">123</span>, <span class="hljs-string">&quot;uatom&quot;</span>));</code></pre>
+<span style="color: #008000">// Send tokens</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">recipient</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;cosmos1b2340gb2…&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">sendTokens</span><span style="color: #000000">(</span><span style="color: #001080">recipient</span><span style="color: #000000">, </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">123</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;uatom&quot;</span><span style="color: #000000">));</span>
+</code></pre>
 				<p>or use custom message types:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  Secp256k1HdWallet,
-  SigningCosmosClient,
-  coins,
-  coin,
-  MsgDelegate,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">SigningCosmosClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coins</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coin</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">MsgDelegate</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
-<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #0070C1">address</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Address:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Ensure the address has some tokens to spend</span>
+<span style="color: #008000">// Ensure the address has some tokens to spend</span>
 
-<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>;
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lcdApi</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;https://…&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #001080">lcdApi</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">, </span><span style="color: #001080">wallet</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> msg: MsgDelegate = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgDelegate&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">delegator_address</span>: address,
-    <span class="hljs-attr">validator_address</span>: <span class="hljs-string">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span>,
-    <span class="hljs-attr">amount</span>: coin(<span class="hljs-number">300000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
-  },
-};
-<span class="hljs-keyword">const</span> fee = {
-  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;180000&quot;</span>, <span class="hljs-comment">// 180k</span>
-};
-<span class="hljs-keyword">await</span> client.signAndBroadcast([msg], fee);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg</span><span style="color: #000000">: </span><span style="color: #267F99">MsgDelegate</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgDelegate&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">delegator_address:</span><span style="color: #000000"> </span><span style="color: #001080">address</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">validator_address:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coin</span><span style="color: #000000">(</span><span style="color: #098658">300000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ustake&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fee</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">2000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  </span><span style="color: #001080">gas:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;180000&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// 180k</span>
+<span style="color: #000000">};</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">signAndBroadcast</span><span style="color: #000000">([</span><span style="color: #001080">msg</span><span style="color: #000000">], </span><span style="color: #001080">fee</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#advanced-usage" id="advanced-usage" style="color: inherit; text-decoration: none;">
 					<h2>Advanced usage</h2>
 				</a>
@@ -181,93 +181,95 @@
 					<h3>Sign only</h3>
 				</a>
 				<p>You can sign a transaction without broadcasting it:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  Secp256k1HdWallet,
-  SigningCosmosClient,
-  coins,
-  coin,
-  MsgDelegate,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">SigningCosmosClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coins</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coin</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">MsgDelegate</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
-<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #0070C1">address</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Address:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>; <span class="hljs-comment">// Signing is offline, but from this endpoint we get the account number and sequence</span>
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lcdApi</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;https://…&quot;</span><span style="color: #000000">; </span><span style="color: #008000">// Signing is offline, but from this endpoint we get the account number and sequence</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #001080">lcdApi</span><span style="color: #000000">, </span><span style="color: #001080">address</span><span style="color: #000000">, </span><span style="color: #001080">wallet</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// …</span>
+<span style="color: #008000">// …</span>
 
-<span class="hljs-keyword">const</span> msg: MsgDelegate = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgDelegate&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">delegator_address</span>: address,
-    <span class="hljs-attr">validator_address</span>: <span class="hljs-string">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span>,
-    <span class="hljs-attr">amount</span>: coin(<span class="hljs-number">300000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
-  },
-};
-<span class="hljs-keyword">const</span> fee = {
-  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;180000&quot;</span>, <span class="hljs-comment">// 180k</span>
-};
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg</span><span style="color: #000000">: </span><span style="color: #267F99">MsgDelegate</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgDelegate&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">delegator_address:</span><span style="color: #000000"> </span><span style="color: #001080">address</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">validator_address:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coin</span><span style="color: #000000">(</span><span style="color: #098658">300000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ustake&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fee</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">2000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  </span><span style="color: #001080">gas:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;180000&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// 180k</span>
+<span style="color: #000000">};</span>
 
-<span class="hljs-keyword">let</span> signed = <span class="hljs-keyword">await</span> client.sign([msg], fee);
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Signed transaction:&quot;</span>, signed);
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">signed</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">sign</span><span style="color: #000000">([</span><span style="color: #001080">msg</span><span style="color: #000000">], </span><span style="color: #001080">fee</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Signed transaction:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">signed</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// We can broadcast it manually later on</span>
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.broadcastTx(signed);
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Broadcasting result:&quot;</span>, result);</code></pre>
+<span style="color: #008000">// We can broadcast it manually later on</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">result</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTx</span><span style="color: #000000">(</span><span style="color: #001080">signed</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Broadcasting result:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">result</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#aggregate-signatures" id="aggregate-signatures" style="color: inherit; text-decoration: none;">
 					<h3>Aggregate signatures</h3>
 				</a>
 				<p>In this example we use <code>wallet0</code>/<code>client0</code> and <code>wallet1</code>/<code>client1</code> which can
 				live on separate systems:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  Secp256k1HdWallet,
-  SigningCosmosClient,
-  coins,
-  coin,
-  MsgDelegate,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">SigningCosmosClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coins</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">coin</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">MsgDelegate</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> wallet0 = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(mnemonic0);
-<span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: address0 }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-keyword">const</span> client0 = <span class="hljs-keyword">new</span> SigningCosmosClient(<span class="hljs-string">&quot;https://…&quot;</span>, address0, wallet0);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet0</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">fromMnemonic</span><span style="color: #000000">(</span><span style="color: #001080">mnemonic0</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #001080">address</span><span style="color: #000000">: </span><span style="color: #0070C1">address0</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client0</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;https://…&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address0</span><span style="color: #000000">, </span><span style="color: #001080">wallet0</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> wallet1 = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(mnemonic1);
-<span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: address1 }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
-<span class="hljs-keyword">const</span> client1 = <span class="hljs-keyword">new</span> SigningCosmosClient(<span class="hljs-string">&quot;https://…&quot;</span>, address1, wallet1);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet1</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">fromMnemonic</span><span style="color: #000000">(</span><span style="color: #001080">mnemonic1</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #001080">address</span><span style="color: #000000">: </span><span style="color: #0070C1">address1</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;https://…&quot;</span><span style="color: #000000">, </span><span style="color: #001080">address1</span><span style="color: #000000">, </span><span style="color: #001080">wallet1</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> msg1: MsgSend = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSend&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">from_address</span>: address0,
-    <span class="hljs-attr">to_address</span>: <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>,
-    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">1234567</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  },
-};
-<span class="hljs-keyword">const</span> msg2: MsgSend = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSend&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">from_address</span>: address1,
-    <span class="hljs-attr">to_address</span>: <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>,
-    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">1234567</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  },
-};
-<span class="hljs-keyword">const</span> fee = {
-  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;160000&quot;</span>, <span class="hljs-comment">// 2*80k</span>
-};
-<span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;This must be authorized by the two of us&quot;</span>;
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg1</span><span style="color: #000000">: </span><span style="color: #267F99">MsgSend</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgSend&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">from_address:</span><span style="color: #000000"> </span><span style="color: #001080">address0</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">to_address:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos1b2340gb2…&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">1234567</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg2</span><span style="color: #000000">: </span><span style="color: #267F99">MsgSend</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgSend&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">from_address:</span><span style="color: #000000"> </span><span style="color: #001080">address1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">to_address:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos1b2340gb2…&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">1234567</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fee</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">2000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  </span><span style="color: #001080">gas:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;160000&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// 2*80k</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">memo</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;This must be authorized by the two of us&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> signed = <span class="hljs-keyword">await</span> client0.sign([msg1, msg2], fee, memo);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">signed</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client0</span><span style="color: #000000">.</span><span style="color: #795E26">sign</span><span style="color: #000000">([</span><span style="color: #001080">msg1</span><span style="color: #000000">, </span><span style="color: #001080">msg2</span><span style="color: #000000">], </span><span style="color: #001080">fee</span><span style="color: #000000">, </span><span style="color: #001080">memo</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> cosigned = <span class="hljs-keyword">await</span> client1.appendSignature(signed);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cosigned</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client1</span><span style="color: #000000">.</span><span style="color: #795E26">appendSignature</span><span style="color: #000000">(</span><span style="color: #001080">signed</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client1.broadcastTx(cosigned);
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Broadcasting result:&quot;</span>, result);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">result</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client1</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTx</span><span style="color: #000000">(</span><span style="color: #001080">cosigned</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Broadcasting result:&quot;</span><span style="color: #000000">, </span><span style="color: #001080">result</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#cosmos-sdk-module-support" id="cosmos-sdk-module-support" style="color: inherit; text-decoration: none;">
 					<h2>Cosmos SDK module support</h2>
 				</a>
@@ -284,65 +286,69 @@
 					<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/lcdclient.html">LcdClient</a>,
 					which can be extended with all the standard Cosmos SDK modules in a type-safe
 				way. With</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LcdClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LcdClient</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> LcdClient(apiUrl);
-<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> client.nodeInfo();</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">LcdClient</span><span style="color: #000000">(</span><span style="color: #001080">apiUrl</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">response</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">nodeInfo</span><span style="color: #000000">();</span>
+</code></pre>
 				<p>you only get access to blocks, transaction lists and node info. In order to sign
 				transactions, you need to setup the auth extension with:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LcdClient, setupAuthExtension } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LcdClient</span><span style="color: #000000">, </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> client = LcdClient.withExtensions({ apiUrl }, setupAuthExtension);
-<span class="hljs-keyword">const</span> { account_number, sequence } = (
-  <span class="hljs-keyword">await</span> client.auth.account(myAddress)
-).result.value;</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #001080">LcdClient</span><span style="color: #000000">.</span><span style="color: #795E26">withExtensions</span><span style="color: #000000">({ </span><span style="color: #001080">apiUrl</span><span style="color: #000000"> }, </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">account_number</span><span style="color: #000000">, </span><span style="color: #0070C1">sequence</span><span style="color: #000000"> } = (</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">auth</span><span style="color: #000000">.</span><span style="color: #795E26">account</span><span style="color: #000000">(</span><span style="color: #001080">myAddress</span><span style="color: #000000">)</span>
+<span style="color: #000000">).</span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">value</span><span style="color: #000000">;</span>
+</code></pre>
 				<p>A full client can use all of the following extensions:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  LcdClient,
-  setupAuthExtension,
-  setupBankExtension,
-  setupDistributionExtension,
-  setupGovExtension,
-  setupMintExtension,
-  setupSlashingExtension,
-  setupStakingExtension,
-  setupSupplyExtension,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">LcdClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupBankExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupDistributionExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupGovExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupMintExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupSlashingExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupStakingExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupSupplyExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> client = LcdClient.withExtensions(
-  { apiUrl },
-  setupAuthExtension,
-  setupBankExtension,
-  setupDistributionExtension,
-  setupGovExtension,
-  setupMintExtension,
-  setupSlashingExtension,
-  setupStakingExtension,
-  setupSupplyExtension,
-);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #001080">LcdClient</span><span style="color: #000000">.</span><span style="color: #795E26">withExtensions</span><span style="color: #000000">(</span>
+<span style="color: #000000">  { </span><span style="color: #001080">apiUrl</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupBankExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupDistributionExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupGovExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupMintExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupSlashingExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupStakingExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupSupplyExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Example queries</span>
-<span class="hljs-keyword">const</span> balances = <span class="hljs-keyword">await</span> client.bank.balances(myAddress);
-<span class="hljs-keyword">const</span> distParameters = <span class="hljs-keyword">await</span> client.distribution.parameters();
-<span class="hljs-keyword">const</span> proposals = <span class="hljs-keyword">await</span> client.gov.proposals();
-<span class="hljs-keyword">const</span> inflation = <span class="hljs-keyword">await</span> client.mint.inflation();
-<span class="hljs-keyword">const</span> signingInfos = <span class="hljs-keyword">await</span> client.slashing.signingInfos();
-<span class="hljs-keyword">const</span> redelegations = <span class="hljs-keyword">await</span> client.staking.redelegations();
-<span class="hljs-keyword">const</span> supply = <span class="hljs-keyword">await</span> client.supply.totalAll();</code></pre>
+<span style="color: #008000">// Example queries</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">balances</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">bank</span><span style="color: #000000">.</span><span style="color: #795E26">balances</span><span style="color: #000000">(</span><span style="color: #001080">myAddress</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">distParameters</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">distribution</span><span style="color: #000000">.</span><span style="color: #795E26">parameters</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">proposals</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">gov</span><span style="color: #000000">.</span><span style="color: #795E26">proposals</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">inflation</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">mint</span><span style="color: #000000">.</span><span style="color: #795E26">inflation</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">signingInfos</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">slashing</span><span style="color: #000000">.</span><span style="color: #795E26">signingInfos</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">redelegations</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">staking</span><span style="color: #000000">.</span><span style="color: #795E26">redelegations</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">supply</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">supply</span><span style="color: #000000">.</span><span style="color: #795E26">totalAll</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#messages-suppport" id="messages-suppport" style="color: inherit; text-decoration: none;">
 					<h3>Messages suppport</h3>
 				</a>
 				<p>Every Amino-JSON compatible message can be used for the
 					<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/interfaces/msg.html">Msg</a>
 				interface like this:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> voteMsg: Msg = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgVote&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">proposal_id</span>: proposalId,
-    <span class="hljs-attr">voter</span>: faucet.address,
-    <span class="hljs-attr">option</span>: <span class="hljs-string">&quot;Yes&quot;</span>,
-  },
-};</code></pre>
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">voteMsg</span><span style="color: #000000">: </span><span style="color: #267F99">Msg</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgVote&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">proposal_id:</span><span style="color: #000000"> </span><span style="color: #001080">proposalId</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">voter:</span><span style="color: #000000"> </span><span style="color: #001080">faucet</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">option:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Yes&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+</code></pre>
 				<p>This is most flexible since you are not restricted to known messages, but gives
 					you very little type safety. For improved type safety, we added TypeScript
 				definitions for all common Cosmos SDK messages:</p>
@@ -367,95 +373,97 @@
 				</ul>
 				<p>Those can be signed and broadcast the manual way or by using a higher level
 				<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/signingcosmosclient.html">SigningCosmosClient</a>:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  coins,
-  BroadcastTxResult,
-  MsgSubmitProposal,
-  OfflineSigner,
-  SigningCosmosClient,
-  StdFee,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">coins</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">BroadcastTxResult</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">MsgSubmitProposal</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">OfflineSigner</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">SigningCosmosClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">StdFee</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">publishProposal</span>(<span class="hljs-params">
-  apiUrl: <span class="hljs-built_in">string</span>,
-  signer: OfflineSigner,
-</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">BroadcastTxResult</span>&gt; </span>{
-  <span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: authorAddress }] = <span class="hljs-keyword">await</span> signer.getAccounts();
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">publishProposal</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiUrl</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">signer</span><span style="color: #000000">: </span><span style="color: #267F99">OfflineSigner</span><span style="color: #000000">,</span>
+<span style="color: #000000">): </span><span style="color: #267F99">Promise</span><span style="color: #000000">&lt;</span><span style="color: #267F99">BroadcastTxResult</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> [{ </span><span style="color: #001080">address</span><span style="color: #000000">: </span><span style="color: #0070C1">authorAddress</span><span style="color: #000000"> }] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">signer</span><span style="color: #000000">.</span><span style="color: #795E26">getAccounts</span><span style="color: #000000">();</span>
 
-  <span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;My first proposal on chain&quot;</span>;
-  <span class="hljs-keyword">const</span> msg: MsgSubmitProposal = {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSubmitProposal&quot;</span>,
-    <span class="hljs-attr">value</span>: {
-      <span class="hljs-attr">content</span>: {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/TextProposal&quot;</span>,
-        <span class="hljs-attr">value</span>: {
-          <span class="hljs-attr">description</span>:
-            <span class="hljs-string">&quot;This proposal proposes to test whether this proposal passes&quot;</span>,
-          <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;Test Proposal&quot;</span>,
-        },
-      },
-      <span class="hljs-attr">proposer</span>: authorAddress,
-      <span class="hljs-attr">initial_deposit</span>: coins(<span class="hljs-number">25000000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
-    },
-  };
-  <span class="hljs-keyword">const</span> fee: StdFee = {
-    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-    <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;89000000&quot;</span>,
-  };
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">memo</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;My first proposal on chain&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg</span><span style="color: #000000">: </span><span style="color: #267F99">MsgSubmitProposal</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">    </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/MsgSubmitProposal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">content:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cosmos-sdk/TextProposal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">description:</span>
+<span style="color: #000000">            </span><span style="color: #A31515">&quot;This proposal proposes to test whether this proposal passes&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">          </span><span style="color: #001080">title:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Test Proposal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      </span><span style="color: #001080">proposer:</span><span style="color: #000000"> </span><span style="color: #001080">authorAddress</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">initial_deposit:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">25000000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ustake&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  };</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fee</span><span style="color: #000000">: </span><span style="color: #267F99">StdFee</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">    </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">5000000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">    </span><span style="color: #001080">gas:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;89000000&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  };</span>
 
-  <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(apiUrl, authorAddress, signer);
-  <span class="hljs-keyword">return</span> client.signAndBroadcast([msg], fee, memo);
-}</code></pre>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SigningCosmosClient</span><span style="color: #000000">(</span><span style="color: #001080">apiUrl</span><span style="color: #000000">, </span><span style="color: #001080">authorAddress</span><span style="color: #000000">, </span><span style="color: #001080">signer</span><span style="color: #000000">);</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">signAndBroadcast</span><span style="color: #000000">([</span><span style="color: #001080">msg</span><span style="color: #000000">], </span><span style="color: #001080">fee</span><span style="color: #000000">, </span><span style="color: #001080">memo</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+</code></pre>
 				<a href="#custom-modules" id="custom-modules" style="color: inherit; text-decoration: none;">
 					<h3>Custom modules</h3>
 				</a>
 				<p>Both query and message support is implemented in a decentralized fashion, which
 					allows applications to add their extensions without changing CosmJS. As an
 				example we show how to build a client for a blockchain with a wasm module:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
-  MsgExecuteContract,
-  setupWasmExtension,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/cosmwasm-launchpad&quot;</span>;
-<span class="hljs-keyword">import</span> {
-  assertIsBroadcastTxResult,
-  LcdClient,
-  makeSignDoc,
-  setupAuthExtension,
-  StdFee,
-  StdTx,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">MsgExecuteContract</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupWasmExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/cosmwasm-launchpad&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">assertIsBroadcastTxResult</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">LcdClient</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">makeSignDoc</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">StdFee</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">StdTx</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> client = LcdClient.withExtensions(
-  { apiUrl },
-  setupAuthExtension,
-  <span class="hljs-comment">// 👇 this extension can come from a chain-specific package or the application itself</span>
-  setupWasmExtension,
-);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #001080">LcdClient</span><span style="color: #000000">.</span><span style="color: #795E26">withExtensions</span><span style="color: #000000">(</span>
+<span style="color: #000000">  { </span><span style="color: #001080">apiUrl</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupAuthExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// 👇 this extension can come from a chain-specific package or the application itself</span>
+<span style="color: #000000">  </span><span style="color: #001080">setupWasmExtension</span><span style="color: #000000">,</span>
+<span style="color: #000000">);</span>
 
-<span class="hljs-comment">// 👇 this message type can come from a chain-specific package or the application itself</span>
-<span class="hljs-keyword">const</span> msg: MsgExecuteContract = {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;wasm/MsgExecuteContract&quot;</span>,
-  <span class="hljs-attr">value</span>: {
-    <span class="hljs-attr">sender</span>: myAddress,
-    <span class="hljs-attr">contract</span>: contractAddress,
-    <span class="hljs-attr">msg</span>: wasmMsg,
-    <span class="hljs-attr">sent_funds</span>: [],
-  },
-};
+<span style="color: #008000">// 👇 this message type can come from a chain-specific package or the application itself</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">msg</span><span style="color: #000000">: </span><span style="color: #267F99">MsgExecuteContract</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;wasm/MsgExecuteContract&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">value:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">sender:</span><span style="color: #000000"> </span><span style="color: #001080">myAddress</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">contract:</span><span style="color: #000000"> </span><span style="color: #001080">contractAddress</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">msg:</span><span style="color: #000000"> </span><span style="color: #001080">wasmMsg</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sent_funds:</span><span style="color: #000000"> [],</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
 
-<span class="hljs-keyword">const</span> fee: StdFee = {
-  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;89000000&quot;</span>,
-};
-<span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;Time for action&quot;</span>;
-<span class="hljs-keyword">const</span> { account_number, sequence } = (
-  <span class="hljs-keyword">await</span> client.auth.account(myAddress)
-).result.value;
-<span class="hljs-keyword">const</span> signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
-<span class="hljs-keyword">const</span> { signed, signature } = <span class="hljs-keyword">await</span> signer.sign(myAddress, signDoc);
-<span class="hljs-keyword">const</span> signedTx = makeStdTx(signed, signature);
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.broadcastTx(signedTx);
-assertIsBroadcastTxResult(result);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fee</span><span style="color: #000000">: </span><span style="color: #267F99">StdFee</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">amount:</span><span style="color: #000000"> </span><span style="color: #795E26">coins</span><span style="color: #000000">(</span><span style="color: #098658">5000000</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;ucosm&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  </span><span style="color: #001080">gas:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;89000000&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">memo</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;Time for action&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">account_number</span><span style="color: #000000">, </span><span style="color: #0070C1">sequence</span><span style="color: #000000"> } = (</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">auth</span><span style="color: #000000">.</span><span style="color: #795E26">account</span><span style="color: #000000">(</span><span style="color: #001080">myAddress</span><span style="color: #000000">)</span>
+<span style="color: #000000">).</span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">value</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">signDoc</span><span style="color: #000000"> = </span><span style="color: #795E26">makeSignDoc</span><span style="color: #000000">([</span><span style="color: #001080">msg</span><span style="color: #000000">], </span><span style="color: #001080">fee</span><span style="color: #000000">, </span><span style="color: #001080">apiUrl</span><span style="color: #000000">, </span><span style="color: #001080">memo</span><span style="color: #000000">, </span><span style="color: #001080">account_number</span><span style="color: #000000">, </span><span style="color: #001080">sequence</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">signed</span><span style="color: #000000">, </span><span style="color: #0070C1">signature</span><span style="color: #000000"> } = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">signer</span><span style="color: #000000">.</span><span style="color: #795E26">sign</span><span style="color: #000000">(</span><span style="color: #001080">myAddress</span><span style="color: #000000">, </span><span style="color: #001080">signDoc</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">signedTx</span><span style="color: #000000"> = </span><span style="color: #795E26">makeStdTx</span><span style="color: #000000">(</span><span style="color: #001080">signed</span><span style="color: #000000">, </span><span style="color: #001080">signature</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">result</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTx</span><span style="color: #000000">(</span><span style="color: #001080">signedTx</span><span style="color: #000000">);</span>
+<span style="color: #795E26">assertIsBroadcastTxResult</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#secure-key-storage" id="secure-key-storage" style="color: inherit; text-decoration: none;">
 					<h2>Secure key storage</h2>
 				</a>
@@ -463,56 +471,62 @@ assertIsBroadcastTxResult(result);</code></pre>
 					supports securely encrypted serialization/deserialization using Argon2 for key
 					derivation and XChaCha20Poly1305 for authenticated encryption. It can be used as
 				easily as:</p>
-				<pre><code class="language-ts"><span class="hljs-comment">// generate an 18 word mnemonic</span>
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate(<span class="hljs-number">18</span>);
-<span class="hljs-keyword">const</span> serialized = <span class="hljs-keyword">await</span> original.serialize(<span class="hljs-string">&quot;my password&quot;</span>);
+				<pre><code class="language-ts"><span style="color: #008000">// generate an 18 word mnemonic</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">(</span><span style="color: #098658">18</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">serialized</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">original</span><span style="color: #000000">.</span><span style="color: #795E26">serialize</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;my password&quot;</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// serialized is encrypted and can now be stored in an application-specific way</span>
+<span style="color: #008000">// serialized is encrypted and can now be stored in an application-specific way</span>
 
-<span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1HdWallet.deserialize(serialized, <span class="hljs-string">&quot;my password&quot;</span>);</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">restored</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">deserialize</span><span style="color: #000000">(</span><span style="color: #001080">serialized</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;my password&quot;</span><span style="color: #000000">);</span>
+</code></pre>
 				<p>If you want to use really strong KDF parameters in a user interface, you should
 					offload the KDF execution to a separate thread in order to avoid freezing the
 				UI. This can be done in the advanced mode:</p>
 				<p><strong>Session 1 (main thread)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate(<span class="hljs-number">18</span>);</code></pre>
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">generate</span><span style="color: #000000">(</span><span style="color: #098658">18</span><span style="color: #000000">);</span>
+</code></pre>
 				<p><strong>Session 1 (WebWorker)</strong></p>
 				<p>This operation can now run a couple of seconds without freezing the UI.</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { executeKdf } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">executeKdf</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// pass password to the worker</span>
+<span style="color: #008000">// pass password to the worker</span>
 
-<span class="hljs-keyword">const</span> strongKdfParams: KdfConfiguration = {
-  <span class="hljs-attr">algorithm</span>: <span class="hljs-string">&quot;argon2id&quot;</span>,
-  <span class="hljs-attr">params</span>: {
-    <span class="hljs-attr">outputLength</span>: <span class="hljs-number">32</span>,
-    <span class="hljs-attr">opsLimit</span>: <span class="hljs-number">5000</span>,
-    <span class="hljs-attr">memLimitKib</span>: <span class="hljs-number">15</span> * <span class="hljs-number">1024</span>,
-  },
-};
-<span class="hljs-keyword">const</span> encryptionKey = <span class="hljs-keyword">await</span> executeKdf(password, strongKdfParams);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">strongKdfParams</span><span style="color: #000000">: </span><span style="color: #267F99">KdfConfiguration</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">algorithm:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;argon2id&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">outputLength:</span><span style="color: #000000"> </span><span style="color: #098658">32</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opsLimit:</span><span style="color: #000000"> </span><span style="color: #098658">5000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">memLimitKib:</span><span style="color: #000000"> </span><span style="color: #098658">15</span><span style="color: #000000"> * </span><span style="color: #098658">1024</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">encryptionKey</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">executeKdf</span><span style="color: #000000">(</span><span style="color: #001080">password</span><span style="color: #000000">, </span><span style="color: #001080">strongKdfParams</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// pass encryptionKey to the main thread</span></code></pre>
+<span style="color: #008000">// pass encryptionKey to the main thread</span>
+</code></pre>
 				<p><strong>Session 1 (main thread)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> serialized = <span class="hljs-keyword">await</span> wallet.serializeWithEncryptionKey(
-  encryptionKey,
-  anyKdfParams,
-);</code></pre>
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">serialized</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wallet</span><span style="color: #000000">.</span><span style="color: #795E26">serializeWithEncryptionKey</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #001080">encryptionKey</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">anyKdfParams</span><span style="color: #000000">,</span>
+<span style="color: #000000">);</span>
+</code></pre>
 				<p><strong>Session 2 (WebWorker)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { executeKdf, extractKdfConfiguration } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">executeKdf</span><span style="color: #000000">, </span><span style="color: #001080">extractKdfConfiguration</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@cosmjs/launchpad&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// pass serialized and password to the worker</span>
+<span style="color: #008000">// pass serialized and password to the worker</span>
 
-<span class="hljs-keyword">const</span> kdfConfiguration = extractKdfConfiguration(serialized);
-<span class="hljs-keyword">const</span> encryptionKey = <span class="hljs-keyword">await</span> executeKdf(password, kdfConfiguration);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">kdfConfiguration</span><span style="color: #000000"> = </span><span style="color: #795E26">extractKdfConfiguration</span><span style="color: #000000">(</span><span style="color: #001080">serialized</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">encryptionKey</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">executeKdf</span><span style="color: #000000">(</span><span style="color: #001080">password</span><span style="color: #000000">, </span><span style="color: #001080">kdfConfiguration</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// pass encryptionKey to the main thread</span></code></pre>
+<span style="color: #008000">// pass encryptionKey to the main thread</span>
+</code></pre>
 				<p><strong>Session 2 (main thead)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1HdWallet.deserializeWithEncryptionKey(
-  serialized,
-  encryptionKey,
-);
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">restored</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Secp256k1HdWallet</span><span style="color: #000000">.</span><span style="color: #795E26">deserializeWithEncryptionKey</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #001080">serialized</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">encryptionKey</span><span style="color: #000000">,</span>
+<span style="color: #000000">);</span>
 
-<span class="hljs-comment">// use restored for signing</span></code></pre>
+<span style="color: #008000">// use restored for signing</span>
+</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -524,712 +538,106 @@ assertIsBroadcastTxResult(result);</code></pre>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/address.html">address</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/coins.html">coins</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/cosmosclient.html">cosmosclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/encoding.html">encoding</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/gas.html">gas</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi.html">lcdapi</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_auth.html">lcdapi/auth</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_bank.html">lcdapi/bank</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_base.html">lcdapi/base</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_distribution.html">lcdapi/distribution</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_gov.html">lcdapi/gov</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_lcdclient.html">lcdapi/lcdclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_mint.html">lcdapi/mint</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_slashing.html">lcdapi/slashing</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_staking.html">lcdapi/staking</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_supply.html">lcdapi/supply</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/lcdapi_utils.html">lcdapi/utils</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/logs.html">logs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/msgs.html">msgs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/paths.html">paths</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/pubkey.html">pubkey</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/secp256k1hdwallet.html">secp256k1hdwallet</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/secp256k1wallet.html">secp256k1wallet</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/sequence.html">sequence</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/signature.html">signature</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/signer.html">signer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/signingcosmosclient.html">signingcosmosclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/tx.html">tx</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/types.html">types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/wallet.html">wallet</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/bondstatus.html" class="tsd-kind-icon">Bond<wbr>Status</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/broadcastmode.html" class="tsd-kind-icon">Broadcast<wbr>Mode</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/govparameterstype.html" class="tsd-kind-icon">Gov<wbr>Parameters<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/voteoption.html" class="tsd-kind-icon">Vote<wbr>Option</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/cosmosclient.html" class="tsd-kind-icon">Cosmos<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/gasprice.html" class="tsd-kind-icon">Gas<wbr>Price</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/lcdclient.html" class="tsd-kind-icon">Lcd<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/secp256k1hdwallet.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/secp256k1wallet.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/signingcosmosclient.html" class="tsd-kind-icon">Signing<wbr>Cosmos<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/account.html" class="tsd-kind-icon">Account</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/accountdata.html" class="tsd-kind-icon">Account<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminosignresponse.html" class="tsd-kind-icon">Amino<wbr>Sign<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/any.html" class="tsd-kind-icon">Any</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/applicationversion.html" class="tsd-kind-icon">Application<wbr>Version</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/attribute.html" class="tsd-kind-icon">Attribute</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/authaccountsresponse.html" class="tsd-kind-icon">Auth<wbr>Accounts<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/authextension.html" class="tsd-kind-icon">Auth<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/bankbalancesresponse.html" class="tsd-kind-icon">Bank<wbr>Balances<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/bankextension.html" class="tsd-kind-icon">Bank<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/baseaccount.html" class="tsd-kind-icon">Base<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/block.html" class="tsd-kind-icon">Block</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/blockheader.html" class="tsd-kind-icon">Block<wbr>Header</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/blockid.html" class="tsd-kind-icon">Block<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/blockresponse.html" class="tsd-kind-icon">Block<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/broadcasttxsresponse.html" class="tsd-kind-icon">Broadcast<wbr>Txs<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/coin.html" class="tsd-kind-icon">Coin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/commissionrates.html" class="tsd-kind-icon">Commission<wbr>Rates</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/cosmosfeetable.html" class="tsd-kind-icon">Cosmos<wbr>Fee<wbr>Table</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/delegation.html" class="tsd-kind-icon">Delegation</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/deposit.html" class="tsd-kind-icon">Deposit</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/derivationinfo.html" class="tsd-kind-icon">Derivation<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/derivationinfojson.html" class="tsd-kind-icon">Derivation<wbr>Info<wbr>Json</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/description.html" class="tsd-kind-icon">Description</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributioncommunitypoolresponse.html" class="tsd-kind-icon">Distribution<wbr>Community<wbr>Pool<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributiondelegatorrewardresponse.html" class="tsd-kind-icon">Distribution<wbr>Delegator<wbr>Reward<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributiondelegatorrewardsresponse.html" class="tsd-kind-icon">Distribution<wbr>Delegator<wbr>Rewards<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionextension.html" class="tsd-kind-icon">Distribution<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionparametersresponse.html" class="tsd-kind-icon">Distribution<wbr>Parameters<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionvalidatoroutstandingrewardsresponse.html" class="tsd-kind-icon">Distribution<wbr>Validator<wbr>Outstanding<wbr>Rewards<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionvalidatorresponse.html" class="tsd-kind-icon">Distribution<wbr>Validator<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionvalidatorrewardsresponse.html" class="tsd-kind-icon">Distribution<wbr>Validator<wbr>Rewards<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/distributionwithdrawaddressresponse.html" class="tsd-kind-icon">Distribution<wbr>Withdraw<wbr>Address<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/encodetxresponse.html" class="tsd-kind-icon">Encode<wbr>TxResponse</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/encryptionconfiguration.html" class="tsd-kind-icon">Encryption<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/event.html" class="tsd-kind-icon">Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/getsequenceresult.html" class="tsd-kind-icon">Get<wbr>Sequence<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govdepositresponse.html" class="tsd-kind-icon">Gov<wbr>Deposit<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govdepositsresponse.html" class="tsd-kind-icon">Gov<wbr>Deposits<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govextension.html" class="tsd-kind-icon">Gov<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govparametersdepositresponse.html" class="tsd-kind-icon">Gov<wbr>Parameters<wbr>Deposit<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govparameterstallyingresponse.html" class="tsd-kind-icon">Gov<wbr>Parameters<wbr>Tallying<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govparametersvotingresponse.html" class="tsd-kind-icon">Gov<wbr>Parameters<wbr>Voting<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govproposalresponse.html" class="tsd-kind-icon">Gov<wbr>Proposal<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govproposalsresponse.html" class="tsd-kind-icon">Gov<wbr>Proposals<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govproposerresponse.html" class="tsd-kind-icon">Gov<wbr>Proposer<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govtallyresponse.html" class="tsd-kind-icon">Gov<wbr>Tally<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govvoteresponse.html" class="tsd-kind-icon">Gov<wbr>Vote<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/govvotesresponse.html" class="tsd-kind-icon">Gov<wbr>Votes<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/historicalinfo.html" class="tsd-kind-icon">Historical<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/indexedtx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/input.html" class="tsd-kind-icon">Input</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/kdfconfiguration.html" class="tsd-kind-icon">Kdf<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/lcdclientbaseoptions.html" class="tsd-kind-icon">Lcd<wbr>Client<wbr>Base<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/log.html" class="tsd-kind-icon">Log</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mintannualprovisionsresponse.html" class="tsd-kind-icon">Mint<wbr>Annual<wbr>Provisions<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mintextension.html" class="tsd-kind-icon">Mint<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mintinflationresponse.html" class="tsd-kind-icon">Mint<wbr>Inflation<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mintparametersresponse.html" class="tsd-kind-icon">Mint<wbr>Parameters<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msg.html" class="tsd-kind-icon">Msg</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgbeginredelegate.html" class="tsd-kind-icon">Msg<wbr>Begin<wbr>Redelegate</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgcreatevalidator.html" class="tsd-kind-icon">Msg<wbr>Create<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgdelegate.html" class="tsd-kind-icon">Msg<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgdeposit.html" class="tsd-kind-icon">Msg<wbr>Deposit</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgeditvalidator.html" class="tsd-kind-icon">Msg<wbr>Edit<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgfundcommunitypool.html" class="tsd-kind-icon">Msg<wbr>Fund<wbr>Community<wbr>Pool</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgmultisend.html" class="tsd-kind-icon">Msg<wbr>Multi<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgsend.html" class="tsd-kind-icon">Msg<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgsetwithdrawaddress.html" class="tsd-kind-icon">Msg<wbr>Set<wbr>Withdraw<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgsubmitevidence.html" class="tsd-kind-icon">Msg<wbr>Submit<wbr>Evidence</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgsubmitproposal.html" class="tsd-kind-icon">Msg<wbr>Submit<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgundelegate.html" class="tsd-kind-icon">Msg<wbr>Undelegate</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgunjail.html" class="tsd-kind-icon">Msg<wbr>Unjail</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgverifyinvariant.html" class="tsd-kind-icon">Msg<wbr>Verify<wbr>Invariant</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgvote.html" class="tsd-kind-icon">Msg<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgwithdrawdelegatorreward.html" class="tsd-kind-icon">Msg<wbr>Withdraw<wbr>Delegator<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgwithdrawvalidatorcommission.html" class="tsd-kind-icon">Msg<wbr>Withdraw<wbr>Validator<wbr>Commission</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/nodeinfo.html" class="tsd-kind-icon">Node<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/nodeinforesponse.html" class="tsd-kind-icon">Node<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/offlinesigner.html" class="tsd-kind-icon">Offline<wbr>Signer</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/output.html" class="tsd-kind-icon">Output</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/privatecosmosclient.html" class="tsd-kind-icon">Private<wbr>Cosmos<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/privatesigningcosmosclient.html" class="tsd-kind-icon">Private<wbr>Signing<wbr>Cosmos<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/proposal.html" class="tsd-kind-icon">Proposal</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/pubkey.html" class="tsd-kind-icon">Pub<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/redelegation.html" class="tsd-kind-icon">Redelegation</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/redelegationentry.html" class="tsd-kind-icon">Redelegation<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/rewardcontainer.html" class="tsd-kind-icon">Reward<wbr>Container</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/searchbyheightquery.html" class="tsd-kind-icon">Search<wbr>ByHeight<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/searchbysentfromortoquery.html" class="tsd-kind-icon">Search<wbr>BySent<wbr>From<wbr>OrTo<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/searchbytagsquery.html" class="tsd-kind-icon">Search<wbr>ByTags<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/searchtxfilter.html" class="tsd-kind-icon">Search<wbr>TxFilter</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/searchtxsresponse.html" class="tsd-kind-icon">Search<wbr>Txs<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1hdwalletdata.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1hdwalletserialization.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet<wbr>Serialization</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/slashingextension.html" class="tsd-kind-icon">Slashing<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/slashingparametersresponse.html" class="tsd-kind-icon">Slashing<wbr>Parameters<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/slashingsigninginfo.html" class="tsd-kind-icon">Slashing<wbr>Signing<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/slashingsigninginfosresponse.html" class="tsd-kind-icon">Slashing<wbr>Signing<wbr>Infos<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingdelegationresponse.html" class="tsd-kind-icon">Staking<wbr>Delegation<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingdelegatordelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Delegations<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingdelegatorunbondingdelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Unbonding<wbr>Delegations<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingdelegatorvalidatorresponse.html" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Validator<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingdelegatorvalidatorsresponse.html" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Validators<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingextension.html" class="tsd-kind-icon">Staking<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakinghistoricalinforesponse.html" class="tsd-kind-icon">Staking<wbr>Historical<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingparametersresponse.html" class="tsd-kind-icon">Staking<wbr>Parameters<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingpoolresponse.html" class="tsd-kind-icon">Staking<wbr>Pool<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingredelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Redelegations<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingunbondingdelegationresponse.html" class="tsd-kind-icon">Staking<wbr>Unbonding<wbr>Delegation<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingvalidatordelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Validator<wbr>Delegations<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingvalidatorresponse.html" class="tsd-kind-icon">Staking<wbr>Validator<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingvalidatorunbondingdelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Validator<wbr>Unbonding<wbr>Delegations<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingvalidatorsparams.html" class="tsd-kind-icon">Staking<wbr>Validators<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stakingvalidatorsresponse.html" class="tsd-kind-icon">Staking<wbr>Validators<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stdfee.html" class="tsd-kind-icon">Std<wbr>Fee</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stdsigndoc.html" class="tsd-kind-icon">Std<wbr>Sign<wbr>Doc</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stdsignature.html" class="tsd-kind-icon">Std<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/stdtx.html" class="tsd-kind-icon">Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/supplyextension.html" class="tsd-kind-icon">Supply<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/tally.html" class="tsd-kind-icon">Tally</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/totalsupplyallresponse.html" class="tsd-kind-icon">Total<wbr>Supply<wbr>All<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/totalsupplyresponse.html" class="tsd-kind-icon">Total<wbr>Supply<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/txsresponse.html" class="tsd-kind-icon">Txs<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/unbondingdelegation.html" class="tsd-kind-icon">Unbonding<wbr>Delegation</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/unbondingdelegationentry.html" class="tsd-kind-icon">Unbonding<wbr>Delegation<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/validator.html" class="tsd-kind-icon">Validator</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/vote.html" class="tsd-kind-icon">Vote</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/wrappedstdtx.html" class="tsd-kind-icon">Wrapped<wbr>Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/wrappedtx.html" class="tsd-kind-icon">Wrapped<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#algo" class="tsd-kind-icon">Algo</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#broadcasttxresult" class="tsd-kind-icon">Broadcast<wbr>TxResult</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#cosmossdktx" class="tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#feetable" class="tsd-kind-icon">Fee<wbr>Table</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#gaslimits" class="tsd-kind-icon">Gas<wbr>Limits</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#govparametersresponse" class="tsd-kind-icon">Gov<wbr>Parameters<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#lcdapiarray" class="tsd-kind-icon">Lcd<wbr>Api<wbr>Array</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#lcdextensionsetup" class="tsd-kind-icon">Lcd<wbr>Extension<wbr>Setup</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#searchtxquery" class="tsd-kind-icon">Search<wbr>TxQuery</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#stakingdelegatortransactionsresponse" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Transactions<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#cosmjssalt" class="tsd-kind-icon">cosmjs<wbr>Salt</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#pubkeyaminoprefixed25519" class="tsd-kind-icon">pubkey<wbr>Amino<wbr>Prefix<wbr>Ed25519</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#pubkeyaminoprefixlength" class="tsd-kind-icon">pubkey<wbr>Amino<wbr>Prefix<wbr>Length</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#pubkeyaminoprefixsecp256k1" class="tsd-kind-icon">pubkey<wbr>Amino<wbr>Prefix<wbr>Secp256k1</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#pubkeyaminoprefixsr25519" class="tsd-kind-icon">pubkey<wbr>Amino<wbr>Prefix<wbr>Sr25519</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#serializationtypev1" class="tsd-kind-icon">serialization<wbr>Type<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#buildfeetable" class="tsd-kind-icon">build<wbr>Fee<wbr>Table</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#calculatefee" class="tsd-kind-icon">calculate<wbr>Fee</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#coin" class="tsd-kind-icon">coin</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#coins" class="tsd-kind-icon">coins</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#decodeaminopubkey" class="tsd-kind-icon">decode<wbr>Amino<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#decodebech32pubkey" class="tsd-kind-icon">decode<wbr>Bech32<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#decrypt" class="tsd-kind-icon">decrypt</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#encodeaminopubkey" class="tsd-kind-icon">encode<wbr>Amino<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#encodebech32pubkey" class="tsd-kind-icon">encode<wbr>Bech32<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#encodesecp256k1pubkey" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#encodesecp256k1signature" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#encrypt" class="tsd-kind-icon">encrypt</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#executekdf" class="tsd-kind-icon">execute<wbr>Kdf</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#extractkdfconfiguration" class="tsd-kind-icon">extract<wbr>Kdf<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#extractkdfconfigurationv1" class="tsd-kind-icon">extract<wbr>Kdf<wbr>Configuration<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#findattribute" class="tsd-kind-icon">find<wbr>Attribute</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#findsequenceforsignedtx" class="tsd-kind-icon">find<wbr>Sequence<wbr>For<wbr>Signed<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#isderivationjson" class="tsd-kind-icon">is<wbr>Derivation<wbr>Json</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgbeginredelegate" class="tsd-kind-icon">is<wbr>Msg<wbr>Begin<wbr>Redelegate</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgcreatevalidator" class="tsd-kind-icon">is<wbr>Msg<wbr>Create<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgdelegate" class="tsd-kind-icon">is<wbr>Msg<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgdeposit" class="tsd-kind-icon">is<wbr>Msg<wbr>Deposit</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgeditvalidator" class="tsd-kind-icon">is<wbr>Msg<wbr>Edit<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgfundcommunitypool" class="tsd-kind-icon">is<wbr>Msg<wbr>Fund<wbr>Community<wbr>Pool</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgmultisend" class="tsd-kind-icon">is<wbr>Msg<wbr>Multi<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgsend" class="tsd-kind-icon">is<wbr>Msg<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgsetwithdrawaddress" class="tsd-kind-icon">is<wbr>Msg<wbr>Set<wbr>Withdraw<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgsubmitevidence" class="tsd-kind-icon">is<wbr>Msg<wbr>Submit<wbr>Evidence</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgsubmitproposal" class="tsd-kind-icon">is<wbr>Msg<wbr>Submit<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgundelegate" class="tsd-kind-icon">is<wbr>Msg<wbr>Undelegate</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgunjail" class="tsd-kind-icon">is<wbr>Msg<wbr>Unjail</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgverifyinvariant" class="tsd-kind-icon">is<wbr>Msg<wbr>Verify<wbr>Invariant</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgvote" class="tsd-kind-icon">is<wbr>Msg<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgwithdrawdelegatorreward" class="tsd-kind-icon">is<wbr>Msg<wbr>Withdraw<wbr>Delegator<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#ismsgwithdrawvalidatorcommission" class="tsd-kind-icon">is<wbr>Msg<wbr>Withdraw<wbr>Validator<wbr>Commission</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#issearchbyheightquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByHeight<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#issearchbysentfromortoquery" class="tsd-kind-icon">is<wbr>Search<wbr>BySent<wbr>From<wbr>OrTo<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#issearchbytagsquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByTags<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#isstdtx" class="tsd-kind-icon">is<wbr>Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#iswrappedstdtx" class="tsd-kind-icon">is<wbr>Wrapped<wbr>Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#makecosmoshubpath" class="tsd-kind-icon">make<wbr>Cosmoshub<wbr>Path</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#makestdtx" class="tsd-kind-icon">make<wbr>Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#normalizelcdapiarray" class="tsd-kind-icon">normalize<wbr>Lcd<wbr>Api<wbr>Array</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#normalizepubkey" class="tsd-kind-icon">normalize<wbr>Pubkey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parseattribute" class="tsd-kind-icon">parse<wbr>Attribute</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parseaxioserror" class="tsd-kind-icon">parse<wbr>Axios<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parsecoins" class="tsd-kind-icon">parse<wbr>Coins</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parseevent" class="tsd-kind-icon">parse<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parselog" class="tsd-kind-icon">parse<wbr>Log</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parselogs" class="tsd-kind-icon">parse<wbr>Logs</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#pubkeytoaddress" class="tsd-kind-icon">pubkey<wbr>ToAddress</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#rawsecp256k1pubkeytoaddress" class="tsd-kind-icon">raw<wbr>Secp256k1<wbr>Pubkey<wbr>ToAddress</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#serializesigndoc" class="tsd-kind-icon">serialize<wbr>Sign<wbr>Doc</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupbankextension" class="tsd-kind-icon">setup<wbr>Bank<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupdistributionextension" class="tsd-kind-icon">setup<wbr>Distribution<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupgovextension" class="tsd-kind-icon">setup<wbr>Gov<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupmintextension" class="tsd-kind-icon">setup<wbr>Mint<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupslashingextension" class="tsd-kind-icon">setup<wbr>Slashing<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupstakingextension" class="tsd-kind-icon">setup<wbr>Staking<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupsupplyextension" class="tsd-kind-icon">setup<wbr>Supply<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#sortedjsonstringify" class="tsd-kind-icon">sorted<wbr>Json<wbr>Stringify</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#sortedobject" class="tsd-kind-icon">sorted<wbr>Object</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#uint64tonumber" class="tsd-kind-icon">uint64<wbr>ToNumber</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#uint64tostring" class="tsd-kind-icon">uint64<wbr>ToString</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basicpasswordhashingoptions" class="tsd-kind-icon">basic<wbr>Password<wbr>Hashing<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#pubkeytype" class="tsd-kind-icon">pubkey<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#supportedalgorithms" class="tsd-kind-icon">supported<wbr>Algorithms</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -1240,21 +648,20 @@ assertIsBroadcastTxResult(result);</code></pre>
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>

@@ -1,0 +1,354 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Any | @cosmjs/proto-signing Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/proto-signing Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@cosmjs/proto-signing Documentation</a>
+				</li>
+				<li>
+					<a href="../modules/codec_google_protobuf_any.html">codec/google/protobuf/any</a>
+				</li>
+				<li>
+					<a href="codec_google_protobuf_any.any.html">Any</a>
+				</li>
+			</ul>
+			<h1>Interface Any</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p><code>Any</code> contains an arbitrary serialized protocol buffer message along with a
+						URL that describes the type of the serialized message.</p>
+					</div>
+					<p>Protobuf library provides support to pack/unpack Any values in the form
+					of utility functions or additional generated methods of the Any type.</p>
+					<p>Example 1: Pack and unpack a message in C++.</p>
+					<pre><code><span style="color: #001080">Foo</span><span style="color: #000000"> </span><span style="color: #001080">foo</span><span style="color: #000000"> = ...;</span>
+<span style="color: #001080">Any</span><span style="color: #000000"> </span><span style="color: #001080">any</span><span style="color: #000000">;</span>
+<span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">PackFrom</span><span style="color: #000000">(</span><span style="color: #001080">foo</span><span style="color: #000000">);</span>
+<span style="color: #000000">...</span>
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">UnpackTo</span><span style="color: #000000">(&amp;</span><span style="color: #001080">foo</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">  ...</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					<p>Example 2: Pack and unpack a message in Java.</p>
+					<pre><code><span style="color: #001080">Foo</span><span style="color: #000000"> </span><span style="color: #001080">foo</span><span style="color: #000000"> = ...;</span>
+<span style="color: #001080">Any</span><span style="color: #000000"> </span><span style="color: #001080">any</span><span style="color: #000000"> = </span><span style="color: #001080">Any</span><span style="color: #000000">.</span><span style="color: #795E26">pack</span><span style="color: #000000">(</span><span style="color: #001080">foo</span><span style="color: #000000">);</span>
+<span style="color: #000000">...</span>
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">is</span><span style="color: #000000">(</span><span style="color: #001080">Foo</span><span style="color: #000000">.</span><span style="color: #001080">class</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">foo</span><span style="color: #000000"> = </span><span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">unpack</span><span style="color: #000000">(</span><span style="color: #001080">Foo</span><span style="color: #000000">.</span><span style="color: #001080">class</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					<p> Example 3: Pack and unpack a message in Python.</p>
+					<pre><code><span style="color: #001080">foo</span><span style="color: #000000"> = </span><span style="color: #795E26">Foo</span><span style="color: #000000">(...)</span>
+<span style="color: #001080">any</span><span style="color: #000000"> = </span><span style="color: #795E26">Any</span><span style="color: #000000">()</span>
+<span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">Pack</span><span style="color: #000000">(</span><span style="color: #001080">foo</span><span style="color: #000000">)</span>
+<span style="color: #000000">...</span>
+<span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">Foo</span><span style="color: #000000">.</span><span style="color: #0070C1">DESCRIPTOR</span><span style="color: #000000">):</span>
+<span style="color: #000000">  </span><span style="color: #001080">any</span><span style="color: #000000">.</span><span style="color: #795E26">Unpack</span><span style="color: #000000">(</span><span style="color: #001080">foo</span><span style="color: #000000">)</span>
+<span style="color: #000000">  ...</span>
+</code></pre>
+					<p> Example 4: Pack and unpack a message in Go</p>
+					<pre><code><span style="color: #000000"> foo := &amp;</span><span style="color: #001080">pb</span><span style="color: #000000">.</span><span style="color: #001080">Foo</span><span style="color: #000000">{...}</span>
+<span style="color: #000000"> </span><span style="color: #001080">any</span><span style="color: #000000">, err := </span><span style="color: #001080">ptypes</span><span style="color: #000000">.</span><span style="color: #795E26">MarshalAny</span><span style="color: #000000">(</span><span style="color: #001080">foo</span><span style="color: #000000">)</span>
+<span style="color: #000000"> ...</span>
+<span style="color: #000000"> foo := &amp;</span><span style="color: #001080">pb</span><span style="color: #000000">.</span><span style="color: #001080">Foo</span><span style="color: #000000">{}</span>
+<span style="color: #000000"> </span><span style="color: #AF00DB">if</span><span style="color: #000000"> err := </span><span style="color: #001080">ptypes</span><span style="color: #000000">.</span><span style="color: #795E26">UnmarshalAny</span><span style="color: #000000">(</span><span style="color: #001080">any</span><span style="color: #000000">, </span><span style="color: #001080">foo</span><span style="color: #000000">); </span><span style="color: #001080">err</span><span style="color: #000000"> != </span><span style="color: #001080">nil</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   ...</span>
+<span style="color: #000000"> }</span>
+</code></pre>
+					<p>The pack methods provided by protobuf library will by default use
+						&#39;type.googleapis.com/full.type.name&#39; as the type URL and the unpack
+						methods only use the fully qualified type name after the last &#39;/&#39;
+						in the type URL, for example &quot;foo.bar.com/x/y.z&quot; will yield type
+					name &quot;y.z&quot;.</p>
+					<a href="#json" id="json" style="color: inherit; text-decoration: none;">
+						<h1>JSON</h1>
+					</a>
+					<p>The JSON representation of an <code>Any</code> value uses the regular
+						representation of the deserialized, embedded message, with an
+					additional field <code>@type</code> which contains the type URL. Example:</p>
+					<pre><code><span style="color: #AF00DB">package</span><span style="color: #000000"> </span><span style="color: #001080">google</span><span style="color: #000000">.</span><span style="color: #001080">profile</span><span style="color: #000000">;</span>
+<span style="color: #001080">message</span><span style="color: #000000"> </span><span style="color: #001080">Person</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">string</span><span style="color: #000000"> </span><span style="color: #001080">first_name</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">string</span><span style="color: #000000"> </span><span style="color: #001080">last_name</span><span style="color: #000000"> = </span><span style="color: #098658">2</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;@type&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;type.googleapis.com/google.profile.Person&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;firstName&quot;</span><span style="color: #000000">: &lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt;,</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;lastName&quot;</span><span style="color: #000000">: &lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					<p>If the embedded message type is well-known and has a custom JSON
+						representation, that representation will be embedded adding a field
+						<code>value</code> which holds the custom JSON in addition to the <code>@type</code>
+					field. Example (for message [google.protobuf.Duration][]):</p>
+					<pre><code><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;@type&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;type.googleapis.com/google.protobuf.Duration&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;value&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;1.212s&quot;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Any</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_google_protobuf_any.any.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_google_protobuf_any.any.html#value" class="tsd-kind-icon">value</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="typeurl" class="tsd-anchor"></a>
+					<h3>type<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">type<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/proto-signing/src/codec/google/protobuf/any.ts#L118">codec/google/protobuf/any.ts:118</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A URL/resource name that uniquely identifies the type of the serialized
+								protocol buffer message. This string must contain at least
+								one &quot;/&quot; character. The last segment of the URL&#39;s path must represent
+								the fully qualified name of the type (as in
+								<code>path/google.protobuf.Duration</code>). The name should be in a canonical form
+							(e.g., leading &quot;.&quot; is not accepted).</p>
+						</div>
+						<p>In practice, teams usually precompile into the binary all types that they
+							expect it to use in the context of Any. However, for URLs which use the
+							scheme <code>http</code>, <code>https</code>, or no scheme, one can optionally set up a type
+						server that maps type URLs to message definitions as follows:</p>
+						<ul>
+							<li>If no scheme is provided, <code>https</code> is assumed.</li>
+							<li>An HTTP GET on the URL must yield a [google.protobuf.Type][]
+							value in binary format, or produce an error.</li>
+							<li>Applications are allowed to cache lookup results based on the
+								URL, or have them precompiled into a binary to avoid any
+								lookup. Therefore, binary compatibility needs to be preserved
+								on changes to types. (Use versioned type names to manage
+							breaking changes.)</li>
+						</ul>
+						<p>Note: this functionality is not currently available in the official
+							protobuf release, and it is not used for type URLs beginning with
+						type.googleapis.com.</p>
+						<p>Schemes other than <code>http</code>, <code>https</code> (or the empty scheme) might be
+						used with implementation specific semantics.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/proto-signing/src/codec/google/protobuf/any.ts#L120">codec/google/protobuf/any.ts:120</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Must be a valid serialized protocol buffer of the above specified type.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_bank_v1beta1_bank.html">codec/cosmos/bank/v1beta1/bank</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_bank_v1beta1_tx.html">codec/cosmos/bank/v1beta1/tx</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_base_v1beta1_coin.html">codec/cosmos/base/v1beta1/coin</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_crypto_multisig_v1beta1_multisig.html">codec/cosmos/crypto/multisig/v1beta1/multisig</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_crypto_secp256k1_keys.html">codec/cosmos/crypto/secp256k1/keys</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_tx_signing_v1beta1_signing.html">codec/cosmos/tx/signing/v1beta1/signing</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_tx_v1beta1_tx.html">codec/cosmos/tx/v1beta1/tx</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_cosmos_proto_cosmos.html">codec/cosmos_<wbr>proto/cosmos</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_gogoproto_gogo.html">codec/gogoproto/gogo</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/codec_google_protobuf_any.html">codec/google/protobuf/any</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_google_protobuf_descriptor.html">codec/google/protobuf/descriptor</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/codec_tendermint_crypto_keys.html">codec/tendermint/crypto/keys</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/directsecp256k1hdwallet.html">directsecp256k1hdwallet</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/directsecp256k1wallet.html">directsecp256k1wallet</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/paths.html">paths</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/pubkey.html">pubkey</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/registry.html">registry</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/signer.html">signer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/signing.html">signing</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="codec_google_protobuf_any.any.html" class="tsd-kind-icon">Any</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_google_protobuf_any.any.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_google_protobuf_any.any.html#value" class="tsd-kind-icon">value</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/codec_google_protobuf_any.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/codec_google_protobuf_any.html#any-1" class="tsd-kind-icon">Any</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/codec_google_protobuf_any.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

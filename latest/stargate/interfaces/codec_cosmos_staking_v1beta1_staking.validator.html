@@ -1,0 +1,372 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Validator | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@cosmjs/stargate Documentation</a>
+				</li>
+				<li>
+					<a href="../modules/codec_cosmos_staking_v1beta1_staking.html">codec/cosmos/staking/v1beta1/staking</a>
+				</li>
+				<li>
+					<a href="codec_cosmos_staking_v1beta1_staking.validator.html">Validator</a>
+				</li>
+			</ul>
+			<h1>Interface Validator</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Validator defines a validator, together with the total amount of the
+							Validator&#39;s bond shares and their exchange rate to coins. Slashing results in
+							a decrease in the exchange rate, allowing correct calculation of future
+							undelegations without iterating over delegators. When coins are delegated to
+							this validator, the validator is credited with a delegation whose number of
+							bond shares is based on the amount of coins delegated divided by the current
+							exchange rate. Voting power can be calculated as total bonded shares
+						multiplied by exchange rate.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Validator</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#commission" class="tsd-kind-icon">commission</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#consensuspubkey" class="tsd-kind-icon">consensus<wbr>Pubkey</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#delegatorshares" class="tsd-kind-icon">delegator<wbr>Shares</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#jailed" class="tsd-kind-icon">jailed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#minselfdelegation" class="tsd-kind-icon">min<wbr>Self<wbr>Delegation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#operatoraddress" class="tsd-kind-icon">operator<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#status" class="tsd-kind-icon">status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#tokens" class="tsd-kind-icon">tokens</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#unbondingheight" class="tsd-kind-icon">unbonding<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="codec_cosmos_staking_v1beta1_staking.validator.html#unbondingtime" class="tsd-kind-icon">unbonding<wbr>Time</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="commission" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> commission</h3>
+					<div class="tsd-signature tsd-kind-icon">commission<span class="tsd-signature-symbol">:</span> <a href="../modules/codec_cosmos_staking_v1beta1_staking.html#commission-1" class="tsd-signature-type" data-tsd-kind="Variable">Commission</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L137">codec/cosmos/staking/v1beta1/staking.ts:137</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>commission defines the commission parameters.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="consensuspubkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> consensus<wbr>Pubkey</h3>
+					<div class="tsd-signature tsd-kind-icon">consensus<wbr>Pubkey<span class="tsd-signature-symbol">:</span> <a href="../modules/codec_google_protobuf_any.html#any-1" class="tsd-signature-type" data-tsd-kind="Variable">Any</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L121">codec/cosmos/staking/v1beta1/staking.ts:121</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>consensus_pubkey is the consensus public key of the validator, as a Protobuf Any.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="delegatorshares" class="tsd-anchor"></a>
+					<h3>delegator<wbr>Shares</h3>
+					<div class="tsd-signature tsd-kind-icon">delegator<wbr>Shares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L129">codec/cosmos/staking/v1beta1/staking.ts:129</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>delegator_shares defines total shares issued to a validator&#39;s delegators.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="description" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <a href="../modules/codec_cosmos_staking_v1beta1_staking.html#description-1" class="tsd-signature-type" data-tsd-kind="Variable">Description</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L131">codec/cosmos/staking/v1beta1/staking.ts:131</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>description defines the description terms for the validator.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="jailed" class="tsd-anchor"></a>
+					<h3>jailed</h3>
+					<div class="tsd-signature tsd-kind-icon">jailed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L123">codec/cosmos/staking/v1beta1/staking.ts:123</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>jailed defined whether the validator has been jailed from bonded status or not.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="minselfdelegation" class="tsd-anchor"></a>
+					<h3>min<wbr>Self<wbr>Delegation</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Self<wbr>Delegation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L139">codec/cosmos/staking/v1beta1/staking.ts:139</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>min_self_delegation is the validator&#39;s self declared minimum self delegation.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="operatoraddress" class="tsd-anchor"></a>
+					<h3>operator<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">operator<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L119">codec/cosmos/staking/v1beta1/staking.ts:119</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>operator_address defines the address of the validator&#39;s operator; bech encoded in JSON.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <a href="../enums/codec_cosmos_staking_v1beta1_staking.bondstatus.html" class="tsd-signature-type" data-tsd-kind="Enumeration">BondStatus</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L125">codec/cosmos/staking/v1beta1/staking.ts:125</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>status is the validator status (bonded/unbonding/unbonded).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tokens" class="tsd-anchor"></a>
+					<h3>tokens</h3>
+					<div class="tsd-signature tsd-kind-icon">tokens<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L127">codec/cosmos/staking/v1beta1/staking.ts:127</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>tokens define the delegated tokens (incl. self-delegation).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="unbondingheight" class="tsd-anchor"></a>
+					<h3>unbonding<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">unbonding<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Long</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L133">codec/cosmos/staking/v1beta1/staking.ts:133</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>unbonding_height defines, if unbonding, the height at which this validator has begun unbonding.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="unbondingtime" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> unbonding<wbr>Time</h3>
+					<div class="tsd-signature tsd-kind-icon">unbonding<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b05182c3f/packages/stargate/src/codec/cosmos/staking/v1beta1/staking.ts#L135">codec/cosmos/staking/v1beta1/staking.ts:135</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>unbonding_time defines, if unbonding, the min time for the validator to complete unbonding.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/codec_cosmos_staking_v1beta1_staking.html">codec/cosmos/staking/v1beta1/staking</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="codec_cosmos_staking_v1beta1_staking.validator.html" class="tsd-kind-icon">Validator</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#commission" class="tsd-kind-icon">commission</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#consensuspubkey" class="tsd-kind-icon">consensus<wbr>Pubkey</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#delegatorshares" class="tsd-kind-icon">delegator<wbr>Shares</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#description" class="tsd-kind-icon">description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#jailed" class="tsd-kind-icon">jailed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#minselfdelegation" class="tsd-kind-icon">min<wbr>Self<wbr>Delegation</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#operatoraddress" class="tsd-kind-icon">operator<wbr>Address</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#status" class="tsd-kind-icon">status</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#tokens" class="tsd-kind-icon">tokens</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#unbondingheight" class="tsd-kind-icon">unbonding<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="codec_cosmos_staking_v1beta1_staking.validator.html#unbondingtime" class="tsd-kind-icon">unbonding<wbr>Time</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

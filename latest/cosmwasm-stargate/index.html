@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for @cosmjs/cosmwasm-stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -47,11 +48,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>@cosmjs/cosmwasm-stargate Documentation</h1>
 		</div>
 	</div>
@@ -91,9 +87,10 @@
 					<h2>Development</h2>
 				</a>
 				<p>Updating Hackatom development contract in <code>src/testdata/contract.json</code>:</p>
-				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> packages/cosmwasm-stargate
-<span class="hljs-built_in">export</span> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v0.12.0/hackatom.wasm
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;{\&quot;// source\&quot;: \&quot;<span class="hljs-variable">$HACKATOM_URL</span>\&quot;, \&quot;data\&quot;: \&quot;<span class="hljs-subst">$(curl -sS  --location $HACKATOM_URL | base64)</span>\&quot; }&quot;</span> | jq &gt; src/testdata/contract.json</code></pre>
+				<pre><code class="language-sh"><span style="color: #795E26">cd</span><span style="color: #000000"> packages/cosmwasm-stargate</span>
+<span style="color: #0000FF">export</span><span style="color: #000000"> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v0.12.0/hackatom.wasm</span>
+<span style="color: #795E26">echo</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;{</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">// source</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">, </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">data</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">$(curl -sS  --location </span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #A31515"> </span><span style="color: #000000">|</span><span style="color: #A31515"> base64)</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515"> }&quot;</span><span style="color: #000000"> | jq &gt; src/testdata/contract.json</span>
+</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -105,529 +102,46 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/aminotypes.html">aminotypes</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/codec_cosmos_base_query_v1beta1_pagination.html">codec/cosmos/base/query/v1beta1/pagination</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/codec_cosmos_base_v1beta1_coin.html">codec/cosmos/base/v1beta1/coin</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/codec_x_wasm_internal_types_query.html">codec/x/wasm/internal/types/query</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/codec_x_wasm_internal_types_tx.html">codec/x/wasm/internal/types/tx</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/codec_x_wasm_internal_types_types.html">codec/x/wasm/internal/types/types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/cosmwasmclient.html">cosmwasmclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries.html">queries</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/queries_wasm.html">queries/wasm</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/signingcosmwasmclient.html">signingcosmwasmclient</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/accesstype.html" class="tsd-kind-icon">Access<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/contractcodehistoryoperationtype.html" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Operation<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/cosmwasmclient.html" class="tsd-kind-icon">Cosm<wbr>Wasm<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgclientimpl.html" class="tsd-kind-icon">Msg<wbr>Client<wbr>Impl</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/queryclientimpl.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Impl</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/signingcosmwasmclient.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/absolutetxposition.html" class="tsd-kind-icon">Absolute<wbr>TxPosition</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/accessconfig.html" class="tsd-kind-icon">Access<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/accesstypeparam.html" class="tsd-kind-icon">Access<wbr>Type<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsgclearadmin.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Clear<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsgexecutecontract.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsginstantiatecontract.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsgmigratecontract.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsgstorecode.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aminomsgupdateadmin.html" class="tsd-kind-icon">Amino<wbr>Msg<wbr>Update<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/codeinfo.html" class="tsd-kind-icon">Code<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/codeinforesponse.html" class="tsd-kind-icon">Code<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/coin.html" class="tsd-kind-icon">Coin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/contractcodehistoryentry.html" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/contractinfo.html" class="tsd-kind-icon">Contract<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/contractinfowithaddress.html" class="tsd-kind-icon">Contract<wbr>Info<wbr>With<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/deccoin.html" class="tsd-kind-icon">Dec<wbr>Coin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/decproto.html" class="tsd-kind-icon">Dec<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/intproto.html" class="tsd-kind-icon">Int<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/model.html" class="tsd-kind-icon">Model</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msg.html" class="tsd-kind-icon">Msg</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgclearadmin.html" class="tsd-kind-icon">Msg<wbr>Clear<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgclearadminresponse.html" class="tsd-kind-icon">Msg<wbr>Clear<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgexecutecontract.html" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgexecutecontractresponse.html" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msginstantiatecontract.html" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msginstantiatecontractresponse.html" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgmigratecontract.html" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgmigratecontractresponse.html" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgstorecode.html" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgstorecoderesponse.html" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgupdateadmin.html" class="tsd-kind-icon">Msg<wbr>Update<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/msgupdateadminresponse.html" class="tsd-kind-icon">Msg<wbr>Update<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/pagerequest.html" class="tsd-kind-icon">Page<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/pageresponse.html" class="tsd-kind-icon">Page<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/params.html" class="tsd-kind-icon">Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/privatecosmwasmclient.html" class="tsd-kind-icon">Private<wbr>Cosm<wbr>Wasm<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/privatesigningcosmwasmclient.html" class="tsd-kind-icon">Private<wbr>Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/query.html" class="tsd-kind-icon">Query</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/queryallcontractstaterequest.html" class="tsd-kind-icon">Query<wbr>All<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/queryallcontractstateresponse.html" class="tsd-kind-icon">Query<wbr>All<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycoderequest.html" class="tsd-kind-icon">Query<wbr>Code<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycoderesponse.html" class="tsd-kind-icon">Query<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycodesrequest.html" class="tsd-kind-icon">Query<wbr>Codes<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycodesresponse.html" class="tsd-kind-icon">Query<wbr>Codes<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontracthistoryrequest.html" class="tsd-kind-icon">Query<wbr>Contract<wbr>History<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontracthistoryresponse.html" class="tsd-kind-icon">Query<wbr>Contract<wbr>History<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontractinforequest.html" class="tsd-kind-icon">Query<wbr>Contract<wbr>Info<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontractinforesponse.html" class="tsd-kind-icon">Query<wbr>Contract<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontractsbycoderequest.html" class="tsd-kind-icon">Query<wbr>Contracts<wbr>ByCode<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querycontractsbycoderesponse.html" class="tsd-kind-icon">Query<wbr>Contracts<wbr>ByCode<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/queryrawcontractstaterequest.html" class="tsd-kind-icon">Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/queryrawcontractstateresponse.html" class="tsd-kind-icon">Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querysmartcontractstaterequest.html" class="tsd-kind-icon">Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/querysmartcontractstateresponse.html" class="tsd-kind-icon">Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/rpc.html" class="tsd-kind-icon">Rpc</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/signingcosmwasmclientoptions.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/wasmextension.html" class="tsd-kind-icon">Wasm<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#builtin" class="tsd-kind-icon">Builtin</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#atob" class="tsd-kind-icon">atob</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basemodel" class="tsd-kind-icon">base<wbr>Model</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basemsgclearadminresponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Clear<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basemsgexecutecontractresponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Execute<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basemsgmigratecontractresponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Migrate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basemsgupdateadminresponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Update<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequeryallcontractstateresponse" class="tsd-kind-icon">base<wbr>Query<wbr>All<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerycoderesponse" class="tsd-kind-icon">base<wbr>Query<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerycodesrequest" class="tsd-kind-icon">base<wbr>Query<wbr>Codes<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerycodesresponse" class="tsd-kind-icon">base<wbr>Query<wbr>Codes<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerycontracthistoryresponse" class="tsd-kind-icon">base<wbr>Query<wbr>Contract<wbr>History<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerycontractsbycoderesponse" class="tsd-kind-icon">base<wbr>Query<wbr>Contracts<wbr>ByCode<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequeryrawcontractstateresponse" class="tsd-kind-icon">base<wbr>Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#basequerysmartcontractstateresponse" class="tsd-kind-icon">base<wbr>Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#btoa" class="tsd-kind-icon">btoa</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#globalthis" class="tsd-kind-icon">global<wbr>This</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#self" class="tsd-kind-icon">self</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#window" class="tsd-kind-icon">window</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#accesstypefromjson" class="tsd-kind-icon">access<wbr>Type<wbr>FromJSON</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#accesstypetojson" class="tsd-kind-icon">access<wbr>Type<wbr>ToJSON</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#base64frombytes" class="tsd-kind-icon">base64<wbr>From<wbr>Bytes</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#bytesfrombase64" class="tsd-kind-icon">bytes<wbr>From<wbr>Base64</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#contractcodehistoryoperationtypefromjson" class="tsd-kind-icon">contract<wbr>Code<wbr>History<wbr>Operation<wbr>Type<wbr>FromJSON</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#contractcodehistoryoperationtypetojson" class="tsd-kind-icon">contract<wbr>Code<wbr>History<wbr>Operation<wbr>Type<wbr>ToJSON</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createbroadcasttxerrormessage" class="tsd-kind-icon">create<wbr>Broadcast<wbr>TxError<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createdefaultregistry" class="tsd-kind-icon">create<wbr>Default<wbr>Registry</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#preparebuilder" class="tsd-kind-icon">prepare<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setupwasmextension" class="tsd-kind-icon">setup<wbr>Wasm<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#absolutetxposition" class="tsd-kind-icon">Absolute<wbr>TxPosition</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#accessconfig" class="tsd-kind-icon">Access<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#accesstypeparam" class="tsd-kind-icon">Access<wbr>Type<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#codeinfo" class="tsd-kind-icon">Code<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#codeinforesponse" class="tsd-kind-icon">Code<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#coin" class="tsd-kind-icon">Coin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#contractcodehistoryentry" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#contractinfo" class="tsd-kind-icon">Contract<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#contractinfowithaddress" class="tsd-kind-icon">Contract<wbr>Info<wbr>With<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#deccoin" class="tsd-kind-icon">Dec<wbr>Coin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#decproto" class="tsd-kind-icon">Dec<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#intproto" class="tsd-kind-icon">Int<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#model" class="tsd-kind-icon">Model</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgclearadmin" class="tsd-kind-icon">Msg<wbr>Clear<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgclearadminresponse" class="tsd-kind-icon">Msg<wbr>Clear<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgexecutecontract" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgexecutecontractresponse" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msginstantiatecontract" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msginstantiatecontractresponse" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgmigratecontract" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgmigratecontractresponse" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgstorecode" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgstorecoderesponse" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgupdateadmin" class="tsd-kind-icon">Msg<wbr>Update<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#msgupdateadminresponse" class="tsd-kind-icon">Msg<wbr>Update<wbr>Admin<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#pagerequest" class="tsd-kind-icon">Page<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#pageresponse" class="tsd-kind-icon">Page<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#params" class="tsd-kind-icon">Params</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#queryallcontractstaterequest" class="tsd-kind-icon">Query<wbr>All<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#queryallcontractstateresponse" class="tsd-kind-icon">Query<wbr>All<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycoderequest" class="tsd-kind-icon">Query<wbr>Code<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycoderesponse" class="tsd-kind-icon">Query<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycodesrequest" class="tsd-kind-icon">Query<wbr>Codes<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycodesresponse" class="tsd-kind-icon">Query<wbr>Codes<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontracthistoryrequest" class="tsd-kind-icon">Query<wbr>Contract<wbr>History<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontracthistoryresponse" class="tsd-kind-icon">Query<wbr>Contract<wbr>History<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontractinforequest" class="tsd-kind-icon">Query<wbr>Contract<wbr>Info<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontractinforesponse" class="tsd-kind-icon">Query<wbr>Contract<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontractsbycoderequest" class="tsd-kind-icon">Query<wbr>Contracts<wbr>ByCode<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querycontractsbycoderesponse" class="tsd-kind-icon">Query<wbr>Contracts<wbr>ByCode<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#queryrawcontractstaterequest" class="tsd-kind-icon">Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#queryrawcontractstateresponse" class="tsd-kind-icon">Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querysmartcontractstaterequest" class="tsd-kind-icon">Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#querysmartcontractstateresponse" class="tsd-kind-icon">Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#baseabsolutetxposition" class="tsd-kind-icon">base<wbr>Absolute<wbr>TxPosition</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#baseaccessconfig" class="tsd-kind-icon">base<wbr>Access<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#baseaccesstypeparam" class="tsd-kind-icon">base<wbr>Access<wbr>Type<wbr>Param</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecodeinfo" class="tsd-kind-icon">base<wbr>Code<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecodeinforesponse" class="tsd-kind-icon">base<wbr>Code<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecoin" class="tsd-kind-icon">base<wbr>Coin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecontractcodehistoryentry" class="tsd-kind-icon">base<wbr>Contract<wbr>Code<wbr>History<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecontractinfo" class="tsd-kind-icon">base<wbr>Contract<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basecontractinfowithaddress" class="tsd-kind-icon">base<wbr>Contract<wbr>Info<wbr>With<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basedeccoin" class="tsd-kind-icon">base<wbr>Dec<wbr>Coin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basedecproto" class="tsd-kind-icon">base<wbr>Dec<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#baseintproto" class="tsd-kind-icon">base<wbr>Int<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgclearadmin" class="tsd-kind-icon">base<wbr>Msg<wbr>Clear<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgexecutecontract" class="tsd-kind-icon">base<wbr>Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsginstantiatecontract" class="tsd-kind-icon">base<wbr>Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsginstantiatecontractresponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Instantiate<wbr>Contract<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgmigratecontract" class="tsd-kind-icon">base<wbr>Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgstorecode" class="tsd-kind-icon">base<wbr>Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgstorecoderesponse" class="tsd-kind-icon">base<wbr>Msg<wbr>Store<wbr>Code<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basemsgupdateadmin" class="tsd-kind-icon">base<wbr>Msg<wbr>Update<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basepagerequest" class="tsd-kind-icon">base<wbr>Page<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basepageresponse" class="tsd-kind-icon">base<wbr>Page<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#baseparams" class="tsd-kind-icon">base<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequeryallcontractstaterequest" class="tsd-kind-icon">base<wbr>Query<wbr>All<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerycoderequest" class="tsd-kind-icon">base<wbr>Query<wbr>Code<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerycontracthistoryrequest" class="tsd-kind-icon">base<wbr>Query<wbr>Contract<wbr>History<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerycontractinforequest" class="tsd-kind-icon">base<wbr>Query<wbr>Contract<wbr>Info<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerycontractinforesponse" class="tsd-kind-icon">base<wbr>Query<wbr>Contract<wbr>Info<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerycontractsbycoderequest" class="tsd-kind-icon">base<wbr>Query<wbr>Contracts<wbr>ByCode<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequeryrawcontractstaterequest" class="tsd-kind-icon">base<wbr>Query<wbr>Raw<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#basequerysmartcontractstaterequest" class="tsd-kind-icon">base<wbr>Query<wbr>Smart<wbr>Contract<wbr>State<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#cosmwasmtypes" class="tsd-kind-icon">cosm<wbr>Wasm<wbr>Types</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -638,18 +152,18 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>
