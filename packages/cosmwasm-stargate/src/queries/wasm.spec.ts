@@ -84,7 +84,7 @@ async function instantiateContract(
           beneficiary: beneficiaryAddress,
         }),
       ),
-      initFunds: transferAmount ? [...transferAmount] : [],
+      funds: transferAmount ? [...transferAmount] : [],
     }),
   };
   const fee: StdFee = {
@@ -109,7 +109,7 @@ async function executeContract(
       sender: alice.address0,
       contract: contractAddress,
       msg: toAscii(JSON.stringify(msg)),
-      sentFunds: [],
+      funds: [],
     }),
   };
   const fee: StdFee = {
@@ -219,6 +219,7 @@ describe("WasmExtension", () => {
         creator: alice.address0,
         label: "my escrow",
         admin: "",
+        ibcPortId: "",
       });
 
       const { contractInfo } = await client.unverified.wasm.getContractInfo(myAddress);
@@ -228,6 +229,7 @@ describe("WasmExtension", () => {
         creator: alice.address0,
         label: "my escrow",
         admin: "",
+        ibcPortId: "",
       });
       expect(contractInfo.admin).toEqual("");
     });

@@ -191,7 +191,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
         initMsg: toUtf8(JSON.stringify(initMsg)),
-        initFunds: [...(options.transferAmount || [])],
+        funds: [...(options.transferAmount || [])],
         admin: options.admin,
       }),
     };
@@ -293,7 +293,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: senderAddress,
         contract: contractAddress,
         msg: toUtf8(JSON.stringify(handleMsg)),
-        sentFunds: [...(transferAmount || [])],
+        funds: [...(transferAmount || [])],
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [executeMsg], this.fees.exec, memo);

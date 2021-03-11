@@ -58,7 +58,7 @@ describe("AminoTypes", () => {
             foo: "bar",
           }),
         ),
-        initFunds: coins(1234, "ucosm"),
+        funds: coins(1234, "ucosm"),
         admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
       const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
@@ -130,7 +130,7 @@ describe("AminoTypes", () => {
             foo: "bar",
           }),
         ),
-        sentFunds: coins(1234, "ucosm"),
+        funds: coins(1234, "ucosm"),
       };
       const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
@@ -229,7 +229,7 @@ describe("AminoTypes", () => {
             foo: "bar",
           }),
         ),
-        initFunds: coins(1234, "ucosm"),
+        funds: coins(1234, "ucosm"),
         admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
       expect(msg).toEqual({
@@ -299,7 +299,7 @@ describe("AminoTypes", () => {
             foo: "bar",
           }),
         ),
-        sentFunds: coins(1234, "ucosm"),
+        funds: coins(1234, "ucosm"),
       };
       expect(msg).toEqual({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",

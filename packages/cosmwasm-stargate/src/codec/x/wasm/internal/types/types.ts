@@ -122,7 +122,7 @@ export interface Params {
 
 /** CodeInfo is data for the uploaded contract WASM code */
 export interface CodeInfo {
-  /** CodeHash is the unique CodeID */
+  /** CodeHash is the unique identifier created by wasmvm */
   codeHash: Uint8Array;
   /** Creator address who initially stored the code */
   creator: string;
@@ -149,6 +149,7 @@ export interface ContractInfo {
    * This data should kept internal and not be exposed via query results. Just use for sorting
    */
   created?: AbsoluteTxPosition;
+  ibcPortId: string;
 }
 
 /** ContractCodeHistoryEntry metadata to a contract. */
@@ -523,7 +524,7 @@ export const CodeInfo = {
   },
 };
 
-const baseContractInfo: object = { codeId: Long.UZERO, creator: "", admin: "", label: "" };
+const baseContractInfo: object = { codeId: Long.UZERO, creator: "", admin: "", label: "", ibcPortId: "" };
 
 export const ContractInfo = {
   encode(message: ContractInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
@@ -541,6 +542,9 @@ export const ContractInfo = {
     }
     if (message.created !== undefined) {
       AbsoluteTxPosition.encode(message.created, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.ibcPortId !== "") {
+      writer.uint32(50).string(message.ibcPortId);
     }
     return writer;
   },
@@ -566,6 +570,9 @@ export const ContractInfo = {
           break;
         case 5:
           message.created = AbsoluteTxPosition.decode(reader, reader.uint32());
+          break;
+        case 6:
+          message.ibcPortId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -602,6 +609,11 @@ export const ContractInfo = {
     } else {
       message.created = undefined;
     }
+    if (object.ibcPortId !== undefined && object.ibcPortId !== null) {
+      message.ibcPortId = String(object.ibcPortId);
+    } else {
+      message.ibcPortId = "";
+    }
     return message;
   },
 
@@ -613,6 +625,7 @@ export const ContractInfo = {
     message.label !== undefined && (obj.label = message.label);
     message.created !== undefined &&
       (obj.created = message.created ? AbsoluteTxPosition.toJSON(message.created) : undefined);
+    message.ibcPortId !== undefined && (obj.ibcPortId = message.ibcPortId);
     return obj;
   },
 
@@ -642,6 +655,11 @@ export const ContractInfo = {
       message.created = AbsoluteTxPosition.fromPartial(object.created);
     } else {
       message.created = undefined;
+    }
+    if (object.ibcPortId !== undefined && object.ibcPortId !== null) {
+      message.ibcPortId = object.ibcPortId;
+    } else {
+      message.ibcPortId = "";
     }
     return message;
   },

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   MsgClearAdmin as LaunchpadMsgClearAdmin,
-  MsgExecuteContract as LaunchpadMsgExecuteContract,
-  MsgInstantiateContract as LaunchpadMsgInstantiateContract,
   MsgMigrateContract as LaunchpadMsgMigrateContract,
   MsgStoreCode as LaunchpadMsgStoreCode,
   MsgUpdateAdmin as LaunchpadMsgUpdateAdmin,
 } from "@cosmjs/cosmwasm-launchpad";
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
+import { Coin } from "@cosmjs/launchpad";
 import { AminoConverter, coinFromProto } from "@cosmjs/stargate";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
@@ -20,6 +19,30 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "./codec/x/wasm/internal/types/tx";
+
+interface MsgExecuteContractValueAmino {
+  /** Bech32 account address */
+  readonly sender: string;
+  /** Bech32 account address */
+  readonly contract: string;
+  /** Handle message as JavaScript object */
+  readonly msg: any;
+  readonly funds: readonly Coin[];
+}
+
+interface MsgInstantiateContractValueAmino {
+  /** Bech32 account address */
+  readonly sender: string;
+  /** ID of the Wasm code that was uploaded before */
+  readonly code_id: string;
+  /** Human-readable label for this contract */
+  readonly label: string;
+  /** Init message as JavaScript object */
+  readonly init_msg: any;
+  readonly funds: readonly Coin[];
+  /** Bech32-encoded admin address */
+  readonly admin?: string;
+}
 
 export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgStoreCode": {
@@ -56,20 +79,20 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       codeId,
       label,
       initMsg,
-      initFunds,
+      funds,
       admin,
-    }: MsgInstantiateContract): LaunchpadMsgInstantiateContract["value"] => {
+    }: MsgInstantiateContract): MsgInstantiateContractValueAmino => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(codeId, "missing codeId");
       assertDefinedAndNotNull(label, "missing label");
       assertDefinedAndNotNull(initMsg, "missing initMsg");
-      assertDefinedAndNotNull(initFunds, "missing initFunds");
+      assertDefinedAndNotNull(funds, "missing funds");
       return {
         sender: sender,
         code_id: codeId.toString(),
         label: label,
         init_msg: JSON.parse(fromUtf8(initMsg)),
-        init_funds: initFunds.map(coinFromProto),
+        funds: funds.map(coinFromProto),
         admin: admin ?? undefined,
       };
     },
@@ -78,14 +101,14 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       code_id,
       label,
       init_msg,
-      init_funds,
+      funds,
       admin,
-    }: LaunchpadMsgInstantiateContract["value"]): MsgInstantiateContract => ({
+    }: MsgInstantiateContractValueAmino): MsgInstantiateContract => ({
       sender: sender,
       codeId: Long.fromString(code_id),
       label: label,
       initMsg: toUtf8(JSON.stringify(init_msg)),
-      initFunds: [...init_funds],
+      funds: [...funds],
       admin: admin ?? "",
     }),
   },
@@ -124,33 +147,23 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgExecuteContract": {
     aminoType: "wasm/MsgExecuteContract",
-    toAmino: ({
-      sender,
-      contract,
-      msg,
-      sentFunds,
-    }: MsgExecuteContract): LaunchpadMsgExecuteContract["value"] => {
+    toAmino: ({ sender, contract, msg, funds }: MsgExecuteContract): MsgExecuteContractValueAmino => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(contract, "missing contract");
       assertDefinedAndNotNull(msg, "missing msg");
-      assertDefinedAndNotNull(sentFunds, "missing sentFunds");
+      assertDefinedAndNotNull(funds, "missing funds");
       return {
         sender: sender,
         contract: contract,
         msg: JSON.parse(fromUtf8(msg)),
-        sent_funds: sentFunds.map(coinFromProto),
+        funds: funds.map(coinFromProto),
       };
     },
-    fromAmino: ({
-      sender,
-      contract,
-      msg,
-      sent_funds,
-    }: LaunchpadMsgExecuteContract["value"]): MsgExecuteContract => ({
+    fromAmino: ({ sender, contract, msg, funds }: MsgExecuteContractValueAmino): MsgExecuteContract => ({
       sender: sender,
       contract: contract,
       msg: toUtf8(JSON.stringify(msg)),
-      sentFunds: [...sent_funds],
+      funds: [...funds],
     }),
   },
   "/cosmwasm.wasm.v1beta1.MsgMigrateContract": {
