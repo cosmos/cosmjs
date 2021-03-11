@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/cosmwasm-stargate: Codec adapted to support wasmd 0.16. Older versions
+  of wasmd are not supported anymore.
+
 ## [0.24.0] - 2021-03-11
 
 - @cosmjs/cosmwasm: This package is now deprecated. The same functionality is
