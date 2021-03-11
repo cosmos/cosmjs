@@ -414,11 +414,13 @@ type RpcSignature = {
 };
 
 function decodeCommitSignature(data: RpcSignature): CommitSignature {
+  const nonZeroTime = data.timestamp && !data.timestamp.startsWith("0001-01-01");
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
     validatorAddress: fromHex(data.validator_address),
-    timestamp: fromRfc3339WithNanoseconds(assertNotEmpty(data.timestamp)),
-    signature: fromBase64(assertNotEmpty(data.signature)),
+    timestamp: nonZeroTime ? fromRfc3339WithNanoseconds(data.timestamp) : undefined,
+    // FIXME: make this optional in type? (signature?: Uint8Array)
+    signature: fromBase64(optional(data.signature, "")),
   };
 }
 
