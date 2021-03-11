@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.24.0 (unreleased)
+## [0.24.0] - 2021-03-11
 
 - @cosmjs/cosmwasm: This package is now deprecated. The same functionality is
   now available in @cosmjs/cosmwasm-launchpad.
@@ -241,3 +241,5 @@
 - @cosmjs/sdk38: Remove the obsolete `upload`, `init`, `exec` properties from
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
+
+[0.24.0]: https://github.com/CosmWasm/cosmwasm/compare/v0.23.0...v0.24.0
