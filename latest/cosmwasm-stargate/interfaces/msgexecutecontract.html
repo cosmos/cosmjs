@@ -85,9 +85,9 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="msgexecutecontract.html#contract" class="tsd-kind-icon">contract</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="msgexecutecontract.html#funds" class="tsd-kind-icon">funds</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="msgexecutecontract.html#msg" class="tsd-kind-icon">msg</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="msgexecutecontract.html#sender" class="tsd-kind-icon">sender</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="msgexecutecontract.html#sentfunds" class="tsd-kind-icon">sent<wbr>Funds</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,7 +101,7 @@
 					<div class="tsd-signature tsd-kind-icon">contract<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/44e326179/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L56">src/codec/x/wasm/internal/types/tx.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/1a1ebaf83/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L58">src/codec/x/wasm/internal/types/tx.ts:58</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -111,12 +111,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="funds" class="tsd-anchor"></a>
+					<h3>funds</h3>
+					<div class="tsd-signature tsd-kind-icon">funds<span class="tsd-signature-symbol">:</span> <a href="coin.html" class="tsd-signature-type">Coin</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/1a1ebaf83/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L62">src/codec/x/wasm/internal/types/tx.ts:62</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Funds coins that are transferred to the contract on execution</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="msg" class="tsd-anchor"></a>
 					<h3>msg</h3>
 					<div class="tsd-signature tsd-kind-icon">msg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/44e326179/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L58">src/codec/x/wasm/internal/types/tx.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/1a1ebaf83/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L60">src/codec/x/wasm/internal/types/tx.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,27 +146,12 @@
 					<div class="tsd-signature tsd-kind-icon">sender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/44e326179/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L54">src/codec/x/wasm/internal/types/tx.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/1a1ebaf83/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L56">src/codec/x/wasm/internal/types/tx.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Sender is the that actor that signed the messages</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="sentfunds" class="tsd-anchor"></a>
-					<h3>sent<wbr>Funds</h3>
-					<div class="tsd-signature tsd-kind-icon">sent<wbr>Funds<span class="tsd-signature-symbol">:</span> <a href="coin.html" class="tsd-signature-type">Coin</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/44e326179/packages/cosmwasm-stargate/src/codec/x/wasm/internal/types/tx.ts#L60">src/codec/x/wasm/internal/types/tx.ts:60</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>SentFunds coins that are transferred to the contract on execution</p>
 						</div>
 					</div>
 				</section>
@@ -176,13 +176,13 @@
 								<a href="msgexecutecontract.html#contract" class="tsd-kind-icon">contract</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="msgexecutecontract.html#funds" class="tsd-kind-icon">funds</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="msgexecutecontract.html#msg" class="tsd-kind-icon">msg</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="msgexecutecontract.html#sender" class="tsd-kind-icon">sender</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="msgexecutecontract.html#sentfunds" class="tsd-kind-icon">sent<wbr>Funds</a>
 							</li>
 						</ul>
 					</li>
