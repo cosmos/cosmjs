@@ -38,14 +38,16 @@ export interface MsgInstantiateContract {
   label: string;
   /** InitMsg json encoded message to be passed to the contract on instantiation */
   initMsg: Uint8Array;
-  /** InitFunds coins that are transferred to the contract on instantiation */
-  initFunds: Coin[];
+  /** Funds coins that are transferred to the contract on instantiation */
+  funds: Coin[];
 }
 
 /** MsgInstantiateContractResponse return instantiation result data */
 export interface MsgInstantiateContractResponse {
   /** Address is the bech32 address of the new contract instance. */
   address: string;
+  /** Data contains base64-encoded bytes to returned from the contract */
+  data: Uint8Array;
 }
 
 /** MsgExecuteContract submits the given message data to a smart contract */
@@ -56,8 +58,8 @@ export interface MsgExecuteContract {
   contract: string;
   /** Msg json encoded message to be passed to the contract */
   msg: Uint8Array;
-  /** SentFunds coins that are transferred to the contract on execution */
-  sentFunds: Coin[];
+  /** Funds coins that are transferred to the contract on execution */
+  funds: Coin[];
 }
 
 /** MsgExecuteContractResponse returns execution result data. */
@@ -312,7 +314,7 @@ export const MsgInstantiateContract = {
     if (message.initMsg.length !== 0) {
       writer.uint32(42).bytes(message.initMsg);
     }
-    for (const v of message.initFunds) {
+    for (const v of message.funds) {
       Coin.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
@@ -322,7 +324,7 @@ export const MsgInstantiateContract = {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgInstantiateContract } as MsgInstantiateContract;
-    message.initFunds = [];
+    message.funds = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -342,7 +344,7 @@ export const MsgInstantiateContract = {
           message.initMsg = reader.bytes();
           break;
         case 6:
-          message.initFunds.push(Coin.decode(reader, reader.uint32()));
+          message.funds.push(Coin.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -354,7 +356,7 @@ export const MsgInstantiateContract = {
 
   fromJSON(object: any): MsgInstantiateContract {
     const message = { ...baseMsgInstantiateContract } as MsgInstantiateContract;
-    message.initFunds = [];
+    message.funds = [];
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -378,9 +380,9 @@ export const MsgInstantiateContract = {
     if (object.initMsg !== undefined && object.initMsg !== null) {
       message.initMsg = bytesFromBase64(object.initMsg);
     }
-    if (object.initFunds !== undefined && object.initFunds !== null) {
-      for (const e of object.initFunds) {
-        message.initFunds.push(Coin.fromJSON(e));
+    if (object.funds !== undefined && object.funds !== null) {
+      for (const e of object.funds) {
+        message.funds.push(Coin.fromJSON(e));
       }
     }
     return message;
@@ -394,17 +396,17 @@ export const MsgInstantiateContract = {
     message.label !== undefined && (obj.label = message.label);
     message.initMsg !== undefined &&
       (obj.initMsg = base64FromBytes(message.initMsg !== undefined ? message.initMsg : new Uint8Array()));
-    if (message.initFunds) {
-      obj.initFunds = message.initFunds.map((e) => (e ? Coin.toJSON(e) : undefined));
+    if (message.funds) {
+      obj.funds = message.funds.map((e) => (e ? Coin.toJSON(e) : undefined));
     } else {
-      obj.initFunds = [];
+      obj.funds = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgInstantiateContract>): MsgInstantiateContract {
     const message = { ...baseMsgInstantiateContract } as MsgInstantiateContract;
-    message.initFunds = [];
+    message.funds = [];
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = object.sender;
     } else {
@@ -430,9 +432,9 @@ export const MsgInstantiateContract = {
     } else {
       message.initMsg = new Uint8Array();
     }
-    if (object.initFunds !== undefined && object.initFunds !== null) {
-      for (const e of object.initFunds) {
-        message.initFunds.push(Coin.fromPartial(e));
+    if (object.funds !== undefined && object.funds !== null) {
+      for (const e of object.funds) {
+        message.funds.push(Coin.fromPartial(e));
       }
     }
     return message;
@@ -446,6 +448,9 @@ export const MsgInstantiateContractResponse = {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
+    if (message.data.length !== 0) {
+      writer.uint32(18).bytes(message.data);
+    }
     return writer;
   },
 
@@ -458,6 +463,9 @@ export const MsgInstantiateContractResponse = {
       switch (tag >>> 3) {
         case 1:
           message.address = reader.string();
+          break;
+        case 2:
+          message.data = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -474,12 +482,17 @@ export const MsgInstantiateContractResponse = {
     } else {
       message.address = "";
     }
+    if (object.data !== undefined && object.data !== null) {
+      message.data = bytesFromBase64(object.data);
+    }
     return message;
   },
 
   toJSON(message: MsgInstantiateContractResponse): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
+    message.data !== undefined &&
+      (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
     return obj;
   },
 
@@ -489,6 +502,11 @@ export const MsgInstantiateContractResponse = {
       message.address = object.address;
     } else {
       message.address = "";
+    }
+    if (object.data !== undefined && object.data !== null) {
+      message.data = object.data;
+    } else {
+      message.data = new Uint8Array();
     }
     return message;
   },
@@ -507,7 +525,7 @@ export const MsgExecuteContract = {
     if (message.msg.length !== 0) {
       writer.uint32(26).bytes(message.msg);
     }
-    for (const v of message.sentFunds) {
+    for (const v of message.funds) {
       Coin.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
@@ -517,7 +535,7 @@ export const MsgExecuteContract = {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgExecuteContract } as MsgExecuteContract;
-    message.sentFunds = [];
+    message.funds = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -531,7 +549,7 @@ export const MsgExecuteContract = {
           message.msg = reader.bytes();
           break;
         case 5:
-          message.sentFunds.push(Coin.decode(reader, reader.uint32()));
+          message.funds.push(Coin.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -543,7 +561,7 @@ export const MsgExecuteContract = {
 
   fromJSON(object: any): MsgExecuteContract {
     const message = { ...baseMsgExecuteContract } as MsgExecuteContract;
-    message.sentFunds = [];
+    message.funds = [];
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -557,9 +575,9 @@ export const MsgExecuteContract = {
     if (object.msg !== undefined && object.msg !== null) {
       message.msg = bytesFromBase64(object.msg);
     }
-    if (object.sentFunds !== undefined && object.sentFunds !== null) {
-      for (const e of object.sentFunds) {
-        message.sentFunds.push(Coin.fromJSON(e));
+    if (object.funds !== undefined && object.funds !== null) {
+      for (const e of object.funds) {
+        message.funds.push(Coin.fromJSON(e));
       }
     }
     return message;
@@ -571,17 +589,17 @@ export const MsgExecuteContract = {
     message.contract !== undefined && (obj.contract = message.contract);
     message.msg !== undefined &&
       (obj.msg = base64FromBytes(message.msg !== undefined ? message.msg : new Uint8Array()));
-    if (message.sentFunds) {
-      obj.sentFunds = message.sentFunds.map((e) => (e ? Coin.toJSON(e) : undefined));
+    if (message.funds) {
+      obj.funds = message.funds.map((e) => (e ? Coin.toJSON(e) : undefined));
     } else {
-      obj.sentFunds = [];
+      obj.funds = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgExecuteContract>): MsgExecuteContract {
     const message = { ...baseMsgExecuteContract } as MsgExecuteContract;
-    message.sentFunds = [];
+    message.funds = [];
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = object.sender;
     } else {
@@ -597,9 +615,9 @@ export const MsgExecuteContract = {
     } else {
       message.msg = new Uint8Array();
     }
-    if (object.sentFunds !== undefined && object.sentFunds !== null) {
-      for (const e of object.sentFunds) {
-        message.sentFunds.push(Coin.fromPartial(e));
+    if (object.funds !== undefined && object.funds !== null) {
+      for (const e of object.funds) {
+        message.funds.push(Coin.fromPartial(e));
       }
     }
     return message;

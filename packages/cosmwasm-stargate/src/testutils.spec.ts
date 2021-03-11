@@ -83,15 +83,27 @@ export const unused = {
 };
 
 export const validator = {
-  /** From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json */
+  /**
+   * From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
   pubkey: {
     type: "tendermint/PubKeySecp256k1",
-    value: "AsYCD9IZsnY3BhSrR3k7mf5iaJD0KkQdwqzLLl9PT+05",
+    value: "AoSRL8/aA1oDkHPd0IMtLpozhGdgFafzMCKmmOQ0olJn",
   },
-  /** delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json */
-  delegatorAddress: "wasm1m4vhsgne6u74ff78vf0tvkjq3q4hjf9v84k82s",
-  /** validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json */
-  validatorAddress: "wasmvaloper1m4vhsgne6u74ff78vf0tvkjq3q4hjf9vjfrmy2",
+  /**
+   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
+  delegatorAddress: "wasm1jq32x9gj3n5lj2cgrcksypk3zegxnxgy8vzymc",
+  /**
+   * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
+  validatorAddress: "wasmvaloper1jq32x9gj3n5lj2cgrcksypk3zegxnxgyjshc4z",
   accountNumber: 0,
   sequence: 1,
 };
@@ -100,8 +112,8 @@ export const validator = {
 export const deployedHackatom = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.1",
-  checksum: "3defc33a41f58c71d38b176d521c411d8e74d26403fde7660486930c7579a016",
+  builder: "cosmwasm/rust-optimizer:0.10.8",
+  checksum: "08537c4f191980bc835f08ecb9077bb60df1097c1c0793312e0f21cbfca868d2",
   instances: [
     {
       beneficiary: alice.address0,
@@ -118,19 +130,6 @@ export const deployedHackatom = {
       address: "wasm18r5szma8hm93pvx6lwpjwyxruw27e0k5kjkyan",
       label: "From deploy_hackatom.js (2)",
     },
-  ],
-};
-
-/** Deployed as part of scripts/wasmd/init.sh */
-export const deployedErc20 = {
-  codeId: 2,
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
-  checksum: "d04368320ad55089384adb171aaea39e43d710d7608829adba0300ed30aa2988",
-  instances: [
-    "wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te", // HASH
-    "wasm1ym5m5dw7pttft5w430nxx6uat8f84ck4hrew7r", // ISA
-    "wasm1gv07846a3867ezn3uqkk082c5ftke7hp4rffwt", // JADE
   ],
 };
 
@@ -161,16 +160,6 @@ export function wasmdEnabled(): boolean {
 export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
     return pending("Set WASMD_ENABLED to enable Wasmd-based tests");
-  }
-}
-
-export function erc20Enabled(): boolean {
-  return !!process.env.ERC20_ENABLED;
-}
-
-export function pendingWithoutErc20(): void {
-  if (!erc20Enabled()) {
-    return pending("Set ERC20_ENABLED to enable ERC20-based tests");
   }
 }
 
