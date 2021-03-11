@@ -1,13 +1,11 @@
 const packageJson = require("./package.json");
 
 module.exports = {
-  inputFiles: ["./src"],
+  entryPoints: ["./src"],
   out: "docs",
-  exclude: "**/*.spec.ts",
+  exclude: ["**/*.spec.ts", "**/*.worker.ts"],
   name: `${packageJson.name} Documentation`,
   readme: "README.md",
-  mode: "file",
   excludeExternals: true,
-  excludeNotExported: true,
   excludePrivate: true,
 };
