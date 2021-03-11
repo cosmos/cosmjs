@@ -29,7 +29,7 @@ docker run --rm \
   --mount type=volume,source=simapp_data,target=/root \
   "$REPOSITORY:$VERSION" \
   /template/run_simd.sh \
-  >"$SIMD_LOGFILE" &
+  >"$SIMD_LOGFILE" 2>&1 &
 
 echo "simd running on http://localhost:$TENDERMINT_PORT_HOST and logging into $SIMD_LOGFILE"
 
