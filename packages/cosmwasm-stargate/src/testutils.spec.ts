@@ -122,19 +122,6 @@ export const deployedHackatom = {
 };
 
 /** Deployed as part of scripts/wasmd/init.sh */
-export const deployedErc20 = {
-  codeId: 2,
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
-  checksum: "d04368320ad55089384adb171aaea39e43d710d7608829adba0300ed30aa2988",
-  instances: [
-    "wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te", // HASH
-    "wasm1ym5m5dw7pttft5w430nxx6uat8f84ck4hrew7r", // ISA
-    "wasm1gv07846a3867ezn3uqkk082c5ftke7hp4rffwt", // JADE
-  ],
-};
-
-/** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw3 = {
   codeId: 3,
   source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
@@ -161,16 +148,6 @@ export function wasmdEnabled(): boolean {
 export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
     return pending("Set WASMD_ENABLED to enable Wasmd-based tests");
-  }
-}
-
-export function erc20Enabled(): boolean {
-  return !!process.env.ERC20_ENABLED;
-}
-
-export function pendingWithoutErc20(): void {
-  if (!erc20Enabled()) {
-    return pending("Set ERC20_ENABLED to enable ERC20-based tests");
   }
 }
 
