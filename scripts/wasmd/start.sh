@@ -30,7 +30,7 @@ docker run --rm \
   --mount type=volume,source=wasmd_data,target=/root \
   "$REPOSITORY:$VERSION" \
   ./run_wasmd.sh /template \
-  >"$WASMD_LOGFILE" &
+  >"$WASMD_LOGFILE" 2>&1 &
 
 echo "wasmd running and logging into $WASMD_LOGFILE"
 
