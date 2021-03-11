@@ -83,15 +83,27 @@ export const unused = {
 };
 
 export const validator = {
-  /** From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json */
+  /**
+   * From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
   pubkey: {
     type: "tendermint/PubKeySecp256k1",
-    value: "AsYCD9IZsnY3BhSrR3k7mf5iaJD0KkQdwqzLLl9PT+05",
+    value: "AoSRL8/aA1oDkHPd0IMtLpozhGdgFafzMCKmmOQ0olJn",
   },
-  /** delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json */
-  delegatorAddress: "wasm1m4vhsgne6u74ff78vf0tvkjq3q4hjf9v84k82s",
-  /** validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json */
-  validatorAddress: "wasmvaloper1m4vhsgne6u74ff78vf0tvkjq3q4hjf9vjfrmy2",
+  /**
+   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
+  delegatorAddress: "wasm1jq32x9gj3n5lj2cgrcksypk3zegxnxgy8vzymc",
+  /**
+   * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
+   *
+   * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
+   */
+  validatorAddress: "wasmvaloper1jq32x9gj3n5lj2cgrcksypk3zegxnxgyjshc4z",
   accountNumber: 0,
   sequence: 1,
 };
@@ -100,8 +112,8 @@ export const validator = {
 export const deployedHackatom = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.1",
-  checksum: "3defc33a41f58c71d38b176d521c411d8e74d26403fde7660486930c7579a016",
+  builder: "cosmwasm/rust-optimizer:0.10.8",
+  checksum: "08537c4f191980bc835f08ecb9077bb60df1097c1c0793312e0f21cbfca868d2",
   instances: [
     {
       beneficiary: alice.address0,

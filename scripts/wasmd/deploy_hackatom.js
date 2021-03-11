@@ -17,7 +17,7 @@ const alice = {
 
 const codeMeta = {
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.1",
+  builder: "cosmwasm/rust-optimizer:0.10.8",
 };
 
 const inits = [
