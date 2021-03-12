@@ -3,7 +3,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
-import { fromRfc3339WithNanoseconds } from "../../../dates";
+import { DateWithNanoseconds, fromRfc3339WithNanoseconds } from "../../../dates";
 import { SubscriptionEvent } from "../../../rpcclients";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../../types";
 import {
@@ -416,17 +416,23 @@ type RpcSignature = {
   readonly signature: string | null;
 };
 
+/**
+ * In some cases a timestamp is optional and set to the value 0 in Go.
+ * This can lead to strings like "0001-01-01T00:00:00Z" (see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415).
+ * This decoder tries to clean up such encoding from the API and turn them
+ * into undefined values.
+ */
+function decodeOptionalTime(timestamp: string): DateWithNanoseconds | undefined {
+  const nonZeroTime = timestamp && !timestamp.startsWith("0001-01-01");
+  return nonZeroTime ? fromRfc3339WithNanoseconds(timestamp) : undefined;
+}
+
 function decodeCommitSignature(data: RpcSignature): CommitSignature {
-  const nonZeroTime = data.timestamp && !data.timestamp.startsWith("0001-01-01");
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
-    // FIXME: Return an optional validatorAddress instead of an empty Uint8Array
-    // in the next breaking release.
-    validatorAddress: fromHex(data.validator_address),
-    timestamp: nonZeroTime ? fromRfc3339WithNanoseconds(data.timestamp) : undefined,
-    // FIXME: Return an optional signature instead of an empty Uint8Array
-    // in the next breaking release.
-    signature: fromBase64(data.signature || ""),
+    validatorAddress: data.validator_address ? fromHex(data.validator_address) : undefined,
+    timestamp: decodeOptionalTime(data.timestamp),
+    signature: data.signature ? fromBase64(data.signature) : undefined,
   };
 }
 
