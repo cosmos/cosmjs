@@ -409,16 +409,24 @@ type RpcSignature = {
   /** hex encoded */
   readonly validator_address: string;
   readonly timestamp: string;
-  /** bae64 encoded */
-  readonly signature: string;
+  /**
+   * Base64 encoded signature.
+   * There are cases when this is not set, see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415.
+   */
+  readonly signature: string | null;
 };
 
 function decodeCommitSignature(data: RpcSignature): CommitSignature {
+  const nonZeroTime = data.timestamp && !data.timestamp.startsWith("0001-01-01");
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
+    // FIXME: Return an optional validatorAddress instead of an empty Uint8Array
+    // in the next breaking release.
     validatorAddress: fromHex(data.validator_address),
-    timestamp: fromRfc3339WithNanoseconds(assertNotEmpty(data.timestamp)),
-    signature: fromBase64(assertNotEmpty(data.signature)),
+    timestamp: nonZeroTime ? fromRfc3339WithNanoseconds(data.timestamp) : undefined,
+    // FIXME: Return an optional signature instead of an empty Uint8Array
+    // in the next breaking release.
+    signature: fromBase64(data.signature || ""),
   };
 }
 
