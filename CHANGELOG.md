@@ -10,6 +10,11 @@ and this project adheres to
 
 - @cosmjs/cosmwasm-stargate: Codec adapted to support wasmd 0.16. Older versions
   of wasmd are not supported anymore.
+- @cosmjs/tendermint-rpc: The fields `CommitSignature.validatorAddress`,
+  `.timestamp` and `.signature` are now optional. They are unset when
+  `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is
+  only updated for the class `Tendermint34Client`, not for `Client`. Please
+  migrate to the former.
 
 ## [0.24.0] - 2021-03-11
 
