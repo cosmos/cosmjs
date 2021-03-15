@@ -16,12 +16,13 @@ import {
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
-import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
 import { BaseAccount } from "./codec/cosmos/auth/v1beta1/auth";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { Any } from "./codec/google/protobuf/any";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
 /** A transaction that is indexed as part of the transaction history */
@@ -91,16 +92,33 @@ function uint64FromProto(input: number | Long | null | undefined): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
-export function accountFromProto(input: BaseAccount): Account {
+function accountFromBaseAccount(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
   const pubkey = decodePubkey(pubKey);
-  assert(address);
   return {
     address: address,
     pubkey: pubkey,
     accountNumber: uint64FromProto(accountNumber).toNumber(),
     sequence: uint64FromProto(sequence).toNumber(),
   };
+}
+
+/**
+ * Takes an `Any` encoded account from the chain and extracts some common
+ * `Account` information from it. This is supposed to support the most relevant
+ * common Cosmos SDK account types. If you need support for exotix account types,
+ * you'll need to write your own account decoder.
+ */
+export function accountFromAny(input: Any): Account {
+  const { typeUrl, value } = input;
+
+  switch (typeUrl) {
+    case "/cosmos.auth.v1beta1.BaseAccount": {
+      return accountFromBaseAccount(BaseAccount.decode(value));
+    }
+    default:
+      throw new Error(`Unsupported type: '${typeUrl}'`);
+  }
 }
 
 export function coinFromProto(input: Coin): Coin {
@@ -151,14 +169,14 @@ export class StargateClient {
   // this is nice to display data to the user, but is slower
   public async getAccount(searchAddress: string): Promise<Account | null> {
     const account = await this.queryClient.auth.account(searchAddress);
-    return account ? accountFromProto(account) : null;
+    return account ? accountFromAny(account) : null;
   }
 
   // if we just need to get the sequence for signing a transaction, let's make this faster
   // (no need to wait a block before submitting)
   public async getAccountUnverified(searchAddress: string): Promise<Account | null> {
     const account = await this.queryClient.auth.unverified.account(searchAddress);
-    return account ? accountFromProto(account) : null;
+    return account ? accountFromAny(account) : null;
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {

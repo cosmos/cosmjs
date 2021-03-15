@@ -10,6 +10,10 @@ and this project adheres to
 
 - @cosmjs/cosmwasm-stargate: Codec adapted to support wasmd 0.16. Older versions
   of wasmd are not supported anymore.
+- @cosmjs/stargate: Let `AuthExtension.account` and
+  `AuthExtension.unverified.account` return an account of type `Any`. This makes
+  the caller responsible for decoding the type.
+- @cosmjs/stargate: Remove `accountFromProto` in favour of `accountFromAny`.
 - @cosmjs/tendermint-rpc: The fields `CommitSignature.validatorAddress`,
   `.timestamp` and `.signature` are now optional. They are unset when
   `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is

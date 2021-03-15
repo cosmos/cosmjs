@@ -18,7 +18,7 @@ export {
 } from "./queries";
 export {
   Account,
-  accountFromProto,
+  accountFromAny,
   assertIsBroadcastTxSuccess,
   BroadcastTxFailure,
   BroadcastTxResponse,
