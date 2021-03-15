@@ -1,3 +1,4 @@
+export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoTypes } from "./aminotypes";
 export { parseRawLog } from "./logs";
 export {
@@ -17,8 +18,6 @@ export {
   StakingExtension,
 } from "./queries";
 export {
-  Account,
-  accountFromAny,
   assertIsBroadcastTxSuccess,
   BroadcastTxFailure,
   BroadcastTxResponse,
