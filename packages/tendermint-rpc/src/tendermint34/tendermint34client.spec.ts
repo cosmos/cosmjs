@@ -104,9 +104,9 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     expect(response).toBeTruthy();
     expect(response.commit.signatures.length).toBeGreaterThanOrEqual(1);
     expect(response.commit.signatures[0].blockIdFlag).toEqual(2);
-    expect(response.commit.signatures[0].validatorAddress.length).toEqual(20);
+    expect(response.commit.signatures[0].validatorAddress?.length).toEqual(20);
     expect(response.commit.signatures[0].timestamp).toBeInstanceOf(Date);
-    expect(response.commit.signatures[0].signature.length).toEqual(64);
+    expect(response.commit.signatures[0].signature?.length).toEqual(64);
 
     client.disconnect();
   });
