@@ -19,7 +19,7 @@ import {
 import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
-import { BaseAccount } from "./codec/cosmos/auth/v1beta1/auth";
+import { BaseAccount, ModuleAccount } from "./codec/cosmos/auth/v1beta1/auth";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import {
@@ -123,6 +123,11 @@ export function accountFromAny(input: Any): Account {
 
     case "/cosmos.auth.v1beta1.BaseAccount":
       return accountFromBaseAccount(BaseAccount.decode(value));
+    case "/cosmos.auth.v1beta1.ModuleAccount": {
+      const baseAccount = ModuleAccount.decode(value).baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
 
     // vesting
 

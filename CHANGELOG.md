@@ -9,8 +9,8 @@ and this project adheres to
 ### Added
 
 - @cosmjs/stargate: Add support for different account types in `accountFromAny`
-  and `StargateClient`. Added vesting accounts `BaseVestingAccount`,
-  `ContinuousVestingAccount`, `DelayedVestingAccount` and
+  and `StargateClient`. Added `ModuleAccount` and vesting accounts
+  `BaseVestingAccount`, `ContinuousVestingAccount`, `DelayedVestingAccount` and
   `PeriodicVestingAccount`.
 
 ### Changed
