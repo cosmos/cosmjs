@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate: Add support for different account types in `accountFromAny`
+  and `StargateClient`. Added vesting accounts `BaseVestingAccount`,
+  `ContinuousVestingAccount`, `DelayedVestingAccount` and
+  `PeriodicVestingAccount`.
+
 ### Changed
 
 - @cosmjs/cosmwasm-stargate: Codec adapted to support wasmd 0.16. Older versions

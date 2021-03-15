@@ -16,12 +16,18 @@ import {
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
 import { BaseAccount } from "./codec/cosmos/auth/v1beta1/auth";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import {
+  BaseVestingAccount,
+  ContinuousVestingAccount,
+  DelayedVestingAccount,
+  PeriodicVestingAccount,
+} from "./codec/cosmos/vesting/v1beta1/vesting";
 import { Any } from "./codec/google/protobuf/any";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
@@ -113,9 +119,34 @@ export function accountFromAny(input: Any): Account {
   const { typeUrl, value } = input;
 
   switch (typeUrl) {
-    case "/cosmos.auth.v1beta1.BaseAccount": {
+    // auth
+
+    case "/cosmos.auth.v1beta1.BaseAccount":
       return accountFromBaseAccount(BaseAccount.decode(value));
+
+    // vesting
+
+    case "/cosmos.vesting.v1beta1.BaseVestingAccount": {
+      const baseAccount = BaseVestingAccount.decode(value)?.baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
     }
+    case "/cosmos.vesting.v1beta1.ContinuousVestingAccount": {
+      const baseAccount = ContinuousVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
+    case "/cosmos.vesting.v1beta1.DelayedVestingAccount": {
+      const baseAccount = DelayedVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
+    case "/cosmos.vesting.v1beta1.PeriodicVestingAccount": {
+      const baseAccount = PeriodicVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
+
     default:
       throw new Error(`Unsupported type: '${typeUrl}'`);
   }
