@@ -18,6 +18,8 @@ and this project adheres to
   and `StargateClient`. Added `ModuleAccount` and vesting accounts
   `BaseVestingAccount`, `ContinuousVestingAccount`, `DelayedVestingAccount` and
   `PeriodicVestingAccount`.
+- @cosmjs/stargate: Add codecs for IBC channel tx, client query/tx, and
+  connection tx.
 
 ### Changed
 
