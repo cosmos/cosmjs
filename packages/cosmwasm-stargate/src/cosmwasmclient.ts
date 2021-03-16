@@ -19,7 +19,7 @@ import {
 import { Uint53 } from "@cosmjs/math";
 import {
   Account,
-  accountFromProto,
+  accountFromAny,
   AuthExtension,
   BankExtension,
   BroadcastTxResponse,
@@ -87,7 +87,7 @@ export class CosmWasmClient {
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
     const account = await this.queryClient.auth.account(searchAddress);
-    return account ? accountFromProto(account) : null;
+    return account ? accountFromAny(account) : null;
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {

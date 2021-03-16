@@ -93,6 +93,15 @@ discussion please reach out to the team.
 [cosmwasm community call]:
   https://github.com/CosmWasm/cosmwasm/issues?q=label%3A%22Community+Call+%F0%9F%97%BA%F0%9F%93%9E%22
 
+## Known limitations
+
+### 0.24
+
+1. `AuthExtension` and all higher level Stargate clients only support
+   `BaseAccount`s for all functionality, including getting account numbers and
+   sequences for transaction signing. This will be implemented for all common
+   Cosmos SDK account types in the 0.25 series.
+
 ## Get in touch
 
 The CosmJS development team is happy to get in touch with you for all questions

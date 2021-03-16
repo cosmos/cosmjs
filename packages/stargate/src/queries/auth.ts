@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { assert } from "@cosmjs/utils";
-
-import { BaseAccount } from "../codec/cosmos/auth/v1beta1/auth";
 import { QueryClientImpl } from "../codec/cosmos/auth/v1beta1/query";
 import { Any } from "../codec/google/protobuf/any";
 import { QueryClient } from "./queryclient";
@@ -9,9 +5,23 @@ import { createRpc, toAccAddress } from "./utils";
 
 export interface AuthExtension {
   readonly auth: {
-    readonly account: (address: string) => Promise<BaseAccount | null>;
+    /**
+     * Returns an account if it exists and `null` otherwise.
+     *
+     * The account is a protobuf Any in order to be able to support many different
+     * account types in one API. The caller needs to switch over the expected and supported
+     * `typeUrl` and decode the `value` using its own type decoder.
+     */
+    readonly account: (address: string) => Promise<Any | null>;
     readonly unverified: {
-      readonly account: (address: string) => Promise<BaseAccount | null>;
+      /**
+       * Returns an account if it exists and `null` otherwise.
+       *
+       * The account is a protobuf Any in order to be able to support many different
+       * account types in one API. The caller needs to switch over the expected and supported
+       * `typeUrl` and decode the `value` using its own type decoder.
+       */
+      readonly account: (address: string) => Promise<Any | null>;
     };
   };
 }
@@ -29,27 +39,12 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
         const key = Uint8Array.from([0x01, ...toAccAddress(address)]);
         const responseData = await base.queryVerified("acc", key);
         if (responseData.length === 0) return null;
-        const account = Any.decode(responseData);
-        switch (account.typeUrl) {
-          case "/cosmos.auth.v1beta1.BaseAccount": {
-            return BaseAccount.decode(account.value);
-          }
-          default:
-            throw new Error(`Unsupported type: '${account.typeUrl}'`);
-        }
+        return Any.decode(responseData);
       },
       unverified: {
         account: async (address: string) => {
           const { account } = await queryService.Account({ address: address });
-          if (!account) return null;
-          switch (account.typeUrl) {
-            case "/cosmos.auth.v1beta1.BaseAccount": {
-              assert(account.value);
-              return BaseAccount.decode(account.value);
-            }
-            default:
-              throw new Error(`Unsupported type: '${account.typeUrl}'`);
-          }
+          return account ?? null;
         },
       },
     },

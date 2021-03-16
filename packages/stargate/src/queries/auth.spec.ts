@@ -4,6 +4,7 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
+import { BaseAccount } from "../codec/cosmos/auth/v1beta1/auth";
 import { Any } from "../codec/google/protobuf/any";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
@@ -24,7 +25,8 @@ describe("AuthExtension", () => {
       const account = await client.auth.account(unused.address);
       assert(account);
 
-      expect(account).toEqual({
+      expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
+      expect(BaseAccount.decode(account.value)).toEqual({
         address: unused.address,
         // pubKey not set
         accountNumber: Long.fromNumber(unused.accountNumber, true),
@@ -40,10 +42,10 @@ describe("AuthExtension", () => {
       const account = await client.auth.account(validator.delegatorAddress);
       assert(account);
 
-      const pubkey = encodePubkey(validator.pubkey);
-      expect(account).toEqual({
+      expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
+      expect(BaseAccount.decode(account.value)).toEqual({
         address: validator.delegatorAddress,
-        pubKey: Any.fromPartial(pubkey),
+        pubKey: Any.fromPartial(encodePubkey(validator.pubkey)),
         accountNumber: Long.fromNumber(0, true),
         sequence: Long.fromNumber(validator.sequence, true),
       });
@@ -70,7 +72,8 @@ describe("AuthExtension", () => {
         const account = await client.auth.unverified.account(unused.address);
         assert(account);
 
-        expect(account).toEqual({
+        expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
+        expect(BaseAccount.decode(account.value)).toEqual({
           address: unused.address,
           // pubKey not set
           accountNumber: Long.fromNumber(unused.accountNumber, true),
@@ -86,10 +89,10 @@ describe("AuthExtension", () => {
         const account = await client.auth.unverified.account(validator.delegatorAddress);
         assert(account);
 
-        const pubkey = encodePubkey(validator.pubkey);
-        expect(account).toEqual({
+        expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
+        expect(BaseAccount.decode(account.value)).toEqual({
           address: validator.delegatorAddress,
-          pubKey: Any.fromPartial(pubkey),
+          pubKey: Any.fromPartial(encodePubkey(validator.pubkey)),
           accountNumber: Long.fromNumber(0, true),
           sequence: Long.fromNumber(validator.sequence, true),
         });
