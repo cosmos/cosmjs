@@ -99,8 +99,8 @@ discussion please reach out to the team.
 
 1. `AuthExtension` and all higher level Stargate clients only support
    `BaseAccount`s for all functionality, including getting account numbers and
-   sequences for transaction signing. This will be implemented in the 0.25
-   series.
+   sequences for transaction signing. This will be implemented for all common
+   Cosmos SDK account types in the 0.25 series.
 
 ## Get in touch
 

@@ -39,7 +39,7 @@ function accountFromBaseAccount(input: BaseAccount): Account {
 /**
  * Takes an `Any` encoded account from the chain and extracts some common
  * `Account` information from it. This is supposed to support the most relevant
- * common Cosmos SDK account types. If you need support for exotix account types,
+ * common Cosmos SDK account types. If you need support for exotic account types,
  * you'll need to write your own account decoder.
  */
 export function accountFromAny(input: Any): Account {

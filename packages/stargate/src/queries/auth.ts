@@ -9,7 +9,7 @@ export interface AuthExtension {
      * Returns an account if it exists and `null` otherwise.
      *
      * The account is a protobuf Any in order to be able to support many different
-     * account types in one API. The caller needs to switch over the expeced and supported
+     * account types in one API. The caller needs to switch over the expected and supported
      * `typeUrl` and decode the `value` using its own type decoder.
      */
     readonly account: (address: string) => Promise<Any | null>;
@@ -18,7 +18,7 @@ export interface AuthExtension {
        * Returns an account if it exists and `null` otherwise.
        *
        * The account is a protobuf Any in order to be able to support many different
-       * account types in one API. The caller needs to switch over the expeced and supported
+       * account types in one API. The caller needs to switch over the expected and supported
        * `typeUrl` and decode the `value` using its own type decoder.
        */
       readonly account: (address: string) => Promise<Any | null>;
