@@ -108,8 +108,9 @@ export interface PrivateSigningCosmWasmClient {
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
-  private readonly fees: CosmosFeeTable;
-  private readonly registry: Registry;
+  public readonly fees: CosmosFeeTable;
+  public readonly registry: Registry;
+
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
 

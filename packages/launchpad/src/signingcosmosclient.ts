@@ -27,10 +27,10 @@ export interface PrivateSigningCosmosClient {
 }
 
 export class SigningCosmosClient extends CosmosClient {
+  public readonly fees: CosmosFeeTable;
   public readonly signerAddress: string;
 
   private readonly signer: OfflineSigner;
-  private readonly fees: CosmosFeeTable;
 
   /**
    * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.

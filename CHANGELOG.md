@@ -8,6 +8,12 @@ and this project adheres to
 
 ### Added
 
+- @cosmjs/cosmwasm-launchpad: Expose `SigningCosmWasmClient.fees`.
+- @cosmjs/cosmwasm-stargate: Expose `SigningCosmWasmClient.fees` and
+  `SigningCosmWasmClient.registry`.
+- @cosmjs/launchpad: Expose `SigningCosmosClient.fees`.
+- @cosmjs/stargate: Expose `SigningStargateClient.fees` and
+  `SigningStargateClient.registry`.
 - @cosmjs/stargate: Add support for different account types in `accountFromAny`
   and `StargateClient`. Added `ModuleAccount` and vesting accounts
   `BaseVestingAccount`, `ContinuousVestingAccount`, `DelayedVestingAccount` and
