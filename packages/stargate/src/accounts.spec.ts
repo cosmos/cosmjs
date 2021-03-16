@@ -4,8 +4,7 @@ import { Any } from "./codec/google/protobuf/any";
 describe("accounts", () => {
   describe("accountFromAny", () => {
     it("works for PeriodicVestingAccount", () => {
-      // Arbitrary entry from https://raw.githubusercontent.com/ovrclk/net/24ddbb427/mainnet/genesis.json
-      // queried from chain via `packages/cli/examples/get_vesting_account.ts`.
+      // Queried from chain via `packages/cli/examples/get_akash_vesting_account.ts`.
       const any = Any.fromJSON({
         typeUrl: "/cosmos.vesting.v1beta1.PeriodicVestingAccount",
         value:
