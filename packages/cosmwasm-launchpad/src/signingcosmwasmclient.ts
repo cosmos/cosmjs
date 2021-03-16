@@ -149,10 +149,10 @@ export interface PrivateSigningCosmWasmClient {
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
+  public readonly fees: CosmWasmFeeTable;
   public readonly signerAddress: string;
 
   private readonly signer: OfflineSigner;
-  private readonly fees: CosmWasmFeeTable;
 
   /**
    * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
