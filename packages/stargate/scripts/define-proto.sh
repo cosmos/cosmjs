@@ -36,10 +36,14 @@ protoc \
   "$COSMOS_PROTO_DIR/cosmos/vesting/v1beta1/vesting.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/channel/v1/channel.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/channel/v1/query.proto" \
+  "$COSMOS_PROTO_DIR/ibc/core/channel/v1/tx.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/client/v1/client.proto" \
+  "$COSMOS_PROTO_DIR/ibc/core/client/v1/query.proto" \
+  "$COSMOS_PROTO_DIR/ibc/core/client/v1/tx.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/commitment/v1/commitment.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/connection/v1/connection.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/connection/v1/query.proto" \
+  "$COSMOS_PROTO_DIR/ibc/core/connection/v1/tx.proto" \
   "$THIRD_PARTY_PROTO_DIR/confio/proofs.proto" \
   "$THIRD_PARTY_PROTO_DIR/tendermint/abci/types.proto" \
   "$THIRD_PARTY_PROTO_DIR/tendermint/crypto/keys.proto" \
