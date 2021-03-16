@@ -44,8 +44,7 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
       unverified: {
         account: async (address: string) => {
           const { account } = await queryService.Account({ address: address });
-          if (!account) return null;
-          return account;
+          return account ?? null;
         },
       },
     },
