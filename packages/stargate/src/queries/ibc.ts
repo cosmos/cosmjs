@@ -63,14 +63,16 @@ function decodeTendermintConsensusStateAny(clientState: Any | undefined): Tender
 
 export interface IbcExtension {
   readonly ibc: {
-    readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
-    readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
-    readonly packetAcknowledgement: (
-      portId: string,
-      channelId: string,
-      sequence: number,
-    ) => Promise<Uint8Array>;
-    readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
+    readonly channel: {
+      readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
+      readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
+      readonly packetAcknowledgement: (
+        portId: string,
+        channelId: string,
+        sequence: number,
+      ) => Promise<Uint8Array>;
+      readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
+    };
     readonly unverified: {
       readonly channel: {
         readonly channel: (portId: string, channelId: string) => Promise<QueryChannelResponse>;
@@ -178,37 +180,38 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
 
   return {
     ibc: {
-      channel: async (portId: string, channelId: string) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
-        const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
-        const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? Channel.decode(responseData) : null;
+      channel: {
+        channel: async (portId: string, channelId: string) => {
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
+          const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
+          const responseData = await base.queryVerified("ibc", key);
+          return responseData.length ? Channel.decode(responseData) : null;
+        },
+        packetCommitment: async (portId: string, channelId: string, sequence: number) => {
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
+          const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
+          const responseData = await base.queryVerified("ibc", key);
+          // keeper code doesn't parse, but returns raw
+          return responseData;
+        },
+        packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
+          const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
+          const responseData = await base.queryVerified("ibc", key);
+          // keeper code doesn't parse, but returns raw
+          return responseData;
+        },
+        nextSequenceReceive: async (portId: string, channelId: string) => {
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
+          const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
+          const responseData = await base.queryVerified("ibc", key);
+          return responseData.length ? Uint64.fromBytes(responseData).toNumber() : null;
+        },
       },
-      packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
-        const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
-        const responseData = await base.queryVerified("ibc", key);
-        // keeper code doesn't parse, but returns raw
-        return responseData;
-      },
-      packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
-        const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
-        const responseData = await base.queryVerified("ibc", key);
-        // keeper code doesn't parse, but returns raw
-        return responseData;
-      },
-      nextSequenceReceive: async (portId: string, channelId: string) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
-        const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
-        const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? Uint64.fromBytes(responseData).toNumber() : null;
-      },
-
       unverified: {
         channel: {
           channel: async (portId: string, channelId: string) =>
