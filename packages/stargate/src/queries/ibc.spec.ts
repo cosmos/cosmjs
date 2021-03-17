@@ -36,9 +36,7 @@ describe("IbcExtension", () => {
           const response = await client.ibc.unverified.channel.channels();
           expect(response.channels).toEqual([ibcTest.identifiedChannel]);
           expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -49,12 +47,8 @@ describe("IbcExtension", () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-          const response = await client.ibc.unverified.channel.channels();
+          const response = await client.ibc.unverified.channel.allChannels();
           expect(response.channels).toEqual([ibcTest.identifiedChannel]);
-          expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
-          expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -68,9 +62,7 @@ describe("IbcExtension", () => {
           const response = await client.ibc.unverified.channel.connectionChannels(ibcTest.connectionId);
           expect(response.channels).toEqual([ibcTest.identifiedChannel]);
           expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -81,23 +73,51 @@ describe("IbcExtension", () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-          const response = await client.ibc.unverified.channel.connectionChannels(ibcTest.connectionId);
+          const response = await client.ibc.unverified.channel.allConnectionChannels(ibcTest.connectionId);
           expect(response.channels).toEqual([ibcTest.identifiedChannel]);
-          expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
-          expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
       });
 
       describe("clientState", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.clientState(ibcTest.portId, ibcTest.channelId);
+          expect(response.identifiedClientState).toEqual({
+            clientId: ibcTest.clientId,
+            clientState: {
+              typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
+              value: jasmine.any(Uint8Array),
+            },
+          });
+
+          tmClient.disconnect();
+        });
       });
 
       describe("consensusState", () => {
-        it("works");
+        xit("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.consensusState(
+            ibcTest.portId,
+            ibcTest.channelId,
+            // TODO: Find valid values
+            0,
+            0,
+          );
+          expect(response.consensusState).toEqual({
+            typeUrl: "/haha",
+            value: jasmine.any(Uint8Array),
+          });
+          expect(response.clientId).toEqual(ibcTest.clientId);
+
+          tmClient.disconnect();
+        });
       });
 
       describe("packetCommitment", () => {
@@ -129,9 +149,7 @@ describe("IbcExtension", () => {
           );
           expect(response.commitments).toEqual([ibcTest.packetState]);
           expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -142,22 +160,30 @@ describe("IbcExtension", () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-          const response = await client.ibc.unverified.channel.packetCommitments(
+          const response = await client.ibc.unverified.channel.allPacketCommitments(
             ibcTest.portId,
             ibcTest.channelId,
           );
           expect(response.commitments).toEqual([ibcTest.packetState]);
-          expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
-          expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
       });
 
       describe("packetReceipt", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.packetReceipt(
+            ibcTest.portId,
+            ibcTest.channelId,
+            1,
+          );
+          expect(response.received).toEqual(false);
+
+          tmClient.disconnect();
+        });
       });
 
       describe("packetAcknowledgement", () => {
@@ -190,9 +216,7 @@ describe("IbcExtension", () => {
           );
           expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
           expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -203,15 +227,11 @@ describe("IbcExtension", () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-          const response = await client.ibc.unverified.channel.packetAcknowledgements(
+          const response = await client.ibc.unverified.channel.allPacketAcknowledgements(
             ibcTest.portId,
             ibcTest.channelId,
           );
           expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
-          expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
-          expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -229,7 +249,6 @@ describe("IbcExtension", () => {
           );
           expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -247,7 +266,6 @@ describe("IbcExtension", () => {
           );
           expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -273,47 +291,194 @@ describe("IbcExtension", () => {
 
     describe("client", () => {
       describe("state", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.state(ibcTest.clientId);
+          expect(response.clientState).toEqual({
+            typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
+            value: jasmine.any(Uint8Array),
+          });
+
+          tmClient.disconnect();
+        });
       });
 
       describe("states", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.states();
+          expect(response.clientStates).toEqual([
+            {
+              clientId: ibcTest.clientId,
+              clientState: {
+                typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
+                value: jasmine.any(Uint8Array),
+              },
+            },
+          ]);
+          expect(response.pagination).toBeDefined();
+
+          tmClient.disconnect();
+        });
       });
 
       describe("allStates", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.allStates();
+          expect(response.clientStates).toEqual([
+            {
+              clientId: ibcTest.clientId,
+              clientState: {
+                typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
+                value: jasmine.any(Uint8Array),
+              },
+            },
+          ]);
+
+          tmClient.disconnect();
+        });
       });
 
       describe("consensusState", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.consensusState(ibcTest.clientId);
+          expect(response.consensusState).toEqual({
+            typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
+            value: jasmine.any(Uint8Array),
+          });
+
+          tmClient.disconnect();
+        });
       });
 
       describe("consensusStates", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.consensusStates(ibcTest.clientId);
+          expect(response.consensusStates).toEqual(
+            jasmine.arrayContaining([
+              {
+                height: jasmine.anything(),
+                consensusState: {
+                  typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
+                  value: jasmine.any(Uint8Array),
+                },
+              },
+            ]),
+          );
+
+          tmClient.disconnect();
+        });
       });
 
       describe("allConsensusStates", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.allConsensusStates(ibcTest.clientId);
+          expect(response.consensusStates).toEqual(
+            jasmine.arrayContaining([
+              {
+                height: jasmine.anything(),
+                consensusState: {
+                  typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
+                  value: jasmine.any(Uint8Array),
+                },
+              },
+            ]),
+          );
+
+          tmClient.disconnect();
+        });
       });
 
       describe("params", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.params();
+          expect(response.params).toEqual({
+            allowedClients: ["06-solomachine", "07-tendermint"],
+          });
+
+          tmClient.disconnect();
+        });
       });
 
       describe("stateTm", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.stateTm(ibcTest.clientId);
+          expect(response.chainId).toEqual("ibc-1");
+          // TODO: Fill these expectations out
+
+          tmClient.disconnect();
+        });
       });
 
       describe("statesTm", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.statesTm();
+          expect(response).toEqual(
+            jasmine.arrayContaining([
+              jasmine.objectContaining({
+                chainId: "ibc-1",
+              }),
+            ]),
+          );
+
+          tmClient.disconnect();
+        });
       });
 
       describe("allStatesTm", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.allStatesTm();
+          expect(response).toEqual(
+            jasmine.arrayContaining([
+              jasmine.objectContaining({
+                chainId: "ibc-1",
+              }),
+            ]),
+          );
+
+          tmClient.disconnect();
+        });
       });
 
       describe("consensusStateTm", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.client.consensusStateTm(ibcTest.clientId);
+          expect(response.nextValidatorsHash).toEqual(jasmine.any(Uint8Array));
+          // TODO: Fill out these expectations
+
+          tmClient.disconnect();
+        });
       });
     });
 
@@ -340,9 +505,7 @@ describe("IbcExtension", () => {
           const response = await client.ibc.unverified.connection.connections();
           expect(response.connections).toEqual([ibcTest.identifiedConnection]);
           expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
           expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -353,12 +516,8 @@ describe("IbcExtension", () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-          const response = await client.ibc.unverified.connection.connections();
+          const response = await client.ibc.unverified.connection.allConnections();
           expect(response.connections).toEqual([ibcTest.identifiedConnection]);
-          expect(response.pagination).toBeDefined();
-          expect(response.pagination).not.toBeNull();
-          expect(response.height).toBeDefined();
-          expect(response.height).not.toBeNull();
 
           tmClient.disconnect();
         });
@@ -379,11 +538,38 @@ describe("IbcExtension", () => {
       });
 
       describe("clientState", () => {
-        it("works");
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.connection.clientState(ibcTest.connectionId);
+          expect(response.identifiedClientState).toEqual({
+            clientId: ibcTest.clientId,
+            clientState: {
+              typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
+              value: jasmine.any(Uint8Array),
+            },
+          });
+
+          tmClient.disconnect();
+        });
       });
 
       describe("consensusState", () => {
-        it("works");
+        xit("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          // TODO: Find valid values
+          const response = await client.ibc.unverified.connection.consensusState(ibcTest.connectionId, 1, 1);
+          expect(response.clientId).toEqual(ibcTest.clientId);
+          expect(response.consensusState).toEqual({
+            typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
+            value: jasmine.any(Uint8Array),
+          });
+
+          tmClient.disconnect();
+        });
       });
     });
   });
