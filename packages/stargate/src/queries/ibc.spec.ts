@@ -44,6 +44,22 @@ describe("IbcExtension", () => {
         });
       });
 
+      describe("allChannels", () => {
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.channels();
+          expect(response.channels).toEqual([ibcTest.identifiedChannel]);
+          expect(response.pagination).toBeDefined();
+          expect(response.pagination).not.toBeNull();
+          expect(response.height).toBeDefined();
+          expect(response.height).not.toBeNull();
+
+          tmClient.disconnect();
+        });
+      });
+
       describe("connectionChannels", () => {
         it("works", async () => {
           pendingWithoutSimapp();
@@ -58,6 +74,30 @@ describe("IbcExtension", () => {
 
           tmClient.disconnect();
         });
+      });
+
+      describe("allConnectionChannels", () => {
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.connectionChannels(ibcTest.connectionId);
+          expect(response.channels).toEqual([ibcTest.identifiedChannel]);
+          expect(response.pagination).toBeDefined();
+          expect(response.pagination).not.toBeNull();
+          expect(response.height).toBeDefined();
+          expect(response.height).not.toBeNull();
+
+          tmClient.disconnect();
+        });
+      });
+
+      describe("clientState", () => {
+        it("works");
+      });
+
+      describe("consensusState", () => {
+        it("works");
       });
 
       describe("packetCommitment", () => {
@@ -97,6 +137,29 @@ describe("IbcExtension", () => {
         });
       });
 
+      describe("allPacketCommitments", () => {
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.packetCommitments(
+            ibcTest.portId,
+            ibcTest.channelId,
+          );
+          expect(response.commitments).toEqual([ibcTest.packetState]);
+          expect(response.pagination).toBeDefined();
+          expect(response.pagination).not.toBeNull();
+          expect(response.height).toBeDefined();
+          expect(response.height).not.toBeNull();
+
+          tmClient.disconnect();
+        });
+      });
+
+      describe("packetReceipt", () => {
+        it("works");
+      });
+
       describe("packetAcknowledgement", () => {
         it("works", async () => {
           pending("We don't have an acknowledgement for testing at the moment");
@@ -117,6 +180,25 @@ describe("IbcExtension", () => {
       });
 
       describe("packetAcknowledgements", () => {
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.channel.packetAcknowledgements(
+            ibcTest.portId,
+            ibcTest.channelId,
+          );
+          expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
+          expect(response.pagination).toBeDefined();
+          expect(response.pagination).not.toBeNull();
+          expect(response.height).toBeDefined();
+          expect(response.height).not.toBeNull();
+
+          tmClient.disconnect();
+        });
+      });
+
+      describe("allPacketAcknowledgements", () => {
         it("works", async () => {
           pendingWithoutSimapp();
           const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
@@ -189,6 +271,52 @@ describe("IbcExtension", () => {
       });
     });
 
+    describe("client", () => {
+      describe("state", () => {
+        it("works");
+      });
+
+      describe("states", () => {
+        it("works");
+      });
+
+      describe("allStates", () => {
+        it("works");
+      });
+
+      describe("consensusState", () => {
+        it("works");
+      });
+
+      describe("consensusStates", () => {
+        it("works");
+      });
+
+      describe("allConsensusStates", () => {
+        it("works");
+      });
+
+      describe("params", () => {
+        it("works");
+      });
+
+      describe("stateTm", () => {
+        it("works");
+      });
+
+      describe("statesTm", () => {
+        it("works");
+      });
+
+      describe("allStatesTm", () => {
+        it("works");
+      });
+
+      describe("consensusStateTm", () => {
+        it("works");
+      });
+    });
+
     describe("connection", () => {
       describe("connection", () => {
         it("works", async () => {
@@ -220,6 +348,22 @@ describe("IbcExtension", () => {
         });
       });
 
+      describe("allConnections", () => {
+        it("works", async () => {
+          pendingWithoutSimapp();
+          const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+          const response = await client.ibc.unverified.connection.connections();
+          expect(response.connections).toEqual([ibcTest.identifiedConnection]);
+          expect(response.pagination).toBeDefined();
+          expect(response.pagination).not.toBeNull();
+          expect(response.height).toBeDefined();
+          expect(response.height).not.toBeNull();
+
+          tmClient.disconnect();
+        });
+      });
+
       describe("clientConnections", () => {
         it("works", async () => {
           pendingWithoutSimapp();
@@ -232,6 +376,14 @@ describe("IbcExtension", () => {
 
           tmClient.disconnect();
         });
+      });
+
+      describe("clientState", () => {
+        it("works");
+      });
+
+      describe("consensusState", () => {
+        it("works");
       });
     });
   });
