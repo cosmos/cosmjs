@@ -39,6 +39,30 @@ import {
 } from "./codec/cosmos/staking/v1beta1/tx";
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import {
+  MsgAcknowledgement,
+  MsgChannelCloseConfirm,
+  MsgChannelCloseInit,
+  MsgChannelOpenAck,
+  MsgChannelOpenConfirm,
+  MsgChannelOpenInit,
+  MsgChannelOpenTry,
+  MsgRecvPacket,
+  MsgTimeout,
+  MsgTimeoutOnClose,
+} from "./codec/ibc/core/channel/v1/tx";
+import {
+  MsgCreateClient,
+  MsgSubmitMisbehaviour,
+  MsgUpdateClient,
+  MsgUpgradeClient,
+} from "./codec/ibc/core/client/v1/tx";
+import {
+  MsgConnectionOpenAck,
+  MsgConnectionOpenConfirm,
+  MsgConnectionOpenInit,
+  MsgConnectionOpenTry,
+} from "./codec/ibc/core/connection/v1/tx";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
@@ -55,6 +79,24 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
   ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
   ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+  ["/ibc.core.channel.v1.MsgChannelOpenInit", MsgChannelOpenInit],
+  ["/ibc.core.channel.v1.MsgChannelOpenTry", MsgChannelOpenTry],
+  ["/ibc.core.channel.v1.MsgChannelOpenAck", MsgChannelOpenAck],
+  ["/ibc.core.channel.v1.MsgChannelOpenConfirm", MsgChannelOpenConfirm],
+  ["/ibc.core.channel.v1.MsgChannelCloseInit", MsgChannelCloseInit],
+  ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],
+  ["/ibc.core.channel.v1.MsgRecvPacket", MsgRecvPacket],
+  ["/ibc.core.channel.v1.MsgTimeout ", MsgTimeout],
+  ["/ibc.core.channel.v1.MsgTimeoutOnClose", MsgTimeoutOnClose],
+  ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
+  ["/ibc.core.client.v1.MsgCreateClient", MsgCreateClient],
+  ["/ibc.core.client.v1.MsgUpdateClient", MsgUpdateClient],
+  ["/ibc.core.client.v1.MsgUpgradeClient", MsgUpgradeClient],
+  ["/ibc.core.client.v1.MsgSubmitMisbehaviour", MsgSubmitMisbehaviour],
+  ["/ibc.core.connection.v1.MsgConnectionOpenInit", MsgConnectionOpenInit],
+  ["/ibc.core.connection.v1.MsgConnectionOpenTry", MsgConnectionOpenTry],
+  ["/ibc.core.connection.v1.MsgConnectionOpenAck", MsgConnectionOpenAck],
+  ["/ibc.core.connection.v1.MsgConnectionOpenConfirm", MsgConnectionOpenConfirm],
 ];
 
 function createDefaultRegistry(): Registry {
