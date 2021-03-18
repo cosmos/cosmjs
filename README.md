@@ -32,6 +32,12 @@ from the latest release.
 
 [cosmos.github.io/cosmjs]: https://cosmos.github.io/cosmjs
 
+### Using custom Stargate modules
+
+Documentation on how to use your own custom modules with CosmJS for Stargate
+chains (Cosmos SDK v0.41) can be found
+[here](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/CUSTOM_PROTOBUF_CODECS.md).
+
 ## Packages
 
 CosmJS is a library that consists of many smaller npm packages within the
