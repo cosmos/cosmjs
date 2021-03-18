@@ -14,6 +14,7 @@ import { adaptorForVersion } from "./adaptors";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
+/** @deprecated Use Tendermint34Client */
 export class Client {
   /**
    * Creates a new Tendermint client for the given endpoint.

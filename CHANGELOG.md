@@ -33,6 +33,12 @@ and this project adheres to
   only updated for the class `Tendermint34Client`, not for `Client`. Please
   migrate to the former.
 
+### Deprecated
+
+- @cosmjs/tendermint-rpc: `Client` has been deprecated. Launchpad applications
+  do not need a Tendermint RPC client and Stargate applications should use
+  `Tendermint34Client`.
+
 ## [0.24.0] - 2021-03-11
 
 - @cosmjs/cosmwasm: This package is now deprecated. The same functionality is
