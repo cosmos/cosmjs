@@ -24,11 +24,11 @@ export function createPagination(paginationKey?: Uint8Array): PageRequest | unde
     : undefined;
 }
 
-export interface Rpc {
+export interface ProtobufRpcClient {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
 }
 
-export function createRpc(base: QueryClient): Rpc {
+export function createProtobufRpcClient(base: QueryClient): ProtobufRpcClient {
   return {
     request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
       const path = `/${service}/${method}`;

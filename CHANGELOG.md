@@ -27,6 +27,8 @@ and this project adheres to
   `AuthExtension.unverified.account` return an account of type `Any`. This makes
   the caller responsible for decoding the type.
 - @cosmjs/stargate: Remove `accountFromProto` in favour of `accountFromAny`.
+- @cosmjs/stargate: Rename `Rpc` interface to `ProtobufRpcClient` and
+  `createRpc` to `createProtobufRpcClient`.
 - @cosmjs/tendermint-rpc: The fields `CommitSignature.validatorAddress`,
   `.timestamp` and `.signature` are now optional. They are unset when
   `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is

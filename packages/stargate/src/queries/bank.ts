@@ -5,7 +5,7 @@ import { assert } from "@cosmjs/utils";
 import { QueryClientImpl } from "../codec/cosmos/bank/v1beta1/query";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { QueryClient } from "./queryclient";
-import { createRpc, toAccAddress } from "./utils";
+import { createProtobufRpcClient, toAccAddress } from "./utils";
 
 export interface BankExtension {
   readonly bank: {
@@ -20,7 +20,7 @@ export interface BankExtension {
 }
 
 export function setupBankExtension(base: QueryClient): BankExtension {
-  const rpc = createRpc(base);
+  const rpc = createProtobufRpcClient(base);
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
   const queryService = new QueryClientImpl(rpc);

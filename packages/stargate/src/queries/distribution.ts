@@ -14,7 +14,7 @@ import {
   QueryValidatorSlashesResponse,
 } from "../codec/cosmos/distribution/v1beta1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc } from "./utils";
+import { createPagination, createProtobufRpcClient } from "./utils";
 
 export interface DistributionExtension {
   readonly distribution: {
@@ -43,7 +43,7 @@ export interface DistributionExtension {
 }
 
 export function setupDistributionExtension(base: QueryClient): DistributionExtension {
-  const rpc = createRpc(base);
+  const rpc = createProtobufRpcClient(base);
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
   const queryService = new QueryClientImpl(rpc);

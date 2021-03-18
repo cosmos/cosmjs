@@ -20,7 +20,7 @@ import {
 } from "../codec/cosmos/staking/v1beta1/query";
 import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc } from "./utils";
+import { createPagination, createProtobufRpcClient } from "./utils";
 
 export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 
@@ -74,7 +74,7 @@ export interface StakingExtension {
 export function setupStakingExtension(base: QueryClient): StakingExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
-  const rpc = createRpc(base);
+  const rpc = createProtobufRpcClient(base);
   const queryService = new QueryClientImpl(rpc);
 
   return {
