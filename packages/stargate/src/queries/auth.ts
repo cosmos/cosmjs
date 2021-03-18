@@ -1,7 +1,7 @@
 import { QueryClientImpl } from "../codec/cosmos/auth/v1beta1/query";
 import { Any } from "../codec/google/protobuf/any";
 import { QueryClient } from "./queryclient";
-import { createRpc, toAccAddress } from "./utils";
+import { createProtobufRpcClient, toAccAddress } from "./utils";
 
 export interface AuthExtension {
   readonly auth: {
@@ -27,7 +27,7 @@ export interface AuthExtension {
 }
 
 export function setupAuthExtension(base: QueryClient): AuthExtension {
-  const rpc = createRpc(base);
+  const rpc = createProtobufRpcClient(base);
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
   const queryService = new QueryClientImpl(rpc);

@@ -24,7 +24,7 @@ import {
   QueryConnectionsResponse,
 } from "../codec/ibc/core/connection/v1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc } from "./utils";
+import { createPagination, createProtobufRpcClient } from "./utils";
 
 export interface IbcExtension {
   readonly ibc: {
@@ -89,7 +89,7 @@ export interface IbcExtension {
 }
 
 export function setupIbcExtension(base: QueryClient): IbcExtension {
-  const rpc = createRpc(base);
+  const rpc = createProtobufRpcClient(base);
   // Use these services to get easy typed access to query methods
   // These cannot be used for proof verification
   const channelQueryService = new ChannelQuery(rpc);
