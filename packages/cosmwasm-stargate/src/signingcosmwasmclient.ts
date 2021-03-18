@@ -344,17 +344,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
+    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const accountFromChain = await this.getAccount(signerAddress);
     if (!accountFromChain) {
       throw new Error("Account not found");
     }
     const { accountNumber, sequence } = accountFromChain;
-    if (!pubkey) {
-      throw new Error("Pubkey not known");
-    }
     const chainId = await this.getChainId();
-    const pubkeyAny = encodePubkey(pubkey);
     const txBody = {
       messages: messages,
       memo: memo,
@@ -366,7 +362,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const gasLimit = Int53.fromString(fee.gas).toNumber();
 
     if (isOfflineDirectSigner(this.signer)) {
-      const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
+      const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
       const txRaw = TxRaw.fromPartial({
@@ -394,7 +390,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
     const signedSequence = Int53.fromString(signed.sequence).toNumber();
     const signedAuthInfoBytes = makeAuthInfoBytes(
-      [pubkeyAny],
+      [pubkey],
       signed.fee.amount,
       signedGasLimit,
       signedSequence,
