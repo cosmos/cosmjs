@@ -1,5 +1,5 @@
 import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
-import { arrayContentEquals } from "@cosmjs/utils";
+import { arrayContentStartsWith } from "@cosmjs/utils";
 
 import { Pubkey, pubkeyType, Secp256k1Pubkey } from "./pubkeys";
 
@@ -16,18 +16,16 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
 // As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
 // Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
 // Last bytes is varint-encoded length prefix
-const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae98721");
-const pubkeyAminoPrefixEd25519 = fromHex("1624de6420");
-const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005");
-const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
+const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae987" + "21" /* fixed length */);
+const pubkeyAminoPrefixEd25519 = fromHex("1624de64" + "20" /* fixed length */);
+const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005" + "20" /* fixed length */);
 
 /**
  * Decodes a pubkey in the Amino binary format to a type/value object.
  */
 export function decodeAminoPubkey(data: Uint8Array): Pubkey {
-  const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
-  const rest = data.slice(pubkeyAminoPrefixLength);
-  if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
+  if (arrayContentStartsWith(data, pubkeyAminoPrefixSecp256k1)) {
+    const rest = data.slice(pubkeyAminoPrefixSecp256k1.length);
     if (rest.length !== 33) {
       throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
     }
@@ -35,7 +33,8 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
       type: pubkeyType.secp256k1,
       value: toBase64(rest),
     };
-  } else if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixEd25519)) {
+  } else if (arrayContentStartsWith(data, pubkeyAminoPrefixEd25519)) {
+    const rest = data.slice(pubkeyAminoPrefixEd25519.length);
     if (rest.length !== 32) {
       throw new Error("Invalid rest data length. Expected 32 bytes (Ed25519 pubkey).");
     }
@@ -43,7 +42,8 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
       type: pubkeyType.ed25519,
       value: toBase64(rest),
     };
-  } else if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixSr25519)) {
+  } else if (arrayContentStartsWith(data, pubkeyAminoPrefixSr25519)) {
+    const rest = data.slice(pubkeyAminoPrefixSr25519.length);
     if (rest.length !== 32) {
       throw new Error("Invalid rest data length. Expected 32 bytes (Sr25519 pubkey).");
     }
@@ -52,7 +52,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
       value: toBase64(rest),
     };
   } else {
-    throw new Error("Unsupported Pubkey type. Amino prefix: " + toHex(aminoPrefix));
+    throw new Error("Unsupported public key type. Amino data starts with: " + toHex(data.slice(0, 5)));
   }
 }
 

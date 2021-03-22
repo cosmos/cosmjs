@@ -49,6 +49,10 @@ describe("encoding", () => {
         value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
       });
     });
+
+    it("works for sr25519", () => {
+      pending("No test data available");
+    });
   });
 
   describe("decodeBech32Pubkey", () => {
