@@ -142,16 +142,16 @@ describe("encoding", () => {
       // ./build/wasmd keys add test3
       // ./build/wasmd keys add testgroup1 --multisig=test1,test2,test3 --multisig-threshold 2
       // ./build/wasmd keys add testgroup2 --multisig=test1,test2,test3 --multisig-threshold 1
-      // ./build/wasmd keys add testgroup3 --multisig=test3,test1 --multisig-threshold 2
+      // ./build/wasmd keys add testgroup3 --multisig=test3,test1 --multisig-threshold 2 # creates test1,test3 for some reason
 
       const test1 = decodeBech32Pubkey(
-        "wasmpub1addwnpepqwxttx8w2sfs6d8cuzqcuau84grp8xsw95qzdjkmvc44tnckskdxw3zw2km",
+        "wasmpub1addwnpepqwxttx8w2sfs6d8cuzqcuau84grp8xsw95qzdjkmvc44tnckskdxw3zw2km", // data: eb5ae98721038cb598ee54130d34f8e0818e7787aa06139a0e2d0026cadb662b55cf16859a67
       );
       const test2 = decodeBech32Pubkey(
-        "wasmpub1addwnpepq2gx7x7e29kge5a4ycunytyqr0u8ynql5h583s8r9wdads9m3v8ks6y0nhc",
+        "wasmpub1addwnpepq2gx7x7e29kge5a4ycunytyqr0u8ynql5h583s8r9wdads9m3v8ks6y0nhc", // data: eb5ae9872102906f1bd9516c8cd3b52639322c801bf8724c1fa5e878c0e32b9bd6c0bb8b0f68
       );
       const test3 = decodeBech32Pubkey(
-        "wasmpub1addwnpepq0xfx5vavxmgdkn0p6x0l9p3udttghu3qcldd7ql08wa3xy93qq0xuzvtxc",
+        "wasmpub1addwnpepq0xfx5vavxmgdkn0p6x0l9p3udttghu3qcldd7ql08wa3xy93qq0xuzvtxc", // data: eb5ae9872103cc93519d61b686da6f0e8cff9431e356b45f91063ed6f81f79ddd898858800f3
       );
 
       // 2/3 multisig
@@ -179,6 +179,19 @@ describe("encoding", () => {
         "wasmpub1ytql0csgqyfzd666axrjzquvkkvwu4qnp5603cyp3emc02sxzwdqutgqym9dke3t2h83dpv6vufzd666axrjzq5sdudaj5tv3nfm2f3exgkgqxlcwfxplf0g0rqwx2um6mqthzc0dqfzd666axrjzq7vjdge6cdksmdx7r5vl72rrc6kk30ezp376mup77wamzvgtzqq7vc4ejke",
       ).data;
       expect(encodeAminoPubkey(testgroup2)).toEqual(expected2);
+
+      // 2/2 multisig
+      const testgroup3: MultisigThresholdPubkey = {
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "2",
+          pubkeys: [test1, test3],
+        },
+      };
+      const expected3 = Bech32.decode(
+        "wasmpub1ytql0csgqgfzd666axrjzquvkkvwu4qnp5603cyp3emc02sxzwdqutgqym9dke3t2h83dpv6vufzd666axrjzq7vjdge6cdksmdx7r5vl72rrc6kk30ezp376mup77wamzvgtzqq7vzjhugu",
+      ).data;
+      expect(encodeAminoPubkey(testgroup3)).toEqual(expected3);
     });
   });
 });
