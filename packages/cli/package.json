@@ -39,6 +39,7 @@
     "!**/testdata/"
   ],
   "dependencies": {
+    "@cosmjs/amino": "^0.25.0-alpha.0",
     "@cosmjs/cosmwasm-launchpad": "^0.25.0-alpha.0",
     "@cosmjs/cosmwasm-stargate": "^0.25.0-alpha.0",
     "@cosmjs/crypto": "^0.25.0-alpha.0",

@@ -13,6 +13,7 @@ cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
 cosmwasm-cli --init examples/helpers.ts --code "process.exit(0)"
 cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
 cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
+cosmwasm-cli --init examples/multisig_address.ts --code "process.exit(0)"
 if [ -n "${SIMAPP_ENABLED:-}" ]; then
   cosmwasm-cli --init examples/stargate.ts --code "process.exit(0)"
 fi
