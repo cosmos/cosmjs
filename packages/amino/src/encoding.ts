@@ -70,9 +70,19 @@ export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
   return decodeAminoPubkey(data);
 }
 
-function encodeSmallUint(value: number | string): number[] {
+/**
+ * Uvarint encoder for Amino. This is the same encoding as `binary.PutUvarint` from the Go
+ * standard library.
+ *
+ * @see https://github.com/tendermint/go-amino/blob/8e779b71f40d175/encoder.go#L77-L85
+ */
+function encodeUvarint(value: number | string): number[] {
   const checked = Uint53.fromString(value.toString()).toNumber();
-  if (checked > 127) throw new Error("Encoding numbers > 127 is not supported here.");
+  if (checked > 127) {
+    throw new Error(
+      "Encoding numbers > 127 is not supported here. Please tell those lazy CosmJS maintainers to port the binary.PutUvarint implementation from the Go standard library and write some tests.",
+    );
+  }
   return [checked];
 }
 
@@ -83,10 +93,10 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
   if (isMultisigThresholdPubkey(pubkey)) {
     const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
     out.push(8); // TODO: What is this?
-    out.push(...encodeSmallUint(pubkey.value.threshold));
+    out.push(...encodeUvarint(pubkey.value.threshold));
     for (const pubkeyData of pubkey.value.pubkeys.map((p) => encodeAminoPubkey(p))) {
       out.push(18); // TODO: What is this?
-      out.push(...encodeSmallUint(pubkeyData.length));
+      out.push(...encodeUvarint(pubkeyData.length));
       out.push(...pubkeyData);
     }
     return new Uint8Array(out);
