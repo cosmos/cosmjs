@@ -1,5 +1,4 @@
-import { MultisigThresholdPubkey, pubkeyToRawAddress } from "@cosmjs/amino";
-import { Bech32 } from "@cosmjs/encoding";
+import { MultisigThresholdPubkey, pubkeyToAddress } from "@cosmjs/amino";
 
 // https://github.com/cosmos/cosmjs/issues/673#issuecomment-779847238
 const multisigPubkey: MultisigThresholdPubkey = {
@@ -27,5 +26,5 @@ const multisigPubkey: MultisigThresholdPubkey = {
   }
 };
 
-const address = Bech32.encode("cosmos", pubkeyToRawAddress(multisigPubkey));
+const address = pubkeyToAddress(multisigPubkey, "cosmos");
 console.log(address);

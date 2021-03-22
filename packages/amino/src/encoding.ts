@@ -145,6 +145,10 @@ export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
   }
 }
 
+export function pubkeyToAddress(pubkey: Pubkey, prefix: string): string {
+  return Bech32.encode(prefix, pubkeyToRawAddress(pubkey));
+}
+
 /**
  * Encodes a public key to binary Amino and then to bech32.
  *

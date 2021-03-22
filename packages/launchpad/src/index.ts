@@ -5,6 +5,7 @@ export {
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
+  pubkeyToAddress,
   pubkeyType,
   SinglePubkey as PubKey,
 } from "@cosmjs/amino";
@@ -12,7 +13,7 @@ export {
 import * as logs from "./logs";
 export { logs };
 
-export { pubkeyToAddress, rawSecp256k1PubkeyToAddress } from "./address";
+export { rawSecp256k1PubkeyToAddress } from "./address";
 export { Coin, coin, coins, parseCoins } from "./coins";
 
 export {

@@ -4,6 +4,7 @@ export {
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
+  pubkeyToAddress,
   pubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
 } from "./encoding";
