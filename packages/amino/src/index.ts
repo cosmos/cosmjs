@@ -5,4 +5,12 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
 } from "./encoding";
-export { Pubkey, Secp256k1Pubkey, SinglePubkey, isSinglePubkey, pubkeyType } from "./pubkeys";
+export {
+  MultisigThresholdPubkey,
+  Pubkey,
+  Secp256k1Pubkey,
+  SinglePubkey,
+  isMultisigThresholdPubkey,
+  isSinglePubkey,
+  pubkeyType,
+} from "./pubkeys";

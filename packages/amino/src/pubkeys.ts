@@ -42,3 +42,16 @@ export function isSinglePubkey(pubkey: Pubkey): pubkey is SinglePubkey {
   const singPubkeyTypes: string[] = [pubkeyType.ed25519, pubkeyType.secp256k1, pubkeyType.sr25519];
   return singPubkeyTypes.includes(pubkey.type);
 }
+
+export interface MultisigThresholdPubkey extends Pubkey {
+  readonly type: "tendermint/PubKeyMultisigThreshold";
+  readonly value: {
+    /** A string-encoded integer */
+    readonly threshold: string;
+    readonly pubkeys: readonly SinglePubkey[];
+  };
+}
+
+export function isMultisigThresholdPubkey(pubkey: Pubkey): pubkey is MultisigThresholdPubkey {
+  return (pubkey as MultisigThresholdPubkey).type === "tendermint/PubKeyMultisigThreshold";
+}
