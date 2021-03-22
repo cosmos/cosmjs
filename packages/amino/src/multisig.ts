@@ -20,6 +20,11 @@ export function createMultisigThresholdPubkey(
   threshold: number,
   nosort = false,
 ): MultisigThresholdPubkey {
+  const uintThreshold = new Uint53(threshold);
+  if (uintThreshold.toNumber() > pubkeys.length) {
+    throw new Error(`Threshold k = ${uintThreshold.toNumber()} exceeds number of keys n = ${pubkeys.length}`);
+  }
+
   const outPubkeys = nosort
     ? pubkeys
     : Array.from(pubkeys).sort((lhs, rhs) => {
@@ -31,7 +36,7 @@ export function createMultisigThresholdPubkey(
   return {
     type: "tendermint/PubKeyMultisigThreshold",
     value: {
-      threshold: new Uint53(threshold).toString(),
+      threshold: uintThreshold.toString(),
       pubkeys: outPubkeys,
     },
   };
