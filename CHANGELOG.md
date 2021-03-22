@@ -29,6 +29,8 @@ and this project adheres to
   supported nested pubkeys for multisig. `SinglePubkey` is the old `PubKey` in
   which the `value` is a base64 encoded string. And `Secp256k1Pubkey` is a
   single secp256k1 pubkey.
+- @cosmjs/utils: The new `arrayContentStartsWith` works similar to
+  `arrayContentEquals` but only checks the start of an array.
 
 ### Changed
 
