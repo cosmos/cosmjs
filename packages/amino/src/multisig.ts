@@ -1,0 +1,38 @@
+import { toHex } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
+
+import { pubkeyToRawAddress } from "./addresses";
+import { MultisigThresholdPubkey, SinglePubkey } from "./pubkeys";
+
+/**
+ * Compare arrays lexicographically.
+ *
+ * Returns value < 0 if `a < b`.
+ * Returns value > 0 if `a > b`.
+ * Returns 0 if `a === b`.
+ */
+export function compareArrays(a: Uint8Array, b: Uint8Array): number {
+  return toHex(a).localeCompare(toHex(b));
+}
+
+export function createMultisigThresholdPubkey(
+  pubkeys: readonly SinglePubkey[],
+  threshold: number,
+  nosort = false,
+): MultisigThresholdPubkey {
+  const outPubkeys = nosort
+    ? pubkeys
+    : Array.from(pubkeys).sort((lhs, rhs) => {
+        // https://github.com/cosmos/cosmos-sdk/blob/v0.42.2/client/keys/add.go#L172-L174
+        const addressLhs = pubkeyToRawAddress(lhs);
+        const addressRhs = pubkeyToRawAddress(rhs);
+        return compareArrays(addressLhs, addressRhs);
+      });
+  return {
+    type: "tendermint/PubKeyMultisigThreshold",
+    value: {
+      threshold: new Uint53(threshold).toString(),
+      pubkeys: outPubkeys,
+    },
+  };
+}

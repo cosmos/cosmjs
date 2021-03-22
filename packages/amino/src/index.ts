@@ -18,3 +18,4 @@ export {
   isSinglePubkey,
   pubkeyType,
 } from "./pubkeys";
+export { createMultisigThresholdPubkey } from "./multisig";
