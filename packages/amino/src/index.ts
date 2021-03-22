@@ -4,6 +4,7 @@ export {
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
+  pubkeyToRawAddress,
 } from "./encoding";
 export {
   MultisigThresholdPubkey,

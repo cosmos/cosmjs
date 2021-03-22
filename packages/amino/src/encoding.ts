@@ -1,3 +1,4 @@
+import { ripemd160, sha256 } from "@cosmjs/crypto";
 import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { arrayContentStartsWith } from "@cosmjs/utils";
@@ -113,6 +114,30 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
     return new Uint8Array([...pubkeyAminoPrefixSecp256k1, ...fromBase64(pubkey.value)]);
   } else {
     throw new Error("Unsupported pubkey type");
+  }
+}
+
+// See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
+// For secp256k1 this assumes we already have a compressed pubkey.
+export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
+  if (isSecp256k1Pubkey(pubkey)) {
+    const pubkeyData = fromBase64(pubkey.value);
+    if (pubkeyData.length !== 33) {
+      throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
+    }
+    return ripemd160(sha256(pubkeyData)).slice(0, 20);
+  } else if (isEd25519Pubkey(pubkey)) {
+    const pubkeyData = fromBase64(pubkey.value);
+    if (pubkeyData.length !== 32) {
+      throw new Error(`Invalid Ed25519 pubkey length: ${pubkeyData.length}`);
+    }
+    return sha256(pubkeyData).slice(0, 20);
+  } else if (isMultisigThresholdPubkey(pubkey)) {
+    // https://github.com/tendermint/tendermint/blob/38b401657e4ad7a7eeb3c30a3cbf512037df3740/crypto/multisig/threshold_pubkey.go#L71-L74
+    const pubkeyData = encodeAminoPubkey(pubkey);
+    return sha256(pubkeyData).slice(0, 20);
+  } else {
+    throw new Error("Unsupported public key type");
   }
 }
 

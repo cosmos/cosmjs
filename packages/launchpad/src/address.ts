@@ -1,6 +1,7 @@
-import { pubkeyType, SinglePubkey } from "@cosmjs/amino";
+import { SinglePubkey } from "@cosmjs/amino";
+import { pubkeyToRawAddress } from "@cosmjs/amino/build/encoding";
 import { ripemd160, sha256 } from "@cosmjs/crypto";
-import { Bech32, fromBase64 } from "@cosmjs/encoding";
+import { Bech32 } from "@cosmjs/encoding";
 
 export function rawSecp256k1PubkeyToAddress(pubkeyRaw: Uint8Array, prefix: string): string {
   if (pubkeyRaw.length !== 33) {
@@ -14,26 +15,5 @@ export function rawSecp256k1PubkeyToAddress(pubkeyRaw: Uint8Array, prefix: strin
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 // This assumes we already have a cosmos-compressed pubkey
 export function pubkeyToAddress(pubkey: SinglePubkey, prefix: string): string {
-  const pubkeyBytes = fromBase64(pubkey.value);
-  switch (pubkey.type) {
-    case pubkeyType.secp256k1: {
-      return rawSecp256k1PubkeyToAddress(pubkeyBytes, prefix);
-    }
-    case pubkeyType.ed25519: {
-      if (pubkeyBytes.length !== 32) {
-        throw new Error(`Invalid Ed25519 pubkey length: ${pubkeyBytes.length}`);
-      }
-      const hash = sha256(pubkeyBytes);
-      return Bech32.encode(prefix, hash.slice(0, 20));
-    }
-    case pubkeyType.sr25519: {
-      if (pubkeyBytes.length !== 32) {
-        throw new Error(`Invalid Sr25519 pubkey length: ${pubkeyBytes.length}`);
-      }
-      const hash = sha256(pubkeyBytes);
-      return Bech32.encode(prefix, hash.slice(0, 20));
-    }
-    default:
-      throw new Error("Unrecognized public key algorithm");
-  }
+  return Bech32.encode(prefix, pubkeyToRawAddress(pubkey));
 }
