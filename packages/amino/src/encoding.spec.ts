@@ -244,26 +244,22 @@ describe("encoding", () => {
     it("works for multisig", () => {
       const test1 = decodeBech32Pubkey(
         "wasmpub1addwnpepqwxttx8w2sfs6d8cuzqcuau84grp8xsw95qzdjkmvc44tnckskdxw3zw2km",
-        // pubkey data: eb5ae98721038cb598ee54130d34f8e0818e7787aa06139a0e2d0026cadb662b55cf16859a67
-        // address: wasm1jq59w7y34msq69g4w3zvq6d5h3stcajd8g62xm
-        // address data: 9028577891aee00d15157444c069b4bc60bc764d
       );
       const test2 = decodeBech32Pubkey(
         "wasmpub1addwnpepq2gx7x7e29kge5a4ycunytyqr0u8ynql5h583s8r9wdads9m3v8ks6y0nhc",
-        // pubkey data: eb5ae9872102906f1bd9516c8cd3b52639322c801bf8724c1fa5e878c0e32b9bd6c0bb8b0f68
-        // address: wasm146e52j6zphxw8m67cz8860ad5uju892cqmawsg
-        // address data: aeb3454b420dcce3ef5ec08e7d3fada725c39558
       );
       const test3 = decodeBech32Pubkey(
         "wasmpub1addwnpepq0xfx5vavxmgdkn0p6x0l9p3udttghu3qcldd7ql08wa3xy93qq0xuzvtxc",
-        // pubkey data: eb5ae9872103cc93519d61b686da6f0e8cff9431e356b45f91063ed6f81f79ddd898858800f3
-        // address: wasm1a6uxr25mw8qg8zz3l2avsdjsveh4yg9sw7h5np
-        // address data: eeb861aa9b71c0838851fabac83650666f5220b0
       );
 
-      expect(pubkeyToRawAddress(test1)).toEqual(fromHex("9028577891aee00d15157444c069b4bc60bc764d"));
-      expect(pubkeyToRawAddress(test2)).toEqual(fromHex("aeb3454b420dcce3ef5ec08e7d3fada725c39558"));
-      expect(pubkeyToRawAddress(test3)).toEqual(fromHex("eeb861aa9b71c0838851fabac83650666f5220b0"));
+      const testgroup1: MultisigThresholdPubkey = {
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "2",
+          pubkeys: [test1, test2, test3],
+        },
+      };
+      expect(pubkeyToRawAddress(testgroup1)).toEqual(fromHex("0892a77fab2fa7e192c3b7b2741e6682f3abb72f"));
     });
   });
 });
