@@ -5,6 +5,7 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
   pubkeyToRawAddress,
+  rawSecp256k1PubkeyToRawAddress,
 } from "./encoding";
 export {
   MultisigThresholdPubkey,

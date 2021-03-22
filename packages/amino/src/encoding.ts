@@ -117,15 +117,19 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
   }
 }
 
+export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+  if (pubkeyData.length !== 33) {
+    throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
+  }
+  return ripemd160(sha256(pubkeyData));
+}
+
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 // For secp256k1 this assumes we already have a compressed pubkey.
 export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
   if (isSecp256k1Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
-    if (pubkeyData.length !== 33) {
-      throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
-    }
-    return ripemd160(sha256(pubkeyData)).slice(0, 20);
+    return rawSecp256k1PubkeyToRawAddress(pubkeyData);
   } else if (isEd25519Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     if (pubkeyData.length !== 32) {
