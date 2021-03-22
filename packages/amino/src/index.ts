@@ -8,9 +8,12 @@ export {
 export {
   MultisigThresholdPubkey,
   Pubkey,
+  Ed25519Pubkey,
   Secp256k1Pubkey,
   SinglePubkey,
   isMultisigThresholdPubkey,
+  isEd25519Pubkey,
+  isSecp256k1Pubkey,
   isSinglePubkey,
   pubkeyType,
 } from "./pubkeys";

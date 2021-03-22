@@ -2,7 +2,14 @@ import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { arrayContentStartsWith } from "@cosmjs/utils";
 
-import { isMultisigThresholdPubkey, Pubkey, pubkeyType, Secp256k1Pubkey } from "./pubkeys";
+import {
+  isEd25519Pubkey,
+  isMultisigThresholdPubkey,
+  isSecp256k1Pubkey,
+  Pubkey,
+  pubkeyType,
+  Secp256k1Pubkey,
+} from "./pubkeys";
 
 export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
   if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
@@ -100,21 +107,13 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
       out.push(...pubkeyData);
     }
     return new Uint8Array(out);
+  } else if (isEd25519Pubkey(pubkey)) {
+    return new Uint8Array([...pubkeyAminoPrefixEd25519, ...fromBase64(pubkey.value)]);
+  } else if (isSecp256k1Pubkey(pubkey)) {
+    return new Uint8Array([...pubkeyAminoPrefixSecp256k1, ...fromBase64(pubkey.value)]);
+  } else {
+    throw new Error("Unsupported pubkey type");
   }
-
-  let aminoPrefix: Uint8Array;
-  switch (pubkey.type) {
-    // Note: please don't add cases here without writing additional unit tests
-    case pubkeyType.secp256k1:
-      aminoPrefix = pubkeyAminoPrefixSecp256k1;
-      break;
-    case pubkeyType.ed25519:
-      aminoPrefix = pubkeyAminoPrefixEd25519;
-      break;
-    default:
-      throw new Error("Unsupported pubkey type");
-  }
-  return new Uint8Array([...aminoPrefix, ...fromBase64(pubkey.value)]);
 }
 
 /**
