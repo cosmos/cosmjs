@@ -49,6 +49,9 @@ and this project adheres to
   `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is
   only updated for the class `Tendermint34Client`, not for `Client`. Please
   migrate to the former.
+- @cosmjs/launchpad: `rawSecp256k1PubkeyToAddress` was removed. Instead use
+  `Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkeyRaw))` with
+  `rawSecp256k1PubkeyToRawAddress` from @cosmjs/amino.
 
 ### Deprecated
 

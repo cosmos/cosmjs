@@ -13,7 +13,6 @@ export {
 import * as logs from "./logs";
 export { logs };
 
-export { rawSecp256k1PubkeyToAddress } from "./address";
 export { Coin, coin, coins, parseCoins } from "./coins";
 
 export {
