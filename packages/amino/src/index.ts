@@ -1,12 +1,10 @@
+export { pubkeyToAddress, pubkeyToRawAddress, rawSecp256k1PubkeyToRawAddress } from "./addresses";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
-  pubkeyToAddress,
-  pubkeyToRawAddress,
-  rawSecp256k1PubkeyToRawAddress,
 } from "./encoding";
 export {
   MultisigThresholdPubkey,
