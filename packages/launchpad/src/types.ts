@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { PubKey } from "@cosmjs/amino";
+import { Pubkey } from "@cosmjs/amino";
 
 import { Coin } from "./coins";
 
@@ -9,6 +9,6 @@ export interface StdFee {
 }
 
 export interface StdSignature {
-  readonly pub_key: PubKey;
+  readonly pub_key: Pubkey;
   readonly signature: string;
 }

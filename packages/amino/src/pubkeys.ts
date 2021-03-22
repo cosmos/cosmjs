@@ -1,10 +1,13 @@
-export interface PubKey {
+export interface Pubkey {
   // type is one of the strings defined in pubkeyType
   // I don't use a string literal union here as that makes trouble with json test data:
   // https://github.com/cosmos/cosmjs/pull/44#pullrequestreview-353280504
   readonly type: string;
-  // Value field is base64-encoded in all cases
-  // Note: if type is Secp256k1, this must contain a COMPRESSED pubkey - to encode from bcp/keycontrol land, you must compress it first
+  readonly value: any;
+}
+
+export interface Secp256k1Pubkey extends SinglePubkey {
+  readonly type: "tendermint/PubKeySecp256k1";
   readonly value: string;
 }
 
@@ -16,3 +19,26 @@ export const pubkeyType = {
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12 */
   sr25519: "tendermint/PubKeySr25519" as const,
 };
+
+/**
+ * A pubkey which contains the data directly without further nesting.
+ *
+ * You can think of this as a non-multisig pubkey.
+ */
+export interface SinglePubkey extends Pubkey {
+  // type is one of the strings defined in pubkeyType
+  // I don't use a string literal union here as that makes trouble with json test data:
+  // https://github.com/cosmos/cosmjs/pull/44#pullrequestreview-353280504
+  readonly type: string;
+  /**
+   * The base64 encoding of the Amino binary encoded pubkey.
+   *
+   * Note: if type is Secp256k1, this must contain a 33 bytes compressed pubkey.
+   */
+  readonly value: string;
+}
+
+export function isSinglePubkey(pubkey: Pubkey): pubkey is SinglePubkey {
+  const singPubkeyTypes: string[] = [pubkeyType.ed25519, pubkeyType.secp256k1, pubkeyType.sr25519];
+  return singPubkeyTypes.includes(pubkey.type);
+}

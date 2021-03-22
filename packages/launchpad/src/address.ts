@@ -1,4 +1,4 @@
-import { PubKey, pubkeyType } from "@cosmjs/amino";
+import { pubkeyType, SinglePubkey } from "@cosmjs/amino";
 import { ripemd160, sha256 } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 
@@ -13,7 +13,7 @@ export function rawSecp256k1PubkeyToAddress(pubkeyRaw: Uint8Array, prefix: strin
 
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 // This assumes we already have a cosmos-compressed pubkey
-export function pubkeyToAddress(pubkey: PubKey, prefix: string): string {
+export function pubkeyToAddress(pubkey: SinglePubkey, prefix: string): string {
   const pubkeyBytes = fromBase64(pubkey.value);
   switch (pubkey.type) {
     case pubkeyType.secp256k1: {

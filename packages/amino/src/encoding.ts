@@ -1,9 +1,9 @@
 import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
 import { arrayContentEquals } from "@cosmjs/utils";
 
-import { PubKey, pubkeyType } from "./pubkeys";
+import { Pubkey, pubkeyType, Secp256k1Pubkey } from "./pubkeys";
 
-export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
+export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
   if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
     throw new Error("Public key must be compressed secp256k1, i.e. 33 bytes starting with 0x02 or 0x03");
   }
@@ -24,7 +24,7 @@ const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 /**
  * Decodes a pubkey in the Amino binary format to a type/value object.
  */
-export function decodeAminoPubkey(data: Uint8Array): PubKey {
+export function decodeAminoPubkey(data: Uint8Array): Pubkey {
   const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
   const rest = data.slice(pubkeyAminoPrefixLength);
   if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
@@ -62,7 +62,7 @@ export function decodeAminoPubkey(data: Uint8Array): PubKey {
  *
  * @param bechEncoded the bech32 encoded pubkey
  */
-export function decodeBech32Pubkey(bechEncoded: string): PubKey {
+export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
   const { data } = Bech32.decode(bechEncoded);
   return decodeAminoPubkey(data);
 }
@@ -70,7 +70,7 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
 /**
  * Encodes a public key to binary Amino.
  */
-export function encodeAminoPubkey(pubkey: PubKey): Uint8Array {
+export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
   let aminoPrefix: Uint8Array;
   switch (pubkey.type) {
     // Note: please don't add cases here without writing additional unit tests
@@ -92,6 +92,6 @@ export function encodeAminoPubkey(pubkey: PubKey): Uint8Array {
  * @param pubkey the public key to encode
  * @param prefix the bech32 prefix (human readable part)
  */
-export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
+export function encodeBech32Pubkey(pubkey: Pubkey, prefix: string): string {
   return Bech32.encode(prefix, encodeAminoPubkey(pubkey));
 }

@@ -6,7 +6,7 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
   pubkeyType,
-  PubKey,
+  SinglePubkey as PubKey,
 } from "@cosmjs/amino";
 
 import * as logs from "./logs";

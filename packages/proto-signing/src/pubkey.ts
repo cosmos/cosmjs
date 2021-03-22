@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeSecp256k1Pubkey, PubKey as AminoPubKey } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, SinglePubkey as AminoPubKey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 
 import { PubKey } from "./codec/cosmos/crypto/secp256k1/keys";

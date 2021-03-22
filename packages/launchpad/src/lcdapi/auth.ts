@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { PubKey } from "@cosmjs/amino";
+import { Pubkey } from "@cosmjs/amino";
 
 import { Coin } from "../coins";
 import { LcdClient } from "./lcdclient";
@@ -26,7 +26,7 @@ export interface BaseAccount {
    * [1]: https://github.com/cosmos/cosmos-sdk/pull/5280
    * [2]: https://github.com/cosmos/cosmos-sdk/pull/6749
    */
-  readonly public_key: string | PubKey | null;
+  readonly public_key: string | Pubkey | null;
   /**
    * The account number assigned by the blockchain.
    *

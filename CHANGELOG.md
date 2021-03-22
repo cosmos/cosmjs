@@ -24,6 +24,11 @@ and this project adheres to
   `SigningStargateClient`.
 - @cosmjs/amino: New package created that contains the shared amino signing
   functionality for @cosmjs/launchpad and @cosmjs/stargate.
+- @cosmjs/amino: Split public key interfaces into `Pubkey`, `SinglePubkey` and
+  `Secp256k1Pubkey` where `Pubkey` is a generalization of the old `PubKey` that
+  supported nested pubkeys for multisig. `SinglePubkey` is the old `PubKey` in
+  which the `value` is a base64 encoded string. And `Secp256k1Pubkey` is a
+  single secp256k1 pubkey.
 
 ### Changed
 

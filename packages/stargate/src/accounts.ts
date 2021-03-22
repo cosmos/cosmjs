@@ -1,4 +1,4 @@
-import { PubKey } from "@cosmjs/amino";
+import { Pubkey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
@@ -16,7 +16,7 @@ import { Any } from "./codec/google/protobuf/any";
 export interface Account {
   /** Bech32 account address */
   readonly address: string;
-  readonly pubkey: PubKey | null;
+  readonly pubkey: Pubkey | null;
   readonly accountNumber: number;
   readonly sequence: number;
 }

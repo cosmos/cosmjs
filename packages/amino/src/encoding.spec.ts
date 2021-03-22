@@ -7,9 +7,9 @@ import {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
 } from "./encoding";
-import { PubKey } from "./pubkeys";
+import { Pubkey } from "./pubkeys";
 
-describe("pubkey", () => {
+describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {
     it("encodes a compresed pubkey", () => {
       const pubkey = fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP");
@@ -85,7 +85,7 @@ describe("pubkey", () => {
 
   describe("encodeAminoPubkey", () => {
     it("works for secp256k1", () => {
-      const pubkey: PubKey = {
+      const pubkey: Pubkey = {
         type: "tendermint/PubKeySecp256k1",
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       };
@@ -98,7 +98,7 @@ describe("pubkey", () => {
     it("works for ed25519", () => {
       // Decoded from http://localhost:26657/validators
       // Encoded from `corald tendermint show-validator`
-      const pubkey: PubKey = {
+      const pubkey: Pubkey = {
         type: "tendermint/PubKeyEd25519",
         value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
       };
@@ -111,7 +111,7 @@ describe("pubkey", () => {
 
   describe("encodeBech32Pubkey", () => {
     it("works for secp256k1", () => {
-      const pubkey: PubKey = {
+      const pubkey: Pubkey = {
         type: "tendermint/PubKeySecp256k1",
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       };
@@ -123,7 +123,7 @@ describe("pubkey", () => {
     it("works for ed25519", () => {
       // Decoded from http://localhost:26657/validators
       // Encoded from `corald tendermint show-validator`
-      const pubkey: PubKey = {
+      const pubkey: Pubkey = {
         type: "tendermint/PubKeyEd25519",
         value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
       };
