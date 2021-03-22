@@ -1,7 +1,8 @@
 import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
 import { arrayContentStartsWith } from "@cosmjs/utils";
 
-import { Pubkey, pubkeyType, Secp256k1Pubkey } from "./pubkeys";
+import { isMultisigThresholdPubkey, Pubkey, pubkeyType, Secp256k1Pubkey } from "./pubkeys";
 
 export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
   if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
@@ -19,6 +20,8 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
 const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae987" + "21" /* fixed length */);
 const pubkeyAminoPrefixEd25519 = fromHex("1624de64" + "20" /* fixed length */);
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005" + "20" /* fixed length */);
+/** See https://github.com/tendermint/tendermint/commit/38b401657e4ad7a7eeb3c30a3cbf512037df3740 */
+const pubkeyAminoPrefixMultisigThreshold = fromHex("22c1f7e2" /* variable length not included */);
 
 /**
  * Decodes a pubkey in the Amino binary format to a type/value object.
@@ -67,10 +70,28 @@ export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
   return decodeAminoPubkey(data);
 }
 
+function encodeSmallUint(value: number | string): number[] {
+  const checked = Uint53.fromString(value.toString()).toNumber();
+  if (checked > 127) throw new Error("Encoding numbers > 127 is not supported here.");
+  return [checked];
+}
+
 /**
  * Encodes a public key to binary Amino.
  */
 export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
+  if (isMultisigThresholdPubkey(pubkey)) {
+    const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
+    out.push(8); // TODO: What is this?
+    out.push(...encodeSmallUint(pubkey.value.threshold));
+    for (const pubkeyData of pubkey.value.pubkeys.map((p) => encodeAminoPubkey(p))) {
+      out.push(18); // TODO: What is this?
+      out.push(...encodeSmallUint(pubkeyData.length));
+      out.push(...pubkeyData);
+    }
+    return new Uint8Array(out);
+  }
+
   let aminoPrefix: Uint8Array;
   switch (pubkey.type) {
     // Note: please don't add cases here without writing additional unit tests

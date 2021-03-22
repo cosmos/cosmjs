@@ -18,6 +18,7 @@ export const pubkeyType = {
   ed25519: "tendermint/PubKeyEd25519" as const,
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12 */
   sr25519: "tendermint/PubKeySr25519" as const,
+  multisigThreshold: "tendermint/PubKeyMultisigThreshold" as const,
 };
 
 /**
