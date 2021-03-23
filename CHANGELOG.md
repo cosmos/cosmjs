@@ -22,6 +22,10 @@ and this project adheres to
   connection tx, as well as Tendermint.
 - @cosmjs/stargate: Add support for IBC message types in
   `SigningStargateClient`.
+- @cosmjs/stargate: Added new `logs` export with all the functionality from
+  @cosmjs/launchpad.
+- @cosmjs/stargate: Added new `Coin`, `coin`, `coins` and `parseCoins` exports
+  which have the same functionality as already existed in @cosmjs/launchpad.
 - @cosmjs/amino: New package created that contains the shared amino signing
   functionality for @cosmjs/launchpad and @cosmjs/stargate.
 - @cosmjs/amino: Split public key interfaces into `Pubkey`, `SinglePubkey` and
@@ -31,6 +35,9 @@ and this project adheres to
   single secp256k1 pubkey.
 - @cosmjs/utils: The new `arrayContentStartsWith` works similar to
   `arrayContentEquals` but only checks the start of an array.
+- @cosmjs/proto-signing: Added new `Coin`, `coin`, `coins` and `parseCoins`
+  exports which have the same functionality as already existed in
+  @cosmjs/launchpad.
 
 ### Changed
 
@@ -52,6 +59,7 @@ and this project adheres to
 - @cosmjs/launchpad: `rawSecp256k1PubkeyToAddress` was removed. Instead use
   `Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkeyRaw))` with
   `rawSecp256k1PubkeyToRawAddress` from @cosmjs/amino.
+- @cosmjs/stargate: `parseRawLog` is now nested under the `logs` export.
 
 ### Deprecated
 
