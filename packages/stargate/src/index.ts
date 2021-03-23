@@ -1,6 +1,6 @@
 export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoTypes } from "./aminotypes";
-export { parseRawLog } from "./logs";
+export * as logs from "./logs";
 export {
   AuthExtension,
   BankExtension,
