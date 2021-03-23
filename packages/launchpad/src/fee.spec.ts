@@ -1,6 +1,6 @@
 import { Decimal } from "@cosmjs/math";
 
-import { GasPrice } from "./gas";
+import { GasPrice } from "./fee";
 
 describe("GasPrice", () => {
   it("can be constructed", () => {

@@ -1,7 +1,11 @@
 import { Decimal, Uint53 } from "@cosmjs/math";
 
-import { coins } from "./coins";
-import { StdFee } from "./types";
+import { Coin, coins } from "./coins";
+
+export interface StdFee {
+  readonly amount: readonly Coin[];
+  readonly gas: string;
+}
 
 export type FeeTable = Record<string, StdFee>;
 

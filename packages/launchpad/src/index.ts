@@ -43,7 +43,7 @@ export {
   isSearchByTagsQuery,
 } from "./cosmosclient";
 export { makeSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
-export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
+export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
 export {
   AuthAccountsResponse,
   AuthExtension,
@@ -145,7 +145,6 @@ export { findSequenceForSignedTx } from "./sequence";
 export { AccountData, Algo, AminoSignResponse, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
-export { StdFee } from "./types";
 export { executeKdf, KdfConfiguration } from "./wallet";
 export { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 export { Secp256k1Wallet } from "./secp256k1wallet";
