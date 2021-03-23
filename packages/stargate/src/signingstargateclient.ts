@@ -98,6 +98,12 @@ function createDefaultRegistry(): Registry {
   return new Registry(defaultRegistryTypes);
 }
 
+export interface SignData {
+  readonly accountNumber: number;
+  readonly sequence: number;
+  readonly chainId: string;
+}
+
 /** Use for testing only */
 export interface PrivateSigningStargateClient {
   readonly fees: CosmosFeeTable;
@@ -186,16 +192,25 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo: string,
   ): Promise<TxRaw> {
+    const accountFromChain = await this.getAccountUnverified(signerAddress);
+    if (!accountFromChain) {
+      throw new Error("Account not found");
+    }
+    const { accountNumber, sequence } = accountFromChain;
+    const chainId = await this.getChainId();
+    const signData: SignData = { accountNumber, sequence, chainId };
+
     return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo)
-      : this.signAmino(signerAddress, messages, fee, memo);
+      ? this.signDirect(signerAddress, messages, fee, memo, signData)
+      : this.signAmino(signerAddress, messages, fee, memo, signData);
   }
 
-  private async signAmino(
+  public async signAmino(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    { accountNumber, sequence, chainId }: SignData,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -205,12 +220,6 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const accountFromChain = await this.getAccountUnverified(signerAddress);
-    if (!accountFromChain) {
-      throw new Error("Account not found");
-    }
-    const { accountNumber, sequence } = accountFromChain;
-    const chainId = await this.getChainId();
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -239,11 +248,12 @@ export class SigningStargateClient extends StargateClient {
     });
   }
 
-  private async signDirect(
+  public async signDirect(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    { accountNumber, sequence, chainId }: SignData,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -253,12 +263,6 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const accountFromChain = await this.getAccountUnverified(signerAddress);
-    if (!accountFromChain) {
-      throw new Error("Account not found");
-    }
-    const { accountNumber, sequence } = accountFromChain;
-    const chainId = await this.getChainId();
     const txBody = {
       messages: messages,
       memo: memo,
