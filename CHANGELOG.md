@@ -18,6 +18,10 @@ and this project adheres to
   and `StargateClient`. Added `ModuleAccount` and vesting accounts
   `BaseVestingAccount`, `ContinuousVestingAccount`, `DelayedVestingAccount` and
   `PeriodicVestingAccount`.
+- @cosmjs/stargate: Add codecs for IBC channel tx, client query/tx, and
+  connection tx, as well as Tendermint.
+- @cosmjs/stargate: Add support for IBC message types in
+  `SigningStargateClient`.
 
 ### Changed
 
@@ -29,6 +33,8 @@ and this project adheres to
 - @cosmjs/stargate: Remove `accountFromProto` in favour of `accountFromAny`.
 - @cosmjs/stargate: Rename `Rpc` interface to `ProtobufRpcClient` and
   `createRpc` to `createProtobufRpcClient`.
+- @cosmjs/stargate: Reorganize nesting structure of IBC query client and add
+  support for more methods.
 - @cosmjs/tendermint-rpc: The fields `CommitSignature.validatorAddress`,
   `.timestamp` and `.signature` are now optional. They are unset when
   `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is

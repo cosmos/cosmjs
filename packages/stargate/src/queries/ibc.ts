@@ -3,8 +3,11 @@ import { toAscii } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import Long from "long";
 
+import { Any } from "../codec/google/protobuf/any";
 import { Channel } from "../codec/ibc/core/channel/v1/channel";
 import {
+  QueryChannelClientStateResponse,
+  QueryChannelConsensusStateResponse,
   QueryChannelResponse,
   QueryChannelsResponse,
   QueryClientImpl as ChannelQuery,
@@ -14,76 +17,155 @@ import {
   QueryPacketAcknowledgementsResponse,
   QueryPacketCommitmentResponse,
   QueryPacketCommitmentsResponse,
+  QueryPacketReceiptResponse,
   QueryUnreceivedAcksResponse,
   QueryUnreceivedPacketsResponse,
 } from "../codec/ibc/core/channel/v1/query";
+import { Height } from "../codec/ibc/core/client/v1/client";
+import {
+  QueryClientImpl as ClientQuery,
+  QueryClientParamsResponse,
+  QueryClientStateResponse,
+  QueryClientStatesResponse,
+  QueryConsensusStateRequest,
+  QueryConsensusStateResponse,
+  QueryConsensusStatesResponse,
+} from "../codec/ibc/core/client/v1/query";
 import {
   QueryClientConnectionsResponse,
   QueryClientImpl as ConnectionQuery,
+  QueryConnectionClientStateResponse,
+  QueryConnectionConsensusStateRequest,
+  QueryConnectionConsensusStateResponse,
   QueryConnectionResponse,
   QueryConnectionsResponse,
 } from "../codec/ibc/core/connection/v1/query";
+import {
+  ClientState as TendermintClientState,
+  ConsensusState as TendermintConsensusState,
+} from "../codec/ibc/lightclients/tendermint/v1/tendermint";
 import { QueryClient } from "./queryclient";
 import { createPagination, createProtobufRpcClient } from "./utils";
 
+function decodeTendermintClientStateAny(clientState: Any | undefined): TendermintClientState {
+  if (clientState?.typeUrl !== "/ibc.lightclients.tendermint.v1.ClientState") {
+    throw new Error(`Unexpected client state type: ${clientState?.typeUrl}`);
+  }
+  return TendermintClientState.decode(clientState.value);
+}
+
+function decodeTendermintConsensusStateAny(clientState: Any | undefined): TendermintConsensusState {
+  if (clientState?.typeUrl !== "/ibc.lightclients.tendermint.v1.ConsensusState") {
+    throw new Error(`Unexpected client state type: ${clientState?.typeUrl}`);
+  }
+  return TendermintConsensusState.decode(clientState.value);
+}
+
 export interface IbcExtension {
   readonly ibc: {
-    readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
-    readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
-    readonly packetAcknowledgement: (
-      portId: string,
-      channelId: string,
-      sequence: number,
-    ) => Promise<Uint8Array>;
-    readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
-    readonly unverified: {
-      // Queries for ibc.core.channel.v1
-      readonly channel: (portId: string, channelId: string) => Promise<QueryChannelResponse>;
-      readonly channels: (paginationKey?: Uint8Array) => Promise<QueryChannelsResponse>;
-      readonly connectionChannels: (
-        connection: string,
-        paginationKey?: Uint8Array,
-      ) => Promise<QueryConnectionChannelsResponse>;
-      readonly packetCommitment: (
-        portId: string,
-        channelId: string,
-        sequence: number,
-      ) => Promise<QueryPacketCommitmentResponse>;
-      readonly packetCommitments: (
-        portId: string,
-        channelId: string,
-        paginationKey?: Uint8Array,
-      ) => Promise<QueryPacketCommitmentsResponse>;
+    readonly channel: {
+      readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
+      readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
       readonly packetAcknowledgement: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<QueryPacketAcknowledgementResponse>;
-      readonly packetAcknowledgements: (
-        portId: string,
-        channelId: string,
-        paginationKey?: Uint8Array,
-      ) => Promise<QueryPacketAcknowledgementsResponse>;
-      readonly unreceivedPackets: (
-        portId: string,
-        channelId: string,
-        packetCommitmentSequences: readonly number[],
-      ) => Promise<QueryUnreceivedPacketsResponse>;
-      readonly unreceivedAcks: (
-        portId: string,
-        channelId: string,
-        packetCommitmentSequences: readonly number[],
-      ) => Promise<QueryUnreceivedAcksResponse>;
-      readonly nextSequenceReceive: (
-        portId: string,
-        channelId: string,
-      ) => Promise<QueryNextSequenceReceiveResponse>;
-
-      // Queries for ibc.core.connection.v1
-
-      readonly connection: (connectionId: string) => Promise<QueryConnectionResponse>;
-      readonly connections: (paginationKey?: Uint8Array) => Promise<QueryConnectionsResponse>;
-      readonly clientConnections: (clientId: string) => Promise<QueryClientConnectionsResponse>;
+      ) => Promise<Uint8Array>;
+      readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
+    };
+    readonly unverified: {
+      readonly channel: {
+        readonly channel: (portId: string, channelId: string) => Promise<QueryChannelResponse>;
+        readonly channels: (paginationKey?: Uint8Array) => Promise<QueryChannelsResponse>;
+        readonly allChannels: () => Promise<QueryChannelsResponse>;
+        readonly connectionChannels: (
+          connection: string,
+          paginationKey?: Uint8Array,
+        ) => Promise<QueryConnectionChannelsResponse>;
+        readonly allConnectionChannels: (connection: string) => Promise<QueryConnectionChannelsResponse>;
+        readonly clientState: (portId: string, channelId: string) => Promise<QueryChannelClientStateResponse>;
+        readonly consensusState: (
+          portId: string,
+          channelId: string,
+          revisionNumber: number,
+          revisionHeight: number,
+        ) => Promise<QueryChannelConsensusStateResponse>;
+        readonly packetCommitment: (
+          portId: string,
+          channelId: string,
+          sequence: Long,
+        ) => Promise<QueryPacketCommitmentResponse>;
+        readonly packetCommitments: (
+          portId: string,
+          channelId: string,
+          paginationKey?: Uint8Array,
+        ) => Promise<QueryPacketCommitmentsResponse>;
+        readonly allPacketCommitments: (
+          portId: string,
+          channelId: string,
+        ) => Promise<QueryPacketCommitmentsResponse>;
+        readonly packetReceipt: (
+          portId: string,
+          channelId: string,
+          sequence: number,
+        ) => Promise<QueryPacketReceiptResponse>;
+        readonly packetAcknowledgement: (
+          portId: string,
+          channelId: string,
+          sequence: number,
+        ) => Promise<QueryPacketAcknowledgementResponse>;
+        readonly packetAcknowledgements: (
+          portId: string,
+          channelId: string,
+          paginationKey?: Uint8Array,
+        ) => Promise<QueryPacketAcknowledgementsResponse>;
+        readonly allPacketAcknowledgements: (
+          portId: string,
+          channelId: string,
+        ) => Promise<QueryPacketAcknowledgementsResponse>;
+        readonly unreceivedPackets: (
+          portId: string,
+          channelId: string,
+          packetCommitmentSequences: readonly number[],
+        ) => Promise<QueryUnreceivedPacketsResponse>;
+        readonly unreceivedAcks: (
+          portId: string,
+          channelId: string,
+          packetAckSequences: readonly number[],
+        ) => Promise<QueryUnreceivedAcksResponse>;
+        readonly nextSequenceReceive: (
+          portId: string,
+          channelId: string,
+        ) => Promise<QueryNextSequenceReceiveResponse>;
+      };
+      readonly client: {
+        readonly state: (clientId: string) => Promise<QueryClientStateResponse>;
+        readonly states: (paginationKey?: Uint8Array) => Promise<QueryClientStatesResponse>;
+        readonly allStates: () => Promise<QueryClientStatesResponse>;
+        readonly consensusState: (clientId: string, height?: number) => Promise<QueryConsensusStateResponse>;
+        readonly consensusStates: (
+          clientId: string,
+          paginationKey?: Uint8Array,
+        ) => Promise<QueryConsensusStatesResponse>;
+        readonly allConsensusStates: (clientId: string) => Promise<QueryConsensusStatesResponse>;
+        readonly params: () => Promise<QueryClientParamsResponse>;
+        readonly stateTm: (clientId: string) => Promise<TendermintClientState>;
+        readonly statesTm: (paginationKey?: Uint8Array) => Promise<TendermintClientState[]>;
+        readonly allStatesTm: () => Promise<TendermintClientState[]>;
+        readonly consensusStateTm: (clientId: string, height?: Height) => Promise<TendermintConsensusState>;
+      };
+      readonly connection: {
+        readonly connection: (connectionId: string) => Promise<QueryConnectionResponse>;
+        readonly connections: (paginationKey?: Uint8Array) => Promise<QueryConnectionsResponse>;
+        readonly allConnections: () => Promise<QueryConnectionsResponse>;
+        readonly clientConnections: (clientId: string) => Promise<QueryClientConnectionsResponse>;
+        readonly clientState: (connectionId: string) => Promise<QueryConnectionClientStateResponse>;
+        readonly consensusState: (
+          connectionId: string,
+          revisionNumber: number,
+          revisionHeight: number,
+        ) => Promise<QueryConnectionConsensusStateResponse>;
+      };
     };
   };
 }
@@ -93,139 +175,324 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
   // Use these services to get easy typed access to query methods
   // These cannot be used for proof verification
   const channelQueryService = new ChannelQuery(rpc);
+  const clientQueryService = new ClientQuery(rpc);
   const connectionQueryService = new ConnectionQuery(rpc);
 
   return {
     ibc: {
-      channel: async (portId: string, channelId: string) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
-        const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
-        const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? Channel.decode(responseData) : null;
-      },
-      packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
-        const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
-        const responseData = await base.queryVerified("ibc", key);
-        // keeper code doesn't parse, but returns raw
-        return responseData;
-      },
-      packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
-        const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
-        const responseData = await base.queryVerified("ibc", key);
-        // keeper code doesn't parse, but returns raw
-        return responseData;
-      },
-      nextSequenceReceive: async (portId: string, channelId: string) => {
-        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
-        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
-        const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
-        const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? Uint64.fromBytes(responseData).toNumber() : null;
-      },
-
-      unverified: {
-        // Queries for ibc.core.channel.v1
+      channel: {
         channel: async (portId: string, channelId: string) => {
-          const response = await channelQueryService.Channel({ portId: portId, channelId: channelId });
-          return response;
-        },
-        channels: async (paginationKey?: Uint8Array) => {
-          const request = {
-            pagination: createPagination(paginationKey),
-          };
-          const response = await channelQueryService.Channels(request);
-          return response;
-        },
-        connectionChannels: async (connection: string, paginationKey?: Uint8Array) => {
-          const request = {
-            connection: connection,
-            pagination: createPagination(paginationKey),
-          };
-          const response = await channelQueryService.ConnectionChannels(request);
-          return response;
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
+          const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
+          const responseData = await base.queryVerified("ibc", key);
+          return responseData.length ? Channel.decode(responseData) : null;
         },
         packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQueryService.PacketCommitment({
-            portId: portId,
-            channelId: channelId,
-            sequence: Long.fromNumber(sequence, true),
-          });
-          return response;
-        },
-        packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
-          const request = {
-            channelId: channelId,
-            portId: portId,
-            pagination: createPagination(paginationKey),
-          };
-          const response = await channelQueryService.PacketCommitments(request);
-          return response;
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
+          const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
+          const responseData = await base.queryVerified("ibc", key);
+          // keeper code doesn't parse, but returns raw
+          return responseData;
         },
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQueryService.PacketAcknowledgement({
-            portId: portId,
-            channelId: channelId,
-            sequence: Long.fromNumber(sequence, true),
-          });
-          return response;
-        },
-        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
-          const response = await channelQueryService.PacketAcknowledgements({
-            portId: portId,
-            channelId: channelId,
-            pagination: createPagination(paginationKey),
-          });
-          return response;
-        },
-        unreceivedPackets: async (
-          portId: string,
-          channelId: string,
-          packetCommitmentSequences: readonly number[],
-        ) => {
-          const response = await channelQueryService.UnreceivedPackets({
-            portId: portId,
-            channelId: channelId,
-            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s, true)),
-          });
-          return response;
-        },
-        unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) => {
-          const response = await channelQueryService.UnreceivedAcks({
-            portId: portId,
-            channelId: channelId,
-            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s, true)),
-          });
-          return response;
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
+          const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
+          const responseData = await base.queryVerified("ibc", key);
+          // keeper code doesn't parse, but returns raw
+          return responseData;
         },
         nextSequenceReceive: async (portId: string, channelId: string) => {
-          const response = await channelQueryService.NextSequenceReceive({
-            portId: portId,
-            channelId: channelId,
-          });
-          return response;
+          // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
+          // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
+          const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
+          const responseData = await base.queryVerified("ibc", key);
+          return responseData.length ? Uint64.fromBytes(responseData).toNumber() : null;
         },
-
-        // Queries for ibc.core.connection.v1
-
-        connection: async (connectionId: string) => {
-          const response = await connectionQueryService.Connection({ connectionId: connectionId });
-          return response;
+      },
+      unverified: {
+        channel: {
+          channel: async (portId: string, channelId: string) =>
+            channelQueryService.Channel({
+              portId: portId,
+              channelId: channelId,
+            }),
+          channels: async (paginationKey?: Uint8Array) =>
+            channelQueryService.Channels({
+              pagination: createPagination(paginationKey),
+            }),
+          allChannels: async () => {
+            const channels = [];
+            let response: QueryChannelsResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await channelQueryService.Channels({
+                pagination: createPagination(key),
+              });
+              channels.push(...response.channels);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              channels: channels,
+              height: response.height,
+            };
+          },
+          connectionChannels: async (connection: string, paginationKey?: Uint8Array) =>
+            channelQueryService.ConnectionChannels({
+              connection: connection,
+              pagination: createPagination(paginationKey),
+            }),
+          allConnectionChannels: async (connection: string) => {
+            const channels = [];
+            let response: QueryConnectionChannelsResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await channelQueryService.ConnectionChannels({
+                connection: connection,
+                pagination: createPagination(key),
+              });
+              channels.push(...response.channels);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              channels: channels,
+              height: response.height,
+            };
+          },
+          clientState: async (portId: string, channelId: string) =>
+            channelQueryService.ChannelClientState({
+              portId: portId,
+              channelId: channelId,
+            }),
+          consensusState: async (
+            portId: string,
+            channelId: string,
+            revisionNumber: number,
+            revisionHeight: number,
+          ) =>
+            channelQueryService.ChannelConsensusState({
+              portId: portId,
+              channelId: channelId,
+              revisionNumber: Long.fromNumber(revisionNumber, true),
+              revisionHeight: Long.fromNumber(revisionHeight, true),
+            }),
+          packetCommitment: async (portId: string, channelId: string, sequence: Long) =>
+            channelQueryService.PacketCommitment({
+              portId: portId,
+              channelId: channelId,
+              sequence: sequence,
+            }),
+          packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
+            channelQueryService.PacketCommitments({
+              channelId: channelId,
+              portId: portId,
+              pagination: createPagination(paginationKey),
+            }),
+          allPacketCommitments: async (portId: string, channelId: string) => {
+            const commitments = [];
+            let response: QueryPacketCommitmentsResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await channelQueryService.PacketCommitments({
+                channelId: channelId,
+                portId: portId,
+                pagination: createPagination(key),
+              });
+              commitments.push(...response.commitments);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              commitments: commitments,
+              height: response.height,
+            };
+          },
+          packetReceipt: async (portId: string, channelId: string, sequence: number) =>
+            channelQueryService.PacketReceipt({
+              portId: portId,
+              channelId: channelId,
+              sequence: Long.fromNumber(sequence, true),
+            }),
+          packetAcknowledgement: async (portId: string, channelId: string, sequence: number) =>
+            channelQueryService.PacketAcknowledgement({
+              portId: portId,
+              channelId: channelId,
+              sequence: Long.fromNumber(sequence, true),
+            }),
+          packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
+            channelQueryService.PacketAcknowledgements({
+              portId: portId,
+              channelId: channelId,
+              pagination: createPagination(paginationKey),
+            }),
+          allPacketAcknowledgements: async (portId: string, channelId: string) => {
+            const acknowledgements = [];
+            let response: QueryPacketAcknowledgementsResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await channelQueryService.PacketAcknowledgements({
+                channelId: channelId,
+                portId: portId,
+                pagination: createPagination(key),
+              });
+              acknowledgements.push(...response.acknowledgements);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              acknowledgements: acknowledgements,
+              height: response.height,
+            };
+          },
+          unreceivedPackets: async (
+            portId: string,
+            channelId: string,
+            packetCommitmentSequences: readonly number[],
+          ) =>
+            channelQueryService.UnreceivedPackets({
+              portId: portId,
+              channelId: channelId,
+              packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s, true)),
+            }),
+          unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) =>
+            channelQueryService.UnreceivedAcks({
+              portId: portId,
+              channelId: channelId,
+              packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s, true)),
+            }),
+          nextSequenceReceive: async (portId: string, channelId: string) =>
+            channelQueryService.NextSequenceReceive({
+              portId: portId,
+              channelId: channelId,
+            }),
         },
-        connections: async (paginationKey?: Uint8Array) => {
-          const request = {
-            pagination: createPagination(paginationKey),
-          };
-          const response = await connectionQueryService.Connections(request);
-          return response;
+        client: {
+          state: (clientId: string) => clientQueryService.ClientState({ clientId }),
+          states: (paginationKey?: Uint8Array) =>
+            clientQueryService.ClientStates({
+              pagination: createPagination(paginationKey),
+            }),
+          allStates: async () => {
+            const clientStates = [];
+            let response: QueryClientStatesResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await clientQueryService.ClientStates({
+                pagination: createPagination(key),
+              });
+              clientStates.push(...response.clientStates);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              clientStates: clientStates,
+            };
+          },
+          consensusState: (clientId: string, consensusHeight?: number) =>
+            clientQueryService.ConsensusState(
+              QueryConsensusStateRequest.fromPartial({
+                clientId: clientId,
+                revisionHeight:
+                  consensusHeight !== undefined ? Long.fromNumber(consensusHeight, true) : undefined,
+                latestHeight: consensusHeight === undefined,
+              }),
+            ),
+          consensusStates: (clientId: string, paginationKey?: Uint8Array) =>
+            clientQueryService.ConsensusStates({
+              clientId: clientId,
+              pagination: createPagination(paginationKey),
+            }),
+          allConsensusStates: async (clientId: string) => {
+            const consensusStates = [];
+            let response: QueryConsensusStatesResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await clientQueryService.ConsensusStates({
+                clientId: clientId,
+                pagination: createPagination(key),
+              });
+              consensusStates.push(...response.consensusStates);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              consensusStates: consensusStates,
+            };
+          },
+          params: () => clientQueryService.ClientParams({}),
+          stateTm: async (clientId: string) => {
+            const response = await clientQueryService.ClientState({ clientId });
+            return decodeTendermintClientStateAny(response.clientState);
+          },
+          statesTm: async (paginationKey?: Uint8Array) => {
+            const { clientStates } = await clientQueryService.ClientStates({
+              pagination: createPagination(paginationKey),
+            });
+            return clientStates.map(({ clientState }) => decodeTendermintClientStateAny(clientState));
+          },
+          allStatesTm: async () => {
+            const clientStates = [];
+            let response: QueryClientStatesResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await clientQueryService.ClientStates({
+                pagination: createPagination(key),
+              });
+              clientStates.push(...response.clientStates);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return clientStates.map(({ clientState }) => decodeTendermintClientStateAny(clientState));
+          },
+          consensusStateTm: async (clientId: string, consensusHeight?: Height) => {
+            const response = await clientQueryService.ConsensusState(
+              QueryConsensusStateRequest.fromPartial({
+                clientId: clientId,
+                revisionHeight: consensusHeight?.revisionHeight,
+                revisionNumber: consensusHeight?.revisionNumber,
+                latestHeight: consensusHeight === undefined,
+              }),
+            );
+            return decodeTendermintConsensusStateAny(response.consensusState);
+          },
         },
-        clientConnections: async (clientId: string) => {
-          const response = await connectionQueryService.ClientConnections({ clientId: clientId });
-          return response;
+        connection: {
+          connection: async (connectionId: string) =>
+            connectionQueryService.Connection({
+              connectionId: connectionId,
+            }),
+          connections: async (paginationKey?: Uint8Array) =>
+            connectionQueryService.Connections({
+              pagination: createPagination(paginationKey),
+            }),
+          allConnections: async () => {
+            const connections = [];
+            let response: QueryConnectionsResponse;
+            let key: Uint8Array | undefined;
+            do {
+              response = await connectionQueryService.Connections({
+                pagination: createPagination(key),
+              });
+              connections.push(...response.connections);
+              key = response.pagination?.nextKey;
+            } while (key);
+            return {
+              connections: connections,
+              height: response.height,
+            };
+          },
+          clientConnections: async (clientId: string) =>
+            connectionQueryService.ClientConnections({
+              clientId: clientId,
+            }),
+          clientState: async (connectionId: string) =>
+            connectionQueryService.ConnectionClientState({
+              connectionId: connectionId,
+            }),
+          consensusState: async (connectionId: string, revisionHeight: number) =>
+            connectionQueryService.ConnectionConsensusState(
+              QueryConnectionConsensusStateRequest.fromPartial({
+                connectionId: connectionId,
+                revisionHeight: Long.fromNumber(revisionHeight, true),
+              }),
+            ),
         },
       },
     },
