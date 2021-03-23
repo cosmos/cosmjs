@@ -42,6 +42,7 @@
     "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
   },
   "dependencies": {
+    "@cosmjs/amino": "^0.25.0-alpha.0",
     "@cosmjs/cosmwasm-launchpad": "^0.25.0-alpha.0",
     "@cosmjs/crypto": "^0.25.0-alpha.0",
     "@cosmjs/encoding": "^0.25.0-alpha.0",

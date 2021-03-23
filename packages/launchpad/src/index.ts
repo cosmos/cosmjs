@@ -1,7 +1,20 @@
+// Re-exports for backwards compatibility
+export {
+  decodeAminoPubkey,
+  decodeBech32Pubkey,
+  encodeAminoPubkey,
+  encodeBech32Pubkey,
+  encodeSecp256k1Pubkey,
+  pubkeyToAddress,
+  pubkeyType,
+} from "@cosmjs/amino";
+import { SinglePubkey } from "@cosmjs/amino";
+/** @deprecated PubKey is deprecated. Use `SinglePubkey` or the more general `Pubkey` from `@cosmjs/amino`. */
+export type PubKey = SinglePubkey;
+
 import * as logs from "./logs";
 export { logs };
 
-export { pubkeyToAddress, rawSecp256k1PubkeyToAddress } from "./address";
 export { Coin, coin, coins, parseCoins } from "./coins";
 
 export {
@@ -125,19 +138,12 @@ export {
   MsgWithdrawValidatorCommission,
 } from "./msgs";
 export { makeCosmoshubPath } from "./paths";
-export {
-  decodeAminoPubkey,
-  decodeBech32Pubkey,
-  encodeAminoPubkey,
-  encodeBech32Pubkey,
-  encodeSecp256k1Pubkey,
-} from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export { AccountData, Algo, AminoSignResponse, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
-export { pubkeyType, PubKey, StdFee, StdSignature } from "./types";
+export { StdFee, StdSignature } from "./types";
 export { executeKdf, KdfConfiguration } from "./wallet";
 export { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 export { Secp256k1Wallet } from "./secp256k1wallet";

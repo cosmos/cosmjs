@@ -1,3 +1,4 @@
+import { Pubkey } from "@cosmjs/amino";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
@@ -13,7 +14,6 @@ import {
 } from "./lcdapi";
 import { Log, parseLogs } from "./logs";
 import { StdTx, WrappedStdTx } from "./tx";
-import { PubKey } from "./types";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -24,7 +24,7 @@ export interface Account {
   /** Bech32 account address */
   readonly address: string;
   readonly balance: readonly Coin[];
-  readonly pubkey: PubKey | undefined;
+  readonly pubkey: Pubkey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }

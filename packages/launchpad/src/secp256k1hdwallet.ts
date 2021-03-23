@@ -1,3 +1,4 @@
+import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
 import {
   Bip39,
   EnglishMnemonic,
@@ -10,10 +11,9 @@ import {
   Slip10Curve,
   stringToPath,
 } from "@cosmjs/crypto";
-import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
+import { Bech32, fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
-import { rawSecp256k1PubkeyToAddress } from "./address";
 import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { makeCosmoshubPath } from "./paths";
 import { encodeSecp256k1Signature } from "./signature";
@@ -246,7 +246,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
   }
 
   private get address(): string {
-    return rawSecp256k1PubkeyToAddress(this.pubkey, this.accounts[0].prefix);
+    return Bech32.encode(this.accounts[0].prefix, rawSecp256k1PubkeyToRawAddress(this.pubkey));
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {

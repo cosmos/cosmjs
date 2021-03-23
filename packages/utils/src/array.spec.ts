@@ -1,4 +1,4 @@
-import { arrayContentEquals } from "./arrays";
+import { arrayContentEquals, arrayContentStartsWith } from "./arrays";
 
 describe("array", () => {
   describe("arrayContentEquals", () => {
@@ -28,6 +28,34 @@ describe("array", () => {
     it("works for empty arrays", () => {
       expect(arrayContentEquals([], [])).toEqual(true);
       expect(arrayContentEquals([], new Uint8Array([]))).toEqual(true);
+    });
+  });
+
+  describe("arrayContentStartsWith", () => {
+    it("can compare number arrays", () => {
+      // same length
+      expect(arrayContentStartsWith([], [])).toEqual(true); // Same behaviour as "".startsWith("")
+      expect(arrayContentStartsWith([1, 2, 3], [1, 2, 3])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3], [1, 2, 8])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2, 3], [0, 0, 0])).toEqual(false);
+
+      // a shorter than b
+      expect(arrayContentStartsWith([], [1, 2, 3])).toEqual(false);
+      expect(arrayContentStartsWith([1], [1, 2, 3])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2], [1, 2, 3])).toEqual(false);
+
+      // a longer than b
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 3, 4])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 3])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [])).toEqual(true);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 3, 4, 0])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 3, 0])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 2, 0])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [1, 0])).toEqual(false);
+      expect(arrayContentStartsWith([1, 2, 3, 4, 5], [0])).toEqual(false);
     });
   });
 });

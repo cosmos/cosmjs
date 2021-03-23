@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
 import {
   ChangeAdminResult,
   CosmWasmFeeTable,
@@ -16,7 +17,6 @@ import {
   buildFeeTable,
   Coin,
   CosmosFeeTable,
-  encodeSecp256k1Pubkey,
   GasLimits,
   GasPrice,
   logs,

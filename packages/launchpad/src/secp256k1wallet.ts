@@ -1,6 +1,7 @@
+import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
 import { Secp256k1, Sha256 } from "@cosmjs/crypto";
+import { Bech32 } from "@cosmjs/encoding";
 
-import { rawSecp256k1PubkeyToAddress } from "./address";
 import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { encodeSecp256k1Signature } from "./signature";
 import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
@@ -33,7 +34,7 @@ export class Secp256k1Wallet implements OfflineSigner {
   }
 
   private get address(): string {
-    return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
+    return Bech32.encode(this.prefix, rawSecp256k1PubkeyToRawAddress(this.pubkey));
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {

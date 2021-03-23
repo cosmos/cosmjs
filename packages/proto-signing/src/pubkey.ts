@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { encodeSecp256k1Pubkey, SinglePubkey as AminoPubKey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import { encodeSecp256k1Pubkey, PubKey as LaunchpadPubKey } from "@cosmjs/launchpad";
 
 import { PubKey } from "./codec/cosmos/crypto/secp256k1/keys";
 import { Any } from "./codec/google/protobuf/any";
 
-export function encodePubkey(pubkey: LaunchpadPubKey): Any {
+export function encodePubkey(pubkey: AminoPubKey): Any {
   switch (pubkey.type) {
     case "tendermint/PubKeySecp256k1": {
       const pubkeyProto = PubKey.fromPartial({
@@ -21,7 +21,7 @@ export function encodePubkey(pubkey: LaunchpadPubKey): Any {
   }
 }
 
-export function decodePubkey(pubkey?: Any | null): LaunchpadPubKey | null {
+export function decodePubkey(pubkey?: Any | null): AminoPubKey | null {
   if (!pubkey || !pubkey.value) {
     return null;
   }

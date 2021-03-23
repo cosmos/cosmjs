@@ -1,4 +1,5 @@
-import { PubKey } from "../types";
+import { Pubkey } from "@cosmjs/amino";
+
 import { normalizePubkey, uint64ToNumber, uint64ToString } from "./utils";
 
 describe("utils", () => {
@@ -84,7 +85,7 @@ describe("utils", () => {
     });
 
     it("passes PubKey unchanged", () => {
-      const original: PubKey = {
+      const original: Pubkey = {
         type: "tendermint/PubKeySecp256k1",
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       };

@@ -22,6 +22,15 @@ and this project adheres to
   connection tx, as well as Tendermint.
 - @cosmjs/stargate: Add support for IBC message types in
   `SigningStargateClient`.
+- @cosmjs/amino: New package created that contains the shared amino signing
+  functionality for @cosmjs/launchpad and @cosmjs/stargate.
+- @cosmjs/amino: Split public key interfaces into `Pubkey`, `SinglePubkey` and
+  `Secp256k1Pubkey` where `Pubkey` is a generalization of the old `PubKey` that
+  supported nested pubkeys for multisig. `SinglePubkey` is the old `PubKey` in
+  which the `value` is a base64 encoded string. And `Secp256k1Pubkey` is a
+  single secp256k1 pubkey.
+- @cosmjs/utils: The new `arrayContentStartsWith` works similar to
+  `arrayContentEquals` but only checks the start of an array.
 
 ### Changed
 
@@ -40,6 +49,9 @@ and this project adheres to
   `blockIdFlag` is `BlockIdFlag.Absent`. The decoding into `CommitSignature` is
   only updated for the class `Tendermint34Client`, not for `Client`. Please
   migrate to the former.
+- @cosmjs/launchpad: `rawSecp256k1PubkeyToAddress` was removed. Instead use
+  `Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkeyRaw))` with
+  `rawSecp256k1PubkeyToRawAddress` from @cosmjs/amino.
 
 ### Deprecated
 

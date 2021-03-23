@@ -1,7 +1,5 @@
+import { decodeBech32Pubkey, Pubkey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
-
-import { decodeBech32Pubkey } from "../pubkey";
-import { PubKey } from "../types";
 
 /**
  * Converts an integer expressed as number or string to a number.
@@ -31,7 +29,7 @@ export function uint64ToString(input: number | string): string {
  *
  * Returns null when unset.
  */
-export function normalizePubkey(input: string | PubKey | null): PubKey | null {
+export function normalizePubkey(input: string | Pubkey | null): Pubkey | null {
   if (!input) return null;
   if (typeof input === "string") return decodeBech32Pubkey(input);
   return input;
