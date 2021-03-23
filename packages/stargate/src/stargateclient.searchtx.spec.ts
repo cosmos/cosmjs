@@ -1,6 +1,6 @@
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
-import { Coin, coins } from "@cosmjs/launchpad";
 import {
+  coins,
   DirectSecp256k1HdWallet,
   encodePubkey,
   makeAuthInfoBytes,
@@ -9,6 +9,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import {
   BroadcastTxResponse,

@@ -2,7 +2,6 @@ import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   buildFeeTable,
-  Coin,
   CosmosFeeTable,
   GasLimits,
   GasPrice,
@@ -24,6 +23,7 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import {
   MsgFundCommunityPool,
   MsgSetWithdrawAddress,

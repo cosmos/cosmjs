@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bip39, EnglishMnemonic, Random, Secp256k1, Slip10, Slip10Curve } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-import { AminoSignResponse, coins, Secp256k1HdWallet, StdSignDoc } from "@cosmjs/launchpad";
+import { AminoSignResponse, Secp256k1HdWallet, StdSignDoc } from "@cosmjs/launchpad";
 import {
+  coins,
   DirectSecp256k1HdWallet,
   DirectSignResponse,
   makeAuthInfoBytes,

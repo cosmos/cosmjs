@@ -2,8 +2,6 @@
 import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
-  coin,
-  coins,
   MsgBeginRedelegate as LaunchpadMsgBeginRedelegate,
   MsgCreateValidator as LaunchpadMsgCreateValidator,
   MsgDelegate as LaunchpadMsgDelegate,
@@ -16,6 +14,7 @@ import {
   MsgWithdrawDelegatorReward as LaunchpadMsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission as LaunchpadMsgWithdrawValidatorCommission,
 } from "@cosmjs/launchpad";
+import { coin, coins } from "@cosmjs/proto-signing";
 
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend, MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
