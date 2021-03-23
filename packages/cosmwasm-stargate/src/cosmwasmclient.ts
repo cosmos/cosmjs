@@ -9,7 +9,6 @@ import {
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import {
   Block,
-  Coin,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
@@ -23,6 +22,7 @@ import {
   AuthExtension,
   BankExtension,
   BroadcastTxResponse,
+  Coin,
   coinFromProto,
   IndexedTx,
   QueryClient,

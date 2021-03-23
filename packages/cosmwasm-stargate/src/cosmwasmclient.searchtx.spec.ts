@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
-import { Coin, coins } from "@cosmjs/launchpad";
 import {
   DirectSecp256k1HdWallet,
   encodePubkey,
@@ -8,7 +7,13 @@ import {
   makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
-import { BroadcastTxResponse, isBroadcastTxFailure, isBroadcastTxSuccess } from "@cosmjs/stargate";
+import {
+  BroadcastTxResponse,
+  Coin,
+  coins,
+  isBroadcastTxFailure,
+  isBroadcastTxSuccess,
+} from "@cosmjs/stargate";
 import { Tx, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 

@@ -15,11 +15,9 @@ import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import {
   buildFeeTable,
-  Coin,
   CosmosFeeTable,
   GasLimits,
   GasPrice,
-  logs,
   makeSignDoc as makeSignDocAmino,
   StdFee,
 } from "@cosmjs/launchpad";
@@ -37,9 +35,10 @@ import {
   AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
+  Coin,
   defaultRegistryTypes,
   isBroadcastTxFailure,
-  parseRawLog,
+  logs,
 } from "@cosmjs/stargate";
 import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
@@ -165,7 +164,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isBroadcastTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
-    const parsedLogs = parseRawLog(result.rawLog);
+    const parsedLogs = logs.parseRawLog(result.rawLog);
     const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
@@ -200,7 +199,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isBroadcastTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
-    const parsedLogs = parseRawLog(result.rawLog);
+    const parsedLogs = logs.parseRawLog(result.rawLog);
     const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
     return {
       contractAddress: contractAddressAttr.value,
@@ -228,7 +227,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
-      logs: parseRawLog(result.rawLog),
+      logs: logs.parseRawLog(result.rawLog),
       transactionHash: result.transactionHash,
     };
   }
@@ -250,7 +249,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
-      logs: parseRawLog(result.rawLog),
+      logs: logs.parseRawLog(result.rawLog),
       transactionHash: result.transactionHash,
     };
   }
@@ -276,7 +275,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
-      logs: parseRawLog(result.rawLog),
+      logs: logs.parseRawLog(result.rawLog),
       transactionHash: result.transactionHash,
     };
   }
@@ -302,7 +301,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
-      logs: parseRawLog(result.rawLog),
+      logs: logs.parseRawLog(result.rawLog),
       transactionHash: result.transactionHash,
     };
   }

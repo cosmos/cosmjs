@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { coin, coins } from "@cosmjs/launchpad";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { coin, coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 

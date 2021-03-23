@@ -2,7 +2,7 @@
 import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64 } from "@cosmjs/encoding";
-import { coins, logs, StdFee } from "@cosmjs/launchpad";
+import { StdFee } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
   DirectSecp256k1HdWallet,
@@ -11,7 +11,7 @@ import {
   makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
-import { assertIsBroadcastTxSuccess, parseRawLog } from "@cosmjs/stargate";
+import { assertIsBroadcastTxSuccess, coins, logs } from "@cosmjs/stargate";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
@@ -210,7 +210,7 @@ describe("CosmWasmClient", () => {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const result = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(result);
-      const amountAttr = logs.findAttribute(parseRawLog(result.rawLog), "transfer", "amount");
+      const amountAttr = logs.findAttribute(logs.parseRawLog(result.rawLog), "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });

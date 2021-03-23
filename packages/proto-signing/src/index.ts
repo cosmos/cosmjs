@@ -1,3 +1,4 @@
+export { Coin, coin, coins, parseCoins } from "./coins";
 export {
   isPbjsGeneratedType,
   isTsProtoGeneratedType,

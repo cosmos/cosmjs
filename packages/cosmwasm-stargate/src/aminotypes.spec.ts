@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toUtf8 } from "@cosmjs/encoding";
-import { coins } from "@cosmjs/launchpad";
-import { AminoTypes } from "@cosmjs/stargate";
+import { AminoTypes, coins } from "@cosmjs/stargate";
 import Long from "long";
 
 import {
