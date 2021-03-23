@@ -144,7 +144,7 @@ describe("BankExtension", () => {
         const response = await client.bank.unverified.totalSupply();
         expect(response).toEqual([
           {
-            amount: "18000000000",
+            amount: simapp.totalSupply.toString(),
             denom: simapp.denomFee,
           },
           {
@@ -164,7 +164,7 @@ describe("BankExtension", () => {
 
         const response = await client.bank.unverified.supplyOf(simapp.denomFee);
         expect(response).toEqual({
-          amount: "18000000000",
+          amount: simapp.totalSupply.toString(),
           denom: simapp.denomFee,
         });
 
