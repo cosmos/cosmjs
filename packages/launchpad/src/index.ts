@@ -7,8 +7,10 @@ export {
   encodeSecp256k1Pubkey,
   pubkeyToAddress,
   pubkeyType,
-  SinglePubkey as PubKey,
 } from "@cosmjs/amino";
+import { SinglePubkey } from "@cosmjs/amino";
+/** @deprecated PubKey is deprecated. Use `SinglePubkey` or the more general `Pubkey` from `@cosmjs/amino`. */
+export type PubKey = SinglePubkey;
 
 import * as logs from "./logs";
 export { logs };
