@@ -22,6 +22,8 @@ and this project adheres to
   connection tx, as well as Tendermint.
 - @cosmjs/stargate: Add support for IBC message types in
   `SigningStargateClient`.
+- @cosmjs/amino: New package created that contains the shared amino signing
+  functionality for @cosmjs/launchpad and @cosmjs/stargate.
 
 ### Changed
 

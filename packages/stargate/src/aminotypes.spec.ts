@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   coin,
   coins,
-  encodeBech32Pubkey,
   MsgBeginRedelegate as LaunchpadMsgBeginRedelegate,
   MsgCreateValidator as LaunchpadMsgCreateValidator,
   MsgDelegate as LaunchpadMsgDelegate,

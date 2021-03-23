@@ -1,9 +1,8 @@
 {
-  "name": "@cosmjs/proto-signing",
+  "name": "@cosmjs/amino",
   "version": "0.25.0-alpha.0",
-  "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
+  "description": "Helpers for Amino based signing which are shared between @cosmjs/launchpad and @cosmjs/stargate.",
   "contributors": [
-    "Will Clark <willclarktech@users.noreply.github.com>",
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
@@ -17,39 +16,33 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/proto-signing"
+    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/amino"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "docs": "typedoc --options typedoc.js",
-    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
-    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "test-node": "node jasmine-testrunner.js",
+    "test-edge": "yarn pack-web && karma start --single-run --browsers Edge",
+    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
+    "test-safari": "yarn pack-web && karma start --single-run --browsers Safari",
+    "test": "yarn build-or-skip && yarn test-node",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "prebuild": "shx rm -rf ./build",
     "build": "tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "test-node": "node jasmine-testrunner.js",
-    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
-    "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
-    "preget-proto": "shx rm -rf proto",
-    "get-proto": "COSMOS_SDK_REF=v0.42.0 ./scripts/get-proto.sh",
-    "define-proto": "./scripts/define-proto.sh",
-    "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.25.0-alpha.0",
-    "@cosmjs/launchpad": "^0.25.0-alpha.0",
-    "long": "^4.0.0",
-    "protobufjs": "~6.10.2"
-  },
-  "devDependencies": {
     "@cosmjs/encoding": "^0.25.0-alpha.0",
     "@cosmjs/utils": "^0.25.0-alpha.0"
+  },
+  "devDependencies": {
   }
 }

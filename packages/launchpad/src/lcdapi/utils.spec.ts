@@ -1,4 +1,5 @@
-import { PubKey } from "../types";
+import { PubKey } from "@cosmjs/amino";
+
 import { normalizePubkey, uint64ToNumber, uint64ToString } from "./utils";
 
 describe("utils", () => {

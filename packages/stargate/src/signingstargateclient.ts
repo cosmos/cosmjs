@@ -1,9 +1,9 @@
+import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   buildFeeTable,
   Coin,
   CosmosFeeTable,
-  encodeSecp256k1Pubkey,
   GasLimits,
   GasPrice,
   makeSignDoc as makeSignDocAmino,

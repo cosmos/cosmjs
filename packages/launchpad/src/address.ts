@@ -1,7 +1,6 @@
+import { PubKey, pubkeyType } from "@cosmjs/amino";
 import { ripemd160, sha256 } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-
-import { PubKey, pubkeyType } from "./types";
 
 export function rawSecp256k1PubkeyToAddress(pubkeyRaw: Uint8Array, prefix: string): string {
   if (pubkeyRaw.length !== 33) {

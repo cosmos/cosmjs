@@ -1,4 +1,4 @@
-import { PubKey } from "@cosmjs/launchpad";
+import { PubKey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
