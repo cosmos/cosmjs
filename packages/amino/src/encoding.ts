@@ -99,10 +99,10 @@ function encodeUvarint(value: number | string): number[] {
 export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
   if (isMultisigThresholdPubkey(pubkey)) {
     const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
-    out.push(8); // TODO: What is this?
+    out.push(0x08); // TODO: What is this?
     out.push(...encodeUvarint(pubkey.value.threshold));
     for (const pubkeyData of pubkey.value.pubkeys.map((p) => encodeAminoPubkey(p))) {
-      out.push(18); // TODO: What is this?
+      out.push(0x12); // TODO: What is this?
       out.push(...encodeUvarint(pubkeyData.length));
       out.push(...pubkeyData);
     }
