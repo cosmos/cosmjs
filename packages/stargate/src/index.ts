@@ -1,3 +1,5 @@
+export { Coin, coin, coins, parseCoins } from "@cosmjs/proto-signing";
+
 export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoTypes } from "./aminotypes";
 export * as logs from "./logs";
