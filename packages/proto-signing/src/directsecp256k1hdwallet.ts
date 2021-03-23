@@ -1,4 +1,4 @@
-import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
+import { encodeSecp256k1Signature, rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
 import {
   Bip39,
   EnglishMnemonic,
@@ -10,7 +10,6 @@ import {
   Slip10Curve,
 } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-import { encodeSecp256k1Signature } from "@cosmjs/launchpad";
 
 import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { makeCosmoshubPath } from "./paths";
