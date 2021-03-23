@@ -19,7 +19,6 @@ import {
   GasLimits,
   GasPrice,
   makeSignDoc as makeSignDocAmino,
-  StdFee,
 } from "@cosmjs/launchpad";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
@@ -39,6 +38,7 @@ import {
   defaultRegistryTypes,
   isBroadcastTxFailure,
   logs,
+  StdFee,
 } from "@cosmjs/stargate";
 import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
