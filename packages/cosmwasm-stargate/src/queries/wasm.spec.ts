@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { sha256 } from "@cosmjs/crypto";
 import { fromAscii, fromHex, toAscii, toHex } from "@cosmjs/encoding";
-import { Coin, coin, coins, logs, StdFee } from "@cosmjs/launchpad";
+import { StdFee } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
 import {
   assertIsBroadcastTxSuccess,
   BroadcastTxResponse,
-  parseRawLog,
+  Coin,
+  coin,
+  coins,
+  logs,
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { assert, assertDefined } from "@cosmjs/utils";
@@ -392,7 +395,7 @@ describe("WasmExtension", () => {
       {
         const result = await uploadContract(wallet, getHackatom());
         assertIsBroadcastTxSuccess(result);
-        const parsedLogs = logs.parseLogs(parseRawLog(result.rawLog));
+        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
@@ -412,7 +415,7 @@ describe("WasmExtension", () => {
       {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
         assertIsBroadcastTxSuccess(result);
-        const parsedLogs = logs.parseLogs(parseRawLog(result.rawLog));
+        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
@@ -437,7 +440,7 @@ describe("WasmExtension", () => {
       {
         const result = await executeContract(wallet, contractAddress, { release: {} });
         assertIsBroadcastTxSuccess(result);
-        const parsedLogs = logs.parseLogs(parseRawLog(result.rawLog));
+        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const wasmEvent = parsedLogs.find(() => true)?.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");
         expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
