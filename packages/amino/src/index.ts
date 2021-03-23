@@ -19,3 +19,4 @@ export {
   pubkeyType,
 } from "./pubkeys";
 export { createMultisigThresholdPubkey } from "./multisig";
+export { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";

@@ -1,7 +1,6 @@
-import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
+import { encodeSecp256k1Signature, rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
 import { Secp256k1, sha256 } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-import { encodeSecp256k1Signature } from "@cosmjs/launchpad";
 
 import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer";

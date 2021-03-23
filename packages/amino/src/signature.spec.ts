@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64 } from "@cosmjs/encoding";
 
-import { decodeSignature, encodeSecp256k1Signature } from "./signature";
-import { StdSignature } from "./types";
+import { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";
 
 describe("signature", () => {
   describe("encodeSecp256k1Signature", () => {

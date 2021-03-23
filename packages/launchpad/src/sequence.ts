@@ -1,7 +1,7 @@
+import { decodeSignature } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 
 import { makeSignDoc, serializeSignDoc } from "./encoding";
-import { decodeSignature } from "./signature";
 import { WrappedStdTx } from "./tx";
 
 /**

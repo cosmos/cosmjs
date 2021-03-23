@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
-import { coins } from "@cosmjs/launchpad";
 
+import { coins } from "./coins";
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 import { testVectors } from "./testutils.spec";

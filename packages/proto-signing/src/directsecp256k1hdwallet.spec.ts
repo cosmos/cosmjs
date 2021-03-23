@@ -1,7 +1,7 @@
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
-import { coins } from "@cosmjs/launchpad";
 
+import { coins } from "./coins";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 import { faucet, testVectors } from "./testutils.spec";

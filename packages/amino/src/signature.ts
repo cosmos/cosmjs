@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeSecp256k1Pubkey, pubkeyType } from "@cosmjs/amino";
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 
-import { StdSignature } from "./types";
+import { encodeSecp256k1Pubkey } from "./encoding";
+import { Pubkey, pubkeyType } from "./pubkeys";
+
+export interface StdSignature {
+  readonly pub_key: Pubkey;
+  readonly signature: string;
+}
 
 /**
  * Takes a binary pubkey and signature to create a signature object
