@@ -96,12 +96,26 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#defaultregistrytypes" class="tsd-kind-icon">default<wbr>Registry<wbr>Types</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#parserawlog" class="tsd-kind-icon">parse<wbr>Raw<wbr>Log</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#logs" class="tsd-kind-icon">logs</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#setupbankextension" class="tsd-kind-icon">setup<wbr>Bank<wbr>Extension</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#setupdistributionextension" class="tsd-kind-icon">setup<wbr>Distribution<wbr>Extension</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#setupibcextension" class="tsd-kind-icon">setup<wbr>Ibc<wbr>Extension</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#setupstakingextension" class="tsd-kind-icon">setup<wbr>Staking<wbr>Extension</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/index.coin.html" class="tsd-kind-icon">Coin</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#coin-1" class="tsd-kind-icon">coin</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#coins" class="tsd-kind-icon">coins</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#parsecoins" class="tsd-kind-icon">parse<wbr>Coins</a></li>
 							</ul>
 						</section>
 					</div>
@@ -240,9 +254,9 @@
 					Re-exports <a href="stargateclient.html#isbroadcasttxsuccess">isBroadcastTxSuccess</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="parserawlog" class="tsd-anchor"></a>
-					<h3>parse<wbr>Raw<wbr>Log</h3>
-					Re-exports <a href="logs.html#parserawlog">parseRawLog</a>
+					<a name="logs" class="tsd-anchor"></a>
+					<h3>logs</h3>
+					Re-exports <a href="logs.html">logs</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="setupauthextension" class="tsd-anchor"></a>
@@ -268,6 +282,102 @@
 					<a name="setupstakingextension" class="tsd-anchor"></a>
 					<h3>setup<wbr>Staking<wbr>Extension</h3>
 					Re-exports <a href="queries_staking.html#setupstakingextension">setupStakingExtension</a>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="coin-1" class="tsd-anchor"></a>
+					<h3>coin</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">coin<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-signing/build/coins.d.ts:13</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a coin.</p>
+								</div>
+								<p>This is the same as coin from @cosmjs/launchpad but those might diverge in the future.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>denom: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="coins" class="tsd-anchor"></a>
+					<h3>coins</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">coins<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-signing/build/coins.d.ts:19</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a list of coins with one element</p>
+								</div>
+								<p>This is the same as coins from @cosmjs/launchpad but those might diverge in the future.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>denom: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="parsecoins" class="tsd-anchor"></a>
+					<h3>parse<wbr>Coins</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Coins<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-signing/build/coins.d.ts:25</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a coins list like &quot;819966000ucosm,700000000ustake&quot; and parses it</p>
+								</div>
+								<p>This is the same as parseCoins from @cosmjs/launchpad but those might diverge in the future.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -363,7 +473,7 @@
 						<a href="index.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
-						<a href="index.html#parserawlog" class="tsd-kind-icon">parse<wbr>Raw<wbr>Log</a>
+						<a href="index.html#logs" class="tsd-kind-icon">logs</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a>
@@ -379,6 +489,18 @@
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#setupstakingextension" class="tsd-kind-icon">setup<wbr>Staking<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/index.coin.html" class="tsd-kind-icon">Coin</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="index.html#coin-1" class="tsd-kind-icon">coin</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="index.html#coins" class="tsd-kind-icon">coins</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="index.html#parsecoins" class="tsd-kind-icon">parse<wbr>Coins</a>
 					</li>
 				</ul>
 			</nav>
