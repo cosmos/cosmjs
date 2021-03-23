@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { sha256 } from "@cosmjs/crypto";
 import { fromAscii, fromHex, toAscii, toHex } from "@cosmjs/encoding";
-import { StdFee } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
 import {
   assertIsBroadcastTxSuccess,
@@ -11,6 +10,7 @@ import {
   coins,
   logs,
   SigningStargateClient,
+  StdFee,
 } from "@cosmjs/stargate";
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";

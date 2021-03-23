@@ -2,7 +2,6 @@
 import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64 } from "@cosmjs/encoding";
-import { StdFee } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
   DirectSecp256k1HdWallet,
@@ -11,7 +10,7 @@ import {
   makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
-import { assertIsBroadcastTxSuccess, coins, logs } from "@cosmjs/stargate";
+import { assertIsBroadcastTxSuccess, coins, logs, StdFee } from "@cosmjs/stargate";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";

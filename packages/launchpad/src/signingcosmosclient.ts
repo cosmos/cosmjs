@@ -4,12 +4,11 @@ import equals from "fast-deep-equal";
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
-import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { OfflineSigner } from "./signer";
 import { makeStdTx, StdTx } from "./tx";
-import { StdFee } from "./types";
 
 /**
  * These fees are used by the higher level methods of SigningCosmosClient

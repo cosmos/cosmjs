@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
-import { GasPrice, MsgDelegate as LaunchpadMsgDelegate, Secp256k1HdWallet } from "@cosmjs/launchpad";
+import { MsgDelegate as LaunchpadMsgDelegate, Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import protobuf from "protobufjs/minimal";
@@ -9,6 +9,7 @@ import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { DeepPartial, MsgDelegate } from "./codec/cosmos/staking/v1beta1/tx";
 import { Tx } from "./codec/cosmos/tx/v1beta1/tx";
+import { GasPrice } from "./fee";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "./stargateclient";
 import {

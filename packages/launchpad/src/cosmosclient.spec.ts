@@ -4,6 +4,7 @@ import { ReadonlyDate } from "readonly-date";
 
 import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
+import { StdFee } from "./fee";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
 import { Secp256k1HdWallet } from "./secp256k1hdwallet";
@@ -17,7 +18,6 @@ import {
   unused,
 } from "./testutils.spec";
 import { isWrappedStdTx, makeStdTx } from "./tx";
-import { StdFee } from "./types";
 
 const blockTime = 1_000; // ms
 

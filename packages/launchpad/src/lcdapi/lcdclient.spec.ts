@@ -4,6 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { Coin } from "../coins";
 import { isBroadcastTxFailure } from "../cosmosclient";
 import { makeSignDoc } from "../encoding";
+import { StdFee } from "../fee";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
 import { makeCosmoshubPath } from "../paths";
@@ -21,7 +22,6 @@ import {
   unused,
 } from "../testutils.spec";
 import { isWrappedStdTx, makeStdTx, StdTx } from "../tx";
-import { StdFee } from "../types";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
 import { LcdApiArray, LcdClient } from "./lcdclient";

@@ -3,7 +3,7 @@ import { assert } from "@cosmjs/utils";
 
 import { Coin, coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
-import { GasPrice } from "./gas";
+import { GasPrice } from "./fee";
 import { MsgDelegate, MsgSend } from "./msgs";
 import { makeCosmoshubPath } from "./paths";
 import { Secp256k1HdWallet } from "./secp256k1hdwallet";

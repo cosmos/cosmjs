@@ -2,8 +2,8 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
+import { StdFee } from "./fee";
 import { Msg } from "./msgs";
-import { StdFee } from "./types";
 
 function sortedObject(obj: any): any {
   if (typeof obj !== "object" || obj === null) {
