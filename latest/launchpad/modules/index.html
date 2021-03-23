@@ -167,7 +167,6 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#stakingvalidatorsresponse" class="tsd-kind-icon">Staking<wbr>Validators<wbr>Response</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#stdfee" class="tsd-kind-icon">Std<wbr>Fee</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#stdsigndoc" class="tsd-kind-icon">Std<wbr>Sign<wbr>Doc</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#stdsignature" class="tsd-kind-icon">Std<wbr>Signature</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#stdtx" class="tsd-kind-icon">Std<wbr>Tx</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#supplyextension" class="tsd-kind-icon">Supply<wbr>Extension</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#txsresponse" class="tsd-kind-icon">Txs<wbr>Response</a></li>
@@ -177,8 +176,6 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#buildfeetable" class="tsd-kind-icon">build<wbr>Fee<wbr>Table</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#coin-1" class="tsd-kind-icon">coin</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#coins" class="tsd-kind-icon">coins</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#encodesecp256k1signature" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#executekdf" class="tsd-kind-icon">execute<wbr>Kdf</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#extractkdfconfiguration" class="tsd-kind-icon">extract<wbr>Kdf<wbr>Configuration</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="index.html#findsequenceforsignedtx" class="tsd-kind-icon">find<wbr>Sequence<wbr>For<wbr>Signed<wbr>Tx</a></li>
@@ -221,6 +218,12 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/index.stdsignature.html" class="tsd-kind-icon">Std<wbr>Signature</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="index.html#pubkey" class="tsd-kind-icon">Pub<wbr>Key</a></li>
@@ -237,9 +240,11 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#decodeaminopubkey" class="tsd-kind-icon">decode<wbr>Amino<wbr>Pubkey</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#decodebech32pubkey" class="tsd-kind-icon">decode<wbr>Bech32<wbr>Pubkey</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#encodeaminopubkey" class="tsd-kind-icon">encode<wbr>Amino<wbr>Pubkey</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#encodebech32pubkey" class="tsd-kind-icon">encode<wbr>Bech32<wbr>Pubkey</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#encodesecp256k1pubkey" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Pubkey</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#encodesecp256k1signature" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#pubkeytoaddress" class="tsd-kind-icon">pubkey<wbr>ToAddress</a></li>
 							</ul>
 						</section>
@@ -734,11 +739,6 @@
 					Re-exports <a href="../interfaces/encoding.stdsigndoc.html">StdSignDoc</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="stdsignature" class="tsd-anchor"></a>
-					<h3>Std<wbr>Signature</h3>
-					Re-exports <a href="../interfaces/types.stdsignature.html">StdSignature</a>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="stdtx" class="tsd-anchor"></a>
 					<h3>Std<wbr>Tx</h3>
 					Re-exports <a href="../interfaces/tx.stdtx.html">StdTx</a>
@@ -782,16 +782,6 @@
 					<a name="coins" class="tsd-anchor"></a>
 					<h3>coins</h3>
 					Re-exports <a href="coins.html#coins-1">coins</a>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="decodesignature" class="tsd-anchor"></a>
-					<h3>decode<wbr>Signature</h3>
-					Re-exports <a href="signature.html#decodesignature">decodeSignature</a>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="encodesecp256k1signature" class="tsd-anchor"></a>
-					<h3>encode<wbr>Secp256k1<wbr>Signature</h3>
-					Re-exports <a href="signature.html#encodesecp256k1signature">encodeSecp256k1Signature</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="executekdf" class="tsd-anchor"></a>
@@ -997,7 +987,7 @@
 					<div class="tsd-signature tsd-kind-icon">Pub<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SinglePubkey</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e95acc81e/packages/launchpad/src/index.ts#L13">launchpad/src/index.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e61727200/packages/launchpad/src/index.ts#L16">launchpad/src/index.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1123,6 +1113,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="decodesignature" class="tsd-anchor"></a>
+					<h3>decode<wbr>Signature</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">decode<wbr>Signature<span class="tsd-signature-symbol">(</span>signature<span class="tsd-signature-symbol">: </span><a href="../interfaces/index.stdsignature.html" class="tsd-signature-type" data-tsd-kind="Interface">StdSignature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in amino/build/signature.d.ts:13</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>signature: <a href="../interfaces/index.stdsignature.html" class="tsd-signature-type" data-tsd-kind="Interface">StdSignature</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="encodeaminopubkey" class="tsd-anchor"></a>
 					<h3>encode<wbr>Amino<wbr>Pubkey</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -1207,6 +1228,43 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Secp256k1Pubkey</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="encodesecp256k1signature" class="tsd-anchor"></a>
+					<h3>encode<wbr>Secp256k1<wbr>Signature</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature<span class="tsd-signature-symbol">(</span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.stdsignature.html" class="tsd-signature-type" data-tsd-kind="Interface">StdSignature</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in amino/build/signature.d.ts:12</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a binary pubkey and signature to create a signature object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pubkey: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a compressed secp256k1 public key</p>
+									</div>
+								</li>
+								<li>
+									<h5>signature: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a 64 byte fixed length representation of secp256k1 signature components r and s</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.stdsignature.html" class="tsd-signature-type" data-tsd-kind="Interface">StdSignature</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -1543,9 +1601,6 @@
 						<a href="index.html#stdsigndoc" class="tsd-kind-icon">Std<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
-						<a href="index.html#stdsignature" class="tsd-kind-icon">Std<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#stdtx" class="tsd-kind-icon">Std<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
@@ -1571,12 +1626,6 @@
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#coins" class="tsd-kind-icon">coins</a>
-					</li>
-					<li class=" tsd-kind-reference tsd-parent-kind-module">
-						<a href="index.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-reference tsd-parent-kind-module">
-						<a href="index.html#encodesecp256k1signature" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#executekdf" class="tsd-kind-icon">execute<wbr>Kdf</a>
@@ -1695,6 +1744,9 @@
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="index.html#uint64tostring" class="tsd-kind-icon">uint64<wbr>ToString</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/index.stdsignature.html" class="tsd-kind-icon">Std<wbr>Signature</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="index.html#pubkey" class="tsd-kind-icon">Pub<wbr>Key</a>
 					</li>
@@ -1708,6 +1760,9 @@
 						<a href="index.html#decodebech32pubkey" class="tsd-kind-icon">decode<wbr>Bech32<wbr>Pubkey</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="index.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="index.html#encodeaminopubkey" class="tsd-kind-icon">encode<wbr>Amino<wbr>Pubkey</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
@@ -1715,6 +1770,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="index.html#encodesecp256k1pubkey" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Pubkey</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="index.html#encodesecp256k1signature" class="tsd-kind-icon">encode<wbr>Secp256k1<wbr>Signature</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="index.html#pubkeytoaddress" class="tsd-kind-icon">pubkey<wbr>ToAddress</a>
