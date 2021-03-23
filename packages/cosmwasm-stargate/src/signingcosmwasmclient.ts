@@ -13,13 +13,7 @@ import {
 } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
-import {
-  buildFeeTable,
-  CosmosFeeTable,
-  GasLimits,
-  GasPrice,
-  makeSignDoc as makeSignDocAmino,
-} from "@cosmjs/launchpad";
+import { CosmosFeeTable, makeSignDoc as makeSignDocAmino } from "@cosmjs/launchpad";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
   EncodeObject,
@@ -34,8 +28,11 @@ import {
   AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
+  buildFeeTable,
   Coin,
   defaultRegistryTypes,
+  GasLimits,
+  GasPrice,
   isBroadcastTxFailure,
   logs,
   StdFee,
