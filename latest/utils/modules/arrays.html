@@ -71,6 +71,7 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="arrays.html#arraycontentequals" class="tsd-kind-icon">array<wbr>Content<wbr>Equals</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="arrays.html#arraycontentstartswith" class="tsd-kind-icon">array<wbr>Content<wbr>Starts<wbr>With</a></li>
 							</ul>
 						</section>
 					</div>
@@ -88,7 +89,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/utils/src/arrays.ts#L9">arrays.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6aa0e3f93/packages/utils/src/arrays.ts#L9">arrays.ts:9</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -96,6 +97,46 @@
 									<p>Compares the content of two arrays-like objects for equality.</p>
 								</div>
 								<p>Equality is defined as having equal length and element values, where element equality means <code>===</code> returning <code>true</code>.</p>
+								<p>This allows you to compare the content of a Buffer, Uint8Array or number[], ignoring the specific type.
+								As a consequence, this returns different results than Jasmine&#39;s <code>toEqual</code>, which ensures elements have the same type.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>a: <span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>b: <span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="arraycontentstartswith" class="tsd-anchor"></a>
+					<h3>array<wbr>Content<wbr>Starts<wbr>With</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">array<wbr>Content<wbr>Starts<wbr>With&lt;T&gt;<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6aa0e3f93/packages/utils/src/arrays.ts#L28">arrays.ts:28</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if <code>a</code> starts with the contents of <code>b</code>.</p>
+								</div>
+								<p>This requires equality of the element values, where element equality means <code>===</code> returning <code>true</code>.</p>
 								<p>This allows you to compare the content of a Buffer, Uint8Array or number[], ignoring the specific type.
 								As a consequence, this returns different results than Jasmine&#39;s <code>toEqual</code>, which ensures elements have the same type.</p>
 							</div>
@@ -147,6 +188,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="arrays.html#arraycontentequals" class="tsd-kind-icon">array<wbr>Content<wbr>Equals</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="arrays.html#arraycontentstartswith" class="tsd-kind-icon">array<wbr>Content<wbr>Starts<wbr>With</a>
 					</li>
 				</ul>
 			</nav>
