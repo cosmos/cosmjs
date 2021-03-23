@@ -38,6 +38,8 @@ and this project adheres to
 - @cosmjs/proto-signing: Added new `Coin`, `coin`, `coins` and `parseCoins`
   exports which have the same functionality as already existed in
   @cosmjs/launchpad.
+- @cosmjs/stargate: Add `SigningStargateClient.sign`, which allows you to create
+  signed transactions without broadcasting them directly.
 
 ### Changed
 

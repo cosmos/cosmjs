@@ -169,10 +169,26 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const signedTx = isOfflineDirectSigner(this.signer)
-      ? await this.signDirect(signerAddress, messages, fee, memo)
-      : await this.signAmino(signerAddress, messages, fee, memo);
+    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
     return this.broadcastTx(signedTx);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and assembles the signed transaction.
+   *
+   * The sign mode (SIGN_MODE_DIRECT or SIGN_MODE_LEGACY_AMINO_JSON) is determined by this client's signer.
+   */
+  public async sign(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+  ): Promise<TxRaw> {
+    return isOfflineDirectSigner(this.signer)
+      ? this.signDirect(signerAddress, messages, fee, memo)
+      : this.signAmino(signerAddress, messages, fee, memo);
   }
 
   private async signAmino(
@@ -180,7 +196,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-  ): Promise<Uint8Array> {
+  ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
@@ -216,13 +232,11 @@ export class SigningStargateClient extends StargateClient {
       signedSequence,
       signMode,
     );
-    const txRaw = TxRaw.fromPartial({
+    return TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],
     });
-    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-    return signedTx;
   }
 
   private async signDirect(
@@ -230,7 +244,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-  ): Promise<Uint8Array> {
+  ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
@@ -257,11 +271,10 @@ export class SigningStargateClient extends StargateClient {
     const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-    const txRaw = TxRaw.fromPartial({
+    return TxRaw.fromPartial({
       bodyBytes: signed.bodyBytes,
       authInfoBytes: signed.authInfoBytes,
       signatures: [fromBase64(signature.signature)],
     });
-    return Uint8Array.from(TxRaw.encode(txRaw).finish());
   }
 }
