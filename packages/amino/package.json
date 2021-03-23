@@ -42,8 +42,8 @@
   "dependencies": {
     "@cosmjs/crypto": "^0.25.0-alpha.0",
     "@cosmjs/encoding": "^0.25.0-alpha.0",
+    "@cosmjs/math": "^0.25.0-alpha.0",
     "@cosmjs/utils": "^0.25.0-alpha.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
