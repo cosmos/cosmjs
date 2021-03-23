@@ -1,6 +1,8 @@
+import { StdSignature } from "@cosmjs/amino";
+
 import { StdSignDoc } from "./encoding";
 import { Msg } from "./msgs";
-import { StdFee, StdSignature } from "./types";
+import { StdFee } from "./types";
 
 /**
  * A Cosmos SDK StdTx
