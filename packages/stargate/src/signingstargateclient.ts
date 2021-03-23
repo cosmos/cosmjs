@@ -1,13 +1,6 @@
 import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import {
-  buildFeeTable,
-  CosmosFeeTable,
-  GasLimits,
-  GasPrice,
-  makeSignDoc as makeSignDocAmino,
-  StdFee,
-} from "@cosmjs/launchpad";
+import { CosmosFeeTable, makeSignDoc as makeSignDocAmino } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
   EncodeObject,
@@ -63,6 +56,7 @@ import {
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
 } from "./codec/ibc/core/connection/v1/tx";
+import { buildFeeTable, GasLimits, GasPrice, StdFee } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
