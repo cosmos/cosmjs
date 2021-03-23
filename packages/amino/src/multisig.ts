@@ -12,7 +12,9 @@ import { MultisigThresholdPubkey, SinglePubkey } from "./pubkeys";
  * Returns 0 if `a === b`.
  */
 export function compareArrays(a: Uint8Array, b: Uint8Array): number {
-  return toHex(a).localeCompare(toHex(b));
+  const aHex = toHex(a);
+  const bHex = toHex(b);
+  return aHex === bHex ? 0 : aHex < bHex ? -1 : 1;
 }
 
 export function createMultisigThresholdPubkey(
