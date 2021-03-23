@@ -16,6 +16,12 @@ describe("multisig", () => {
       expect(compareArrays(new Uint8Array([5, 5, 5]), new Uint8Array([5, 5]))).toBeGreaterThan(0);
       expect(compareArrays(new Uint8Array([5, 5, 5]), new Uint8Array([5]))).toBeGreaterThan(0);
       expect(compareArrays(new Uint8Array([5, 5, 5]), new Uint8Array([]))).toBeGreaterThan(0);
+
+      // left or right precedence
+      expect(compareArrays(new Uint8Array([5, 5, 4]), new Uint8Array([4, 5, 5]))).toBeGreaterThan(0);
+
+      // magnitude is more important than length
+      expect(compareArrays(new Uint8Array([6]), new Uint8Array([5, 5]))).toBeGreaterThan(0);
     });
 
     it("return < 0 for left < right", () => {
@@ -25,6 +31,12 @@ describe("multisig", () => {
       expect(compareArrays(new Uint8Array([5, 5]), new Uint8Array([5, 5, 5]))).toBeLessThan(0);
       expect(compareArrays(new Uint8Array([5]), new Uint8Array([5, 5, 5]))).toBeLessThan(0);
       expect(compareArrays(new Uint8Array([]), new Uint8Array([5, 5, 5]))).toBeLessThan(0);
+
+      // left or right precedence
+      expect(compareArrays(new Uint8Array([4, 5, 5]), new Uint8Array([5, 5, 4]))).toBeLessThan(0);
+
+      // magnitude is more important than length
+      expect(compareArrays(new Uint8Array([5, 5]), new Uint8Array([6]))).toBeLessThan(0);
     });
 
     it("can be used with sort", () => {
