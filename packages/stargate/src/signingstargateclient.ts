@@ -13,6 +13,7 @@ import {
   Registry,
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { assert } from "@cosmjs/utils";
 
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
@@ -168,6 +169,19 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
+    const signedTx = isOfflineDirectSigner(this.signer)
+      ? await this.signDirect(signerAddress, messages, fee, memo)
+      : await this.signAmino(signerAddress, messages, fee, memo);
+    return this.broadcastTx(signedTx);
+  }
+
+  private async signAmino(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+  ): Promise<Uint8Array> {
+    assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
     );
@@ -181,30 +195,6 @@ export class SigningStargateClient extends StargateClient {
     }
     const { accountNumber, sequence } = accountFromChain;
     const chainId = await this.getChainId();
-    const txBody = {
-      messages: messages,
-      memo: memo,
-    };
-    const txBodyBytes = this.registry.encode({
-      typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: txBody,
-    });
-    const gasLimit = Int53.fromString(fee.gas).toNumber();
-
-    if (isOfflineDirectSigner(this.signer)) {
-      const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
-      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-      const txRaw = TxRaw.fromPartial({
-        bodyBytes: signed.bodyBytes,
-        authInfoBytes: signed.authInfoBytes,
-        signatures: [fromBase64(signature.signature)],
-      });
-      const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-      return this.broadcastTx(signedTx);
-    }
-
-    // Amino signer
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -232,6 +222,46 @@ export class SigningStargateClient extends StargateClient {
       signatures: [fromBase64(signature.signature)],
     });
     const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-    return this.broadcastTx(signedTx);
+    return signedTx;
+  }
+
+  private async signDirect(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+  ): Promise<Uint8Array> {
+    assert(isOfflineDirectSigner(this.signer));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const accountFromChain = await this.getAccountUnverified(signerAddress);
+    if (!accountFromChain) {
+      throw new Error("Account not found");
+    }
+    const { accountNumber, sequence } = accountFromChain;
+    const chainId = await this.getChainId();
+    const txBody = {
+      messages: messages,
+      memo: memo,
+    };
+    const txBodyBytes = this.registry.encode({
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: txBody,
+    });
+    const gasLimit = Int53.fromString(fee.gas).toNumber();
+    const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
+    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+    const txRaw = TxRaw.fromPartial({
+      bodyBytes: signed.bodyBytes,
+      authInfoBytes: signed.authInfoBytes,
+      signatures: [fromBase64(signature.signature)],
+    });
+    return Uint8Array.from(TxRaw.encode(txRaw).finish());
   }
 }
