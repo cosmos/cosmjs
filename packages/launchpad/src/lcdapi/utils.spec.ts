@@ -88,7 +88,7 @@ describe("utils", () => {
         type: "tendermint/PubKeySecp256k1",
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       };
-      expect(original).toEqual(original);
+      expect(normalizePubkey(original)).toEqual(original);
     });
   });
 });
