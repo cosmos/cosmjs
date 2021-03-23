@@ -21,7 +21,7 @@ import {
 
 describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {
-    it("encodes a compresed pubkey", () => {
+    it("encodes a compressed pubkey", () => {
       const pubkey = fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP");
       expect(encodeSecp256k1Pubkey(pubkey)).toEqual({
         type: "tendermint/PubKeySecp256k1",

@@ -60,7 +60,7 @@ describe("multisig", () => {
       expect(createMultisigThresholdPubkey([test3, test1], 2, true)).toEqual(testgroup4);
     });
 
-    it("throws for threshold lager than number of keys", () => {
+    it("throws for threshold larger than number of keys", () => {
       expect(() => createMultisigThresholdPubkey([test1, test2, test3], 5)).toThrowError(
         /threshold k = 5 exceeds number of keys n = 3/i,
       );
