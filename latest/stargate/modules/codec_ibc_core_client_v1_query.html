@@ -1,0 +1,1751 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>codec/ibc/core/client/v1/query | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@cosmjs/stargate Documentation</a>
+				</li>
+				<li>
+					<a href="codec_ibc_core_client_v1_query.html">codec/ibc/core/client/v1/query</a>
+				</li>
+			</ul>
+			<h1>Module codec/ibc/core/client/v1/query</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/codec_ibc_core_client_v1_query.queryclientimpl.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Impl</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.query.html" class="tsd-kind-icon">Query</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientparamsrequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Request</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientparamsresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Response</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstaterequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Request</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstateresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Response</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstatesrequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Request</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstatesresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Response</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstaterequest.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Request</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstateresponse.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Response</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstatesrequest.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Request</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstatesresponse.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Response</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="codec_ibc_core_client_v1_query.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Request</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Response</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Request</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Response</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Request</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Response</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Request</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Response</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Request</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Response</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="codec_ibc_core_client_v1_query.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="deeppartial" class="tsd-anchor"></a>
+					<h3>Deep<wbr>Partial</h3>
+					<div class="tsd-signature tsd-kind-icon">Deep<wbr>Partial&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Builtin</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">infer </span> U<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> ? </span><a href="codec_ibc_core_client_v1_query.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> U<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><a href="codec_ibc_core_client_v1_query.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#deeppartial" class="tsd-signature-type" data-tsd-kind="Type alias">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L945">codec/ibc/core/client/v1/query.ts:945</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientparamsrequest-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>Params<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L762">codec/ibc/core/client/v1/query.ts:762</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L767">codec/ibc/core/client/v1/query.ts:767</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>_<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L763">codec/ibc/core/client/v1/query.ts:763</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>_: <a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>_<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L782">codec/ibc/core/client/v1/query.ts:782</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>_: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>_<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L792">codec/ibc/core/client/v1/query.ts:792</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>_: <span class="tsd-signature-symbol">{}</span></h5>
+												<ul class="tsd-parameters">
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>_<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L787">codec/ibc/core/client/v1/query.ts:787</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>_: <a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientparamsresponse-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>Params<wbr>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L800">codec/ibc/core/client/v1/query.ts:800</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L808">codec/ibc/core/client/v1/query.ts:808</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L801">codec/ibc/core/client/v1/query.ts:801</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L826">codec/ibc/core/client/v1/query.ts:826</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ allowedClients?: string[] | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L842">codec/ibc/core/client/v1/query.ts:842</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ allowedClients?: string[] | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ allowedClients?: string[] | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>params defines the parameters of the module.</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L836">codec/ibc/core/client/v1/query.ts:836</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientParamsResponse</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientstaterequest-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>State<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L123">codec/ibc/core/client/v1/query.ts:123</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L131">codec/ibc/core/client/v1/query.ts:131</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L124">codec/ibc/core/client/v1/query.ts:124</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L149">codec/ibc/core/client/v1/query.ts:149</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L165">codec/ibc/core/client/v1/query.ts:165</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> client<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>client state unique identifier</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L159">codec/ibc/core/client/v1/query.ts:159</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientstateresponse-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>State<wbr>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L178">codec/ibc/core/client/v1/query.ts:178</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L192">codec/ibc/core/client/v1/query.ts:192</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L179">codec/ibc/core/client/v1/query.ts:179</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L216">codec/ibc/core/client/v1/query.ts:216</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clientState<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proofHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L245">codec/ibc/core/client/v1/query.ts:245</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>clientState<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proofHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> client<wbr>State<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>client state associated with the request identifier</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>merkle proof of existence</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<wbr>Height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>height at which the proof was retrieved</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L234">codec/ibc/core/client/v1/query.ts:234</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStateResponse</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientstatesrequest-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>States<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L268">codec/ibc/core/client/v1/query.ts:268</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L276">codec/ibc/core/client/v1/query.ts:276</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L269">codec/ibc/core/client/v1/query.ts:269</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L294">codec/ibc/core/client/v1/query.ts:294</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L311">codec/ibc/core/client/v1/query.ts:311</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>pagination request</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L304">codec/ibc/core/client/v1/query.ts:304</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryclientstatesresponse-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Client<wbr>States<wbr>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L324">codec/ibc/core/client/v1/query.ts:324</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L335">codec/ibc/core/client/v1/query.ts:335</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L325">codec/ibc/core/client/v1/query.ts:325</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L357">codec/ibc/core/client/v1/query.ts:357</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clientStates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ clientId?: string | undefined; clientState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L385">codec/ibc/core/client/v1/query.ts:385</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>clientStates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ clientId?: string | undefined; clientState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> client<wbr>States<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ clientId?: string | undefined; clientState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>list of stored ClientStates of the chain.</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>pagination response</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L373">codec/ibc/core/client/v1/query.ts:373</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryClientStatesResponse</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryconsensusstaterequest-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Consensus<wbr>State<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L409">codec/ibc/core/client/v1/query.ts:409</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L426">codec/ibc/core/client/v1/query.ts:426</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L410">codec/ibc/core/client/v1/query.ts:410</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L453">codec/ibc/core/client/v1/query.ts:453</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>latestHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>revisionHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>revisionNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L489">codec/ibc/core/client/v1/query.ts:489</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>latestHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>revisionHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">; </span>revisionNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> client<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>client identifier</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> latest<wbr>Height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>latest_height overrrides the height field and queries the latest stored
+																ConsensusState</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> revision<wbr>Height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus state revision height</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> revision<wbr>Number<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Long</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus state revision number</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L478">codec/ibc/core/client/v1/query.ts:478</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryconsensusstateresponse-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Consensus<wbr>State<wbr>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L517">codec/ibc/core/client/v1/query.ts:517</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L531">codec/ibc/core/client/v1/query.ts:531</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L518">codec/ibc/core/client/v1/query.ts:518</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L555">codec/ibc/core/client/v1/query.ts:555</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>consensusState<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proofHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L584">codec/ibc/core/client/v1/query.ts:584</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>consensusState<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span><span class="tsd-signature-symbol">; </span>proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span>proofHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> consensus<wbr>State<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ typeUrl?: string | undefined; value?: Uint8Array | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus state associated with the client identifier at the given height</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>merkle proof of existence</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> proof<wbr>Height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>height at which the proof was retrieved</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L573">codec/ibc/core/client/v1/query.ts:573</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStateResponse</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryconsensusstatesrequest-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Consensus<wbr>States<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L607">codec/ibc/core/client/v1/query.ts:607</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L618">codec/ibc/core/client/v1/query.ts:618</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L608">codec/ibc/core/client/v1/query.ts:608</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L639">codec/ibc/core/client/v1/query.ts:639</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L662">codec/ibc/core/client/v1/query.ts:662</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>clientId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> client<wbr>Id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>client identifier</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ key?: Uint8Array | undefined; offset?: Long | undefined; limit?: Long | undefined; countTotal?: boolean | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>pagination request</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L654">codec/ibc/core/client/v1/query.ts:654</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="queryconsensusstatesresponse-1" class="tsd-anchor"></a>
+					<h3>Query<wbr>Consensus<wbr>States<wbr>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>fromPartial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>toJSON<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L680">codec/ibc/core/client/v1/query.ts:680</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>decode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L691">codec/ibc/core/client/v1/query.ts:691</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>input: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Reader</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>encode<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a>, writer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writer</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L681">codec/ibc/core/client/v1/query.ts:681</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></h5>
+											</li>
+											<li>
+												<h5>writer: <span class="tsd-signature-type">Writer</span><span class="tsd-signature-symbol"> = ...</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writer</span></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>fromJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L713">codec/ibc/core/client/v1/query.ts:713</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>from<wbr>Partial<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">from<wbr>Partial<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>consensusStates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: { revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; } | undefined; consensusState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L743">codec/ibc/core/client/v1/query.ts:743</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>object: <span class="tsd-signature-symbol">{ </span>consensusStates<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: { revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; } | undefined; consensusState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span><span class="tsd-signature-symbol"> }</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> consensus<wbr>States<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ height?: { revisionNumber?: Long | undefined; revisionHeight?: Long | undefined; } | undefined; consensusState?: { typeUrl?: string | undefined; value?: Uint8Array | undefined; } | undefined; }</span><span class="tsd-signature-symbol">[]</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>consensus states associated with the identifier</p>
+															</div>
+														</div>
+													</li>
+													<li class="tsd-parameter">
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> pagination<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">{ nextKey?: Uint8Array | undefined; total?: Long | undefined; }</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<div class="lead">
+																<p>pagination response</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></h4>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5>toJSON<span class="tsd-signature-symbol">: </span>function</h5>
+								<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-type-literal">
+									<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L729">codec/ibc/core/client/v1/query.ts:729</a></li>
+											</ul>
+										</aside>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>message: <a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryConsensusStatesResponse</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="protobufpackage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> protobuf<wbr>Package</h3>
+					<div class="tsd-signature tsd-kind-icon">protobuf<wbr>Package<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ibc.core.client.v1&quot;</span><span class="tsd-signature-symbol"> = &quot;ibc.core.client.v1&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9a8782614/packages/stargate/src/codec/ibc/core/client/v1/query.ts#L13">codec/ibc/core/client/v1/query.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html">codec/ibc/core/client/v1/query</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/codec_ibc_core_client_v1_query.queryclientimpl.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Impl</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.query.html" class="tsd-kind-icon">Query</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientparamsrequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientparamsresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstaterequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstateresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstatesrequest.html" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryclientstatesresponse.html" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstaterequest.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstateresponse.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstatesrequest.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/codec_ibc_core_client_v1_query.queryconsensusstatesresponse.html" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="codec_ibc_core_client_v1_query.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientparamsrequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientparamsresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>Params<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientstaterequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientstateresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientstatesrequest-1" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryclientstatesresponse-1" class="tsd-kind-icon">Query<wbr>Client<wbr>States<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryconsensusstaterequest-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryconsensusstateresponse-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesrequest-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#queryconsensusstatesresponse-1" class="tsd-kind-icon">Query<wbr>Consensus<wbr>States<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="codec_ibc_core_client_v1_query.html#protobufpackage" class="tsd-kind-icon">protobuf<wbr>Package</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
