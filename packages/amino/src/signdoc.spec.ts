@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { coin, coins } from "./coins";
-import { makeSignDoc, sortedJsonStringify } from "./encoding";
-import { MsgDelegate, MsgSend } from "./msgs";
-import { faucet, launchpad, makeRandomAddress } from "./testutils.spec";
+import { Random } from "@cosmjs/crypto";
+import { Bech32 } from "@cosmjs/encoding";
+
+import { AminoMsg, makeSignDoc, sortedJsonStringify } from "./signdoc";
+
+function makeRandomAddress(): string {
+  return Bech32.encode("cosmos", Random.getBytes(20));
+}
+const testAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
+const testValidatorAddress = "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr";
 
 describe("encoding", () => {
   describe("sortedJsonStringify", () => {
@@ -55,24 +61,24 @@ describe("encoding", () => {
   describe("makeSignDoc", () => {
     it("works", () => {
       const chainId = "testspace-12";
-      const msg1: MsgDelegate = {
+      const msg1: AminoMsg = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address0,
-          validator_address: launchpad.validator.address,
-          amount: coin(1234, "ustake"),
+          delegator_address: testAddress,
+          validator_address: testValidatorAddress,
+          amount: { amount: "1234", denom: "ustake" },
         },
       };
-      const msg2: MsgSend = {
+      const msg2: AminoMsg = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address0,
+          from_address: testAddress,
           to_address: makeRandomAddress(),
-          amount: coins(1234567, "ucosm"),
+          amount: [{ amount: "1234567", denom: "ucosm" }],
         },
       };
       const fee = {
-        amount: coins(2000, "ucosm"),
+        amount: [{ amount: "2000", denom: "ucosm" }],
         gas: "180000", // 180k
       };
       const memo = "Use your power wisely";
@@ -92,24 +98,24 @@ describe("encoding", () => {
 
     it("works with undefined memo", () => {
       const chainId = "testspace-12";
-      const msg1: MsgDelegate = {
+      const msg1: AminoMsg = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address0,
-          validator_address: launchpad.validator.address,
-          amount: coin(1234, "ustake"),
+          delegator_address: testAddress,
+          validator_address: testValidatorAddress,
+          amount: { amount: "1234", denom: "ustake" },
         },
       };
-      const msg2: MsgSend = {
+      const msg2: AminoMsg = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address0,
+          from_address: testAddress,
           to_address: makeRandomAddress(),
-          amount: coins(1234567, "ucosm"),
+          amount: [{ amount: "1234567", denom: "ucosm" }],
         },
       };
       const fee = {
-        amount: coins(2000, "ucosm"),
+        amount: [{ amount: "2000", denom: "ucosm" }],
         gas: "180000", // 180k
       };
       const accountNumber = 15;

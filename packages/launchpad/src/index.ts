@@ -1,5 +1,14 @@
 // Re-exports for backwards compatibility
 export {
+  AccountData,
+  Algo,
+  AminoMsg as Msg,
+  AminoSignResponse,
+  Coin,
+  OfflineAminoSigner as OfflineSigner,
+  StdFee,
+  StdSignDoc,
+  StdSignature,
   decodeAminoPubkey,
   decodeBech32Pubkey,
   decodeSignature,
@@ -7,9 +16,10 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
   encodeSecp256k1Signature,
+  makeSignDoc,
   pubkeyToAddress,
   pubkeyType,
-  StdSignature,
+  serializeSignDoc,
 } from "@cosmjs/amino";
 import { SinglePubkey } from "@cosmjs/amino";
 /** @deprecated PubKey is deprecated. Use `SinglePubkey` or the more general `Pubkey` from `@cosmjs/amino`. */
@@ -18,8 +28,7 @@ export type PubKey = SinglePubkey;
 import * as logs from "./logs";
 export { logs };
 
-export { Coin, coin, coins, parseCoins } from "./coins";
-
+export { coin, coins, parseCoins } from "./coins";
 export {
   Account,
   assertIsBroadcastTxSuccess,
@@ -42,8 +51,7 @@ export {
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
-export { makeSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
-export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 export {
   AuthAccountsResponse,
   AuthExtension,
@@ -127,7 +135,6 @@ export {
   isMsgUndelegate,
   isMsgWithdrawDelegatorReward,
   isMsgWithdrawValidatorCommission,
-  Msg,
   MsgBeginRedelegate,
   MsgCreateValidator,
   MsgDelegate,
@@ -142,7 +149,6 @@ export {
 } from "./msgs";
 export { makeCosmoshubPath } from "./paths";
 export { findSequenceForSignedTx } from "./sequence";
-export { AccountData, Algo, AminoSignResponse, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
 export { executeKdf, KdfConfiguration } from "./wallet";

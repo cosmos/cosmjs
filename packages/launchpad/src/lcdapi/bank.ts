@@ -1,4 +1,5 @@
-import { Coin } from "../coins";
+import { Coin } from "@cosmjs/amino";
+
 import { LcdClient } from "./lcdclient";
 
 export interface BankBalancesResponse {

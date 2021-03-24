@@ -20,3 +20,5 @@ export {
 } from "./pubkeys";
 export { createMultisigThresholdPubkey } from "./multisig";
 export { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";
+export { AminoMsg, Coin, makeSignDoc, serializeSignDoc, StdFee, StdSignDoc } from "./signdoc";
+export { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";

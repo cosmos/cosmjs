@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { AminoMsg, Coin, makeSignDoc, OfflineAminoSigner, StdFee } from "@cosmjs/amino";
 import equals from "fast-deep-equal";
 
-import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
-import { makeSignDoc } from "./encoding";
-import { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastMode } from "./lcdapi";
-import { Msg, MsgSend } from "./msgs";
-import { OfflineSigner } from "./signer";
+import { MsgSend } from "./msgs";
 import { makeStdTx, StdTx } from "./tx";
 
 /**
@@ -29,7 +27,7 @@ export class SigningCosmosClient extends CosmosClient {
   public readonly fees: CosmosFeeTable;
   public readonly signerAddress: string;
 
-  private readonly signer: OfflineSigner;
+  private readonly signer: OfflineAminoSigner;
 
   /**
    * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.
@@ -39,7 +37,7 @@ export class SigningCosmosClient extends CosmosClient {
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param signerAddress The address that will sign transactions using this instance. The `signer` must be able to sign with this address.
-   * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
+   * @param signer An implementation of OfflineAminoSigner which can provide signatures for transactions, potentially requiring user input.
    * @param gasPrice The price paid per unit of gas
    * @param gasLimits Custom overrides for gas limits related to specific transaction types
    * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
@@ -47,7 +45,7 @@ export class SigningCosmosClient extends CosmosClient {
   public constructor(
     apiUrl: string,
     signerAddress: string,
-    signer: OfflineSigner,
+    signer: OfflineAminoSigner,
     gasPrice: GasPrice = defaultGasPrice,
     gasLimits: Partial<GasLimits<CosmosFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
@@ -87,7 +85,11 @@ export class SigningCosmosClient extends CosmosClient {
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
+  public async signAndBroadcast(
+    msgs: readonly AminoMsg[],
+    fee: StdFee,
+    memo = "",
+  ): Promise<BroadcastTxResult> {
     const signedTx = await this.sign(msgs, fee, memo);
     return this.broadcastTx(signedTx);
   }
@@ -96,7 +98,7 @@ export class SigningCosmosClient extends CosmosClient {
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature and assembles the signed transaction.
    */
-  public async sign(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<StdTx> {
+  public async sign(msgs: readonly AminoMsg[], fee: StdFee, memo = ""): Promise<StdTx> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);

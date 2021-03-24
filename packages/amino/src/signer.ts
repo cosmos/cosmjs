@@ -1,6 +1,5 @@
-import { StdSignature } from "@cosmjs/amino";
-
-import { StdSignDoc } from "./encoding";
+import { StdSignature } from "./signature";
+import { StdSignDoc } from "./signdoc";
 
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
 
@@ -20,7 +19,7 @@ export interface AminoSignResponse {
   readonly signature: StdSignature;
 }
 
-export interface OfflineSigner {
+export interface OfflineAminoSigner {
   /**
    * Get AccountData array from wallet. Rejects if not enabled.
    */

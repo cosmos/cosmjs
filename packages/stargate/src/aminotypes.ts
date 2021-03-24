@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
+import { AminoMsg, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
-  Msg,
   MsgBeginRedelegate as LaunchpadMsgBeginRedelegate,
   MsgCreateValidator as LaunchpadMsgCreateValidator,
   MsgDelegate as LaunchpadMsgDelegate,
@@ -416,7 +415,7 @@ export class AminoTypes {
     this.register = { ...filteredDefaultTypes, ...additions };
   }
 
-  public toAmino({ typeUrl, value }: EncodeObject): Msg {
+  public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
     const converter = this.register[typeUrl];
     if (!converter) {
       throw new Error(
@@ -431,7 +430,7 @@ export class AminoTypes {
     };
   }
 
-  public fromAmino({ type, value }: Msg): EncodeObject {
+  public fromAmino({ type, value }: AminoMsg): EncodeObject {
     const result = Object.entries(this.register).find(([_typeUrl, { aminoType }]) => aminoType === type);
     if (!result) {
       throw new Error(

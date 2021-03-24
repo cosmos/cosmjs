@@ -1,6 +1,6 @@
-import { encodeSecp256k1Pubkey } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import { CosmosFeeTable, makeSignDoc as makeSignDocAmino } from "@cosmjs/launchpad";
+import { CosmosFeeTable } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
   EncodeObject,
