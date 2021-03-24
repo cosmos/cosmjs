@@ -4,9 +4,8 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { serializeSignDoc, StdSignDoc } from "./signdoc";
+import { base64Matcher } from "./testutils.spec";
 import { executeKdf, KdfConfiguration } from "./wallet";
-
-const base64Matcher = /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;
 
 describe("Secp256k1HdWallet", () => {
   // m/44'/118'/0'/0/0
