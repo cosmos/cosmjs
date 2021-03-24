@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { StdSignature } from "./signature";
 import { StdSignDoc } from "./signdoc";
 
