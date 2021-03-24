@@ -127,19 +127,19 @@ describe("SigningStargateClient multisig", () => {
     const {
       bodyBytes,
       signatures: [signature0],
-    } = await client0.signAmino(faucet.address0, [msg], fee, memo, signerData);
+    } = await client0.sign(faucet.address0, [msg], fee, memo, signerData);
     const {
       signatures: [signature1],
-    } = await client1.signAmino(faucet.address1, [msg], fee, memo, signerData);
+    } = await client1.sign(faucet.address1, [msg], fee, memo, signerData);
     const {
       signatures: [signature2],
-    } = await client2.signAmino(faucet.address2, [msg], fee, memo, signerData);
+    } = await client2.sign(faucet.address2, [msg], fee, memo, signerData);
     const {
       signatures: [signature3],
-    } = await client3.signAmino(faucet.address3, [msg], fee, memo, signerData);
+    } = await client3.sign(faucet.address3, [msg], fee, memo, signerData);
     const {
       signatures: [signature4],
-    } = await client4.signAmino(faucet.address4, [msg], fee, memo, signerData);
+    } = await client4.sign(faucet.address4, [msg], fee, memo, signerData);
 
     const signatures = new Map<string, Uint8Array>([
       [address0, signature0],

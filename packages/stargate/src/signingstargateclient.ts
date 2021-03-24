@@ -190,27 +190,37 @@ export class SigningStargateClient extends StargateClient {
    * creates a single signature and assembles the signed transaction.
    *
    * The sign mode (SIGN_MODE_DIRECT or SIGN_MODE_LEGACY_AMINO_JSON) is determined by this client's signer.
+   *
+   * You can pass signer data (account number, sequence and chain ID) explicitly instead of querying them
+   * from the chain. This is needed when signing for a multisig account, but it also allows for offline signing
+   * (which probably fails right now because in other places SigningStargateClient assumes you are online).
    */
   public async sign(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    explicitSignerData?: SignerData,
   ): Promise<TxRaw> {
-    const accountFromChain = await this.getAccountUnverified(signerAddress);
-    if (!accountFromChain) {
-      throw new Error("Account not found");
+    let signerData: SignerData;
+    if (explicitSignerData) {
+      signerData = explicitSignerData;
+    } else {
+      const accountFromChain = await this.getAccountUnverified(signerAddress);
+      if (!accountFromChain) {
+        throw new Error("Account not found");
+      }
+      const { accountNumber, sequence } = accountFromChain;
+      const chainId = await this.getChainId();
+      signerData = { accountNumber, sequence, chainId };
     }
-    const { accountNumber, sequence } = accountFromChain;
-    const chainId = await this.getChainId();
-    const signerData: SignerData = { accountNumber, sequence, chainId };
 
     return isOfflineDirectSigner(this.signer)
       ? this.signDirect(signerAddress, messages, fee, memo, signerData)
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
   }
 
-  public async signAmino(
+  private async signAmino(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
@@ -253,7 +263,7 @@ export class SigningStargateClient extends StargateClient {
     });
   }
 
-  public async signDirect(
+  private async signDirect(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
