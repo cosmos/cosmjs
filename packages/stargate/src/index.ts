@@ -34,6 +34,7 @@ export {
 } from "./stargateclient";
 export {
   defaultRegistryTypes,
+  SignerData,
   SigningStargateClient,
   SigningStargateClientOptions,
 } from "./signingstargateclient";

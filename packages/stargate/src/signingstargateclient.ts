@@ -98,7 +98,12 @@ function createDefaultRegistry(): Registry {
   return new Registry(defaultRegistryTypes);
 }
 
-export interface SignData {
+/**
+ * Signing information for a single signer that is not included in the transaction.
+ *
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.42.2/x/auth/signing/sign_mode_handler.go#L23-L37
+ */
+export interface SignerData {
   readonly accountNumber: number;
   readonly sequence: number;
   readonly chainId: string;
@@ -198,11 +203,11 @@ export class SigningStargateClient extends StargateClient {
     }
     const { accountNumber, sequence } = accountFromChain;
     const chainId = await this.getChainId();
-    const signData: SignData = { accountNumber, sequence, chainId };
+    const signerData: SignerData = { accountNumber, sequence, chainId };
 
     return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo, signData)
-      : this.signAmino(signerAddress, messages, fee, memo, signData);
+      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
+      : this.signAmino(signerAddress, messages, fee, memo, signerData);
   }
 
   public async signAmino(
@@ -210,7 +215,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-    { accountNumber, sequence, chainId }: SignData,
+    { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -253,7 +258,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-    { accountNumber, sequence, chainId }: SignData,
+    { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(

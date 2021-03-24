@@ -16,7 +16,7 @@ import { CompactBitArray } from "./codec/cosmos/crypto/multisig/v1beta1/multisig
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignerInfo, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { StdFee } from "./fee";
-import { SigningStargateClient } from "./signingstargateclient";
+import { SignerData, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "./stargateclient";
 import { faucet, simapp } from "./testutils.spec";
 
@@ -118,7 +118,7 @@ describe("SigningStargateClient multisig", () => {
 
     const multisigAccount = await client0.getAccount(multisigAddress);
     assert(multisigAccount, "Account does not exist on chain");
-    const signData = {
+    const signerData: SignerData = {
       accountNumber: multisigAccount.accountNumber,
       sequence: multisigAccount.sequence,
       chainId: await client0.getChainId(),
@@ -127,19 +127,19 @@ describe("SigningStargateClient multisig", () => {
     const {
       bodyBytes,
       signatures: [signature0],
-    } = await client0.signAmino(faucet.address0, [msg], fee, memo, signData);
+    } = await client0.signAmino(faucet.address0, [msg], fee, memo, signerData);
     const {
       signatures: [signature1],
-    } = await client1.signAmino(faucet.address1, [msg], fee, memo, signData);
+    } = await client1.signAmino(faucet.address1, [msg], fee, memo, signerData);
     const {
       signatures: [signature2],
-    } = await client2.signAmino(faucet.address2, [msg], fee, memo, signData);
+    } = await client2.signAmino(faucet.address2, [msg], fee, memo, signerData);
     const {
       signatures: [signature3],
-    } = await client3.signAmino(faucet.address3, [msg], fee, memo, signData);
+    } = await client3.signAmino(faucet.address3, [msg], fee, memo, signerData);
     const {
       signatures: [signature4],
-    } = await client4.signAmino(faucet.address4, [msg], fee, memo, signData);
+    } = await client4.signAmino(faucet.address4, [msg], fee, memo, signerData);
 
     const signatures = new Map<string, Uint8Array>([
       [address0, signature0],
