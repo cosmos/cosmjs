@@ -1,9 +1,5 @@
+import { Coin } from "@cosmjs/amino";
 import { Uint53, Uint64 } from "@cosmjs/math";
-
-export interface Coin {
-  readonly denom: string;
-  readonly amount: string;
-}
 
 /** Creates a coin */
 export function coin(amount: number, denom: string): Coin {

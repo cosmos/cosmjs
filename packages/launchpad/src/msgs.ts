@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg } from "@cosmjs/amino";
-
-import { Coin } from "./coins";
+import { AminoMsg, Coin } from "@cosmjs/amino";
 
 // auth (no messages) - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/auth/auth.proto
 

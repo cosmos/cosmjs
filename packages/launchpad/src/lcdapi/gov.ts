@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin } from "../coins";
+import { Coin } from "@cosmjs/amino";
+
 import { LcdClient } from "./lcdclient";
 
 export enum GovParametersType {

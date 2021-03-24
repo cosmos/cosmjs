@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, StdSignDoc } from "@cosmjs/amino";
+import { AminoMsg, StdFee, StdSignDoc } from "@cosmjs/amino";
 import { toUtf8 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-
-import { StdFee } from "./fee";
 
 function sortedObject(obj: any): any {
   if (typeof obj !== "object" || obj === null) {

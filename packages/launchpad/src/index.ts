@@ -4,7 +4,9 @@ export {
   Algo,
   AminoMsg as Msg,
   AminoSignResponse,
+  Coin,
   OfflineAminoSigner as OfflineSigner,
+  StdFee,
   StdSignDoc,
   StdSignature,
   decodeAminoPubkey,
@@ -24,8 +26,7 @@ export type PubKey = SinglePubkey;
 import * as logs from "./logs";
 export { logs };
 
-export { Coin, coin, coins, parseCoins } from "./coins";
-
+export { coin, coins, parseCoins } from "./coins";
 export {
   Account,
   assertIsBroadcastTxSuccess,
@@ -49,7 +50,7 @@ export {
   isSearchByTagsQuery,
 } from "./cosmosclient";
 export { makeSignDoc, serializeSignDoc } from "./encoding";
-export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 export {
   AuthAccountsResponse,
   AuthExtension,

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Coin } from "@cosmjs/amino";
 import { assert } from "@cosmjs/utils";
 
-import { Coin, coin, coins } from "./coins";
+import { coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./fee";
 import { MsgDelegate, MsgSend } from "./msgs";
