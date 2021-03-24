@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import {
-  MsgBeginRedelegate as LaunchpadMsgBeginRedelegate,
-  MsgCreateValidator as LaunchpadMsgCreateValidator,
-  MsgDelegate as LaunchpadMsgDelegate,
-  MsgEditValidator as LaunchpadMsgEditValidator,
-  MsgFundCommunityPool as LaunchpadMsgFundCommunityPool,
-  MsgMultiSend as LaunchpadMsgMultiSend,
-  MsgSend as LaunchpadMsgSend,
-  MsgSetWithdrawAddress as LaunchpadMsgSetWithdrawAddress,
-  MsgUndelegate as LaunchpadMsgUndelegate,
-  MsgWithdrawDelegatorReward as LaunchpadMsgWithdrawDelegatorReward,
-  MsgWithdrawValidatorCommission as LaunchpadMsgWithdrawValidatorCommission,
-} from "@cosmjs/launchpad";
 import { coin, coins } from "@cosmjs/proto-signing";
 
+import {
+  AminoMsgBeginRedelegate,
+  AminoMsgCreateValidator,
+  AminoMsgDelegate,
+  AminoMsgEditValidator,
+  AminoMsgFundCommunityPool,
+  AminoMsgMultiSend,
+  AminoMsgSend,
+  AminoMsgSetWithdrawAddress,
+  AminoMsgUndelegate,
+  AminoMsgWithdrawDelegatorReward,
+  AminoMsgWithdrawValidatorCommission,
+} from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend, MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import {
@@ -44,7 +44,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.bank.v1beta1.MsgSend",
         value: msg,
       });
-      const expected: LaunchpadMsgSend = {
+      const expected: AminoMsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -70,7 +70,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
         value: msg,
       });
-      const expected: LaunchpadMsgMultiSend = {
+      const expected: AminoMsgMultiSend = {
         type: "cosmos-sdk/MsgMultiSend",
         value: {
           inputs: [
@@ -95,7 +95,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
         value: msg,
       });
-      const expected: LaunchpadMsgFundCommunityPool = {
+      const expected: AminoMsgFundCommunityPool = {
         type: "cosmos-sdk/MsgFundCommunityPool",
         value: {
           amount: coins(1234, "ucosm"),
@@ -114,7 +114,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
         value: msg,
       });
-      const expected: LaunchpadMsgSetWithdrawAddress = {
+      const expected: AminoMsgSetWithdrawAddress = {
         type: "cosmos-sdk/MsgModifyWithdrawAddress",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -133,7 +133,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
         value: msg,
       });
-      const expected: LaunchpadMsgWithdrawDelegatorReward = {
+      const expected: AminoMsgWithdrawDelegatorReward = {
         type: "cosmos-sdk/MsgWithdrawDelegationReward",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -151,7 +151,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
         value: msg,
       });
-      const expected: LaunchpadMsgWithdrawValidatorCommission = {
+      const expected: AminoMsgWithdrawValidatorCommission = {
         type: "cosmos-sdk/MsgWithdrawValidatorCommission",
         value: {
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -171,7 +171,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
         value: msg,
       });
-      const expected: LaunchpadMsgBeginRedelegate = {
+      const expected: AminoMsgBeginRedelegate = {
         type: "cosmos-sdk/MsgBeginRedelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -210,7 +210,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
         value: msg,
       });
-      const expected: LaunchpadMsgCreateValidator = {
+      const expected: AminoMsgCreateValidator = {
         type: "cosmos-sdk/MsgCreateValidator",
         value: {
           description: {
@@ -248,7 +248,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: msg,
       });
-      const expected: LaunchpadMsgDelegate = {
+      const expected: AminoMsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -276,7 +276,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
         value: msg,
       });
-      const expected: LaunchpadMsgEditValidator = {
+      const expected: AminoMsgEditValidator = {
         type: "cosmos-sdk/MsgEditValidator",
         value: {
           description: {
@@ -304,7 +304,7 @@ describe("AminoTypes", () => {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value: msg,
       });
-      const expected: LaunchpadMsgUndelegate = {
+      const expected: AminoMsgUndelegate = {
         type: "cosmos-sdk/MsgUndelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -382,7 +382,7 @@ describe("AminoTypes", () => {
 
   describe("fromAmino", () => {
     it("works for MsgSend", () => {
-      const aminoMsg: LaunchpadMsgSend = {
+      const aminoMsg: AminoMsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -403,7 +403,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgMultiSend", () => {
-      const aminoMsg: LaunchpadMsgMultiSend = {
+      const aminoMsg: AminoMsgMultiSend = {
         type: "cosmos-sdk/MsgMultiSend",
         value: {
           inputs: [
@@ -434,7 +434,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgBeginRedelegate", () => {
-      const aminoMsg: LaunchpadMsgBeginRedelegate = {
+      const aminoMsg: AminoMsgBeginRedelegate = {
         type: "cosmos-sdk/MsgBeginRedelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -457,7 +457,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgCreateValidator", () => {
-      const aminoMsg: LaunchpadMsgCreateValidator = {
+      const aminoMsg: AminoMsgCreateValidator = {
         type: "cosmos-sdk/MsgCreateValidator",
         value: {
           description: {
@@ -512,7 +512,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgDelegate", () => {
-      const aminoMsg: LaunchpadMsgDelegate = {
+      const aminoMsg: AminoMsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -533,7 +533,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgEditValidator", () => {
-      const aminoMsg: LaunchpadMsgEditValidator = {
+      const aminoMsg: AminoMsgEditValidator = {
         type: "cosmos-sdk/MsgEditValidator",
         value: {
           description: {
@@ -568,7 +568,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgUndelegate", () => {
-      const aminoMsg: LaunchpadMsgUndelegate = {
+      const aminoMsg: AminoMsgUndelegate = {
         type: "cosmos-sdk/MsgUndelegate",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
