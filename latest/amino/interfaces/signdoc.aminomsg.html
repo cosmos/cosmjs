@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AccountData | @cosmjs/launchpad Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
+	<title>AminoMsg | @cosmjs/amino Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/amino Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/amino Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,16 +50,16 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">@cosmjs/launchpad Documentation</a>
+					<a href="../modules.html">@cosmjs/amino Documentation</a>
 				</li>
 				<li>
-					<a href="../modules/signer.html">signer</a>
+					<a href="../modules/signdoc.html">signdoc</a>
 				</li>
 				<li>
-					<a href="signer.accountdata.html">AccountData</a>
+					<a href="signdoc.aminomsg.html">AminoMsg</a>
 				</li>
 			</ul>
-			<h1>Interface AccountData</h1>
+			<h1>Interface AminoMsg</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AccountData</span>
+						<span class="target">AminoMsg</span>
 					</li>
 				</ul>
 			</section>
@@ -81,9 +81,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signer.accountdata.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signer.accountdata.html#algo" class="tsd-kind-icon">algo</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signer.accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signdoc.aminomsg.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signdoc.aminomsg.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,37 +91,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="address" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address</h3>
-					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bd7644332/packages/launchpad/src/signer.ts#L9">launchpad/src/signer.ts:9</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A printable address (typically bech32 encoded)</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="algo" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> algo</h3>
-					<div class="tsd-signature tsd-kind-icon">algo<span class="tsd-signature-symbol">:</span> <a href="../modules/signer.html#algo" class="tsd-signature-type" data-tsd-kind="Type alias">Algo</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bd7644332/packages/launchpad/src/signer.ts#L10">launchpad/src/signer.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/241d73f5e/packages/amino/src/signdoc.ts#L6">signdoc.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="pubkey" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> pubkey</h3>
-					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<a name="value" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bd7644332/packages/launchpad/src/signer.ts#L11">launchpad/src/signer.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/241d73f5e/packages/amino/src/signdoc.ts#L7">signdoc.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -134,7 +118,28 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/addresses.html">addresses</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/encoding.html">encoding</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/multisig.html">multisig</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/pubkeys.html">pubkeys</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/signature.html">signature</a>
+					</li>
 					<li class="current tsd-kind-module">
+						<a href="../modules/signdoc.html">signdoc</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/signer.html">signer</a>
 					</li>
 				</ul>
@@ -144,29 +149,35 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="signer.accountdata.html" class="tsd-kind-icon">Account<wbr>Data</a>
+						<a href="signdoc.aminomsg.html" class="tsd-kind-icon">Amino<wbr>Msg</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signer.accountdata.html#address" class="tsd-kind-icon">address</a>
+								<a href="signdoc.aminomsg.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signer.accountdata.html#algo" class="tsd-kind-icon">algo</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signer.accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a>
+								<a href="signdoc.aminomsg.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="signer.aminosignresponse.html" class="tsd-kind-icon">Amino<wbr>Sign<wbr>Response</a>
+						<a href="signdoc.coin.html" class="tsd-kind-icon">Coin</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="signer.offlinesigner.html" class="tsd-kind-icon">Offline<wbr>Signer</a>
+						<a href="signdoc.stdfee.html" class="tsd-kind-icon">Std<wbr>Fee</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/signer.html#algo" class="tsd-kind-icon">Algo</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="signdoc.stdsigndoc.html" class="tsd-kind-icon">Std<wbr>Sign<wbr>Doc</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/signdoc.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/signdoc.html#serializesigndoc" class="tsd-kind-icon">serialize<wbr>Sign<wbr>Doc</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/signdoc.html#sortedjsonstringify" class="tsd-kind-icon">sorted<wbr>Json<wbr>Stringify</a>
 					</li>
 				</ul>
 			</nav>
@@ -180,19 +191,11 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>

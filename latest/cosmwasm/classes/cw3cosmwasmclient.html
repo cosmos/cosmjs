@@ -146,7 +146,7 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Cw3<wbr>Cosm<wbr>Wasm<wbr>Client<span class="tsd-signature-symbol">(</span>apiUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OfflineSigner</span>, cw3ContractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, gasPrice<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">GasPrice</span>, gasLimits<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">GasLimits</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/cosmwasmfeetable.html" class="tsd-signature-type" data-tsd-kind="Interface">CosmWasmFeeTable</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>, broadcastMode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Block</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Sync</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Async</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cw3cosmwasmclient.html" class="tsd-signature-type" data-tsd-kind="Class">Cw3CosmWasmClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Cw3<wbr>Cosm<wbr>Wasm<wbr>Client<span class="tsd-signature-symbol">(</span>apiUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OfflineAminoSigner</span>, cw3ContractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, gasPrice<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">GasPrice</span>, gasLimits<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">GasLimits</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/cosmwasmfeetable.html" class="tsd-signature-type" data-tsd-kind="Interface">CosmWasmFeeTable</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>, broadcastMode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Block</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Sync</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Async</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cw3cosmwasmclient.html" class="tsd-signature-type" data-tsd-kind="Class">Cw3CosmWasmClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -165,7 +165,7 @@
 									<h5>signerAddress: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>signer: <span class="tsd-signature-type">OfflineSigner</span></h5>
+									<h5>signer: <span class="tsd-signature-type">OfflineAminoSigner</span></h5>
 								</li>
 								<li>
 									<h5>cw3ContractAddress: <span class="tsd-signature-type">string</span></h5>
@@ -1096,7 +1096,7 @@
 					<a name="signandbroadcast" class="tsd-anchor"></a>
 					<h3>sign<wbr>And<wbr>Broadcast</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">sign<wbr>And<wbr>Broadcast<span class="tsd-signature-symbol">(</span>msgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Msg</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>And<wbr>Broadcast<span class="tsd-signature-symbol">(</span>msgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">AminoMsg</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1115,7 +1115,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>msgs: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Msg</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>msgs: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">AminoMsg</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
 									<h5>fee: <span class="tsd-signature-type">StdFee</span></h5>
