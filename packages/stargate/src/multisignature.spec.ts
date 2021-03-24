@@ -1,5 +1,11 @@
-import { createMultisigThresholdPubkey, encodeSecp256k1Pubkey, pubkeyToAddress } from "@cosmjs/amino";
-import { coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/launchpad";
+import {
+  createMultisigThresholdPubkey,
+  encodeSecp256k1Pubkey,
+  makeCosmoshubPath,
+  pubkeyToAddress,
+  Secp256k1HdWallet,
+} from "@cosmjs/amino";
+import { coins } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 
 import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";

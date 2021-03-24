@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { serializeSignDoc, StdSignDoc } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { Secp256k1Wallet } from "./secp256k1wallet";
+import { serializeSignDoc, StdSignDoc } from "./signdoc";
 
 describe("Secp256k1Wallet", () => {
   const defaultPrivkey = fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e");

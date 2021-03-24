@@ -1,13 +1,4 @@
 import {
-  AccountData,
-  AminoSignResponse,
-  encodeSecp256k1Signature,
-  OfflineAminoSigner,
-  rawSecp256k1PubkeyToRawAddress,
-  serializeSignDoc,
-  StdSignDoc,
-} from "@cosmjs/amino";
-import {
   Bip39,
   EnglishMnemonic,
   HdPath,
@@ -22,7 +13,11 @@ import {
 import { Bech32, fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
+import { rawSecp256k1PubkeyToRawAddress } from "./addresses";
 import { makeCosmoshubPath } from "./paths";
+import { encodeSecp256k1Signature } from "./signature";
+import { serializeSignDoc, StdSignDoc } from "./signdoc";
+import { AccountData, AminoSignResponse, OfflineAminoSigner } from "./signer";
 import {
   decrypt,
   encrypt,

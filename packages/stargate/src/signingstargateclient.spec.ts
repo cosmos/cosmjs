@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
-import { MsgDelegate as LaunchpadMsgDelegate, Secp256k1HdWallet } from "@cosmjs/launchpad";
+import { Secp256k1HdWallet } from "@cosmjs/amino";
+import { MsgDelegate as LaunchpadMsgDelegate } from "@cosmjs/launchpad";
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import protobuf from "protobufjs/minimal";

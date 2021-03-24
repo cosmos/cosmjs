@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { serializeSignDoc, StdSignDoc } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
+import { serializeSignDoc, StdSignDoc } from "./signdoc";
 import { base64Matcher } from "./testutils.spec";
 import { executeKdf, KdfConfiguration } from "./wallet";
 

@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoSignResponse, StdSignDoc } from "@cosmjs/amino";
+import { AminoSignResponse, makeCosmoshubPath, Secp256k1HdWallet, StdSignDoc } from "@cosmjs/amino";
 import { Bip39, EnglishMnemonic, Random, Secp256k1, Slip10, Slip10Curve } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-import { Secp256k1HdWallet } from "@cosmjs/launchpad";
-import {
-  coins,
-  DirectSecp256k1HdWallet,
-  DirectSignResponse,
-  makeAuthInfoBytes,
-  makeCosmoshubPath,
-} from "@cosmjs/proto-signing";
+import { coins, DirectSecp256k1HdWallet, DirectSignResponse, makeAuthInfoBytes } from "@cosmjs/proto-signing";
 
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "./codec/cosmos/tx/v1beta1/tx";
