@@ -1,3 +1,4 @@
+import { StdFee } from "@cosmjs/amino";
 import { Bech32 } from "@cosmjs/encoding";
 import { encodePubkey } from "@cosmjs/proto-signing";
 import Long from "long";
@@ -7,7 +8,6 @@ import { CompactBitArray, MultiSignature } from "./codec/cosmos/crypto/multisig/
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignerInfo } from "./codec/cosmos/tx/v1beta1/tx";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
-import { StdFee } from "./fee";
 
 export function makeCompactBitArray(bits: readonly boolean[]): CompactBitArray {
   const byteCount = Math.ceil(bits.length / 8);

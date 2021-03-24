@@ -1,4 +1,4 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 import {
@@ -56,7 +56,7 @@ import {
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
 } from "./codec/ibc/core/connection/v1/tx";
-import { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 /**
