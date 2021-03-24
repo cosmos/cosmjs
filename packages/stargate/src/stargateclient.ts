@@ -90,8 +90,8 @@ export interface PrivateStargateClient {
 }
 
 export class StargateClient {
-  private readonly tmClient: Tendermint34Client;
-  private readonly queryClient: QueryClient & AuthExtension & BankExtension;
+  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly queryClient: (QueryClient & AuthExtension & BankExtension) | undefined;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -99,14 +99,32 @@ export class StargateClient {
     return new StargateClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client) {
-    this.tmClient = tmClient;
-    this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
+  protected constructor(tmClient: Tendermint34Client | undefined) {
+    if (tmClient) {
+      this.tmClient = tmClient;
+      this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
+    }
+  }
+
+  protected forceGetTmClient(): Tendermint34Client {
+    if (!this.tmClient) {
+      throw new Error(
+        "Tendermint client not available. You cannot use online functionality in offline mode.",
+      );
+    }
+    return this.tmClient;
+  }
+
+  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension {
+    if (!this.queryClient) {
+      throw new Error("Query client not available. You cannot use online functionality in offline mode.");
+    }
+    return this.queryClient;
   }
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.tmClient.status();
+      const response = await this.forceGetTmClient().status();
       const chainId = response.nodeInfo.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -116,20 +134,20 @@ export class StargateClient {
   }
 
   public async getHeight(): Promise<number> {
-    const status = await this.tmClient.status();
+    const status = await this.forceGetTmClient().status();
     return status.syncInfo.latestBlockHeight;
   }
 
   // this is nice to display data to the user, but is slower
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const account = await this.queryClient.auth.account(searchAddress);
+    const account = await this.forceGetQueryClient().auth.account(searchAddress);
     return account ? accountFromAny(account) : null;
   }
 
   // if we just need to get the sequence for signing a transaction, let's make this faster
   // (no need to wait a block before submitting)
   public async getAccountUnverified(searchAddress: string): Promise<Account | null> {
-    const account = await this.queryClient.auth.unverified.account(searchAddress);
+    const account = await this.forceGetQueryClient().auth.unverified.account(searchAddress);
     return account ? accountFromAny(account) : null;
   }
 
@@ -146,7 +164,7 @@ export class StargateClient {
   }
 
   public async getBlock(height?: number): Promise<Block> {
-    const response = await this.tmClient.block(height);
+    const response = await this.forceGetTmClient().block(height);
     return {
       id: toHex(response.blockId.hash).toUpperCase(),
       header: {
@@ -163,7 +181,7 @@ export class StargateClient {
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
-    const balance = await this.queryClient.bank.balance(address, searchDenom);
+    const balance = await this.forceGetQueryClient().bank.balance(address, searchDenom);
     return balance ? coinFromProto(balance) : null;
   }
 
@@ -174,7 +192,7 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const balances = await this.queryClient.bank.unverified.allBalances(address);
+    const balances = await this.forceGetQueryClient().bank.unverified.allBalances(address);
     return balances.map(coinFromProto);
   }
 
@@ -222,11 +240,11 @@ export class StargateClient {
   }
 
   public disconnect(): void {
-    this.tmClient.disconnect();
+    if (this.tmClient) this.tmClient.disconnect();
   }
 
   public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
-    const response = await this.tmClient.broadcastTxCommit({ tx });
+    const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
     if (broadcastTxCommitSuccess(response)) {
       return {
         height: response.height,
@@ -253,7 +271,7 @@ export class StargateClient {
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
-    const results = await this.tmClient.txSearchAll({ query: query });
+    const results = await this.forceGetTmClient().txSearchAll({ query: query });
     return results.txs.map((tx) => {
       return {
         height: tx.height,
