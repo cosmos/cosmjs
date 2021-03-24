@@ -13,7 +13,6 @@ import {
 } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
-import { CosmosFeeTable } from "@cosmjs/launchpad";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
   EncodeObject,
@@ -30,6 +29,7 @@ import {
   BroadcastTxResponse,
   buildFeeTable,
   Coin,
+  CosmosFeeTable,
   defaultRegistryTypes,
   GasLimits,
   GasPrice,
