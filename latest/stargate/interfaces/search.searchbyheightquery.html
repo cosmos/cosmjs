@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StdFee | @cosmjs/stargate Documentation</title>
+	<title>SearchByHeightQuery | @cosmjs/stargate Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,31 +53,24 @@
 					<a href="../modules.html">@cosmjs/stargate Documentation</a>
 				</li>
 				<li>
-					<a href="../modules/fee.html">fee</a>
+					<a href="../modules/search.html">search</a>
 				</li>
 				<li>
-					<a href="fee.stdfee.html">StdFee</a>
+					<a href="search.searchbyheightquery.html">SearchByHeightQuery</a>
 				</li>
 			</ul>
-			<h1>Interface StdFee</h1>
+			<h1>Interface SearchByHeightQuery</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>This is the same as StdFee from @cosmjs/launchpad but those might diverge in the future.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StdFee</span>
+						<span class="target">SearchByHeightQuery</span>
 					</li>
 				</ul>
 			</section>
@@ -88,8 +81,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fee.stdfee.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fee.stdfee.html#gas" class="tsd-kind-icon">gas</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="search.searchbyheightquery.html#height" class="tsd-kind-icon">height</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,22 +90,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="index.coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="height" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> height</h3>
+					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/906b259dd/packages/stargate/src/fee.ts#L8">stargate/src/fee.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="gas" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> gas</h3>
-					<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/906b259dd/packages/stargate/src/fee.ts#L9">stargate/src/fee.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/133898c2f/packages/stargate/src/search.ts#L2">stargate/src/search.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -126,38 +108,44 @@
 						<a href="../modules.html">Exports</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/fee.html">fee</a>
+						<a href="../modules/search.html">search</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/fee.gasprice.html" class="tsd-kind-icon">Gas<wbr>Price</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="fee.stdfee.html" class="tsd-kind-icon">Std<wbr>Fee</a>
+						<a href="search.searchbyheightquery.html" class="tsd-kind-icon">Search<wbr>ByHeight<wbr>Query</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="fee.stdfee.html#amount" class="tsd-kind-icon">amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="fee.stdfee.html#gas" class="tsd-kind-icon">gas</a>
+								<a href="search.searchbyheightquery.html#height" class="tsd-kind-icon">height</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="search.searchbysentfromortoquery.html" class="tsd-kind-icon">Search<wbr>BySent<wbr>From<wbr>OrTo<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="search.searchbytagsquery.html" class="tsd-kind-icon">Search<wbr>ByTags<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="search.searchtxfilter.html" class="tsd-kind-icon">Search<wbr>TxFilter</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/fee.html#feetable" class="tsd-kind-icon">Fee<wbr>Table</a>
+						<a href="../modules/search.html#searchtxquery" class="tsd-kind-icon">Search<wbr>TxQuery</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/fee.html#gaslimits" class="tsd-kind-icon">Gas<wbr>Limits</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/search.html#issearchbyheightquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByHeight<wbr>Query</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/fee.html#buildfeetable" class="tsd-kind-icon">build<wbr>Fee<wbr>Table</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/search.html#issearchbysentfromortoquery" class="tsd-kind-icon">is<wbr>Search<wbr>BySent<wbr>From<wbr>OrTo<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/search.html#issearchbytagsquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByTags<wbr>Query</a>
 					</li>
 				</ul>
 			</nav>
