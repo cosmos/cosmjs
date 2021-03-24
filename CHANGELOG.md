@@ -39,7 +39,9 @@ and this project adheres to
   exports which have the same functionality as already existed in
   @cosmjs/launchpad.
 - @cosmjs/stargate: Add `SigningStargateClient.sign`, which allows you to create
-  signed transactions without broadcasting them directly.
+  signed transactions without broadcasting them directly. The new type
+  `SignerData` can be passed into `.sign` to skip querying account number,
+  sequence and chain ID.
 
 ### Changed
 
