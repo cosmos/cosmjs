@@ -199,110 +199,34 @@ describe("multisignature", () => {
         };
       })();
 
-      // Signing environment 0
-      const [pubkey0, signature0, bodyBytes] = await (async () => {
-        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-        const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
-        const address = (await wallet.getAccounts())[0].address;
-        const signingClient = await SigningStargateClient.offline(wallet);
-        const signerData: SignerData = {
-          accountNumber: signingInstruction.accountNumber,
-          sequence: signingInstruction.sequence,
-          chainId: signingInstruction.chainId,
-        };
-        const { bodyBytes: bb, signatures } = await signingClient.sign(
-          address,
-          signingInstruction.msgs,
-          signingInstruction.fee,
-          signingInstruction.memo,
-          signerData,
-        );
-        return [pubkey, signatures[0], bb] as const;
-      })();
-
-      // Signing environment 1
-      const [pubkey1, signature1] = await (async () => {
-        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
-        const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
-        const address = (await wallet.getAccounts())[0].address;
-        const signingClient = await SigningStargateClient.offline(wallet);
-        const signerData: SignerData = {
-          accountNumber: signingInstruction.accountNumber,
-          sequence: signingInstruction.sequence,
-          chainId: signingInstruction.chainId,
-        };
-        const { signatures } = await signingClient.sign(
-          address,
-          signingInstruction.msgs,
-          signingInstruction.fee,
-          signingInstruction.memo,
-          signerData,
-        );
-        return [pubkey, signatures[0]] as const;
-      })();
-
-      // Signing environment 2
-      const [pubkey2, signature2] = await (async () => {
-        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
-        const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
-        const address = (await wallet.getAccounts())[0].address;
-        const signingClient = await SigningStargateClient.offline(wallet);
-        const signerData: SignerData = {
-          accountNumber: signingInstruction.accountNumber,
-          sequence: signingInstruction.sequence,
-          chainId: signingInstruction.chainId,
-        };
-        const { signatures } = await signingClient.sign(
-          address,
-          signingInstruction.msgs,
-          signingInstruction.fee,
-          signingInstruction.memo,
-          signerData,
-        );
-        return [pubkey, signatures[0]] as const;
-      })();
-
-      // Signing environment 3
-      const [pubkey3, signature3] = await (async () => {
-        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(3));
-        const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
-        const address = (await wallet.getAccounts())[0].address;
-        const signingClient = await SigningStargateClient.offline(wallet);
-        const signerData: SignerData = {
-          accountNumber: signingInstruction.accountNumber,
-          sequence: signingInstruction.sequence,
-          chainId: signingInstruction.chainId,
-        };
-        const { signatures } = await signingClient.sign(
-          address,
-          signingInstruction.msgs,
-          signingInstruction.fee,
-          signingInstruction.memo,
-          signerData,
-        );
-        return [pubkey, signatures[0]] as const;
-      })();
-
-      // Signing environment 4
-      const [pubkey4, signature4] = await (async () => {
-        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(4));
-        const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
-        const address = (await wallet.getAccounts())[0].address;
-        const signingClient = await SigningStargateClient.offline(wallet);
-        const signerData: SignerData = {
-          accountNumber: signingInstruction.accountNumber,
-          sequence: signingInstruction.sequence,
-          chainId: signingInstruction.chainId,
-        };
-        const { signatures } = await signingClient.sign(
-          address,
-          signingInstruction.msgs,
-          signingInstruction.fee,
-          signingInstruction.memo,
-          signerData,
-        );
-        return [pubkey, signatures[0]] as const;
-      })();
+      const [
+        [pubkey0, signature0, bodyBytes],
+        [pubkey1, signature1],
+        [pubkey2, signature2],
+        [pubkey3, signature3],
+        [pubkey4, signature4],
+      ] = await Promise.all(
+        [0, 1, 2, 3, 4].map(async (i) => {
+          // Signing environment
+          const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(i));
+          const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
+          const address = (await wallet.getAccounts())[0].address;
+          const signingClient = await SigningStargateClient.offline(wallet);
+          const signerData: SignerData = {
+            accountNumber: signingInstruction.accountNumber,
+            sequence: signingInstruction.sequence,
+            chainId: signingInstruction.chainId,
+          };
+          const { bodyBytes: bb, signatures } = await signingClient.sign(
+            address,
+            signingInstruction.msgs,
+            signingInstruction.fee,
+            signingInstruction.memo,
+            signerData,
+          );
+          return [pubkey, signatures[0], bb] as const;
+        }),
+      );
 
       // From here on, no private keys are required anymore. Any anonymous entity
       // can collect, assemble and broadcast.
