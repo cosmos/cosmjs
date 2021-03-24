@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin } from "@cosmjs/amino";
+import { Coin, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
 import { assert } from "@cosmjs/utils";
 
 import { coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./fee";
 import { MsgDelegate, MsgSend } from "./msgs";
-import { makeCosmoshubPath } from "./paths";
-import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
 import {
   base64Matcher,

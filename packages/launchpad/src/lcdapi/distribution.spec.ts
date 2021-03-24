@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { makeSignDoc } from "@cosmjs/amino";
+import { makeSignDoc, Secp256k1HdWallet } from "@cosmjs/amino";
 import { Bech32 } from "@cosmjs/encoding";
 import { sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { MsgDelegate } from "../msgs";
-import { Secp256k1HdWallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,

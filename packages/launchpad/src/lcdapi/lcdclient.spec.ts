@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, makeSignDoc, StdFee } from "@cosmjs/amino";
+import { Coin, makeCosmoshubPath, makeSignDoc, Secp256k1HdWallet, StdFee } from "@cosmjs/amino";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { isBroadcastTxFailure } from "../cosmosclient";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
-import { makeCosmoshubPath } from "../paths";
-import { Secp256k1HdWallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import cosmoshub from "../testdata/cosmoshub.json";
 import {

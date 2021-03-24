@@ -5,7 +5,10 @@ export {
   AminoMsg as Msg,
   AminoSignResponse,
   Coin,
+  KdfConfiguration,
   OfflineAminoSigner as OfflineSigner,
+  Secp256k1HdWallet,
+  Secp256k1Wallet,
   StdFee,
   StdSignDoc,
   StdSignature,
@@ -16,6 +19,9 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
   encodeSecp256k1Signature,
+  extractKdfConfiguration,
+  executeKdf,
+  makeCosmoshubPath,
   makeSignDoc,
   pubkeyToAddress,
   pubkeyType,
@@ -147,10 +153,6 @@ export {
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
 } from "./msgs";
-export { makeCosmoshubPath } from "./paths";
 export { findSequenceForSignedTx } from "./sequence";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
-export { executeKdf, KdfConfiguration } from "./wallet";
-export { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
-export { Secp256k1Wallet } from "./secp256k1wallet";
