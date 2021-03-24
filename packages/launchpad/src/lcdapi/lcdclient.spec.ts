@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, StdFee } from "@cosmjs/amino";
+import { Coin, makeSignDoc, StdFee } from "@cosmjs/amino";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { isBroadcastTxFailure } from "../cosmosclient";
-import { makeSignDoc } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
 import { makeCosmoshubPath } from "../paths";

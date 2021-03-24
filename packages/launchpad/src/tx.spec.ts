@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { StdFee, StdSignature } from "@cosmjs/amino";
+import { makeSignDoc } from "@cosmjs/amino/build/signdoc";
 
 import { coins } from "./coins";
-import { makeSignDoc } from "./encoding";
 import { makeStdTx } from "./tx";
 
 describe("tx", () => {

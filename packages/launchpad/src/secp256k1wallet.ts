@@ -4,12 +4,11 @@ import {
   encodeSecp256k1Signature,
   OfflineAminoSigner,
   rawSecp256k1PubkeyToRawAddress,
+  serializeSignDoc,
   StdSignDoc,
 } from "@cosmjs/amino";
 import { Secp256k1, Sha256 } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-
-import { serializeSignDoc } from "./encoding";
 
 /**
  * A wallet that holds a single secp256k1 keypair.

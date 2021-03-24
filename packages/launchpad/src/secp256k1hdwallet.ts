@@ -4,6 +4,7 @@ import {
   encodeSecp256k1Signature,
   OfflineAminoSigner,
   rawSecp256k1PubkeyToRawAddress,
+  serializeSignDoc,
   StdSignDoc,
 } from "@cosmjs/amino";
 import {
@@ -21,7 +22,6 @@ import {
 import { Bech32, fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
-import { serializeSignDoc } from "./encoding";
 import { makeCosmoshubPath } from "./paths";
 import {
   decrypt,

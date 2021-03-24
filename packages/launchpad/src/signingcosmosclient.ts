@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin, OfflineAminoSigner, StdFee } from "@cosmjs/amino";
+import { AminoMsg, Coin, makeSignDoc, OfflineAminoSigner, StdFee } from "@cosmjs/amino";
+import {} from "@cosmjs/amino/build/signdoc";
 import equals from "fast-deep-equal";
 
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
-import { makeSignDoc } from "./encoding";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastMode } from "./lcdapi";
 import { MsgSend } from "./msgs";

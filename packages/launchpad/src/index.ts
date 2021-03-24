@@ -16,8 +16,10 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
   encodeSecp256k1Signature,
+  makeSignDoc,
   pubkeyToAddress,
   pubkeyType,
+  serializeSignDoc,
 } from "@cosmjs/amino";
 import { SinglePubkey } from "@cosmjs/amino";
 /** @deprecated PubKey is deprecated. Use `SinglePubkey` or the more general `Pubkey` from `@cosmjs/amino`. */
@@ -49,7 +51,6 @@ export {
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
-export { makeSignDoc, serializeSignDoc } from "./encoding";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 export {
   AuthAccountsResponse,
