@@ -6,12 +6,12 @@ export interface AminoMsg {
   readonly value: any;
 }
 
-interface Coin {
+export interface Coin {
   readonly denom: string;
   readonly amount: string;
 }
 
-interface StdFee {
+export interface StdFee {
   readonly amount: readonly Coin[];
   readonly gas: string;
 }
