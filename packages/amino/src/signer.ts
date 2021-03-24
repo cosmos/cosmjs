@@ -1,34 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { StdSignature } from "./signature";
-
-export interface AminoMsg {
-  readonly type: string;
-  readonly value: any;
-}
-
-export interface Coin {
-  readonly denom: string;
-  readonly amount: string;
-}
-
-export interface StdFee {
-  readonly amount: readonly Coin[];
-  readonly gas: string;
-}
-
-/**
- * The document to be signed
- *
- * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
- */
-export interface StdSignDoc {
-  readonly chain_id: string;
-  readonly account_number: string;
-  readonly sequence: string;
-  readonly fee: StdFee;
-  readonly msgs: readonly AminoMsg[];
-  readonly memo: string;
-}
+import { StdSignDoc } from "./signdoc";
 
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
 
