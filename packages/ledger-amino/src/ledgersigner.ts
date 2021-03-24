@@ -1,17 +1,18 @@
-import { HdPath } from "@cosmjs/crypto";
 import {
   AccountData,
+  AminoSignResponse,
   encodeSecp256k1Signature,
   makeCosmoshubPath,
-  OfflineSigner,
+  OfflineAminoSigner,
+  serializeSignDoc,
   StdSignDoc,
-} from "@cosmjs/launchpad";
-import { AminoSignResponse, serializeSignDoc } from "@cosmjs/launchpad";
+} from "@cosmjs/amino";
+import { HdPath } from "@cosmjs/crypto";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
-export class LedgerSigner implements OfflineSigner {
+export class LedgerSigner implements OfflineAminoSigner {
   private readonly ledger: LaunchpadLedger;
   private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];

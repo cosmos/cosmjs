@@ -1,5 +1,5 @@
+import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/amino";
 import { toBase64 } from "@cosmjs/encoding";
-import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { makeCosmoshubPath, makeSignDoc, StdFee, StdSignature } from "@cosmjs/amino";
 import { toBase64 } from "@cosmjs/encoding";
-import { makeCosmoshubPath, makeSignDoc, StdFee, StdSignature } from "@cosmjs/launchpad";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 
 import { LedgerSigner } from "../ledgersigner";

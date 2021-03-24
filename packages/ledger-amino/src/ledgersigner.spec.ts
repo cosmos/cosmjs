@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import {
+  AminoMsg,
+  coins,
+  makeCosmoshubPath,
+  makeSignDoc,
+  Secp256k1HdWallet,
+  serializeSignDoc,
+  StdFee,
+} from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessLaunchpad,
-  coins,
-  makeCosmoshubPath,
-  makeSignDoc,
-  Msg,
-  Secp256k1HdWallet,
-  serializeSignDoc,
   SigningCosmosClient,
-  StdFee,
 } from "@cosmjs/launchpad";
 import {
   assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
@@ -131,7 +133,7 @@ describe("LedgerSigner", () => {
 
         const [firstAccount] = await signer.getAccounts();
 
-        const msgs: readonly Msg[] = [
+        const msgs: readonly AminoMsg[] = [
           {
             type: "cosmos-sdk/MsgSend",
             value: {
