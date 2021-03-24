@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { MsgDelegate as LaunchpadMsgDelegate, Secp256k1HdWallet } from "@cosmjs/launchpad";
+import { MsgDelegate as LaunchpadMsgDelegate } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { AminoTypes, assertIsBroadcastTxSuccess, coin, coins, GasPrice } from "@cosmjs/stargate";
 import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
