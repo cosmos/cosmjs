@@ -44,6 +44,8 @@ and this project adheres to
   sequence and chain ID.
 - @cosmjs/stargate: Add constructor `SigningStargateClient.offline` which does
   not connect to Tendermint. This allows offline signing.
+- @cosmjs/stargate: Add `makeMultisignedTx` which allows you to assemble a
+  transaction signed by a multisig account.
 
 ### Changed
 
