@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { makeSignDoc, Secp256k1HdWallet } from "@cosmjs/amino";
+import { coin, coins, makeSignDoc, Secp256k1HdWallet } from "@cosmjs/amino";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { coin, coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
 import { SigningCosmosClient } from "../signingcosmosclient";

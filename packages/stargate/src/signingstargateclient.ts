@@ -1,6 +1,5 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import { CosmosFeeTable } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
   EncodeObject,
@@ -57,8 +56,17 @@ import {
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
 } from "./codec/ibc/core/connection/v1/tx";
-import { buildFeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
+
+/**
+ * These fees are used by the higher level methods of SigningCosmosClient
+ *
+ * This is the same as CosmosFeeTable from @cosmjs/launchpad but those might diverge in the future.
+ */
+export interface CosmosFeeTable extends FeeTable {
+  readonly send: StdFee;
+}
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };

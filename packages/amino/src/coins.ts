@@ -1,18 +1,26 @@
-import { Coin } from "@cosmjs/amino";
 import { Uint53, Uint64 } from "@cosmjs/math";
 
-/** Creates a coin */
+export interface Coin {
+  readonly denom: string;
+  readonly amount: string;
+}
+
+/**
+ * Creates a coin.
+ */
 export function coin(amount: number, denom: string): Coin {
   return { amount: new Uint53(amount).toString(), denom: denom };
 }
 
-/** Creates a list of coins with one element */
+/**
+ * Creates a list of coins with one element.
+ */
 export function coins(amount: number, denom: string): Coin[] {
   return [coin(amount, denom)];
 }
 
 /**
- * Takes a coins list like "819966000ucosm,700000000ustake" and parses it
+ * Takes a coins list like "819966000ucosm,700000000ustake" and parses it.
  */
 export function parseCoins(input: string): Coin[] {
   return input

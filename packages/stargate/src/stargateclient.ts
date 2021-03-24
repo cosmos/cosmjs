@@ -1,13 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toHex } from "@cosmjs/encoding";
-import {
-  Block,
-  isSearchByHeightQuery,
-  isSearchBySentFromOrToQuery,
-  isSearchByTagsQuery,
-  SearchTxFilter,
-  SearchTxQuery,
-} from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import {
   broadcastTxCommitSuccess,
@@ -20,6 +12,38 @@ import { Account, accountFromAny } from "./accounts";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
+import {
+  isSearchByHeightQuery,
+  isSearchBySentFromOrToQuery,
+  isSearchByTagsQuery,
+  SearchTxFilter,
+  SearchTxQuery,
+} from "./search";
+
+/**
+ * This is the same as BlockHeader from @cosmjs/launchpad but those might diverge in the future.
+ */
+export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly height: number;
+  readonly chainId: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+
+/**
+ * This is the same as Block from @cosmjs/launchpad but those might diverge in the future.
+ */
+export interface Block {
+  /** The ID is a hash of the block header (uppercase hex) */
+  readonly id: string;
+  readonly header: BlockHeader;
+  /** Array of raw transactions */
+  readonly txs: readonly Uint8Array[];
+}
 
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {

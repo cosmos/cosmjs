@@ -2,14 +2,11 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
+import { Coin } from "./coins";
+
 export interface AminoMsg {
   readonly type: string;
   readonly value: any;
-}
-
-export interface Coin {
-  readonly denom: string;
-  readonly amount: string;
 }
 
 export interface StdFee {

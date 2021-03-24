@@ -1,13 +1,6 @@
+import { StdFee } from "@cosmjs/amino";
 import { Decimal, Uint53 } from "@cosmjs/math";
-import { Coin, coins } from "@cosmjs/proto-signing";
-
-/**
- * This is the same as StdFee from @cosmjs/launchpad but those might diverge in the future.
- */
-export interface StdFee {
-  readonly amount: readonly Coin[];
-  readonly gas: string;
-}
+import { coins } from "@cosmjs/proto-signing";
 
 /**
  * This is the same as FeeTable from @cosmjs/launchpad but those might diverge in the future.

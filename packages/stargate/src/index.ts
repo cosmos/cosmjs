@@ -1,8 +1,9 @@
+export { StdFee } from "@cosmjs/amino";
 export { Coin, coin, coins, parseCoins } from "@cosmjs/proto-signing";
 
 export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoTypes } from "./aminotypes";
-export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
+export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 export * as logs from "./logs";
 export { makeMultisignedTx } from "./multisignature";
 export {
@@ -22,7 +23,19 @@ export {
   StakingExtension,
 } from "./queries";
 export {
+  SearchByHeightQuery,
+  SearchBySentFromOrToQuery,
+  SearchByTagsQuery,
+  SearchTxQuery,
+  SearchTxFilter,
+  isSearchByHeightQuery,
+  isSearchBySentFromOrToQuery,
+  isSearchByTagsQuery,
+} from "./search";
+export {
   assertIsBroadcastTxSuccess,
+  Block,
+  BlockHeader,
   BroadcastTxFailure,
   BroadcastTxResponse,
   BroadcastTxSuccess,
@@ -34,6 +47,7 @@ export {
   StargateClient,
 } from "./stargateclient";
 export {
+  CosmosFeeTable,
   defaultRegistryTypes,
   SignerData,
   SigningStargateClient,
