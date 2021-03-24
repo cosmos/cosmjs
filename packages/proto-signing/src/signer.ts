@@ -1,5 +1,4 @@
-import { StdSignature } from "@cosmjs/amino";
-import { OfflineSigner as OfflineAminoSigner } from "@cosmjs/launchpad";
+import { OfflineAminoSigner, StdSignature } from "@cosmjs/amino";
 
 import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 
