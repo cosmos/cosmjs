@@ -1,5 +1,12 @@
 // Re-exports for backwards compatibility
 export {
+  AccountData,
+  Algo,
+  AminoMsg as Msg,
+  AminoSignResponse,
+  OfflineAminoSigner as OfflineSigner,
+  StdSignDoc,
+  StdSignature,
   decodeAminoPubkey,
   decodeBech32Pubkey,
   decodeSignature,
@@ -9,7 +16,6 @@ export {
   encodeSecp256k1Signature,
   pubkeyToAddress,
   pubkeyType,
-  StdSignature,
 } from "@cosmjs/amino";
 import { SinglePubkey } from "@cosmjs/amino";
 /** @deprecated PubKey is deprecated. Use `SinglePubkey` or the more general `Pubkey` from `@cosmjs/amino`. */
@@ -42,7 +48,7 @@ export {
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
-export { makeSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
+export { makeSignDoc, serializeSignDoc } from "./encoding";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
 export {
   AuthAccountsResponse,
@@ -127,7 +133,6 @@ export {
   isMsgUndelegate,
   isMsgWithdrawDelegatorReward,
   isMsgWithdrawValidatorCommission,
-  Msg,
   MsgBeginRedelegate,
   MsgCreateValidator,
   MsgDelegate,
@@ -142,7 +147,6 @@ export {
 } from "./msgs";
 export { makeCosmoshubPath } from "./paths";
 export { findSequenceForSignedTx } from "./sequence";
-export { AccountData, Algo, AminoSignResponse, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
 export { executeKdf, KdfConfiguration } from "./wallet";

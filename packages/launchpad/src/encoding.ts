@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { AminoMsg, StdSignDoc } from "@cosmjs/amino";
 import { toUtf8 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
 import { StdFee } from "./fee";
-import { Msg } from "./msgs";
 
 function sortedObject(obj: any): any {
   if (typeof obj !== "object" || obj === null) {
@@ -27,22 +27,8 @@ export function sortedJsonStringify(obj: any): string {
   return JSON.stringify(sortedObject(obj));
 }
 
-/**
- * The document to be signed
- *
- * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
- */
-export interface StdSignDoc {
-  readonly chain_id: string;
-  readonly account_number: string;
-  readonly sequence: string;
-  readonly fee: StdFee;
-  readonly msgs: readonly Msg[];
-  readonly memo: string;
-}
-
 export function makeSignDoc(
-  msgs: readonly Msg[],
+  msgs: readonly AminoMsg[],
   fee: StdFee,
   chainId: string,
   memo: string | undefined,

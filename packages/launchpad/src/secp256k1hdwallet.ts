@@ -1,4 +1,11 @@
-import { encodeSecp256k1Signature, rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
+import {
+  AccountData,
+  AminoSignResponse,
+  encodeSecp256k1Signature,
+  OfflineAminoSigner,
+  rawSecp256k1PubkeyToRawAddress,
+  StdSignDoc,
+} from "@cosmjs/amino";
 import {
   Bip39,
   EnglishMnemonic,
@@ -14,9 +21,8 @@ import {
 import { Bech32, fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
-import { serializeSignDoc, StdSignDoc } from "./encoding";
+import { serializeSignDoc } from "./encoding";
 import { makeCosmoshubPath } from "./paths";
-import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 import {
   decrypt,
   encrypt,
@@ -106,7 +112,7 @@ interface DerivationInfo {
   readonly prefix: string;
 }
 
-export class Secp256k1HdWallet implements OfflineSigner {
+export class Secp256k1HdWallet implements OfflineAminoSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *

@@ -1,16 +1,22 @@
-import { encodeSecp256k1Signature, rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
+import {
+  AccountData,
+  AminoSignResponse,
+  encodeSecp256k1Signature,
+  OfflineAminoSigner,
+  rawSecp256k1PubkeyToRawAddress,
+  StdSignDoc,
+} from "@cosmjs/amino";
 import { Secp256k1, Sha256 } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
 
-import { serializeSignDoc, StdSignDoc } from "./encoding";
-import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
+import { serializeSignDoc } from "./encoding";
 
 /**
  * A wallet that holds a single secp256k1 keypair.
  *
  * If you want to work with BIP39 mnemonics and multiple accounts, use Secp256k1HdWallet.
  */
-export class Secp256k1Wallet implements OfflineSigner {
+export class Secp256k1Wallet implements OfflineAminoSigner {
   /**
    * Creates a Secp256k1Wallet from the given private key
    *
