@@ -5,6 +5,8 @@ export {
   AminoMsg as Msg,
   AminoSignResponse,
   Coin,
+  coin,
+  coins,
   KdfConfiguration,
   OfflineAminoSigner as OfflineSigner,
   Secp256k1HdWallet,
@@ -23,6 +25,7 @@ export {
   executeKdf,
   makeCosmoshubPath,
   makeSignDoc,
+  parseCoins,
   pubkeyToAddress,
   pubkeyType,
   serializeSignDoc,
@@ -34,7 +37,6 @@ export type PubKey = SinglePubkey;
 import * as logs from "./logs";
 export { logs };
 
-export { coin, coins, parseCoins } from "./coins";
 export {
   Account,
   assertIsBroadcastTxSuccess,
