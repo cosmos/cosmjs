@@ -42,6 +42,8 @@ and this project adheres to
   signed transactions without broadcasting them directly. The new type
   `SignerData` can be passed into `.sign` to skip querying account number,
   sequence and chain ID.
+- @cosmjs/stargate: Add constructor `SigningStargateClient.offline` which does
+  not connect to Tendermint. This allows offline signing.
 
 ### Changed
 

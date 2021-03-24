@@ -139,8 +139,24 @@ export class SigningStargateClient extends StargateClient {
     return new SigningStargateClient(tmClient, signer, options);
   }
 
+  /**
+   * Creates a client in offline mode.
+   *
+   * This should only be used in niche cases where you know exactly what you're doing,
+   * e.g. when building an offline signing application.
+   *
+   * When you try to use online functionality with such a signer, an
+   * exception will be raised.
+   */
+  public static async offline(
+    signer: OfflineSigner,
+    options: SigningStargateClientOptions = {},
+  ): Promise<SigningStargateClient> {
+    return new SigningStargateClient(undefined, signer, options);
+  }
+
   private constructor(
-    tmClient: Tendermint34Client,
+    tmClient: Tendermint34Client | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {
@@ -193,7 +209,7 @@ export class SigningStargateClient extends StargateClient {
    *
    * You can pass signer data (account number, sequence and chain ID) explicitly instead of querying them
    * from the chain. This is needed when signing for a multisig account, but it also allows for offline signing
-   * (which probably fails right now because in other places SigningStargateClient assumes you are online).
+   * (See the SigningStargateClient.offline constructor).
    */
   public async sign(
     signerAddress: string,
