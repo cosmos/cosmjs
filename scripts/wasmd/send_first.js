@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/naming-convention */
+const { coins } = require("@cosmjs/amino");
 const { Random } = require("@cosmjs/crypto");
 const { Bech32 } = require("@cosmjs/encoding");
-const { coins } = require("@cosmjs/launchpad");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { assertIsBroadcastTxSuccess, SigningStargateClient } = require("@cosmjs/stargate");
 
