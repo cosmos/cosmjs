@@ -20,6 +20,7 @@ protoc \
   "$COSMOS_PROTO_DIR/cosmos/bank/v1beta1/bank.proto" \
   "$COSMOS_PROTO_DIR/cosmos/bank/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/cosmos/crypto/multisig/v1beta1/multisig.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/crypto/multisig/keys.proto" \
   "$COSMOS_PROTO_DIR/cosmos/crypto/secp256k1/keys.proto" \
   "$COSMOS_PROTO_DIR/cosmos/tx/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/cosmos/tx/signing/v1beta1/signing.proto" \

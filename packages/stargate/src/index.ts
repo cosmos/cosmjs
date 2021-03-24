@@ -4,6 +4,7 @@ export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoTypes } from "./aminotypes";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice, StdFee } from "./fee";
 export * as logs from "./logs";
+export { makeMultisignedTx } from "./multisignature";
 export {
   AuthExtension,
   BankExtension,
@@ -34,6 +35,7 @@ export {
 } from "./stargateclient";
 export {
   defaultRegistryTypes,
+  SignerData,
   SigningStargateClient,
   SigningStargateClientOptions,
 } from "./signingstargateclient";

@@ -128,6 +128,27 @@
           "address": "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
           "pub_key": null,
           "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "account_number": "0",
+          "address": "cosmos1v75snhly7wfndk83ud4daygh397vcmkta8rlzq",
+          "pub_key": null,
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "account_number": "0",
+          "address": "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9",
+          "pub_key": null,
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "account_number": "0",
+          "address": "cosmos1d2mg2euvus3tu2tprfwrfzeal4xu7kygugjxjc",
+          "pub_key": null,
+          "sequence": "0"
         }
       ],
       "params": {
@@ -206,6 +227,32 @@
           ]
         },
         {
+          "address": "cosmos1v75snhly7wfndk83ud4daygh397vcmkta8rlzq",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos1d2mg2euvus3tu2tprfwrfzeal4xu7kygugjxjc",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
           "address": "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           "coins": [
             {
@@ -246,6 +293,19 @@
         },
         {
           "address": "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9",
           "coins": [
             {
               "amount": "1000000000",

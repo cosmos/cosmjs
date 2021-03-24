@@ -38,6 +38,14 @@ and this project adheres to
 - @cosmjs/proto-signing: Added new `Coin`, `coin`, `coins` and `parseCoins`
   exports which have the same functionality as already existed in
   @cosmjs/launchpad.
+- @cosmjs/stargate: Add `SigningStargateClient.sign`, which allows you to create
+  signed transactions without broadcasting them directly. The new type
+  `SignerData` can be passed into `.sign` to skip querying account number,
+  sequence and chain ID.
+- @cosmjs/stargate: Add constructor `SigningStargateClient.offline` which does
+  not connect to Tendermint. This allows offline signing.
+- @cosmjs/stargate: Add `makeMultisignedTx` which allows you to assemble a
+  transaction signed by a multisig account.
 
 ### Changed
 

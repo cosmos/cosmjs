@@ -13,6 +13,7 @@ import {
   Registry,
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { assert } from "@cosmjs/utils";
 
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
@@ -97,6 +98,17 @@ function createDefaultRegistry(): Registry {
   return new Registry(defaultRegistryTypes);
 }
 
+/**
+ * Signing information for a single signer that is not included in the transaction.
+ *
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.42.2/x/auth/signing/sign_mode_handler.go#L23-L37
+ */
+export interface SignerData {
+  readonly accountNumber: number;
+  readonly sequence: number;
+  readonly chainId: string;
+}
+
 /** Use for testing only */
 export interface PrivateSigningStargateClient {
   readonly fees: CosmosFeeTable;
@@ -127,8 +139,24 @@ export class SigningStargateClient extends StargateClient {
     return new SigningStargateClient(tmClient, signer, options);
   }
 
+  /**
+   * Creates a client in offline mode.
+   *
+   * This should only be used in niche cases where you know exactly what you're doing,
+   * e.g. when building an offline signing application.
+   *
+   * When you try to use online functionality with such a signer, an
+   * exception will be raised.
+   */
+  public static async offline(
+    signer: OfflineSigner,
+    options: SigningStargateClientOptions = {},
+  ): Promise<SigningStargateClient> {
+    return new SigningStargateClient(undefined, signer, options);
+  }
+
   private constructor(
-    tmClient: Tendermint34Client,
+    tmClient: Tendermint34Client | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {
@@ -168,6 +196,54 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
+    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
+    return this.broadcastTx(signedTx);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and assembles the signed transaction.
+   *
+   * The sign mode (SIGN_MODE_DIRECT or SIGN_MODE_LEGACY_AMINO_JSON) is determined by this client's signer.
+   *
+   * You can pass signer data (account number, sequence and chain ID) explicitly instead of querying them
+   * from the chain. This is needed when signing for a multisig account, but it also allows for offline signing
+   * (See the SigningStargateClient.offline constructor).
+   */
+  public async sign(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    explicitSignerData?: SignerData,
+  ): Promise<TxRaw> {
+    let signerData: SignerData;
+    if (explicitSignerData) {
+      signerData = explicitSignerData;
+    } else {
+      const accountFromChain = await this.getAccountUnverified(signerAddress);
+      if (!accountFromChain) {
+        throw new Error("Account not found");
+      }
+      const { accountNumber, sequence } = accountFromChain;
+      const chainId = await this.getChainId();
+      signerData = { accountNumber, sequence, chainId };
+    }
+
+    return isOfflineDirectSigner(this.signer)
+      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
+      : this.signAmino(signerAddress, messages, fee, memo, signerData);
+  }
+
+  private async signAmino(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    { accountNumber, sequence, chainId }: SignerData,
+  ): Promise<TxRaw> {
+    assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
     );
@@ -175,36 +251,6 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const accountFromChain = await this.getAccountUnverified(signerAddress);
-    if (!accountFromChain) {
-      throw new Error("Account not found");
-    }
-    const { accountNumber, sequence } = accountFromChain;
-    const chainId = await this.getChainId();
-    const txBody = {
-      messages: messages,
-      memo: memo,
-    };
-    const txBodyBytes = this.registry.encode({
-      typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: txBody,
-    });
-    const gasLimit = Int53.fromString(fee.gas).toNumber();
-
-    if (isOfflineDirectSigner(this.signer)) {
-      const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
-      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-      const txRaw = TxRaw.fromPartial({
-        bodyBytes: signed.bodyBytes,
-        authInfoBytes: signed.authInfoBytes,
-        signatures: [fromBase64(signature.signature)],
-      });
-      const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-      return this.broadcastTx(signedTx);
-    }
-
-    // Amino signer
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -226,12 +272,44 @@ export class SigningStargateClient extends StargateClient {
       signedSequence,
       signMode,
     );
-    const txRaw = TxRaw.fromPartial({
+    return TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],
     });
-    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-    return this.broadcastTx(signedTx);
+  }
+
+  private async signDirect(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    { accountNumber, sequence, chainId }: SignerData,
+  ): Promise<TxRaw> {
+    assert(isOfflineDirectSigner(this.signer));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const txBody = {
+      messages: messages,
+      memo: memo,
+    };
+    const txBodyBytes = this.registry.encode({
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: txBody,
+    });
+    const gasLimit = Int53.fromString(fee.gas).toNumber();
+    const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
+    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+    return TxRaw.fromPartial({
+      bodyBytes: signed.bodyBytes,
+      authInfoBytes: signed.authInfoBytes,
+      signatures: [fromBase64(signature.signature)],
+    });
   }
 }

@@ -24,7 +24,8 @@ docker run --rm \
   cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0 cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5 cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce \
   cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au cosmos1c7wpeen2uv8thayf7g8q2rgpm29clj0dgrdtzw cosmos1mjxpv9ft30wer7ma7kwfxhm42l379xutplrdk6 \
   cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u \
-  cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej
+  cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej \
+  cosmos1v75snhly7wfndk83ud4daygh397vcmkta8rlzq cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9 cosmos1d2mg2euvus3tu2tprfwrfzeal4xu7kygugjxjc
 
 # The ./template folder is created by the docker daemon's user (root on Linux, current user
 # when using Docker Desktop on macOS), let's make it ours if needed
