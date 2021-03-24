@@ -34,6 +34,7 @@ export {
   StargateClient,
 } from "./stargateclient";
 export {
+  CosmosFeeTable,
   defaultRegistryTypes,
   SignerData,
   SigningStargateClient,
