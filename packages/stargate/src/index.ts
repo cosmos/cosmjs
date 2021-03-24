@@ -23,7 +23,19 @@ export {
   StakingExtension,
 } from "./queries";
 export {
+  SearchByHeightQuery,
+  SearchBySentFromOrToQuery,
+  SearchByTagsQuery,
+  SearchTxQuery,
+  SearchTxFilter,
+  isSearchByHeightQuery,
+  isSearchBySentFromOrToQuery,
+  isSearchByTagsQuery,
+} from "./search";
+export {
   assertIsBroadcastTxSuccess,
+  Block,
+  BlockHeader,
   BroadcastTxFailure,
   BroadcastTxResponse,
   BroadcastTxSuccess,
