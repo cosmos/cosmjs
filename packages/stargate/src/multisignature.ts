@@ -9,6 +9,21 @@ import { AuthInfo, SignerInfo } from "./codec/cosmos/tx/v1beta1/tx";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { StdFee } from "./fee";
 
+export function makeCompactBitArray(bits: readonly boolean[]): CompactBitArray {
+  const byteCount = Math.ceil(bits.length / 8);
+  const extraBits = bits.length - Math.floor(bits.length / 8) * 8;
+  const bytes = new Uint8Array(byteCount); // zero-filled
+
+  bits.forEach((value, index) => {
+    const bytePos = Math.floor(index / 8);
+    const bitPos = index % 8;
+    // eslint-disable-next-line no-bitwise
+    if (value) bytes[bytePos] |= 0b1 << (8 - 1 - bitPos);
+  });
+
+  return CompactBitArray.fromPartial({ elems: bytes, extraBitsStored: extraBits });
+}
+
 export function makeMultisignedTx(
   multisigPubkey: MultisigThresholdPubkey,
   sequence: number,
@@ -19,14 +34,13 @@ export function makeMultisignedTx(
   const addresses = Array.from(signatures.keys());
   const prefix = Bech32.decode(addresses[0]).prefix;
 
-  let bits = 0;
+  const signers: boolean[] = Array(multisigPubkey.value.pubkeys.length).fill(false);
   const signaturesList = new Array<Uint8Array>();
   for (let i = 0; i < multisigPubkey.value.pubkeys.length; i++) {
     const signerAddress = pubkeyToAddress(multisigPubkey.value.pubkeys[i], prefix);
     const signature = signatures.get(signerAddress);
     if (signature) {
-      // eslint-disable-next-line no-bitwise
-      bits |= 0b1 << (8 - 1 - i);
+      signers[i] = true;
       signaturesList.push(signature);
     }
   }
@@ -35,10 +49,7 @@ export function makeMultisignedTx(
     publicKey: encodePubkey(multisigPubkey),
     modeInfo: {
       multi: {
-        bitarray: CompactBitArray.fromPartial({
-          elems: new Uint8Array([bits]),
-          extraBitsStored: multisigPubkey.value.pubkeys.length,
-        }),
+        bitarray: makeCompactBitArray(signers),
         modeInfos: signaturesList.map((_) => ({ single: { mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON } })),
       },
     },

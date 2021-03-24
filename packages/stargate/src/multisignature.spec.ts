@@ -4,12 +4,164 @@ import { assert } from "@cosmjs/utils";
 
 import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
-import { makeMultisignedTx } from "./multisignature";
+import { makeCompactBitArray, makeMultisignedTx } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "./stargateclient";
 import { faucet, pendingWithoutSimapp, simapp } from "./testutils.spec";
 
 describe("multisignature", () => {
+  describe("makeCompactBitArray", () => {
+    it("works for 0 bits of different lengths", () => {
+      expect(makeCompactBitArray([])).toEqual({ elems: new Uint8Array([]), extraBitsStored: 0 });
+      expect(makeCompactBitArray([false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 1,
+      });
+      expect(makeCompactBitArray([false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(makeCompactBitArray([false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 3,
+      });
+      expect(makeCompactBitArray([false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 4,
+      });
+      expect(makeCompactBitArray([false, false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 5,
+      });
+      expect(makeCompactBitArray([false, false, false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 6,
+      });
+      expect(makeCompactBitArray([false, false, false, false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 7,
+      });
+      expect(makeCompactBitArray([false, false, false, false, false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000]),
+        extraBitsStored: 0,
+      });
+      expect(makeCompactBitArray([false, false, false, false, false, false, false, false, false])).toEqual({
+        elems: new Uint8Array([0b00000000, 0b00000000]),
+        extraBitsStored: 1,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, false, false, false, false, false]),
+      ).toEqual({ elems: new Uint8Array([0b00000000, 0b00000000]), extraBitsStored: 2 });
+    });
+
+    it("works for 1 bits of different lengths", () => {
+      expect(makeCompactBitArray([])).toEqual({ elems: new Uint8Array([]), extraBitsStored: 0 });
+      expect(makeCompactBitArray([true])).toEqual({
+        elems: new Uint8Array([0b10000000]),
+        extraBitsStored: 1,
+      });
+      expect(makeCompactBitArray([true, true])).toEqual({
+        elems: new Uint8Array([0b11000000]),
+        extraBitsStored: 2,
+      });
+      expect(makeCompactBitArray([true, true, true])).toEqual({
+        elems: new Uint8Array([0b11100000]),
+        extraBitsStored: 3,
+      });
+      expect(makeCompactBitArray([true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11110000]),
+        extraBitsStored: 4,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111000]),
+        extraBitsStored: 5,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111100]),
+        extraBitsStored: 6,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111110]),
+        extraBitsStored: 7,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111111]),
+        extraBitsStored: 0,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111111, 0b10000000]),
+        extraBitsStored: 1,
+      });
+      expect(makeCompactBitArray([true, true, true, true, true, true, true, true, true, true])).toEqual({
+        elems: new Uint8Array([0b11111111, 0b11000000]),
+        extraBitsStored: 2,
+      });
+    });
+
+    it("works for 1 bit in different places", () => {
+      expect(
+        makeCompactBitArray([true, false, false, false, false, false, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b10000000, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, true, false, false, false, false, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b01000000, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, true, false, false, false, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00100000, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, true, false, false, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00010000, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, true, false, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00001000, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, true, false, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00000100, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, false, true, false, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00000010, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, false, false, true, false, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00000001, 0b00000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, false, false, false, true, false]),
+      ).toEqual({
+        elems: new Uint8Array([0b00000000, 0b10000000]),
+        extraBitsStored: 2,
+      });
+      expect(
+        makeCompactBitArray([false, false, false, false, false, false, false, false, false, true]),
+      ).toEqual({
+        elems: new Uint8Array([0b00000000, 0b01000000]),
+        extraBitsStored: 2,
+      });
+    });
+  });
+
   describe("makeMultisignedTx", () => {
     it("works", async () => {
       pendingWithoutSimapp();
