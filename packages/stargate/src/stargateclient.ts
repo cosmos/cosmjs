@@ -130,6 +130,10 @@ export class StargateClient {
     }
   }
 
+  protected getTmClient(): Tendermint34Client | undefined {
+    return this.tmClient;
+  }
+
   protected forceGetTmClient(): Tendermint34Client {
     if (!this.tmClient) {
       throw new Error(
@@ -137,6 +141,10 @@ export class StargateClient {
       );
     }
     return this.tmClient;
+  }
+
+  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension) | undefined {
+    return this.queryClient;
   }
 
   protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension {
