@@ -49,6 +49,7 @@ and this project adheres to
 - @cosmjs/stargate: Add `delegateTokens`, `undelegateTokens` and
   `withdrawRewards` methods to `SigningStargateClient`.
 - @cosmjs/stargate: Export `defaultGasLimits` and `defaultGasPrice`.
+- @cosmjs/cosmwasm-stargate: Export `defaultGasLimits`.
 
 ### Changed
 
