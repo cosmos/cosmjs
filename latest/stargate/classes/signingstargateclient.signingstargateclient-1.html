@@ -94,6 +94,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingstargateclient.signingstargateclient-1.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#delegatetokens" class="tsd-kind-icon">delegate<wbr>Tokens</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingstargateclient.signingstargateclient-1.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="signingstargateclient.signingstargateclient-1.html#forcegetqueryclient" class="tsd-kind-icon">force<wbr>Get<wbr>Query<wbr>Client</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="signingstargateclient.signingstargateclient-1.html#forcegettmclient" class="tsd-kind-icon">force<wbr>Get<wbr>TmClient</a></li>
@@ -110,6 +111,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#sendtokens" class="tsd-kind-icon">send<wbr>Tokens</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#sign" class="tsd-kind-icon">sign</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#undelegatetokens" class="tsd-kind-icon">undelegate<wbr>Tokens</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingstargateclient.signingstargateclient-1.html#withdrawrewards" class="tsd-kind-icon">withdraw<wbr>Rewards</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="signingstargateclient.signingstargateclient-1.html#connect" class="tsd-kind-icon">connect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="signingstargateclient.signingstargateclient-1.html#connectwithsigner" class="tsd-kind-icon">connect<wbr>With<wbr>Signer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="signingstargateclient.signingstargateclient-1.html#offline" class="tsd-kind-icon">offline</a></li>
@@ -126,7 +129,7 @@
 					<div class="tsd-signature tsd-kind-icon">fees<span class="tsd-signature-symbol">:</span> <a href="../interfaces/signingstargateclient.cosmosfeetable.html" class="tsd-signature-type" data-tsd-kind="Interface">CosmosFeeTable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L135">stargate/src/signingstargateclient.ts:135</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L143">stargate/src/signingstargateclient.ts:143</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -136,7 +139,7 @@
 					<div class="tsd-signature tsd-kind-icon">registry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Registry</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L136">stargate/src/signingstargateclient.ts:136</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L144">stargate/src/signingstargateclient.ts:144</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,13 +157,45 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#broadcasttx">broadcastTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L270">stargate/src/stargateclient.ts:270</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L270">stargate/src/stargateclient.ts:270</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>tx: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="delegatetokens" class="tsd-anchor"></a>
+					<h3>delegate<wbr>Tokens</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><a href="../modules/codec_cosmos_base_v1beta1_coin.html#coin-1" class="tsd-signature-type" data-tsd-kind="Variable">Coin</a>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L209">stargate/src/signingstargateclient.ts:209</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>delegatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>validatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>amount: <a href="../modules/codec_cosmos_base_v1beta1_coin.html#coin-1" class="tsd-signature-type" data-tsd-kind="Variable">Coin</a></h5>
+								</li>
+								<li>
+									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -178,7 +213,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#disconnect">disconnect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L266">stargate/src/stargateclient.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L266">stargate/src/stargateclient.ts:266</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -196,7 +231,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#forcegetqueryclient">forceGetQueryClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L142">stargate/src/stargateclient.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L142">stargate/src/stargateclient.ts:142</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.queryclient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_auth.authextension.html" class="tsd-signature-type" data-tsd-kind="Interface">AuthExtension</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_bank.bankextension.html" class="tsd-signature-type" data-tsd-kind="Interface">BankExtension</a></h4>
@@ -214,7 +249,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#forcegettmclient">forceGetTmClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L133">stargate/src/stargateclient.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L133">stargate/src/stargateclient.ts:133</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Tendermint34Client</span></h4>
@@ -232,7 +267,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getaccount">getAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L166">stargate/src/stargateclient.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L166">stargate/src/stargateclient.ts:166</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -256,7 +291,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getaccountunverified">getAccountUnverified</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L173">stargate/src/stargateclient.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L173">stargate/src/stargateclient.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -280,7 +315,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getallbalancesunverified">getAllBalancesUnverified</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L218">stargate/src/stargateclient.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L218">stargate/src/stargateclient.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +346,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getbalance">getBalance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L207">stargate/src/stargateclient.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L207">stargate/src/stargateclient.ts:207</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -338,7 +373,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getblock">getBlock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L190">stargate/src/stargateclient.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L190">stargate/src/stargateclient.ts:190</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -362,7 +397,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getchainid">getChainId</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L149">stargate/src/stargateclient.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L149">stargate/src/stargateclient.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -380,7 +415,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getheight">getHeight</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L160">stargate/src/stargateclient.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L160">stargate/src/stargateclient.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -398,7 +433,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#getsequence">getSequence</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L178">stargate/src/stargateclient.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L178">stargate/src/stargateclient.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -422,7 +457,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#gettx">getTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L223">stargate/src/stargateclient.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L223">stargate/src/stargateclient.ts:223</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -446,7 +481,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#searchtx">searchTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L228">stargate/src/stargateclient.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L228">stargate/src/stargateclient.ts:228</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -472,7 +507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L184">stargate/src/signingstargateclient.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L192">stargate/src/signingstargateclient.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -504,7 +539,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L222">stargate/src/signingstargateclient.ts:222</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L268">stargate/src/signingstargateclient.ts:268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -549,7 +584,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L201">stargate/src/signingstargateclient.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L247">stargate/src/signingstargateclient.ts:247</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -571,6 +606,67 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="undelegatetokens" class="tsd-anchor"></a>
+					<h3>undelegate<wbr>Tokens</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">undelegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><a href="../modules/codec_cosmos_base_v1beta1_coin.html#coin-1" class="tsd-signature-type" data-tsd-kind="Variable">Coin</a>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L222">stargate/src/signingstargateclient.ts:222</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>delegatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>validatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>amount: <a href="../modules/codec_cosmos_base_v1beta1_coin.html#coin-1" class="tsd-signature-type" data-tsd-kind="Variable">Coin</a></h5>
+								</li>
+								<li>
+									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="withdrawrewards" class="tsd-anchor"></a>
+					<h3>withdraw<wbr>Rewards</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">withdraw<wbr>Rewards<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L235">stargate/src/signingstargateclient.ts:235</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>delegatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>validatorAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/stargateclient.html#broadcasttxresponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
 					<a name="connect" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> connect</h3>
@@ -582,7 +678,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="stargateclient.stargateclient-1.html">StargateClient</a>.<a href="stargateclient.stargateclient-1.html#connect">connect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/stargateclient.ts#L121">stargate/src/stargateclient.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/stargateclient.ts#L121">stargate/src/stargateclient.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -605,7 +701,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L141">stargate/src/signingstargateclient.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L149">stargate/src/signingstargateclient.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -634,7 +730,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a2fd121bc/packages/stargate/src/signingstargateclient.ts#L159">stargate/src/signingstargateclient.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cb45cdf2c/packages/stargate/src/signingstargateclient.ts#L167">stargate/src/signingstargateclient.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -688,6 +784,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="signingstargateclient.signingstargateclient-1.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingstargateclient.signingstargateclient-1.html#delegatetokens" class="tsd-kind-icon">delegate<wbr>Tokens</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="signingstargateclient.signingstargateclient-1.html#disconnect" class="tsd-kind-icon">disconnect</a>
 							</li>
@@ -736,6 +835,12 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="signingstargateclient.signingstargateclient-1.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingstargateclient.signingstargateclient-1.html#undelegatetokens" class="tsd-kind-icon">undelegate<wbr>Tokens</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingstargateclient.signingstargateclient-1.html#withdrawrewards" class="tsd-kind-icon">withdraw<wbr>Rewards</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
 								<a href="signingstargateclient.signingstargateclient-1.html#connect" class="tsd-kind-icon">connect</a>
 							</li>
@@ -760,6 +865,12 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/signingstargateclient.signingstargateclientoptions.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/signingstargateclient.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/signingstargateclient.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="../modules/signingstargateclient.html#defaultregistrytypes" class="tsd-kind-icon">default<wbr>Registry<wbr>Types</a>
