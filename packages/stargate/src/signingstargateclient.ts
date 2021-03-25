@@ -128,7 +128,7 @@ export interface SigningStargateClientOptions {
   readonly aminoTypes?: AminoTypes;
   readonly prefix?: string;
   readonly gasPrice?: GasPrice;
-  readonly gasLimits?: GasLimits<CosmosFeeTable>;
+  readonly gasLimits?: Partial<GasLimits<CosmosFeeTable>>;
 }
 
 export class SigningStargateClient extends StargateClient {
@@ -173,7 +173,7 @@ export class SigningStargateClient extends StargateClient {
       registry = createDefaultRegistry(),
       aminoTypes = new AminoTypes({ prefix: options.prefix }),
       gasPrice = defaultGasPrice,
-      gasLimits = defaultGasLimits,
+      gasLimits = {},
     } = options;
     this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
     this.registry = registry;
