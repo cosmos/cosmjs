@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { MsgDelegate as LaunchpadMsgDelegate } from "@cosmjs/launchpad";
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import protobuf from "protobufjs/minimal";
 
+import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
@@ -346,7 +346,7 @@ describe("SigningStargateClient", () => {
                 customDelegatorAddress,
                 customValidatorAddress,
                 customAmount,
-              }: CustomMsgDelegate): LaunchpadMsgDelegate["value"] => {
+              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
                 assert(customDelegatorAddress, "missing customDelegatorAddress");
                 assert(customValidatorAddress, "missing validatorAddress");
                 assert(customAmount, "missing amount");
@@ -365,7 +365,7 @@ describe("SigningStargateClient", () => {
                 delegator_address,
                 validator_address,
                 amount,
-              }: LaunchpadMsgDelegate["value"]): CustomMsgDelegate => ({
+              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
                 customDelegatorAddress: delegator_address,
                 customValidatorAddress: validator_address,
                 customAmount: Coin.fromPartial(amount),
@@ -614,7 +614,7 @@ describe("SigningStargateClient", () => {
                 customDelegatorAddress,
                 customValidatorAddress,
                 customAmount,
-              }: CustomMsgDelegate): LaunchpadMsgDelegate["value"] => {
+              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
                 assert(customDelegatorAddress, "missing customDelegatorAddress");
                 assert(customValidatorAddress, "missing validatorAddress");
                 assert(customAmount, "missing amount");
@@ -633,7 +633,7 @@ describe("SigningStargateClient", () => {
                 delegator_address,
                 validator_address,
                 amount,
-              }: LaunchpadMsgDelegate["value"]): CustomMsgDelegate => ({
+              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
                 customDelegatorAddress: delegator_address,
                 customValidatorAddress: validator_address,
                 customAmount: Coin.fromPartial(amount),

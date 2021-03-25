@@ -3,9 +3,15 @@ import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { MsgDelegate as LaunchpadMsgDelegate } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
-import { AminoTypes, assertIsBroadcastTxSuccess, coin, coins, GasPrice } from "@cosmjs/stargate";
+import {
+  AminoMsgDelegate,
+  AminoTypes,
+  assertIsBroadcastTxSuccess,
+  coin,
+  coins,
+  GasPrice,
+} from "@cosmjs/stargate";
 import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
@@ -712,7 +718,7 @@ describe("SigningCosmWasmClient", () => {
                 customDelegatorAddress,
                 customValidatorAddress,
                 customAmount,
-              }: CustomMsgDelegate): LaunchpadMsgDelegate["value"] => {
+              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
                 assert(customDelegatorAddress, "missing customDelegatorAddress");
                 assert(customValidatorAddress, "missing validatorAddress");
                 assert(customAmount, "missing amount");
@@ -731,7 +737,7 @@ describe("SigningCosmWasmClient", () => {
                 delegator_address,
                 validator_address,
                 amount,
-              }: LaunchpadMsgDelegate["value"]): CustomMsgDelegate => ({
+              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
                 customDelegatorAddress: delegator_address,
                 customValidatorAddress: validator_address,
                 customAmount: Coin.fromPartial(amount),

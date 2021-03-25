@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/naming-convention */
+const { Secp256k1HdWallet } = require("@cosmjs/amino");
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-launchpad");
-const { Secp256k1HdWallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";

@@ -37,12 +37,13 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
   "dependencies": {
-    "@cosmjs/launchpad": "^0.25.0-alpha.1",
+    "@cosmjs/amino": "^0.25.0-alpha.1",
     "@cosmjs/utils": "^0.25.0-alpha.1",
     "ledger-cosmos-js": "^2.1.8",
     "semver": "^7.3.2"
   },
   "devDependencies": {
+    "@cosmjs/launchpad": "^0.25.0-alpha.1",
     "@cosmjs/stargate": "^0.25.0-alpha.1",
     "@ledgerhq/hw-transport": "^5.25.0",
     "@ledgerhq/hw-transport-node-hid": "^5.25.0",

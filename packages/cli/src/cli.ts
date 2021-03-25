@@ -86,7 +86,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         Secp256k1HdWallet,
         Secp256k1Wallet,
         StdFee,
-      } from "@cosmjs/launchpad";
+      } from "@cosmjs/amino";
       import { Decimal } from "@cosmjs/math";
       import { assert, arrayContentEquals, sleep } from "@cosmjs/utils";
 
