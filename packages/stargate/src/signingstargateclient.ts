@@ -207,41 +207,41 @@ export class SigningStargateClient extends StargateClient {
   }
 
   public async delegateTokens(
-    senderAddress: string,
+    delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-      value: MsgDelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+      value: MsgDelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
     };
-    return this.signAndBroadcast(senderAddress, [delegateMsg], this.fees.delegate, memo);
+    return this.signAndBroadcast(delegatorAddress, [delegateMsg], this.fees.delegate, memo);
   }
 
   public async undelegateTokens(
-    senderAddress: string,
+    delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg = {
       typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-      value: MsgUndelegate.fromPartial({ delegatorAddress: senderAddress, validatorAddress, amount }),
+      value: MsgUndelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
     };
-    return this.signAndBroadcast(senderAddress, [undelegateMsg], this.fees.undelegate, memo);
+    return this.signAndBroadcast(delegatorAddress, [undelegateMsg], this.fees.undelegate, memo);
   }
 
   public async withdrawRewards(
-    senderAddress: string,
+    delegatorAddress: string,
     validatorAddress: string,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawMsg = {
       typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: senderAddress, validatorAddress }),
+      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
     };
-    return this.signAndBroadcast(senderAddress, [withdrawMsg], this.fees.withdraw, memo);
+    return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
   }
 
   public async signAndBroadcast(
