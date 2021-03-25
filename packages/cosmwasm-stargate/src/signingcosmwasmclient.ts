@@ -2,7 +2,6 @@
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
 import {
   ChangeAdminResult,
-  CosmWasmFeeTable,
   ExecuteResult,
   InstantiateOptions,
   InstantiateResult,
@@ -30,6 +29,8 @@ import {
   buildFeeTable,
   Coin,
   CosmosFeeTable,
+  defaultGasLimits as defaultStargateGasLimits,
+  defaultGasPrice,
   defaultRegistryTypes,
   GasLimits,
   GasPrice,
@@ -54,6 +55,18 @@ import {
 } from "./codec/x/wasm/internal/types/tx";
 import { CosmWasmClient } from "./cosmwasmclient";
 
+/**
+ * These fees are used by the higher level methods of SigningCosmWasmClient
+ */
+export interface CosmWasmFeeTable extends CosmosFeeTable {
+  readonly upload: StdFee;
+  readonly init: StdFee;
+  readonly exec: StdFee;
+  readonly migrate: StdFee;
+  /** Paid when setting the contract admin to a new address or unsetting it */
+  readonly changeAdmin: StdFee;
+}
+
 function prepareBuilder(builder: string | undefined): string {
   if (builder === undefined) {
     return ""; // normalization needed by backend
@@ -63,13 +76,12 @@ function prepareBuilder(builder: string | undefined): string {
   }
 }
 
-const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
+export const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
+  ...defaultStargateGasLimits,
   upload: 1_500_000,
   init: 500_000,
   migrate: 200_000,
   exec: 200_000,
-  send: 80_000,
   changeAdmin: 80_000,
 };
 
