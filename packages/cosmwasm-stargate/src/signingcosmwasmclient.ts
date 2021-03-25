@@ -94,7 +94,7 @@ export interface SigningCosmWasmClientOptions {
   readonly aminoTypes?: AminoTypes;
   readonly prefix?: string;
   readonly gasPrice?: GasPrice;
-  readonly gasLimits?: GasLimits<CosmosFeeTable>;
+  readonly gasLimits?: Partial<GasLimits<CosmosFeeTable>>;
 }
 
 /** Use for testing only */
@@ -129,7 +129,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       registry = createDefaultRegistry(),
       aminoTypes = new AminoTypes({ additions: cosmWasmTypes, prefix: options.prefix }),
       gasPrice = defaultGasPrice,
-      gasLimits = defaultGasLimits,
+      gasLimits = {},
     } = options;
     this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
     this.registry = registry;
