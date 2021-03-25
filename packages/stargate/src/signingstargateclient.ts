@@ -71,8 +71,8 @@ export interface CosmosFeeTable extends FeeTable {
   readonly withdraw: StdFee;
 }
 
-const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = {
+export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+export const defaultGasLimits: GasLimits<CosmosFeeTable> = {
   send: 80000,
   delegate: 160000,
   undelegate: 160000,

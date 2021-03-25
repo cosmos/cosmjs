@@ -84,6 +84,8 @@ export {
 } from "./stargateclient";
 export {
   CosmosFeeTable,
+  defaultGasLimits,
+  defaultGasPrice,
   defaultRegistryTypes,
   SignerData,
   SigningStargateClient,
