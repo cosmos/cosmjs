@@ -110,7 +110,7 @@ export function coinFromProto(input: Coin): Coin {
 
 /** Use for testing only */
 export interface PrivateStargateClient {
-  readonly tmClient: Tendermint34Client;
+  readonly tmClient: Tendermint34Client | undefined;
 }
 
 export class StargateClient {
