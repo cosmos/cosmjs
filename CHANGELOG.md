@@ -46,6 +46,10 @@ and this project adheres to
   not connect to Tendermint. This allows offline signing.
 - @cosmjs/stargate: Add `makeMultisignedTx` which allows you to assemble a
   transaction signed by a multisig account.
+- @cosmjs/stargate: Add `delegateTokens`, `undelegateTokens` and
+  `withdrawRewards` methods to `SigningStargateClient`.
+- @cosmjs/stargate: Export `defaultGasLimits` and `defaultGasPrice`.
+- @cosmjs/cosmwasm-stargate: Export `defaultGasLimits`.
 
 ### Changed
 

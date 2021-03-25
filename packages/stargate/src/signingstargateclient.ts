@@ -66,10 +66,18 @@ import { BroadcastTxResponse, StargateClient } from "./stargateclient";
  */
 export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
+  readonly delegate: StdFee;
+  readonly undelegate: StdFee;
+  readonly withdraw: StdFee;
 }
 
-const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
+export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+export const defaultGasLimits: GasLimits<CosmosFeeTable> = {
+  send: 80_000,
+  delegate: 160_000,
+  undelegate: 160_000,
+  withdraw: 160_000,
+};
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -196,6 +204,44 @@ export class SigningStargateClient extends StargateClient {
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
+  }
+
+  public async delegateTokens(
+    delegatorAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const delegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+      value: MsgDelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [delegateMsg], this.fees.delegate, memo);
+  }
+
+  public async undelegateTokens(
+    delegatorAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const undelegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+      value: MsgUndelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [undelegateMsg], this.fees.undelegate, memo);
+  }
+
+  public async withdrawRewards(
+    delegatorAddress: string,
+    validatorAddress: string,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const withdrawMsg = {
+      typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
   }
 
   public async signAndBroadcast(

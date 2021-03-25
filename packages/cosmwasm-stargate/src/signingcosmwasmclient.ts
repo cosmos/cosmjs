@@ -2,7 +2,6 @@
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
 import {
   ChangeAdminResult,
-  CosmWasmFeeTable,
   ExecuteResult,
   InstantiateOptions,
   InstantiateResult,
@@ -30,6 +29,8 @@ import {
   buildFeeTable,
   Coin,
   CosmosFeeTable,
+  defaultGasLimits as defaultStargateGasLimits,
+  defaultGasPrice,
   defaultRegistryTypes,
   GasLimits,
   GasPrice,
@@ -37,6 +38,8 @@ import {
   logs,
   StdFee,
 } from "@cosmjs/stargate";
+import { MsgWithdrawDelegatorReward } from "@cosmjs/stargate/build/codec/cosmos/distribution/v1beta1/tx";
+import { MsgDelegate, MsgUndelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
@@ -54,6 +57,18 @@ import {
 } from "./codec/x/wasm/internal/types/tx";
 import { CosmWasmClient } from "./cosmwasmclient";
 
+/**
+ * These fees are used by the higher level methods of SigningCosmWasmClient
+ */
+export interface CosmWasmFeeTable extends CosmosFeeTable {
+  readonly upload: StdFee;
+  readonly init: StdFee;
+  readonly exec: StdFee;
+  readonly migrate: StdFee;
+  /** Paid when setting the contract admin to a new address or unsetting it */
+  readonly changeAdmin: StdFee;
+}
+
 function prepareBuilder(builder: string | undefined): string {
   if (builder === undefined) {
     return ""; // normalization needed by backend
@@ -63,13 +78,12 @@ function prepareBuilder(builder: string | undefined): string {
   }
 }
 
-const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
+export const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
+  ...defaultStargateGasLimits,
   upload: 1_500_000,
   init: 500_000,
   migrate: 200_000,
   exec: 200_000,
-  send: 80_000,
   changeAdmin: 80_000,
 };
 
@@ -318,6 +332,44 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
+  }
+
+  public async delegateTokens(
+    delegatorAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const delegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+      value: MsgDelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [delegateMsg], this.fees.delegate, memo);
+  }
+
+  public async undelegateTokens(
+    delegatorAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const undelegateMsg = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+      value: MsgUndelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [undelegateMsg], this.fees.undelegate, memo);
+  }
+
+  public async withdrawRewards(
+    delegatorAddress: string,
+    validatorAddress: string,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const withdrawMsg = {
+      typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
   }
 
   /**

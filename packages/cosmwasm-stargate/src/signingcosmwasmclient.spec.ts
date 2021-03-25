@@ -91,6 +91,18 @@ describe("SigningCosmWasmClient", () => {
           amount: coins(251200, "utest"),
           gas: "80000",
         },
+        delegate: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
+        undelegate: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
+        withdraw: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
       });
     });
 
@@ -129,6 +141,18 @@ describe("SigningCosmWasmClient", () => {
         changeAdmin: {
           amount: coins(2000, "ucosm"),
           gas: "80000",
+        },
+        delegate: {
+          amount: coins(4000, "ucosm"),
+          gas: "160000",
+        },
+        undelegate: {
+          amount: coins(4000, "ucosm"),
+          gas: "160000",
+        },
+        withdraw: {
+          amount: coins(4000, "ucosm"),
+          gas: "160000",
         },
       });
     });
@@ -169,6 +193,18 @@ describe("SigningCosmWasmClient", () => {
         changeAdmin: {
           amount: coins(251200, "utest"),
           gas: "80000",
+        },
+        delegate: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
+        undelegate: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
+        withdraw: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
         },
       });
     });

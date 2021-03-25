@@ -40,6 +40,33 @@ describe("SigningStargateClient", () => {
           ],
           gas: "80000",
         },
+        delegate: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
+        undelegate: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
+        withdraw: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
       });
     });
 
@@ -71,6 +98,33 @@ describe("SigningStargateClient", () => {
           ],
           gas: "80000",
         },
+        delegate: {
+          amount: [
+            {
+              amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        undelegate: {
+          amount: [
+            {
+              amount: "502400",
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        withdraw: {
+          amount: [
+            {
+              amount: "502400",
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
       });
     });
 
@@ -79,6 +133,7 @@ describe("SigningStargateClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasLimits = {
         send: 160000,
+        delegate: 120000,
       };
       const options = { gasLimits: gasLimits };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
@@ -88,6 +143,33 @@ describe("SigningStargateClient", () => {
           amount: [
             {
               amount: "4000", // 0.025 * 160_000
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
+        delegate: {
+          amount: [
+            {
+              amount: "3000", // 0.025 * 120_000
+              denom: "ucosm",
+            },
+          ],
+          gas: "120000",
+        },
+        undelegate: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
+        withdraw: {
+          amount: [
+            {
+              amount: "4000",
               denom: "ucosm",
             },
           ],
@@ -111,6 +193,33 @@ describe("SigningStargateClient", () => {
           amount: [
             {
               amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        delegate: {
+          amount: [
+            {
+              amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        undelegate: {
+          amount: [
+            {
+              amount: "502400",
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        withdraw: {
+          amount: [
+            {
+              amount: "502400",
               denom: "utest",
             },
           ],
