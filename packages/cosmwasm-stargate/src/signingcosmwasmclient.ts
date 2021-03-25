@@ -133,7 +133,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return new SigningCosmWasmClient(tmClient, signer, options);
   }
 
-  private constructor(
+  protected constructor(
     tmClient: Tendermint34Client,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
