@@ -48,6 +48,7 @@ and this project adheres to
   transaction signed by a multisig account.
 - @cosmjs/stargate: Add `delegateTokens`, `undelegateTokens` and
   `withdrawRewards` methods to `SigningStargateClient`.
+- @cosmjs/stargate: Export `defaultGasLimits` and `defaultGasPrice`.
 
 ### Changed
 
