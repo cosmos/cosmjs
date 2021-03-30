@@ -241,7 +241,10 @@ describe("SigningStargateClient", () => {
 
       // no tokens here
       const before = await client.getBalance(beneficiaryAddress, "ucosm");
-      expect(before).toBeNull();
+      expect(before).toEqual({
+        denom: "ucosm",
+        amount: "0",
+      });
 
       // send
       const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);
@@ -265,7 +268,10 @@ describe("SigningStargateClient", () => {
 
       // no tokens here
       const before = await client.getBalance(beneficiaryAddress, "ucosm");
-      expect(before).toBeNull();
+      expect(before).toEqual({
+        denom: "ucosm",
+        amount: "0",
+      });
 
       // send
       const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);

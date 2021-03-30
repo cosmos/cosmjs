@@ -213,33 +213,39 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
-    it("returns null for non-existent balance", async () => {
+    it("returns 0 for non-existent balance", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
       const response = await client.getBalance(unused.address, "gintonic");
-      expect(response).toBeNull();
+      expect(response).toEqual({
+        denom: "gintonic",
+        amount: "0",
+      });
 
       client.disconnect();
     });
 
-    it("returns null for non-existent address", async () => {
+    it("returns 0 for non-existent address", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
       const response = await client.getBalance(nonExistentAddress, simapp.denomFee);
-      expect(response).toBeNull();
+      expect(response).toEqual({
+        denom: simapp.denomFee,
+        amount: "0",
+      });
 
       client.disconnect();
     });
   });
 
-  describe("getAllBalancesUnverified", () => {
+  describe("getAllBalances", () => {
     it("returns all balances for unused account", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const balances = await client.getAllBalancesUnverified(unused.address);
+      const balances = await client.getAllBalances(unused.address);
       expect(balances).toEqual([
         {
           amount: unused.balanceFee,
@@ -258,7 +264,7 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const balances = await client.getAllBalancesUnverified(nonExistentAddress);
+      const balances = await client.getAllBalances(nonExistentAddress);
       expect(balances).toEqual([]);
 
       client.disconnect();
