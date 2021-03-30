@@ -6,7 +6,6 @@ import {
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
 
 import { Account, accountFromAny } from "./accounts";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";

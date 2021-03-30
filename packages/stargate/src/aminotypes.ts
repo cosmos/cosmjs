@@ -42,16 +42,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
-      toAmino: ({ fromAddress, toAddress, amount }: MsgSend): AminoMsgSend["value"] => {
-        assertDefinedAndNotNull(fromAddress, "missing fromAddress");
-        assertDefinedAndNotNull(toAddress, "missing toAddress");
-        assertDefinedAndNotNull(amount, "missing amount");
-        return {
-          from_address: fromAddress,
-          to_address: toAddress,
-          amount: amount,
-        };
-      },
+      toAmino: ({ fromAddress, toAddress, amount }: MsgSend): AminoMsgSend["value"] => ({
+        from_address: fromAddress,
+        to_address: toAddress,
+        amount: [...amount],
+      }),
       fromAmino: ({ from_address, to_address, amount }: AminoMsgSend["value"]): MsgSend => ({
         fromAddress: from_address,
         toAddress: to_address,
@@ -60,28 +55,16 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.bank.v1beta1.MsgMultiSend": {
       aminoType: "cosmos-sdk/MsgMultiSend",
-      toAmino: ({ inputs, outputs }: MsgMultiSend): AminoMsgMultiSend["value"] => {
-        assertDefinedAndNotNull(inputs, "missing inputs");
-        assertDefinedAndNotNull(outputs, "missing outputs");
-        return {
-          inputs: inputs.map((input) => {
-            assertDefinedAndNotNull(input.address, "missing input.address");
-            assertDefinedAndNotNull(input.coins, "missing input.amount");
-            return {
-              address: input.address,
-              coins: input.coins,
-            };
-          }),
-          outputs: outputs.map((output) => {
-            assertDefinedAndNotNull(output.address, "missing output.address");
-            assertDefinedAndNotNull(output.coins, "missing output.coins");
-            return {
-              address: output.address,
-              coins: output.coins,
-            };
-          }),
-        };
-      },
+      toAmino: ({ inputs, outputs }: MsgMultiSend): AminoMsgMultiSend["value"] => ({
+        inputs: inputs.map((input) => ({
+          address: input.address,
+          coins: [...input.coins],
+        })),
+        outputs: outputs.map((output) => ({
+          address: output.address,
+          coins: [...output.coins],
+        })),
+      }),
       fromAmino: ({ inputs, outputs }: AminoMsgMultiSend["value"]): MsgMultiSend => ({
         inputs: inputs.map((input) => ({
           address: input.address,
@@ -95,14 +78,10 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
       aminoType: "cosmos-sdk/MsgFundCommunityPool",
-      toAmino: ({ amount, depositor }: MsgFundCommunityPool): AminoMsgFundCommunityPool["value"] => {
-        assertDefinedAndNotNull(amount);
-        assertDefinedAndNotNull(depositor);
-        return {
-          amount: amount,
-          depositor: depositor,
-        };
-      },
+      toAmino: ({ amount, depositor }: MsgFundCommunityPool): AminoMsgFundCommunityPool["value"] => ({
+        amount: [...amount],
+        depositor: depositor,
+      }),
       fromAmino: ({ amount, depositor }: AminoMsgFundCommunityPool["value"]): MsgFundCommunityPool => ({
         amount: [...amount],
         depositor: depositor,
@@ -113,14 +92,10 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       toAmino: ({
         delegatorAddress,
         withdrawAddress,
-      }: MsgSetWithdrawAddress): AminoMsgSetWithdrawAddress["value"] => {
-        assertDefinedAndNotNull(delegatorAddress);
-        assertDefinedAndNotNull(withdrawAddress);
-        return {
-          delegator_address: delegatorAddress,
-          withdraw_address: withdrawAddress,
-        };
-      },
+      }: MsgSetWithdrawAddress): AminoMsgSetWithdrawAddress["value"] => ({
+        delegator_address: delegatorAddress,
+        withdraw_address: withdrawAddress,
+      }),
       fromAmino: ({
         delegator_address,
         withdraw_address,
@@ -134,14 +109,10 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       toAmino: ({
         delegatorAddress,
         validatorAddress,
-      }: MsgWithdrawDelegatorReward): AminoMsgWithdrawDelegatorReward["value"] => {
-        assertDefinedAndNotNull(delegatorAddress);
-        assertDefinedAndNotNull(validatorAddress);
-        return {
-          delegator_address: delegatorAddress,
-          validator_address: validatorAddress,
-        };
-      },
+      }: MsgWithdrawDelegatorReward): AminoMsgWithdrawDelegatorReward["value"] => ({
+        delegator_address: delegatorAddress,
+        validator_address: validatorAddress,
+      }),
       fromAmino: ({
         delegator_address,
         validator_address,
@@ -154,12 +125,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       aminoType: "cosmos-sdk/MsgWithdrawValidatorCommission",
       toAmino: ({
         validatorAddress,
-      }: MsgWithdrawValidatorCommission): AminoMsgWithdrawValidatorCommission["value"] => {
-        assertDefinedAndNotNull(validatorAddress);
-        return {
-          validator_address: validatorAddress,
-        };
-      },
+      }: MsgWithdrawValidatorCommission): AminoMsgWithdrawValidatorCommission["value"] => ({
+        validator_address: validatorAddress,
+      }),
       fromAmino: ({
         validator_address,
       }: AminoMsgWithdrawValidatorCommission["value"]): MsgWithdrawValidatorCommission => ({
@@ -174,9 +142,6 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorDstAddress,
         amount,
       }: MsgBeginRedelegate): AminoMsgBeginRedelegate["value"] => {
-        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
-        assertDefinedAndNotNull(validatorSrcAddress, "missing validatorSrcAddress");
-        assertDefinedAndNotNull(validatorDstAddress, "missing validatorDstAddress");
         assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
@@ -209,20 +174,8 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         value,
       }: MsgCreateValidator): AminoMsgCreateValidator["value"] => {
         assertDefinedAndNotNull(description, "missing description");
-        assertDefinedAndNotNull(description.moniker, "missing description.moniker");
-        assertDefinedAndNotNull(description.identity, "missing description.identity");
-        assertDefinedAndNotNull(description.website, "missing description.website");
-        assertDefinedAndNotNull(description.securityContact, "missing description.securityContact");
-        assertDefinedAndNotNull(description.details, "missing description.details");
         assertDefinedAndNotNull(commission, "missing commission");
-        assertDefinedAndNotNull(commission.rate, "missing commission.rate");
-        assertDefinedAndNotNull(commission.maxRate, "missing commission.maxRate");
-        assertDefinedAndNotNull(commission.maxChangeRate, "missing commission.maxChangeRate");
-        assertDefinedAndNotNull(minSelfDelegation, "missing minSelfDelegation");
-        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
-        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         assertDefinedAndNotNull(pubkey, "missing pubkey");
-        assertDefinedAndNotNull(pubkey.value, "missing pubkey.value");
         assertDefinedAndNotNull(value, "missing value");
         return {
           description: {
@@ -290,8 +243,6 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     "/cosmos.staking.v1beta1.MsgDelegate": {
       aminoType: "cosmos-sdk/MsgDelegate",
       toAmino: ({ delegatorAddress, validatorAddress, amount }: MsgDelegate): AminoMsgDelegate["value"] => {
-        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
-        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
@@ -318,14 +269,6 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorAddress,
       }: MsgEditValidator): AminoMsgEditValidator["value"] => {
         assertDefinedAndNotNull(description, "missing description");
-        assertDefinedAndNotNull(description.moniker, "missing description.moniker");
-        assertDefinedAndNotNull(description.identity, "missing description.identity");
-        assertDefinedAndNotNull(description.website, "missing description.website");
-        assertDefinedAndNotNull(description.securityContact, "missing description.securityContact");
-        assertDefinedAndNotNull(description.details, "missing description.details");
-        assertDefinedAndNotNull(commissionRate, "missing commissionRate");
-        assertDefinedAndNotNull(minSelfDelegation, "missing minSelfDelegation");
-        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         return {
           description: {
             moniker: description.moniker,
@@ -364,8 +307,6 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorAddress,
         amount,
       }: MsgUndelegate): AminoMsgUndelegate["value"] => {
-        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
-        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
