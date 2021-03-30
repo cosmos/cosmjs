@@ -171,7 +171,7 @@ export class SigningStargateClient extends StargateClient {
     return new SigningStargateClient(undefined, signer, options);
   }
 
-  private constructor(
+  protected constructor(
     tmClient: Tendermint34Client | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,

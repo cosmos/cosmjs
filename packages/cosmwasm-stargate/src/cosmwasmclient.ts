@@ -42,13 +42,13 @@ import { setupWasmExtension, WasmExtension } from "./queries";
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: Tendermint34Client;
-  readonly queryClient: QueryClient & AuthExtension & BankExtension & WasmExtension;
+  readonly tmClient: Tendermint34Client | undefined;
+  readonly queryClient: (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: Tendermint34Client;
-  private readonly queryClient: QueryClient & AuthExtension & BankExtension & WasmExtension;
+  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly queryClient: (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined;
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
@@ -57,19 +57,45 @@ export class CosmWasmClient {
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client) {
-    this.tmClient = tmClient;
-    this.queryClient = QueryClient.withExtensions(
-      tmClient,
-      setupAuthExtension,
-      setupBankExtension,
-      setupWasmExtension,
-    );
+  protected constructor(tmClient: Tendermint34Client | undefined) {
+    if (tmClient) {
+      this.tmClient = tmClient;
+      this.queryClient = QueryClient.withExtensions(
+        tmClient,
+        setupAuthExtension,
+        setupBankExtension,
+        setupWasmExtension,
+      );
+    }
+  }
+
+  protected getTmClient(): Tendermint34Client | undefined {
+    return this.tmClient;
+  }
+
+  protected forceGetTmClient(): Tendermint34Client {
+    if (!this.tmClient) {
+      throw new Error(
+        "Tendermint client not available. You cannot use online functionality in offline mode.",
+      );
+    }
+    return this.tmClient;
+  }
+
+  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined {
+    return this.queryClient;
+  }
+
+  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & WasmExtension {
+    if (!this.queryClient) {
+      throw new Error("Query client not available. You cannot use online functionality in offline mode.");
+    }
+    return this.queryClient;
   }
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.tmClient.status();
+      const response = await this.forceGetTmClient().status();
       const chainId = response.nodeInfo.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -79,12 +105,12 @@ export class CosmWasmClient {
   }
 
   public async getHeight(): Promise<number> {
-    const status = await this.tmClient.status();
+    const status = await this.forceGetTmClient().status();
     return status.syncInfo.latestBlockHeight;
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const account = await this.queryClient.auth.account(searchAddress);
+    const account = await this.forceGetQueryClient().auth.account(searchAddress);
     return account ? accountFromAny(account) : null;
   }
 
@@ -101,7 +127,7 @@ export class CosmWasmClient {
   }
 
   public async getBlock(height?: number): Promise<Block> {
-    const response = await this.tmClient.block(height);
+    const response = await this.forceGetTmClient().block(height);
     return {
       id: toHex(response.blockId.hash).toUpperCase(),
       header: {
@@ -118,7 +144,7 @@ export class CosmWasmClient {
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
-    const balance = await this.queryClient.bank.balance(address, searchDenom);
+    const balance = await this.forceGetQueryClient().bank.balance(address, searchDenom);
     return balance ? coinFromProto(balance) : null;
   }
 
@@ -166,11 +192,11 @@ export class CosmWasmClient {
   }
 
   public disconnect(): void {
-    this.tmClient.disconnect();
+    if (this.tmClient) this.tmClient.disconnect();
   }
 
   public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
-    const response = await this.tmClient.broadcastTxCommit({ tx });
+    const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
     if (broadcastTxCommitSuccess(response)) {
       return {
         height: response.height,
@@ -197,7 +223,7 @@ export class CosmWasmClient {
   }
 
   public async getCodes(): Promise<readonly Code[]> {
-    const { codeInfos } = await this.queryClient.unverified.wasm.listCodeInfo();
+    const { codeInfos } = await this.forceGetQueryClient().unverified.wasm.listCodeInfo();
     return (codeInfos || []).map(
       (entry: CodeInfoResponse): Code => {
         assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
@@ -216,7 +242,7 @@ export class CosmWasmClient {
     const cached = this.codesCache.get(codeId);
     if (cached) return cached;
 
-    const { codeInfo, data } = await this.queryClient.unverified.wasm.getCode(codeId);
+    const { codeInfo, data } = await this.forceGetQueryClient().unverified.wasm.getCode(codeId);
     assert(
       codeInfo && codeInfo.codeId && codeInfo.creator && codeInfo.dataHash && data,
       "codeInfo missing or incomplete",
@@ -234,7 +260,7 @@ export class CosmWasmClient {
   }
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
-    const { contractInfos } = await this.queryClient.unverified.wasm.listContractsByCodeId(codeId);
+    const { contractInfos } = await this.forceGetQueryClient().unverified.wasm.listContractsByCodeId(codeId);
     return (contractInfos || []).map(
       ({ address, contractInfo }): Contract => {
         assert(address, "address missing");
@@ -260,7 +286,7 @@ export class CosmWasmClient {
     const {
       address: retrievedAddress,
       contractInfo,
-    } = await this.queryClient.unverified.wasm.getContractInfo(address);
+    } = await this.forceGetQueryClient().unverified.wasm.getContractInfo(address);
     if (!contractInfo) throw new Error(`No contract found at address "${address}"`);
     assert(retrievedAddress, "address missing");
     assert(contractInfo.codeId && contractInfo.creator && contractInfo.label, "contractInfo incomplete");
@@ -277,7 +303,7 @@ export class CosmWasmClient {
    * Throws an error if no contract was found at the address
    */
   public async getContractCodeHistory(address: string): Promise<readonly ContractCodeHistoryEntry[]> {
-    const result = await this.queryClient.unverified.wasm.getContractCodeHistory(address);
+    const result = await this.forceGetQueryClient().unverified.wasm.getContractCodeHistory(address);
     if (!result) throw new Error(`No contract history found for address "${address}"`);
     const operations: Record<number, "Init" | "Genesis" | "Migrate"> = {
       [ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT]: "Init",
@@ -306,7 +332,7 @@ export class CosmWasmClient {
     // just test contract existence
     await this.getContract(address);
 
-    const { data } = await this.queryClient.unverified.wasm.queryContractRaw(address, key);
+    const { data } = await this.forceGetQueryClient().unverified.wasm.queryContractRaw(address, key);
     return data ?? null;
   }
 
@@ -319,7 +345,7 @@ export class CosmWasmClient {
    */
   public async queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject> {
     try {
-      return await this.queryClient.unverified.wasm.queryContractSmart(address, queryMsg);
+      return await this.forceGetQueryClient().unverified.wasm.queryContractSmart(address, queryMsg);
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.startsWith("not found: contract")) {
@@ -334,7 +360,7 @@ export class CosmWasmClient {
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
-    const results = await this.tmClient.txSearchAll({ query: query });
+    const results = await this.forceGetTmClient().txSearchAll({ query: query });
     return results.txs.map((tx) => {
       return {
         height: tx.height,

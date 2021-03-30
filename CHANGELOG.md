@@ -50,6 +50,11 @@ and this project adheres to
   `withdrawRewards` methods to `SigningStargateClient`.
 - @cosmjs/stargate: Export `defaultGasLimits` and `defaultGasPrice`.
 - @cosmjs/cosmwasm-stargate: Export `defaultGasLimits`.
+- @cosmjs/stargate: `SigningStargateClient` constructor is now `protected`.
+- @cosmjs/cosmwasm-stargate: `SigningCosmWasmClient` constructor is now
+  `protected`.
+- @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.offline` static method
+  for constructing offline clients without a Tendermint client.
 
 ### Changed
 

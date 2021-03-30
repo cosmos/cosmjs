@@ -133,8 +133,24 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return new SigningCosmWasmClient(tmClient, signer, options);
   }
 
-  private constructor(
-    tmClient: Tendermint34Client,
+  /**
+   * Creates a client in offline mode.
+   *
+   * This should only be used in niche cases where you know exactly what you're doing,
+   * e.g. when building an offline signing application.
+   *
+   * When you try to use online functionality with such a signer, an
+   * exception will be raised.
+   */
+  public static async offline(
+    signer: OfflineSigner,
+    options: SigningCosmWasmClientOptions = {},
+  ): Promise<SigningCosmWasmClient> {
+    return new SigningCosmWasmClient(undefined, signer, options);
+  }
+
+  protected constructor(
+    tmClient: Tendermint34Client | undefined,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {
