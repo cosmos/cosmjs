@@ -16,7 +16,6 @@ import {
   Block,
   BroadcastTxResponse,
   Coin,
-  coinFromProto,
   IndexedTx,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -144,8 +143,7 @@ export class CosmWasmClient {
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
-    const balance = await this.forceGetQueryClient().bank.balance(address, searchDenom);
-    return balance ? coinFromProto(balance) : null;
+    return this.forceGetQueryClient().bank.balance(address, searchDenom);
   }
 
   public async getTx(id: string): Promise<IndexedTx | null> {

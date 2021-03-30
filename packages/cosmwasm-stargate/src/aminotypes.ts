@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
-import { AminoConverter, Coin, coinFromProto } from "@cosmjs/stargate";
+import { AminoConverter, Coin } from "@cosmjs/stargate";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
@@ -167,7 +167,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         code_id: codeId.toString(),
         label: label,
         init_msg: JSON.parse(fromUtf8(initMsg)),
-        funds: funds.map(coinFromProto),
+        funds: funds,
         admin: admin ?? undefined,
       };
     },
@@ -231,7 +231,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         sender: sender,
         contract: contract,
         msg: JSON.parse(fromUtf8(msg)),
-        funds: funds.map(coinFromProto),
+        funds: funds,
       };
     },
     fromAmino: ({ sender, contract, msg, funds }: AminoMsgExecuteContract["value"]): MsgExecuteContract => ({
