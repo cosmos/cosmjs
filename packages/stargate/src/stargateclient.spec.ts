@@ -131,12 +131,13 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
-    it("returns null for non-existent address", async () => {
+    it("rejects for non-existent address", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const account = await client.getSequence(nonExistentAddress);
-      expect(account).toBeNull();
+      await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
+        /account does not exist on chain/i,
+      );
 
       client.disconnect();
     });

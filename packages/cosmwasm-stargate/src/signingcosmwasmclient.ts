@@ -409,11 +409,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const accountFromChain = await this.getAccount(signerAddress);
-    if (!accountFromChain) {
-      throw new Error("Account not found");
-    }
-    const { accountNumber, sequence } = accountFromChain;
+    const { accountNumber, sequence } = await this.getSequence(signerAddress);
     const chainId = await this.getChainId();
     const txBody = {
       messages: messages,

@@ -82,24 +82,6 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("getSequence", () => {
-    it("works", async () => {
-      pendingWithoutWasmd();
-      const client = await CosmWasmClient.connect(wasmd.endpoint);
-      expect(await client.getSequence(unused.address)).toEqual({
-        accountNumber: unused.accountNumber,
-        sequence: unused.sequence,
-      });
-    });
-
-    it("returns null for missing accounts", async () => {
-      pendingWithoutWasmd();
-      const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const missing = makeRandomAddress();
-      expect(await client.getSequence(missing)).toBeNull();
-    });
-  });
-
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutWasmd();
@@ -117,6 +99,26 @@ describe("CosmWasmClient", () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
       expect(await client.getAccount(missing)).toBeNull();
+    });
+  });
+
+  describe("getSequence", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const client = await CosmWasmClient.connect(wasmd.endpoint);
+      expect(await client.getSequence(unused.address)).toEqual({
+        accountNumber: unused.accountNumber,
+        sequence: unused.sequence,
+      });
+    });
+
+    it("rejects for missing accounts", async () => {
+      pendingWithoutWasmd();
+      const client = await CosmWasmClient.connect(wasmd.endpoint);
+      const missing = makeRandomAddress();
+      await expectAsync(client.getSequence(missing)).toBeRejectedWithError(
+        /account does not exist on chain/i,
+      );
     });
   });
 

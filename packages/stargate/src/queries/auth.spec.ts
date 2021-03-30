@@ -53,23 +53,24 @@ describe("AuthExtension", () => {
       tmClient.disconnect();
     });
 
-    it("returns null for non-existent address", async () => {
+    it("rejects for non-existent address", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-      const account = await client.auth.account(nonExistentAddress);
 
-      expect(account).toBeNull();
+      await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(
+        /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
+      );
 
       tmClient.disconnect();
     });
   });
 
-  describe("unverified", () => {
+  describe("verified", () => {
     describe("account", () => {
       it("works for unused account", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-        const account = await client.auth.unverified.account(unused.address);
+        const account = await client.auth.verified.account(unused.address);
         assert(account);
 
         expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
@@ -86,7 +87,7 @@ describe("AuthExtension", () => {
       it("works for account with pubkey and non-zero sequence", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-        const account = await client.auth.unverified.account(validator.delegatorAddress);
+        const account = await client.auth.verified.account(validator.delegatorAddress);
         assert(account);
 
         expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
@@ -103,10 +104,9 @@ describe("AuthExtension", () => {
       it("returns null for non-existent address", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
+        const account = await client.auth.verified.account(nonExistentAddress);
 
-        await expectAsync(client.auth.unverified.account(nonExistentAddress)).toBeRejectedWithError(
-          /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
-        );
+        expect(account).toBeNull();
 
         tmClient.disconnect();
       });
