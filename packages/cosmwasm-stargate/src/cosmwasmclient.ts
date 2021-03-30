@@ -120,14 +120,17 @@ export class CosmWasmClient {
     }
   }
 
-  public async getSequence(address: string): Promise<SequenceResponse | null> {
+  public async getSequence(address: string): Promise<SequenceResponse> {
     const account = await this.getAccount(address);
-    return account
-      ? {
-          accountNumber: account.accountNumber,
-          sequence: account.sequence,
-        }
-      : null;
+    if (!account) {
+      throw new Error(
+        "Account does not exist on chain. Send some tokens there before trying to query sequence.",
+      );
+    }
+    return {
+      accountNumber: account.accountNumber,
+      sequence: account.sequence,
+    };
   }
 
   public async getBlock(height?: number): Promise<Block> {
