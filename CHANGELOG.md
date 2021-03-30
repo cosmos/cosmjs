@@ -84,6 +84,11 @@ and this project adheres to
   do not need a Tendermint RPC client and Stargate applications should use
   `Tendermint34Client`.
 
+### Removed
+
+- @cosmjs/stargate: `coinFromProto` helper has been removed as it is no longer
+  needed after the `ts-proto` migration.
+
 ## [0.24.0] - 2021-03-11
 
 - @cosmjs/cosmwasm: This package is now deprecated. The same functionality is
