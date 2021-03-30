@@ -87,6 +87,10 @@ and this project adheres to
   query and `CosmWasmClient.getAccountUnverified` has been removed.
   `CosmWasmClient.getAccountVerified` has been added, which performs a verified
   query.
+- @cosmjs/stargate: `StargateClient.getSequence` now rejects if the account is
+  not found, instead of returning null.
+- @cosmjs/cosmwasm-stargate: `CosmWasmClient.getSequence` now rejects if the
+  account is not found, instead of returning null.
 
 ### Deprecated
 
