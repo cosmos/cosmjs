@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
-import { AminoConverter, Coin, coinFromProto } from "@cosmjs/stargate";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import { AminoConverter, Coin } from "@cosmjs/stargate";
 import Long from "long";
 
 import {
@@ -127,18 +126,12 @@ export interface AminoMsgClearAdmin {
 export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgStoreCode": {
     aminoType: "wasm/MsgStoreCode",
-    toAmino: ({ sender, wasmByteCode, source, builder }: MsgStoreCode): AminoMsgStoreCode["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(wasmByteCode, "missing wasmByteCode");
-      assertDefinedAndNotNull(source, "missing source");
-      assertDefinedAndNotNull(builder, "missing builder");
-      return {
-        sender: sender,
-        wasm_byte_code: toBase64(wasmByteCode),
-        source: source,
-        builder: builder,
-      };
-    },
+    toAmino: ({ sender, wasmByteCode, source, builder }: MsgStoreCode): AminoMsgStoreCode["value"] => ({
+      sender: sender,
+      wasm_byte_code: toBase64(wasmByteCode),
+      source: source,
+      builder: builder,
+    }),
     fromAmino: ({ sender, wasm_byte_code, source, builder }: AminoMsgStoreCode["value"]): MsgStoreCode => ({
       sender: sender,
       wasmByteCode: fromBase64(wasm_byte_code),
@@ -156,21 +149,14 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       initMsg,
       funds,
       admin,
-    }: MsgInstantiateContract): AminoMsgInstantiateContract["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(codeId, "missing codeId");
-      assertDefinedAndNotNull(label, "missing label");
-      assertDefinedAndNotNull(initMsg, "missing initMsg");
-      assertDefinedAndNotNull(funds, "missing funds");
-      return {
-        sender: sender,
-        code_id: codeId.toString(),
-        label: label,
-        init_msg: JSON.parse(fromUtf8(initMsg)),
-        funds: funds.map(coinFromProto),
-        admin: admin ?? undefined,
-      };
-    },
+    }: MsgInstantiateContract): AminoMsgInstantiateContract["value"] => ({
+      sender: sender,
+      code_id: codeId.toString(),
+      label: label,
+      init_msg: JSON.parse(fromUtf8(initMsg)),
+      funds: funds,
+      admin: admin ?? undefined,
+    }),
     fromAmino: ({
       sender,
       code_id,
@@ -189,16 +175,11 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin": {
     aminoType: "wasm/MsgUpdateAdmin",
-    toAmino: ({ sender, newAdmin, contract }: MsgUpdateAdmin): AminoMsgUpdateAdmin["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(newAdmin, "missing newAdmin");
-      assertDefinedAndNotNull(contract, "missing contract");
-      return {
-        sender: sender,
-        new_admin: newAdmin,
-        contract: contract,
-      };
-    },
+    toAmino: ({ sender, newAdmin, contract }: MsgUpdateAdmin): AminoMsgUpdateAdmin["value"] => ({
+      sender: sender,
+      new_admin: newAdmin,
+      contract: contract,
+    }),
     fromAmino: ({ sender, new_admin, contract }: AminoMsgUpdateAdmin["value"]): MsgUpdateAdmin => ({
       sender: sender,
       newAdmin: new_admin,
@@ -207,14 +188,10 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgClearAdmin": {
     aminoType: "wasm/MsgClearAdmin",
-    toAmino: ({ sender, contract }: MsgClearAdmin): AminoMsgClearAdmin["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(contract, "missing contract");
-      return {
-        sender: sender,
-        contract: contract,
-      };
-    },
+    toAmino: ({ sender, contract }: MsgClearAdmin): AminoMsgClearAdmin["value"] => ({
+      sender: sender,
+      contract: contract,
+    }),
     fromAmino: ({ sender, contract }: AminoMsgClearAdmin["value"]): MsgClearAdmin => ({
       sender: sender,
       contract: contract,
@@ -222,18 +199,12 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgExecuteContract": {
     aminoType: "wasm/MsgExecuteContract",
-    toAmino: ({ sender, contract, msg, funds }: MsgExecuteContract): AminoMsgExecuteContract["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(contract, "missing contract");
-      assertDefinedAndNotNull(msg, "missing msg");
-      assertDefinedAndNotNull(funds, "missing funds");
-      return {
-        sender: sender,
-        contract: contract,
-        msg: JSON.parse(fromUtf8(msg)),
-        funds: funds.map(coinFromProto),
-      };
-    },
+    toAmino: ({ sender, contract, msg, funds }: MsgExecuteContract): AminoMsgExecuteContract["value"] => ({
+      sender: sender,
+      contract: contract,
+      msg: JSON.parse(fromUtf8(msg)),
+      funds: funds,
+    }),
     fromAmino: ({ sender, contract, msg, funds }: AminoMsgExecuteContract["value"]): MsgExecuteContract => ({
       sender: sender,
       contract: contract,
@@ -248,18 +219,12 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       contract,
       codeId,
       migrateMsg,
-    }: MsgMigrateContract): AminoMsgMigrateContract["value"] => {
-      assertDefinedAndNotNull(sender, "missing sender");
-      assertDefinedAndNotNull(contract, "missing contract");
-      assertDefinedAndNotNull(codeId, "missing codeId");
-      assertDefinedAndNotNull(migrateMsg, "missing migrateMsg");
-      return {
-        sender: sender,
-        contract: contract,
-        code_id: codeId.toString(),
-        msg: JSON.parse(fromUtf8(migrateMsg)),
-      };
-    },
+    }: MsgMigrateContract): AminoMsgMigrateContract["value"] => ({
+      sender: sender,
+      contract: contract,
+      code_id: codeId.toString(),
+      msg: JSON.parse(fromUtf8(migrateMsg)),
+    }),
     fromAmino: ({
       sender,
       contract,
