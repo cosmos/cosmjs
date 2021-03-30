@@ -150,7 +150,7 @@ export class CosmWasmClient {
     };
   }
 
-  public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
+  public async getBalance(address: string, searchDenom: string): Promise<Coin> {
     return this.forceGetQueryClient().bank.balance(address, searchDenom);
   }
 
