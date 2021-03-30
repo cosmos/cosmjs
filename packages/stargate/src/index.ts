@@ -75,7 +75,6 @@ export {
   BroadcastTxFailure,
   BroadcastTxResponse,
   BroadcastTxSuccess,
-  coinFromProto,
   IndexedTx,
   isBroadcastTxFailure,
   isBroadcastTxSuccess,

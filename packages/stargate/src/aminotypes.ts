@@ -31,7 +31,6 @@ import {
   MsgEditValidator,
   MsgUndelegate,
 } from "./codec/cosmos/staking/v1beta1/tx";
-import { coinFromProto } from "./stargateclient";
 
 export interface AminoConverter {
   readonly aminoType: string;
@@ -50,7 +49,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         return {
           from_address: fromAddress,
           to_address: toAddress,
-          amount: amount.map(coinFromProto),
+          amount: amount,
         };
       },
       fromAmino: ({ from_address, to_address, amount }: AminoMsgSend["value"]): MsgSend => ({
@@ -70,7 +69,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
             assertDefinedAndNotNull(input.coins, "missing input.amount");
             return {
               address: input.address,
-              coins: input.coins.map(coinFromProto),
+              coins: input.coins,
             };
           }),
           outputs: outputs.map((output) => {
@@ -78,7 +77,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
             assertDefinedAndNotNull(output.coins, "missing output.coins");
             return {
               address: output.address,
-              coins: output.coins.map(coinFromProto),
+              coins: output.coins,
             };
           }),
         };
@@ -100,7 +99,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         assertDefinedAndNotNull(amount);
         assertDefinedAndNotNull(depositor);
         return {
-          amount: amount.map(coinFromProto),
+          amount: amount,
           depositor: depositor,
         };
       },
@@ -183,7 +182,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           delegator_address: delegatorAddress,
           validator_src_address: validatorSrcAddress,
           validator_dst_address: validatorDstAddress,
-          amount: coinFromProto(amount),
+          amount: amount,
         };
       },
       fromAmino: ({
@@ -248,7 +247,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
             },
             prefix,
           ),
-          value: coinFromProto(value),
+          value: value,
         };
       },
       fromAmino: ({
@@ -297,7 +296,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         return {
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          amount: coinFromProto(amount),
+          amount: amount,
         };
       },
       fromAmino: ({
@@ -371,7 +370,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         return {
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          amount: coinFromProto(amount),
+          amount: amount,
         };
       },
       fromAmino: ({

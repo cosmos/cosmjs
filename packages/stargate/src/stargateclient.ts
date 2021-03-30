@@ -99,15 +99,6 @@ export function assertIsBroadcastTxSuccess(
   }
 }
 
-export function coinFromProto(input: Coin): Coin {
-  assertDefinedAndNotNull(input.amount);
-  assertDefinedAndNotNull(input.denom);
-  return {
-    amount: input.amount,
-    denom: input.denom,
-  };
-}
-
 /** Use for testing only */
 export interface PrivateStargateClient {
   readonly tmClient: Tendermint34Client | undefined;
@@ -213,8 +204,7 @@ export class StargateClient {
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
-    const balance = await this.forceGetQueryClient().bank.balance(address, searchDenom);
-    return balance ? coinFromProto(balance) : null;
+    return this.forceGetQueryClient().bank.balance(address, searchDenom);
   }
 
   /**
@@ -224,8 +214,7 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const balances = await this.forceGetQueryClient().bank.unverified.allBalances(address);
-    return balances.map(coinFromProto);
+    return this.forceGetQueryClient().bank.unverified.allBalances(address);
   }
 
   public async getTx(id: string): Promise<IndexedTx | null> {
