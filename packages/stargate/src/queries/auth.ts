@@ -13,7 +13,7 @@ export interface AuthExtension {
      * `typeUrl` and decode the `value` using its own type decoder.
      */
     readonly account: (address: string) => Promise<Any | null>;
-    readonly unverified: {
+    readonly verified: {
       /**
        * Returns an account if it exists and `null` otherwise.
        *
@@ -35,16 +35,16 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
   return {
     auth: {
       account: async (address: string) => {
-        // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L29-L32
-        const key = Uint8Array.from([0x01, ...toAccAddress(address)]);
-        const responseData = await base.queryVerified("acc", key);
-        if (responseData.length === 0) return null;
-        return Any.decode(responseData);
+        const { account } = await queryService.Account({ address: address });
+        return account ?? null;
       },
-      unverified: {
+      verified: {
         account: async (address: string) => {
-          const { account } = await queryService.Account({ address: address });
-          return account ?? null;
+          // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L29-L32
+          const key = Uint8Array.from([0x01, ...toAccAddress(address)]);
+          const responseData = await base.queryVerified("acc", key);
+          if (responseData.length === 0) return null;
+          return Any.decode(responseData);
         },
       },
     },

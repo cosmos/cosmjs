@@ -276,7 +276,7 @@ export class SigningStargateClient extends StargateClient {
     if (explicitSignerData) {
       signerData = explicitSignerData;
     } else {
-      const accountFromChain = await this.getAccountUnverified(signerAddress);
+      const accountFromChain = await this.getAccount(signerAddress);
       if (!accountFromChain) {
         throw new Error("Account not found");
       }

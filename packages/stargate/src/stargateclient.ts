@@ -160,29 +160,31 @@ export class StargateClient {
     return status.syncInfo.latestBlockHeight;
   }
 
-  // this is nice to display data to the user, but is slower
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const account = await this.forceGetQueryClient().auth.account(searchAddress);
-    return account ? accountFromAny(account) : null;
+    try {
+      const account = await this.forceGetQueryClient().auth.account(searchAddress);
+      return account ? accountFromAny(account) : null;
+    } catch (error) {
+      if (/rpc error: code = NotFound/i.test(error)) {
+        return null;
+      }
+      throw error;
+    }
   }
 
-  // if we just need to get the sequence for signing a transaction, let's make this faster
-  // (no need to wait a block before submitting)
-  public async getAccountUnverified(searchAddress: string): Promise<Account | null> {
-    const account = await this.forceGetQueryClient().auth.unverified.account(searchAddress);
+  public async getAccountVerified(searchAddress: string): Promise<Account | null> {
+    const account = await this.forceGetQueryClient().auth.verified.account(searchAddress);
     return account ? accountFromAny(account) : null;
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {
     const account = await this.getAccount(address);
-    if (account) {
-      return {
-        accountNumber: account.accountNumber,
-        sequence: account.sequence,
-      };
-    } else {
-      return null;
-    }
+    return account
+      ? {
+          accountNumber: account.accountNumber,
+          sequence: account.sequence,
+        }
+      : null;
   }
 
   public async getBlock(height?: number): Promise<Block> {
