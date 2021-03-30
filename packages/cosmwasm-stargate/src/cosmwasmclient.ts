@@ -109,20 +109,25 @@ export class CosmWasmClient {
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const account = await this.forceGetQueryClient().auth.account(searchAddress);
-    return account ? accountFromAny(account) : null;
+    try {
+      const account = await this.forceGetQueryClient().auth.account(searchAddress);
+      return account ? accountFromAny(account) : null;
+    } catch (error) {
+      if (/rpc error: code = NotFound/i.test(error)) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {
     const account = await this.getAccount(address);
-    if (account) {
-      return {
-        accountNumber: account.accountNumber,
-        sequence: account.sequence,
-      };
-    } else {
-      return null;
-    }
+    return account
+      ? {
+          accountNumber: account.accountNumber,
+          sequence: account.sequence,
+        }
+      : null;
   }
 
   public async getBlock(height?: number): Promise<Block> {
