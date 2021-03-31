@@ -219,7 +219,11 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<BroadcastTxResponse> {
     const delegateMsg = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-      value: MsgDelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+      value: MsgDelegate.fromPartial({
+        delegatorAddress: delegatorAddress,
+        validatorAddress: validatorAddress,
+        amount: amount,
+      }),
     };
     return this.signAndBroadcast(delegatorAddress, [delegateMsg], this.fees.delegate, memo);
   }
@@ -232,7 +236,11 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg = {
       typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-      value: MsgUndelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
+      value: MsgUndelegate.fromPartial({
+        delegatorAddress: delegatorAddress,
+        validatorAddress: validatorAddress,
+        amount: amount,
+      }),
     };
     return this.signAndBroadcast(delegatorAddress, [undelegateMsg], this.fees.undelegate, memo);
   }
@@ -244,7 +252,10 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<BroadcastTxResponse> {
     const withdrawMsg = {
       typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-      value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
+      value: MsgWithdrawDelegatorReward.fromPartial({
+        delegatorAddress: delegatorAddress,
+        validatorAddress: validatorAddress,
+      }),
     };
     return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
   }
@@ -312,7 +323,11 @@ export class SigningStargateClient extends StargateClient {
     } else {
       const { accountNumber, sequence } = await this.getSequence(signerAddress);
       const chainId = await this.getChainId();
-      signerData = { accountNumber, sequence, chainId };
+      signerData = {
+        accountNumber: accountNumber,
+        sequence: sequence,
+        chainId: chainId,
+      };
     }
 
     return isOfflineDirectSigner(this.signer)
