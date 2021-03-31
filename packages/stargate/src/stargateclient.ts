@@ -207,7 +207,7 @@ export class StargateClient {
     };
   }
 
-  public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
+  public async getBalance(address: string, searchDenom: string): Promise<Coin> {
     return this.forceGetQueryClient().bank.balance(address, searchDenom);
   }
 
@@ -217,8 +217,8 @@ export class StargateClient {
    * Uses the grpc queries (which iterates over the store internally), and we cannot get
    * proofs from such a method.
    */
-  public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    return this.forceGetQueryClient().bank.unverified.allBalances(address);
+  public async getAllBalances(address: string): Promise<readonly Coin[]> {
+    return this.forceGetQueryClient().bank.allBalances(address);
   }
 
   public async getTx(id: string): Promise<IndexedTx | null> {

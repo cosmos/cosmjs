@@ -321,7 +321,7 @@ describe("Faucet", () => {
         });
 
         const readOnlyClient = await StargateClient.connect(apiUrl);
-        const account = await readOnlyClient.getAllBalancesUnverified(recipient);
+        const account = await readOnlyClient.getAllBalances(recipient);
         assert(account);
         expect(account).toEqual([
           {
@@ -345,9 +345,7 @@ describe("Faucet", () => {
         );
         await faucet.refill();
         const readOnlyClient = await StargateClient.connect(apiUrl);
-        const distributorBalance = await readOnlyClient.getAllBalancesUnverified(
-          faucet.distributorAddresses[0],
-        );
+        const distributorBalance = await readOnlyClient.getAllBalances(faucet.distributorAddresses[0]);
         assert(distributorBalance);
         expect(distributorBalance).toEqual([
           jasmine.objectContaining({
@@ -377,7 +375,7 @@ describe("Faucet", () => {
         await faucet.credit(recipient, "ucosm");
 
         const readOnlyClient = await StargateClient.connect(apiUrl);
-        const balance = await readOnlyClient.getAllBalancesUnverified(recipient);
+        const balance = await readOnlyClient.getAllBalances(recipient);
         assert(balance);
         expect(balance).toEqual([
           {
@@ -401,7 +399,7 @@ describe("Faucet", () => {
         await faucet.credit(recipient, "ustake");
 
         const readOnlyClient = await StargateClient.connect(apiUrl);
-        const balance = await readOnlyClient.getAllBalancesUnverified(recipient);
+        const balance = await readOnlyClient.getAllBalances(recipient);
         assert(balance);
         expect(balance).toEqual([
           {
@@ -442,8 +440,8 @@ describe("Faucet", () => {
         const accounts = await faucet.loadAccounts();
 
         const readOnlyClient = await StargateClient.connect(apiUrl);
-        const expectedHolderBalance = await readOnlyClient.getAllBalancesUnverified(faucet.holderAddress);
-        const expectedDistributorBalance = await readOnlyClient.getAllBalancesUnverified(
+        const expectedHolderBalance = await readOnlyClient.getAllBalances(faucet.holderAddress);
+        const expectedDistributorBalance = await readOnlyClient.getAllBalances(
           faucet.distributorAddresses[0],
         );
         assert(expectedHolderBalance);

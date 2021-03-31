@@ -77,8 +77,8 @@ and this project adheres to
   `Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkeyRaw))` with
   `rawSecp256k1PubkeyToRawAddress` from @cosmjs/amino.
 - @cosmjs/stargate: `parseRawLog` is now nested under the `logs` export.
-- @cosmjs/stargate: `auth` extension now has unverified queries at the root and
-  verified queries nested under `.verified`.
+- @cosmjs/stargate: `auth` and `bank` extensions now have unverified queries at
+  the root and verified queries nested under `.verified`.
 - @cosmjs/stargate: `StargateClient.getAccount` now uses an unverified query and
   `StargateClient.getAccountUnverified` has been removed.
   `StargateClient.getAccountVerified` has been added, which performs a verified
@@ -89,8 +89,14 @@ and this project adheres to
   query.
 - @cosmjs/stargate: `StargateClient.getSequence` now rejects if the account is
   not found, instead of returning null.
+- @cosmjs/stargate: `StargateClient.getBalance` now returns a 0 balance instead
+  of null.
+- @cosmjs/stargate: `StargateClient.getAllBalancesUnverified` has been renamed
+  `.getAllBalances`.
 - @cosmjs/cosmwasm-stargate: `CosmWasmClient.getSequence` now rejects if the
   account is not found, instead of returning null.
+- @cosmjs/cosmwasm-stargate: `CosmWasmClient.getBalance` now returns a 0 balance
+  instead of null.
 
 ### Deprecated
 
