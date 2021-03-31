@@ -45,18 +45,16 @@ describe("DistributionExtension", () => {
     }
   });
 
-  describe("unverified", () => {
-    describe("communityPool", () => {
-      it("works", async () => {
-        pendingWithoutSimapp();
-        const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+  describe("communityPool", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-        const response = await client.distribution.communityPool();
-        expect(response.pool).toBeDefined();
-        expect(response.pool).not.toBeNull();
+      const response = await client.distribution.communityPool();
+      expect(response.pool).toBeDefined();
+      expect(response.pool).not.toBeNull();
 
-        tmClient.disconnect();
-      });
+      tmClient.disconnect();
     });
   });
 
