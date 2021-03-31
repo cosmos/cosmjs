@@ -114,7 +114,7 @@ export class Faucet {
     const balance =
       this.readOnlyClient instanceof CosmosClient
         ? (await this.readOnlyClient.getAccount(address))?.balance ?? []
-        : await this.readOnlyClient.getAllBalancesUnverified(address);
+        : await this.readOnlyClient.getAllBalances(address);
 
     return {
       address: address,
