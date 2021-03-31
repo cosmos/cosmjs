@@ -81,7 +81,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="queries_wasm.wasmextension.html#unverified" class="tsd-kind-icon">unverified</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="queries_wasm.wasmextension.html#wasm" class="tsd-kind-icon">wasm</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,234 +90,229 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="unverified" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> unverified</h3>
-					<div class="tsd-signature tsd-kind-icon">unverified<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>wasm<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>getAllContractState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractCodeHistory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listCodeInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listContractsByCodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractRaw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractSmart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span></div>
+					<a name="wasm" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> wasm</h3>
+					<div class="tsd-signature tsd-kind-icon">wasm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>getAllContractState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractCodeHistory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listCodeInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listContractsByCodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractRaw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractSmart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/33df23b3e/packages/cosmwasm-stargate/src/queries/wasm.ts#L19">cosmwasm-stargate/src/queries/wasm.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/268b2dc33/packages/cosmwasm-stargate/src/queries/wasm.ts#L19">cosmwasm-stargate/src/queries/wasm.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> wasm<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>getAllContractState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractCodeHistory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>getContractInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listCodeInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>listContractsByCodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractRaw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>queryContractSmart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></h5>
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>All<wbr>Contract<wbr>State<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns all contract state.
+										This is an empty array if no such contract, or contract has no data.</p>
+									</div>
+								</div>
 								<ul class="tsd-parameters">
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>All<wbr>Contract<wbr>State<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Returns all contract state.
-												This is an empty array if no such contract, or contract has no data.</p>
-											</div>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>address: <span class="tsd-signature-type">string</span></h5>
-															</li>
-															<li>
-																<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>address: <span class="tsd-signature-type">string</span></h5>
+													</li>
+													<li>
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryallcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryAllContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Downloads the original wasm bytecode by code ID.</p>
-											</div>
-											<p>Throws an error if no code with this id</p>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>id: <span class="tsd-signature-type">number</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Downloads the original wasm bytecode by code ID.</p>
+									</div>
+									<p>Throws an error if no code with this id</p>
+								</div>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>id: <span class="tsd-signature-type">number</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Contract<wbr>Code<wbr>History<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Returns null when contract history was not found for this address.</p>
-											</div>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>address: <span class="tsd-signature-type">string</span></h5>
-															</li>
-															<li>
-																<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Contract<wbr>Code<wbr>History<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns null when contract history was not found for this address.</p>
+									</div>
+								</div>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>address: <span class="tsd-signature-type">string</span></h5>
+													</li>
+													<li>
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontracthistoryresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractHistoryResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Contract<wbr>Info<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Returns null when contract was not found at this address.</p>
-											</div>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>address: <span class="tsd-signature-type">string</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Contract<wbr>Info<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns null when contract was not found at this address.</p>
+									</div>
+								</div>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>address: <span class="tsd-signature-type">string</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractinforesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractInfoResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> list<wbr>Code<wbr>Info<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> list<wbr>Code<wbr>Info<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycodesresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryCodesResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> list<wbr>Contracts<wbr>ByCode<wbr>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>id: <span class="tsd-signature-type">number</span></h5>
-															</li>
-															<li>
-																<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> list<wbr>Contracts<wbr>ByCode<wbr>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>id: <span class="tsd-signature-type">number</span></h5>
+													</li>
+													<li>
+														<h5><span class="tsd-flag ts-flagOptional">Optional</span> paginationKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#querycontractsbycoderesponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryContractsByCodeResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> query<wbr>Contract<wbr>Raw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Returns the data at the key if present (unknown decoded json),
-												or null if no data at this (contract address, key) pair</p>
-											</div>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>address: <span class="tsd-signature-type">string</span></h5>
-															</li>
-															<li>
-																<h5>key: <span class="tsd-signature-type">Uint8Array</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> query<wbr>Contract<wbr>Raw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns the data at the key if present (unknown decoded json),
+										or null if no data at this (contract address, key) pair</p>
+									</div>
+								</div>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>address: <span class="tsd-signature-type">string</span></h5>
+													</li>
+													<li>
+														<h5>key: <span class="tsd-signature-type">Uint8Array</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/codec_x_wasm_internal_types_query.html#queryrawcontractstateresponse-1" class="tsd-signature-type" data-tsd-kind="Variable">QueryRawContractStateResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
-									<li class="tsd-parameter">
-										<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> query<wbr>Contract<wbr>Smart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Makes a smart query on the contract and parses the response as JSON.
-												Throws error if no such contract exists, the query format is invalid or the response is invalid.</p>
-											</div>
-										</div>
-										<ul class="tsd-parameters">
-											<li class="tsd-parameter-signature">
-												<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
-													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
-												</ul>
-												<ul class="tsd-descriptions">
-													<li class="tsd-description">
-														<h4 class="tsd-parameters-title">Parameters</h4>
-														<ul class="tsd-parameters">
-															<li>
-																<h5>address: <span class="tsd-signature-type">string</span></h5>
-															</li>
-															<li>
-																<h5>query: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
-															</li>
-														</ul>
-														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> query<wbr>Contract<wbr>Smart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Makes a smart query on the contract and parses the response as JSON.
+										Throws error if no such contract exists, the query format is invalid or the response is invalid.</p>
+									</div>
+								</div>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-signature">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>address: <span class="tsd-signature-type">string</span></h5>
+													</li>
+													<li>
+														<h5>query: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
 													</li>
 												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 											</li>
 										</ul>
 									</li>
@@ -377,7 +372,7 @@
 						<a href="queries_wasm.wasmextension.html" class="tsd-kind-icon">Wasm<wbr>Extension</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="queries_wasm.wasmextension.html#unverified" class="tsd-kind-icon">unverified</a>
+								<a href="queries_wasm.wasmextension.html#wasm" class="tsd-kind-icon">wasm</a>
 							</li>
 						</ul>
 					</li>
