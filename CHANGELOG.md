@@ -77,8 +77,8 @@ and this project adheres to
   `Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkeyRaw))` with
   `rawSecp256k1PubkeyToRawAddress` from @cosmjs/amino.
 - @cosmjs/stargate: `parseRawLog` is now nested under the `logs` export.
-- @cosmjs/stargate: `auth` and `bank` extensions now have unverified queries at
-  the root and verified queries nested under `.verified`.
+- @cosmjs/stargate: Query extensions now have unverified queries at the root and
+  verified queries nested under `.verified`.
 - @cosmjs/cosmwasm-stargate: `wasm` extension now has unverified queries at the
   root.
 - @cosmjs/stargate: `StargateClient.getAccount` now uses an unverified query and
