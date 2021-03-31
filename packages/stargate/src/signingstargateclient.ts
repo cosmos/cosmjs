@@ -13,6 +13,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 
 import { AminoTypes } from "./aminotypes";
 import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
@@ -45,6 +46,7 @@ import {
   MsgTimeout,
   MsgTimeoutOnClose,
 } from "./codec/ibc/core/channel/v1/tx";
+import { Height } from "./codec/ibc/core/client/v1/client";
 import {
   MsgCreateClient,
   MsgSubmitMisbehaviour,
@@ -76,6 +78,7 @@ export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 export const defaultGasLimits: GasLimits<CosmosFeeTable> = {
   send: 80_000,
   delegate: 160_000,
+  transfer: 160_000,
   undelegate: 160_000,
   withdraw: 160_000,
 };
@@ -244,6 +247,35 @@ export class SigningStargateClient extends StargateClient {
       value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
     };
     return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
+  }
+
+  public async sendIbcTokens(
+    senderAddress: string,
+    recipientAddress: string,
+    transferAmount: Coin,
+    sourcePort: string,
+    sourceChannel: string,
+    timeoutHeight: Height | undefined,
+    /** timeout in seconds */
+    timeoutTimestamp: number | undefined,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const timeoutTimestampNanoseconds = timeoutTimestamp
+      ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
+      : undefined;
+    const transferMsg = {
+      typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
+      value: MsgTransfer.fromPartial({
+        sourcePort: sourcePort,
+        sourceChannel: sourceChannel,
+        sender: senderAddress,
+        receiver: recipientAddress,
+        token: transferAmount,
+        timeoutHeight: timeoutHeight,
+        timeoutTimestamp: timeoutTimestampNanoseconds,
+      }),
+    };
+    return this.signAndBroadcast(senderAddress, [transferMsg], this.fees.transfer, memo);
   }
 
   public async signAndBroadcast(
