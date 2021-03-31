@@ -18,7 +18,7 @@ export interface AminoMsgSend extends AminoMsg {
 }
 
 export function isAminoMsgSend(msg: AminoMsg): msg is AminoMsgSend {
-  return (msg as AminoMsgSend).type === "cosmos-sdk/MsgSend";
+  return msg.type === "cosmos-sdk/MsgSend";
 }
 
 interface Input {
@@ -43,7 +43,7 @@ export interface AminoMsgMultiSend extends AminoMsg {
 }
 
 export function isAminoMsgMultiSend(msg: AminoMsg): msg is AminoMsgMultiSend {
-  return (msg as AminoMsgMultiSend).type === "cosmos-sdk/MsgMultiSend";
+  return msg.type === "cosmos-sdk/MsgMultiSend";
 }
 
 // crisis - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/crisis/crisis.proto
@@ -60,7 +60,7 @@ export interface AminoMsgVerifyInvariant extends AminoMsg {
 }
 
 export function isAminoMsgVerifyInvariant(msg: AminoMsg): msg is AminoMsgVerifyInvariant {
-  return (msg as AminoMsgVerifyInvariant).type === "cosmos-sdk/MsgVerifyInvariant";
+  return msg.type === "cosmos-sdk/MsgVerifyInvariant";
 }
 
 // distribution - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/distribution/distribution.proto
@@ -79,7 +79,7 @@ export interface AminoMsgSetWithdrawAddress extends AminoMsg {
 
 export function isAminoMsgSetWithdrawAddress(msg: AminoMsg): msg is AminoMsgSetWithdrawAddress {
   // NOTE: Type string and names diverge here!
-  return (msg as AminoMsgSetWithdrawAddress).type === "cosmos-sdk/MsgModifyWithdrawAddress";
+  return msg.type === "cosmos-sdk/MsgModifyWithdrawAddress";
 }
 
 /** Message for delegation withdraw from a single validator */
@@ -96,7 +96,7 @@ export interface AminoMsgWithdrawDelegatorReward extends AminoMsg {
 
 export function isAminoMsgWithdrawDelegatorReward(msg: AminoMsg): msg is AminoMsgWithdrawDelegatorReward {
   // NOTE: Type string and names diverge here!
-  return (msg as AminoMsgWithdrawDelegatorReward).type === "cosmos-sdk/MsgWithdrawDelegationReward";
+  return msg.type === "cosmos-sdk/MsgWithdrawDelegationReward";
 }
 
 /** Message for validator withdraw */
@@ -111,7 +111,7 @@ export interface AminoMsgWithdrawValidatorCommission extends AminoMsg {
 export function isAminoMsgWithdrawValidatorCommission(
   msg: AminoMsg,
 ): msg is AminoMsgWithdrawValidatorCommission {
-  return (msg as AminoMsgWithdrawValidatorCommission).type === "cosmos-sdk/MsgWithdrawValidatorCommission";
+  return msg.type === "cosmos-sdk/MsgWithdrawValidatorCommission";
 }
 
 /** Allows an account to directly fund the community pool. */
@@ -125,7 +125,7 @@ export interface AminoMsgFundCommunityPool extends AminoMsg {
 }
 
 export function isAminoMsgFundCommunityPool(msg: AminoMsg): msg is AminoMsgFundCommunityPool {
-  return (msg as AminoMsgFundCommunityPool).type === "cosmos-sdk/MsgFundCommunityPool";
+  return msg.type === "cosmos-sdk/MsgFundCommunityPool";
 }
 
 // evidence - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/evidence/evidence.proto
@@ -146,7 +146,7 @@ export interface AminoMsgSubmitEvidence extends AminoMsg {
 }
 
 export function isAminoMsgSubmitEvidence(msg: AminoMsg): msg is AminoMsgSubmitEvidence {
-  return (msg as AminoMsgSubmitEvidence).type === "cosmos-sdk/MsgSubmitEvidence";
+  return msg.type === "cosmos-sdk/MsgSubmitEvidence";
 }
 
 // gov - https://github.com/cosmos/cosmos-sdk/blob/efa73c7edb31a7bd65786501da213b294f89267a/proto/cosmos/gov/gov.proto
@@ -163,7 +163,7 @@ export interface AminoMsgSubmitProposal extends AminoMsg {
 }
 
 export function isAminoMsgSubmitProposal(msg: AminoMsg): msg is AminoMsgSubmitProposal {
-  return (msg as AminoMsgSubmitProposal).type === "cosmos-sdk/MsgSubmitProposal";
+  return msg.type === "cosmos-sdk/MsgSubmitProposal";
 }
 
 enum VoteOption {
@@ -186,7 +186,7 @@ export interface AminoMsgVote extends AminoMsg {
 }
 
 export function isAminoMsgVote(msg: AminoMsg): msg is AminoMsgVote {
-  return (msg as AminoMsgVote).type === "cosmos-sdk/MsgVote";
+  return msg.type === "cosmos-sdk/MsgVote";
 }
 
 /** Submits a deposit to an existing proposal */
@@ -201,10 +201,8 @@ export interface AminoMsgDeposit extends AminoMsg {
 }
 
 export function isAminoMsgDeposit(msg: AminoMsg): msg is AminoMsgDeposit {
-  return (msg as AminoMsgDeposit).type === "cosmos-sdk/MsgDeposit";
+  return msg.type === "cosmos-sdk/MsgDeposit";
 }
-
-// ibc
 
 // mint (no messages) - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/mint/mint.proto
 
@@ -222,7 +220,7 @@ export interface AminoMsgUnjail extends AminoMsg {
 }
 
 export function isAminoMsgUnjail(msg: AminoMsg): msg is AminoMsgUnjail {
-  return (msg as AminoMsgUnjail).type === "cosmos-sdk/MsgUnjail";
+  return msg.type === "cosmos-sdk/MsgUnjail";
 }
 
 // staking - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/staking/staking.proto
@@ -261,7 +259,7 @@ export interface AminoMsgCreateValidator extends AminoMsg {
 }
 
 export function isAminoMsgCreateValidator(msg: AminoMsg): msg is AminoMsgCreateValidator {
-  return (msg as AminoMsgCreateValidator).type === "cosmos-sdk/MsgCreateValidator";
+  return msg.type === "cosmos-sdk/MsgCreateValidator";
 }
 
 /** Edits an existing validator. */
@@ -277,7 +275,7 @@ export interface AminoMsgEditValidator extends AminoMsg {
 }
 
 export function isAminoMsgEditValidator(msg: AminoMsg): msg is AminoMsgEditValidator {
-  return (msg as AminoMsgEditValidator).type === "cosmos-sdk/MsgEditValidator";
+  return msg.type === "cosmos-sdk/MsgEditValidator";
 }
 
 /**
@@ -297,7 +295,7 @@ export interface AminoMsgDelegate extends AminoMsg {
 }
 
 export function isAminoMsgDelegate(msg: AminoMsg): msg is AminoMsgDelegate {
-  return (msg as AminoMsgDelegate).type === "cosmos-sdk/MsgDelegate";
+  return msg.type === "cosmos-sdk/MsgDelegate";
 }
 
 /** Performs a redelegation from a delegate and source validator to a destination validator */
@@ -315,7 +313,7 @@ export interface AminoMsgBeginRedelegate extends AminoMsg {
 }
 
 export function isAminoMsgBeginRedelegate(msg: AminoMsg): msg is AminoMsgBeginRedelegate {
-  return (msg as AminoMsgBeginRedelegate).type === "cosmos-sdk/MsgBeginRedelegate";
+  return msg.type === "cosmos-sdk/MsgBeginRedelegate";
 }
 
 /** Performs an undelegation from a delegate and a validator */
@@ -331,7 +329,38 @@ export interface AminoMsgUndelegate extends AminoMsg {
 }
 
 export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
-  return (msg as AminoMsgUndelegate).type === "cosmos-sdk/MsgUndelegate";
+  return msg.type === "cosmos-sdk/MsgUndelegate";
 }
 
 // upgrade (no messages) - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/upgrade/upgrade.proto
+
+// ibc
+
+// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/core/02-client/types/client.pb.go#L297-L312
+interface AminoHeight {
+  readonly revision_number: number;
+  readonly revision_height: number;
+}
+
+// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/apps/transfer/types/tx.pb.go#L33-L53
+/** Transfers fungible tokens (i.e Coins) between ICS20 enabled chains */
+export interface AminoMsgTransfer extends AminoMsg {
+  readonly type: "cosmos-sdk/MsgTransfer";
+  readonly value: {
+    readonly source_port: string;
+    readonly source_channel: string;
+    readonly token?: Coin;
+    /** Bech32 account address */
+    readonly sender: string;
+    /** Bech32 account address */
+    readonly receiver: string;
+    readonly timeout_height?: AminoHeight;
+    // Timeout timestamp (in nanoseconds) relative to the current block timestamp.
+    // The timeout is disabled when set to 0.
+    readonly timeout_timestamp: number;
+  };
+}
+
+export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
+  return msg.type === "cosmos-sdk/MsgTransfer";
+}
