@@ -258,7 +258,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.queryClient!.unverified.wasm, "getCode").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.queryClient!.wasm, "getCode").and.callThrough();
 
       const result1 = await client.getCodeDetails(deployedHackatom.codeId); // from network
       const result2 = await client.getCodeDetails(deployedHackatom.codeId); // from cache

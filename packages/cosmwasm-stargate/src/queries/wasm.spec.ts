@@ -156,7 +156,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
-      const { codeInfos } = await client.unverified.wasm.listCodeInfo();
+      const { codeInfos } = await client.wasm.listCodeInfo();
       assert(codeInfos);
       const lastCode = codeInfos[codeInfos.length - 1];
       expect(lastCode.codeId.toNumber()).toEqual(hackatomCodeId);
@@ -172,7 +172,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
-      const { codeInfo, data } = await client.unverified.wasm.getCode(hackatomCodeId);
+      const { codeInfo, data } = await client.wasm.getCode(hackatomCodeId);
       expect(codeInfo!.codeId.toNumber()).toEqual(hackatomCodeId);
       expect(codeInfo!.creator).toEqual(alice.address0);
       expect(codeInfo!.source).toEqual(hackatom.source ?? "");
@@ -193,7 +193,7 @@ describe("WasmExtension", () => {
       const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
-      const { contractInfos: existingContractInfos } = await client.unverified.wasm.listContractsByCodeId(
+      const { contractInfos: existingContractInfos } = await client.wasm.listContractsByCodeId(
         hackatomCodeId,
       );
       assert(existingContractInfos);
@@ -211,9 +211,7 @@ describe("WasmExtension", () => {
         .events.find((event: any) => event.type === "message")
         .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
 
-      const { contractInfos: newContractInfos } = await client.unverified.wasm.listContractsByCodeId(
-        hackatomCodeId,
-      );
+      const { contractInfos: newContractInfos } = await client.wasm.listContractsByCodeId(hackatomCodeId);
       assert(newContractInfos);
       expect(newContractInfos.length).toEqual(existingContractInfos.length + 1);
       const newContract = newContractInfos[newContractInfos.length - 1];
@@ -225,7 +223,7 @@ describe("WasmExtension", () => {
         ibcPortId: "",
       });
 
-      const { contractInfo } = await client.unverified.wasm.getContractInfo(myAddress);
+      const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
       expect({ ...contractInfo }).toEqual({
         codeId: Long.fromNumber(hackatomCodeId, true),
@@ -242,9 +240,7 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(client.unverified.wasm.getContractInfo(nonExistentAddress)).toBeRejectedWithError(
-        /not found/i,
-      );
+      await expectAsync(client.wasm.getContractInfo(nonExistentAddress)).toBeRejectedWithError(/not found/i);
     });
   });
 
@@ -265,7 +261,7 @@ describe("WasmExtension", () => {
         .events.find((event: any) => event.type === "message")
         .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
 
-      const history = await client.unverified.wasm.getContractCodeHistory(myAddress);
+      const history = await client.wasm.getContractCodeHistory(myAddress);
       assert(history.entries);
       expect(history.entries).toContain(
         jasmine.objectContaining({
@@ -286,7 +282,7 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      const history = await client.unverified.wasm.getContractCodeHistory(nonExistentAddress);
+      const history = await client.wasm.getContractCodeHistory(nonExistentAddress);
       expect(history.entries).toEqual([]);
     });
   });
@@ -296,7 +292,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
-      const { models } = await client.unverified.wasm.getAllContractState(hackatomContractAddress);
+      const { models } = await client.wasm.getAllContractState(hackatomContractAddress);
       assert(models);
       expect(models.length).toEqual(1);
       const data = models[0];
@@ -310,7 +306,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(client.unverified.wasm.getAllContractState(nonExistentAddress)).toBeRejectedWithError(
+      await expectAsync(client.wasm.getAllContractState(nonExistentAddress)).toBeRejectedWithError(
         /not found/i,
       );
     });
@@ -321,7 +317,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
-      const raw = await client.unverified.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
+      const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
       assert(raw.data, "must get result");
       const model = JSON.parse(fromAscii(raw.data));
       expect(model.verifier).toMatch(base64Matcher);
@@ -332,10 +328,7 @@ describe("WasmExtension", () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
-      const { data } = await client.unverified.wasm.queryContractRaw(
-        hackatomContractAddress,
-        fromHex("cafe0dad"),
-      );
+      const { data } = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
       expect(data).toBeUndefined();
     });
 
@@ -344,7 +337,7 @@ describe("WasmExtension", () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
       await expectAsync(
-        client.unverified.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey),
+        client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey),
       ).toBeRejectedWithError(/not found/i);
     });
   });
@@ -355,7 +348,7 @@ describe("WasmExtension", () => {
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
       const request = { verifier: {} };
-      const result = await client.unverified.wasm.queryContractSmart(hackatomContractAddress, request);
+      const result = await client.wasm.queryContractSmart(hackatomContractAddress, request);
       expect(result).toEqual({ verifier: alice.address0 });
     });
 
@@ -365,7 +358,7 @@ describe("WasmExtension", () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const request = { nosuchkey: {} };
       await expectAsync(
-        client.unverified.wasm.queryContractSmart(hackatomContractAddress, request),
+        client.wasm.queryContractSmart(hackatomContractAddress, request),
       ).toBeRejectedWithError(/Error parsing into type hackatom::contract::QueryMsg: unknown variant/i);
     });
 
@@ -374,9 +367,9 @@ describe("WasmExtension", () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const request = { verifier: {} };
-      await expectAsync(
-        client.unverified.wasm.queryContractSmart(nonExistentAddress, request),
-      ).toBeRejectedWithError(/not found/i);
+      await expectAsync(client.wasm.queryContractSmart(nonExistentAddress, request)).toBeRejectedWithError(
+        /not found/i,
+      );
     });
   });
 
