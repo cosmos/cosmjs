@@ -32,6 +32,7 @@ import {
 } from "./codec/cosmos/staking/v1beta1/tx";
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { MsgTransfer } from "./codec/ibc/applications/transfer/v1/tx";
 import {
   MsgAcknowledgement,
   MsgChannelCloseConfirm,
@@ -108,6 +109,7 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/ibc.core.connection.v1.MsgConnectionOpenTry", MsgConnectionOpenTry],
   ["/ibc.core.connection.v1.MsgConnectionOpenAck", MsgConnectionOpenAck],
   ["/ibc.core.connection.v1.MsgConnectionOpenConfirm", MsgConnectionOpenConfirm],
+  ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],
 ];
 
 function createDefaultRegistry(): Registry {
