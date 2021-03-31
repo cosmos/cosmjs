@@ -51,7 +51,7 @@ describe("DistributionExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-        const response = await client.distribution.unverified.communityPool();
+        const response = await client.distribution.communityPool();
         expect(response.pool).toBeDefined();
         expect(response.pool).not.toBeNull();
 
@@ -65,7 +65,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.delegationRewards(
+      const response = await client.distribution.delegationRewards(
         faucet.address0,
         validator.validatorAddress,
       );
@@ -81,7 +81,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.delegationTotalRewards(faucet.address0);
+      const response = await client.distribution.delegationTotalRewards(faucet.address0);
       expect(response.rewards).toBeDefined();
       expect(response.rewards).not.toBeNull();
 
@@ -94,7 +94,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.delegatorValidators(faucet.address0);
+      const response = await client.distribution.delegatorValidators(faucet.address0);
       expect(response.validators).toBeDefined();
       expect(response.validators).not.toBeNull();
 
@@ -107,7 +107,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.delegatorWithdrawAddress(faucet.address0);
+      const response = await client.distribution.delegatorWithdrawAddress(faucet.address0);
       expect(response.withdrawAddress).toBeDefined();
       expect(response.withdrawAddress).not.toBeNull();
 
@@ -120,7 +120,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.params();
+      const response = await client.distribution.params();
       expect(response.params).toBeDefined();
       expect(response.params).not.toBeNull();
 
@@ -133,7 +133,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.validatorCommission(validator.validatorAddress);
+      const response = await client.distribution.validatorCommission(validator.validatorAddress);
       expect(response.commission).toBeDefined();
       expect(response.commission).not.toBeNull();
 
@@ -146,9 +146,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.validatorOutstandingRewards(
-        validator.validatorAddress,
-      );
+      const response = await client.distribution.validatorOutstandingRewards(validator.validatorAddress);
       expect(response.rewards).toBeDefined();
       expect(response.rewards).not.toBeNull();
 
@@ -161,11 +159,7 @@ describe("DistributionExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
-      const response = await client.distribution.unverified.validatorSlashes(
-        validator.validatorAddress,
-        1,
-        5,
-      );
+      const response = await client.distribution.validatorSlashes(validator.validatorAddress, 1, 5);
       expect(response.slashes).toBeDefined();
       expect(response.slashes).not.toBeNull();
 
