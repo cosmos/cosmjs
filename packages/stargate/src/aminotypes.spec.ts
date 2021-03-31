@@ -326,10 +326,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.fromNumber(123, true),
-          revisionNumber: Long.fromNumber(456, true),
+          revisionHeight: Long.fromString("123", true),
+          revisionNumber: Long.fromString("456", true),
         },
-        timeoutTimestamp: Long.fromNumber(789, true),
+        timeoutTimestamp: Long.fromString("789", true),
       };
       const aminoMsg = new AminoTypes().toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -344,10 +344,10 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           timeout_height: {
-            revision_height: 123,
-            revision_number: 456,
+            revision_height: "123",
+            revision_number: "456",
           },
-          timeout_timestamp: 789,
+          timeout_timestamp: "789",
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -636,10 +636,10 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           timeout_height: {
-            revision_height: 123,
-            revision_number: 456,
+            revision_height: "123",
+            revision_number: "456",
           },
-          timeout_timestamp: 789,
+          timeout_timestamp: "789",
         },
       };
       const msg = new AminoTypes().fromAmino(aminoMsg);
@@ -650,10 +650,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.fromNumber(123, true),
-          revisionNumber: Long.fromNumber(456, true),
+          revisionHeight: Long.fromString("123", true),
+          revisionNumber: Long.fromString("456", true),
         },
-        timeoutTimestamp: Long.fromNumber(789, true),
+        timeoutTimestamp: Long.fromString("789", true),
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",

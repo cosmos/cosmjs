@@ -178,7 +178,7 @@ enum VoteOption {
 export interface AminoMsgVote extends AminoMsg {
   readonly type: "cosmos-sdk/MsgVote";
   readonly value: {
-    readonly proposal_id: number;
+    readonly proposal_id: string;
     /** Bech32 account address */
     readonly voter: string;
     readonly option: VoteOption;
@@ -193,7 +193,7 @@ export function isAminoMsgVote(msg: AminoMsg): msg is AminoMsgVote {
 export interface AminoMsgDeposit extends AminoMsg {
   readonly type: "cosmos-sdk/MsgDeposit";
   readonly value: {
-    readonly proposal_id: number;
+    readonly proposal_id: string;
     /** Bech32 account address */
     readonly depositor: string;
     readonly amount: readonly Coin[];
@@ -338,8 +338,8 @@ export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
 
 // https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/core/02-client/types/client.pb.go#L297-L312
 interface AminoHeight {
-  readonly revision_number: number;
-  readonly revision_height: number;
+  readonly revision_number: string;
+  readonly revision_height: string;
 }
 
 // https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/apps/transfer/types/tx.pb.go#L33-L53
@@ -357,7 +357,7 @@ export interface AminoMsgTransfer extends AminoMsg {
     readonly timeout_height?: AminoHeight;
     // Timeout timestamp (in nanoseconds) relative to the current block timestamp.
     // The timeout is disabled when set to 0.
-    readonly timeout_timestamp: number;
+    readonly timeout_timestamp: string;
   };
 }
 

@@ -345,11 +345,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         receiver: receiver,
         timeout_height: timeoutHeight
           ? {
-              revision_height: timeoutHeight.revisionHeight.toNumber(),
-              revision_number: timeoutHeight.revisionNumber.toNumber(),
+              revision_height: timeoutHeight.revisionHeight.toString(),
+              revision_number: timeoutHeight.revisionNumber.toString(),
             }
           : undefined,
-        timeout_timestamp: timeoutTimestamp.toNumber(),
+        timeout_timestamp: timeoutTimestamp.toString(),
       }),
       fromAmino: ({
         source_port,
@@ -367,11 +367,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         receiver: receiver,
         timeoutHeight: timeout_height
           ? {
-              revisionHeight: Long.fromNumber(timeout_height.revision_height, true),
-              revisionNumber: Long.fromNumber(timeout_height.revision_number, true),
+              revisionHeight: Long.fromString(timeout_height.revision_height, true),
+              revisionNumber: Long.fromString(timeout_height.revision_number, true),
             }
           : undefined,
-        timeoutTimestamp: Long.fromNumber(timeout_timestamp, true),
+        timeoutTimestamp: Long.fromString(timeout_timestamp, true),
       }),
     },
   };
