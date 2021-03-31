@@ -229,7 +229,7 @@ export class CosmWasmClient {
   }
 
   public async getCodes(): Promise<readonly Code[]> {
-    const { codeInfos } = await this.forceGetQueryClient().unverified.wasm.listCodeInfo();
+    const { codeInfos } = await this.forceGetQueryClient().wasm.listCodeInfo();
     return (codeInfos || []).map(
       (entry: CodeInfoResponse): Code => {
         assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
@@ -248,7 +248,7 @@ export class CosmWasmClient {
     const cached = this.codesCache.get(codeId);
     if (cached) return cached;
 
-    const { codeInfo, data } = await this.forceGetQueryClient().unverified.wasm.getCode(codeId);
+    const { codeInfo, data } = await this.forceGetQueryClient().wasm.getCode(codeId);
     assert(
       codeInfo && codeInfo.codeId && codeInfo.creator && codeInfo.dataHash && data,
       "codeInfo missing or incomplete",
@@ -266,7 +266,7 @@ export class CosmWasmClient {
   }
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
-    const { contractInfos } = await this.forceGetQueryClient().unverified.wasm.listContractsByCodeId(codeId);
+    const { contractInfos } = await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId);
     return (contractInfos || []).map(
       ({ address, contractInfo }): Contract => {
         assert(address, "address missing");
@@ -289,10 +289,9 @@ export class CosmWasmClient {
    * Throws an error if no contract was found at the address
    */
   public async getContract(address: string): Promise<Contract> {
-    const {
-      address: retrievedAddress,
-      contractInfo,
-    } = await this.forceGetQueryClient().unverified.wasm.getContractInfo(address);
+    const { address: retrievedAddress, contractInfo } = await this.forceGetQueryClient().wasm.getContractInfo(
+      address,
+    );
     if (!contractInfo) throw new Error(`No contract found at address "${address}"`);
     assert(retrievedAddress, "address missing");
     assert(contractInfo.codeId && contractInfo.creator && contractInfo.label, "contractInfo incomplete");
@@ -309,7 +308,7 @@ export class CosmWasmClient {
    * Throws an error if no contract was found at the address
    */
   public async getContractCodeHistory(address: string): Promise<readonly ContractCodeHistoryEntry[]> {
-    const result = await this.forceGetQueryClient().unverified.wasm.getContractCodeHistory(address);
+    const result = await this.forceGetQueryClient().wasm.getContractCodeHistory(address);
     if (!result) throw new Error(`No contract history found for address "${address}"`);
     const operations: Record<number, "Init" | "Genesis" | "Migrate"> = {
       [ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT]: "Init",
@@ -338,7 +337,7 @@ export class CosmWasmClient {
     // just test contract existence
     await this.getContract(address);
 
-    const { data } = await this.forceGetQueryClient().unverified.wasm.queryContractRaw(address, key);
+    const { data } = await this.forceGetQueryClient().wasm.queryContractRaw(address, key);
     return data ?? null;
   }
 
@@ -351,7 +350,7 @@ export class CosmWasmClient {
    */
   public async queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject> {
     try {
-      return await this.forceGetQueryClient().unverified.wasm.queryContractSmart(address, queryMsg);
+      return await this.forceGetQueryClient().wasm.queryContractSmart(address, queryMsg);
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.startsWith("not found: contract")) {

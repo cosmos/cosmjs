@@ -295,7 +295,7 @@ describe("SigningCosmWasmClient", () => {
         { admin: unused.address },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
-      const { contractInfo } = await wasmClient.unverified.wasm.getContractInfo(contractAddress);
+      const { contractInfo } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo);
       expect(contractInfo.admin).toEqual(unused.address);
     });
@@ -349,16 +349,12 @@ describe("SigningCosmWasmClient", () => {
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
-      const { contractInfo: contractInfo1 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
       await client.updateAdmin(alice.address0, contractAddress, unused.address);
-      const { contractInfo: contractInfo2 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual(unused.address);
     });
@@ -385,16 +381,12 @@ describe("SigningCosmWasmClient", () => {
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
-      const { contractInfo: contractInfo1 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
       await client.clearAdmin(alice.address0, contractAddress);
-      const { contractInfo: contractInfo2 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual("");
     });
@@ -422,17 +414,13 @@ describe("SigningCosmWasmClient", () => {
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
-      const { contractInfo: contractInfo1 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
       const newVerifier = makeRandomAddress();
       await client.migrate(alice.address0, contractAddress, codeId2, { verifier: newVerifier });
-      const { contractInfo: contractInfo2 } = await wasmClient.unverified.wasm.getContractInfo(
-        contractAddress,
-      );
+      const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect({ ...contractInfo2 }).toEqual({
         ...contractInfo1,
