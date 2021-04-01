@@ -55,6 +55,7 @@ and this project adheres to
   `protected`.
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.offline` static method
   for constructing offline clients without a Tendermint client.
+- @cosmjs/stargate: Add `SigningStargateClient.sendIbcTokens` method.
 
 ### Changed
 
