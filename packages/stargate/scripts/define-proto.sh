@@ -34,6 +34,7 @@ protoc \
   "$COSMOS_PROTO_DIR/cosmos/tx/signing/v1beta1/signing.proto" \
   "$COSMOS_PROTO_DIR/cosmos/tx/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/cosmos/vesting/v1beta1/vesting.proto" \
+  "$COSMOS_PROTO_DIR/ibc/applications/transfer/v1/tx.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/channel/v1/channel.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/channel/v1/query.proto" \
   "$COSMOS_PROTO_DIR/ibc/core/channel/v1/tx.proto" \

@@ -3,6 +3,7 @@ import { AminoMsg, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino"
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import Long from "long";
 
 import {
   AminoMsgBeginRedelegate,
@@ -13,6 +14,7 @@ import {
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
+  AminoMsgTransfer,
   AminoMsgUndelegate,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
@@ -31,6 +33,7 @@ import {
   MsgEditValidator,
   MsgUndelegate,
 } from "./codec/cosmos/staking/v1beta1/tx";
+import { MsgTransfer } from "./codec/ibc/applications/transfer/v1/tx";
 
 export interface AminoConverter {
   readonly aminoType: string;
@@ -322,6 +325,53 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         amount: amount,
+      }),
+    },
+    "/ibc.applications.transfer.v1.MsgTransfer": {
+      aminoType: "cosmos-sdk/MsgTransfer",
+      toAmino: ({
+        sourcePort,
+        sourceChannel,
+        token,
+        sender,
+        receiver,
+        timeoutHeight,
+        timeoutTimestamp,
+      }: MsgTransfer): AminoMsgTransfer["value"] => ({
+        source_port: sourcePort,
+        source_channel: sourceChannel,
+        token: token,
+        sender: sender,
+        receiver: receiver,
+        timeout_height: timeoutHeight
+          ? {
+              revision_height: timeoutHeight.revisionHeight.toString(),
+              revision_number: timeoutHeight.revisionNumber.toString(),
+            }
+          : undefined,
+        timeout_timestamp: timeoutTimestamp.toString(),
+      }),
+      fromAmino: ({
+        source_port,
+        source_channel,
+        token,
+        sender,
+        receiver,
+        timeout_height,
+        timeout_timestamp,
+      }: AminoMsgTransfer["value"]): MsgTransfer => ({
+        sourcePort: source_port,
+        sourceChannel: source_channel,
+        token: token,
+        sender: sender,
+        receiver: receiver,
+        timeoutHeight: timeout_height
+          ? {
+              revisionHeight: Long.fromString(timeout_height.revision_height, true),
+              revisionNumber: Long.fromString(timeout_height.revision_number, true),
+            }
+          : undefined,
+        timeoutTimestamp: Long.fromString(timeout_timestamp, true),
       }),
     },
   };

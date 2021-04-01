@@ -2,6 +2,7 @@
 import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { coin, coins } from "@cosmjs/proto-signing";
+import Long from "long";
 
 import {
   AminoMsgBeginRedelegate,
@@ -12,6 +13,7 @@ import {
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
+  AminoMsgTransfer,
   AminoMsgUndelegate,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
@@ -31,6 +33,7 @@ import {
   MsgEditValidator,
   MsgUndelegate,
 } from "./codec/cosmos/staking/v1beta1/tx";
+import { MsgTransfer } from "./codec/ibc/applications/transfer/v1/tx";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {
@@ -315,6 +318,41 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
 
+    it("works for MsgTransfer", () => {
+      const msg: MsgTransfer = {
+        sourcePort: "testport",
+        sourceChannel: "testchannel",
+        token: coin(1234, "utest"),
+        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        timeoutHeight: {
+          revisionHeight: Long.fromString("123", true),
+          revisionNumber: Long.fromString("456", true),
+        },
+        timeoutTimestamp: Long.fromString("789", true),
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
+        value: msg,
+      });
+      const expected: AminoMsgTransfer = {
+        type: "cosmos-sdk/MsgTransfer",
+        value: {
+          source_port: "testport",
+          source_channel: "testchannel",
+          token: coin(1234, "utest"),
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          timeout_height: {
+            revision_height: "123",
+            revision_number: "456",
+          },
+          timeout_timestamp: "789",
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
     it("works with custom type url", () => {
       const msg = {
         foo: "bar",
@@ -584,6 +622,41 @@ describe("AminoTypes", () => {
       };
       expect(msg).toEqual({
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgTransfer", () => {
+      const aminoMsg: AminoMsgTransfer = {
+        type: "cosmos-sdk/MsgTransfer",
+        value: {
+          source_port: "testport",
+          source_channel: "testchannel",
+          token: coin(1234, "utest"),
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          timeout_height: {
+            revision_height: "123",
+            revision_number: "456",
+          },
+          timeout_timestamp: "789",
+        },
+      };
+      const msg = new AminoTypes().fromAmino(aminoMsg);
+      const expectedValue: MsgTransfer = {
+        sourcePort: "testport",
+        sourceChannel: "testchannel",
+        token: coin(1234, "utest"),
+        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        timeoutHeight: {
+          revisionHeight: Long.fromString("123", true),
+          revisionNumber: Long.fromString("456", true),
+        },
+        timeoutTimestamp: Long.fromString("789", true),
+      };
+      expect(msg).toEqual({
+        typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: expectedValue,
       });
     });
