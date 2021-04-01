@@ -253,7 +253,6 @@ describe("SigningStargateClient", () => {
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
-      assert(after);
       expect(after).toEqual(transferAmount[0]);
     });
 
@@ -280,7 +279,6 @@ describe("SigningStargateClient", () => {
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
-      assert(after);
       expect(after).toEqual(transferAmount[0]);
     });
   });
@@ -465,8 +463,6 @@ describe("SigningStargateClient", () => {
                 assert(customDelegatorAddress, "missing customDelegatorAddress");
                 assert(customValidatorAddress, "missing validatorAddress");
                 assert(customAmount, "missing amount");
-                assert(customAmount.amount, "missing amount.amount");
-                assert(customAmount.denom, "missing amount.denom");
                 return {
                   delegator_address: customDelegatorAddress,
                   validator_address: customValidatorAddress,
@@ -733,8 +729,6 @@ describe("SigningStargateClient", () => {
                 assert(customDelegatorAddress, "missing customDelegatorAddress");
                 assert(customValidatorAddress, "missing validatorAddress");
                 assert(customAmount, "missing amount");
-                assert(customAmount.amount, "missing amount.amount");
-                assert(customAmount.denom, "missing amount.denom");
                 return {
                   delegator_address: customDelegatorAddress,
                   validator_address: customValidatorAddress,
