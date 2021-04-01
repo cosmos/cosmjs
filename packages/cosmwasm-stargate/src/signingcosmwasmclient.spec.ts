@@ -95,6 +95,10 @@ describe("SigningCosmWasmClient", () => {
           amount: coins(502400, "utest"),
           gas: "160000",
         },
+        transfer: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
         undelegate: {
           amount: coins(502400, "utest"),
           gas: "160000",
@@ -143,6 +147,10 @@ describe("SigningCosmWasmClient", () => {
           gas: "80000",
         },
         delegate: {
+          amount: coins(4000, "ucosm"),
+          gas: "160000",
+        },
+        transfer: {
           amount: coins(4000, "ucosm"),
           gas: "160000",
         },
@@ -195,6 +203,10 @@ describe("SigningCosmWasmClient", () => {
           gas: "80000",
         },
         delegate: {
+          amount: coins(502400, "utest"),
+          gas: "160000",
+        },
+        transfer: {
           amount: coins(502400, "utest"),
           gas: "160000",
         },
