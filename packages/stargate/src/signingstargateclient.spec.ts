@@ -49,6 +49,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "160000",
         },
+        transfer: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
         undelegate: {
           amount: [
             {
@@ -107,6 +116,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "160000",
         },
+        transfer: {
+          amount: [
+            {
+              amount: "502400",
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
         undelegate: {
           amount: [
             {
@@ -157,6 +175,15 @@ describe("SigningStargateClient", () => {
           ],
           gas: "120000",
         },
+        transfer: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
         undelegate: {
           amount: [
             {
@@ -202,6 +229,15 @@ describe("SigningStargateClient", () => {
           amount: [
             {
               amount: "502400", // 3.14 * 160_000
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        transfer: {
+          amount: [
+            {
+              amount: "502400",
               denom: "utest",
             },
           ],
