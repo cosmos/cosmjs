@@ -70,6 +70,7 @@ import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
   readonly delegate: StdFee;
+  readonly transfer: StdFee;
   readonly undelegate: StdFee;
   readonly withdraw: StdFee;
 }
