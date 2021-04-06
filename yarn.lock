@@ -8661,10 +8661,10 @@ ts-proto-descriptors@^1.2.0:
   dependencies:
     protobufjs "^6.8.8"
 
-ts-proto@^1.73.0:
-  version "1.73.0"
-  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.73.0.tgz#119bc82d35ddda8c0f2be650ff8cdba4247e5e7d"
-  integrity sha512-5wHHUFdBS1nRUgTx60ybuTHRO7hm3LlTKED57fn5C1/VWesqdrA13u5RRbCuv9doefQ2FAvirwLKAGZgul7kWA==
+ts-proto@^1.79.1:
+  version "1.79.1"
+  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.79.1.tgz#825520e503b4e551a8b86fa63aa83d2a8504418a"
+  integrity sha512-kSekfynENO6MjFl0G+1hvG8Ew3g1JlHN5QWwSfw1Rk09wf5Jg9uZ5qjk9YmWpQ0KFxDsocajV67RjFM/432Flw==
   dependencies:
     "@types/object-hash" "^1.3.0"
     dataloader "^1.4.0"
