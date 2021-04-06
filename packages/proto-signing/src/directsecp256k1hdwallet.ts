@@ -23,22 +23,39 @@ interface Secp256k1Derivation {
   readonly prefix: string;
 }
 
+export interface DirectSecp256k1HdWalletOptions {
+  /** The password to use when deriving a BIP39 seed from a mnemonic. */
+  readonly bip39Password: string;
+  /** The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`. */
+  readonly hdPath: HdPath;
+  /** The bech32 address prefix (human readable part). Defaults to "cosmos". */
+  readonly prefix: string;
+}
+
+const defaultOptions: DirectSecp256k1HdWalletOptions = {
+  bip39Password: "",
+  hdPath: makeCosmoshubPath(0),
+  prefix: "cosmos",
+};
+
 /** A wallet for protobuf based signing using SIGN_MODE_DIRECT */
 export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
    * @param mnemonic Any valid English mnemonic.
-   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
-   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   * @param options An optional `DirectSecp256k1HdWalletOptions` object optionally containing a bip39Password, hdPath, and prefix.
    */
   public static async fromMnemonic(
     mnemonic: string,
-    hdPath: HdPath = makeCosmoshubPath(0),
-    prefix = "cosmos",
+    options: Partial<DirectSecp256k1HdWalletOptions> = {},
   ): Promise<DirectSecp256k1HdWallet> {
+    const { bip39Password, hdPath, prefix } = {
+      ...defaultOptions,
+      ...options,
+    };
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, bip39Password);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
     return new DirectSecp256k1HdWallet(
@@ -65,7 +82,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
-    return DirectSecp256k1HdWallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+    return DirectSecp256k1HdWallet.fromMnemonic(mnemonic.toString(), { hdPath: hdPath, prefix: prefix });
   }
 
   /** Base secret */

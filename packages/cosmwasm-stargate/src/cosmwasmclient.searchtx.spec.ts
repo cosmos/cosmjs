@@ -102,7 +102,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const unsuccessfulRecipient = makeRandomAddress();
       const successfulRecipient = makeRandomAddress();

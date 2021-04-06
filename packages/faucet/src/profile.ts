@@ -19,7 +19,7 @@ export async function createWallets(
   const numberOfIdentities = 1 + numberOfDistributors;
   for (let i = 0; i < numberOfIdentities; i++) {
     const path = makeCosmoshubPath(i);
-    const wallet = await createWallet(mnemonic, path, addressPrefix);
+    const wallet = await createWallet(mnemonic, { hdPath: path, prefix: addressPrefix });
     const [{ address }] = await wallet.getAccounts();
     if (logging) {
       const role = i === 0 ? "token holder " : `distributor ${i}`;

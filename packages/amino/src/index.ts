@@ -21,7 +21,7 @@ export {
 } from "./pubkeys";
 export { createMultisigThresholdPubkey } from "./multisig";
 export { makeCosmoshubPath } from "./paths";
-export { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
+export { extractKdfConfiguration, Secp256k1HdWallet, Secp256k1HdWalletOptions } from "./secp256k1hdwallet";
 export { Secp256k1Wallet } from "./secp256k1wallet";
 export { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";
 export { AminoMsg, makeSignDoc, serializeSignDoc, StdFee, StdSignDoc } from "./signdoc";

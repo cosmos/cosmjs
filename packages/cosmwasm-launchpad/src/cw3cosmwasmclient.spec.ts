@@ -247,7 +247,9 @@ describe("Cw3CosmWasmClient", () => {
         proposerWallet,
         contractAddress,
       );
-      const voterWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
+      const voterWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
       const voter = new Cw3CosmWasmClient(launchpad.endpoint, alice.address1, voterWallet, contractAddress);
       const toAddress = makeRandomAddress();
       const msg = {
@@ -292,9 +294,13 @@ describe("Cw3CosmWasmClient", () => {
         proposerWallet,
         contractAddress,
       );
-      const voter1Wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
+      const voter1Wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
       const voter1 = new Cw3CosmWasmClient(launchpad.endpoint, alice.address1, voter1Wallet, contractAddress);
-      const voter2Wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, makeCosmoshubPath(2));
+      const voter2Wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+        hdPath: makeCosmoshubPath(2),
+      });
       const voter2 = new Cw3CosmWasmClient(launchpad.endpoint, alice.address2, voter2Wallet, contractAddress);
       const toAddress = makeRandomAddress();
       const msg = {

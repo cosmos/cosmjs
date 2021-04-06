@@ -133,7 +133,7 @@ describe("WasmExtension", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, "wasm");
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const result = await uploadContract(wallet, hackatom);
       assertIsBroadcastTxSuccess(result);
       hackatomCodeId = Number.parseInt(
@@ -187,7 +187,7 @@ describe("WasmExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, "wasm");
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
@@ -248,7 +248,7 @@ describe("WasmExtension", () => {
     it("can list contract history", async () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, "wasm");
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
@@ -376,7 +376,7 @@ describe("WasmExtension", () => {
   describe("broadcastTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
 
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];

@@ -10,7 +10,7 @@ export {
   TsProtoGeneratedType,
   PbjsGeneratedType,
 } from "./registry";
-export { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
+export { DirectSecp256k1HdWallet, DirectSecp256k1HdWalletOptions } from "./directsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 export { decodePubkey, encodePubkey } from "./pubkey";
 export {
