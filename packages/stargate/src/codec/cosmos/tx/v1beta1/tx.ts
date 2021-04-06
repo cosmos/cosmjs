@@ -1,10 +1,10 @@
 /* eslint-disable */
 import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Any } from "../../../google/protobuf/any";
 import { SignMode, signModeFromJSON, signModeToJSON } from "../../../cosmos/tx/signing/v1beta1/signing";
 import { CompactBitArray } from "../../../cosmos/crypto/multisig/v1beta1/multisig";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.tx.v1beta1";
 
@@ -224,7 +224,7 @@ export const Tx = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Tx {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTx } as Tx;
     message.signatures = [];
@@ -321,10 +321,12 @@ export const TxRaw = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxRaw {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxRaw } as TxRaw;
     message.signatures = [];
+    message.bodyBytes = new Uint8Array();
+    message.authInfoBytes = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -348,6 +350,8 @@ export const TxRaw = {
   fromJSON(object: any): TxRaw {
     const message = { ...baseTxRaw } as TxRaw;
     message.signatures = [];
+    message.bodyBytes = new Uint8Array();
+    message.authInfoBytes = new Uint8Array();
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
       message.bodyBytes = bytesFromBase64(object.bodyBytes);
     }
@@ -422,9 +426,11 @@ export const SignDoc = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignDoc {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignDoc } as SignDoc;
+    message.bodyBytes = new Uint8Array();
+    message.authInfoBytes = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -450,6 +456,8 @@ export const SignDoc = {
 
   fromJSON(object: any): SignDoc {
     const message = { ...baseSignDoc } as SignDoc;
+    message.bodyBytes = new Uint8Array();
+    message.authInfoBytes = new Uint8Array();
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
       message.bodyBytes = bytesFromBase64(object.bodyBytes);
     }
@@ -534,7 +542,7 @@ export const TxBody = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxBody {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxBody } as TxBody;
     message.messages = [];
@@ -672,7 +680,7 @@ export const AuthInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AuthInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAuthInfo } as AuthInfo;
     message.signerInfos = [];
@@ -754,7 +762,7 @@ export const SignerInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignerInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignerInfo } as SignerInfo;
     while (reader.pos < end) {
@@ -842,7 +850,7 @@ export const ModeInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo } as ModeInfo;
     while (reader.pos < end) {
@@ -913,7 +921,7 @@ export const ModeInfo_Single = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Single {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Single } as ModeInfo_Single;
     while (reader.pos < end) {
@@ -971,7 +979,7 @@ export const ModeInfo_Multi = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Multi {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
     message.modeInfos = [];
@@ -1057,7 +1065,7 @@ export const Fee = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Fee {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFee } as Fee;
     message.amount = [];
@@ -1191,3 +1199,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

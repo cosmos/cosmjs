@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { AccessConfig } from "../../../../x/wasm/internal/types/types";
 import Long from "long";
-import { Coin } from "../../../../cosmos/base/v1beta1/coin";
 import _m0 from "protobufjs/minimal";
+import { AccessConfig } from "../../../../x/wasm/internal/types/types";
+import { Coin } from "../../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";
 
@@ -136,9 +136,10 @@ export const MsgStoreCode = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgStoreCode {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgStoreCode } as MsgStoreCode;
+    message.wasmByteCode = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -167,6 +168,7 @@ export const MsgStoreCode = {
 
   fromJSON(object: any): MsgStoreCode {
     const message = { ...baseMsgStoreCode } as MsgStoreCode;
+    message.wasmByteCode = new Uint8Array();
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -251,7 +253,7 @@ export const MsgStoreCodeResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgStoreCodeResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgStoreCodeResponse } as MsgStoreCodeResponse;
     while (reader.pos < end) {
@@ -321,10 +323,11 @@ export const MsgInstantiateContract = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgInstantiateContract {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgInstantiateContract } as MsgInstantiateContract;
     message.funds = [];
+    message.initMsg = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -357,6 +360,7 @@ export const MsgInstantiateContract = {
   fromJSON(object: any): MsgInstantiateContract {
     const message = { ...baseMsgInstantiateContract } as MsgInstantiateContract;
     message.funds = [];
+    message.initMsg = new Uint8Array();
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -455,9 +459,10 @@ export const MsgInstantiateContractResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgInstantiateContractResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgInstantiateContractResponse } as MsgInstantiateContractResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -477,6 +482,7 @@ export const MsgInstantiateContractResponse = {
 
   fromJSON(object: any): MsgInstantiateContractResponse {
     const message = { ...baseMsgInstantiateContractResponse } as MsgInstantiateContractResponse;
+    message.data = new Uint8Array();
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -532,10 +538,11 @@ export const MsgExecuteContract = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExecuteContract {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgExecuteContract } as MsgExecuteContract;
     message.funds = [];
+    message.msg = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -562,6 +569,7 @@ export const MsgExecuteContract = {
   fromJSON(object: any): MsgExecuteContract {
     const message = { ...baseMsgExecuteContract } as MsgExecuteContract;
     message.funds = [];
+    message.msg = new Uint8Array();
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -635,9 +643,10 @@ export const MsgExecuteContractResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExecuteContractResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgExecuteContractResponse } as MsgExecuteContractResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -654,6 +663,7 @@ export const MsgExecuteContractResponse = {
 
   fromJSON(object: any): MsgExecuteContractResponse {
     const message = { ...baseMsgExecuteContractResponse } as MsgExecuteContractResponse;
+    message.data = new Uint8Array();
     if (object.data !== undefined && object.data !== null) {
       message.data = bytesFromBase64(object.data);
     }
@@ -698,9 +708,10 @@ export const MsgMigrateContract = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateContract {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMigrateContract } as MsgMigrateContract;
+    message.migrateMsg = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -726,6 +737,7 @@ export const MsgMigrateContract = {
 
   fromJSON(object: any): MsgMigrateContract {
     const message = { ...baseMsgMigrateContract } as MsgMigrateContract;
+    message.migrateMsg = new Uint8Array();
     if (object.sender !== undefined && object.sender !== null) {
       message.sender = String(object.sender);
     } else {
@@ -796,9 +808,10 @@ export const MsgMigrateContractResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateContractResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMigrateContractResponse } as MsgMigrateContractResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -815,6 +828,7 @@ export const MsgMigrateContractResponse = {
 
   fromJSON(object: any): MsgMigrateContractResponse {
     const message = { ...baseMsgMigrateContractResponse } as MsgMigrateContractResponse;
+    message.data = new Uint8Array();
     if (object.data !== undefined && object.data !== null) {
       message.data = bytesFromBase64(object.data);
     }
@@ -856,7 +870,7 @@ export const MsgUpdateAdmin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateAdmin {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateAdmin } as MsgUpdateAdmin;
     while (reader.pos < end) {
@@ -936,7 +950,7 @@ export const MsgUpdateAdminResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateAdminResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateAdminResponse } as MsgUpdateAdminResponse;
     while (reader.pos < end) {
@@ -980,7 +994,7 @@ export const MsgClearAdmin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearAdmin {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgClearAdmin } as MsgClearAdmin;
     while (reader.pos < end) {
@@ -1046,7 +1060,7 @@ export const MsgClearAdminResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearAdminResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgClearAdminResponse } as MsgClearAdminResponse;
     while (reader.pos < end) {
@@ -1179,3 +1193,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

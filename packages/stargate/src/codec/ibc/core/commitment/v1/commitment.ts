@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { CommitmentProof } from "../../../../confio/proofs";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { CommitmentProof } from "../../../../confio/proofs";
 
 export const protobufPackage = "ibc.core.commitment.v1";
 
@@ -53,9 +53,10 @@ export const MerkleRoot = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleRoot {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerkleRoot } as MerkleRoot;
+    message.hash = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -72,6 +73,7 @@ export const MerkleRoot = {
 
   fromJSON(object: any): MerkleRoot {
     const message = { ...baseMerkleRoot } as MerkleRoot;
+    message.hash = new Uint8Array();
     if (object.hash !== undefined && object.hash !== null) {
       message.hash = bytesFromBase64(object.hash);
     }
@@ -107,9 +109,10 @@ export const MerklePrefix = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePrefix {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerklePrefix } as MerklePrefix;
+    message.keyPrefix = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -126,6 +129,7 @@ export const MerklePrefix = {
 
   fromJSON(object: any): MerklePrefix {
     const message = { ...baseMerklePrefix } as MerklePrefix;
+    message.keyPrefix = new Uint8Array();
     if (object.keyPrefix !== undefined && object.keyPrefix !== null) {
       message.keyPrefix = bytesFromBase64(object.keyPrefix);
     }
@@ -163,7 +167,7 @@ export const MerklePath = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePath {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerklePath } as MerklePath;
     message.keyPath = [];
@@ -225,7 +229,7 @@ export const MerkleProof = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleProof {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerkleProof } as MerkleProof;
     message.proofs = [];
@@ -317,3 +321,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

@@ -324,12 +324,12 @@ describe("WasmExtension", () => {
       expect(model.beneficiary).toMatch(base64Matcher);
     });
 
-    it("returns undefined for missing key", async () => {
+    it("returns empty for missing key", async () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
       const { data } = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
-      expect(data).toBeUndefined();
+      expect(data).toEqual(new Uint8Array());
     });
 
     it("returns null for non-existent address", async () => {
@@ -418,10 +418,7 @@ describe("WasmExtension", () => {
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("instantiate");
         const response = MsgInstantiateContractResponse.decode(msgData.data);
-        expect({
-          ...response,
-          data: new Uint8Array(), // workaround for https://github.com/stephenh/ts-proto/issues/237
-        }).toEqual(MsgInstantiateContractResponse.fromPartial({ address: contractAddress }));
+        expect(response).toEqual(MsgInstantiateContractResponse.fromPartial({ address: contractAddress }));
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
         expect(balanceUcosm).toEqual(transferAmount[0]);

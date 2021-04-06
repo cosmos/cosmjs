@@ -1,10 +1,10 @@
 /* eslint-disable */
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { ConnectionEnd, IdentifiedConnection } from "../../../../ibc/core/connection/v1/connection";
 import { Height, IdentifiedClientState } from "../../../../ibc/core/client/v1/client";
 import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
-import Long from "long";
 import { Any } from "../../../../google/protobuf/any";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.connection.v1";
 
@@ -133,7 +133,7 @@ export const QueryConnectionRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionRequest } as QueryConnectionRequest;
     while (reader.pos < end) {
@@ -194,9 +194,10 @@ export const QueryConnectionResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionResponse } as QueryConnectionResponse;
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -219,6 +220,7 @@ export const QueryConnectionResponse = {
 
   fromJSON(object: any): QueryConnectionResponse {
     const message = { ...baseQueryConnectionResponse } as QueryConnectionResponse;
+    message.proof = new Uint8Array();
     if (object.connection !== undefined && object.connection !== null) {
       message.connection = ConnectionEnd.fromJSON(object.connection);
     } else {
@@ -278,7 +280,7 @@ export const QueryConnectionsRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionsRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionsRequest } as QueryConnectionsRequest;
     while (reader.pos < end) {
@@ -340,7 +342,7 @@ export const QueryConnectionsResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionsResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionsResponse } as QueryConnectionsResponse;
     message.connections = [];
@@ -431,7 +433,7 @@ export const QueryClientConnectionsRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientConnectionsRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientConnectionsRequest } as QueryClientConnectionsRequest;
     while (reader.pos < end) {
@@ -492,10 +494,11 @@ export const QueryClientConnectionsResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientConnectionsResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientConnectionsResponse } as QueryClientConnectionsResponse;
     message.connectionPaths = [];
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -519,6 +522,7 @@ export const QueryClientConnectionsResponse = {
   fromJSON(object: any): QueryClientConnectionsResponse {
     const message = { ...baseQueryClientConnectionsResponse } as QueryClientConnectionsResponse;
     message.connectionPaths = [];
+    message.proof = new Uint8Array();
     if (object.connectionPaths !== undefined && object.connectionPaths !== null) {
       for (const e of object.connectionPaths) {
         message.connectionPaths.push(String(e));
@@ -582,7 +586,7 @@ export const QueryConnectionClientStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionClientStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionClientStateRequest } as QueryConnectionClientStateRequest;
     while (reader.pos < end) {
@@ -643,9 +647,10 @@ export const QueryConnectionClientStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionClientStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionClientStateResponse } as QueryConnectionClientStateResponse;
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -668,6 +673,7 @@ export const QueryConnectionClientStateResponse = {
 
   fromJSON(object: any): QueryConnectionClientStateResponse {
     const message = { ...baseQueryConnectionClientStateResponse } as QueryConnectionClientStateResponse;
+    message.proof = new Uint8Array();
     if (object.identifiedClientState !== undefined && object.identifiedClientState !== null) {
       message.identifiedClientState = IdentifiedClientState.fromJSON(object.identifiedClientState);
     } else {
@@ -742,7 +748,7 @@ export const QueryConnectionConsensusStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionConsensusStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionConsensusStateRequest } as QueryConnectionConsensusStateRequest;
     while (reader.pos < end) {
@@ -841,9 +847,10 @@ export const QueryConnectionConsensusStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionConsensusStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionConsensusStateResponse } as QueryConnectionConsensusStateResponse;
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -869,6 +876,7 @@ export const QueryConnectionConsensusStateResponse = {
 
   fromJSON(object: any): QueryConnectionConsensusStateResponse {
     const message = { ...baseQueryConnectionConsensusStateResponse } as QueryConnectionConsensusStateResponse;
+    message.proof = new Uint8Array();
     if (object.consensusState !== undefined && object.consensusState !== null) {
       message.consensusState = Any.fromJSON(object.consensusState);
     } else {
@@ -1042,3 +1050,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

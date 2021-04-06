@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { Counterparty, Version } from "../../../../ibc/core/connection/v1/connection";
 import Long from "long";
+import _m0 from "protobufjs/minimal";
+import { Counterparty, Version } from "../../../../ibc/core/connection/v1/connection";
 import { Any } from "../../../../google/protobuf/any";
 import { Height } from "../../../../ibc/core/client/v1/client";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.connection.v1";
 
@@ -118,7 +118,7 @@ export const MsgConnectionOpenInit = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenInit {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenInit } as MsgConnectionOpenInit;
     while (reader.pos < end) {
@@ -228,7 +228,7 @@ export const MsgConnectionOpenInitResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenInitResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenInitResponse } as MsgConnectionOpenInitResponse;
     while (reader.pos < end) {
@@ -307,10 +307,13 @@ export const MsgConnectionOpenTry = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenTry {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenTry } as MsgConnectionOpenTry;
     message.counterpartyVersions = [];
+    message.proofInit = new Uint8Array();
+    message.proofClient = new Uint8Array();
+    message.proofConsensus = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -361,6 +364,9 @@ export const MsgConnectionOpenTry = {
   fromJSON(object: any): MsgConnectionOpenTry {
     const message = { ...baseMsgConnectionOpenTry } as MsgConnectionOpenTry;
     message.counterpartyVersions = [];
+    message.proofInit = new Uint8Array();
+    message.proofClient = new Uint8Array();
+    message.proofConsensus = new Uint8Array();
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
     } else {
@@ -527,7 +533,7 @@ export const MsgConnectionOpenTryResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenTryResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenTryResponse } as MsgConnectionOpenTryResponse;
     while (reader.pos < end) {
@@ -595,9 +601,12 @@ export const MsgConnectionOpenAck = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenAck {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenAck } as MsgConnectionOpenAck;
+    message.proofTry = new Uint8Array();
+    message.proofClient = new Uint8Array();
+    message.proofConsensus = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -641,6 +650,9 @@ export const MsgConnectionOpenAck = {
 
   fromJSON(object: any): MsgConnectionOpenAck {
     const message = { ...baseMsgConnectionOpenAck } as MsgConnectionOpenAck;
+    message.proofTry = new Uint8Array();
+    message.proofClient = new Uint8Array();
+    message.proofConsensus = new Uint8Array();
     if (object.connectionId !== undefined && object.connectionId !== null) {
       message.connectionId = String(object.connectionId);
     } else {
@@ -779,7 +791,7 @@ export const MsgConnectionOpenAckResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenAckResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenAckResponse } as MsgConnectionOpenAckResponse;
     while (reader.pos < end) {
@@ -829,9 +841,10 @@ export const MsgConnectionOpenConfirm = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenConfirm {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenConfirm } as MsgConnectionOpenConfirm;
+    message.proofAck = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -857,6 +870,7 @@ export const MsgConnectionOpenConfirm = {
 
   fromJSON(object: any): MsgConnectionOpenConfirm {
     const message = { ...baseMsgConnectionOpenConfirm } as MsgConnectionOpenConfirm;
+    message.proofAck = new Uint8Array();
     if (object.connectionId !== undefined && object.connectionId !== null) {
       message.connectionId = String(object.connectionId);
     } else {
@@ -923,7 +937,7 @@ export const MsgConnectionOpenConfirmResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenConfirmResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgConnectionOpenConfirmResponse } as MsgConnectionOpenConfirmResponse;
     while (reader.pos < end) {
@@ -1040,3 +1054,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

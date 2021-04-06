@@ -35,7 +35,7 @@ export const MultiSignature = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MultiSignature {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMultiSignature } as MultiSignature;
     message.signatures = [];
@@ -100,9 +100,10 @@ export const CompactBitArray = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompactBitArray {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCompactBitArray } as CompactBitArray;
+    message.elems = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -122,6 +123,7 @@ export const CompactBitArray = {
 
   fromJSON(object: any): CompactBitArray {
     const message = { ...baseCompactBitArray } as CompactBitArray;
+    message.elems = new Uint8Array();
     if (object.extraBitsStored !== undefined && object.extraBitsStored !== null) {
       message.extraBitsStored = Number(object.extraBitsStored);
     } else {
@@ -198,3 +200,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

@@ -31,9 +31,10 @@ export const PubKey = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PubKey {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePubKey } as PubKey;
+    message.key = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -50,6 +51,7 @@ export const PubKey = {
 
   fromJSON(object: any): PubKey {
     const message = { ...basePubKey } as PubKey;
+    message.key = new Uint8Array();
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -85,9 +87,10 @@ export const PrivKey = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PrivKey {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePrivKey } as PrivKey;
+    message.key = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -104,6 +107,7 @@ export const PrivKey = {
 
   fromJSON(object: any): PrivKey {
     const message = { ...basePrivKey } as PrivKey;
+    message.key = new Uint8Array();
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -169,3 +173,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

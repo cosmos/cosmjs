@@ -1,13 +1,13 @@
 /* eslint-disable */
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Duration } from "../../../../google/protobuf/duration";
 import { Height } from "../../../../ibc/core/client/v1/client";
 import { MerkleRoot } from "../../../../ibc/core/commitment/v1/commitment";
 import { SignedHeader } from "../../../../tendermint/types/types";
 import { ValidatorSet } from "../../../../tendermint/types/validator";
-import Long from "long";
 import { Timestamp } from "../../../../google/protobuf/timestamp";
 import { ProofSpec } from "../../../../confio/proofs";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.lightclients.tendermint.v1";
 
@@ -148,7 +148,7 @@ export const ClientState = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientState } as ClientState;
     message.proofSpecs = [];
@@ -371,9 +371,10 @@ export const ConsensusState = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusState } as ConsensusState;
+    message.nextValidatorsHash = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -396,6 +397,7 @@ export const ConsensusState = {
 
   fromJSON(object: any): ConsensusState {
     const message = { ...baseConsensusState } as ConsensusState;
+    message.nextValidatorsHash = new Uint8Array();
     if (object.timestamp !== undefined && object.timestamp !== null) {
       message.timestamp = fromJsonTimestamp(object.timestamp);
     } else {
@@ -414,8 +416,7 @@ export const ConsensusState = {
 
   toJSON(message: ConsensusState): unknown {
     const obj: any = {};
-    message.timestamp !== undefined &&
-      (obj.timestamp = message.timestamp !== undefined ? message.timestamp.toISOString() : null);
+    message.timestamp !== undefined && (obj.timestamp = message.timestamp.toISOString());
     message.root !== undefined && (obj.root = message.root ? MerkleRoot.toJSON(message.root) : undefined);
     message.nextValidatorsHash !== undefined &&
       (obj.nextValidatorsHash = base64FromBytes(
@@ -462,7 +463,7 @@ export const Misbehaviour = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Misbehaviour {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMisbehaviour } as Misbehaviour;
     while (reader.pos < end) {
@@ -556,7 +557,7 @@ export const Header = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Header {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHeader } as Header;
     while (reader.pos < end) {
@@ -662,7 +663,7 @@ export const Fraction = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Fraction {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFraction } as Fraction;
     while (reader.pos < end) {
