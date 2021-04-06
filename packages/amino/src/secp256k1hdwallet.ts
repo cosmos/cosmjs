@@ -107,21 +107,38 @@ interface DerivationInfo {
   readonly prefix: string;
 }
 
+export interface Secp256k1HdWalletOptions {
+  /** The password to use when deriving a BIP39 seed from a mnemonic. */
+  readonly bip39Password: string;
+  /** The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`. */
+  readonly hdPath: HdPath;
+  /** The bech32 address prefix (human readable part). Defaults to "cosmos". */
+  readonly prefix: string;
+}
+
+const defaultOptions: Secp256k1HdWalletOptions = {
+  bip39Password: "",
+  hdPath: makeCosmoshubPath(0),
+  prefix: "cosmos",
+};
+
 export class Secp256k1HdWallet implements OfflineAminoSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
    * @param mnemonic Any valid English mnemonic.
-   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
-   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   * @param options An optional `Secp256k1HdWalletOptions` object optionally containing a bip39Password, hdPath, and prefix.
    */
   public static async fromMnemonic(
     mnemonic: string,
-    hdPath: HdPath = makeCosmoshubPath(0),
-    prefix = "cosmos",
+    options: Partial<Secp256k1HdWalletOptions> = {},
   ): Promise<Secp256k1HdWallet> {
+    const { bip39Password, hdPath, prefix } = {
+      ...defaultOptions,
+      ...options,
+    };
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, bip39Password);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
     return new Secp256k1HdWallet(
@@ -148,7 +165,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
-    return Secp256k1HdWallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+    return Secp256k1HdWallet.fromMnemonic(mnemonic.toString(), { hdPath: hdPath, prefix: prefix });
   }
 
   /**
@@ -198,7 +215,10 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
         if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
         const account = accounts[0];
         if (!isDerivationJson(account)) throw new Error("Account is not in the correct format.");
-        return Secp256k1HdWallet.fromMnemonic(mnemonic, stringToPath(account.hdPath), account.prefix);
+        return Secp256k1HdWallet.fromMnemonic(mnemonic, {
+          hdPath: stringToPath(account.hdPath),
+          prefix: account.prefix,
+        });
       }
       default:
         throw new Error("Unsupported serialization type");
