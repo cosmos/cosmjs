@@ -56,6 +56,11 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.offline` static method
   for constructing offline clients without a Tendermint client.
 - @cosmjs/stargate: Add `SigningStargateClient.sendIbcTokens` method.
+- @cosmjs/amino: Export `Secp256k1HdWalletOptions` interface.
+- @cosmjs/amino: Add `bip39Password` option to `Secp256k1HdWallet` options.
+- @cosmjs/proto-signing: Export `DirectSecp256k1HdWalletOptions` interface.
+- @cosmjs/proto-signing: Add `bip39Password` option to `DirectSecp256k1HdWallet`
+  options.
 
 ### Changed
 
@@ -100,6 +105,10 @@ and this project adheres to
   account is not found, instead of returning null.
 - @cosmjs/cosmwasm-stargate: `CosmWasmClient.getBalance` now returns a 0 balance
   instead of null.
+- @cosmjs/amino: Options for `Secp256k1HdWallet.fromMnemonic` are now passed via
+  a `Secp256k1HdWalletOptions` object.
+- @cosmjs/proto-signing: Options for `DirectSecp256k1HdWallet.fromMnemonic` are
+  now passed via a `DirectSecp256k1HdWalletOptions` object.
 
 ### Deprecated
 
