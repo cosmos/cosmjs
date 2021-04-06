@@ -324,12 +324,12 @@ describe("WasmExtension", () => {
       expect(model.beneficiary).toMatch(base64Matcher);
     });
 
-    it("returns undefined for missing key", async () => {
+    it("returns empty for missing key", async () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
       const { data } = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
-      expect(data).toBeUndefined();
+      expect(data).toEqual(new Uint8Array());
     });
 
     it("returns null for non-existent address", async () => {
