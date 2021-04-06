@@ -1,4 +1,4 @@
-import { coins } from "@cosmjs/amino";
+import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
@@ -18,6 +18,17 @@ describe("DirectSecp256k1HdWallet", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
       expect(wallet).toBeTruthy();
       expect(wallet.mnemonic).toEqual(defaultMnemonic);
+    });
+
+    it("works with options", async () => {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic, {
+        bip39Password: "password123",
+        hdPath: makeCosmoshubPath(123),
+        prefix: "yolo",
+      });
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+      expect((wallet as any).pubkey).not.toEqual(defaultPubkey);
+      expect((wallet as any).address.slice(0, 4)).toEqual("yolo");
     });
   });
 
