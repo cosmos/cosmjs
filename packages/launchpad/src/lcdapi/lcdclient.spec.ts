@@ -547,9 +547,15 @@ describe("LcdClient", () => {
 
     it("can't send transaction with additional signatures", async () => {
       pendingWithoutLaunchpad();
-      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
-      const account3 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
+      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(0),
+      });
+      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
+      const account3 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(2),
+      });
       const [address1, address2, address3] = await Promise.all(
         [account1, account2, account3].map(async (wallet) => {
           return (await wallet.getAccounts())[0].address;
@@ -605,7 +611,7 @@ describe("LcdClient", () => {
 
     it("can send multiple messages with one signature", async () => {
       pendingWithoutLaunchpad();
-      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPath: makeCosmoshubPath(0) });
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
 
@@ -659,8 +665,12 @@ describe("LcdClient", () => {
 
     it("can send multiple messages with multiple signatures", async () => {
       pendingWithoutLaunchpad();
-      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(0),
+      });
+      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
           return (await wallet.getAccounts())[0].address;
@@ -730,8 +740,12 @@ describe("LcdClient", () => {
 
     it("can't send transaction with wrong signature order (1)", async () => {
       pendingWithoutLaunchpad();
-      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(0),
+      });
+      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
           return (await wallet.getAccounts())[0].address;
@@ -796,8 +810,12 @@ describe("LcdClient", () => {
 
     it("can't send transaction with wrong signature order (2)", async () => {
       pendingWithoutLaunchpad();
-      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(0),
+      });
+      const account2 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPath: makeCosmoshubPath(1),
+      });
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
           return (await wallet.getAccounts())[0].address;
