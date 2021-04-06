@@ -204,7 +204,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             channels.push(...response.channels);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             channels: channels,
             height: response.height,
@@ -226,7 +226,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             channels.push(...response.channels);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             channels: channels,
             height: response.height,
@@ -273,7 +273,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             commitments.push(...response.commitments);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             commitments: commitments,
             height: response.height,
@@ -309,7 +309,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             acknowledgements.push(...response.acknowledgements);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             acknowledgements: acknowledgements,
             height: response.height,
@@ -353,7 +353,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             clientStates.push(...response.clientStates);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             clientStates: clientStates,
           };
@@ -383,7 +383,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             consensusStates.push(...response.consensusStates);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             consensusStates: consensusStates,
           };
@@ -409,7 +409,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             clientStates.push(...response.clientStates);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return clientStates.map(({ clientState }) => decodeTendermintClientStateAny(clientState));
         },
         consensusStateTm: async (clientId: string, consensusHeight?: Height) => {
@@ -443,7 +443,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             });
             connections.push(...response.connections);
             key = response.pagination?.nextKey;
-          } while (key);
+          } while (key && key.length);
           return {
             connections: connections,
             height: response.height,
