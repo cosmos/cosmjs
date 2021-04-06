@@ -63,7 +63,7 @@ const initData = [
 ];
 
 async function main() {
-  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, "wasm");
+  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: "wasm" });
   const client = await SigningCosmWasmClient.connectWithSigner(endpoint, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw3_fixed_multisig.wasm");

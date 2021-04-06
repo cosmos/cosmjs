@@ -37,7 +37,10 @@ async function main() {
   for (const { mnemonic, accountNumbers } of accountsToCreate) {
     const wallets = await Promise.all(
       accountNumbers.map((accountNumber) =>
-        Secp256k1HdWallet.fromMnemonic(mnemonic, makeCosmoshubPath(accountNumber), prefix),
+        Secp256k1HdWallet.fromMnemonic(mnemonic, {
+          hdPath: makeCosmoshubPath(accountNumber),
+          prefix: prefix,
+        }),
       ),
     );
     const accounts = (await Promise.all(wallets.map((wallet) => wallet.getAccounts()))).map(
