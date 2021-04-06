@@ -61,6 +61,7 @@ and this project adheres to
 - @cosmjs/proto-signing: Export `DirectSecp256k1HdWalletOptions` interface.
 - @cosmjs/proto-signing: Add `bip39Password` option to `DirectSecp256k1HdWallet`
   options.
+- @cosmjs/amino: Add `rawEd25519PubkeyToRawAddress` helper function.
 
 ### Changed
 
