@@ -1,4 +1,10 @@
 export {
+  pubkeyToAddress,
+  pubkeyToRawAddress,
+  rawEd25519PubkeyToRawAddress,
+  rawSecp256k1PubkeyToRawAddress,
+} from "./addresses";
+export {
   adaptor33,
   adaptor34,
   Adaptor,
