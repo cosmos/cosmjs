@@ -62,6 +62,9 @@ and this project adheres to
 - @cosmjs/proto-signing: Add `bip39Password` option to `DirectSecp256k1HdWallet`
   options.
 - @cosmjs/amino: Add `rawEd25519PubkeyToRawAddress` helper function.
+- @cosmjs/tendermint-rpc: Add `pubkeyToAddress`, `pubkeyToRawAddress`,
+  `rawEd25519PubkeyToRawAddress`, and `rawSecp256k1PubkeyToRawAddress` helper
+  functions.
 
 ### Changed
 
