@@ -50,7 +50,7 @@ export const Coin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Coin {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCoin } as Coin;
     while (reader.pos < end) {
@@ -122,7 +122,7 @@ export const DecCoin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DecCoin {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDecCoin } as DecCoin;
     while (reader.pos < end) {
@@ -191,7 +191,7 @@ export const IntProto = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IntProto {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIntProto } as IntProto;
     while (reader.pos < end) {
@@ -246,7 +246,7 @@ export const DecProto = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DecProto {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDecProto } as DecProto;
     while (reader.pos < end) {
@@ -300,3 +300,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
