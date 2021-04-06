@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Any } from "../../../../google/protobuf/any";
-import _m0 from "protobufjs/minimal";
 import Long from "long";
+import _m0 from "protobufjs/minimal";
+import { Any } from "../../../../google/protobuf/any";
 
 export const protobufPackage = "ibc.core.client.v1";
 
@@ -89,7 +89,7 @@ export const MsgCreateClient = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateClient {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgCreateClient } as MsgCreateClient;
     while (reader.pos < end) {
@@ -171,7 +171,7 @@ export const MsgCreateClientResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateClientResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgCreateClientResponse } as MsgCreateClientResponse;
     while (reader.pos < end) {
@@ -218,7 +218,7 @@ export const MsgUpdateClient = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateClient {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateClient } as MsgUpdateClient;
     while (reader.pos < end) {
@@ -298,7 +298,7 @@ export const MsgUpdateClientResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateClientResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateClientResponse } as MsgUpdateClientResponse;
     while (reader.pos < end) {
@@ -354,9 +354,11 @@ export const MsgUpgradeClient = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpgradeClient {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpgradeClient } as MsgUpgradeClient;
+    message.proofUpgradeClient = new Uint8Array();
+    message.proofUpgradeConsensusState = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -388,6 +390,8 @@ export const MsgUpgradeClient = {
 
   fromJSON(object: any): MsgUpgradeClient {
     const message = { ...baseMsgUpgradeClient } as MsgUpgradeClient;
+    message.proofUpgradeClient = new Uint8Array();
+    message.proofUpgradeConsensusState = new Uint8Array();
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
     } else {
@@ -482,7 +486,7 @@ export const MsgUpgradeClientResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpgradeClientResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpgradeClientResponse } as MsgUpgradeClientResponse;
     while (reader.pos < end) {
@@ -529,7 +533,7 @@ export const MsgSubmitMisbehaviour = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitMisbehaviour {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSubmitMisbehaviour } as MsgSubmitMisbehaviour;
     while (reader.pos < end) {
@@ -610,7 +614,7 @@ export const MsgSubmitMisbehaviourResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitMisbehaviourResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSubmitMisbehaviourResponse } as MsgSubmitMisbehaviourResponse;
     while (reader.pos < end) {
@@ -727,3 +731,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

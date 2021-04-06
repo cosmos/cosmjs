@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import { DecCoin, Coin } from "../../../cosmos/base/v1beta1/coin";
 import _m0 from "protobufjs/minimal";
+import { DecCoin, Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "cosmos.distribution.v1beta1";
 
@@ -151,7 +151,7 @@ export const Params = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     while (reader.pos < end) {
@@ -251,7 +251,7 @@ export const ValidatorHistoricalRewards = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorHistoricalRewards {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorHistoricalRewards } as ValidatorHistoricalRewards;
     message.cumulativeRewardRatio = [];
@@ -332,7 +332,7 @@ export const ValidatorCurrentRewards = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorCurrentRewards {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorCurrentRewards } as ValidatorCurrentRewards;
     message.rewards = [];
@@ -408,7 +408,7 @@ export const ValidatorAccumulatedCommission = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorAccumulatedCommission {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorAccumulatedCommission } as ValidatorAccumulatedCommission;
     message.commission = [];
@@ -470,7 +470,7 @@ export const ValidatorOutstandingRewards = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorOutstandingRewards {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorOutstandingRewards } as ValidatorOutstandingRewards;
     message.rewards = [];
@@ -535,7 +535,7 @@ export const ValidatorSlashEvent = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvent {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorSlashEvent } as ValidatorSlashEvent;
     while (reader.pos < end) {
@@ -605,7 +605,7 @@ export const ValidatorSlashEvents = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvents {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorSlashEvents } as ValidatorSlashEvents;
     message.validatorSlashEvents = [];
@@ -669,7 +669,7 @@ export const FeePool = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): FeePool {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFeePool } as FeePool;
     message.communityPool = [];
@@ -740,7 +740,7 @@ export const CommunityPoolSpendProposal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposal {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommunityPoolSpendProposal } as CommunityPoolSpendProposal;
     message.amount = [];
@@ -850,7 +850,7 @@ export const DelegatorStartingInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegatorStartingInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegatorStartingInfo } as DelegatorStartingInfo;
     while (reader.pos < end) {
@@ -937,7 +937,7 @@ export const DelegationDelegatorReward = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegationDelegatorReward {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegationDelegatorReward } as DelegationDelegatorReward;
     message.reward = [];
@@ -1034,7 +1034,7 @@ export const CommunityPoolSpendProposalWithDeposit = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposalWithDeposit {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommunityPoolSpendProposalWithDeposit } as CommunityPoolSpendProposalWithDeposit;
     while (reader.pos < end) {
@@ -1146,3 +1146,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

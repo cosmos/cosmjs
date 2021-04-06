@@ -1,8 +1,8 @@
 /* eslint-disable */
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Input, Output } from "../../../cosmos/bank/v1beta1/bank";
-import _m0 from "protobufjs/minimal";
-import Long from "long";
 
 export const protobufPackage = "cosmos.bank.v1beta1";
 
@@ -42,7 +42,7 @@ export const MsgSend = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSend {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSend } as MsgSend;
     message.amount = [];
@@ -129,7 +129,7 @@ export const MsgSendResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSendResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSendResponse } as MsgSendResponse;
     while (reader.pos < end) {
@@ -173,7 +173,7 @@ export const MsgMultiSend = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSend {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMultiSend } as MsgMultiSend;
     message.inputs = [];
@@ -253,7 +253,7 @@ export const MsgMultiSendResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSendResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
     while (reader.pos < end) {
@@ -323,3 +323,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

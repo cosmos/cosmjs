@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { BaseAccount } from "../../../cosmos/auth/v1beta1/auth";
 import Long from "long";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import _m0 from "protobufjs/minimal";
+import { BaseAccount } from "../../../cosmos/auth/v1beta1/auth";
+import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "cosmos.vesting.v1beta1";
 
@@ -75,7 +75,7 @@ export const BaseVestingAccount = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BaseVestingAccount {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBaseVestingAccount } as BaseVestingAccount;
     message.originalVesting = [];
@@ -211,7 +211,7 @@ export const ContinuousVestingAccount = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContinuousVestingAccount {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseContinuousVestingAccount } as ContinuousVestingAccount;
     while (reader.pos < end) {
@@ -283,7 +283,7 @@ export const DelayedVestingAccount = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DelayedVestingAccount {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelayedVestingAccount } as DelayedVestingAccount;
     while (reader.pos < end) {
@@ -344,7 +344,7 @@ export const Period = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Period {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePeriod } as Period;
     message.amount = [];
@@ -426,7 +426,7 @@ export const PeriodicVestingAccount = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PeriodicVestingAccount {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePeriodicVestingAccount } as PeriodicVestingAccount;
     message.vestingPeriods = [];
@@ -518,3 +518,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

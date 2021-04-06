@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Any } from "../../../../google/protobuf/any";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Any } from "../../../../google/protobuf/any";
 
 export const protobufPackage = "ibc.core.client.v1";
 
@@ -89,7 +89,7 @@ export const IdentifiedClientState = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedClientState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
     while (reader.pos < end) {
@@ -162,7 +162,7 @@ export const ConsensusStateWithHeight = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
     while (reader.pos < end) {
@@ -235,7 +235,7 @@ export const ClientConsensusStates = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientConsensusStates {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
     message.consensusStates = [];
@@ -322,7 +322,7 @@ export const ClientUpdateProposal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientUpdateProposal {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
     while (reader.pos < end) {
@@ -422,7 +422,7 @@ export const Height = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Height {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHeight } as Height;
     while (reader.pos < end) {
@@ -493,7 +493,7 @@ export const Params = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     message.allowedClients = [];
@@ -554,3 +554,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

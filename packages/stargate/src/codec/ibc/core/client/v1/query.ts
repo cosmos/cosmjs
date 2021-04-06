@@ -1,4 +1,6 @@
 /* eslint-disable */
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Any } from "../../../../google/protobuf/any";
 import {
   Height,
@@ -7,8 +9,6 @@ import {
   ConsensusStateWithHeight,
 } from "../../../../ibc/core/client/v1/client";
 import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
-import Long from "long";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.client.v1";
 
@@ -129,7 +129,7 @@ export const QueryClientStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientStateRequest } as QueryClientStateRequest;
     while (reader.pos < end) {
@@ -190,9 +190,10 @@ export const QueryClientStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientStateResponse } as QueryClientStateResponse;
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -215,6 +216,7 @@ export const QueryClientStateResponse = {
 
   fromJSON(object: any): QueryClientStateResponse {
     const message = { ...baseQueryClientStateResponse } as QueryClientStateResponse;
+    message.proof = new Uint8Array();
     if (object.clientState !== undefined && object.clientState !== null) {
       message.clientState = Any.fromJSON(object.clientState);
     } else {
@@ -274,7 +276,7 @@ export const QueryClientStatesRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientStatesRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientStatesRequest } as QueryClientStatesRequest;
     while (reader.pos < end) {
@@ -333,7 +335,7 @@ export const QueryClientStatesResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientStatesResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientStatesResponse } as QueryClientStatesResponse;
     message.clientStates = [];
@@ -424,7 +426,7 @@ export const QueryConsensusStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConsensusStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConsensusStateRequest } as QueryConsensusStateRequest;
     while (reader.pos < end) {
@@ -529,9 +531,10 @@ export const QueryConsensusStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConsensusStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConsensusStateResponse } as QueryConsensusStateResponse;
+    message.proof = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -554,6 +557,7 @@ export const QueryConsensusStateResponse = {
 
   fromJSON(object: any): QueryConsensusStateResponse {
     const message = { ...baseQueryConsensusStateResponse } as QueryConsensusStateResponse;
+    message.proof = new Uint8Array();
     if (object.consensusState !== undefined && object.consensusState !== null) {
       message.consensusState = Any.fromJSON(object.consensusState);
     } else {
@@ -616,7 +620,7 @@ export const QueryConsensusStatesRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConsensusStatesRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConsensusStatesRequest } as QueryConsensusStatesRequest;
     while (reader.pos < end) {
@@ -689,7 +693,7 @@ export const QueryConsensusStatesResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryConsensusStatesResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConsensusStatesResponse } as QueryConsensusStatesResponse;
     message.consensusStates = [];
@@ -765,7 +769,7 @@ export const QueryClientParamsRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientParamsRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientParamsRequest } as QueryClientParamsRequest;
     while (reader.pos < end) {
@@ -806,7 +810,7 @@ export const QueryClientParamsResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientParamsResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientParamsResponse } as QueryClientParamsResponse;
     while (reader.pos < end) {
@@ -951,3 +955,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

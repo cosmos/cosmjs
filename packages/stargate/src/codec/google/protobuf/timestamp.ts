@@ -127,7 +127,7 @@ export const Timestamp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Timestamp {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTimestamp } as Timestamp;
     while (reader.pos < end) {
@@ -195,3 +195,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

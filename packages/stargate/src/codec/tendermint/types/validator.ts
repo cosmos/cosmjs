@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import { PublicKey } from "../../tendermint/crypto/keys";
 import _m0 from "protobufjs/minimal";
+import { PublicKey } from "../../tendermint/crypto/keys";
 
 export const protobufPackage = "tendermint.types";
 
@@ -40,7 +40,7 @@ export const ValidatorSet = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSet {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
@@ -141,9 +141,10 @@ export const Validator = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidator } as Validator;
+    message.address = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -169,6 +170,7 @@ export const Validator = {
 
   fromJSON(object: any): Validator {
     const message = { ...baseValidator } as Validator;
+    message.address = new Uint8Array();
     if (object.address !== undefined && object.address !== null) {
       message.address = bytesFromBase64(object.address);
     }
@@ -242,7 +244,7 @@ export const SimpleValidator = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SimpleValidator {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSimpleValidator } as SimpleValidator;
     while (reader.pos < end) {
@@ -342,3 +344,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

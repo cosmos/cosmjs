@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { Any } from "../../../../google/protobuf/any";
 import Long from "long";
-import { CompactBitArray } from "../../../../cosmos/crypto/multisig/v1beta1/multisig";
 import _m0 from "protobufjs/minimal";
+import { Any } from "../../../../google/protobuf/any";
+import { CompactBitArray } from "../../../../cosmos/crypto/multisig/v1beta1/multisig";
 
 export const protobufPackage = "cosmos.tx.signing.v1beta1";
 
@@ -127,7 +127,7 @@ export const SignatureDescriptors = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptors {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptors } as SignatureDescriptors;
     message.signatures = [];
@@ -195,7 +195,7 @@ export const SignatureDescriptor = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
     while (reader.pos < end) {
@@ -283,7 +283,7 @@ export const SignatureDescriptor_Data = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data } as SignatureDescriptor_Data;
     while (reader.pos < end) {
@@ -357,9 +357,10 @@ export const SignatureDescriptor_Data_Single = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Single {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
+    message.signature = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -379,6 +380,7 @@ export const SignatureDescriptor_Data_Single = {
 
   fromJSON(object: any): SignatureDescriptor_Data_Single {
     const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
+    message.signature = new Uint8Array();
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = signModeFromJSON(object.mode);
     } else {
@@ -430,7 +432,7 @@ export const SignatureDescriptor_Data_Multi = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Multi {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data_Multi } as SignatureDescriptor_Data_Multi;
     message.signatures = [];
@@ -537,3 +539,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

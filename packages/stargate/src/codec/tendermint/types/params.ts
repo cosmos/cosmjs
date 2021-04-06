@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import { Duration } from "../../google/protobuf/duration";
 import _m0 from "protobufjs/minimal";
+import { Duration } from "../../google/protobuf/duration";
 
 export const protobufPackage = "tendermint.types";
 
@@ -105,7 +105,7 @@ export const ConsensusParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusParams } as ConsensusParams;
     while (reader.pos < end) {
@@ -212,7 +212,7 @@ export const BlockParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BlockParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBlockParams } as BlockParams;
     while (reader.pos < end) {
@@ -301,7 +301,7 @@ export const EvidenceParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): EvidenceParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEvidenceParams } as EvidenceParams;
     while (reader.pos < end) {
@@ -386,7 +386,7 @@ export const ValidatorParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorParams } as ValidatorParams;
     message.pubKeyTypes = [];
@@ -448,7 +448,7 @@ export const VersionParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): VersionParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVersionParams } as VersionParams;
     while (reader.pos < end) {
@@ -506,7 +506,7 @@ export const HashedParams = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): HashedParams {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHashedParams } as HashedParams;
     while (reader.pos < end) {
@@ -575,3 +575,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

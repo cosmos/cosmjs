@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { Coin } from "../../../../cosmos/base/v1beta1/coin";
-import { Height } from "../../../../ibc/core/client/v1/client";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Coin } from "../../../../cosmos/base/v1beta1/coin";
+import { Height } from "../../../../ibc/core/client/v1/client";
 
 export const protobufPackage = "ibc.applications.transfer.v1";
 
@@ -72,7 +72,7 @@ export const MsgTransfer = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransfer {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgTransfer } as MsgTransfer;
     while (reader.pos < end) {
@@ -210,7 +210,7 @@ export const MsgTransferResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransferResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
     while (reader.pos < end) {
@@ -272,3 +272,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "cosmos.bank.v1beta1";
 
@@ -90,7 +90,7 @@ export const Params = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     message.sendEnabled = [];
@@ -169,7 +169,7 @@ export const SendEnabled = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SendEnabled {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSendEnabled } as SendEnabled;
     while (reader.pos < end) {
@@ -241,7 +241,7 @@ export const Input = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Input {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseInput } as Input;
     message.coins = [];
@@ -320,7 +320,7 @@ export const Output = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Output {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOutput } as Output;
     message.coins = [];
@@ -396,7 +396,7 @@ export const Supply = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Supply {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSupply } as Supply;
     message.total = [];
@@ -464,7 +464,7 @@ export const DenomUnit = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DenomUnit {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDenomUnit } as DenomUnit;
     message.aliases = [];
@@ -563,7 +563,7 @@ export const Metadata = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Metadata {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMetadata } as Metadata;
     message.denomUnits = [];
@@ -666,3 +666,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

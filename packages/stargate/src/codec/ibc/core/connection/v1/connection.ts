@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import { MerklePrefix } from "../../../../ibc/core/commitment/v1/commitment";
 import _m0 from "protobufjs/minimal";
+import { MerklePrefix } from "../../../../ibc/core/commitment/v1/commitment";
 
 export const protobufPackage = "ibc.core.connection.v1";
 
@@ -171,7 +171,7 @@ export const ConnectionEnd = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionEnd {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConnectionEnd } as ConnectionEnd;
     message.versions = [];
@@ -305,7 +305,7 @@ export const IdentifiedConnection = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedConnection {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedConnection } as IdentifiedConnection;
     message.versions = [];
@@ -444,7 +444,7 @@ export const Counterparty = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCounterparty } as Counterparty;
     while (reader.pos < end) {
@@ -528,7 +528,7 @@ export const ClientPaths = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientPaths {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientPaths } as ClientPaths;
     message.paths = [];
@@ -593,7 +593,7 @@ export const ConnectionPaths = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionPaths {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConnectionPaths } as ConnectionPaths;
     message.paths = [];
@@ -672,7 +672,7 @@ export const Version = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Version {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVersion } as Version;
     message.features = [];
@@ -747,3 +747,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
