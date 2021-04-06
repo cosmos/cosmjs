@@ -1,4 +1,9 @@
-export { pubkeyToAddress, pubkeyToRawAddress, rawSecp256k1PubkeyToRawAddress } from "./addresses";
+export {
+  pubkeyToAddress,
+  pubkeyToRawAddress,
+  rawEd25519PubkeyToRawAddress,
+  rawSecp256k1PubkeyToRawAddress,
+} from "./addresses";
 export { Coin, coin, coins, parseCoins } from "./coins";
 export {
   decodeAminoPubkey,
