@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../../x/wasm/internal/types/types";
-import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../../x/wasm/internal/types/types";
+import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";
 
@@ -143,7 +143,7 @@ export const QueryContractInfoRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractInfoRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractInfoRequest } as QueryContractInfoRequest;
     while (reader.pos < end) {
@@ -201,7 +201,7 @@ export const QueryContractInfoResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractInfoResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractInfoResponse } as QueryContractInfoResponse;
     while (reader.pos < end) {
@@ -274,7 +274,7 @@ export const QueryContractHistoryRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractHistoryRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractHistoryRequest } as QueryContractHistoryRequest;
     while (reader.pos < end) {
@@ -347,7 +347,7 @@ export const QueryContractHistoryResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractHistoryResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractHistoryResponse } as QueryContractHistoryResponse;
     message.entries = [];
@@ -427,7 +427,7 @@ export const QueryContractsByCodeRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractsByCodeRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractsByCodeRequest } as QueryContractsByCodeRequest;
     while (reader.pos < end) {
@@ -500,7 +500,7 @@ export const ContractInfoWithAddress = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfoWithAddress {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseContractInfoWithAddress } as ContractInfoWithAddress;
     while (reader.pos < end) {
@@ -573,7 +573,7 @@ export const QueryContractsByCodeResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryContractsByCodeResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractsByCodeResponse } as QueryContractsByCodeResponse;
     message.contractInfos = [];
@@ -655,7 +655,7 @@ export const QueryAllContractStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllContractStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllContractStateRequest } as QueryAllContractStateRequest;
     while (reader.pos < end) {
@@ -728,7 +728,7 @@ export const QueryAllContractStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllContractStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllContractStateResponse } as QueryAllContractStateResponse;
     message.models = [];
@@ -808,9 +808,10 @@ export const QueryRawContractStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRawContractStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryRawContractStateRequest } as QueryRawContractStateRequest;
+    message.queryData = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -830,6 +831,7 @@ export const QueryRawContractStateRequest = {
 
   fromJSON(object: any): QueryRawContractStateRequest {
     const message = { ...baseQueryRawContractStateRequest } as QueryRawContractStateRequest;
+    message.queryData = new Uint8Array();
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -878,9 +880,10 @@ export const QueryRawContractStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRawContractStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryRawContractStateResponse } as QueryRawContractStateResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -897,6 +900,7 @@ export const QueryRawContractStateResponse = {
 
   fromJSON(object: any): QueryRawContractStateResponse {
     const message = { ...baseQueryRawContractStateResponse } as QueryRawContractStateResponse;
+    message.data = new Uint8Array();
     if (object.data !== undefined && object.data !== null) {
       message.data = bytesFromBase64(object.data);
     }
@@ -935,9 +939,10 @@ export const QuerySmartContractStateRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySmartContractStateRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySmartContractStateRequest } as QuerySmartContractStateRequest;
+    message.queryData = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -957,6 +962,7 @@ export const QuerySmartContractStateRequest = {
 
   fromJSON(object: any): QuerySmartContractStateRequest {
     const message = { ...baseQuerySmartContractStateRequest } as QuerySmartContractStateRequest;
+    message.queryData = new Uint8Array();
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -1005,9 +1011,10 @@ export const QuerySmartContractStateResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySmartContractStateResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySmartContractStateResponse } as QuerySmartContractStateResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1024,6 +1031,7 @@ export const QuerySmartContractStateResponse = {
 
   fromJSON(object: any): QuerySmartContractStateResponse {
     const message = { ...baseQuerySmartContractStateResponse } as QuerySmartContractStateResponse;
+    message.data = new Uint8Array();
     if (object.data !== undefined && object.data !== null) {
       message.data = bytesFromBase64(object.data);
     }
@@ -1059,7 +1067,7 @@ export const QueryCodeRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCodeRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryCodeRequest } as QueryCodeRequest;
     while (reader.pos < end) {
@@ -1126,9 +1134,10 @@ export const CodeInfoResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CodeInfoResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCodeInfoResponse } as CodeInfoResponse;
+    message.dataHash = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1157,6 +1166,7 @@ export const CodeInfoResponse = {
 
   fromJSON(object: any): CodeInfoResponse {
     const message = { ...baseCodeInfoResponse } as CodeInfoResponse;
+    message.dataHash = new Uint8Array();
     if (object.codeId !== undefined && object.codeId !== null) {
       message.codeId = Long.fromString(object.codeId);
     } else {
@@ -1239,9 +1249,10 @@ export const QueryCodeResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCodeResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryCodeResponse } as QueryCodeResponse;
+    message.data = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1261,6 +1272,7 @@ export const QueryCodeResponse = {
 
   fromJSON(object: any): QueryCodeResponse {
     const message = { ...baseQueryCodeResponse } as QueryCodeResponse;
+    message.data = new Uint8Array();
     if (object.codeInfo !== undefined && object.codeInfo !== null) {
       message.codeInfo = CodeInfoResponse.fromJSON(object.codeInfo);
     } else {
@@ -1308,7 +1320,7 @@ export const QueryCodesRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCodesRequest {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryCodesRequest } as QueryCodesRequest;
     while (reader.pos < end) {
@@ -1367,7 +1379,7 @@ export const QueryCodesResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCodesResponse {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryCodesResponse } as QueryCodesResponse;
     message.codeInfos = [];
@@ -1552,3 +1564,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

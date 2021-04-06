@@ -189,7 +189,7 @@ export const AccessTypeParam = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessTypeParam {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccessTypeParam } as AccessTypeParam;
     while (reader.pos < end) {
@@ -247,7 +247,7 @@ export const AccessConfig = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessConfig {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccessConfig } as AccessConfig;
     while (reader.pos < end) {
@@ -322,7 +322,7 @@ export const Params = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     while (reader.pos < end) {
@@ -422,9 +422,10 @@ export const CodeInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CodeInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCodeInfo } as CodeInfo;
+    message.codeHash = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -453,6 +454,7 @@ export const CodeInfo = {
 
   fromJSON(object: any): CodeInfo {
     const message = { ...baseCodeInfo } as CodeInfo;
+    message.codeHash = new Uint8Array();
     if (object.codeHash !== undefined && object.codeHash !== null) {
       message.codeHash = bytesFromBase64(object.codeHash);
     }
@@ -550,7 +552,7 @@ export const ContractInfo = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseContractInfo } as ContractInfo;
     while (reader.pos < end) {
@@ -685,9 +687,10 @@ export const ContractCodeHistoryEntry = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractCodeHistoryEntry {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseContractCodeHistoryEntry } as ContractCodeHistoryEntry;
+    message.msg = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -713,6 +716,7 @@ export const ContractCodeHistoryEntry = {
 
   fromJSON(object: any): ContractCodeHistoryEntry {
     const message = { ...baseContractCodeHistoryEntry } as ContractCodeHistoryEntry;
+    message.msg = new Uint8Array();
     if (object.operation !== undefined && object.operation !== null) {
       message.operation = contractCodeHistoryOperationTypeFromJSON(object.operation);
     } else {
@@ -786,7 +790,7 @@ export const AbsoluteTxPosition = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AbsoluteTxPosition {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAbsoluteTxPosition } as AbsoluteTxPosition;
     while (reader.pos < end) {
@@ -858,9 +862,11 @@ export const Model = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Model {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModel } as Model;
+    message.key = new Uint8Array();
+    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -880,6 +886,8 @@ export const Model = {
 
   fromJSON(object: any): Model {
     const message = { ...baseModel } as Model;
+    message.key = new Uint8Array();
+    message.value = new Uint8Array();
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -955,3 +963,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
