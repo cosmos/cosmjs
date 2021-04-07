@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
@@ -6,6 +7,7 @@ import {
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
+import { sleep } from "@cosmjs/utils";
 
 import { Account, accountFromAny } from "./accounts";
 import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
@@ -18,6 +20,15 @@ import {
   SearchTxFilter,
   SearchTxQuery,
 } from "./search";
+
+class TimeoutError extends Error {
+  public readonly txId: string;
+
+  public constructor(message: string, txId: string) {
+    super(message);
+    this.txId = txId;
+  }
+}
 
 /**
  * This is the same as BlockHeader from @cosmjs/launchpad but those might diverge in the future.
@@ -268,7 +279,61 @@ export class StargateClient {
     if (this.tmClient) this.tmClient.disconnect();
   }
 
-  public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
+  public async broadcastTx(
+    tx: Uint8Array,
+    timeoutMs = 60_000,
+    pollIntervalMs = 3_000,
+  ): Promise<BroadcastTxResponse> {
+    const txId = toHex(sha256(tx));
+    let timedOut = false;
+    const timeoutTimeout = setTimeout(() => {
+      timedOut = true;
+    }, timeoutMs);
+
+    const handlePrematureTimeout = (): Promise<BroadcastTxResponse> => {
+      if (timedOut) {
+        throw new TimeoutError(
+          `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
+          txId,
+        );
+      }
+      return sleep(pollIntervalMs)
+        .then(() => this.getTx(txId))
+        .then((result) =>
+          result
+            ? {
+                code: result.code,
+                height: result.height,
+                rawLog: result.rawLog,
+                transactionHash: txId,
+              }
+            : handlePrematureTimeout(),
+        );
+    };
+
+    return new Promise((resolve, reject) =>
+      this.broadcastTxCommit(tx)
+        .catch((error) => {
+          try {
+            const errorJson = JSON.parse(error.message);
+            if (errorJson.code !== -32603) {
+              // irrelevant error
+              throw error;
+            }
+          } catch {
+            // invalid JSON
+            throw error;
+          }
+          // timed out waiting for tx to be included in a block
+          // now we poll to artificially extend the timeout
+          return handlePrematureTimeout();
+        })
+        .then(resolve, reject)
+        .finally(() => clearTimeout(timeoutTimeout)),
+    );
+  }
+
+  private async broadcastTxCommit(tx: Uint8Array): Promise<BroadcastTxResponse> {
     const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
     if (broadcastTxCommitSuccess(response)) {
       return {
