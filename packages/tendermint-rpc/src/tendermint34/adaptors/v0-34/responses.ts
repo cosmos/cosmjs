@@ -263,7 +263,7 @@ interface RpcBlockId {
   /** hex encoded */
   readonly hash: string;
   readonly parts: {
-    readonly total: string;
+    readonly total: number;
     /** hex encoded */
     readonly hash: string;
   };
@@ -273,7 +273,7 @@ function decodeBlockId(data: RpcBlockId): responses.BlockId {
   return {
     hash: fromHex(assertNotEmpty(data.hash)),
     parts: {
-      total: Integer.parse(assertNotEmpty(data.parts.total)),
+      total: assertNotEmpty(data.parts.total),
       hash: fromHex(assertNotEmpty(data.parts.hash)),
     },
   };
@@ -296,8 +296,6 @@ interface RpcHeader {
   readonly chain_id: string;
   readonly height: string;
   readonly time: string;
-  readonly num_txs: string;
-  readonly total_txs: string;
 
   readonly last_block_id: RpcBlockId;
 
