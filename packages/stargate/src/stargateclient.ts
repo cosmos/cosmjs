@@ -286,29 +286,27 @@ export class StargateClient {
   ): Promise<BroadcastTxResponse> {
     const txId = toHex(sha256(tx));
     let timedOut = false;
-    const timeoutTimeout = setTimeout(() => {
+    const txPollTimeout = setTimeout(() => {
       timedOut = true;
     }, timeoutMs);
 
-    const handlePrematureTimeout = (): Promise<BroadcastTxResponse> => {
+    const handlePrematureTimeout = async (): Promise<BroadcastTxResponse> => {
       if (timedOut) {
         throw new TimeoutError(
           `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
           txId,
         );
       }
-      return sleep(pollIntervalMs)
-        .then(() => this.getTx(txId))
-        .then((result) =>
-          result
-            ? {
-                code: result.code,
-                height: result.height,
-                rawLog: result.rawLog,
-                transactionHash: txId,
-              }
-            : handlePrematureTimeout(),
-        );
+      await sleep(pollIntervalMs);
+      const result = await this.getTx(txId);
+      return result
+        ? {
+            code: result.code,
+            height: result.height,
+            rawLog: result.rawLog,
+            transactionHash: txId,
+          }
+        : handlePrematureTimeout();
     };
 
     return new Promise((resolve, reject) =>
@@ -329,7 +327,7 @@ export class StargateClient {
           return handlePrematureTimeout();
         })
         .then(resolve, reject)
-        .finally(() => clearTimeout(timeoutTimeout)),
+        .finally(() => clearTimeout(txPollTimeout)),
     );
   }
 
