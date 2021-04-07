@@ -346,13 +346,17 @@ function decodeHeader(data: RpcHeader): responses.Header {
 
 interface RpcBlockMeta {
   readonly block_id: RpcBlockId;
+  readonly block_size: string;
   readonly header: RpcHeader;
+  readonly num_txs: string;
 }
 
 function decodeBlockMeta(data: RpcBlockMeta): responses.BlockMeta {
   return {
     blockId: decodeBlockId(data.block_id),
+    blockSize: Integer.parse(assertNotEmpty(data.block_size)),
     header: decodeHeader(data.header),
+    numTxs: Integer.parse(assertNotEmpty(data.num_txs)),
   };
 }
 
