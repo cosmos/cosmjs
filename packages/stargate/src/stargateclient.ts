@@ -21,7 +21,7 @@ import {
   SearchTxQuery,
 } from "./search";
 
-class TimeoutError extends Error {
+export class TimeoutError extends Error {
   public readonly txId: string;
 
   public constructor(message: string, txId: string) {
