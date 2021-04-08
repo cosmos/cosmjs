@@ -275,19 +275,18 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
       const meta = blockchain.blockMetas[0];
 
-      // TODO: check all the fields
-      expect(meta).toEqual({
-        blockId: jasmine.objectContaining({}),
-        // block_size: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        // num_txs: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        header: jasmine.objectContaining({
+      expect(meta.blockId).toEqual(jasmine.objectContaining({}));
+      expect(meta.blockSize).toBeInstanceOf(Number);
+      expect(meta.header).toEqual(
+        jasmine.objectContaining({
           version: {
             block: expected.blockVersion,
             app: expected.appVersion,
           },
           chainId: jasmine.stringMatching(chainIdMatcher),
         }),
-      });
+      );
+      expect(meta.numTxs).toBeInstanceOf(Number);
 
       client.disconnect();
     });
