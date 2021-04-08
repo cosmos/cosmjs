@@ -410,6 +410,6 @@ describe("StargateClient", () => {
       );
 
       client.disconnect();
-    });
+    }, 30_000);
   });
 });
