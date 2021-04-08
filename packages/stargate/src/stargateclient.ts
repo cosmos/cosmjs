@@ -314,17 +314,19 @@ export class StargateClient {
         .catch((error) => {
           try {
             const errorJson = JSON.parse(error.message);
-            if (errorJson.code !== -32603) {
-              // irrelevant error
-              throw error;
+            if (
+              // -32603 is "Internal Error"
+              // https://github.com/tendermint/tendermint/blob/v0.34.0/rpc/jsonrpc/types/types.go#L236
+              errorJson.code === -32603 &&
+              /timed out waiting for tx to be included in a block/i.test(errorJson.data)
+            ) {
+              // now we poll to artificially extend the timeout
+              return handlePrematureTimeout();
             }
           } catch {
             // invalid JSON
-            throw error;
           }
-          // timed out waiting for tx to be included in a block
-          // now we poll to artificially extend the timeout
-          return handlePrematureTimeout();
+          throw error;
         })
         .then(resolve, reject)
         .finally(() => clearTimeout(txPollTimeout)),
