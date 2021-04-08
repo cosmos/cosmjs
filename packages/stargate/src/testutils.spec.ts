@@ -29,6 +29,16 @@ export function pendingWithoutSimapp(): void {
   }
 }
 
+export function slowSimappEnabled(): boolean {
+  return !!process.env.SLOW_SIMAPP_ENABLED;
+}
+
+export function pendingWithoutSlowSimapp(): void {
+  if (!slowSimappEnabled()) {
+    return pending("Set SLOW_SIMAPP_ENABLED to enable slow Simapp based tests");
+  }
+}
+
 export function makeRandomAddressBytes(): Uint8Array {
   return Random.getBytes(20);
 }
@@ -47,6 +57,17 @@ export const simapp = {
   tendermintUrl: "localhost:26658",
   tendermintUrlWs: "ws://localhost:26658",
   tendermintUrlHttp: "http://localhost:26658",
+  chainId: "simd-testing",
+  denomStaking: "ustake",
+  denomFee: "ucosm",
+  blockTime: 1_000, // ms
+  totalSupply: 21000000000,
+};
+
+export const slowSimapp = {
+  tendermintUrl: "localhost:26660",
+  tendermintUrlWs: "ws://localhost:26660",
+  tendermintUrlHttp: "http://localhost:26660",
   chainId: "simd-testing",
   denomStaking: "ustake",
   denomFee: "ucosm",
