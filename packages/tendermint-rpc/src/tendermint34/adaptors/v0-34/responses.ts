@@ -130,7 +130,7 @@ interface RpcTxData {
   readonly log?: string;
   /** base64 encoded */
   readonly data?: string;
-  readonly events: readonly RpcEvent[];
+  readonly events?: readonly RpcEvent[];
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
@@ -138,7 +138,7 @@ function decodeTxData(data: RpcTxData): responses.TxData {
     data: may(fromBase64, data.data),
     log: data.log,
     code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
-    events: decodeEvents(data.events),
+    events: data.events ? decodeEvents(data.events) : [],
   };
 }
 
