@@ -80,6 +80,7 @@ export {
   isBroadcastTxSuccess,
   SequenceResponse,
   StargateClient,
+  TimeoutError,
 } from "./stargateclient";
 export {
   CosmosFeeTable,

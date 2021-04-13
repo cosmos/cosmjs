@@ -15,14 +15,7 @@ import {
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import {
-  MsgExecuteContract,
-  MsgExecuteContractResponse,
-  MsgInstantiateContract,
-  MsgInstantiateContractResponse,
-  MsgStoreCode,
-  MsgStoreCodeResponse,
-} from "../codec/x/wasm/internal/types/tx";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/x/wasm/internal/types/tx";
 import { ContractCodeHistoryOperationType } from "../codec/x/wasm/internal/types/types";
 import { SigningCosmWasmClient } from "../signingcosmwasmclient";
 import {
@@ -30,7 +23,6 @@ import {
   base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
-  fromOneElementArray,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -393,13 +385,8 @@ describe("WasmExtension", () => {
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-
-        assertDefined(result.data);
-        const msgData = fromOneElementArray(result.data);
-        expect(msgData.msgType).toEqual("store-code");
-        expect(MsgStoreCodeResponse.decode(msgData.data)).toEqual(
-          MsgStoreCodeResponse.fromPartial({ codeId: Long.fromNumber(codeId, true) }),
-        );
+        const actionAttr = logs.findAttribute(parsedLogs, "message", "action");
+        expect(actionAttr.value).toEqual("store-code");
       }
 
       let contractAddress: string;
@@ -413,12 +400,8 @@ describe("WasmExtension", () => {
         contractAddress = contractAddressAttr.value;
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-
-        assertDefined(result.data);
-        const msgData = fromOneElementArray(result.data);
-        expect(msgData.msgType).toEqual("instantiate");
-        const response = MsgInstantiateContractResponse.decode(msgData.data);
-        expect(response).toEqual(MsgInstantiateContractResponse.fromPartial({ address: contractAddress }));
+        const actionAttr = logs.findAttribute(parsedLogs, "message", "action");
+        expect(actionAttr.value).toEqual("instantiate");
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
         expect(balanceUcosm).toEqual(transferAmount[0]);
@@ -438,13 +421,6 @@ describe("WasmExtension", () => {
           key: "destination",
           value: beneficiaryAddress,
         });
-
-        assertDefined(result.data);
-        const msgData = fromOneElementArray(result.data);
-        expect(msgData.msgType).toEqual("execute");
-        expect(MsgExecuteContractResponse.decode(msgData.data)).toEqual(
-          MsgExecuteContractResponse.fromPartial({ data: fromHex("F00BAA") }),
-        );
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalanceUcosm = await client.bank.balance(beneficiaryAddress, "ucosm");

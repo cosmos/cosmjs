@@ -17,7 +17,7 @@ const faucet = {
 
 async function main() {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, { prefix: prefix });
-  const client = await SigningStargateClient.connectWithSigner(rpcUrl, wallet);
+  const client = await SigningStargateClient.connectWithSigner(rpcUrl, wallet, { prefix: prefix });
   const recipient = Bech32.encode(prefix, Random.getBytes(20));
   const amount = coins(226644, "ucosm");
   const memo = "Ensure chain has my pubkey";

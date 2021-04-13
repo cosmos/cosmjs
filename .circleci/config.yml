@@ -107,6 +107,10 @@ jobs:
           command: ./scripts/simapp/start.sh
           background: true
       - run:
+          name: Start slow simapp
+          command: ./scripts/simapp/slow_start.sh
+          background: true
+      - run:
           name: Start Tendermint blockchains
           command: ./scripts/tendermint/all_start.sh
           background: true
@@ -166,6 +170,7 @@ jobs:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
             SIMAPP_ENABLED: 1
+            SLOW_SIMAPP_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -196,6 +201,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   test-node-v12:
@@ -227,6 +233,10 @@ jobs:
       - run:
           name: Start simapp
           command: ./scripts/simapp/start.sh
+          background: true
+      - run:
+          name: Start slow simapp
+          command: ./scripts/simapp/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -288,6 +298,7 @@ jobs:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
             SIMAPP_ENABLED: 1
+            SLOW_SIMAPP_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -312,6 +323,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   test-chrome:
@@ -345,6 +357,10 @@ jobs:
           command: ./scripts/simapp/start.sh
           background: true
       - run:
+          name: Start slow simapp
+          command: ./scripts/simapp/slow_start.sh
+          background: true
+      - run:
           name: Start Tendermint blockchains
           command: ./scripts/tendermint/all_start.sh
           background: true
@@ -404,6 +420,7 @@ jobs:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
             SIMAPP_ENABLED: 1
+            SLOW_SIMAPP_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -415,6 +432,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   coverage:
@@ -448,6 +466,10 @@ jobs:
           command: ./scripts/simapp/start.sh
           background: true
       - run:
+          name: Start slow simapp
+          command: ./scripts/simapp/slow_start.sh
+          background: true
+      - run:
           name: Start Tendermint blockchains
           command: ./scripts/tendermint/all_start.sh
           background: true
@@ -507,6 +529,7 @@ jobs:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
             SIMAPP_ENABLED: 1
+            SLOW_SIMAPP_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -521,6 +544,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   docs-build:

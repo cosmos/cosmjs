@@ -2,13 +2,14 @@
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
-  broadcastTxCommitSuccess,
+  BroadcastTxSyncResponse,
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
+import { sleep } from "@cosmjs/utils";
 
 import { Account, accountFromAny } from "./accounts";
-import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
+import { MsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 import {
@@ -18,6 +19,15 @@ import {
   SearchTxFilter,
   SearchTxQuery,
 } from "./search";
+
+export class TimeoutError extends Error {
+  public readonly txId: string;
+
+  public constructor(message: string, txId: string) {
+    super(message);
+    this.txId = txId;
+  }
+}
 
 /**
  * This is the same as BlockHeader from @cosmjs/launchpad but those might diverge in the future.
@@ -268,31 +278,42 @@ export class StargateClient {
     if (this.tmClient) this.tmClient.disconnect();
   }
 
-  public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
-    const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
-    if (broadcastTxCommitSuccess(response)) {
-      return {
-        height: response.height,
-        transactionHash: toHex(response.hash).toUpperCase(),
-        rawLog: response.deliverTx?.log,
-        data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-      };
-    }
-    return response.checkTx.code !== 0
-      ? {
-          height: response.height,
-          code: response.checkTx.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.checkTx.log,
-          data: response.checkTx.data ? TxMsgData.decode(response.checkTx.data).data : undefined,
-        }
-      : {
-          height: response.height,
-          code: response.deliverTx?.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.deliverTx?.log,
-          data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-        };
+  public async broadcastTx(
+    tx: Uint8Array,
+    timeoutMs = 60_000,
+    pollIntervalMs = 3_000,
+  ): Promise<BroadcastTxResponse> {
+    let timedOut = false;
+    const txPollTimeout = setTimeout(() => {
+      timedOut = true;
+    }, timeoutMs);
+
+    const pollForTx = async (txId: string): Promise<BroadcastTxResponse> => {
+      if (timedOut) {
+        throw new TimeoutError(
+          `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
+          txId,
+        );
+      }
+      await sleep(pollIntervalMs);
+      const result = await this.getTx(txId);
+      return result
+        ? {
+            code: result.code,
+            height: result.height,
+            rawLog: result.rawLog,
+            transactionHash: txId,
+          }
+        : pollForTx(txId);
+    };
+
+    return new Promise((resolve, reject) =>
+      this.forceGetTmClient()
+        .broadcastTxSync({ tx })
+        .then(({ hash }: BroadcastTxSyncResponse) => pollForTx(toHex(hash).toUpperCase()))
+        .then(resolve, reject)
+        .finally(() => clearTimeout(txPollTimeout)),
+    );
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
