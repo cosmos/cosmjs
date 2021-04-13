@@ -108,7 +108,7 @@ jobs:
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp/start_slow.sh
+          command: ./scripts/simapp/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -201,7 +201,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
-            ./scripts/simapp/stop_slow.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   test-node-v12:
@@ -236,7 +236,7 @@ jobs:
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp/start_slow.sh
+          command: ./scripts/simapp/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -323,7 +323,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
-            ./scripts/simapp/stop_slow.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   test-chrome:
@@ -358,7 +358,7 @@ jobs:
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp/start_slow.sh
+          command: ./scripts/simapp/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -432,7 +432,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
-            ./scripts/simapp/stop_slow.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   coverage:
@@ -467,7 +467,7 @@ jobs:
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp/start_slow.sh
+          command: ./scripts/simapp/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -544,7 +544,7 @@ jobs:
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
             ./scripts/simapp/stop.sh
-            ./scripts/simapp/stop_slow.sh
+            ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
   docs-build:
