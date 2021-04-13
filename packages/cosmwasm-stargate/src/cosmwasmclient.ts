@@ -26,14 +26,10 @@ import {
   SequenceResponse,
   setupAuthExtension,
   setupBankExtension,
+  TimeoutError,
 } from "@cosmjs/stargate";
-import { TxMsgData } from "@cosmjs/stargate/build/codec/cosmos/base/abci/v1beta1/abci";
-import {
-  broadcastTxCommitSuccess,
-  Tendermint34Client,
-  toRfc3339WithNanoseconds,
-} from "@cosmjs/tendermint-rpc";
-import { assert } from "@cosmjs/utils";
+import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import { assert, sleep } from "@cosmjs/utils";
 
 import { CodeInfoResponse } from "./codec/x/wasm/internal/types/query";
 import { ContractCodeHistoryOperationType } from "./codec/x/wasm/internal/types/types";
@@ -201,31 +197,44 @@ export class CosmWasmClient {
     if (this.tmClient) this.tmClient.disconnect();
   }
 
-  public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
-    const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
-    if (broadcastTxCommitSuccess(response)) {
-      return {
-        height: response.height,
-        transactionHash: toHex(response.hash).toUpperCase(),
-        rawLog: response.deliverTx?.log,
-        data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-      };
-    }
-    return response.checkTx.code !== 0
-      ? {
-          height: response.height,
-          code: response.checkTx.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.checkTx.log,
-          data: response.checkTx.data ? TxMsgData.decode(response.checkTx.data).data : undefined,
-        }
-      : {
-          height: response.height,
-          code: response.deliverTx?.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.deliverTx?.log,
-          data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-        };
+  // NOTE: This method is tested against slow chains and timeouts in the @cosmjs/stargate package.
+  // Make sure it is kept in sync!
+  public async broadcastTx(
+    tx: Uint8Array,
+    timeoutMs = 60_000,
+    pollIntervalMs = 3_000,
+  ): Promise<BroadcastTxResponse> {
+    let timedOut = false;
+    const txPollTimeout = setTimeout(() => {
+      timedOut = true;
+    }, timeoutMs);
+
+    const pollForTx = async (txId: string): Promise<BroadcastTxResponse> => {
+      if (timedOut) {
+        throw new TimeoutError(
+          `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
+          txId,
+        );
+      }
+      await sleep(pollIntervalMs);
+      const result = await this.getTx(txId);
+      return result
+        ? {
+            code: result.code,
+            height: result.height,
+            rawLog: result.rawLog,
+            transactionHash: txId,
+          }
+        : pollForTx(txId);
+    };
+
+    return new Promise((resolve, reject) =>
+      this.forceGetTmClient()
+        .broadcastTxSync({ tx })
+        .then(({ hash }) => pollForTx(toHex(hash).toUpperCase()))
+        .then(resolve, reject)
+        .finally(() => clearTimeout(txPollTimeout)),
+    );
   }
 
   public async getCodes(): Promise<readonly Code[]> {
