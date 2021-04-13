@@ -116,6 +116,9 @@ and this project adheres to
 - @cosmjs/stargate: `StargateClient.broadcastTx` now uses sync mode and then
   polls for the transaction before resolving. The timeout and poll interval can
   be configured.
+- @cosmjs/cosmwasm-stargate: `CosmWasmClient.broadcastTx` now uses sync mode and
+  then polls for the transaction before resolving. The timeout and poll interval
+  can be configured.
 
 ### Deprecated
 
