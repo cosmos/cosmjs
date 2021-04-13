@@ -71,7 +71,7 @@ export const slowSimapp = {
   chainId: "simd-testing",
   denomStaking: "ustake",
   denomFee: "ucosm",
-  blockTime: 1_000, // ms
+  blockTime: 10_000, // ms
   totalSupply: 21000000000,
 };
 

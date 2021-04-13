@@ -284,7 +284,7 @@ export class StargateClient {
     timeoutMs = 60_000,
     pollIntervalMs = 3_000,
   ): Promise<BroadcastTxResponse> {
-    const txId = toHex(sha256(tx));
+    const txId = toHex(sha256(tx)).toUpperCase();
     let timedOut = false;
     const txPollTimeout = setTimeout(() => {
       timedOut = true;
