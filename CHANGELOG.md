@@ -113,6 +113,9 @@ and this project adheres to
   a `Secp256k1HdWalletOptions` object.
 - @cosmjs/proto-signing: Options for `DirectSecp256k1HdWallet.fromMnemonic` are
   now passed via a `DirectSecp256k1HdWalletOptions` object.
+- @cosmjs/stargate: `StargateClient.broadcastTx` now uses sync mode and then
+  polls for the transaction before resolving. The timeout and poll interval can
+  be configured.
 
 ### Deprecated
 
