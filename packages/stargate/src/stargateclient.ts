@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
-  broadcastTxCommitSuccess,
+  BroadcastTxSyncResponse,
   Tendermint34Client,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 
 import { Account, accountFromAny } from "./accounts";
-import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
+import { MsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 import {
@@ -284,13 +283,12 @@ export class StargateClient {
     timeoutMs = 60_000,
     pollIntervalMs = 3_000,
   ): Promise<BroadcastTxResponse> {
-    const txId = toHex(sha256(tx)).toUpperCase();
     let timedOut = false;
     const txPollTimeout = setTimeout(() => {
       timedOut = true;
     }, timeoutMs);
 
-    const handlePrematureTimeout = async (): Promise<BroadcastTxResponse> => {
+    const pollForTx = async (txId: string): Promise<BroadcastTxResponse> => {
       if (timedOut) {
         throw new TimeoutError(
           `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
@@ -306,58 +304,16 @@ export class StargateClient {
             rawLog: result.rawLog,
             transactionHash: txId,
           }
-        : handlePrematureTimeout();
+        : pollForTx(txId);
     };
 
     return new Promise((resolve, reject) =>
-      this.broadcastTxCommit(tx)
-        .catch((error) => {
-          try {
-            const errorJson = JSON.parse(error.message);
-            if (
-              // -32603 is "Internal Error"
-              // https://github.com/tendermint/tendermint/blob/v0.34.0/rpc/jsonrpc/types/types.go#L236
-              errorJson.code === -32603 &&
-              /timed out waiting for tx to be included in a block/i.test(errorJson.data)
-            ) {
-              // now we poll to artificially extend the timeout
-              return handlePrematureTimeout();
-            }
-          } catch {
-            // invalid JSON
-          }
-          throw error;
-        })
+      this.forceGetTmClient()
+        .broadcastTxSync({ tx })
+        .then(({ hash }: BroadcastTxSyncResponse) => pollForTx(toHex(hash).toUpperCase()))
         .then(resolve, reject)
         .finally(() => clearTimeout(txPollTimeout)),
     );
-  }
-
-  private async broadcastTxCommit(tx: Uint8Array): Promise<BroadcastTxResponse> {
-    const response = await this.forceGetTmClient().broadcastTxCommit({ tx });
-    if (broadcastTxCommitSuccess(response)) {
-      return {
-        height: response.height,
-        transactionHash: toHex(response.hash).toUpperCase(),
-        rawLog: response.deliverTx?.log,
-        data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-      };
-    }
-    return response.checkTx.code !== 0
-      ? {
-          height: response.height,
-          code: response.checkTx.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.checkTx.log,
-          data: response.checkTx.data ? TxMsgData.decode(response.checkTx.data).data : undefined,
-        }
-      : {
-          height: response.height,
-          code: response.deliverTx?.code,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.deliverTx?.log,
-          data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
-        };
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
