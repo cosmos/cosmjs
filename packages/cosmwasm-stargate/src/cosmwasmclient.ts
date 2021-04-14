@@ -224,6 +224,8 @@ export class CosmWasmClient {
             height: result.height,
             rawLog: result.rawLog,
             transactionHash: txId,
+            gasUsed: result.gasUsed,
+            gasWanted: result.gasWanted,
           }
         : pollForTx(txId);
     };
@@ -382,6 +384,8 @@ export class CosmWasmClient {
         code: tx.result.code,
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        gasUsed: tx.result.gasUsed,
+        gasWanted: tx.result.gasWanted,
       };
     });
   }
