@@ -36,6 +36,7 @@ import {
   GasPrice,
   isBroadcastTxFailure,
   logs,
+  SignerData,
   StdFee,
 } from "@cosmjs/stargate";
 import { MsgWithdrawDelegatorReward } from "@cosmjs/stargate/build/codec/cosmos/distribution/v1beta1/tx";
@@ -43,6 +44,7 @@ import { MsgDelegate, MsgUndelegate } from "@cosmjs/stargate/build/codec/cosmos/
 import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { assert } from "@cosmjs/utils";
 import Long from "long";
 import pako from "pako";
 
@@ -402,6 +404,44 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
+    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+    return this.broadcastTx(txBytes);
+  }
+
+  public async sign(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    explicitSignerData?: SignerData,
+  ): Promise<TxRaw> {
+    let signerData: SignerData;
+    if (explicitSignerData) {
+      signerData = explicitSignerData;
+    } else {
+      const { accountNumber, sequence } = await this.getSequence(signerAddress);
+      const chainId = await this.getChainId();
+      signerData = {
+        accountNumber: accountNumber,
+        sequence: sequence,
+        chainId: chainId,
+      };
+    }
+
+    return isOfflineDirectSigner(this.signer)
+      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
+      : this.signAmino(signerAddress, messages, fee, memo, signerData);
+  }
+
+  private async signAmino(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    { accountNumber, sequence, chainId }: SignerData,
+  ): Promise<TxRaw> {
+    assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
     );
@@ -409,32 +449,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const { accountNumber, sequence } = await this.getSequence(signerAddress);
-    const chainId = await this.getChainId();
-    const txBody = {
-      messages: messages,
-      memo: memo,
-    };
-    const txBodyBytes = this.registry.encode({
-      typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: txBody,
-    });
-    const gasLimit = Int53.fromString(fee.gas).toNumber();
-
-    if (isOfflineDirectSigner(this.signer)) {
-      const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
-      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-      const txRaw = TxRaw.fromPartial({
-        bodyBytes: signed.bodyBytes,
-        authInfoBytes: signed.authInfoBytes,
-        signatures: [fromBase64(signature.signature)],
-      });
-      const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-      return this.broadcastTx(signedTx);
-    }
-
-    // Amino signer
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -456,12 +470,44 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signedSequence,
       signMode,
     );
-    const txRaw = TxRaw.fromPartial({
+    return TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],
     });
-    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-    return this.broadcastTx(signedTx);
+  }
+
+  private async signDirect(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    { accountNumber, sequence, chainId }: SignerData,
+  ): Promise<TxRaw> {
+    assert(isOfflineDirectSigner(this.signer));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const txBody = {
+      messages: messages,
+      memo: memo,
+    };
+    const txBodyBytes = this.registry.encode({
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: txBody,
+    });
+    const gasLimit = Int53.fromString(fee.gas).toNumber();
+    const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
+    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+    return TxRaw.fromPartial({
+      bodyBytes: signed.bodyBytes,
+      authInfoBytes: signed.authInfoBytes,
+      signatures: [fromBase64(signature.signature)],
+    });
   }
 }
