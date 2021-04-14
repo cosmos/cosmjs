@@ -16,5 +16,10 @@ module.exports = [
       filename: "tests.js",
     },
     plugins: [new webpack.EnvironmentPlugin({ SOCKETSERVER_ENABLED: "" })],
+    resolve: {
+      fallback: {
+        assert: require.resolve("assert"),
+      },
+    },
   },
 ];

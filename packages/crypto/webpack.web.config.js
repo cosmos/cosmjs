@@ -13,5 +13,12 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
+    resolve: {
+      fallback: {
+        crypto: require.resolve("crypto-browserify"),
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+      },
+    },
   },
 ];

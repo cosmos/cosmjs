@@ -23,5 +23,12 @@ module.exports = [
         CW1_ENABLED: "",
       }),
     ],
+    resolve: {
+      fallback: {
+        crypto: require.resolve("crypto-browserify"),
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+      },
+    },
   },
 ];
