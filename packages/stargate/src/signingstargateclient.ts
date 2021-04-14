@@ -297,8 +297,8 @@ export class SigningStargateClient extends StargateClient {
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const txRaw = await this.sign(signerAddress, messages, fee, memo);
-    const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
-    return this.broadcastTx(signedTx);
+    const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+    return this.broadcastTx(txBytes);
   }
 
   /**
