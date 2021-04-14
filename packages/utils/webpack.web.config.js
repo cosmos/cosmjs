@@ -13,6 +13,5 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [],
   },
 ];

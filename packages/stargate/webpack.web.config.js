@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
@@ -14,6 +15,6 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin(["SIMAPP_ENABLED"])],
+    plugins: [new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "" })],
   },
 ];
