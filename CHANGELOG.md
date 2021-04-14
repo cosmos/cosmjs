@@ -65,6 +65,10 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Add `pubkeyToAddress`, `pubkeyToRawAddress`,
   `rawEd25519PubkeyToRawAddress`, and `rawSecp256k1PubkeyToRawAddress` helper
   functions.
+- @cosmjs/stargate: `StargateClient.broadcastTx` and `.getTx` results now
+  include `gasUsed` and `gasWanted` properties.
+- @cosmjs/cosmwasm-stargate: `CosmWasmClient.broadcastTx` and `.getTx` results
+  now include `gasUsed` and `gasWanted` properties.
 
 ### Changed
 
@@ -119,6 +123,8 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: `CosmWasmClient.broadcastTx` now uses sync mode and
   then polls for the transaction before resolving. The timeout and poll interval
   can be configured.
+- @cosmjs/tendermint-rpc: Tendermint v34 `TxData` type now includes `codeSpace`,
+  `gasWanted`, and `gasUsed` properties.
 
 ### Deprecated
 
