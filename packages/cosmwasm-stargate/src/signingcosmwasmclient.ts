@@ -405,7 +405,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const txRaw = await this.sign(signerAddress, messages, fee, memo);
-    const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+    const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes);
   }
 
