@@ -41,7 +41,11 @@ and this project adheres to
 - @cosmjs/stargate: Add `SigningStargateClient.sign`, which allows you to create
   signed transactions without broadcasting them directly. The new type
   `SignerData` can be passed into `.sign` to skip querying account number,
-  sequence and chain ID.
+  sequence and chain ID
+- @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.sign`, which allows you
+  to create signed transactions without broadcasting them directly. The new type
+  `SignerData` from @cosmjs/stargate can be passed into `.sign` to skip querying
+  account number, sequence and chain ID.
 - @cosmjs/stargate: Add constructor `SigningStargateClient.offline` which does
   not connect to Tendermint. This allows offline signing.
 - @cosmjs/stargate: Add `makeMultisignedTx` which allows you to assemble a
