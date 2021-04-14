@@ -126,19 +126,25 @@ function decodeEvents(events: readonly RpcEvent[]): readonly responses.Event[] {
 }
 
 interface RpcTxData {
+  readonly codespace?: string;
   readonly code?: number;
   readonly log?: string;
   /** base64 encoded */
   readonly data?: string;
   readonly events?: readonly RpcEvent[];
+  readonly gas_wanted?: string;
+  readonly gas_used?: string;
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    data: may(fromBase64, data.data),
-    log: data.log,
     code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
+    codeSpace: data.codespace,
+    log: data.log,
+    data: may(fromBase64, data.data),
     events: data.events ? decodeEvents(data.events) : [],
+    gasWanted: Integer.parse(optional<string>(data.gas_wanted, "0")),
+    gasUsed: Integer.parse(optional<string>(data.gas_used, "0")),
   };
 }
 

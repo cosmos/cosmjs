@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-import {
-  BroadcastTxSyncResponse,
-  Tendermint34Client,
-  toRfc3339WithNanoseconds,
-} from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 
 import { Account, accountFromAny } from "./accounts";
@@ -63,6 +59,8 @@ export interface IndexedTx {
   readonly code: number;
   readonly rawLog: string;
   readonly tx: Uint8Array;
+  readonly gasUsed: number;
+  readonly gasWanted: number;
 }
 
 export interface SequenceResponse {
@@ -83,6 +81,8 @@ export interface BroadcastTxSuccess {
   readonly transactionHash: string;
   readonly rawLog?: string;
   readonly data?: readonly MsgData[];
+  readonly gasUsed: number;
+  readonly gasWanted: number;
 }
 
 export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
@@ -303,6 +303,8 @@ export class StargateClient {
             height: result.height,
             rawLog: result.rawLog,
             transactionHash: txId,
+            gasUsed: result.gasUsed,
+            gasWanted: result.gasWanted,
           }
         : pollForTx(txId);
     };
@@ -310,7 +312,7 @@ export class StargateClient {
     return new Promise((resolve, reject) =>
       this.forceGetTmClient()
         .broadcastTxSync({ tx })
-        .then(({ hash }: BroadcastTxSyncResponse) => pollForTx(toHex(hash).toUpperCase()))
+        .then(({ hash }) => pollForTx(toHex(hash).toUpperCase()))
         .then(resolve, reject)
         .finally(() => clearTimeout(txPollTimeout)),
     );
@@ -325,6 +327,8 @@ export class StargateClient {
         code: tx.result.code,
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        gasUsed: tx.result.gasUsed,
+        gasWanted: tx.result.gasWanted,
       };
     });
   }

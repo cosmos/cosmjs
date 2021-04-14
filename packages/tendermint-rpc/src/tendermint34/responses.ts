@@ -176,10 +176,12 @@ export interface Event {
 
 export interface TxData {
   readonly code: number;
+  readonly codeSpace?: string;
   readonly log?: string;
   readonly data?: Uint8Array;
   readonly events: readonly Event[];
-  // readonly fees?: any;
+  readonly gasWanted: number;
+  readonly gasUsed: number;
 }
 
 export interface TxProof {

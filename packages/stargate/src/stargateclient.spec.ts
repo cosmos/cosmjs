@@ -332,7 +332,8 @@ describe("StargateClient", () => {
       const txResult = await client.broadcastTx(txRawBytes);
       assertIsBroadcastTxSuccess(txResult);
 
-      const { rawLog, transactionHash } = txResult;
+      const { gasUsed, rawLog, transactionHash } = txResult;
+      expect(gasUsed).toBeGreaterThan(0);
       expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
