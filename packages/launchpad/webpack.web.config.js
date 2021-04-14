@@ -15,7 +15,12 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin({ LAUNCHPAD_ENABLED: "" })],
+    plugins: [
+      new webpack.EnvironmentPlugin({ LAUNCHPAD_ENABLED: "" }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
     resolve: {
       fallback: {
         crypto: require.resolve("crypto-browserify"),

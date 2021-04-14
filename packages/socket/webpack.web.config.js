@@ -15,7 +15,10 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin({ SOCKETSERVER_ENABLED: "" })],
+    plugins: [
+      new webpack.EnvironmentPlugin({ SOCKETSERVER_ENABLED: "" }),
+      new webpack.ProvidePlugin({ process: "process/browser" }),
+    ],
     resolve: {
       fallback: {
         assert: require.resolve("assert"),

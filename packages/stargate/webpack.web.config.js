@@ -15,7 +15,13 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "" })],
+    plugins: [
+      new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "" }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+      new webpack.ProvidePlugin({ process: "process/browser" }),
+    ],
     resolve: {
       fallback: {
         crypto: require.resolve("crypto-browserify"),

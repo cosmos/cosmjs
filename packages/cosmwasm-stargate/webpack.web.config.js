@@ -22,6 +22,9 @@ module.exports = [
         CW3_ENABLED: "",
         CW1_ENABLED: "",
       }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
     ],
     resolve: {
       fallback: {
