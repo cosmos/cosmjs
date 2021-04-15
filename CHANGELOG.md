@@ -79,6 +79,11 @@ and this project adheres to
   `MsgTransferEncodeObject`, `MsgUndelegateEncodeObject` and
   `MsgWithdrawDelegatorRewardEncodeObject` interfaces as well as
   `isMsgDelegateEncodeObject` etc helpers.
+- @cosmjs/cosmwasm-stargate: Add `MsgClearAdminEncodeObject`,
+  `MsgExecuteContractEncodeObject`, `MsgInstantiateContractEncodeObject`,
+  `MsgMigrateContractEncodeObject`, `MsgStoreCodeEncodeObject` and
+  `MsgUpdateAdminEncodeObject` interfaces as well as
+  `isMsgClearAdminEncodeObject` etc helpers.
 
 ### Changed
 
