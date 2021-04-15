@@ -40,17 +40,24 @@ export function isPbjsGeneratedType(type: GeneratedType): type is PbjsGeneratedT
   return !isTsProtoGeneratedType(type);
 }
 
-export interface EncodeObject {
-  readonly typeUrl: string;
-  readonly value: any;
-}
+const defaultTypeUrls = {
+  cosmosCoin: "/cosmos.base.v1beta1.Coin",
+  cosmosMsgSend: "/cosmos.bank.v1beta1.MsgSend",
+  cosmosTxBody: "/cosmos.tx.v1beta1.TxBody",
+  googleAny: "/google.protobuf.Any",
+};
 
 export interface DecodeObject {
   readonly typeUrl: string;
   readonly value: Uint8Array;
 }
 
-export interface TxBodyValue {
+export interface EncodeObject {
+  readonly typeUrl: string;
+  readonly value: any;
+}
+
+interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: Long;
@@ -58,12 +65,14 @@ export interface TxBodyValue {
   readonly nonCriticalExtensionOptions?: Any[];
 }
 
-const defaultTypeUrls = {
-  cosmosCoin: "/cosmos.base.v1beta1.Coin",
-  cosmosMsgSend: "/cosmos.bank.v1beta1.MsgSend",
-  cosmosTxBody: "/cosmos.tx.v1beta1.TxBody",
-  googleAny: "/google.protobuf.Any",
-};
+export interface TxBodyEncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmos.tx.v1beta1.TxBody";
+  readonly value: TxBodyValue;
+}
+
+export function isTxBodyEncodeObject(encodeObject: EncodeObject): encodeObject is TxBodyEncodeObject {
+  return (encodeObject as TxBodyEncodeObject).typeUrl === "/cosmos.tx.v1beta1.TxBody";
+}
 
 export class Registry {
   private readonly types: Map<string, GeneratedType>;
@@ -109,13 +118,14 @@ export class Registry {
     return type;
   }
 
-  public encode({ typeUrl, value }: EncodeObject): Uint8Array {
-    if (typeUrl === defaultTypeUrls.cosmosTxBody) {
+  public encode(encodeObject: EncodeObject): Uint8Array {
+    const { value, typeUrl } = encodeObject;
+    if (isTxBodyEncodeObject(encodeObject)) {
       return this.encodeTxBody(value);
     }
     const type = this.lookupTypeWithError(typeUrl);
     const instance = isTsProtoGeneratedType(type) ? type.fromPartial(value) : type.create(value);
-    return Uint8Array.from(type.encode(instance).finish());
+    return type.encode(instance).finish();
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
@@ -130,7 +140,7 @@ export class Registry {
       ...txBodyFields,
       messages: wrappedMessages,
     });
-    return Uint8Array.from(TxBody.encode(txBody).finish());
+    return TxBody.encode(txBody).finish();
   }
 
   public decode({ typeUrl, value }: DecodeObject): any {
