@@ -75,6 +75,10 @@ and this project adheres to
   now include `gasUsed` and `gasWanted` properties.
 - @cosmjs/proto-signing: Export `DecodeObject` and `TxBodyEncodeObject`
   interfaces as well as `isTxBodyEncodeObject` helper function.
+- @cosmjs/stargate: Add `MsgDelegateEncodeObject`, `MsgSendEncodeObject`,
+  `MsgTransferEncodeObject`, `MsgUndelegateEncodeObject` and
+  `MsgWithdrawDelegatorRewardEncodeObject` interfaces as well as
+  `isMsgDelegateEncodeObject` etc helpers.
 
 ### Changed
 
