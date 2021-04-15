@@ -39,6 +39,18 @@ export {
   isAminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
 export { AminoConverter, AminoTypes } from "./aminotypes";
+export {
+  isMsgDelegateEncodeObject,
+  isMsgSendEncodeObject,
+  isMsgTransferEncodeObject,
+  isMsgUndelegateEncodeObject,
+  isMsgWithdrawDelegatorRewardEncodeObject,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+  MsgTransferEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgWithdrawDelegatorRewardEncodeObject,
+} from "./encodeobjects";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 export * as logs from "./logs";
 export { makeMultisignedTx } from "./multisignature";

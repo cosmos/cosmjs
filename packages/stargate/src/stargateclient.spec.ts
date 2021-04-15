@@ -6,6 +6,7 @@ import {
   makeAuthInfoBytes,
   makeSignDoc,
   Registry,
+  TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
@@ -289,7 +290,7 @@ describe("StargateClient", () => {
         value: toBase64(pubkeyBytes),
       });
       const registry = new Registry();
-      const txBodyFields = {
+      const txBodyFields: TxBodyEncodeObject = {
         typeUrl: "/cosmos.tx.v1beta1.TxBody",
         value: {
           messages: [
@@ -350,7 +351,7 @@ describe("StargateClient", () => {
         value: toBase64(pubkeyBytes),
       });
       const registry = new Registry();
-      const txBodyFields = {
+      const txBodyFields: TxBodyEncodeObject = {
         typeUrl: "/cosmos.tx.v1beta1.TxBody",
         value: {
           messages: [
