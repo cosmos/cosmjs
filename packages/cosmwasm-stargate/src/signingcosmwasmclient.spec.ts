@@ -11,6 +11,8 @@ import {
   coin,
   coins,
   GasPrice,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
 } from "@cosmjs/stargate";
 import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
@@ -22,6 +24,7 @@ import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
 import { MsgStoreCode } from "./codec/x/wasm/internal/types/tx";
+import { MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { PrivateSigningCosmWasmClient, SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
@@ -557,7 +560,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         });
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: msgDelegateTypeUrl,
           value: msg,
         };
@@ -582,7 +585,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         });
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: msgDelegateTypeUrl,
           value: msg,
         };
@@ -618,7 +621,7 @@ describe("SigningCosmWasmClient", () => {
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
         };
-        const msgAny = {
+        const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msgSend,
         };
@@ -642,7 +645,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         };
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msgDelegate,
         };
@@ -669,7 +672,7 @@ describe("SigningCosmWasmClient", () => {
           builder: builder ?? "",
           instantiatePermission: undefined,
         };
-        const msgAny = {
+        const msgAny: MsgStoreCodeEncodeObject = {
           typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
           value: msgStoreCode,
         };
@@ -811,7 +814,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         };
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
@@ -849,7 +852,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         });
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
@@ -876,7 +879,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         });
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
@@ -912,7 +915,7 @@ describe("SigningCosmWasmClient", () => {
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
         };
-        const msgAny = {
+        const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msgSend,
         };
@@ -939,7 +942,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         };
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msgDelegate,
         };
@@ -1085,7 +1088,7 @@ describe("SigningCosmWasmClient", () => {
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
         };
-        const msgAny = {
+        const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
