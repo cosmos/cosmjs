@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
@@ -15,7 +16,22 @@ module.exports = [
       filename: "tests.js",
     },
     plugins: [
-      new webpack.EnvironmentPlugin(["LAUNCHPAD_ENABLED", "ERC20_ENABLED", "CW3_ENABLED", "CW1_ENABLED"]),
+      new webpack.EnvironmentPlugin({
+        LAUNCHPAD_ENABLED: "",
+        ERC20_ENABLED: "",
+        CW3_ENABLED: "",
+        CW1_ENABLED: "",
+      }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
     ],
+    resolve: {
+      fallback: {
+        crypto: require.resolve("crypto-browserify"),
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+      },
+    },
   },
 ];

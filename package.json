@@ -40,6 +40,9 @@
     "@types/jasmine": "^3.3.7",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "eslint": "^7.5",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
@@ -55,14 +58,17 @@
     "karma-jasmine-html-reporter": "^1.4",
     "lerna": "^4",
     "nyc": "^15.1.0",
+    "path-browserify": "^1.0.1",
     "prettier": "^2.0.5",
+    "process": "^0.11.10",
     "ses": "^0.11.0",
     "shx": "^0.3.2",
     "source-map-support": "^0.5.19",
+    "stream-browserify": "^3.0.0",
     "ts-proto": "^1.79.1",
     "typedoc": "^0.20",
     "typescript": "~4.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0"
   }
 }
