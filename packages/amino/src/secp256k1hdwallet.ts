@@ -5,6 +5,7 @@ import {
   pathToString,
   Random,
   Secp256k1,
+  Secp256k1Keypair,
   sha256,
   Slip10,
   Slip10Curve,
@@ -26,6 +27,10 @@ import {
   KdfConfiguration,
   supportedAlgorithms,
 } from "./wallet";
+
+interface AccountDataWithPrivkey extends AccountData {
+  readonly privkey: Uint8Array;
+}
 
 const serializationTypeV1 = "secp256k1wallet-v1";
 
@@ -110,15 +115,19 @@ interface DerivationInfo {
 export interface Secp256k1HdWalletOptions {
   /** The password to use when deriving a BIP39 seed from a mnemonic. */
   readonly bip39Password: string;
-  /** The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`. */
-  readonly hdPath: HdPath;
+  /** The BIP-32/SLIP-10 derivation paths. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`. */
+  readonly hdPaths: readonly HdPath[];
   /** The bech32 address prefix (human readable part). Defaults to "cosmos". */
   readonly prefix: string;
 }
 
+interface Secp256k1HdWalletConstructorOptions extends Partial<Secp256k1HdWalletOptions> {
+  readonly seed: Uint8Array;
+}
+
 const defaultOptions: Secp256k1HdWalletOptions = {
   bip39Password: "",
-  hdPath: makeCosmoshubPath(0),
+  hdPaths: [makeCosmoshubPath(0)],
   prefix: "cosmos",
 };
 
@@ -127,45 +136,34 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
    * Restores a wallet from the given BIP39 mnemonic.
    *
    * @param mnemonic Any valid English mnemonic.
-   * @param options An optional `Secp256k1HdWalletOptions` object optionally containing a bip39Password, hdPath, and prefix.
+   * @param options An optional `Secp256k1HdWalletOptions` object optionally containing a bip39Password, hdPaths, and prefix.
    */
   public static async fromMnemonic(
     mnemonic: string,
     options: Partial<Secp256k1HdWalletOptions> = {},
   ): Promise<Secp256k1HdWallet> {
-    const { bip39Password, hdPath, prefix } = {
-      ...defaultOptions,
-      ...options,
-    };
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, bip39Password);
-    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1HdWallet(
-      mnemonicChecked,
-      hdPath,
-      privkey,
-      Secp256k1.compressPubkey(uncompressed),
-      prefix,
-    );
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, options.bip39Password);
+    return new Secp256k1HdWallet(mnemonicChecked, {
+      ...options,
+      seed: seed,
+    });
   }
 
   /**
    * Generates a new wallet with a BIP39 mnemonic of the given length.
    *
    * @param length The number of words in the mnemonic (12, 15, 18, 21 or 24).
-   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
-   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   * @param options An optional `Secp256k1HdWalletOptions` object optionally containing a bip39Password, hdPaths, and prefix.
    */
   public static async generate(
     length: 12 | 15 | 18 | 21 | 24 = 12,
-    hdPath: HdPath = makeCosmoshubPath(0),
-    prefix = "cosmos",
+    options: Partial<Secp256k1HdWalletOptions> = {},
   ): Promise<Secp256k1HdWallet> {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
-    return Secp256k1HdWallet.fromMnemonic(mnemonic.toString(), { hdPath: hdPath, prefix: prefix });
+    return Secp256k1HdWallet.fromMnemonic(mnemonic.toString(), options);
   }
 
   /**
@@ -212,12 +210,17 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
         const { mnemonic, accounts } = decryptedDocument;
         assert(typeof mnemonic === "string");
         if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
-        if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
-        const account = accounts[0];
-        if (!isDerivationJson(account)) throw new Error("Account is not in the correct format.");
+        if (!accounts.every((account) => isDerivationJson(account))) {
+          throw new Error("Account is not in the correct format.");
+        }
+        const firstPrefix = accounts[0].prefix;
+        if (!accounts.every(({ prefix }) => prefix === firstPrefix)) {
+          throw new Error("Accounts do not all have the same prefix");
+        }
+        const hdPaths = accounts.map(({ hdPath }) => stringToPath(hdPath));
         return Secp256k1HdWallet.fromMnemonic(mnemonic, {
-          hdPath: stringToPath(account.hdPath),
-          prefix: account.prefix,
+          hdPaths: hdPaths,
+          prefix: firstPrefix,
         });
       }
       default:
@@ -237,58 +240,47 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
 
   /** Base secret */
   private readonly secret: EnglishMnemonic;
+  /** BIP39 seed */
+  private readonly seed: Uint8Array;
   /** Derivation instruction */
   private readonly accounts: readonly DerivationInfo[];
-  /** Derived data */
-  private readonly pubkey: Uint8Array;
-  private readonly privkey: Uint8Array;
 
-  protected constructor(
-    mnemonic: EnglishMnemonic,
-    hdPath: HdPath,
-    privkey: Uint8Array,
-    pubkey: Uint8Array,
-    prefix: string,
-  ) {
+  protected constructor(mnemonic: EnglishMnemonic, options: Secp256k1HdWalletConstructorOptions) {
+    const { seed, hdPaths, prefix } = { ...defaultOptions, ...options };
     this.secret = mnemonic;
-    this.accounts = [
-      {
-        hdPath: hdPath,
-        prefix: prefix,
-      },
-    ];
-    this.privkey = privkey;
-    this.pubkey = pubkey;
+    this.seed = seed;
+    this.accounts = hdPaths.map((hdPath) => ({
+      hdPath: hdPath,
+      prefix: prefix,
+    }));
   }
 
   public get mnemonic(): string {
     return this.secret.toString();
   }
 
-  private get address(): string {
-    return Bech32.encode(this.accounts[0].prefix, rawSecp256k1PubkeyToRawAddress(this.pubkey));
-  }
-
   public async getAccounts(): Promise<readonly AccountData[]> {
-    return [
-      {
-        algo: "secp256k1",
-        address: this.address,
-        pubkey: this.pubkey,
-      },
-    ];
+    const accountsWithPrivkeys = await this.getAccountsWithPrivkeys();
+    return accountsWithPrivkeys.map(({ algo, pubkey, address }) => ({
+      algo: algo,
+      pubkey: pubkey,
+      address: address,
+    }));
   }
 
   public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
-    if (signerAddress !== this.address) {
+    const accounts = await this.getAccountsWithPrivkeys();
+    const account = accounts.find(({ address }) => address === signerAddress);
+    if (account === undefined) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
+    const { privkey, pubkey } = account;
     const message = sha256(serializeSignDoc(signDoc));
-    const signature = await Secp256k1.createSignature(message, this.privkey);
+    const signature = await Secp256k1.createSignature(message, privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
       signed: signDoc,
-      signature: encodeSecp256k1Signature(this.pubkey, signatureBytes),
+      signature: encodeSecp256k1Signature(pubkey, signatureBytes),
     };
   }
 
@@ -319,12 +311,10 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   ): Promise<string> {
     const dataToEncrypt: Secp256k1HdWalletData = {
       mnemonic: this.mnemonic,
-      accounts: this.accounts.map(
-        (account): DerivationInfoJson => ({
-          hdPath: pathToString(account.hdPath),
-          prefix: account.prefix,
-        }),
-      ),
+      accounts: this.accounts.map(({ hdPath, prefix }) => ({
+        hdPath: pathToString(hdPath),
+        prefix: prefix,
+      })),
     };
     const dataToEncryptRaw = toUtf8(JSON.stringify(dataToEncrypt));
 
@@ -340,5 +330,29 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
       data: toBase64(encryptedData),
     };
     return JSON.stringify(out);
+  }
+
+  private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
+    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
+    const { pubkey } = await Secp256k1.makeKeypair(privkey);
+    return {
+      privkey: privkey,
+      pubkey: Secp256k1.compressPubkey(pubkey),
+    };
+  }
+
+  private async getAccountsWithPrivkeys(): Promise<readonly AccountDataWithPrivkey[]> {
+    return Promise.all(
+      this.accounts.map(async ({ hdPath, prefix }) => {
+        const { privkey, pubkey } = await this.getKeyPair(hdPath);
+        const address = Bech32.encode(prefix, rawSecp256k1PubkeyToRawAddress(pubkey));
+        return {
+          algo: "secp256k1" as const,
+          privkey: privkey,
+          pubkey: pubkey,
+          address: address,
+        };
+      }),
+    );
   }
 }

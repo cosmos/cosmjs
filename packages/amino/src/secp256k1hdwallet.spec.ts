@@ -25,12 +25,13 @@ describe("Secp256k1HdWallet", () => {
     it("works with options", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(defaultMnemonic, {
         bip39Password: "password123",
-        hdPath: makeCosmoshubPath(123),
+        hdPaths: [makeCosmoshubPath(123)],
         prefix: "yolo",
       });
       expect(wallet.mnemonic).toEqual(defaultMnemonic);
-      expect((wallet as any).pubkey).not.toEqual(defaultPubkey);
-      expect((wallet as any).address.slice(0, 4)).toEqual("yolo");
+      const [account] = await wallet.getAccounts();
+      expect(account.pubkey).not.toEqual(defaultPubkey);
+      expect(account.address.slice(0, 4)).toEqual("yolo");
     });
   });
 
@@ -55,12 +56,60 @@ describe("Secp256k1HdWallet", () => {
       const password = "123";
       const serialized = await original.serialize(password);
       const deserialized = await Secp256k1HdWallet.deserialize(serialized, password);
+      const accounts = await deserialized.getAccounts();
+
       expect(deserialized.mnemonic).toEqual(defaultMnemonic);
-      expect(await deserialized.getAccounts()).toEqual([
+      expect(accounts).toEqual([
         {
           algo: "secp256k1",
           address: defaultAddress,
           pubkey: defaultPubkey,
+        },
+      ]);
+    });
+
+    it("can restore multiple accounts", async () => {
+      const mnemonic =
+        "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+      const prefix = "wasm";
+      const accountNumbers = [0, 1, 2, 3, 4];
+      const hdPaths = accountNumbers.map(makeCosmoshubPath);
+      const original = await Secp256k1HdWallet.fromMnemonic(mnemonic, {
+        hdPaths: hdPaths,
+        prefix: prefix,
+      });
+      const password = "123";
+      const serialized = await original.serialize(password);
+      const deserialized = await Secp256k1HdWallet.deserialize(serialized, password);
+      const accounts = await deserialized.getAccounts();
+
+      expect(deserialized.mnemonic).toEqual(mnemonic);
+      // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
+      expect(accounts).toEqual([
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
+          address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
+          address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
+          address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
+          address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
         },
       ]);
     });
@@ -94,6 +143,67 @@ describe("Secp256k1HdWallet", () => {
             algo: "secp256k1",
             address: defaultAddress,
             pubkey: defaultPubkey,
+          },
+        ]);
+      }
+    });
+
+    it("can restore multiple accounts", async () => {
+      const mnemonic =
+        "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+      const prefix = "wasm";
+      const password = "123";
+      const accountNumbers = [0, 1, 2, 3, 4];
+      const hdPaths = accountNumbers.map(makeCosmoshubPath);
+      let serialized: string;
+      {
+        const original = await Secp256k1HdWallet.fromMnemonic(mnemonic, { prefix: prefix, hdPaths: hdPaths });
+        const anyKdfParams: KdfConfiguration = {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 4,
+            memLimitKib: 3 * 1024,
+          },
+        };
+        const encryptionKey = await executeKdf(password, anyKdfParams);
+        serialized = await original.serializeWithEncryptionKey(encryptionKey, anyKdfParams);
+      }
+
+      {
+        const kdfConfiguration = extractKdfConfiguration(serialized);
+        const encryptionKey = await executeKdf(password, kdfConfiguration);
+        const deserialized = await Secp256k1HdWallet.deserializeWithEncryptionKey(serialized, encryptionKey);
+        const accounts = await deserialized.getAccounts();
+
+        expect(deserialized.mnemonic).toEqual(mnemonic);
+        expect(deserialized.mnemonic).toEqual(mnemonic);
+        // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
+        expect(accounts).toEqual([
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+            address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
+            address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
+            address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
+            address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
+            address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
           },
         ]);
       }

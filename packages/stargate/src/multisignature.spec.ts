@@ -216,7 +216,7 @@ describe("multisignature", () => {
         [0, 1, 2, 3, 4].map(async (i) => {
           // Signing environment
           const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
-            hdPath: makeCosmoshubPath(i),
+            hdPaths: [makeCosmoshubPath(i)],
           });
           const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
           const address = (await wallet.getAccounts())[0].address;

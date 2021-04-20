@@ -111,7 +111,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       assert(accounts[0].address == "cosmos1kxt5x5q2l57ma2d434pqpafxdm0mgeg9c8cvtx");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-      const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic, { hdPath: makeCosmoshubPath(0) });
+      const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic);
       const [{ address }] = await wallet.getAccounts();
       const data = toAscii("foo bar");
       const fee: StdFee = {
