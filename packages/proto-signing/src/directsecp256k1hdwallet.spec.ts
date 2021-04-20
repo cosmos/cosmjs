@@ -23,12 +23,13 @@ describe("DirectSecp256k1HdWallet", () => {
     it("works with options", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic, {
         bip39Password: "password123",
-        hdPath: makeCosmoshubPath(123),
+        hdPaths: [makeCosmoshubPath(123)],
         prefix: "yolo",
       });
       expect(wallet.mnemonic).toEqual(defaultMnemonic);
-      expect((wallet as any).pubkey).not.toEqual(defaultPubkey);
-      expect((wallet as any).address.slice(0, 4)).toEqual("yolo");
+      const [{ pubkey, address }] = await wallet.getAccounts();
+      expect(pubkey).not.toEqual(defaultPubkey);
+      expect(address.slice(0, 4)).toEqual("yolo");
     });
   });
 
