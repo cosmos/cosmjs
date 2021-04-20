@@ -311,12 +311,10 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   ): Promise<string> {
     const dataToEncrypt: Secp256k1HdWalletData = {
       mnemonic: this.mnemonic,
-      accounts: this.accounts.map(
-        (account): DerivationInfoJson => ({
-          hdPath: pathToString(account.hdPath),
-          prefix: account.prefix,
-        }),
-      ),
+      accounts: this.accounts.map(({ hdPath, prefix }) => ({
+        hdPath: pathToString(hdPath),
+        prefix: prefix,
+      })),
     };
     const dataToEncryptRaw = toUtf8(JSON.stringify(dataToEncrypt));
 
