@@ -121,13 +121,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Direct<wbr>Secp256k1<wbr>HdWallet<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EnglishMnemonic</span>, hdPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HdPath</span>, privkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="directsecp256k1hdwallet.directsecp256k1hdwallet-1.html" class="tsd-signature-type" data-tsd-kind="Class">DirectSecp256k1HdWallet</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Direct<wbr>Secp256k1<wbr>HdWallet<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EnglishMnemonic</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DirectSecp256k1HdWalletConstructorOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="directsecp256k1hdwallet.directsecp256k1hdwallet-1.html" class="tsd-signature-type" data-tsd-kind="Class">DirectSecp256k1HdWallet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L94">proto-signing/src/directsecp256k1hdwallet.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L91">proto-signing/src/directsecp256k1hdwallet.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -136,16 +136,7 @@
 									<h5>mnemonic: <span class="tsd-signature-type">EnglishMnemonic</span></h5>
 								</li>
 								<li>
-									<h5>hdPath: <span class="tsd-signature-type">HdPath</span></h5>
-								</li>
-								<li>
-									<h5>privkey: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5>pubkey: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5>prefix: <span class="tsd-signature-type">string</span></h5>
+									<h5>options: <span class="tsd-signature-type">DirectSecp256k1HdWalletConstructorOptions</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="directsecp256k1hdwallet.directsecp256k1hdwallet-1.html" class="tsd-signature-type" data-tsd-kind="Class">DirectSecp256k1HdWallet</a></h4>
@@ -165,7 +156,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L114">proto-signing/src/directsecp256k1hdwallet.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L103">proto-signing/src/directsecp256k1hdwallet.ts:103</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -185,7 +176,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L122">proto-signing/src/directsecp256k1hdwallet.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L107">proto-signing/src/directsecp256k1hdwallet.ts:107</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><a href="../interfaces/signer.accountdata.html" class="tsd-signature-type" data-tsd-kind="Interface">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -196,19 +187,19 @@
 					<a name="signdirect" class="tsd-anchor"></a>
 					<h3>sign<wbr>Direct</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<wbr>Direct<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><a href="../modules/codec_cosmos_tx_v1beta1_tx.html#signdoc-1" class="tsd-signature-type" data-tsd-kind="Variable">SignDoc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signer.directsignresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">DirectSignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>Direct<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><a href="../modules/codec_cosmos_tx_v1beta1_tx.html#signdoc-1" class="tsd-signature-type" data-tsd-kind="Variable">SignDoc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signer.directsignresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">DirectSignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L132">proto-signing/src/directsecp256k1hdwallet.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L116">proto-signing/src/directsecp256k1hdwallet.ts:116</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>signerAddress: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>signDoc: <a href="../modules/codec_cosmos_tx_v1beta1_tx.html#signdoc-1" class="tsd-signature-type" data-tsd-kind="Variable">SignDoc</a></h5>
@@ -228,7 +219,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L49">proto-signing/src/directsecp256k1hdwallet.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L58">proto-signing/src/directsecp256k1hdwallet.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,7 +238,7 @@
 								<li>
 									<h5>options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/directsecp256k1hdwallet.directsecp256k1hdwalletoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DirectSecp256k1HdWalletOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>An optional <code>DirectSecp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPath, and prefix.</p>
+										<p>An optional <code>DirectSecp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPaths, and prefix.</p>
 									</div>
 								</li>
 							</ul>
@@ -259,13 +250,13 @@
 					<a name="generate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> generate</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HdPath</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="directsecp256k1hdwallet.directsecp256k1hdwallet-1.html" class="tsd-signature-type" data-tsd-kind="Class">DirectSecp256k1HdWallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/directsecp256k1hdwallet.directsecp256k1hdwalletoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DirectSecp256k1HdWalletOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="directsecp256k1hdwallet.directsecp256k1hdwallet-1.html" class="tsd-signature-type" data-tsd-kind="Class">DirectSecp256k1HdWallet</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/directsecp256k1hdwallet.ts#L77">proto-signing/src/directsecp256k1hdwallet.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3995a9336/packages/proto-signing/src/directsecp256k1hdwallet.ts#L76">proto-signing/src/directsecp256k1hdwallet.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,15 +273,9 @@
 									</div>
 								</li>
 								<li>
-									<h5>hdPath: <span class="tsd-signature-type">HdPath</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<h5>options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/directsecp256k1hdwallet.directsecp256k1hdwalletoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DirectSecp256k1HdWalletOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path <code>m/44&#39;/118&#39;/0&#39;/0/0</code>.</p>
-									</div>
-								</li>
-								<li>
-									<h5>prefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;cosmos&quot;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The bech32 address prefix (human readable part). Defaults to &quot;cosmos&quot;.</p>
+										<p>An optional <code>DirectSecp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPaths, and prefix.</p>
 									</div>
 								</li>
 							</ul>

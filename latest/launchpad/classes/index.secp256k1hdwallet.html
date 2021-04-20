@@ -118,13 +118,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Secp256k1<wbr>HdWallet<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EnglishMnemonic</span>, hdPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HdPath</span>, privkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.secp256k1hdwallet.html" class="tsd-signature-type" data-tsd-kind="Class">Secp256k1HdWallet</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Secp256k1<wbr>HdWallet<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EnglishMnemonic</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Secp256k1HdWalletConstructorOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.secp256k1hdwallet.html" class="tsd-signature-type" data-tsd-kind="Class">Secp256k1HdWallet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:68</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:69</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,16 +133,7 @@
 									<h5>mnemonic: <span class="tsd-signature-type">EnglishMnemonic</span></h5>
 								</li>
 								<li>
-									<h5>hdPath: <span class="tsd-signature-type">HdPath</span></h5>
-								</li>
-								<li>
-									<h5>privkey: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5>pubkey: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5>prefix: <span class="tsd-signature-type">string</span></h5>
+									<h5>options: <span class="tsd-signature-type">Secp256k1HdWalletConstructorOptions</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="index.secp256k1hdwallet.html" class="tsd-signature-type" data-tsd-kind="Class">Secp256k1HdWallet</a></h4>
@@ -162,7 +153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:70</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:71</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -304,7 +295,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:50</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:52</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +330,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:60</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:62</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -374,7 +365,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:35</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:38</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -393,7 +384,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Secp256k1HdWalletOptions</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>An optional <code>Secp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPath, and prefix.</p>
+										<p>An optional <code>Secp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPaths, and prefix.</p>
 									</div>
 								</li>
 							</ul>
@@ -405,13 +396,13 @@
 					<a name="generate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> generate</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HdPath</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="index.secp256k1hdwallet.html" class="tsd-signature-type" data-tsd-kind="Class">Secp256k1HdWallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Secp256k1HdWalletOptions</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="index.secp256k1hdwallet.html" class="tsd-signature-type" data-tsd-kind="Class">Secp256k1HdWallet</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/secp256k1hdwallet.d.ts:43</li>
+									<li>Defined in amino/build/secp256k1hdwallet.d.ts:45</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -428,15 +419,9 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> hdPath: <span class="tsd-signature-type">HdPath</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Secp256k1HdWalletOptions</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path <code>m/44&#39;/118&#39;/0&#39;/0/0</code>.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> prefix: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The bech32 address prefix (human readable part). Defaults to &quot;cosmos&quot;.</p>
+										<p>An optional <code>Secp256k1HdWalletOptions</code> object optionally containing a bip39Password, hdPaths, and prefix.</p>
 									</div>
 								</li>
 							</ul>
