@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {
-  AminoSignResponse,
-  makeCosmoshubPath,
-  Secp256k1HdWallet,
-  Secp256k1HdWalletOptions,
-  StdSignDoc,
-} from "@cosmjs/amino";
-import { Bip39, EnglishMnemonic, Random, Secp256k1, Slip10, Slip10Curve } from "@cosmjs/crypto";
+import { AminoSignResponse, Secp256k1HdWallet, Secp256k1HdWalletOptions, StdSignDoc } from "@cosmjs/amino";
+import { Bip39, EnglishMnemonic, Random } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import {
   DirectSecp256k1HdWallet,
@@ -203,12 +197,6 @@ export async function makeWasmClient(
   return QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
 }
 
-const defaultHdWalletOptions = {
-  bip39Password: "",
-  hdPath: makeCosmoshubPath(0),
-  prefix: "cosmos",
-};
-
 /**
  * A class for testing clients using an Amino signer which modifies the transaction it receives before signing
  */
@@ -217,18 +205,9 @@ export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
     mnemonic: string,
     options: Partial<Secp256k1HdWalletOptions> = {},
   ): Promise<ModifyingSecp256k1HdWallet> {
-    const { bip39Password, hdPath, prefix } = { ...defaultHdWalletOptions, ...options };
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, bip39Password);
-    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new ModifyingSecp256k1HdWallet(
-      mnemonicChecked,
-      hdPath,
-      privkey,
-      Secp256k1.compressPubkey(uncompressed),
-      prefix,
-    );
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, options.bip39Password);
+    return new ModifyingSecp256k1HdWallet(mnemonicChecked, { ...options, seed: seed });
   }
 
   public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
@@ -252,18 +231,9 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     mnemonic: string,
     options: Partial<DirectSecp256k1HdWalletOptions> = {},
   ): Promise<DirectSecp256k1HdWallet> {
-    const { bip39Password, hdPath, prefix } = { ...defaultHdWalletOptions, ...options };
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, bip39Password);
-    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new ModifyingDirectSecp256k1HdWallet(
-      mnemonicChecked,
-      hdPath,
-      privkey,
-      Secp256k1.compressPubkey(uncompressed),
-      prefix,
-    );
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked, options.bip39Password);
+    return new ModifyingDirectSecp256k1HdWallet(mnemonicChecked, { ...options, seed: seed });
   }
 
   public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
