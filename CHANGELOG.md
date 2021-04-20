@@ -140,6 +140,16 @@ and this project adheres to
   can be configured.
 - @cosmjs/tendermint-rpc: Tendermint v34 `TxData` type now includes `codeSpace`,
   `gasWanted`, and `gasUsed` properties.
+- @cosmjs/amino: `Secp256k1HdWallet.fromMnemonic` now accepts a
+  `Secp256k1HdWalletOptions` argument which includes an array of `hdPaths`
+  instead of a single `hdPath`. `Secp256k1HdWallet.generate` now also accepts
+  options via this interface. This adds support for multiple accounts from the
+  same mnemonic to `Secp256k1HdWallet`.
+- @cosmjs/proto-signing: `DirectSecp256k1HdWallet.fromMnemonic` now accepts a
+  `DirectSecp256k1HdWalletOptions` argument which includes an array of `hdPaths`
+  instead of a single `hdPath`. `DirectSecp256k1HdWallet.generate` now also
+  accepts options via this interface. This adds support for multiple accounts
+  from the same mnemonic to `DirectSecp256k1HdWallet`.
 
 ### Deprecated
 
