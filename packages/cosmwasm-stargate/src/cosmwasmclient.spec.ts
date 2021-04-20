@@ -9,8 +9,9 @@ import {
   makeAuthInfoBytes,
   makeSignDoc,
   Registry,
+  TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { assertIsBroadcastTxSuccess, coins, logs, StdFee } from "@cosmjs/stargate";
+import { assertIsBroadcastTxSuccess, coins, logs, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
@@ -173,7 +174,7 @@ describe("CosmWasmClient", () => {
       const registry = new Registry();
 
       const memo = "My first contract on chain";
-      const sendMsg = {
+      const sendMsg: MsgSendEncodeObject = {
         typeUrl: "/cosmos.bank.v1beta1.MsgSend",
         value: {
           fromAddress: alice.address0,
@@ -191,14 +192,14 @@ describe("CosmWasmClient", () => {
       assert(sequenceResponse);
       const { accountNumber, sequence } = sequenceResponse;
       const pubkeyAny = encodePubkey(alice.pubkey0);
-      const txBody = {
-        messages: [sendMsg],
-        memo: memo,
-      };
-      const txBodyBytes = registry.encode({
+      const txBody: TxBodyEncodeObject = {
         typeUrl: "/cosmos.tx.v1beta1.TxBody",
-        value: txBody,
-      });
+        value: {
+          messages: [sendMsg],
+          memo: memo,
+        },
+      };
+      const txBodyBytes = registry.encode(txBody);
       const gasLimit = Int53.fromString(fee.gas).toNumber();
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);

@@ -10,6 +10,7 @@ import {
   makeSignDoc,
   OfflineSigner,
   Registry,
+  TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
@@ -59,6 +60,13 @@ import {
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
 } from "./codec/ibc/core/connection/v1/tx";
+import {
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+  MsgTransferEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgWithdrawDelegatorRewardEncodeObject,
+} from "./encodeobjects";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
@@ -201,12 +209,12 @@ export class SigningStargateClient extends StargateClient {
     transferAmount: readonly Coin[],
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const sendMsg = {
+    const sendMsg: MsgSendEncodeObject = {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: {
         fromAddress: senderAddress,
         toAddress: recipientAddress,
-        amount: transferAmount,
+        amount: [...transferAmount],
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
@@ -218,7 +226,7 @@ export class SigningStargateClient extends StargateClient {
     amount: Coin,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const delegateMsg = {
+    const delegateMsg: MsgDelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
       value: MsgDelegate.fromPartial({
         delegatorAddress: delegatorAddress,
@@ -235,7 +243,7 @@ export class SigningStargateClient extends StargateClient {
     amount: Coin,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const undelegateMsg = {
+    const undelegateMsg: MsgUndelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
       value: MsgUndelegate.fromPartial({
         delegatorAddress: delegatorAddress,
@@ -251,7 +259,7 @@ export class SigningStargateClient extends StargateClient {
     validatorAddress: string,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const withdrawMsg = {
+    const withdrawMsg: MsgWithdrawDelegatorRewardEncodeObject = {
       typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
       value: MsgWithdrawDelegatorReward.fromPartial({
         delegatorAddress: delegatorAddress,
@@ -275,7 +283,7 @@ export class SigningStargateClient extends StargateClient {
     const timeoutTimestampNanoseconds = timeoutTimestamp
       ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
       : undefined;
-    const transferMsg = {
+    const transferMsg: MsgTransferEncodeObject = {
       typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
       value: MsgTransfer.fromPartial({
         sourcePort: sourcePort,
@@ -359,10 +367,11 @@ export class SigningStargateClient extends StargateClient {
       messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
       memo: signed.memo,
     };
-    const signedTxBodyBytes = this.registry.encode({
+    const signedTxBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: signedTxBody,
-    });
+    };
+    const signedTxBodyBytes = this.registry.encode(signedTxBodyEncodeObject);
     const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
     const signedSequence = Int53.fromString(signed.sequence).toNumber();
     const signedAuthInfoBytes = makeAuthInfoBytes(
@@ -394,14 +403,14 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const txBody = {
-      messages: messages,
-      memo: memo,
-    };
-    const txBodyBytes = this.registry.encode({
+    const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: txBody,
-    });
+      value: {
+        messages: messages,
+        memo: memo,
+      },
+    };
+    const txBodyBytes = this.registry.encode(txBodyEncodeObject);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
     const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);

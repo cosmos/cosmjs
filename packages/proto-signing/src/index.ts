@@ -2,13 +2,16 @@
 export { Coin, coin, coins, parseCoins } from "@cosmjs/amino";
 
 export {
-  isPbjsGeneratedType,
-  isTsProtoGeneratedType,
+  DecodeObject,
   EncodeObject,
   GeneratedType,
+  isTxBodyEncodeObject,
+  isPbjsGeneratedType,
+  isTsProtoGeneratedType,
+  PbjsGeneratedType,
   Registry,
   TsProtoGeneratedType,
-  PbjsGeneratedType,
+  TxBodyEncodeObject,
 } from "./registry";
 export { DirectSecp256k1HdWallet, DirectSecp256k1HdWalletOptions } from "./directsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";

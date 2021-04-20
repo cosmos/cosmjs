@@ -73,6 +73,17 @@ and this project adheres to
   include `gasUsed` and `gasWanted` properties.
 - @cosmjs/cosmwasm-stargate: `CosmWasmClient.broadcastTx` and `.getTx` results
   now include `gasUsed` and `gasWanted` properties.
+- @cosmjs/proto-signing: Export `DecodeObject` and `TxBodyEncodeObject`
+  interfaces as well as `isTxBodyEncodeObject` helper function.
+- @cosmjs/stargate: Add `MsgDelegateEncodeObject`, `MsgSendEncodeObject`,
+  `MsgTransferEncodeObject`, `MsgUndelegateEncodeObject` and
+  `MsgWithdrawDelegatorRewardEncodeObject` interfaces as well as
+  `isMsgDelegateEncodeObject` etc helpers.
+- @cosmjs/cosmwasm-stargate: Add `MsgClearAdminEncodeObject`,
+  `MsgExecuteContractEncodeObject`, `MsgInstantiateContractEncodeObject`,
+  `MsgMigrateContractEncodeObject`, `MsgStoreCodeEncodeObject` and
+  `MsgUpdateAdminEncodeObject` interfaces as well as
+  `isMsgClearAdminEncodeObject` etc helpers.
 
 ### Changed
 

@@ -17,6 +17,11 @@ import Long from "long";
 
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/x/wasm/internal/types/tx";
 import { ContractCodeHistoryOperationType } from "../codec/x/wasm/internal/types/types";
+import {
+  MsgExecuteContractEncodeObject,
+  MsgInstantiateContractEncodeObject,
+  MsgStoreCodeEncodeObject,
+} from "../encodeobjects";
 import { SigningCosmWasmClient } from "../signingcosmwasmclient";
 import {
   alice,
@@ -42,7 +47,7 @@ async function uploadContract(
   contract: ContractUploadInstructions,
 ): Promise<BroadcastTxResponse> {
   const memo = "My first contract on chain";
-  const theMsg = {
+  const theMsg: MsgStoreCodeEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
     value: MsgStoreCode.fromPartial({
       sender: alice.address0,
@@ -67,7 +72,7 @@ async function instantiateContract(
   transferAmount?: readonly Coin[],
 ): Promise<BroadcastTxResponse> {
   const memo = "Create an escrow instance";
-  const theMsg = {
+  const theMsg: MsgInstantiateContractEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
     value: MsgInstantiateContract.fromPartial({
       sender: alice.address0,
@@ -98,7 +103,7 @@ async function executeContract(
   msg: Record<string, unknown>,
 ): Promise<BroadcastTxResponse> {
   const memo = "Time for action";
-  const theMsg = {
+  const theMsg: MsgExecuteContractEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
     value: MsgExecuteContract.fromPartial({
       sender: alice.address0,

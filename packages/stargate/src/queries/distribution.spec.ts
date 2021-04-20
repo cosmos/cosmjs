@@ -4,6 +4,7 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 
 import { MsgDelegate } from "../codec/cosmos/staking/v1beta1/tx";
+import { MsgDelegateEncodeObject } from "../encodeobjects";
 import { SigningStargateClient } from "../signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "../stargateclient";
 import { faucet, pendingWithoutSimapp, simapp, simappEnabled, validator } from "../testutils.spec";
@@ -33,7 +34,7 @@ describe("DistributionExtension", () => {
         validatorAddress: validator.validatorAddress,
         amount: coin(25000, "ustake"),
       };
-      const msgAny = {
+      const msgAny: MsgDelegateEncodeObject = {
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: msg,
       };

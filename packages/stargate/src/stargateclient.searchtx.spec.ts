@@ -6,11 +6,13 @@ import {
   makeAuthInfoBytes,
   makeSignDoc,
   Registry,
+  TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { isMsgSendEncodeObject } from "./encodeobjects";
 import {
   BroadcastTxResponse,
   isBroadcastTxFailure,
@@ -50,7 +52,7 @@ async function sendTokens(
     type: "tendermint/PubKeySecp256k1",
     value: toBase64(pubkeyBytes),
   });
-  const txBodyFields = {
+  const txBodyFields: TxBodyEncodeObject = {
     typeUrl: "/cosmos.tx.v1beta1.TxBody",
     value: {
       messages: [
@@ -230,9 +232,9 @@ describe("StargateClient.getTx and .searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter(({ typeUrl: typeUrl, value }) => {
-          if (typeUrl !== "/cosmos.bank.v1beta1.MsgSend") return false;
-          const decoded = registry.decode({ typeUrl: typeUrl, value: value });
+        const filteredMsgs = tx.body!.messages.filter((msg) => {
+          if (!isMsgSendEncodeObject(msg)) return false;
+          const decoded = registry.decode(msg);
           return decoded.fromAddress === sendSuccessful?.sender;
         });
         expect(filteredMsgs.length).toBeGreaterThanOrEqual(1);
@@ -258,9 +260,9 @@ describe("StargateClient.getTx and .searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter(({ typeUrl: typeUrl, value }) => {
-          if (typeUrl !== "/cosmos.bank.v1beta1.MsgSend") return false;
-          const decoded = registry.decode({ typeUrl: typeUrl, value: value });
+        const filteredMsgs = tx.body!.messages.filter((msg) => {
+          if (!isMsgSendEncodeObject(msg)) return false;
+          const decoded = registry.decode(msg);
           return decoded.toAddress === sendSuccessful?.recipient;
         });
         expect(filteredMsgs.length).toBeGreaterThanOrEqual(1);
@@ -344,9 +346,9 @@ describe("StargateClient.getTx and .searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const tx = Tx.decode(result.tx);
-        const { typeUrl, value } = fromOneElementArray(tx.body!.messages);
-        expect(typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSend");
-        const decoded = registry.decode({ typeUrl: typeUrl, value: value });
+        const msg = fromOneElementArray(tx.body!.messages);
+        expect(msg.typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSend");
+        const decoded = registry.decode(msg);
         expect(decoded.toAddress).toEqual(sendSuccessful.recipient);
       }
 
