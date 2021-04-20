@@ -225,8 +225,12 @@ describe("SigningCosmosClient", () => {
   describe("appendSignature", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
-      const wallet0 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPath: makeCosmoshubPath(0) });
-      const wallet1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPath: makeCosmoshubPath(1) });
+      const wallet0 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPaths: [makeCosmoshubPath(0)],
+      });
+      const wallet1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPaths: [makeCosmoshubPath(1)],
+      });
       const client0 = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet0);
       const client1 = new SigningCosmosClient(launchpad.endpoint, faucet.address1, wallet1);
 
