@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TxBodyValue | @cosmjs/proto-signing Documentation</title>
+	<title>TxBodyEncodeObject | @cosmjs/proto-signing Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../modules/registry.html">registry</a>
 				</li>
 				<li>
-					<a href="registry.txbodyvalue.html">TxBodyValue</a>
+					<a href="registry.txbodyencodeobject.html">TxBodyEncodeObject</a>
 				</li>
 			</ul>
-			<h1>Interface TxBodyValue</h1>
+			<h1>Interface TxBodyEncodeObject</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TxBodyValue</span>
+						<a href="registry.encodeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">EncodeObject</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">TxBodyEncodeObject</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -81,11 +86,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="registry.txbodyvalue.html#extensionoptions" class="tsd-kind-icon">extension<wbr>Options</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="registry.txbodyvalue.html#memo" class="tsd-kind-icon">memo</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="registry.txbodyvalue.html#messages" class="tsd-kind-icon">messages</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="registry.txbodyvalue.html#noncriticalextensionoptions" class="tsd-kind-icon">non<wbr>Critical<wbr>Extension<wbr>Options</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="registry.txbodyvalue.html#timeoutheight" class="tsd-kind-icon">timeout<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="registry.txbodyencodeobject.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="registry.txbodyencodeobject.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,53 +95,25 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="extensionoptions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> extension<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">extension<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../modules/codec_google_protobuf_any.html#any-1" class="tsd-signature-type" data-tsd-kind="Variable">Any</a><span class="tsd-signature-symbol">[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="typeurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">type<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;/cosmos.tx.v1beta1.TxBody&quot;</span></div>
 					<aside class="tsd-sources">
+						<p>Overrides <a href="registry.encodeobject.html">EncodeObject</a>.<a href="registry.encodeobject.html#typeurl">typeUrl</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ef137d41f/packages/proto-signing/src/registry.ts#L57">proto-signing/src/registry.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/registry.ts#L69">proto-signing/src/registry.ts:69</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="memo" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> memo</h3>
-					<div class="tsd-signature tsd-kind-icon">memo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="value" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TxBodyValue</span></div>
 					<aside class="tsd-sources">
+						<p>Overrides <a href="registry.encodeobject.html">EncodeObject</a>.<a href="registry.encodeobject.html#value">value</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ef137d41f/packages/proto-signing/src/registry.ts#L55">proto-signing/src/registry.ts:55</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="messages" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> messages</h3>
-					<div class="tsd-signature tsd-kind-icon">messages<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="registry.encodeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">EncodeObject</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ef137d41f/packages/proto-signing/src/registry.ts#L54">proto-signing/src/registry.ts:54</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="noncriticalextensionoptions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> non<wbr>Critical<wbr>Extension<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">non<wbr>Critical<wbr>Extension<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../modules/codec_google_protobuf_any.html#any-1" class="tsd-signature-type" data-tsd-kind="Variable">Any</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ef137d41f/packages/proto-signing/src/registry.ts#L58">proto-signing/src/registry.ts:58</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="timeoutheight" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> timeout<wbr>Height</h3>
-					<div class="tsd-signature tsd-kind-icon">timeout<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Long</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ef137d41f/packages/proto-signing/src/registry.ts#L56">proto-signing/src/registry.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/6a18c8e65/packages/proto-signing/src/registry.ts#L70">proto-signing/src/registry.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,22 +207,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="registry.txbodyvalue.html" class="tsd-kind-icon">Tx<wbr>Body<wbr>Value</a>
+						<a href="registry.txbodyencodeobject.html" class="tsd-kind-icon">Tx<wbr>Body<wbr>Encode<wbr>Object</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="registry.txbodyvalue.html#extensionoptions" class="tsd-kind-icon">extension<wbr>Options</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="registry.txbodyencodeobject.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="registry.txbodyvalue.html#memo" class="tsd-kind-icon">memo</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="registry.txbodyvalue.html#messages" class="tsd-kind-icon">messages</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="registry.txbodyvalue.html#noncriticalextensionoptions" class="tsd-kind-icon">non<wbr>Critical<wbr>Extension<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="registry.txbodyvalue.html#timeoutheight" class="tsd-kind-icon">timeout<wbr>Height</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="registry.txbodyencodeobject.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
@@ -262,6 +227,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="../modules/registry.html#istsprotogeneratedtype" class="tsd-kind-icon">is<wbr>TsProto<wbr>Generated<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/registry.html#istxbodyencodeobject" class="tsd-kind-icon">is<wbr>TxBody<wbr>Encode<wbr>Object</a>
 					</li>
 				</ul>
 			</nav>
