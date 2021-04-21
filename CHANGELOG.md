@@ -86,6 +86,7 @@ and this project adheres to
   `isMsgClearAdminEncodeObject` etc helpers.
 - @cosmjs/stargate: Add transfer queries codec, as well as transfer query
   methods to IBC query extension.
+- @cosmjs/tendermint-rpc: Export `ValidatorSecp256k1Pubkey` interface.
 
 ### Changed
 
@@ -152,6 +153,10 @@ and this project adheres to
   instead of a single `hdPath`. `DirectSecp256k1HdWallet.generate` now also
   accepts options via this interface. This adds support for multiple accounts
   from the same mnemonic to `DirectSecp256k1HdWallet`.
+- @cosmjs/tendermint-rpc: `ValidatorPubkey` is now a union of
+  `ValidatorEd25519Pubkey` and the newly exported `ValidatorSecp256k1Pubkey`
+  interface.
+- @cosmjs/tendermint-rpc: `decodePubkey` now supports secp256k1 public keys.
 
 ### Deprecated
 
