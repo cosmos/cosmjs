@@ -4,6 +4,12 @@ import { Uint64 } from "@cosmjs/math";
 import Long from "long";
 
 import { Any } from "../codec/google/protobuf/any";
+import {
+  QueryClientImpl as TransferQuery,
+  QueryDenomTraceResponse,
+  QueryDenomTracesResponse,
+  QueryParamsResponse as QueryTransferParamsResponse,
+} from "../codec/ibc/applications/transfer/v1/query";
 import { Channel } from "../codec/ibc/core/channel/v1/channel";
 import {
   QueryChannelClientStateResponse,
@@ -155,6 +161,12 @@ export interface IbcExtension {
         revisionHeight: number,
       ) => Promise<QueryConnectionConsensusStateResponse>;
     };
+    readonly transfer: {
+      readonly denomTrace: (hash: string) => Promise<QueryDenomTraceResponse>;
+      readonly denomTraces: (paginationKey?: Uint8Array) => Promise<QueryDenomTracesResponse>;
+      readonly allDenomTraces: () => Promise<QueryDenomTracesResponse>;
+      readonly params: () => Promise<QueryTransferParamsResponse>;
+    };
     readonly verified: {
       readonly channel: {
         readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
@@ -181,6 +193,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
   const channelQueryService = new ChannelQuery(rpc);
   const clientQueryService = new ClientQuery(rpc);
   const connectionQueryService = new ConnectionQuery(rpc);
+  const transferQueryService = new TransferQuery(rpc);
 
   return {
     ibc: {
@@ -338,8 +351,8 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           }),
       },
       client: {
-        state: (clientId: string) => clientQueryService.ClientState({ clientId }),
-        states: (paginationKey?: Uint8Array) =>
+        state: async (clientId: string) => clientQueryService.ClientState({ clientId }),
+        states: async (paginationKey?: Uint8Array) =>
           clientQueryService.ClientStates({
             pagination: createPagination(paginationKey),
           }),
@@ -358,7 +371,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             clientStates: clientStates,
           };
         },
-        consensusState: (clientId: string, consensusHeight?: number) =>
+        consensusState: async (clientId: string, consensusHeight?: number) =>
           clientQueryService.ConsensusState(
             QueryConsensusStateRequest.fromPartial({
               clientId: clientId,
@@ -367,7 +380,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
               latestHeight: consensusHeight === undefined,
             }),
           ),
-        consensusStates: (clientId: string, paginationKey?: Uint8Array) =>
+        consensusStates: async (clientId: string, paginationKey?: Uint8Array) =>
           clientQueryService.ConsensusStates({
             clientId: clientId,
             pagination: createPagination(paginationKey),
@@ -388,7 +401,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             consensusStates: consensusStates,
           };
         },
-        params: () => clientQueryService.ClientParams({}),
+        params: async () => clientQueryService.ClientParams({}),
         stateTm: async (clientId: string) => {
           const response = await clientQueryService.ClientState({ clientId });
           return decodeTendermintClientStateAny(response.clientState);
@@ -464,6 +477,29 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
               revisionHeight: Long.fromNumber(revisionHeight, true),
             }),
           ),
+      },
+      transfer: {
+        denomTrace: async (hash: string) => transferQueryService.DenomTrace({ hash: hash }),
+        denomTraces: async (paginationKey?: Uint8Array) =>
+          transferQueryService.DenomTraces({
+            pagination: createPagination(paginationKey),
+          }),
+        allDenomTraces: async () => {
+          const denomTraces = [];
+          let response: QueryDenomTracesResponse;
+          let key: Uint8Array | undefined;
+          do {
+            response = await transferQueryService.DenomTraces({
+              pagination: createPagination(key),
+            });
+            denomTraces.push(...response.denomTraces);
+            key = response.pagination?.nextKey;
+          } while (key && key.length);
+          return {
+            denomTraces: denomTraces,
+          };
+        },
+        params: async () => transferQueryService.Params({}),
       },
       verified: {
         channel: {

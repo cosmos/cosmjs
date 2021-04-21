@@ -84,6 +84,8 @@ and this project adheres to
   `MsgMigrateContractEncodeObject`, `MsgStoreCodeEncodeObject` and
   `MsgUpdateAdminEncodeObject` interfaces as well as
   `isMsgClearAdminEncodeObject` etc helpers.
+- @cosmjs/stargate: Add transfer queries codec, as well as transfer query
+  methods to IBC query extension.
 
 ### Changed
 
