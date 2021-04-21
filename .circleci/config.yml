@@ -53,7 +53,7 @@ jobs:
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -150,7 +150,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -278,7 +278,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -400,7 +400,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -509,7 +509,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -572,7 +572,7 @@ jobs:
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -633,7 +633,7 @@ jobs:
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
