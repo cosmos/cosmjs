@@ -2,29 +2,33 @@
 
 As of [v0.40](https://github.com/cosmos/cosmos-sdk/releases/tag/v0.40.0), the
 Cosmos SDK uses
-[protocol buffers](https://developers.google.com/protocol-buffers) as its
-standard serialization format for blockchain state and wire communication.
-CosmJS by default supports protocol buffer serialization for many of the
-standard queries and messages defined by the Cosmos SDK, as well as
+[Protocol Buffers](https://developers.google.com/protocol-buffers) (also known
+as "protobuf") as its standard serialization format for blockchain state and
+wire communication. CosmJS by default supports Protocol Buffer serialization for
+many of the standard queries and messages defined by the Cosmos SDK, as well as
 [CosmWasm](https://github.com/CosmWasm/wasmd). This document explains how you
-can make use of protocol buffer serialization for your own custom modules with
+can make use of Protocol Buffer serialization for your own custom modules with
 CosmJS.
 
 ## Prerequisites
 
-- You are working on a TypeScript project (plain JS is possible but not covered
-  by this document).
+- You are working on a TypeScript project. (Plain JS is possible but not covered
+  by this document. It should work if you just strip out the type information.)
 - You have installed `@cosmjs/proto-signing`, `@cosmjs/stargate` and
-  `@cosmjs/tendermint-rpc` as dependencies.
-- You have installed `ts-proto` as a development dependency.
+  `@cosmjs/tendermint-rpc` as dependencies. In general these dependencies should
+  all have the same version, and this document is accurate as of v0.25.
+- You have installed `ts-proto` as a development dependency. This document is
+  accurate as of v1.79.
 - You have installed [`protoc`](https://github.com/protocolbuffers/protobuf).
-- This document assumes that the protocol buffer definitions which you need are
-  already available somewhere in `.proto` files.
+  This document is accurate as of v3.15.
+- This document assumes that the Protocol Buffer definitions which you need are
+  already available somewhere in
+  [`.proto` files](https://developers.google.com/protocol-buffers/docs/proto).
 
 ## Step 1: Acquire the definition files
 
 You will need these files locally. For example, we use
-[this script](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.0/packages/stargate/scripts/get-proto.sh)
+[this script](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.2/packages/stargate/scripts/get-proto.sh)
 to download the definition files from the Cosmos SDK repository.
 
 ## Step 2: Generate codec files
@@ -46,7 +50,7 @@ protoc \
 Note that the available `ts-proto` options are described
 [here](https://github.com/stephenh/ts-proto#supported-options). You can see the
 script we use for the `@cosmjs/stargate` package
-[here](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.0/packages/stargate/scripts/define-proto.sh).
+[here](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.2/packages/stargate/scripts/define-proto.sh).
 
 ## Step 3a: Instantiate a signing client using your custom message types
 
@@ -60,23 +64,22 @@ For example:
 ```ts
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes, SigningStargateClient } from "@cosmjs/stargate";
-import { MsgXxx } from "./path/to/generated/codec";
+import { MsgXxx } from "./path/to/generated/codec"; // Replace with your own Msg import
 
 const myRegistry = new Registry([
   ...defaultRegistryTypes,
-  ["/my.custom.MsgXxx", MsgXxx],
+  ["/my.custom.MsgXxx", MsgXxx], // Replace with your own type URL and Msg class
 ]);
-const mnemonic =
+const mnemonic = // Replace with your own mnemonic
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
 // Inside an async function...
 const signer = await DirectSecp256k1HdWallet.fromMnemonic(
   mnemonic,
-  undefined,
-  "myprefix",
+  { prefix: "myprefix" }, // Replace with your own Bech32 address prefix
 );
 const client = await SigningStargateClient.connectWithSigner(
-  "my.endpoint.com",
+  "my.endpoint.com", // Replace with your own RPC endpoint
   signer,
   {
     registry: myRegistry,
@@ -90,7 +93,7 @@ of your custom type, the client will know how to serialize (and deserialize) it:
 ```ts
 const myAddress = "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3";
 const message = {
-  typeUrl: "/my.custom.MsgXxx",
+  typeUrl: "/my.custom.MsgXxx", // Same as above
   value: {
     foo: "bar",
   },
@@ -98,7 +101,7 @@ const message = {
 const fee = {
   amount: [
     {
-      denom: "udenom",
+      denom: "udenom", // Use the appropriate fee denom for your chain
       amount: "120000",
     },
   ],
@@ -111,7 +114,7 @@ const response = await client.signAndBroadcast(myAddress, [message], fee);
 ```
 
 You can see a more complete example in Confio’s
-[`ts-relayer` repo](https://github.com/confio/ts-relayer/blob/1200f6f998edb2fed6c595aefd39b2e12de4972a/src/lib/ibcclient.ts).
+[`ts-relayer` repo](https://github.com/confio/ts-relayer/blob/v0.1.2/src/lib/ibcclient.ts).
 
 ### Step 3b: Instantiate a query client using your custom query service
 
@@ -124,7 +127,7 @@ currently requires a few layers of abstraction. Here is how you can achieve it
 using CosmJS helpers:
 
 ```ts
-import { createRpc, QueryClient } from "@cosmjs/stargate";
+import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { QueryClientImpl } from "./path/to/generated/codec";
 
@@ -136,7 +139,7 @@ const tendermintClient = await Tendermint34Client.connect("my.endpoint.com");
 const queryClient = new QueryClient(tendermintClient);
 
 // This helper function wraps the generic Stargate query client for use by the specific generated query client
-const rpcClient = createRpc(queryClient);
+const rpcClient = createProtobufRpcClient(queryClient);
 
 // Here we instantiate a specific query client which will have the custom methods defined in the .proto file
 const queryService = new QueryClientImpl(rpcClient);
@@ -155,7 +158,7 @@ and pass them to the `QueryClient.withExtensions` static method like this:
 ```ts
 // Define your extensions
 function setupXxxExtension(base: QueryClient) {
-  const rpcClient = createRpc(base);
+  const rpcClient = createProtobufRpcClient(base);
   const queryService = new QueryClientImpl(rpcClient);
 
   return {
@@ -185,4 +188,4 @@ const queryResult = await queryClient.my.nested.customQuery("bar");
 ```
 
 You can see how CosmJS sets up the `bank` extension for its default query client
-[here](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.0/packages/stargate/src/queries/bank.ts).
+[here](https://github.com/cosmos/cosmjs/blob/v0.25.0-alpha.2/packages/stargate/src/queries/bank.ts).
