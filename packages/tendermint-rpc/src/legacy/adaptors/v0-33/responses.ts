@@ -150,14 +150,21 @@ interface RpcPubkey {
 }
 
 function decodePubkey(data: RpcPubkey): ValidatorPubkey {
-  if (data.type === "tendermint/PubKeyEd25519") {
+  switch (data.type) {
     // go-amino special code
-    return {
-      algorithm: "ed25519",
-      data: fromBase64(assertNotEmpty(data.value)),
-    };
+    case "tendermint/PubKeyEd25519":
+      return {
+        algorithm: "ed25519",
+        data: fromBase64(assertNotEmpty(data.value)),
+      };
+    case "tendermint/PubKeySecp256k1":
+      return {
+        algorithm: "secp256k1",
+        data: fromBase64(assertNotEmpty(data.value)),
+      };
+    default:
+      throw new Error(`unknown pubkey type: ${data.type}`);
   }
-  throw new Error(`unknown pubkey type: ${data.type}`);
 }
 
 // for evidence, block results, etc.
