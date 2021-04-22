@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/encoding",
-  "version": "0.25.0-alpha.2",
+  "version": "0.25.0-alpha.3",
   "description": "Encoding helpers for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>"
