@@ -3,7 +3,7 @@ import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
+import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import {
   AminoMsgDelegate,
   AminoTypes,
@@ -17,7 +17,7 @@ import {
 import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
-import { AuthInfo, Tx, TxBody, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
+import { AuthInfo, TxBody, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
 import pako from "pako";
@@ -601,11 +601,11 @@ describe("SigningCosmWasmClient", () => {
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
-        const tx = Tx.decode(searchResult.tx);
+        const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
-        expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect(tx.body.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
 
@@ -830,11 +830,11 @@ describe("SigningCosmWasmClient", () => {
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
-        const tx = Tx.decode(searchResult.tx);
+        const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingSecp256k1HdWallet
-        expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect(tx.body.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
   });

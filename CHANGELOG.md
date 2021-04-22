@@ -87,6 +87,8 @@ and this project adheres to
 - @cosmjs/stargate: Add transfer queries codec, as well as transfer query
   methods to IBC query extension.
 - @cosmjs/tendermint-rpc: Export `ValidatorSecp256k1Pubkey` interface.
+- @cosmjs/proto-signing: Add transaction decoder `decodeTxRaw` for decoding
+  transaction bytes returned by Tendermint (e.g. in `IndexedTx.tx`).
 
 ### Changed
 

@@ -2,7 +2,8 @@
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
-import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { decodeTxRaw } from "./decode";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
 import { Registry } from "./registry";
 import { makeSignBytes, makeSignDoc } from "./signing";
@@ -22,25 +23,23 @@ describe("signing", () => {
     const prefixedPubkeyBytes = Uint8Array.from([0x0a, pubkeyBytes.length, ...pubkeyBytes]);
 
     testVectors.forEach(({ outputs: { signedTxBytes } }) => {
-      const parsedTestTx = Tx.decode(fromHex(signedTxBytes));
+      const parsedTestTx = decodeTxRaw(fromHex(signedTxBytes));
       expect(parsedTestTx.signatures.length).toEqual(1);
-      expect(parsedTestTx.authInfo!.signerInfos.length).toEqual(1);
-      expect(Uint8Array.from(parsedTestTx.authInfo!.signerInfos[0].publicKey!.value ?? [])).toEqual(
+      expect(parsedTestTx.authInfo.signerInfos.length).toEqual(1);
+      expect(Uint8Array.from(parsedTestTx.authInfo.signerInfos[0].publicKey!.value ?? [])).toEqual(
         prefixedPubkeyBytes,
       );
-      expect(parsedTestTx.authInfo?.signerInfos![0].modeInfo!.single!.mode).toEqual(
-        SignMode.SIGN_MODE_DIRECT,
-      );
-      expect({ ...parsedTestTx.authInfo!.fee!.amount[0] }).toEqual({ denom: "ucosm", amount: "2000" });
-      expect(parsedTestTx.authInfo!.fee!.gasLimit.toString()).toEqual(gasLimit.toString());
-      expect(parsedTestTx.body!.extensionOptions).toEqual([]);
-      expect(parsedTestTx.body!.nonCriticalExtensionOptions).toEqual([]);
-      expect(parsedTestTx.body!.messages.length).toEqual(1);
+      expect(parsedTestTx.authInfo.signerInfos[0].modeInfo!.single!.mode).toEqual(SignMode.SIGN_MODE_DIRECT);
+      expect({ ...parsedTestTx.authInfo.fee!.amount[0] }).toEqual({ denom: "ucosm", amount: "2000" });
+      expect(parsedTestTx.authInfo.fee!.gasLimit.toString()).toEqual(gasLimit.toString());
+      expect(parsedTestTx.body.extensionOptions).toEqual([]);
+      expect(parsedTestTx.body.nonCriticalExtensionOptions).toEqual([]);
+      expect(parsedTestTx.body.messages.length).toEqual(1);
 
       const registry = new Registry();
       const parsedTestTxMsg = registry.decode({
-        typeUrl: parsedTestTx.body!.messages[0].typeUrl,
-        value: parsedTestTx.body!.messages[0].value,
+        typeUrl: parsedTestTx.body.messages[0].typeUrl,
+        value: parsedTestTx.body.messages[0].value,
       });
       expect(parsedTestTxMsg.fromAddress).toEqual(address);
       expect(parsedTestTxMsg.toAddress).toEqual(toAddress);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
+  decodeTxRaw,
   DirectSecp256k1HdWallet,
   encodePubkey,
   makeAuthInfoBytes,
@@ -16,7 +17,7 @@ import {
   isBroadcastTxSuccess,
   isMsgSendEncodeObject,
 } from "@cosmjs/stargate";
-import { Tx, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
+import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -232,8 +233,8 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter((msg) => {
+        const tx = decodeTxRaw(result.tx);
+        const filteredMsgs = tx.body.messages.filter((msg) => {
           if (!isMsgSendEncodeObject(msg)) return false;
           const decoded = registry.decode(msg);
           return decoded.fromAddress === sendSuccessful?.sender;
@@ -260,8 +261,8 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter((msg) => {
+        const tx = decodeTxRaw(result.tx);
+        const filteredMsgs = tx.body.messages.filter((msg) => {
           if (!isMsgSendEncodeObject(msg)) return false;
           const decoded = registry.decode(msg);
           return decoded.toAddress === sendSuccessful?.recipient;
@@ -346,8 +347,8 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const msg = fromOneElementArray(tx.body!.messages);
+        const tx = decodeTxRaw(result.tx);
+        const msg = fromOneElementArray(tx.body.messages);
         expect(msg.typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSend");
         const decoded = registry.decode(msg);
         expect(decoded.toAddress).toEqual(sendSuccessful.recipient);

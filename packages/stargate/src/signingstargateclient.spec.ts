@@ -4,12 +4,13 @@ import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-si
 import { assert, sleep } from "@cosmjs/utils";
 import protobuf from "protobufjs/minimal";
 
+import { decodeTxRaw } from "../../proto-signing/build";
 import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { DeepPartial, MsgDelegate } from "./codec/cosmos/staking/v1beta1/tx";
-import { AuthInfo, Tx, TxBody, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { AuthInfo, TxBody, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
 import { GasPrice } from "./fee";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
@@ -371,11 +372,11 @@ describe("SigningStargateClient", () => {
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
-        const tx = Tx.decode(searchResult.tx);
+        const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
-        expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect(tx.body.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
 
@@ -568,11 +569,11 @@ describe("SigningStargateClient", () => {
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
-        const tx = Tx.decode(searchResult.tx);
+        const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingSecp256k1HdWallet
-        expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect(tx.body.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
   });
