@@ -1,9 +1,8 @@
-import { StdFee } from "@cosmjs/amino";
+import { StdFee, MultisigThresholdPubkey, pubkeyToAddress } from "@cosmjs/amino";
 import { Bech32 } from "@cosmjs/encoding";
 import { encodePubkey } from "@cosmjs/proto-signing";
 import Long from "long";
 
-import { MultisigThresholdPubkey, pubkeyToAddress } from "../../amino/build";
 import { CompactBitArray, MultiSignature } from "./codec/cosmos/crypto/multisig/v1beta1/multisig";
 import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignerInfo } from "./codec/cosmos/tx/v1beta1/tx";
