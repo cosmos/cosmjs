@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@cosmjs/utils": "^0.25.2",
-    "eslint": "^7.5"
+    "eslint": "^7.5",
+    "prettier": "^2.0.5"
   }
 }

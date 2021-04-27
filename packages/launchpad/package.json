@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "eslint": "^7.5",
+    "prettier": "^2.0.5",
     "readonly-date": "^1.0.0"
   }
 }

@@ -43,6 +43,7 @@
     "axios": "^0.21.1"
   },
   "devDependencies": {
-    "eslint": "^7.5"
+    "eslint": "^7.5",
+    "prettier": "^2.0.5"
   }
 }

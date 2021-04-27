@@ -64,6 +64,7 @@
     "@types/babylon": "^6.16.3",
     "@types/diff": "^4",
     "@types/yargs": "^15.0.4",
-    "eslint": "^7.5"
+    "eslint": "^7.5",
+    "prettier": "^2.0.5"
   }
 }
