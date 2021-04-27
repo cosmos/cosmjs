@@ -28,7 +28,7 @@
     "format-text": "prettier --write \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "prebuild": "shx rm -rf ./build",
+    "prebuild": "rm -rf ./build",
     "build": "yarn prebuild && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
@@ -37,7 +37,7 @@
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
-    "preget-proto": "shx rm -rf proto",
+    "preget-proto": "rm -rf proto",
     "get-proto": "yarn preget-proto && COSMOS_SDK_REF=v0.42.0 ./scripts/get-proto.sh",
     "define-proto": "./scripts/define-proto.sh && yarn postdefine-proto",
     "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""

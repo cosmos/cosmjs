@@ -3995,7 +3995,6 @@ __metadata:
     prettier: ^2.0.5
     process: ^0.11.10
     ses: ^0.11.0
-    shx: ^0.3.2
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-proto: ^1.79.1
@@ -9508,18 +9507,6 @@ fsevents@~2.3.1:
     onigasm: ^2.2.5
     vscode-textmate: ^5.2.0
   checksum: fce8084727491c496187abe5b8f831dbecdada11ebcc2861335a31fb7eb3d3ebceaf50aec2f2d855f76af626ddb66dabd860536e334b3cb9feff7e79d61ccde0
-  languageName: node
-  linkType: hard
-
-"shx@npm:^0.3.2":
-  version: 0.3.3
-  resolution: "shx@npm:0.3.3"
-  dependencies:
-    minimist: ^1.2.3
-    shelljs: ^0.8.4
-  bin:
-    shx: lib/cli.js
-  checksum: 0658009ba63b8043cc44bb19c1086196115606d4ce3db8ce34940479aa3a232fd5e7b75c0072a577978785fde49f13c745169c8760690dbf3b90c02600ff507c
   languageName: node
   linkType: hard
 

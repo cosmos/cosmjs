@@ -29,7 +29,7 @@
     "format-text": "prettier --write \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "prebuild": "shx rm -rf ./build",
+    "prebuild": "rm -rf ./build",
     "build": "yarn prebuild && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
