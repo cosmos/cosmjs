@@ -48,6 +48,7 @@
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@types/ws": "^6.0.1"
+    "@types/ws": "^6.0.1",
+    "eslint": "^7.5"
   }
 }

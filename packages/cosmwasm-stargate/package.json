@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@types/pako": "^1.0.1",
+    "eslint": "^7.5",
     "readonly-date": "^1.0.0"
   }
 }

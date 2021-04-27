@@ -45,6 +45,7 @@
     "readonly-date": "^1.0.0"
   },
   "devDependencies": {
-    "@types/base64-js": "^1.2.5"
+    "@types/base64-js": "^1.2.5",
+    "eslint": "^7.5"
   }
 }

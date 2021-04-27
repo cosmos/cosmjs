@@ -44,5 +44,8 @@
   "dependencies": {
     "@cosmjs/stream": "^0.25.2",
     "xstream": "^11.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.5"
   }
 }

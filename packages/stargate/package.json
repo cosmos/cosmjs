@@ -52,5 +52,8 @@
     "@cosmjs/utils": "^0.25.2",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.5"
   }
 }

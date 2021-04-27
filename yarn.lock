@@ -303,6 +303,7 @@ __metadata:
     "@cosmjs/encoding": ^0.25.2
     "@cosmjs/math": ^0.25.2
     "@cosmjs/utils": ^0.25.2
+    eslint: ^7.5
   languageName: unknown
   linkType: soft
 
@@ -329,6 +330,7 @@ __metadata:
     babylon: ^6.18.0
     colors: ^1.3.3
     diff: ^4
+    eslint: ^7.5
     recast: ^0.20
     ts-node: ^8
     typescript: ~4.0
@@ -348,6 +350,7 @@ __metadata:
     "@cosmjs/math": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     "@types/pako": ^1.0.1
+    eslint: ^7.5
     pako: ^2.0.2
     readonly-date: ^1.0.0
   languageName: unknown
@@ -367,6 +370,7 @@ __metadata:
     "@cosmjs/tendermint-rpc": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     "@types/pako": ^1.0.1
+    eslint: ^7.5
     long: ^4.0.0
     pako: ^2.0.2
     protobufjs: ~6.10.2
@@ -379,6 +383,7 @@ __metadata:
   resolution: "@cosmjs/cosmwasm@workspace:packages/cosmwasm"
   dependencies:
     "@cosmjs/cosmwasm-launchpad": ^0.25.2
+    eslint: ^7.5
   languageName: unknown
   linkType: soft
 
@@ -397,6 +402,7 @@ __metadata:
     bip39: ^3.0.2
     bn.js: ^4.11.8
     elliptic: ^6.5.3
+    eslint: ^7.5
     js-sha3: ^0.8.0
     libsodium-wrappers: ^0.7.6
     ripemd160: ^2.0.2
@@ -411,6 +417,7 @@ __metadata:
     "@types/base64-js": ^1.2.5
     base64-js: ^1.3.0
     bech32: ^1.1.4
+    eslint: ^7.5
     readonly-date: ^1.0.0
   languageName: unknown
   linkType: soft
@@ -420,6 +427,7 @@ __metadata:
   resolution: "@cosmjs/faucet-client@workspace:packages/faucet-client"
   dependencies:
     axios: ^0.21.1
+    eslint: ^7.5
   languageName: unknown
   linkType: soft
 
@@ -438,6 +446,7 @@ __metadata:
     "@types/koa": ^2.11.0
     "@types/koa-bodyparser": ^4.3.0
     "@types/koa__cors": ^3.0.1
+    eslint: ^7.5
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
   bin:
@@ -450,6 +459,7 @@ __metadata:
   resolution: "@cosmjs/json-rpc@workspace:packages/json-rpc"
   dependencies:
     "@cosmjs/stream": ^0.25.2
+    eslint: ^7.5
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
@@ -464,6 +474,7 @@ __metadata:
     "@cosmjs/math": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     axios: ^0.21.1
+    eslint: ^7.5
     fast-deep-equal: ^3.1.3
     readonly-date: ^1.0.0
   languageName: unknown
@@ -483,6 +494,7 @@ __metadata:
     "@types/ledgerhq__hw-transport-node-hid": ^4.22.2
     "@types/ledgerhq__hw-transport-webusb": ^4.70.1
     "@types/semver": ^7.3.4
+    eslint: ^7.5
     ledger-cosmos-js: ^2.1.8
     semver: ^7.3.2
   languageName: unknown
@@ -494,6 +506,7 @@ __metadata:
   dependencies:
     "@types/bn.js": ^4.11.6
     bn.js: ^4.11.8
+    eslint: ^7.5
   languageName: unknown
   linkType: soft
 
@@ -504,6 +517,7 @@ __metadata:
     "@cosmjs/amino": ^0.25.2
     "@cosmjs/encoding": ^0.25.2
     "@cosmjs/utils": ^0.25.2
+    eslint: ^7.5
     long: ^4.0.0
     protobufjs: ~6.10.2
   languageName: unknown
@@ -515,6 +529,7 @@ __metadata:
   dependencies:
     "@cosmjs/stream": ^0.25.2
     "@types/ws": ^6.0.1
+    eslint: ^7.5
     isomorphic-ws: ^4.0.1
     ws: ^6.2.0
     xstream: ^11.14.0
@@ -533,6 +548,7 @@ __metadata:
     "@cosmjs/stream": ^0.25.2
     "@cosmjs/tendermint-rpc": ^0.25.2
     "@cosmjs/utils": ^0.25.2
+    eslint: ^7.5
     long: ^4.0.0
     protobufjs: ~6.10.2
   languageName: unknown
@@ -542,6 +558,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
+    eslint: ^7.5
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
@@ -558,6 +575,7 @@ __metadata:
     "@cosmjs/stream": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     axios: ^0.21.1
+    eslint: ^7.5
     readonly-date: ^1.0.0
     xstream: ^11.14.0
   languageName: unknown
@@ -566,6 +584,8 @@ __metadata:
 "@cosmjs/utils@^0.25.2, @cosmjs/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@cosmjs/utils@workspace:packages/utils"
+  dependencies:
+    eslint: ^7.5
   languageName: unknown
   linkType: soft
 

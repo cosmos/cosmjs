@@ -57,6 +57,7 @@
     "@types/elliptic": "^6.4.12",
     "@types/libsodium-wrappers": "^0.7.7",
     "@types/ripemd160": "^2.0.0",
-    "@types/sha.js": "^2.4.0"
+    "@types/sha.js": "^2.4.0",
+    "eslint": "^7.5"
   }
 }

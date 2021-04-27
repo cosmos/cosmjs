@@ -43,5 +43,8 @@
   },
   "dependencies": {
     "xstream": "^11.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.5"
   }
 }

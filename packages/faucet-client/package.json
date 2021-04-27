@@ -41,5 +41,8 @@
   },
   "dependencies": {
     "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.5"
   }
 }
