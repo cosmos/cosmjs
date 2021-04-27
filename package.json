@@ -23,8 +23,8 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "lerna run format",
-    "format-text": "prettier --write \"./*.md\" && lerna run format-text",
+    "format": "yarn workspaces foreach run format",
+    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach run format-text",
     "format-shell": "shfmt -w scripts packages",
     "lint": "yarn workspaces foreach run lint",
     "lint-fix": "yarn workspaces foreach run lint-fix",
