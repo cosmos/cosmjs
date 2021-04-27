@@ -10,8 +10,9 @@ import {
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
+import { decodeTxRaw } from "../../proto-signing/build";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
-import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { isMsgSendEncodeObject } from "./encodeobjects";
 import {
   BroadcastTxResponse,
@@ -231,8 +232,8 @@ describe("StargateClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter((msg) => {
+        const tx = decodeTxRaw(result.tx);
+        const filteredMsgs = tx.body.messages.filter((msg) => {
           if (!isMsgSendEncodeObject(msg)) return false;
           const decoded = registry.decode(msg);
           return decoded.fromAddress === sendSuccessful?.sender;
@@ -259,8 +260,8 @@ describe("StargateClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const filteredMsgs = tx.body!.messages.filter((msg) => {
+        const tx = decodeTxRaw(result.tx);
+        const filteredMsgs = tx.body.messages.filter((msg) => {
           if (!isMsgSendEncodeObject(msg)) return false;
           const decoded = registry.decode(msg);
           return decoded.toAddress === sendSuccessful?.recipient;
@@ -345,8 +346,8 @@ describe("StargateClient.getTx and .searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const tx = Tx.decode(result.tx);
-        const msg = fromOneElementArray(tx.body!.messages);
+        const tx = decodeTxRaw(result.tx);
+        const msg = fromOneElementArray(tx.body.messages);
         expect(msg.typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSend");
         const decoded = registry.decode(msg);
         expect(decoded.toAddress).toEqual(sendSuccessful.recipient);
