@@ -10,4 +10,4 @@ curl -L -O "https://github.com/CosmWasm/cosmwasm/releases/download/${COSMWASM_VE
 curl -L -O "https://github.com/CosmWasm/cosmwasm-plus/releases/download/${PLUS_VERSION}/cw1_subkeys.wasm"
 curl -L -O "https://github.com/CosmWasm/cosmwasm-plus/releases/download/${PLUS_VERSION}/cw3_fixed_multisig.wasm"
 
-sha256sum *.wasm > checksums.sha256
+sha256sum *.wasm >checksums.sha256
