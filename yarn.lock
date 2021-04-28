@@ -603,7 +603,10 @@ __metadata:
   resolution: "@cosmjs/ledger-amino@workspace:packages/ledger-amino"
   dependencies:
     "@cosmjs/amino": ^0.25.2
+    "@cosmjs/crypto": ^0.25.2
+    "@cosmjs/encoding": ^0.25.2
     "@cosmjs/launchpad": ^0.25.2
+    "@cosmjs/math": ^0.25.2
     "@cosmjs/stargate": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     "@ledgerhq/hw-transport": ^5.25.0

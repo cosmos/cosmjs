@@ -38,6 +38,9 @@
   },
   "dependencies": {
     "@cosmjs/amino": "^0.25.2",
+    "@cosmjs/crypto": "^0.25.2",
+    "@cosmjs/encoding": "^0.25.2",
+    "@cosmjs/math": "^0.25.2",
     "@cosmjs/utils": "^0.25.2",
     "ledger-cosmos-js": "^2.1.8",
     "semver": "^7.3.2"
