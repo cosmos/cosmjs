@@ -47,7 +47,7 @@ function inline_jq() {
   inline_jq "template/.wasmd/config/genesis.json" -S
 
   # Custom settings in config.toml
-  sed -i "" \
+  sed -i"" \
     -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' \
     -e 's/^timeout_propose =.*$/timeout_propose = "300ms"/' \
     -e 's/^timeout_propose_delta =.*$/timeout_propose_delta = "100ms"/' \
@@ -59,7 +59,7 @@ function inline_jq() {
     "template/.wasmd/config/config.toml"
 
   # Custom settings app.toml
-  sed -i "" \
+  sed -i"" \
     -e 's/^enable =.*$/enable = true/' \
     -e 's/^enabled-unsafe-cors =.*$/enabled-unsafe-cors = true/' \
     "template/.wasmd/config/app.toml"
