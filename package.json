@@ -23,18 +23,18 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "yarn workspaces foreach --topological-dev run format",
-    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach --topological-dev run format-text",
+    "format": "yarn workspaces foreach --topological-dev --parallel run format",
+    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach --topological-dev --parallel run format-text",
     "format-shell": "shfmt -w scripts packages",
-    "lint": "yarn workspaces foreach --topological-dev run lint",
-    "lint-fix": "yarn workspaces foreach --topological-dev run lint-fix",
+    "lint": "yarn workspaces foreach --topological-dev --parallel run lint",
+    "lint-fix": "yarn workspaces foreach --topological-dev --parallel run lint-fix",
     "test": "lerna run test",
     "test-firefox": "lerna run test-firefox",
     "test-chrome": "lerna run test-chrome",
-    "coverage": "yarn workspaces foreach --topological-dev run coverage",
-    "build": "yarn workspaces foreach --topological-dev run build",
-    "docs": "yarn workspaces foreach --topological-dev run docs",
-    "pack-web": "yarn workspaces foreach --topological-dev run pack-web"
+    "coverage": "yarn workspaces foreach --topological-dev --parallel run coverage",
+    "build": "yarn workspaces foreach --topological-dev --parallel run build",
+    "docs": "yarn workspaces foreach --topological-dev --parallel run docs",
+    "pack-web": "yarn workspaces foreach --topological-dev --parallel run pack-web"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
