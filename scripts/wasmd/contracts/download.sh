@@ -3,7 +3,7 @@
 # This must get from 2-3 different repos, fix the versions here:
 
 COSMWASM_VERSION="v0.14.0-beta5"
-PLUS_VERSION="v0.6.0-beta2"
+PLUS_VERSION="v0.6.0-beta3"
 
 curl -L -O "https://github.com/CosmWasm/cosmwasm/releases/download/${COSMWASM_VERSION}/hackatom.wasm"
 
