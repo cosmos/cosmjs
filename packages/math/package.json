@@ -45,9 +45,14 @@
   "devDependencies": {
     "@types/bn.js": "^4.11.6",
     "eslint": "^7.5",
+    "glob": "^7.1.6",
+    "jasmine": "^3.5",
+    "jasmine-spec-reporter": "^6",
     "karma": "^6.1.1",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
+    "ses": "^0.11.0",
+    "source-map-support": "^0.5.19",
     "typedoc": "^0.20",
     "typescript": "~4.0",
     "webpack": "^5.32.0"
