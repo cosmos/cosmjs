@@ -1,25 +1,34 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../../x/wasm/internal/types/types";
-import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
+import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../cosmwasm/wasm/v1beta1/types";
+import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";
 
-/** QueryContractInfoRequest is the request type for the Query/ContractInfo RPC method */
+/**
+ * QueryContractInfoRequest is the request type for the Query/ContractInfo RPC
+ * method
+ */
 export interface QueryContractInfoRequest {
   /** address is the address of the contract to query */
   address: string;
 }
 
-/** QueryContractInfoResponse is the response type for the Query/ContractInfo RPC method */
+/**
+ * QueryContractInfoResponse is the response type for the Query/ContractInfo RPC
+ * method
+ */
 export interface QueryContractInfoResponse {
   /** address is the address of the contract */
   address: string;
   contractInfo?: ContractInfo;
 }
 
-/** QueryContractHistoryRequest is the request type for the Query/ContractHistory RPC method */
+/**
+ * QueryContractHistoryRequest is the request type for the Query/ContractHistory
+ * RPC method
+ */
 export interface QueryContractHistoryRequest {
   /** address is the address of the contract to query */
   address: string;
@@ -27,14 +36,20 @@ export interface QueryContractHistoryRequest {
   pagination?: PageRequest;
 }
 
-/** QueryContractHistoryResponse is the response type for the Query/ContractHistory RPC method */
+/**
+ * QueryContractHistoryResponse is the response type for the
+ * Query/ContractHistory RPC method
+ */
 export interface QueryContractHistoryResponse {
   entries: ContractCodeHistoryEntry[];
   /** pagination defines the pagination in the response. */
   pagination?: PageResponse;
 }
 
-/** QueryContractsByCodeRequest is the request type for the Query/ContractsByCode RPC method */
+/**
+ * QueryContractsByCodeRequest is the request type for the Query/ContractsByCode
+ * RPC method
+ */
 export interface QueryContractsByCodeRequest {
   /** grpc-gateway_out does not support Go style CodID */
   codeId: Long;
@@ -42,20 +57,21 @@ export interface QueryContractsByCodeRequest {
   pagination?: PageRequest;
 }
 
-/** ContractInfoWithAddress adds the address (key) to the ContractInfo representation */
-export interface ContractInfoWithAddress {
-  address: string;
-  contractInfo?: ContractInfo;
-}
-
-/** QueryContractsByCodeResponse is the response type for the Query/ContractsByCode RPC method */
+/**
+ * QueryContractsByCodeResponse is the response type for the
+ * Query/ContractsByCode RPC method
+ */
 export interface QueryContractsByCodeResponse {
-  contractInfos: ContractInfoWithAddress[];
+  /** contracts are a set of contract addresses */
+  contracts: string[];
   /** pagination defines the pagination in the response. */
   pagination?: PageResponse;
 }
 
-/** QueryAllContractStateRequest is the request type for the Query/AllContractState RPC method */
+/**
+ * QueryAllContractStateRequest is the request type for the
+ * Query/AllContractState RPC method
+ */
 export interface QueryAllContractStateRequest {
   /** address is the address of the contract */
   address: string;
@@ -63,27 +79,39 @@ export interface QueryAllContractStateRequest {
   pagination?: PageRequest;
 }
 
-/** QueryAllContractStateResponse is the response type for the Query/AllContractState RPC method */
+/**
+ * QueryAllContractStateResponse is the response type for the
+ * Query/AllContractState RPC method
+ */
 export interface QueryAllContractStateResponse {
   models: Model[];
   /** pagination defines the pagination in the response. */
   pagination?: PageResponse;
 }
 
-/** QueryRawContractStateRequest is the request type for the Query/RawContractState RPC method */
+/**
+ * QueryRawContractStateRequest is the request type for the
+ * Query/RawContractState RPC method
+ */
 export interface QueryRawContractStateRequest {
   /** address is the address of the contract */
   address: string;
   queryData: Uint8Array;
 }
 
-/** QueryRawContractStateResponse is the response type for the Query/RawContractState RPC method */
+/**
+ * QueryRawContractStateResponse is the response type for the
+ * Query/RawContractState RPC method
+ */
 export interface QueryRawContractStateResponse {
   /** Data contains the raw store data */
   data: Uint8Array;
 }
 
-/** QuerySmartContractStateRequest is the request type for the Query/SmartContractState RPC method */
+/**
+ * QuerySmartContractStateRequest is the request type for the
+ * Query/SmartContractState RPC method
+ */
 export interface QuerySmartContractStateRequest {
   /** address is the address of the contract */
   address: string;
@@ -91,7 +119,10 @@ export interface QuerySmartContractStateRequest {
   queryData: Uint8Array;
 }
 
-/** QuerySmartContractStateResponse is the response type for the Query/SmartContractState RPC method */
+/**
+ * QuerySmartContractStateResponse is the response type for the
+ * Query/SmartContractState RPC method
+ */
 export interface QuerySmartContractStateResponse {
   /** Data contains the json data returned from the smart contract */
   data: Uint8Array;
@@ -486,85 +517,12 @@ export const QueryContractsByCodeRequest = {
   },
 };
 
-const baseContractInfoWithAddress: object = { address: "" };
-
-export const ContractInfoWithAddress = {
-  encode(message: ContractInfoWithAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== "") {
-      writer.uint32(10).string(message.address);
-    }
-    if (message.contractInfo !== undefined) {
-      ContractInfo.encode(message.contractInfo, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfoWithAddress {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseContractInfoWithAddress } as ContractInfoWithAddress;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.address = reader.string();
-          break;
-        case 2:
-          message.contractInfo = ContractInfo.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ContractInfoWithAddress {
-    const message = { ...baseContractInfoWithAddress } as ContractInfoWithAddress;
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
-    } else {
-      message.address = "";
-    }
-    if (object.contractInfo !== undefined && object.contractInfo !== null) {
-      message.contractInfo = ContractInfo.fromJSON(object.contractInfo);
-    } else {
-      message.contractInfo = undefined;
-    }
-    return message;
-  },
-
-  toJSON(message: ContractInfoWithAddress): unknown {
-    const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.contractInfo !== undefined &&
-      (obj.contractInfo = message.contractInfo ? ContractInfo.toJSON(message.contractInfo) : undefined);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<ContractInfoWithAddress>): ContractInfoWithAddress {
-    const message = { ...baseContractInfoWithAddress } as ContractInfoWithAddress;
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    } else {
-      message.address = "";
-    }
-    if (object.contractInfo !== undefined && object.contractInfo !== null) {
-      message.contractInfo = ContractInfo.fromPartial(object.contractInfo);
-    } else {
-      message.contractInfo = undefined;
-    }
-    return message;
-  },
-};
-
-const baseQueryContractsByCodeResponse: object = {};
+const baseQueryContractsByCodeResponse: object = { contracts: "" };
 
 export const QueryContractsByCodeResponse = {
   encode(message: QueryContractsByCodeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.contractInfos) {
-      ContractInfoWithAddress.encode(v!, writer.uint32(10).fork()).ldelim();
+    for (const v of message.contracts) {
+      writer.uint32(10).string(v!);
     }
     if (message.pagination !== undefined) {
       PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -576,12 +534,12 @@ export const QueryContractsByCodeResponse = {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryContractsByCodeResponse } as QueryContractsByCodeResponse;
-    message.contractInfos = [];
+    message.contracts = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.contractInfos.push(ContractInfoWithAddress.decode(reader, reader.uint32()));
+          message.contracts.push(reader.string());
           break;
         case 2:
           message.pagination = PageResponse.decode(reader, reader.uint32());
@@ -596,10 +554,10 @@ export const QueryContractsByCodeResponse = {
 
   fromJSON(object: any): QueryContractsByCodeResponse {
     const message = { ...baseQueryContractsByCodeResponse } as QueryContractsByCodeResponse;
-    message.contractInfos = [];
-    if (object.contractInfos !== undefined && object.contractInfos !== null) {
-      for (const e of object.contractInfos) {
-        message.contractInfos.push(ContractInfoWithAddress.fromJSON(e));
+    message.contracts = [];
+    if (object.contracts !== undefined && object.contracts !== null) {
+      for (const e of object.contracts) {
+        message.contracts.push(String(e));
       }
     }
     if (object.pagination !== undefined && object.pagination !== null) {
@@ -612,12 +570,10 @@ export const QueryContractsByCodeResponse = {
 
   toJSON(message: QueryContractsByCodeResponse): unknown {
     const obj: any = {};
-    if (message.contractInfos) {
-      obj.contractInfos = message.contractInfos.map((e) =>
-        e ? ContractInfoWithAddress.toJSON(e) : undefined,
-      );
+    if (message.contracts) {
+      obj.contracts = message.contracts.map((e) => e);
     } else {
-      obj.contractInfos = [];
+      obj.contracts = [];
     }
     message.pagination !== undefined &&
       (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
@@ -626,10 +582,10 @@ export const QueryContractsByCodeResponse = {
 
   fromPartial(object: DeepPartial<QueryContractsByCodeResponse>): QueryContractsByCodeResponse {
     const message = { ...baseQueryContractsByCodeResponse } as QueryContractsByCodeResponse;
-    message.contractInfos = [];
-    if (object.contractInfos !== undefined && object.contractInfos !== null) {
-      for (const e of object.contractInfos) {
-        message.contractInfos.push(ContractInfoWithAddress.fromPartial(e));
+    message.contracts = [];
+    if (object.contracts !== undefined && object.contracts !== null) {
+      for (const e of object.contracts) {
+        message.contracts.push(e);
       }
     }
     if (object.pagination !== undefined && object.pagination !== null) {

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Any } from "../../../google/protobuf/any";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";
 
@@ -126,7 +127,10 @@ export interface CodeInfo {
   codeHash: Uint8Array;
   /** Creator address who initially stored the code */
   creator: string;
-  /** Source is a valid absolute HTTPS URI to the contract's source code, optional */
+  /**
+   * Source is a valid absolute HTTPS URI to the contract's source code,
+   * optional
+   */
   source: string;
   /** Builder is a valid docker image name with tag, optional */
   builder: string;
@@ -146,10 +150,16 @@ export interface ContractInfo {
   label: string;
   /**
    * Created Tx position when the contract was instantiated.
-   * This data should kept internal and not be exposed via query results. Just use for sorting
+   * This data should kept internal and not be exposed via query results. Just
+   * use for sorting
    */
   created?: AbsoluteTxPosition;
   ibcPortId: string;
+  /**
+   * Extension is an extension point to store custom metadata within the
+   * persistence model.
+   */
+  extension?: Any;
 }
 
 /** ContractCodeHistoryEntry metadata to a contract. */
@@ -162,11 +172,17 @@ export interface ContractCodeHistoryEntry {
   msg: Uint8Array;
 }
 
-/** AbsoluteTxPosition is a unique transaction position that allows for global ordering of transactions. */
+/**
+ * AbsoluteTxPosition is a unique transaction position that allows for global
+ * ordering of transactions.
+ */
 export interface AbsoluteTxPosition {
   /** BlockHeight is the block the contract was created at */
   blockHeight: Long;
-  /** TxIndex is a monotonic counter within the block (actual transaction index, or gas consumed) */
+  /**
+   * TxIndex is a monotonic counter within the block (actual transaction index,
+   * or gas consumed)
+   */
   txIndex: Long;
 }
 
@@ -548,6 +564,9 @@ export const ContractInfo = {
     if (message.ibcPortId !== "") {
       writer.uint32(50).string(message.ibcPortId);
     }
+    if (message.extension !== undefined) {
+      Any.encode(message.extension, writer.uint32(58).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -575,6 +594,9 @@ export const ContractInfo = {
           break;
         case 6:
           message.ibcPortId = reader.string();
+          break;
+        case 7:
+          message.extension = Any.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -616,6 +638,11 @@ export const ContractInfo = {
     } else {
       message.ibcPortId = "";
     }
+    if (object.extension !== undefined && object.extension !== null) {
+      message.extension = Any.fromJSON(object.extension);
+    } else {
+      message.extension = undefined;
+    }
     return message;
   },
 
@@ -628,6 +655,8 @@ export const ContractInfo = {
     message.created !== undefined &&
       (obj.created = message.created ? AbsoluteTxPosition.toJSON(message.created) : undefined);
     message.ibcPortId !== undefined && (obj.ibcPortId = message.ibcPortId);
+    message.extension !== undefined &&
+      (obj.extension = message.extension ? Any.toJSON(message.extension) : undefined);
     return obj;
   },
 
@@ -662,6 +691,11 @@ export const ContractInfo = {
       message.ibcPortId = object.ibcPortId;
     } else {
       message.ibcPortId = "";
+    }
+    if (object.extension !== undefined && object.extension !== null) {
+      message.extension = Any.fromPartial(object.extension);
+    } else {
+      message.extension = undefined;
     }
     return message;
   },
