@@ -54,6 +54,7 @@
     "prettier": "^2.0.5",
     "readonly-date": "^1.0.0",
     "typedoc": "^0.20",
+    "typescript": "~4.0",
     "webpack": "^5.32.0"
   }
 }
