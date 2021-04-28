@@ -304,6 +304,7 @@ __metadata:
     "@cosmjs/math": ^0.25.2
     "@cosmjs/utils": ^0.25.2
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
   languageName: unknown
@@ -333,6 +334,7 @@ __metadata:
     colors: ^1.3.3
     diff: ^4
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     recast: ^0.20
     ts-node: ^8
@@ -354,6 +356,7 @@ __metadata:
     "@cosmjs/utils": ^0.25.2
     "@types/pako": ^1.0.1
     eslint: ^7.5
+    nyc: ^15.1.0
     pako: ^2.0.2
     prettier: ^2.0.5
     readonly-date: ^1.0.0
@@ -377,6 +380,7 @@ __metadata:
     "@types/pako": ^1.0.1
     eslint: ^7.5
     long: ^4.0.0
+    nyc: ^15.1.0
     pako: ^2.0.2
     prettier: ^2.0.5
     protobufjs: ~6.10.2
@@ -413,6 +417,7 @@ __metadata:
     eslint: ^7.5
     js-sha3: ^0.8.0
     libsodium-wrappers: ^0.7.6
+    nyc: ^15.1.0
     prettier: ^2.0.5
     ripemd160: ^2.0.2
     sha.js: ^2.4.11
@@ -428,6 +433,7 @@ __metadata:
     base64-js: ^1.3.0
     bech32: ^1.1.4
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     readonly-date: ^1.0.0
     webpack: ^5.32.0
@@ -440,6 +446,7 @@ __metadata:
   dependencies:
     axios: ^0.21.1
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
   languageName: unknown
@@ -463,6 +470,7 @@ __metadata:
     eslint: ^7.5
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
+    nyc: ^15.1.0
     prettier: ^2.0.5
   bin:
     cosmos-faucet: bin/cosmos-faucet
@@ -475,6 +483,7 @@ __metadata:
   dependencies:
     "@cosmjs/stream": ^0.25.2
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
     xstream: ^11.14.0
@@ -493,6 +502,7 @@ __metadata:
     axios: ^0.21.1
     eslint: ^7.5
     fast-deep-equal: ^3.1.3
+    nyc: ^15.1.0
     prettier: ^2.0.5
     readonly-date: ^1.0.0
     webpack: ^5.32.0
@@ -515,6 +525,7 @@ __metadata:
     "@types/semver": ^7.3.4
     eslint: ^7.5
     ledger-cosmos-js: ^2.1.8
+    nyc: ^15.1.0
     prettier: ^2.0.5
     semver: ^7.3.2
     webpack: ^5.32.0
@@ -528,6 +539,7 @@ __metadata:
     "@types/bn.js": ^4.11.6
     bn.js: ^4.11.8
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
   languageName: unknown
@@ -542,6 +554,7 @@ __metadata:
     "@cosmjs/utils": ^0.25.2
     eslint: ^7.5
     long: ^4.0.0
+    nyc: ^15.1.0
     prettier: ^2.0.5
     protobufjs: ~6.10.2
     webpack: ^5.32.0
@@ -556,6 +569,7 @@ __metadata:
     "@types/ws": ^6.0.1
     eslint: ^7.5
     isomorphic-ws: ^4.0.1
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
     ws: ^6.2.0
@@ -577,6 +591,7 @@ __metadata:
     "@cosmjs/utils": ^0.25.2
     eslint: ^7.5
     long: ^4.0.0
+    nyc: ^15.1.0
     prettier: ^2.0.5
     protobufjs: ~6.10.2
     webpack: ^5.32.0
@@ -588,6 +603,7 @@ __metadata:
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
     xstream: ^11.14.0
@@ -607,6 +623,7 @@ __metadata:
     "@cosmjs/utils": ^0.25.2
     axios: ^0.21.1
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     readonly-date: ^1.0.0
     webpack: ^5.32.0
@@ -619,6 +636,7 @@ __metadata:
   resolution: "@cosmjs/utils@workspace:packages/utils"
   dependencies:
     eslint: ^7.5
+    nyc: ^15.1.0
     prettier: ^2.0.5
     webpack: ^5.32.0
   languageName: unknown

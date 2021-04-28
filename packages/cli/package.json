@@ -65,6 +65,7 @@
     "@types/diff": "^4",
     "@types/yargs": "^15.0.4",
     "eslint": "^7.5",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5"
   }
 }

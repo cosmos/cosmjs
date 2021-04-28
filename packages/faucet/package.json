@@ -55,6 +55,7 @@
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa__cors": "^3.0.1",
     "eslint": "^7.5",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5"
   }
 }
