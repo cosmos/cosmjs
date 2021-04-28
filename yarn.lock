@@ -451,15 +451,23 @@ __metadata:
     "@types/sha.js": ^2.4.0
     bip39: ^3.0.2
     bn.js: ^4.11.8
+    crypto-browserify: ^3.12.0
     elliptic: ^6.5.3
     eslint: ^7.5
+    glob: ^7.1.6
+    jasmine: ^3.5
+    jasmine-spec-reporter: ^6
     js-sha3: ^0.8.0
     karma: ^6.1.1
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
+    path-browserify: ^1.0.1
     prettier: ^2.0.5
     ripemd160: ^2.0.2
+    ses: ^0.11.0
     sha.js: ^2.4.11
+    source-map-support: ^0.5.19
+    stream-browserify: ^3.0.0
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
