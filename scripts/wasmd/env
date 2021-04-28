@@ -1,6 +1,5 @@
 # Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
 REPOSITORY="cosmwasm/wasmd"
-# TODO: update to (to be released) v0.16.0-beta1 before merge
-VERSION="latest"
+VERSION="v0.16.0-alpha2"
 
 CONTAINER_NAME="wasmd"
