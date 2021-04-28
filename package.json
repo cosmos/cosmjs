@@ -31,7 +31,7 @@
     "test": "lerna run test",
     "test-firefox": "lerna run test-firefox",
     "test-chrome": "lerna run test-chrome",
-    "coverage": "lerna run coverage",
+    "coverage": "yarn workspaces foreach run coverage",
     "build": "lerna run build",
     "docs": "lerna run docs"
   },
