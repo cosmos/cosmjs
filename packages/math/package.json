@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/bn.js": "^4.11.6",
     "eslint": "^7.5",
+    "karma": "^6.1.1",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "typedoc": "^0.20",
