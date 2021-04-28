@@ -295,8 +295,8 @@ describe("WasmExtension", () => {
       const data = models[0];
       expect(data.key).toEqual(hackatomConfigKey);
       const value = JSON.parse(fromAscii(data.value));
-      expect(value.verifier).toMatch(base64Matcher);
-      expect(value.beneficiary).toMatch(base64Matcher);
+      expect(value.verifier).toMatch(bech32AddressMatcher);
+      expect(value.beneficiary).toMatch(bech32AddressMatcher);
     });
 
     it("rejects for non-existent address", async () => {
@@ -317,8 +317,8 @@ describe("WasmExtension", () => {
       const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
       assert(raw.data, "must get result");
       const model = JSON.parse(fromAscii(raw.data));
-      expect(model.verifier).toMatch(base64Matcher);
-      expect(model.beneficiary).toMatch(base64Matcher);
+      expect(model.verifier).toMatch(bech32AddressMatcher);
+      expect(model.beneficiary).toMatch(bech32AddressMatcher);
     });
 
     it("returns empty for missing key", async () => {
@@ -356,7 +356,7 @@ describe("WasmExtension", () => {
       const request = { nosuchkey: {} };
       await expectAsync(
         client.wasm.queryContractSmart(hackatomContractAddress, request),
-      ).toBeRejectedWithError(/Error parsing into type hackatom::contract::QueryMsg: unknown variant/i);
+      ).toBeRejectedWithError(/Error parsing into type hackatom::msg::QueryMsg: unknown variant/i);
     });
 
     it("throws for non-existent address", async () => {

@@ -359,9 +359,9 @@ describe("CosmWasmClient", () => {
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromAscii(raw))).toEqual({
-        verifier: toBase64(Bech32.decode(contract.initMsg.verifier).data),
-        beneficiary: toBase64(Bech32.decode(contract.initMsg.beneficiary).data),
-        funder: toBase64(Bech32.decode(alice.address0).data),
+        verifier: contract.initMsg.verifier,
+        beneficiary: contract.initMsg.beneficiary,
+        funder: alice.address0,
       });
     });
 
@@ -420,7 +420,7 @@ describe("CosmWasmClient", () => {
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(client.queryContractSmart(contract.address, { broken: {} })).toBeRejectedWithError(
-        /Error parsing into type hackatom::contract::QueryMsg: unknown variant/i,
+        /Error parsing into type hackatom::msg::QueryMsg: unknown variant/i,
       );
     });
 
