@@ -305,6 +305,7 @@ __metadata:
     "@cosmjs/utils": ^0.25.2
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -356,6 +357,7 @@ __metadata:
     pako: ^2.0.2
     prettier: ^2.0.5
     readonly-date: ^1.0.0
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -379,6 +381,7 @@ __metadata:
     prettier: ^2.0.5
     protobufjs: ~6.10.2
     readonly-date: ^1.0.0
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -413,6 +416,7 @@ __metadata:
     prettier: ^2.0.5
     ripemd160: ^2.0.2
     sha.js: ^2.4.11
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -426,6 +430,7 @@ __metadata:
     eslint: ^7.5
     prettier: ^2.0.5
     readonly-date: ^1.0.0
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -436,6 +441,7 @@ __metadata:
     axios: ^0.21.1
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -470,6 +476,7 @@ __metadata:
     "@cosmjs/stream": ^0.25.2
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
@@ -488,6 +495,7 @@ __metadata:
     fast-deep-equal: ^3.1.3
     prettier: ^2.0.5
     readonly-date: ^1.0.0
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -509,6 +517,7 @@ __metadata:
     ledger-cosmos-js: ^2.1.8
     prettier: ^2.0.5
     semver: ^7.3.2
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -520,6 +529,7 @@ __metadata:
     bn.js: ^4.11.8
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -534,6 +544,7 @@ __metadata:
     long: ^4.0.0
     prettier: ^2.0.5
     protobufjs: ~6.10.2
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -546,6 +557,7 @@ __metadata:
     eslint: ^7.5
     isomorphic-ws: ^4.0.1
     prettier: ^2.0.5
+    webpack: ^5.32.0
     ws: ^6.2.0
     xstream: ^11.14.0
   languageName: unknown
@@ -567,6 +579,7 @@ __metadata:
     long: ^4.0.0
     prettier: ^2.0.5
     protobufjs: ~6.10.2
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 
@@ -576,6 +589,7 @@ __metadata:
   dependencies:
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
@@ -595,6 +609,7 @@ __metadata:
     eslint: ^7.5
     prettier: ^2.0.5
     readonly-date: ^1.0.0
+    webpack: ^5.32.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
@@ -605,6 +620,7 @@ __metadata:
   dependencies:
     eslint: ^7.5
     prettier: ^2.0.5
+    webpack: ^5.32.0
   languageName: unknown
   linkType: soft
 

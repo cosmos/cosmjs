@@ -52,6 +52,7 @@
     "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
     "@types/semver": "^7.3.4",
     "eslint": "^7.5",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "webpack": "^5.32.0"
   }
 }

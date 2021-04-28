@@ -59,6 +59,7 @@
     "@types/ripemd160": "^2.0.0",
     "@types/sha.js": "^2.4.0",
     "eslint": "^7.5",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "webpack": "^5.32.0"
   }
 }
