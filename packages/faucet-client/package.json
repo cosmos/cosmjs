@@ -26,7 +26,7 @@
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
-    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "format-text": "prettier --write \"./*.md\"",
     "test-node": "node jasmine-testrunner.js",
     "test-edge": "yarn pack-web && karma start --single-run --browsers Edge",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
