@@ -25,7 +25,7 @@
   "scripts": {
     "docs": "typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
-    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "format-text": "prettier --write \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "prebuild": "shx rm -rf ./build",
