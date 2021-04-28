@@ -61,6 +61,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "readonly-date": "^1.0.0",
+    "typedoc": "^0.20",
     "webpack": "^5.32.0"
   }
 }

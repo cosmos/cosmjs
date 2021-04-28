@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "eslint": "^7.5",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "typedoc": "^0.20"
   }
 }
