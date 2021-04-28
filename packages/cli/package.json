@@ -65,7 +65,10 @@
     "@types/diff": "^4",
     "@types/yargs": "^15.0.4",
     "eslint": "^7.5",
+    "jasmine": "^3.5",
+    "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "source-map-support": "^0.5.19"
   }
 }
