@@ -32,7 +32,7 @@
     "test-firefox": "lerna run test-firefox",
     "test-chrome": "lerna run test-chrome",
     "coverage": "yarn workspaces foreach --topological-dev run coverage",
-    "build": "lerna run build",
+    "build": "yarn workspaces foreach --topological-dev run build",
     "docs": "yarn workspaces foreach --topological-dev run docs",
     "pack-web": "yarn workspaces foreach --topological-dev run pack-web"
   },
