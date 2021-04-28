@@ -729,6 +729,7 @@ __metadata:
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
+    xstream: ^11.14.0
   languageName: unknown
   linkType: soft
 
