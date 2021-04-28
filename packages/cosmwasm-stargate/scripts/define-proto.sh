@@ -25,5 +25,4 @@ protoc \
 
 # Remove unnecessary codec files
 rm -rf \
-  src/codec/gogoproto/ \
-  src/codec/google/
+  src/codec/gogoproto/

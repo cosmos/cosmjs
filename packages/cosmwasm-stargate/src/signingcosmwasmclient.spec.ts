@@ -23,7 +23,7 @@ import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
-import { MsgStoreCode } from "./codec/x/wasm/internal/types/tx";
+import { MsgStoreCode } from "./codec/cosmwasm/wasm/v1beta1/tx";
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { PrivateSigningCosmWasmClient, SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {

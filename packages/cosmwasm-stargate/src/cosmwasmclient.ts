@@ -31,8 +31,8 @@ import {
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { CodeInfoResponse } from "./codec/x/wasm/internal/types/query";
-import { ContractCodeHistoryOperationType } from "./codec/x/wasm/internal/types/types";
+import { CodeInfoResponse } from "./codec/cosmwasm/wasm/v1beta1/query";
+import { ContractCodeHistoryOperationType } from "./codec/cosmwasm/wasm/v1beta1/types";
 import { setupWasmExtension, WasmExtension } from "./queries";
 
 /** Use for testing only */

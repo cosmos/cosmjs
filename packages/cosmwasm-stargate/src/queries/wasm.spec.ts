@@ -15,8 +15,8 @@ import {
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/x/wasm/internal/types/tx";
-import { ContractCodeHistoryOperationType } from "../codec/x/wasm/internal/types/types";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/cosmwasm/wasm/v1beta1/tx";
+import { ContractCodeHistoryOperationType } from "../codec/cosmwasm/wasm/v1beta1/types";
 import {
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
