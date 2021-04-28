@@ -40,15 +40,15 @@
     "define-proto": "./scripts/define-proto.sh && prettier --write \"src/codec/**/*.ts\""
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.25.2",
-    "@cosmjs/crypto": "^0.25.2",
-    "@cosmjs/math": "^0.25.2",
+    "@cosmjs/amino": "workspace:packages/amino",
+    "@cosmjs/crypto": "workspace:packages/crypto",
+    "@cosmjs/math": "workspace:packages/math",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2"
   },
   "devDependencies": {
-    "@cosmjs/encoding": "^0.25.2",
-    "@cosmjs/utils": "^0.25.2",
+    "@cosmjs/encoding": "workspace:packages/encoding",
+    "@cosmjs/utils": "workspace:packages/utils",
     "crypto-browserify": "^3.12.0",
     "eslint": "^7.5",
     "glob": "^7.1.6",

@@ -41,18 +41,18 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.25.2",
-    "@cosmjs/encoding": "^0.25.2",
-    "@cosmjs/json-rpc": "^0.25.2",
-    "@cosmjs/math": "^0.25.2",
-    "@cosmjs/socket": "^0.25.2",
-    "@cosmjs/stream": "^0.25.2",
+    "@cosmjs/crypto": "workspace:packages/crypto",
+    "@cosmjs/encoding": "workspace:packages/encoding",
+    "@cosmjs/json-rpc": "workspace:packages/json-rpc",
+    "@cosmjs/math": "workspace:packages/math",
+    "@cosmjs/socket": "workspace:packages/socket",
+    "@cosmjs/stream": "workspace:packages/stream",
     "axios": "^0.21.1",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@cosmjs/utils": "^0.25.2",
+    "@cosmjs/utils": "workspace:packages/utils",
     "crypto-browserify": "^3.12.0",
     "eslint": "^7.5",
     "glob": "^7.1.6",

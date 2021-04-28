@@ -39,10 +39,10 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.25.2",
-    "@cosmjs/encoding": "^0.25.2",
-    "@cosmjs/math": "^0.25.2",
-    "@cosmjs/utils": "^0.25.2"
+    "@cosmjs/crypto": "workspace:packages/crypto",
+    "@cosmjs/encoding": "workspace:packages/encoding",
+    "@cosmjs/math": "workspace:packages/math",
+    "@cosmjs/utils": "workspace:packages/utils"
   },
   "devDependencies": {
     "crypto-browserify": "^3.12.0",
