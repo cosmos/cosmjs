@@ -33,7 +33,7 @@
     "test-chrome": "lerna run test-chrome",
     "coverage": "yarn workspaces foreach run coverage",
     "build": "lerna run build",
-    "docs": "lerna run docs"
+    "docs": "yarn workspaces foreach run docs"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
