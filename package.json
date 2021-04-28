@@ -23,18 +23,18 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "yarn workspaces foreach --topological-dev --parallel run format",
-    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach --topological-dev --parallel run format-text",
+    "format": "yarn workspaces foreach --topological-dev --parallel --verbose run format",
+    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach --topological-dev --parallel --verbose run format-text",
     "format-shell": "shfmt -w scripts packages",
-    "lint": "yarn workspaces foreach --topological-dev --parallel run lint",
-    "lint-fix": "yarn workspaces foreach --topological-dev --parallel run lint-fix",
-    "test": "yarn workspaces foreach --topological-dev --parallel run test",
-    "test-firefox": "yarn workspaces foreach --topological-dev --parallel run test-firefox",
-    "test-chrome": "yarn workspaces foreach --topological-dev --parallel run test-chrome",
-    "coverage": "yarn workspaces foreach --topological-dev --parallel run coverage",
-    "build": "yarn workspaces foreach --topological-dev --parallel run build",
-    "docs": "yarn workspaces foreach --topological-dev --parallel run docs",
-    "pack-web": "yarn workspaces foreach --topological-dev --parallel run pack-web"
+    "lint": "yarn workspaces foreach --topological-dev --parallel --verbose run lint",
+    "lint-fix": "yarn workspaces foreach --topological-dev --parallel --verbose run lint-fix",
+    "test": "yarn workspaces foreach --topological-dev --parallel --verbose run test",
+    "test-firefox": "yarn workspaces foreach --topological-dev --parallel --verbose run test-firefox",
+    "test-chrome": "yarn workspaces foreach --topological-dev --parallel --verbose run test-chrome",
+    "coverage": "yarn workspaces foreach --topological-dev --parallel --verbose run coverage",
+    "build": "yarn workspaces foreach --topological-dev --parallel --verbose run build",
+    "docs": "yarn workspaces foreach --topological-dev --parallel --verbose run docs",
+    "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:packages/amino",
