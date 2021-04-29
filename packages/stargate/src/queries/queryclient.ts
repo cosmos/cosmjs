@@ -466,7 +466,6 @@ export class QueryClient {
     setupExtensionQ: QueryExtensionSetup<Q>,
     setupExtensionR: QueryExtensionSetup<R>,
   ): QueryClient & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R;
-  
 
   public static withExtensions(
     tmClient: Tendermint34Client,
