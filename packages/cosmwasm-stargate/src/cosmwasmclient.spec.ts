@@ -277,7 +277,7 @@ describe("CosmWasmClient", () => {
       expect(result.length).toBeGreaterThanOrEqual(3);
       const [zero, one, two] = result;
       const expected = deployedHackatom.instances.map((info) => info.address);
-      expect(result.slice(0, 3)).toEqual(expected);
+      expect([zero, one, two]).toEqual(expected);
     });
   });
 
