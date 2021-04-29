@@ -190,16 +190,10 @@ describe("WasmExtension", () => {
       const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
-      const { contractInfos: existingContractInfos } = await client.wasm.listContractsByCodeId(
-        hackatomCodeId,
-      );
-      assert(existingContractInfos);
-      for (const { address, contractInfo } of existingContractInfos) {
+      const { contracts: existingContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      assert(existingContracts);
+      for (const address of existingContracts) {
         expect(address).toMatch(bech32AddressMatcher);
-        assertDefined(contractInfo);
-        expect(contractInfo.codeId.toNumber()).toEqual(hackatomCodeId);
-        expect(contractInfo.creator).toMatch(bech32AddressMatcher);
-        expect(contractInfo.label).toMatch(/^.+$/);
       }
 
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
@@ -208,17 +202,11 @@ describe("WasmExtension", () => {
         .events.find((event: any) => event.type === "message")
         .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
 
-      const { contractInfos: newContractInfos } = await client.wasm.listContractsByCodeId(hackatomCodeId);
-      assert(newContractInfos);
-      expect(newContractInfos.length).toEqual(existingContractInfos.length + 1);
-      const newContract = newContractInfos[newContractInfos.length - 1];
-      expect({ ...newContract.contractInfo }).toEqual({
-        codeId: Long.fromNumber(hackatomCodeId, true),
-        creator: alice.address0,
-        label: "my escrow",
-        admin: "",
-        ibcPortId: "",
-      });
+      const { contracts: newContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      assert(newContracts);
+      expect(newContracts.length).toEqual(existingContracts.length + 1);
+      const newContract = newContracts[newContracts.length - 1];
+      expect(newContract).toMatch(bech32AddressMatcher);
 
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);

@@ -276,27 +276,8 @@ describe("CosmWasmClient", () => {
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
       const [zero, one, two] = result;
-      expect(zero).toEqual({
-        address: deployedHackatom.instances[0].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: undefined,
-        label: deployedHackatom.instances[0].label,
-      });
-      expect(one).toEqual({
-        address: deployedHackatom.instances[1].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: undefined,
-        label: deployedHackatom.instances[1].label,
-      });
-      expect(two).toEqual({
-        address: deployedHackatom.instances[2].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: alice.address1,
-        label: deployedHackatom.instances[2].label,
-      });
+      const expected = deployedHackatom.instances.map((info) => info.address);
+      expect(result.slice(0, 3)).toEqual(expected);
     });
   });
 

@@ -276,24 +276,10 @@ export class CosmWasmClient {
     return codeDetails;
   }
 
-  public async getContracts(codeId: number): Promise<readonly Contract[]> {
-    const { contractInfos } = await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId);
-    return (contractInfos || []).map(
-      ({ address, contractInfo }): Contract => {
-        assert(address, "address missing");
-        assert(
-          contractInfo && contractInfo.codeId && contractInfo.creator && contractInfo.label,
-          "contractInfo missing or incomplete",
-        );
-        return {
-          address: address,
-          codeId: contractInfo.codeId.toNumber(),
-          creator: contractInfo.creator,
-          admin: contractInfo.admin || undefined,
-          label: contractInfo.label,
-        };
-      },
-    );
+  public async getContracts(codeId: number): Promise<readonly string[]> {
+    // TODO: handle pagination - accept as arg or auto-loop
+    const { contracts } = await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId);
+    return contracts;
   }
 
   /**
