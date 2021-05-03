@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
-import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64 } from "@cosmjs/encoding";
+import { fromAscii, fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 import {
   DirectSecp256k1HdWallet,
@@ -274,10 +274,8 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getContracts(1);
-      expect(result.length).toBeGreaterThanOrEqual(3);
-      const [zero, one, two] = result;
-      const expected = deployedHackatom.instances.map((info) => info.address);
-      expect([zero, one, two]).toEqual(expected);
+      const expectedAddresses = deployedHackatom.instances.map((info) => info.address);
+      expect(result).toEqual(expectedAddresses);
     });
   });
 
