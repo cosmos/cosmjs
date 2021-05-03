@@ -12,7 +12,7 @@ import {
   SigningStargateClient,
   StdFee,
 } from "@cosmjs/stargate";
-import { assert, assertDefined } from "@cosmjs/utils";
+import { assert } from "@cosmjs/utils";
 import Long from "long";
 
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/cosmwasm/wasm/v1beta1/tx";
@@ -25,7 +25,6 @@ import {
 import { SigningCosmWasmClient } from "../signingcosmwasmclient";
 import {
   alice,
-  base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
   getHackatom,

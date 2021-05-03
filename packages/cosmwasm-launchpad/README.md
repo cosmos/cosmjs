@@ -19,8 +19,8 @@ Updating Hackatom development contract in `src/testdata/contract.json`:
 
 ```sh
 cd packages/cosmwasm-launchpad
-export HACKATOM_URL=https://github.com/CosmWasm/cosmwasm-launchpad/releases/download/v0.11.0-alpha4/hackatom.wasm
-echo "{\"// source\": \"$HACKATOM_URL\", \"data\": \"$(curl -sS  --location $HACKATOM_URL | base64)\" }" | jq > src/testdata/contract.json
+export HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v0.11.0-alpha4/hackatom.wasm
+echo "{\"// source\": \"$HACKATOM_URL\", \"data\": \"$(curl -sS  --location $HACKATOM_URL | base64 | tr -d '[:space:]')\" }" | jq > src/testdata/contract.json
 ```
 
 ## License
