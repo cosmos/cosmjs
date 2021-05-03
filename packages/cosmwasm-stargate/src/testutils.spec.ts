@@ -85,15 +85,6 @@ export const unused = {
 
 export const validator = {
   /**
-   * From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json
-   *
-   * `jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/wasmd/template/.wasmd/config/genesis.json`
-   */
-  pubkey: {
-    type: "/cosmos.crypto.secp256k1.PubKey",
-    key: "AjOB0SSyyLVBcOe0GK0TuLmXlCVWY/h8cnhKvwbnbdII",
-  },
-  /**
    * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
