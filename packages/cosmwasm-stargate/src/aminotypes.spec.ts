@@ -19,7 +19,7 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/x/wasm/internal/types/tx";
+} from "./codec/cosmwasm/wasm/v1beta1/tx";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

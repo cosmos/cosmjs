@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
-import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64 } from "@cosmjs/encoding";
+import { fromAscii, fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 import {
   DirectSecp256k1HdWallet,
@@ -274,29 +274,8 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getContracts(1);
-      expect(result.length).toBeGreaterThanOrEqual(3);
-      const [zero, one, two] = result;
-      expect(zero).toEqual({
-        address: deployedHackatom.instances[0].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: undefined,
-        label: deployedHackatom.instances[0].label,
-      });
-      expect(one).toEqual({
-        address: deployedHackatom.instances[1].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: undefined,
-        label: deployedHackatom.instances[1].label,
-      });
-      expect(two).toEqual({
-        address: deployedHackatom.instances[2].address,
-        codeId: deployedHackatom.codeId,
-        creator: alice.address0,
-        admin: alice.address1,
-        label: deployedHackatom.instances[2].label,
-      });
+      const expectedAddresses = deployedHackatom.instances.map((info) => info.address);
+      expect(result).toEqual(expectedAddresses);
     });
   });
 
@@ -359,9 +338,9 @@ describe("CosmWasmClient", () => {
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromAscii(raw))).toEqual({
-        verifier: toBase64(Bech32.decode(contract.initMsg.verifier).data),
-        beneficiary: toBase64(Bech32.decode(contract.initMsg.beneficiary).data),
-        funder: toBase64(Bech32.decode(alice.address0).data),
+        verifier: contract.initMsg.verifier,
+        beneficiary: contract.initMsg.beneficiary,
+        funder: alice.address0,
       });
     });
 
@@ -420,7 +399,7 @@ describe("CosmWasmClient", () => {
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(client.queryContractSmart(contract.address, { broken: {} })).toBeRejectedWithError(
-        /Error parsing into type hackatom::contract::QueryMsg: unknown variant/i,
+        /Error parsing into type hackatom::msg::QueryMsg: unknown variant/i,
       );
     });
 

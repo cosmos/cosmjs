@@ -13,7 +13,7 @@ import {
   QueryContractInfoResponse,
   QueryContractsByCodeResponse,
   QueryRawContractStateResponse,
-} from "../codec/x/wasm/internal/types/query";
+} from "../codec/cosmwasm/wasm/v1beta1/query";
 
 export interface WasmExtension {
   readonly wasm: {

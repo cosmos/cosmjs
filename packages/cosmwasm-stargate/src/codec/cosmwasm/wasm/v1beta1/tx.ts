@@ -1,8 +1,8 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { AccessConfig } from "../../../../x/wasm/internal/types/types";
-import { Coin } from "../../../../cosmos/base/v1beta1/coin";
+import { AccessConfig } from "../../../cosmwasm/wasm/v1beta1/types";
+import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";
 
@@ -12,11 +12,17 @@ export interface MsgStoreCode {
   sender: string;
   /** WASMByteCode can be raw or gzip compressed */
   wasmByteCode: Uint8Array;
-  /** Source is a valid absolute HTTPS URI to the contract's source code, optional */
+  /**
+   * Source is a valid absolute HTTPS URI to the contract's source code,
+   * optional
+   */
   source: string;
   /** Builder is a valid docker image name with tag, optional */
   builder: string;
-  /** InstantiatePermission access control to apply on contract creation, optional */
+  /**
+   * InstantiatePermission access control to apply on contract creation,
+   * optional
+   */
   instantiatePermission?: AccessConfig;
 }
 
@@ -26,7 +32,10 @@ export interface MsgStoreCodeResponse {
   codeId: Long;
 }
 
-/** MsgInstantiateContract create a new smart contract instance for the given code id. */
+/**
+ * MsgInstantiateContract create a new smart contract instance for the given
+ * code id.
+ */
 export interface MsgInstantiateContract {
   /** Sender is the that actor that signed the messages */
   sender: string;

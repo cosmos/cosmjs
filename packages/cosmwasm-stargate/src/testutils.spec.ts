@@ -85,26 +85,17 @@ export const unused = {
 
 export const validator = {
   /**
-   * From first gentx's auth_info.signer_infos in scripts/wasmd/template/.wasmd/config/genesis.json
-   *
-   * `jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/wasmd/template/.wasmd/config/genesis.json`
-   */
-  pubkey: {
-    type: "tendermint/PubKeySecp256k1",
-    value: "AoSRL8/aA1oDkHPd0IMtLpozhGdgFafzMCKmmOQ0olJn",
-  },
-  /**
    * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
-  delegatorAddress: "wasm1jq32x9gj3n5lj2cgrcksypk3zegxnxgy8vzymc",
+  delegatorAddress: "wasm1tjgue6r5kqj5dets24pwaa9u7wuzucpwuva0rv",
   /**
    * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
-  validatorAddress: "wasmvaloper1jq32x9gj3n5lj2cgrcksypk3zegxnxgyjshc4z",
+  validatorAddress: "wasmvaloper1tjgue6r5kqj5dets24pwaa9u7wuzucpwfsgndk",
   accountNumber: 0,
   sequence: 1,
 };
@@ -114,7 +105,7 @@ export const deployedHackatom = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
   builder: "cosmwasm/rust-optimizer:0.10.8",
-  checksum: "08537c4f191980bc835f08ecb9077bb60df1097c1c0793312e0f21cbfca868d2",
+  checksum: "3da31e1978e492d041a60905319f454f21b381beac274d07081aee390d0a63d7",
   instances: [
     {
       beneficiary: alice.address0,

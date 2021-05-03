@@ -7,7 +7,7 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/x/wasm/internal/types/tx";
+} from "./codec/cosmwasm/wasm/v1beta1/tx";
 
 export interface MsgStoreCodeEncodeObject extends EncodeObject {
   readonly typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode";

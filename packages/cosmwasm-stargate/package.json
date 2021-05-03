@@ -37,7 +37,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "preget-proto": "shx rm -rf proto",
-    "get-proto": "WASM_REF=v0.16.0-alpha1 COSMOS_SDK_REF=v0.42.0 ./scripts/get-proto.sh",
+    "get-proto": "WASM_REF=v0.16.0-alpha2 COSMOS_SDK_REF=v0.42.4 ./scripts/get-proto.sh",
     "define-proto": "./scripts/define-proto.sh",
     "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
   },

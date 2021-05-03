@@ -10,17 +10,17 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/x/wasm/internal/types/tx";
+} from "./codec/cosmwasm/wasm/v1beta1/tx";
 
 // TODO: implement
 /**
- * @see https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/types.proto#L30-L35
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/types.proto#L30-L35
  */
 type AccessConfig = never;
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L28-L40
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L28-L40
  */
 export interface AminoMsgStoreCode {
   type: "wasm/MsgStoreCode";
@@ -39,7 +39,7 @@ export interface AminoMsgStoreCode {
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L70-L80
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L70-L80
  */
 export interface AminoMsgExecuteContract {
   type: "wasm/MsgExecuteContract";
@@ -56,7 +56,7 @@ export interface AminoMsgExecuteContract {
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L47-L61
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L47-L61
  */
 export interface AminoMsgInstantiateContract {
   type: "wasm/MsgInstantiateContract";
@@ -77,7 +77,7 @@ export interface AminoMsgInstantiateContract {
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L88-L98
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L88-L98
  */
 export interface AminoMsgMigrateContract {
   type: "wasm/MsgMigrateContract";
@@ -95,7 +95,7 @@ export interface AminoMsgMigrateContract {
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L107-L115
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L107-L115
  */
 export interface AminoMsgUpdateAdmin {
   type: "wasm/MsgUpdateAdmin";
@@ -111,7 +111,7 @@ export interface AminoMsgUpdateAdmin {
 
 /**
  * The Amino JSON representation of
- * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha1/x/wasm/internal/types/tx.proto#L120-L126
+ * https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L120-L126
  */
 export interface AminoMsgClearAdmin {
   type: "wasm/MsgClearAdmin";

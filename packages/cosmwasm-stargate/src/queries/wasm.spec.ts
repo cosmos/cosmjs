@@ -12,11 +12,11 @@ import {
   SigningStargateClient,
   StdFee,
 } from "@cosmjs/stargate";
-import { assert, assertDefined } from "@cosmjs/utils";
+import { assert } from "@cosmjs/utils";
 import Long from "long";
 
-import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/x/wasm/internal/types/tx";
-import { ContractCodeHistoryOperationType } from "../codec/x/wasm/internal/types/types";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "../codec/cosmwasm/wasm/v1beta1/tx";
+import { ContractCodeHistoryOperationType } from "../codec/cosmwasm/wasm/v1beta1/types";
 import {
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
@@ -25,7 +25,6 @@ import {
 import { SigningCosmWasmClient } from "../signingcosmwasmclient";
 import {
   alice,
-  base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
   getHackatom,
@@ -190,16 +189,10 @@ describe("WasmExtension", () => {
       const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
-      const { contractInfos: existingContractInfos } = await client.wasm.listContractsByCodeId(
-        hackatomCodeId,
-      );
-      assert(existingContractInfos);
-      for (const { address, contractInfo } of existingContractInfos) {
+      const { contracts: existingContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      assert(existingContracts);
+      for (const address of existingContracts) {
         expect(address).toMatch(bech32AddressMatcher);
-        assertDefined(contractInfo);
-        expect(contractInfo.codeId.toNumber()).toEqual(hackatomCodeId);
-        expect(contractInfo.creator).toMatch(bech32AddressMatcher);
-        expect(contractInfo.label).toMatch(/^.+$/);
       }
 
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
@@ -208,17 +201,11 @@ describe("WasmExtension", () => {
         .events.find((event: any) => event.type === "message")
         .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
 
-      const { contractInfos: newContractInfos } = await client.wasm.listContractsByCodeId(hackatomCodeId);
-      assert(newContractInfos);
-      expect(newContractInfos.length).toEqual(existingContractInfos.length + 1);
-      const newContract = newContractInfos[newContractInfos.length - 1];
-      expect({ ...newContract.contractInfo }).toEqual({
-        codeId: Long.fromNumber(hackatomCodeId, true),
-        creator: alice.address0,
-        label: "my escrow",
-        admin: "",
-        ibcPortId: "",
-      });
+      const { contracts: newContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      assert(newContracts);
+      expect(newContracts.length).toEqual(existingContracts.length + 1);
+      const newContract = newContracts[newContracts.length - 1];
+      expect(newContract).toMatch(bech32AddressMatcher);
 
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
@@ -295,8 +282,8 @@ describe("WasmExtension", () => {
       const data = models[0];
       expect(data.key).toEqual(hackatomConfigKey);
       const value = JSON.parse(fromAscii(data.value));
-      expect(value.verifier).toMatch(base64Matcher);
-      expect(value.beneficiary).toMatch(base64Matcher);
+      expect(value.verifier).toMatch(bech32AddressMatcher);
+      expect(value.beneficiary).toMatch(bech32AddressMatcher);
     });
 
     it("rejects for non-existent address", async () => {
@@ -317,8 +304,8 @@ describe("WasmExtension", () => {
       const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
       assert(raw.data, "must get result");
       const model = JSON.parse(fromAscii(raw.data));
-      expect(model.verifier).toMatch(base64Matcher);
-      expect(model.beneficiary).toMatch(base64Matcher);
+      expect(model.verifier).toMatch(bech32AddressMatcher);
+      expect(model.beneficiary).toMatch(bech32AddressMatcher);
     });
 
     it("returns empty for missing key", async () => {
@@ -356,7 +343,7 @@ describe("WasmExtension", () => {
       const request = { nosuchkey: {} };
       await expectAsync(
         client.wasm.queryContractSmart(hackatomContractAddress, request),
-      ).toBeRejectedWithError(/Error parsing into type hackatom::contract::QueryMsg: unknown variant/i);
+      ).toBeRejectedWithError(/Error parsing into type hackatom::msg::QueryMsg: unknown variant/i);
     });
 
     it("throws for non-existent address", async () => {
