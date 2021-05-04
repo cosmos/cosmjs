@@ -105,7 +105,7 @@ export const deployedHackatom = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
   builder: "cosmwasm/rust-optimizer:0.10.8",
-  checksum: "3da31e1978e492d041a60905319f454f21b381beac274d07081aee390d0a63d7",
+  checksum: "a32acdcfe15a2b3c8ba6963cf1e4ab63347725cc35a0f2434696dd492d63fb5f",
   instances: [
     {
       beneficiary: alice.address0,
