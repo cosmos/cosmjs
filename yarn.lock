@@ -303,6 +303,7 @@ __metadata:
     "@cosmjs/encoding": "workspace:packages/encoding"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     crypto-browserify: ^3.12.0
     eslint: ^7.5
@@ -316,6 +317,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -338,6 +340,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/babylon": ^6.16.3
     "@types/diff": ^4
     "@types/jasmine": ^3.6.10
@@ -371,6 +374,7 @@ __metadata:
     "@cosmjs/launchpad": "workspace:packages/launchpad"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     "@types/pako": ^1.0.1
@@ -388,6 +392,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -407,6 +412,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
@@ -427,6 +433,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -452,6 +459,7 @@ __metadata:
     "@cosmjs/encoding": "workspace:packages/encoding"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/bn.js": ^4.11.6
     "@types/elliptic": ^6.4.12
     "@types/jasmine": ^3.6.10
@@ -478,6 +486,7 @@ __metadata:
     sha.js: ^2.4.11
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -488,6 +497,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/encoding@workspace:packages/encoding"
   dependencies:
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/base64-js": ^1.2.5
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
@@ -503,6 +513,7 @@ __metadata:
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -513,6 +524,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/faucet-client@workspace:packages/faucet-client"
   dependencies:
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     axios: ^0.21.1
@@ -525,6 +537,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -542,6 +555,7 @@ __metadata:
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@koa/cors": ^3.0.0
     "@types/jasmine": ^3.6.10
     "@types/koa": ^2.11.0
@@ -556,6 +570,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typescript: ~4.0
   bin:
     cosmos-faucet: bin/cosmos-faucet
@@ -567,6 +582,7 @@ __metadata:
   resolution: "@cosmjs/json-rpc@workspace:packages/json-rpc"
   dependencies:
     "@cosmjs/stream": "workspace:packages/stream"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     eslint: ^7.5
     glob: ^7.1.6
@@ -577,6 +593,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -593,6 +610,7 @@ __metadata:
     "@cosmjs/encoding": "workspace:packages/encoding"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     axios: ^0.21.1
@@ -610,6 +628,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -627,6 +646,7 @@ __metadata:
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@ledgerhq/hw-transport": ^5.25.0
     "@ledgerhq/hw-transport-node-hid": ^5.25.0
     "@ledgerhq/hw-transport-webusb": ^5.25.0
@@ -648,6 +668,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -658,6 +679,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/math@workspace:packages/math"
   dependencies:
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/bn.js": ^4.11.6
     "@types/jasmine": ^3.6.10
     bn.js: ^4.11.8
@@ -670,6 +692,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -685,6 +708,7 @@ __metadata:
     "@cosmjs/encoding": "workspace:packages/encoding"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
@@ -702,6 +726,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -713,6 +738,7 @@ __metadata:
   resolution: "@cosmjs/socket@workspace:packages/socket"
   dependencies:
     "@cosmjs/stream": "workspace:packages/stream"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/ws": ^6.0.1
     eslint: ^7.5
@@ -725,6 +751,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -746,6 +773,7 @@ __metadata:
     "@cosmjs/stream": "workspace:packages/stream"
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
@@ -764,6 +792,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -775,6 +804,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     eslint: ^7.5
@@ -786,6 +816,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -804,6 +835,7 @@ __metadata:
     "@cosmjs/socket": "workspace:packages/socket"
     "@cosmjs/stream": "workspace:packages/stream"
     "@cosmjs/utils": "workspace:packages/utils"
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     axios: ^0.21.1
@@ -820,6 +852,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -831,6 +864,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/utils@workspace:packages/utils"
   dependencies:
+    "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     eslint: ^7.5
@@ -842,6 +876,7 @@ __metadata:
     prettier: ^2.0.5
     ses: ^0.11.0
     source-map-support: ^0.5.19
+    ts-node: ^8
     typedoc: ^0.20
     typescript: ~4.0
     webpack: ^5.32.0
@@ -875,6 +910,19 @@ __metadata:
     js-yaml: ^3.13.1
     resolve-from: ^5.0.0
   checksum: f7f3b1c922bf5e36a7f747b2a80fedc9c2e1ebd7e03dc73082fca7c1066cc4e2e2ac39827aded6a087c32294e9c032ff3e50bc9041fcf757b4a38ca97418b652
+  languageName: node
+  linkType: hard
+
+"@istanbuljs/nyc-config-typescript@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@istanbuljs/nyc-config-typescript@npm:1.0.1"
+  dependencies:
+    "@istanbuljs/schema": ^0.1.2
+  peerDependencies:
+    nyc: ">=15"
+    source-map-support: "*"
+    ts-node: "*"
+  checksum: 28c19a10ee0d9d46cf8602ffe296c43997b3b6d153f6c15dda99e4a25f7ed56cc5bc43574a0d24aa3685e5155fb09a50291115662820a1849044c91dd5d513d3
   languageName: node
   linkType: hard
 
