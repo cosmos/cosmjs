@@ -26,8 +26,8 @@
     "docs": "typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
-    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
+    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build"
   },
@@ -35,7 +35,15 @@
     "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad"
   },
   "devDependencies": {
+    "@types/eslint-plugin-prettier": "^3",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "eslint": "^7.5",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-node": "^0.3.4",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "prettier": "^2.0.5",
     "typedoc": "^0.20",
     "typescript": "~4.0"
