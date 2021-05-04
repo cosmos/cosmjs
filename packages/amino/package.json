@@ -45,6 +45,7 @@
     "@cosmjs/utils": "workspace:packages/utils"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.6.10",
     "crypto-browserify": "^3.12.0",
     "eslint": "^7.5",
     "glob": "^7.1.6",

@@ -49,6 +49,9 @@
   "devDependencies": {
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/utils": "workspace:packages/utils",
+    "@types/jasmine": "^3.6.10",
+    "@types/long": "^4.0.1",
+    "@types/node": "^15.0.1",
     "crypto-browserify": "^3.12.0",
     "eslint": "^7.5",
     "glob": "^7.1.6",

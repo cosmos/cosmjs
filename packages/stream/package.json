@@ -44,6 +44,8 @@
     "xstream": "^11.14.0"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.6.10",
+    "@types/node": "^15.0.1",
     "eslint": "^7.5",
     "glob": "^7.1.6",
     "jasmine": "^3.5",
