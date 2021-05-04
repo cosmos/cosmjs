@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env yarn node
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { encodeSecp256k1Pubkey, makeCosmoshubPath, Secp256k1HdWallet } = require("@cosmjs/amino");

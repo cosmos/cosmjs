@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env yarn node
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
