@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "format": "yarn workspaces foreach --topological-dev --parallel --verbose run format",
-    "format-text": "prettier --write \"./*.md\" && yarn workspaces foreach --topological-dev --parallel --verbose run format-text",
+    "format-text": "prettier --write \"./*.md\" \"./docs/*.md\" && yarn workspaces foreach --topological-dev --parallel --verbose run format-text",
     "format-shell": "shfmt -w scripts packages",
     "lint": "yarn workspaces foreach --topological-dev --parallel --verbose run lint",
     "lint-fix": "yarn workspaces foreach --topological-dev --parallel --verbose run lint-fix",
