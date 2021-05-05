@@ -1,7 +1,14 @@
+const chrome = require('karma-chrome-launcher');
+const firefox = require('karma-firefox-launcher');
+const jasmine = require('karma-jasmine');
+const kjhtml = require('karma-jasmine-html-reporter');
+
 module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: ".",
+    // registers plugins but does not activate them
+    plugins: [jasmine, kjhtml, chrome, firefox],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
