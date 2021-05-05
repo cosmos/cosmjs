@@ -1,4 +1,4 @@
-#!/usr/bin/env yarn node
+#!/usr/bin/env -S yarn node
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { coins, Secp256k1HdWallet } = require("@cosmjs/amino");
