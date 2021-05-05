@@ -16,6 +16,7 @@ export {
 } from "./encodeobjects";
 export {
   defaultGasLimits,
+  CosmWasmFeeTable, // part of SigningCosmWasmClientOptions
   SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
 } from "./signingcosmwasmclient";
