@@ -609,6 +609,9 @@ jobs:
     docker:
       - image: circleci/node:10-buster
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: sudo apt-get install git-lfs
       - checkout
       - attach_workspace:
           at: /tmp/builds
