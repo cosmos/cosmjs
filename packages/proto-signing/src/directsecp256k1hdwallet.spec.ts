@@ -31,6 +31,18 @@ describe("DirectSecp256k1HdWallet", () => {
       expect(pubkey).not.toEqual(defaultPubkey);
       expect(address.slice(0, 4)).toEqual("yolo");
     });
+
+    it("works with explicitly undefined options", async () => {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic, {
+        bip39Password: undefined,
+        hdPaths: undefined,
+        prefix: undefined,
+      });
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+      const [{ pubkey, address }] = await wallet.getAccounts();
+      expect(pubkey).toEqual(defaultPubkey);
+      expect(address).toEqual(defaultAddress);
+    });
   });
 
   describe("generate", () => {
