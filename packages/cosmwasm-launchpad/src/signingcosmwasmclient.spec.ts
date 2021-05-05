@@ -16,7 +16,7 @@ import { assert } from "@cosmjs/utils";
 
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
-import { PrivateSigningCosmWasmClient, SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
   alice,
   getHackatom,
@@ -42,8 +42,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet, gasPrice);
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: [
             {
@@ -113,8 +112,7 @@ describe("SigningCosmWasmClient", () => {
         undefined,
         gasLimits,
       );
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: [
             {
@@ -185,8 +183,7 @@ describe("SigningCosmWasmClient", () => {
         gasPrice,
         gasLimits,
       );
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: [
             {

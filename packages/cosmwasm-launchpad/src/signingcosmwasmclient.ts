@@ -143,11 +143,6 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
-/** Use for testing only */
-export interface PrivateSigningCosmWasmClient {
-  readonly fees: CosmWasmFeeTable;
-}
-
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly fees: CosmWasmFeeTable;
   public readonly signerAddress: string;

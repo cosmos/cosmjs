@@ -126,12 +126,6 @@ export interface SigningCosmWasmClientOptions {
   readonly gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>;
 }
 
-/** Use for testing only */
-export interface PrivateSigningCosmWasmClient {
-  readonly fees: CosmWasmFeeTable;
-  readonly registry: Registry;
-}
-
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly fees: CosmWasmFeeTable;
   public readonly registry: Registry;

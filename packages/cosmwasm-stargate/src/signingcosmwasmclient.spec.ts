@@ -25,7 +25,7 @@ import protobuf from "protobufjs/minimal";
 
 import { MsgStoreCode } from "./codec/cosmwasm/wasm/v1beta1/tx";
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
-import { PrivateSigningCosmWasmClient, SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   getHackatom,
@@ -56,8 +56,7 @@ describe("SigningCosmWasmClient", () => {
       registry.register("/custom.MsgCustom", MsgSend);
       const options = { prefix: wasmd.prefix, registry: registry };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
+      expect(client.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
     });
 
     it("can be constructed with custom gas price", async () => {
@@ -68,8 +67,7 @@ describe("SigningCosmWasmClient", () => {
         gasPrice: GasPrice.fromString("3.14utest"),
       };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: coins(4710000, "utest"),
           gas: "1500000",
@@ -123,8 +121,7 @@ describe("SigningCosmWasmClient", () => {
         },
       };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: coins(37500, "ucosm"),
           gas: "1500000",
@@ -179,8 +176,7 @@ describe("SigningCosmWasmClient", () => {
         },
       };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
-      expect(openedClient.fees).toEqual({
+      expect(client.fees).toEqual({
         upload: {
           amount: coins(4710000, "utest"),
           gas: "1500000",
