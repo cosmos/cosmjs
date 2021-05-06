@@ -246,12 +246,13 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   private readonly accounts: readonly DerivationInfo[];
 
   protected constructor(mnemonic: EnglishMnemonic, options: Secp256k1HdWalletConstructorOptions) {
-    const { seed, hdPaths, prefix } = { ...defaultOptions, ...options };
+    const hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
+    const prefix = options.prefix ?? defaultOptions.prefix;
     this.secret = mnemonic;
-    this.seed = seed;
+    this.seed = options.seed;
     this.accounts = hdPaths.map((hdPath) => ({
       hdPath: hdPath,
-      prefix: prefix,
+      prefix,
     }));
   }
 

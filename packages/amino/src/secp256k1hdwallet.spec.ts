@@ -33,6 +33,18 @@ describe("Secp256k1HdWallet", () => {
       expect(account.pubkey).not.toEqual(defaultPubkey);
       expect(account.address.slice(0, 4)).toEqual("yolo");
     });
+
+    it("works with explicitly undefined options", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(defaultMnemonic, {
+        bip39Password: undefined,
+        hdPaths: undefined,
+        prefix: undefined,
+      });
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+      const [account] = await wallet.getAccounts();
+      expect(account.pubkey).toEqual(defaultPubkey);
+      expect(account.address).toEqual(defaultAddress);
+    });
   });
 
   describe("generate", () => {
