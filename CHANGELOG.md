@@ -20,6 +20,9 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Use `CosmWasmFeeTable` instead of `CosmosFeeTable`
   in `SigningCosmWasmClientOptions`; export type `CosmWasmFeeTable`.
 
+- @cosmjs/amino, @cosmjs/cli, @cosmjs/ledger-amino, @cosmjs/proto-signing:
+  Fix runtime error caused by passing explicitly undefined options.
+
 ## [0.25.0] - 2021-05-05
 
 ### Added
