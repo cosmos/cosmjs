@@ -35,6 +35,16 @@ import { CodeInfoResponse } from "./codec/cosmwasm/wasm/v1beta1/query";
 import { ContractCodeHistoryOperationType } from "./codec/cosmwasm/wasm/v1beta1/types";
 import { setupWasmExtension, WasmExtension } from "./queries";
 
+// Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
+// For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
+export {
+  Code, // returned by CosmWasmClient.getCode
+  CodeDetails, // returned by CosmWasmClient.getCodeDetails
+  Contract, // returned by CosmWasmClient.getContract
+  ContractCodeHistoryEntry, // returned by CosmWasmClient.getContractCodeHistory
+  JsonObject, // returned by CosmWasmClient.queryContractSmart
+};
+
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
   readonly tmClient: Tendermint34Client | undefined;

@@ -72,6 +72,18 @@ import {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 
+// Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
+// For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
+export {
+  ChangeAdminResult, // returned by SigningCosmWasmClient.updateAdmin/SigningCosmWasmClient.clearAdmin
+  ExecuteResult, // returned by SigningCosmWasmClient.execute
+  InstantiateOptions, // argument type of SigningCosmWasmClient.instantiate
+  InstantiateResult, // returned by SigningCosmWasmClient.instantiate
+  MigrateResult, // returned by SigningCosmWasmClient.migrate
+  UploadMeta, // argument type of SigningCosmWasmClient.upload
+  UploadResult, // returned by SigningCosmWasmClient.upload
+};
+
 /**
  * These fees are used by the higher level methods of SigningCosmWasmClient
  */

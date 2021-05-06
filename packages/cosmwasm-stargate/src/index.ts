@@ -1,5 +1,12 @@
 export { cosmWasmTypes } from "./aminotypes";
-export { CosmWasmClient } from "./cosmwasmclient";
+export {
+  Code,
+  CodeDetails,
+  Contract,
+  ContractCodeHistoryEntry,
+  CosmWasmClient,
+  JsonObject,
+} from "./cosmwasmclient";
 export {
   isMsgClearAdminEncodeObject,
   isMsgExecuteEncodeObject,
@@ -16,7 +23,14 @@ export {
 } from "./encodeobjects";
 export {
   defaultGasLimits,
+  ChangeAdminResult,
   CosmWasmFeeTable, // part of SigningCosmWasmClientOptions
+  ExecuteResult,
+  InstantiateOptions,
+  InstantiateResult,
+  MigrateResult,
   SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
+  UploadMeta,
+  UploadResult,
 } from "./signingcosmwasmclient";
