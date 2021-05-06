@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/launchpad",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "A client library for the Cosmos SDK 0.37 (cosmoshub-3), 0.38 and 0.39 (Launchpad)",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -39,11 +39,11 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.25.0",
-    "@cosmjs/crypto": "^0.25.0",
-    "@cosmjs/encoding": "^0.25.0",
-    "@cosmjs/math": "^0.25.0",
-    "@cosmjs/utils": "^0.25.0",
+    "@cosmjs/amino": "^0.25.1",
+    "@cosmjs/crypto": "^0.25.1",
+    "@cosmjs/encoding": "^0.25.1",
+    "@cosmjs/math": "^0.25.1",
+    "@cosmjs/utils": "^0.25.1",
     "axios": "^0.21.1",
     "fast-deep-equal": "^3.1.3"
   },
