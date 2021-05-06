@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/cosmwasm-stargate: Export types `Code`, `CodeDetails`, `Contract`,
+  `ContractCodeHistoryEntry` and `JsonObject` which are response types of
+  `CosmWasmClient` methods.
+
 ### Fixed
 
 - @cosmjs/cosmwasm-stargate: Use `CosmWasmFeeTable` instead of `CosmosFeeTable`
