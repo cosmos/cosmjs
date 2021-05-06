@@ -47,7 +47,7 @@ export class LaunchpadLedger {
 
     this.testModeAllowed = options.testModeAllowed ?? defaultOptions.testModeAllowed;
     this.hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
-    this.prefix = options.prefix ?? cosmosBech32Prefix;
+    this.prefix = options.prefix ?? defaultOptions.prefix;
     this.app = new CosmosApp(transport);
   }
 
