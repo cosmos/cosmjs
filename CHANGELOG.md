@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Use `CosmWasmFeeTable` instead of `CosmosFeeTable`
+  in `SigningCosmWasmClientOptions`; export type `CosmWasmFeeTable`.
+
 ## [0.25.0] - 2021-05-05
 
 ### Added
