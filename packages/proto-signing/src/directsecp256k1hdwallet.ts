@@ -91,9 +91,10 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   private readonly accounts: readonly Secp256k1Derivation[];
 
   protected constructor(mnemonic: EnglishMnemonic, options: DirectSecp256k1HdWalletConstructorOptions) {
-    const { seed, hdPaths, prefix } = { ...defaultOptions, ...options };
+    const prefix = options.prefix ?? defaultOptions.prefix;
+    const hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
     this.secret = mnemonic;
-    this.seed = seed;
+    this.seed = options.seed;
     this.accounts = hdPaths.map((hdPath) => ({
       hdPath: hdPath,
       prefix: prefix,

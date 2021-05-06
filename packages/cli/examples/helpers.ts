@@ -30,7 +30,13 @@ const connect = async (
   client: SigningCosmWasmClient;
   address: string;
 }> => {
-  const options: Options = { ...defaultOptions, ...opts };
+  const options: Options = {
+    bech32prefix: opts.bech32prefix ?? defaultOptions.bech32prefix,
+    feeToken: opts.feeToken ?? defaultOptions.feeToken,
+    gasPrice: opts.gasPrice ?? defaultOptions.gasPrice,
+    httpUrl: opts.httpUrl ?? defaultOptions.httpUrl,
+    networkId: opts.networkId ?? defaultOptions.networkId,
+  };
   const gasPrice = GasPrice.fromString(`${options.gasPrice}${options.feeToken}`);
   const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic);
   const [{ address }] = await wallet.getAccounts();
