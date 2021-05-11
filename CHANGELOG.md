@@ -8,6 +8,11 @@ and this project adheres to
 
 ### Added
 
+- @cosmjs/proto-signing: Add `serialize` and `serializeWithEncryptionKey`
+  methods to `DirectSecp256k1HdWallet`. Also add `deserialize` and
+  `deserializeWithEncryptionKey` static methods.
+- @cosmjs/proto-signing: Export `extractKdfConfiguration` and `executeKdf`
+  helper functions and `KdfConfiguration` type.
 - @cosmjs/proto-signing: Export `makeCosmoshubPath` helper.
 - @cosmjs/stargate: Export `makeCosmoshubPath` helper.
 
