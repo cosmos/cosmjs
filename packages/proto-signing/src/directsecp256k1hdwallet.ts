@@ -35,13 +35,13 @@ const serializationTypeV1 = "directsecp256k1hdwallet-v1";
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
- * It takes about 1 second in Node.js 12.15 and should have similar runtimes in other modern Wasm hosts.
+ * It takes about 1 second in Node.js 16.0.0 and should have similar runtimes in other modern Wasm hosts.
  */
 const basicPasswordHashingOptions: KdfConfiguration = {
   algorithm: "argon2id",
   params: {
     outputLength: 32,
-    opsLimit: 20,
+    opsLimit: 24,
     memLimitKib: 12 * 1024,
   },
 };
