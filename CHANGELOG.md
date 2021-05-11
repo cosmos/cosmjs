@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/proto-signing: Export `makeCosmoshubPath` helper.
+- @cosmjs/stargate: Export `makeCosmoshubPath` helper.
+
 ## [0.25.1] - 2021-05-06
 
 ### Added

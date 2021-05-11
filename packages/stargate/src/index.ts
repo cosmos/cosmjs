@@ -1,5 +1,5 @@
 export { StdFee } from "@cosmjs/amino";
-export { Coin, coin, coins, parseCoins } from "@cosmjs/proto-signing";
+export { Coin, coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
 
 export { Account, accountFromAny } from "./accounts";
 export {
