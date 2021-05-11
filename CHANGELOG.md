@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.25.2] - 2021-05-11
+
 ### Added
 
 - @cosmjs/cosmwasm-stargate: Add `broadcastTimeoutMs` and
@@ -451,7 +453,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.2...HEAD
+[0.25.2]: https://github.com/cosmos/cosmjs/compare/v0.25.1...v0.25.2
 [0.25.1]: https://github.com/cosmos/cosmjs/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/cosmos/cosmjs/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/cosmos/cosmjs/compare/v0.24.0...v0.24.1
