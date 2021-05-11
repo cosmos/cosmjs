@@ -2,9 +2,10 @@ import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
+import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { faucet, testVectors } from "./testutils.spec";
+import { base64Matcher, faucet, testVectors } from "./testutils.spec";
+import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("DirectSecp256k1HdWallet", () => {
   // m/44'/118'/0'/0/0
@@ -60,6 +61,175 @@ describe("DirectSecp256k1HdWallet", () => {
     });
   });
 
+  describe("deserialize", () => {
+    it("can restore", async () => {
+      const original = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
+      const password = "123";
+      const serialized = await original.serialize(password);
+      const deserialized = await DirectSecp256k1HdWallet.deserialize(serialized, password);
+      const accounts = await deserialized.getAccounts();
+
+      expect(deserialized.mnemonic).toEqual(defaultMnemonic);
+      expect(accounts).toEqual([
+        {
+          algo: "secp256k1",
+          address: defaultAddress,
+          pubkey: defaultPubkey,
+        },
+      ]);
+    });
+
+    it("can restore multiple accounts", async () => {
+      const mnemonic =
+        "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+      const prefix = "wasm";
+      const accountNumbers = [0, 1, 2, 3, 4];
+      const hdPaths = accountNumbers.map(makeCosmoshubPath);
+      const original = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+        hdPaths: hdPaths,
+        prefix: prefix,
+      });
+      const password = "123";
+      const serialized = await original.serialize(password);
+      const deserialized = await DirectSecp256k1HdWallet.deserialize(serialized, password);
+      const accounts = await deserialized.getAccounts();
+
+      expect(deserialized.mnemonic).toEqual(mnemonic);
+      // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
+      expect(accounts).toEqual([
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
+          address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
+          address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
+          address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
+        },
+        {
+          algo: "secp256k1",
+          pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
+          address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
+        },
+      ]);
+    });
+  });
+
+  describe("deserializeWithEncryptionKey", () => {
+    it("can restore", async () => {
+      const password = "123";
+      let serialized: string;
+      {
+        const original = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
+        const anyKdfParams: KdfConfiguration = {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 4,
+            memLimitKib: 3 * 1024,
+          },
+        };
+        const encryptionKey = await executeKdf(password, anyKdfParams);
+        serialized = await original.serializeWithEncryptionKey(encryptionKey, anyKdfParams);
+      }
+
+      {
+        const kdfConfiguration = extractKdfConfiguration(serialized);
+        const encryptionKey = await executeKdf(password, kdfConfiguration);
+        const deserialized = await DirectSecp256k1HdWallet.deserializeWithEncryptionKey(
+          serialized,
+          encryptionKey,
+        );
+        expect(deserialized.mnemonic).toEqual(defaultMnemonic);
+        expect(await deserialized.getAccounts()).toEqual([
+          {
+            algo: "secp256k1",
+            address: defaultAddress,
+            pubkey: defaultPubkey,
+          },
+        ]);
+      }
+    });
+
+    it("can restore multiple accounts", async () => {
+      const mnemonic =
+        "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+      const prefix = "wasm";
+      const password = "123";
+      const accountNumbers = [0, 1, 2, 3, 4];
+      const hdPaths = accountNumbers.map(makeCosmoshubPath);
+      let serialized: string;
+      {
+        const original = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+          prefix: prefix,
+          hdPaths: hdPaths,
+        });
+        const anyKdfParams: KdfConfiguration = {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 4,
+            memLimitKib: 3 * 1024,
+          },
+        };
+        const encryptionKey = await executeKdf(password, anyKdfParams);
+        serialized = await original.serializeWithEncryptionKey(encryptionKey, anyKdfParams);
+      }
+
+      {
+        const kdfConfiguration = extractKdfConfiguration(serialized);
+        const encryptionKey = await executeKdf(password, kdfConfiguration);
+        const deserialized = await DirectSecp256k1HdWallet.deserializeWithEncryptionKey(
+          serialized,
+          encryptionKey,
+        );
+        const accounts = await deserialized.getAccounts();
+
+        expect(deserialized.mnemonic).toEqual(mnemonic);
+        expect(deserialized.mnemonic).toEqual(mnemonic);
+        // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
+        expect(accounts).toEqual([
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+            address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
+            address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
+            address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
+            address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
+          },
+          {
+            algo: "secp256k1",
+            pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
+            address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
+          },
+        ]);
+      }
+    });
+  });
+
   describe("getAccounts", () => {
     it("resolves to a list of accounts", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
@@ -106,6 +276,53 @@ describe("DirectSecp256k1HdWallet", () => {
         pubkey.value,
       );
       expect(valid).toEqual(true);
+    });
+  });
+
+  describe("serialize", () => {
+    it("can save with password", async () => {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
+      const serialized = await wallet.serialize("123");
+      expect(JSON.parse(serialized)).toEqual({
+        type: "directsecp256k1hdwallet-v1",
+        kdf: {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 20,
+            memLimitKib: 12 * 1024,
+          },
+        },
+        encryption: {
+          algorithm: "xchacha20poly1305-ietf",
+        },
+        data: jasmine.stringMatching(base64Matcher),
+      });
+    });
+  });
+
+  describe("serializeWithEncryptionKey", () => {
+    it("can save with password", async () => {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
+
+      const key = fromHex("aabb221100aabb332211aabb33221100aabb221100aabb332211aabb33221100");
+      const customKdfConfiguration: KdfConfiguration = {
+        algorithm: "argon2id",
+        params: {
+          outputLength: 32,
+          opsLimit: 321,
+          memLimitKib: 11 * 1024,
+        },
+      };
+      const serialized = await wallet.serializeWithEncryptionKey(key, customKdfConfiguration);
+      expect(JSON.parse(serialized)).toEqual({
+        type: "directsecp256k1hdwallet-v1",
+        kdf: customKdfConfiguration,
+        encryption: {
+          algorithm: "xchacha20poly1305-ietf",
+        },
+        data: jasmine.stringMatching(base64Matcher),
+      });
     });
   });
 });
