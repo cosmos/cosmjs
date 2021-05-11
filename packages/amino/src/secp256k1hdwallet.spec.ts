@@ -275,7 +275,7 @@ describe("Secp256k1HdWallet", () => {
           algorithm: "argon2id",
           params: {
             outputLength: 32,
-            opsLimit: 20,
+            opsLimit: 24,
             memLimitKib: 12 * 1024,
           },
         },

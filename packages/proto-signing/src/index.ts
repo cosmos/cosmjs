@@ -14,7 +14,11 @@ export {
   TsProtoGeneratedType,
   TxBodyEncodeObject,
 } from "./registry";
-export { DirectSecp256k1HdWallet, DirectSecp256k1HdWalletOptions } from "./directsecp256k1hdwallet";
+export {
+  extractKdfConfiguration,
+  DirectSecp256k1HdWallet,
+  DirectSecp256k1HdWalletOptions,
+} from "./directsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 export { makeCosmoshubPath } from "./paths";
 export { decodePubkey, encodePubkey } from "./pubkey";
@@ -27,3 +31,4 @@ export {
   OfflineSigner,
 } from "./signer";
 export { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
+export { executeKdf, KdfConfiguration } from "./wallet";
