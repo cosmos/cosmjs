@@ -151,11 +151,15 @@ export interface SigningStargateClientOptions {
   readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: Partial<GasLimits<CosmosFeeTable>>;
+  readonly broadcastTimeoutMs?: number;
+  readonly broadcastPollIntervalMs?: number;
 }
 
 export class SigningStargateClient extends StargateClient {
   public readonly fees: CosmosFeeTable;
   public readonly registry: Registry;
+  public readonly broadcastTimeoutMs: number | undefined;
+  public readonly broadcastPollIntervalMs: number | undefined;
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
@@ -201,6 +205,8 @@ export class SigningStargateClient extends StargateClient {
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
+    this.broadcastTimeoutMs = options.broadcastTimeoutMs;
+    this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
   }
 
   public async sendTokens(
@@ -306,7 +312,7 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<BroadcastTxResponse> {
     const txRaw = await this.sign(signerAddress, messages, fee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
-    return this.broadcastTx(txBytes);
+    return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
   /**

@@ -136,11 +136,15 @@ export interface SigningCosmWasmClientOptions {
   readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>;
+  readonly broadcastTimeoutMs?: number;
+  readonly broadcastPollIntervalMs?: number;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly fees: CosmWasmFeeTable;
   public readonly registry: Registry;
+  public readonly broadcastTimeoutMs: number | undefined;
+  public readonly broadcastPollIntervalMs: number | undefined;
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
@@ -186,6 +190,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
+    this.broadcastTimeoutMs = options.broadcastTimeoutMs;
+    this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
   }
 
   /** Uploads code and returns a receipt, including the code ID */
@@ -430,7 +436,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<BroadcastTxResponse> {
     const txRaw = await this.sign(signerAddress, messages, fee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
-    return this.broadcastTx(txBytes);
+    return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
   public async sign(

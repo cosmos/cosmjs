@@ -8,6 +8,8 @@ and this project adheres to
 
 ### Added
 
+- @cosmjs/cosmwasm-stargate: Add `broadcastTimeoutMs` and
+  `broadcastPollIntervalMs` options added to `SigningCosmWasmClientOptions`.
 - @cosmjs/proto-signing: Add `serialize` and `serializeWithEncryptionKey`
   methods to `DirectSecp256k1HdWallet`. Also add `deserialize` and
   `deserializeWithEncryptionKey` static methods.
@@ -15,6 +17,8 @@ and this project adheres to
   helper functions and `KdfConfiguration` type.
 - @cosmjs/proto-signing: Export `makeCosmoshubPath` helper.
 - @cosmjs/stargate: Export `makeCosmoshubPath` helper.
+- @cosmjs/stargate: Add `broadcastTimeoutMs` and `broadcastPollIntervalMs`
+  options added to `SigningStargateClientOptions`.
 
 ## [0.25.1] - 2021-05-06
 
