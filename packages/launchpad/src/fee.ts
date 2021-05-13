@@ -13,7 +13,7 @@ export class GasPrice {
   }
 
   public static fromString(gasPrice: string): GasPrice {
-    const matchResult = gasPrice.match(/^(?<amount>.+?)(?<denom>[a-z]+)$/);
+    const matchResult = gasPrice.match(/^(?<amount>[0-9.]+?)(?<denom>[a-z]+)$/);
     if (!matchResult) {
       throw new Error("Invalid gas price string");
     }
