@@ -13,11 +13,11 @@ export class GasPrice {
   }
 
   public static fromString(gasPrice: string): GasPrice {
-    const matchResult = gasPrice.match(/^(?<amount>[0-9.]+?)(?<denom>[a-z]+)$/);
+    const matchResult = gasPrice.match(/^([0-9.]+?)([a-z]+)$/);
     if (!matchResult) {
       throw new Error("Invalid gas price string");
     }
-    const { amount, denom } = matchResult.groups as { readonly amount: string; readonly denom: string };
+    const [_, amount, denom] = matchResult;
     if (denom.length < 3 || denom.length > 127) {
       throw new Error("Gas price denomination must be between 3 and 127 characters");
     }
