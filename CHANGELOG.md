@@ -17,6 +17,8 @@ and this project adheres to
   work with Hermes ([#801]; thanks [@AlexBHarley]).
 - @cosmjs/launchpad: Adapt `GasPrice.fromString` denom pattern to Cosmos SDK
   0.39 rules: reduce denom length to 16 and allow digits in denom.
+- @cosmjs/stargate: Adapt `GasPrice.fromString` denom pattern to Cosmos SDK 0.42
+  rules: allow lengths up to 128, allow upper case letters and digits.
 
 [#800]: https://github.com/cosmos/cosmjs/issues/800
 [#801]: https://github.com/cosmos/cosmjs/issues/801
