@@ -15,6 +15,8 @@ and this project adheres to
 - @cosmjs/launchpad, @cosmjs/stargate: Avoid the use of named capture groups in
   `GasPrice.fromString` to restore ES2017 compatibility and make the library
   work with Hermes ([#801]; thanks [@AlexBHarley]).
+- @cosmjs/launchpad: Adapt `GasPrice.fromString` denom pattern to Cosmos SDK
+  0.39 rules: reduce denom length to 16 and allow digits in denom.
 
 [#800]: https://github.com/cosmos/cosmjs/issues/800
 [#801]: https://github.com/cosmos/cosmjs/issues/801
