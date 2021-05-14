@@ -8,6 +8,9 @@ import { coins } from "@cosmjs/proto-signing";
 export type FeeTable = Record<string, StdFee>;
 
 /**
+ * A gas price, i.e. the price of a single gas. This is typically a fraction of
+ * the smallest fee token unit, such as 0.012utoken.
+ *
  * This is the same as GasPrice from @cosmjs/launchpad but those might diverge in the future.
  */
 export class GasPrice {
@@ -19,6 +22,9 @@ export class GasPrice {
     this.denom = denom;
   }
 
+  /**
+   * Parses a gas price formatted as `<amount><denom>`, e.g. `GasPrice.fromString("0.012utoken")`.
+   */
   public static fromString(gasPrice: string): GasPrice {
     const matchResult = gasPrice.match(/^([0-9.]+?)([a-z]+)$/);
     if (!matchResult) {
