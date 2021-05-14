@@ -1,5 +1,6 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 import * as bip39 from "bip39";
+
 import { EnglishMnemonic } from "./englishmnemonic";
 
 export class Bip39 {
