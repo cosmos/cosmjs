@@ -207,6 +207,17 @@ export class CosmWasmClient {
     if (this.tmClient) this.tmClient.disconnect();
   }
 
+  /**
+   * Broadcasts a signed transaction to the network and monitors its inclusion in a block.
+   *
+   * If broadcasting is rejected by the node for some reason (e.g. because of a CheckTx failure),
+   * an error is thrown.
+   *
+   * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
+   *
+   * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
+   * usually needs check for execution success or failure.
+   */
   // NOTE: This method is tested against slow chains and timeouts in the @cosmjs/stargate package.
   // Make sure it is kept in sync!
   public async broadcastTx(
@@ -240,10 +251,15 @@ export class CosmWasmClient {
         : pollForTx(txId);
     };
 
+    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+    if (broadcasted.code) {
+      throw new Error(
+        `Broadcasting transaction failed with code ${broadcasted.code} (codespace: ${broadcasted.codeSpace}). Log: ${broadcasted.log}`,
+      );
+    }
+    const transactionId = toHex(broadcasted.hash).toUpperCase();
     return new Promise((resolve, reject) =>
-      this.forceGetTmClient()
-        .broadcastTxSync({ tx })
-        .then(({ hash }) => pollForTx(toHex(hash).toUpperCase()))
+      pollForTx(transactionId)
         .then(resolve, reject)
         .finally(() => clearTimeout(txPollTimeout)),
     );

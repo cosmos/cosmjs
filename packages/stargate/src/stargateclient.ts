@@ -99,6 +99,15 @@ export interface BroadcastTxSuccess {
   readonly gasWanted: number;
 }
 
+/**
+ * The response after sucessfully broadcasting a transaction.
+ * Success or failure refer to the execution result.
+ *
+ * The name is a bit misleading as this contains the result of the execution
+ * in a block. Both `BroadcastTxSuccess` and `BroadcastTxFailure` contain a height
+ * field, which is the height of the block that contains the transaction. This means
+ * transactions that were never included in a block cannot be expressed with this type.
+ */
 export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
 
 export function isBroadcastTxFailure(result: BroadcastTxResponse): result is BroadcastTxFailure {
@@ -292,6 +301,17 @@ export class StargateClient {
     if (this.tmClient) this.tmClient.disconnect();
   }
 
+  /**
+   * Broadcasts a signed transaction to the network and monitors its inclusion in a block.
+   *
+   * If broadcasting is rejected by the node for some reason (e.g. because of a CheckTx failure),
+   * an error is thrown.
+   *
+   * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
+   *
+   * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
+   * usually needs check for execution success or failure.
+   */
   public async broadcastTx(
     tx: Uint8Array,
     timeoutMs = 60_000,
@@ -323,10 +343,15 @@ export class StargateClient {
         : pollForTx(txId);
     };
 
+    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+    if (broadcasted.code) {
+      throw new Error(
+        `Broadcasting transaction failed with code ${broadcasted.code} (codespace: ${broadcasted.codeSpace}). Log: ${broadcasted.log}`,
+      );
+    }
+    const transactionId = toHex(broadcasted.hash).toUpperCase();
     return new Promise((resolve, reject) =>
-      this.forceGetTmClient()
-        .broadcastTxSync({ tx })
-        .then(({ hash }) => pollForTx(toHex(hash).toUpperCase()))
+      pollForTx(transactionId)
         .then(resolve, reject)
         .finally(() => clearTimeout(txPollTimeout)),
     );

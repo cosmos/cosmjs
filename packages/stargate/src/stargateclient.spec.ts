@@ -337,6 +337,58 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
+    it("errors immediately for a CheckTx failure", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+      const pubkey = encodePubkey({
+        type: "tendermint/PubKeySecp256k1",
+        value: toBase64(pubkeyBytes),
+      });
+      const registry = new Registry();
+      const invalidRecipientAddress = "tgrade1z363ulwcrxged4z5jswyt5dn5v3lzsemwz9ewj"; // wrong bech32 prefix
+      const txBodyFields: TxBodyEncodeObject = {
+        typeUrl: "/cosmos.tx.v1beta1.TxBody",
+        value: {
+          messages: [
+            {
+              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+              value: {
+                fromAddress: address,
+                toAddress: invalidRecipientAddress,
+                amount: [
+                  {
+                    denom: "ucosm",
+                    amount: "1234567",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      };
+      const txBodyBytes = registry.encode(txBodyFields);
+      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const feeAmount = coins(2000, "ucosm");
+      const gasLimit = 200000;
+      const authInfoBytes = makeAuthInfoBytes([pubkey], feeAmount, gasLimit, sequence);
+
+      const chainId = await client.getChainId();
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const { signature } = await wallet.signDirect(address, signDoc);
+      const txRaw = TxRaw.fromPartial({
+        bodyBytes: txBodyBytes,
+        authInfoBytes: authInfoBytes,
+        signatures: [fromBase64(signature.signature)],
+      });
+      const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+
+      await expectAsync(client.broadcastTx(txRawBytes)).toBeRejectedWithError(/invalid recipient address/i);
+
+      client.disconnect();
+    });
+
     it("respects user timeouts rather than RPC timeouts", async () => {
       pendingWithoutSlowSimapp();
       const client = await StargateClient.connect(slowSimapp.tendermintUrl);
