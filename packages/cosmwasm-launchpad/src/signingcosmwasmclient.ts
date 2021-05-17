@@ -102,6 +102,15 @@ export interface UploadResult {
  */
 export interface InstantiateOptions {
   readonly memo?: string;
+  /**
+   * The funds that are transferred from the sender to the newly created contract.
+   * The funds are transferred as part of the message execution after the contract address is
+   * created and before the instantiation message is executed by the contract.
+   *
+   * Only native tokens are supported.
+   *
+   * TODO: Rename to `funds` for consistency (https://github.com/cosmos/cosmjs/issues/806)
+   */
   readonly transferAmount?: readonly Coin[];
   /**
    * A bech32 encoded address of an admin account.
@@ -218,7 +227,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async instantiate(
     codeId: number,
-    initMsg: Record<string, unknown>,
+    msg: Record<string, unknown>,
     label: string,
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
@@ -228,7 +237,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.signerAddress,
         code_id: new Uint53(codeId).toString(),
         label: label,
-        init_msg: initMsg,
+        init_msg: msg,
         init_funds: options.transferAmount || [],
         admin: options.admin,
       },
@@ -309,17 +318,17 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async execute(
     contractAddress: string,
-    handleMsg: Record<string, unknown>,
+    msg: Record<string, unknown>,
     memo = "",
-    transferAmount?: readonly Coin[],
+    funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
     const executeMsg: MsgExecuteContract = {
       type: "wasm/MsgExecuteContract",
       value: {
         sender: this.signerAddress,
         contract: contractAddress,
-        msg: handleMsg,
-        sent_funds: transferAmount || [],
+        msg: msg,
+        sent_funds: funds || [],
       },
     };
     const result = await this.signAndBroadcast([executeMsg], this.fees.exec, memo);

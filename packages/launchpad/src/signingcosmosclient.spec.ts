@@ -129,7 +129,6 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
-      // instantiate
       const transferAmount: readonly Coin[] = [
         {
           amount: "7890",

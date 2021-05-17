@@ -305,7 +305,7 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet);
       const { codeId } = await client.upload(getHackatom().data);
 
-      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -316,13 +316,13 @@ describe("SigningCosmWasmClient", () => {
         "My cool label",
         {
           memo: "Let's see if the memo is used",
-          transferAmount,
+          transferAmount: funds,
         },
       );
 
       const lcdClient = makeWasmClient(launchpad.endpoint);
       const balance = (await lcdClient.auth.account(contractAddress)).result.value.coins;
-      expect(balance).toEqual(transferAmount);
+      expect(balance).toEqual(funds);
     });
 
     it("works with admin", async () => {
@@ -486,7 +486,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(getHackatom().data);
 
       // instantiate
-      const transferAmount = [coin(233444, "ucosm"), coin(5454, "ustake")];
+      const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -496,7 +496,7 @@ describe("SigningCosmWasmClient", () => {
         },
         "amazing random contract",
         {
-          transferAmount,
+          transferAmount: funds,
         },
       );
 
@@ -513,7 +513,7 @@ describe("SigningCosmWasmClient", () => {
       // Verify token transfer from contract to beneficiary
       const lcdClient = makeWasmClient(launchpad.endpoint);
       const beneficiaryBalance = (await lcdClient.auth.account(beneficiaryAddress)).result.value.coins;
-      expect(beneficiaryBalance).toEqual(transferAmount);
+      expect(beneficiaryBalance).toEqual(funds);
       const contractBalance = (await lcdClient.auth.account(contractAddress)).result.value.coins;
       expect(contractBalance).toEqual([]);
     });
@@ -525,7 +525,6 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet);
 
-      // instantiate
       const transferAmount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
 

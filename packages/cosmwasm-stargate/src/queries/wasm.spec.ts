@@ -68,7 +68,7 @@ async function instantiateContract(
   signer: OfflineDirectSigner,
   codeId: number,
   beneficiaryAddress: string,
-  transferAmount?: readonly Coin[],
+  funds?: readonly Coin[],
 ): Promise<BroadcastTxResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContractEncodeObject = {
@@ -83,7 +83,7 @@ async function instantiateContract(
           beneficiary: beneficiaryAddress,
         }),
       ),
-      funds: transferAmount ? [...transferAmount] : [],
+      funds: funds ? [...funds] : [],
     }),
   };
   const fee: StdFee = {
@@ -185,8 +185,6 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
       const { contracts: existingContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
@@ -195,7 +193,9 @@ describe("WasmExtension", () => {
         expect(address).toMatch(bech32AddressMatcher);
       }
 
-      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      const beneficiaryAddress = makeRandomAddress();
+      const funds = coins(707707, "ucosm");
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsBroadcastTxSuccess(result);
       const myAddress = JSON.parse(result.rawLog!)[0]
         .events.find((event: any) => event.type === "message")
@@ -234,11 +234,11 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
-      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      const beneficiaryAddress = makeRandomAddress();
+      const funds = coins(707707, "ucosm");
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsBroadcastTxSuccess(result);
 
       const myAddress = JSON.parse(result.rawLog!)[0]
@@ -363,7 +363,7 @@ describe("WasmExtension", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await makeWasmClient(wasmd.endpoint);
 
-      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
 
       let codeId: number;
@@ -385,7 +385,7 @@ describe("WasmExtension", () => {
 
       // instantiate
       {
-        const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
+        const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsBroadcastTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
@@ -396,9 +396,9 @@ describe("WasmExtension", () => {
         expect(actionAttr.value).toEqual("instantiate");
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
-        expect(balanceUcosm).toEqual(transferAmount[0]);
+        expect(balanceUcosm).toEqual(funds[0]);
         const balanceUstake = await client.bank.balance(contractAddress, "ustake");
-        expect(balanceUstake).toEqual(transferAmount[1]);
+        expect(balanceUstake).toEqual(funds[1]);
       }
 
       // execute
@@ -416,9 +416,9 @@ describe("WasmExtension", () => {
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalanceUcosm = await client.bank.balance(beneficiaryAddress, "ucosm");
-        expect(beneficiaryBalanceUcosm).toEqual(transferAmount[0]);
+        expect(beneficiaryBalanceUcosm).toEqual(funds[0]);
         const beneficiaryBalanceUstake = await client.bank.balance(beneficiaryAddress, "ustake");
-        expect(beneficiaryBalanceUstake).toEqual(transferAmount[1]);
+        expect(beneficiaryBalanceUstake).toEqual(funds[1]);
       }
     });
   });

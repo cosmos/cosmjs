@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, makeCosmoshubPath, makeSignDoc, Secp256k1HdWallet, StdFee } from "@cosmjs/amino";
+import { Coin, coins, makeCosmoshubPath, makeSignDoc, Secp256k1HdWallet, StdFee } from "@cosmjs/amino";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { isBroadcastTxFailure } from "../cosmosclient";
@@ -195,11 +195,8 @@ describe("LcdClient", () => {
 
         {
           const recipient = makeRandomAddress();
-          const transferAmount = {
-            denom: "ucosm",
-            amount: "1234567",
-          };
-          const result = await client.sendTokens(recipient, [transferAmount]);
+          const transferAmount = coins(1234567, "ucosm");
+          const result = await client.sendTokens(recipient, transferAmount);
           successful = {
             sender: faucet.address0,
             recipient: recipient,
@@ -210,12 +207,7 @@ describe("LcdClient", () => {
         {
           const memo = "Sending more than I can afford";
           const recipient = makeRandomAddress();
-          const transferAmount = [
-            {
-              denom: "ucosm",
-              amount: "123456700000000",
-            },
-          ];
+          const transferAmount = coins(123456700000000, "ucosm");
           const sendMsg: MsgSend = {
             type: "cosmos-sdk/MsgSend",
             value: {
@@ -225,12 +217,7 @@ describe("LcdClient", () => {
             },
           };
           const fee = {
-            amount: [
-              {
-                denom: "ucosm",
-                amount: "2000",
-              },
-            ],
+            amount: coins(2000, "ucosm"),
             gas: "80000", // 80k
           };
           const { accountNumber, sequence } = await client.getSequence();
@@ -319,12 +306,7 @@ describe("LcdClient", () => {
         const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
         const recipient = makeRandomAddress();
-        const transferAmount = [
-          {
-            denom: "ucosm",
-            amount: "1234567",
-          },
-        ];
+        const transferAmount = coins(1234567, "ucosm");
         const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(75); // wait until tx is indexed

@@ -266,7 +266,7 @@ describe("SigningCosmWasmClient", () => {
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
-      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -278,14 +278,14 @@ describe("SigningCosmWasmClient", () => {
         "My cool label",
         {
           memo: "Let's see if the memo is used",
-          transferAmount,
+          transferAmount: funds,
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
       const ucosmBalance = await wasmClient.bank.balance(contractAddress, "ucosm");
-      expect(ucosmBalance).toEqual(transferAmount[0]);
+      expect(ucosmBalance).toEqual(funds[0]);
       const ustakeBalance = await wasmClient.bank.balance(contractAddress, "ustake");
-      expect(ustakeBalance).toEqual(transferAmount[1]);
+      expect(ustakeBalance).toEqual(funds[1]);
     });
 
     it("works with admin", async () => {
@@ -448,7 +448,7 @@ describe("SigningCosmWasmClient", () => {
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       // instantiate
-      const transferAmount = [coin(233444, "ucosm"), coin(5454, "ustake")];
+      const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -459,7 +459,7 @@ describe("SigningCosmWasmClient", () => {
         },
         "amazing random contract",
         {
-          transferAmount,
+          transferAmount: funds,
         },
       );
       // execute
@@ -474,9 +474,9 @@ describe("SigningCosmWasmClient", () => {
       // Verify token transfer from contract to beneficiary
       const wasmClient = await makeWasmClient(wasmd.endpoint);
       const beneficiaryBalanceUcosm = await wasmClient.bank.balance(beneficiaryAddress, "ucosm");
-      expect(beneficiaryBalanceUcosm).toEqual(transferAmount[0]);
+      expect(beneficiaryBalanceUcosm).toEqual(funds[0]);
       const beneficiaryBalanceUstake = await wasmClient.bank.balance(beneficiaryAddress, "ustake");
-      expect(beneficiaryBalanceUstake).toEqual(transferAmount[1]);
+      expect(beneficiaryBalanceUstake).toEqual(funds[1]);
       const contractBalanceUcosm = await wasmClient.bank.balance(contractAddress, "ucosm");
       expect(contractBalanceUcosm).toEqual(coin(0, "ucosm"));
       const contractBalanceUstake = await wasmClient.bank.balance(contractAddress, "ustake");
