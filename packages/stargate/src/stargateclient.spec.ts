@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
+  coins,
   DirectSecp256k1HdWallet,
   encodePubkey,
   makeAuthInfoBytes,
@@ -312,12 +313,7 @@ describe("StargateClient", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const { accountNumber, sequence } = (await client.getSequence(address))!;
-      const feeAmount = [
-        {
-          amount: "2000",
-          denom: "ucosm",
-        },
-      ];
+      const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
       const authInfoBytes = makeAuthInfoBytes([pubkey], feeAmount, gasLimit, sequence);
 
@@ -373,12 +369,7 @@ describe("StargateClient", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const chainId = await client.getChainId();
-      const feeAmount = [
-        {
-          amount: "2000",
-          denom: "ucosm",
-        },
-      ];
+      const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
 
       const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
