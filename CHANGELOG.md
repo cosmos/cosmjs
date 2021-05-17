@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/cosmwasm-stargate, @cosmjs/stargate: Fix error propagation in
+  `CosmWasmClient.broadcastTx` and `StargateClient.broadcastTx` ([#800]). This
+  bug was introduced with the switch from broadcast mode "commit" to "sync" in
+  version 0.25.0.
+
+[#800]: https://github.com/cosmos/cosmjs/issues/800
+
 ## [0.25.2] - 2021-05-11
 
 ### Added
