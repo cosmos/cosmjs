@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.25.3] - 2021-05-18
+
 ### Fixed
 
 - @cosmjs/cosmwasm-stargate, @cosmjs/stargate: Fix error propagation in
@@ -471,7 +473,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.2...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[0.25.3]: https://github.com/cosmos/cosmjs/compare/v0.25.2...v0.25.3
 [0.25.2]: https://github.com/cosmos/cosmjs/compare/v0.25.1...v0.25.2
 [0.25.1]: https://github.com/cosmos/cosmjs/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/cosmos/cosmjs/compare/v0.24.1...v0.25.0
