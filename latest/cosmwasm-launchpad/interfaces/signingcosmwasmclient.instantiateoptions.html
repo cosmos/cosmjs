@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">admin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L110">cosmwasm-launchpad/src/signingcosmwasmclient.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ca4bb8ca8/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L119">cosmwasm-launchpad/src/signingcosmwasmclient.ts:119</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">memo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L104">cosmwasm-launchpad/src/signingcosmwasmclient.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ca4bb8ca8/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L104">cosmwasm-launchpad/src/signingcosmwasmclient.ts:104</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -131,9 +131,18 @@
 					<div class="tsd-signature tsd-kind-icon">transfer<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L105">cosmwasm-launchpad/src/signingcosmwasmclient.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ca4bb8ca8/packages/cosmwasm-launchpad/src/signingcosmwasmclient.ts#L114">cosmwasm-launchpad/src/signingcosmwasmclient.ts:114</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The funds that are transferred from the sender to the newly created contract.
+								The funds are transferred as part of the message execution after the contract address is
+							created and before the instantiation message is executed by the contract.</p>
+						</div>
+						<p>Only native tokens are supported.</p>
+						<p>TODO: Rename to <code>funds</code> for consistency (<a href="https://github.com/cosmos/cosmjs/issues/806">https://github.com/cosmos/cosmjs/issues/806</a>)</p>
+					</div>
 				</section>
 			</section>
 		</div>
