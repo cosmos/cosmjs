@@ -368,7 +368,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async sendTokens(
     senderAddress: string,
     recipientAddress: string,
-    transferAmount: readonly Coin[],
+    amount: readonly Coin[],
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -376,7 +376,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         fromAddress: senderAddress,
         toAddress: recipientAddress,
-        amount: [...transferAmount],
+        amount: [...amount],
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);

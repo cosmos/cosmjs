@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
-  Coin,
   coins,
   isBroadcastTxFailure,
   isMsgSend,
@@ -57,8 +56,8 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
       {
         const recipient = makeRandomAddress();
-        const transferAmount = coins(1234567, "ucosm");
-        const result = await client.sendTokens(recipient, transferAmount);
+        const amount = coins(1234567, "ucosm");
+        const result = await client.sendTokens(recipient, amount);
         await sleep(75); // wait until tx is indexed
         const txDetails = await new LcdClient(launchpad.endpoint).txById(result.transactionHash);
         sendSuccessful = {
@@ -72,11 +71,8 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
       {
         const recipient = alice.address0;
-        const transferAmount: Coin = {
-          denom: "ucosm",
-          amount: "2345678",
-        };
-        const result = await client.sendTokens(recipient, [transferAmount]);
+        const amount = coins(2345678, "ucosm");
+        const result = await client.sendTokens(recipient, amount);
         await sleep(75); // wait until tx is indexed
         const txDetails = await new LcdClient(launchpad.endpoint).txById(result.transactionHash);
         sendSelfSuccessful = {
@@ -91,13 +87,13 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       {
         const memo = "Sending more than I can afford";
         const recipient = makeRandomAddress();
-        const transferAmount = coins(123456700000000, "ucosm");
+        const amount = coins(123456700000000, "ucosm");
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
             from_address: alice.address0,
             to_address: recipient,
-            amount: transferAmount,
+            amount: amount,
           },
         };
         const fee = {

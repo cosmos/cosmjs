@@ -491,7 +491,7 @@ describe("SigningCosmWasmClient", () => {
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-      const transferAmount = coins(7890, "ucosm");
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
       const memo = "for dinner";
 
@@ -503,14 +503,14 @@ describe("SigningCosmWasmClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(alice.address0, beneficiaryAddress, transferAmount, memo);
+      const result = await client.sendTokens(alice.address0, beneficiaryAddress, amount, memo);
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       assert(after);
-      expect(after).toEqual(transferAmount[0]);
+      expect(after).toEqual(amount[0]);
     });
 
     it("works with legacy Amino signer", async () => {
@@ -519,7 +519,7 @@ describe("SigningCosmWasmClient", () => {
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-      const transferAmount = coins(7890, "ucosm");
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
       const memo = "for dinner";
 
@@ -531,14 +531,14 @@ describe("SigningCosmWasmClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(alice.address0, beneficiaryAddress, transferAmount, memo);
+      const result = await client.sendTokens(alice.address0, beneficiaryAddress, amount, memo);
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       assert(after);
-      expect(after).toEqual(transferAmount[0]);
+      expect(after).toEqual(amount[0]);
     });
   });
 

@@ -67,7 +67,7 @@ export class SigningCosmosClient extends CosmosClient {
 
   public async sendTokens(
     recipientAddress: string,
-    transferAmount: readonly Coin[],
+    amount: readonly Coin[],
     memo = "",
   ): Promise<BroadcastTxResult> {
     const sendMsg: MsgSend = {
@@ -75,7 +75,7 @@ export class SigningCosmosClient extends CosmosClient {
       value: {
         from_address: this.signerAddress,
         to_address: recipientAddress,
-        amount: transferAmount,
+        amount: amount,
       },
     };
     return this.signAndBroadcast([sendMsg], this.fees.send, memo);

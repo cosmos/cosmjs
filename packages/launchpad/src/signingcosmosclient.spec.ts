@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
+import { coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
 import { assert } from "@cosmjs/utils";
 
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
@@ -129,12 +129,7 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "7890",
-          denom: "ucosm",
-        },
-      ];
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
 
       // no tokens here
@@ -142,7 +137,7 @@ describe("SigningCosmosClient", () => {
       expect(before).toBeUndefined();
 
       // send
-      const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
+      const result = await client.sendTokens(beneficiaryAddress, amount, "for dinner");
       assertIsBroadcastTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
@@ -150,7 +145,7 @@ describe("SigningCosmosClient", () => {
       // got tokens
       const after = await client.getAccount(beneficiaryAddress);
       assert(after);
-      expect(after.balance).toEqual(transferAmount);
+      expect(after.balance).toEqual(amount);
     });
   });
 

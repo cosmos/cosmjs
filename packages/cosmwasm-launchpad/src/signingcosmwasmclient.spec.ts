@@ -525,7 +525,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet);
 
-      const transferAmount = coins(7890, "ucosm");
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
 
       // no tokens here
@@ -533,7 +533,7 @@ describe("SigningCosmWasmClient", () => {
       expect(before).toBeUndefined();
 
       // send
-      const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
+      const result = await client.sendTokens(beneficiaryAddress, amount, "for dinner");
       assertIsBroadcastTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
@@ -541,7 +541,7 @@ describe("SigningCosmWasmClient", () => {
       // got tokens
       const after = await client.getAccount(beneficiaryAddress);
       assert(after);
-      expect(after.balance).toEqual(transferAmount);
+      expect(after.balance).toEqual(amount);
     });
   });
 
