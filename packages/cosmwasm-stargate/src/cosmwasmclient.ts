@@ -259,9 +259,16 @@ export class CosmWasmClient {
     }
     const transactionId = toHex(broadcasted.hash).toUpperCase();
     return new Promise((resolve, reject) =>
-      pollForTx(transactionId)
-        .then(resolve, reject)
-        .finally(() => clearTimeout(txPollTimeout)),
+      pollForTx(transactionId).then(
+        (value) => {
+          clearTimeout(txPollTimeout);
+          resolve(value);
+        },
+        (error) => {
+          clearTimeout(txPollTimeout);
+          reject(error);
+        },
+      ),
     );
   }
 
