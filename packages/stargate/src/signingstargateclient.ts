@@ -212,7 +212,7 @@ export class SigningStargateClient extends StargateClient {
   public async sendTokens(
     senderAddress: string,
     recipientAddress: string,
-    transferAmount: readonly Coin[],
+    amount: readonly Coin[],
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -220,7 +220,7 @@ export class SigningStargateClient extends StargateClient {
       value: {
         fromAddress: senderAddress,
         toAddress: recipientAddress,
-        amount: [...transferAmount],
+        amount: [...amount],
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);

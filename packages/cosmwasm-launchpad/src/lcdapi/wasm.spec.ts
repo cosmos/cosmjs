@@ -77,7 +77,7 @@ async function instantiateContract(
   signer: OfflineSigner,
   codeId: number,
   beneficiaryAddress: string,
-  transferAmount?: readonly Coin[],
+  funds?: readonly Coin[],
 ): Promise<BroadcastTxResult> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
@@ -90,7 +90,7 @@ async function instantiateContract(
         verifier: alice.address0,
         beneficiary: beneficiaryAddress,
       },
-      init_funds: transferAmount || [],
+      init_funds: funds || [],
     },
   };
   const fee: StdFee = {
@@ -191,8 +191,6 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(launchpad.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
       const existingContractsByCode = await client.wasm.listContractsByCodeId(hackatomCodeId);
@@ -203,7 +201,9 @@ describe("WasmExtension", () => {
         expect(contract.label).toMatch(/^.+$/);
       }
 
-      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      const beneficiaryAddress = makeRandomAddress();
+      const funds = coins(707707, "ucosm");
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsBroadcastTxSuccess(result);
       const parsedLogs = logs.parseLogs(result.logs);
       const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
@@ -248,11 +248,11 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(launchpad.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
 
       // create new instance and compare before and after
-      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      const beneficiaryAddress = makeRandomAddress();
+      const funds = coins(707707, "ucosm");
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsBroadcastTxSuccess(result);
       const parsedLogs = logs.parseLogs(result.logs);
       const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
@@ -486,9 +486,6 @@ describe("WasmExtension", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(launchpad.endpoint);
 
-      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
-      const beneficiaryAddress = makeRandomAddress();
-
       let codeId: number;
 
       // upload
@@ -504,11 +501,13 @@ describe("WasmExtension", () => {
         expect(result.data).toEqual(toAscii(`${codeId}`));
       }
 
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const beneficiaryAddress = makeRandomAddress();
       let contractAddress: string;
 
       // instantiate
       {
-        const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
+        const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsBroadcastTxSuccess(result);
         // console.log("Raw log:", result.raw_log);
         const parsedLogs = logs.parseLogs(result.logs);
@@ -519,7 +518,7 @@ describe("WasmExtension", () => {
         expect(result.data).toEqual(Bech32.decode(contractAddress).data);
 
         const balance = (await client.auth.account(contractAddress)).result.value.coins;
-        expect(balance).toEqual(transferAmount);
+        expect(balance).toEqual(funds);
       }
 
       // execute
@@ -539,7 +538,7 @@ describe("WasmExtension", () => {
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalance = (await client.auth.account(beneficiaryAddress)).result.value.coins;
-        expect(beneficiaryBalance).toEqual(transferAmount);
+        expect(beneficiaryBalance).toEqual(funds);
         const contractBalance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }

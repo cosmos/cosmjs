@@ -234,7 +234,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate(
     senderAddress: string,
     codeId: number,
-    initMsg: Record<string, unknown>,
+    msg: Record<string, unknown>,
     label: string,
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
@@ -244,7 +244,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: senderAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
-        initMsg: toUtf8(JSON.stringify(initMsg)),
+        initMsg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.transferAmount || [])],
         admin: options.admin,
       }),
@@ -342,17 +342,17 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async execute(
     senderAddress: string,
     contractAddress: string,
-    handleMsg: Record<string, unknown>,
+    msg: Record<string, unknown>,
     memo = "",
-    transferAmount?: readonly Coin[],
+    funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
     const executeContractMsg: MsgExecuteContractEncodeObject = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
-        msg: toUtf8(JSON.stringify(handleMsg)),
-        funds: [...(transferAmount || [])],
+        msg: toUtf8(JSON.stringify(msg)),
+        funds: [...(funds || [])],
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [executeContractMsg], this.fees.exec, memo);
@@ -368,7 +368,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async sendTokens(
     senderAddress: string,
     recipientAddress: string,
-    transferAmount: readonly Coin[],
+    amount: readonly Coin[],
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -376,7 +376,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         fromAddress: senderAddress,
         toAddress: recipientAddress,
-        amount: [...transferAmount],
+        amount: [...amount],
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);

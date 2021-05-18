@@ -273,7 +273,7 @@ describe("SigningStargateClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-      const transferAmount = coins(7890, "ucosm");
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
       const memo = "for dinner";
 
@@ -285,13 +285,13 @@ describe("SigningStargateClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);
+      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, amount, memo);
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
-      expect(after).toEqual(transferAmount[0]);
+      expect(after).toEqual(amount[0]);
     });
 
     it("works with legacy Amino signer", async () => {
@@ -299,7 +299,7 @@ describe("SigningStargateClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-      const transferAmount = coins(7890, "ucosm");
+      const amount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
       const memo = "for dinner";
 
@@ -311,13 +311,13 @@ describe("SigningStargateClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);
+      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, amount, memo);
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
-      expect(after).toEqual(transferAmount[0]);
+      expect(after).toEqual(amount[0]);
     });
   });
 
