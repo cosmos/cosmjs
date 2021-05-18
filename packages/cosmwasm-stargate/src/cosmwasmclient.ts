@@ -216,7 +216,7 @@ export class CosmWasmClient {
    * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
    *
    * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
-   * usually needs check for execution success or failure.
+   * usually needs to check for execution success or failure.
    */
   // NOTE: This method is tested against slow chains and timeouts in the @cosmjs/stargate package.
   // Make sure it is kept in sync!

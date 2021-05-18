@@ -310,7 +310,7 @@ export class StargateClient {
    * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
    *
    * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
-   * usually needs check for execution success or failure.
+   * usually needs to check for execution success or failure.
    */
   public async broadcastTx(
     tx: Uint8Array,
