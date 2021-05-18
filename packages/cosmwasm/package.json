@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm",
-  "version": "0.25.2",
+  "version": "0.25.3",
   "description": "CosmWasm SDK",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
