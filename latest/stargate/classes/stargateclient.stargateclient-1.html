@@ -126,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L138">stargate/src/stargateclient.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L147">stargate/src/stargateclient.ts:147</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -152,9 +152,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L295">stargate/src/stargateclient.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L315">stargate/src/stargateclient.ts:315</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Broadcasts a signed transaction to the network and monitors its inclusion in a block.</p>
+								</div>
+								<p>If broadcasting is rejected by the node for some reason (e.g. because of a CheckTx failure),
+								an error is thrown.</p>
+								<p>If the transaction is not included in a block before the provided timeout, this errors with a <code>TimeoutError</code>.</p>
+								<p>If the transaction is included in a block, a <code>BroadcastTxResponse</code> is returned. The caller then
+								usually needs to check for execution success or failure.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -181,7 +191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L291">stargate/src/stargateclient.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L300">stargate/src/stargateclient.ts:300</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -198,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L164">stargate/src/stargateclient.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L173">stargate/src/stargateclient.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.queryclient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_auth.authextension.html" class="tsd-signature-type" data-tsd-kind="Interface">AuthExtension</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_bank.bankextension.html" class="tsd-signature-type" data-tsd-kind="Interface">BankExtension</a></h4>
@@ -215,7 +225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L151">stargate/src/stargateclient.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L160">stargate/src/stargateclient.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Tendermint34Client</span></h4>
@@ -232,7 +242,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L187">stargate/src/stargateclient.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L196">stargate/src/stargateclient.ts:196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -255,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L199">stargate/src/stargateclient.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L208">stargate/src/stargateclient.ts:208</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -278,7 +288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L244">stargate/src/stargateclient.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L253">stargate/src/stargateclient.ts:253</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,7 +318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L234">stargate/src/stargateclient.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L243">stargate/src/stargateclient.ts:243</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -334,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L217">stargate/src/stargateclient.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L226">stargate/src/stargateclient.ts:226</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -357,7 +367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L171">stargate/src/stargateclient.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L180">stargate/src/stargateclient.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -374,7 +384,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L182">stargate/src/stargateclient.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L191">stargate/src/stargateclient.ts:191</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -391,7 +401,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L160">stargate/src/stargateclient.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L169">stargate/src/stargateclient.ts:169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><a href="queries_queryclient.queryclient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_auth.authextension.html" class="tsd-signature-type" data-tsd-kind="Interface">AuthExtension</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_bank.bankextension.html" class="tsd-signature-type" data-tsd-kind="Interface">BankExtension</a><span class="tsd-signature-symbol">)</span></h4>
@@ -408,7 +418,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L204">stargate/src/stargateclient.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L213">stargate/src/stargateclient.ts:213</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -431,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L147">stargate/src/stargateclient.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L156">stargate/src/stargateclient.ts:156</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Tendermint34Client</span></h4>
@@ -448,7 +458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L248">stargate/src/stargateclient.ts:248</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L257">stargate/src/stargateclient.ts:257</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -471,7 +481,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L253">stargate/src/stargateclient.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L262">stargate/src/stargateclient.ts:262</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -497,7 +507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7a48c1e33/packages/stargate/src/stargateclient.ts#L135">stargate/src/stargateclient.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/stargateclient.ts#L144">stargate/src/stargateclient.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
