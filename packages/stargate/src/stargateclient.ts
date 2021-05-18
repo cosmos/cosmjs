@@ -100,7 +100,7 @@ export interface BroadcastTxSuccess {
 }
 
 /**
- * The response after sucessfully broadcasting a transaction.
+ * The response after successfully broadcasting a transaction.
  * Success or failure refer to the execution result.
  *
  * The name is a bit misleading as this contains the result of the execution

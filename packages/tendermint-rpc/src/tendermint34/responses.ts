@@ -73,7 +73,7 @@ export interface BroadcastTxSyncResponse extends TxData {
 }
 
 /**
- * Returns true iff transaction made it sucessfully into the transaction pool
+ * Returns true iff transaction made it successfully into the transaction pool
  */
 export function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean {
   // code must be 0 on success
