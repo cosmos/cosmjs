@@ -69,8 +69,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This is the same as GasPrice from @cosmjs/launchpad but those might diverge in the future.</p>
+						<p>A gas price, i.e. the price of a single unit of gas. This is typically a fraction of
+						the smallest fee token unit, such as 0.012utoken.</p>
 					</div>
+					<p>This is the same as GasPrice from @cosmjs/launchpad but those might diverge in the future.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -119,7 +121,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/fee.ts#L15">stargate/src/fee.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/stargate/src/fee.ts#L30">stargate/src/fee.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -144,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Decimal</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/fee.ts#L14">stargate/src/fee.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/stargate/src/fee.ts#L29">stargate/src/fee.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">denom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/fee.ts#L15">stargate/src/fee.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/stargate/src/fee.ts#L30">stargate/src/fee.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -171,9 +173,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9f242d3ce/packages/stargate/src/fee.ts#L22">stargate/src/fee.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/01196d0ee/packages/stargate/src/fee.ts#L45">stargate/src/fee.ts:45</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Parses a gas price formatted as <code>&lt;amount&gt;&lt;denom&gt;</code>, e.g. <code>GasPrice.fromString(&quot;0.012utoken&quot;)</code>.</p>
+								</div>
+								<p>The denom must match the Cosmos SDK 0.42 pattern (<a href="https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601">https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601</a>).
+								See <code>GasPrice</code> in @cosmjs/stargate for a more generic matcher.</p>
+								<p>Separators are not yet supported.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
