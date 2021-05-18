@@ -12,8 +12,13 @@ and this project adheres to
   `CosmWasmClient.broadcastTx` and `StargateClient.broadcastTx` ([#800]). This
   bug was introduced with the switch from broadcast mode "commit" to "sync" in
   version 0.25.0.
+- @cosmjs/launchpad, @cosmjs/stargate: Avoid the use of named capture groups in
+  `GasPrice.fromString` to restore ES2017 compatibility and make the library
+  work with Hermes ([#801]; thanks [@AlexBHarley]).
 
 [#800]: https://github.com/cosmos/cosmjs/issues/800
+[#801]: https://github.com/cosmos/cosmjs/issues/801
+[@alexbharley]: https://github.com/AlexBHarley
 
 ## [0.25.2] - 2021-05-11
 
