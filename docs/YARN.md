@@ -215,7 +215,9 @@ https://yarnpkg.com/features/constraints
 ## TypeScript plugin
 
 Automatically installs DefinitelyTyped `@types/*` definitions if the project
-doesn’t have its own.
+doesn’t have its own. This sounds useful, but might actually be annoying because
+sometimes you don’t need the type definitions even when they’re available (eg
+for tools).
 
 ```sh
 yarn plugin import typescript
@@ -289,3 +291,7 @@ Lerna unfortunately appears to be unmaintained. Remove the dependency and the
 https://next.yarnpkg.com/features/release-workflow
 
 https://yarnpkg.com/features/workspaces#yarn-workspaces-vs-lerna
+
+## Setup for IDE
+
+https://next.yarnpkg.com/advanced/pnpify#ide-support
