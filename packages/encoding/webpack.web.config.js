@@ -1,5 +1,6 @@
 const glob = require("glob");
 const path = require("path");
+const webpack = require("webpack");
 
 const target = "web";
 const distdir = path.join(__dirname, "dist", "web");
@@ -13,5 +14,15 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
+    resolve: {
+      fallback: {
+        buffer: false,
+      }
+    }
   },
 ];

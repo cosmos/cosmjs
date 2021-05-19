@@ -66,6 +66,7 @@
     "@types/sha.js": "^2.4.0",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
+    "buffer": "^6.0.3",
     "eslint": "^7.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",
