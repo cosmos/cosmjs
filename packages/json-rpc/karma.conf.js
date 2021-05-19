@@ -1,7 +1,7 @@
-const chrome = require('karma-chrome-launcher');
-const firefox = require('karma-firefox-launcher');
-const jasmine = require('karma-jasmine');
-const kjhtml = require('karma-jasmine-html-reporter');
+const chrome = require("karma-chrome-launcher");
+const firefox = require("karma-firefox-launcher");
+const jasmine = require("karma-jasmine");
+const kjhtml = require("karma-jasmine-html-reporter");
 
 module.exports = function (config) {
   config.set({
