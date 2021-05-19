@@ -15,17 +15,15 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [
-      new webpack.EnvironmentPlugin({ LAUNCHPAD_ENABLED: "" }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
-    ],
+    plugins: [new webpack.EnvironmentPlugin({ LAUNCHPAD_ENABLED: "" })],
     resolve: {
       fallback: {
-        crypto: require.resolve("crypto-browserify"),
-        path: require.resolve("path-browserify"),
-        stream: require.resolve("stream-browserify"),
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: false,
+        string_decoder: false,
       },
     },
   },

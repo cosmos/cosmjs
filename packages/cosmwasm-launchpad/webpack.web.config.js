@@ -22,15 +22,15 @@ module.exports = [
         CW3_ENABLED: "",
         CW1_ENABLED: "",
       }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
     ],
     resolve: {
       fallback: {
-        crypto: require.resolve("crypto-browserify"),
-        path: require.resolve("path-browserify"),
-        stream: require.resolve("stream-browserify"),
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: false,
+        string_decoder: false,
       },
     },
   },
