@@ -274,18 +274,16 @@ export class CosmWasmClient {
 
   public async getCodes(): Promise<readonly Code[]> {
     const { codeInfos } = await this.forceGetQueryClient().wasm.listCodeInfo();
-    return (codeInfos || []).map(
-      (entry: CodeInfoResponse): Code => {
-        assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
-        return {
-          id: entry.codeId.toNumber(),
-          creator: entry.creator,
-          checksum: toHex(entry.dataHash),
-          source: entry.source || undefined,
-          builder: entry.builder || undefined,
-        };
-      },
-    );
+    return (codeInfos || []).map((entry: CodeInfoResponse): Code => {
+      assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
+      return {
+        id: entry.codeId.toNumber(),
+        creator: entry.creator,
+        checksum: toHex(entry.dataHash),
+        source: entry.source || undefined,
+        builder: entry.builder || undefined,
+      };
+    });
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
@@ -345,16 +343,14 @@ export class CosmWasmClient {
       [ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS]: "Genesis",
       [ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE]: "Migrate",
     };
-    return (result.entries || []).map(
-      (entry): ContractCodeHistoryEntry => {
-        assert(entry.operation && entry.codeId && entry.msg);
-        return {
-          operation: operations[entry.operation],
-          codeId: entry.codeId.toNumber(),
-          msg: JSON.parse(fromAscii(entry.msg)),
-        };
-      },
-    );
+    return (result.entries || []).map((entry): ContractCodeHistoryEntry => {
+      assert(entry.operation && entry.codeId && entry.msg);
+      return {
+        operation: operations[entry.operation],
+        codeId: entry.codeId.toNumber(),
+        msg: JSON.parse(fromAscii(entry.msg)),
+      };
+    });
   }
 
   /**

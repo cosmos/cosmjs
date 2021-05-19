@@ -19,7 +19,7 @@ describe("SigningCosmosClient", () => {
     it("can be constructed with default fees", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
-      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      const openedClient = client as unknown as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -37,7 +37,7 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet, gasPrice);
-      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      const openedClient = client as unknown as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -63,7 +63,7 @@ describe("SigningCosmosClient", () => {
         undefined,
         gasLimits,
       );
-      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      const openedClient = client as unknown as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -90,7 +90,7 @@ describe("SigningCosmosClient", () => {
         gasPrice,
         gasLimits,
       );
-      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      const openedClient = client as unknown as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -111,7 +111,7 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
-      const openedClient = (client as unknown) as PrivateCosmosClient;
+      const openedClient = client as unknown as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 

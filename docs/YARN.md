@@ -283,7 +283,8 @@ executables you will ship to your users because they may not be using Yarn.)
 
 ## Switch versioning from Lerna to Yarn
 
-Lerna unfortunately appears to be unmaintained. Remove the dependency and the `lerna.json` configuration file.
+Lerna unfortunately appears to be unmaintained. Remove the dependency and the
+`lerna.json` configuration file.
 
 https://next.yarnpkg.com/features/release-workflow
 

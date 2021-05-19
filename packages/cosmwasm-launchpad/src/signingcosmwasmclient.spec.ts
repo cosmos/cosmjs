@@ -248,7 +248,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet);
 
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = client as unknown as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
@@ -266,13 +266,8 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(launchpad.endpoint, alice.address0, wallet);
       const wasm = getHackatom().data;
-      const {
-        codeId,
-        originalChecksum,
-        originalSize,
-        compressedChecksum,
-        compressedSize,
-      } = await client.upload(wasm);
+      const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
+        await client.upload(wasm);
       expect(originalChecksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);

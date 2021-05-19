@@ -1,6 +1,7 @@
 import { ReadonlyDate } from "readonly-date";
 
-const rfc3339Matcher = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(\.\d{1,9})?((?:[+-]\d{2}:\d{2})|Z)$/;
+const rfc3339Matcher =
+  /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(\.\d{1,9})?((?:[+-]\d{2}:\d{2})|Z)$/;
 
 function padded(integer: number, length = 2): string {
   const filled = "00000" + integer.toString();

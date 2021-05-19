@@ -339,18 +339,16 @@ export class CosmWasmClient {
 
   public async getCodes(): Promise<readonly Code[]> {
     const result = await this.lcdClient.wasm.listCodeInfo();
-    return result.map(
-      (entry): Code => {
-        this.anyValidAddress = entry.creator;
-        return {
-          id: entry.id,
-          creator: entry.creator,
-          checksum: toHex(fromHex(entry.data_hash)),
-          source: entry.source || undefined,
-          builder: entry.builder || undefined,
-        };
-      },
-    );
+    return result.map((entry): Code => {
+      this.anyValidAddress = entry.creator;
+      return {
+        id: entry.id,
+        creator: entry.creator,
+        checksum: toHex(fromHex(entry.data_hash)),
+        source: entry.source || undefined,
+        builder: entry.builder || undefined,
+      };
+    });
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {

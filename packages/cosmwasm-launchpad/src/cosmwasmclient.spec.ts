@@ -57,7 +57,7 @@ describe("CosmWasmClient", () => {
     it("caches chain ID", async () => {
       pendingWithoutLaunchpad();
       const client = new CosmWasmClient(launchpad.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = client as unknown as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.lcdClient, "nodeInfo").and.callThrough();
 
       expect(await client.getChainId()).toEqual(launchpad.chainId); // from network
@@ -71,7 +71,7 @@ describe("CosmWasmClient", () => {
     it("gets height via last block", async () => {
       pendingWithoutLaunchpad();
       const client = new CosmWasmClient(launchpad.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = client as unknown as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
 
       const height1 = await client.getHeight();
@@ -88,7 +88,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutLaunchpad();
       const client = new CosmWasmClient(launchpad.endpoint);
 
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = client as unknown as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
@@ -290,7 +290,7 @@ describe("CosmWasmClient", () => {
     it("caches downloads", async () => {
       pendingWithoutLaunchpad();
       const client = new CosmWasmClient(launchpad.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = client as unknown as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.lcdClient.wasm, "getCode").and.callThrough();
 
       const result1 = await client.getCodeDetails(deployedHackatom.codeId); // from network

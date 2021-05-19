@@ -101,7 +101,7 @@ export class LcdClient {
     B extends object,
     C extends object,
     D extends object,
-    E extends object
+    E extends object,
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -118,7 +118,7 @@ export class LcdClient {
     C extends object,
     D extends object,
     E extends object,
-    F extends object
+    F extends object,
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -137,7 +137,7 @@ export class LcdClient {
     D extends object,
     E extends object,
     F extends object,
-    G extends object
+    G extends object,
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -158,7 +158,7 @@ export class LcdClient {
     E extends object,
     F extends object,
     G extends object,
-    H extends object
+    H extends object,
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,

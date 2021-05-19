@@ -21,11 +21,12 @@ describe("GasPrice", () => {
         "0.14utest": { amount: "0.14", denom: "utest" },
         // Test denoms
         "0.14sht": { amount: "0.14", denom: "sht" },
-        "0.14testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest": {
-          amount: "0.14",
-          denom:
-            "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-        },
+        "0.14testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest":
+          {
+            amount: "0.14",
+            denom:
+              "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+          },
         "0.14ucoin2": { amount: "0.14", denom: "ucoin2" },
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "0.14FOOBAR": { amount: "0.14", denom: "FOOBAR" },
