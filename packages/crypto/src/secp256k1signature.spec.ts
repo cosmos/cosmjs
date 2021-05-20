@@ -100,24 +100,35 @@ describe("Secp256k1Signature", () => {
   });
 
   it("can decode from DER", () => {
-    // Signature 3045022100f25b86e1d8a11d72475b3ed273b0781c7d7f6f9e1dae0dd5d3ee9b84f3fab891022063d9c4e1391de077244583e9a6e3d8e8e1f236a3bf5963735353b93b1a3ba935
-    // decoded by http://asn1-playground.oss.com/
-    const signature = Secp256k1Signature.fromDer(
+    // Signatures found by searching the CosmJS codebase for "3044", "3045" and "3046".
+    // Decoded using https://asn1.io/asn1playground/.
+
+    // 70 bytes (no leading zeros)
+    const sig70 = Secp256k1Signature.fromDer(
+      fromHex(
+        "30440220626d61b7be1488b563e8a85bfb623b2331903964b5c0476c9f9ad29144f076fe02202002a2c0ab5e48626bf761cf677dfeede9c7309d2436d4b8c2b89f21ee2ebc6a",
+      ),
+    );
+    expect(sig70.r()).toEqual(fromHex("626D61B7BE1488B563E8A85BFB623B2331903964B5C0476C9F9AD29144F076FE"));
+    expect(sig70.s()).toEqual(fromHex("2002A2C0AB5E48626BF761CF677DFEEDE9C7309D2436D4B8C2B89F21EE2EBC6A"));
+
+    // 71 bytes (leading zero in r)
+    const sig71 = Secp256k1Signature.fromDer(
       fromHex(
         "3045022100f25b86e1d8a11d72475b3ed273b0781c7d7f6f9e1dae0dd5d3ee9b84f3fab891022063d9c4e1391de077244583e9a6e3d8e8e1f236a3bf5963735353b93b1a3ba935",
       ),
     );
-    expect(signature.toDer()).toEqual(
+    expect(sig71.r()).toEqual(fromHex("F25B86E1D8A11D72475B3ED273B0781C7D7F6F9E1DAE0DD5D3EE9B84F3FAB891"));
+    expect(sig71.s()).toEqual(fromHex("63D9C4E1391DE077244583E9A6E3D8E8E1F236A3BF5963735353B93B1A3BA935"));
+
+    // 72 bytes (leading zero in r and s)
+    const sig72 = Secp256k1Signature.fromDer(
       fromHex(
-        "3045022100f25b86e1d8a11d72475b3ed273b0781c7d7f6f9e1dae0dd5d3ee9b84f3fab891022063d9c4e1391de077244583e9a6e3d8e8e1f236a3bf5963735353b93b1a3ba935",
+        "304602210083de9be443bcf480892b8c8ca1d5ee65c79a315642c3f7b5305aff3065fda2780221009747932122b93cec42cad8ee4630a8f6cbe127578b8c495b4ab927275f657658",
       ),
     );
-    expect(signature.r()).toEqual(
-      fromHex("F25B86E1D8A11D72475B3ED273B0781C7D7F6F9E1DAE0DD5D3EE9B84F3FAB891"),
-    );
-    expect(signature.s()).toEqual(
-      fromHex("63D9C4E1391DE077244583E9A6E3D8E8E1F236A3BF5963735353B93B1A3BA935"),
-    );
+    expect(sig72.r()).toEqual(fromHex("83DE9BE443BCF480892B8C8CA1D5EE65C79A315642C3F7B5305AFF3065FDA278"));
+    expect(sig72.s()).toEqual(fromHex("9747932122B93CEC42CAD8EE4630A8F6CBE127578B8C495B4AB927275F657658"));
   });
 });
 
