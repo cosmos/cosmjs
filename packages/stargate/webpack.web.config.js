@@ -15,7 +15,7 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "" })],
+    plugins: [new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "", SLOW_SIMAPP_ENABLED: "" })],
     resolve: {
       fallback: {
         buffer: false,

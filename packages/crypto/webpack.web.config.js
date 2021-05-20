@@ -26,7 +26,7 @@ module.exports = [
         crypto: false,
         events: false,
         path: false,
-        stream: false,
+        stream: require.resolve("stream-browserify"),
         string_decoder: false,
       },
     },
