@@ -30,4 +30,4 @@ const reporter = new SpecReporter({
 // initialize and execute
 jasmine.env.clearReporters();
 jasmine.addReporter(reporter);
-jasmine.execute();
+void jasmine.execute();
