@@ -22,6 +22,9 @@ module.exports = [
         CW3_ENABLED: "",
         CW1_ENABLED: "",
       }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
     ],
     resolve: {
       fallback: {
@@ -29,7 +32,7 @@ module.exports = [
         crypto: false,
         events: false,
         path: false,
-        stream: false,
+        stream: require.resolve("stream-browserify"),
         string_decoder: false,
       },
     },
