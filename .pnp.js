@@ -3215,7 +3215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@confio/ics23", "npm:0.6.5"],
             ["js-sha512", "npm:0.8.0"],
-            ["protobufjs", "npm:6.11.2"],
+            ["protobufjs", "npm:6.10.2"],
             ["ripemd160", "npm:2.0.2"],
             ["sha.js", "npm:2.4.11"]
           ],
@@ -10845,26 +10845,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@protobufjs/utf8", "npm:1.1.0"],
             ["@types/long", "npm:4.0.1"],
             ["@types/node", "npm:13.13.52"],
-            ["long", "npm:4.0.0"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:6.11.2", {
-          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.2-9b422ce98e/node_modules/protobufjs/",
-          "packageDependencies": [
-            ["protobufjs", "npm:6.11.2"],
-            ["@protobufjs/aspromise", "npm:1.1.2"],
-            ["@protobufjs/base64", "npm:1.1.2"],
-            ["@protobufjs/codegen", "npm:2.0.4"],
-            ["@protobufjs/eventemitter", "npm:1.1.0"],
-            ["@protobufjs/fetch", "npm:1.1.0"],
-            ["@protobufjs/float", "npm:1.0.2"],
-            ["@protobufjs/inquire", "npm:1.1.0"],
-            ["@protobufjs/path", "npm:1.1.2"],
-            ["@protobufjs/pool", "npm:1.1.0"],
-            ["@protobufjs/utf8", "npm:1.1.0"],
-            ["@types/long", "npm:4.0.1"],
-            ["@types/node", "npm:15.3.1"],
             ["long", "npm:4.0.0"]
           ],
           "linkType": "HARD",
