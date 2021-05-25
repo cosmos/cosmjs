@@ -783,6 +783,18 @@ function decodeBlockResponse(data: RpcBlockResponse): responses.BlockResponse {
   };
 }
 
+interface RpcBlockSearchResponse {
+  readonly blocks: readonly RpcBlockResponse[];
+  readonly total_count: string;
+}
+
+function decodeBlockSearch(data: RpcBlockSearchResponse): responses.BlockSearchResponse {
+  return {
+    totalCount: Integer.parse(assertNotEmpty(data.total_count)),
+    blocks: assertArray(data.blocks).map(decodeBlockResponse),
+  };
+}
+
 export class Responses {
   public static decodeAbciInfo(response: JsonRpcSuccessResponse): responses.AbciInfoResponse {
     return decodeAbciInfo(assertObject((response.result as AbciInfoResult).response));
@@ -798,6 +810,10 @@ export class Responses {
 
   public static decodeBlockResults(response: JsonRpcSuccessResponse): responses.BlockResultsResponse {
     return decodeBlockResults(response.result as RpcBlockResultsResponse);
+  }
+
+  public static decodeBlockSearch(response: JsonRpcSuccessResponse): responses.BlockSearchResponse {
+    return decodeBlockSearch(response.result as RpcBlockSearchResponse);
   }
 
   public static decodeBlockchain(response: JsonRpcSuccessResponse): responses.BlockchainResponse {

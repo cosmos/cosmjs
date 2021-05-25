@@ -99,6 +99,47 @@ export class Tendermint34Client {
   }
 
   /**
+   * Search for events that are in a block
+   *
+   * @see https://docs.tendermint.com/master/rpc/#/Info/block_search
+   */
+  public async blockSearch(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
+    const query: requests.BlockSearchRequest = { params: params, method: requests.Method.BlockSearch };
+    const resp = await this.doCall(query, this.p.encodeBlockSearch, this.r.decodeBlockSearch);
+    return {
+      ...resp,
+      // make sure we sort by height, as tendermint may be sorting by string value of the height
+      blocks: [...resp.blocks].sort((a, b) => a.block.header.height - b.block.header.height),
+    };
+  }
+
+  // this should paginate through all blockSearch options to ensure it returns all results.
+  // starts with page 1 or whatever was provided (eg. to start on page 7)
+  public async blockSearchAll(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
+    let page = params.page || 1;
+    const blocks: responses.BlockResponse[] = [];
+    let done = false;
+
+    while (!done) {
+      const resp = await this.blockSearch({ ...params, page: page });
+      blocks.push(...resp.blocks);
+      if (blocks.length < resp.totalCount) {
+        page++;
+      } else {
+        done = true;
+      }
+    }
+    // make sure we sort by height, as tendermint may be sorting by string value of the height
+    // and the earlier items may be in a higher page than the later items
+    blocks.sort((a, b) => a.block.header.height - b.block.header.height);
+
+    return {
+      totalCount: blocks.length,
+      blocks: blocks,
+    };
+  }
+
+  /**
    * Queries block headers filtered by minHeight <= height <= maxHeight.
    *
    * @param minHeight The minimum height to be included in the result. Defaults to 0.
