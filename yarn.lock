@@ -3076,6 +3076,7 @@ __metadata:
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
     prettier: ^2.0.5
+    typescript: ~4.0
   languageName: unknown
   linkType: soft
 
