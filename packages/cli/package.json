@@ -23,7 +23,7 @@
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "start": "yarn build-or-skip && ./bin/cosmwasm-cli",
     "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
-    "test-node": "node jasmine-testrunner.js",
+    "test-node": "node --require esm jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
   },
@@ -75,6 +75,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "esm": "^3.2.25",
     "jasmine": "^3.5",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",

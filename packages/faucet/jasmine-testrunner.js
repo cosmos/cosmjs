@@ -1,4 +1,3 @@
-#!/usr/bin/env -S yarn node
 /* eslint-disable @typescript-eslint/naming-convention */
 
 if (process.env.SES_ENABLED) {
