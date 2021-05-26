@@ -4,7 +4,7 @@ command -v shellcheck >/dev/null && shellcheck "$0"
 
 declare -a TM_VERSIONS
 TM_VERSIONS[33]=v0.33.8
-TM_VERSIONS[34]=v0.34.0
+TM_VERSIONS[34]=v0.34.10
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
