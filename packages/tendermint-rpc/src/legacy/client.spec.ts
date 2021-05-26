@@ -167,7 +167,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
       const status = await client.status();
 
       // node info
-      expect(status.nodeInfo.version).toEqual(expected.version);
+      expect(status.nodeInfo.version).toMatch(expected.version);
       expect(status.nodeInfo.protocolVersion).toEqual({
         p2p: expected.p2pVersion,
         block: expected.blockVersion,
