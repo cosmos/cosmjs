@@ -1,9 +1,12 @@
 import { toAscii } from "@cosmjs/encoding";
 import { sleep } from "@cosmjs/utils";
 
+export const chainIdMatcher = /^[-a-zA-Z0-9]{3,30}$/;
+export const anyMatcher = /^.*$/; // Any string, including empty. Does not do more than a type check.
+
 export interface ExpectedValues {
   /** The Tendermint version as reported by Tendermint itself */
-  readonly version: string;
+  readonly version: string | RegExp;
   readonly appCreator: string;
   readonly p2pVersion: number;
   readonly blockVersion: number;
@@ -49,7 +52,7 @@ export const tendermintInstances: readonly TendermintInstance[] = [
     version: "0.34.x",
     blockTime: 500,
     expected: {
-      version: "182fa32", // srsly?
+      version: anyMatcher,
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 8,
       blockVersion: 11,
@@ -59,8 +62,6 @@ export const tendermintInstances: readonly TendermintInstance[] = [
 ];
 
 export const defaultInstance: TendermintInstance = tendermintInstances[0];
-
-export const chainIdMatcher = /^[-a-zA-Z0-9]{3,30}$/;
 
 export function tendermintEnabled(): boolean {
   return !!process.env.TENDERMINT_ENABLED;
