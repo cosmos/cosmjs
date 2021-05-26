@@ -389,3 +389,10 @@ More info: https://yarnpkg.com/features/constraints
 
 That’s it! There’s a lot more configuration available that has not been covered
 here, but hopefully you made it through all that and your code still works.
+
+## Links
+
+Here are some additional resources I found helpful:
+
+- https://www.huy.dev/yarn-v2-workspace-docker-vs-code-2020-03-23/
+- https://github.com/DerekZiemba/yarn-V2-workspaces-simple-monorepo/issues/1
