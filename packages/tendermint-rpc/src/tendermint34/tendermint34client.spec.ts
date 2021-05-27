@@ -259,8 +259,8 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
 
       const sall = await client.blockSearchAll({ query: query, per_page: 2 });
-      expect(sall.totalCount).toEqual(5);
-      expect(sall.blocks.length).toEqual(5);
+      expect(sall.totalCount).toEqual(3);
+      expect(sall.blocks.length).toEqual(3);
       // make sure there are in order from lowest to highest height
       const [b1, b2, b3] = sall.blocks;
       expect(b2.block.header.height).toEqual(b1.block.header.height + 1);

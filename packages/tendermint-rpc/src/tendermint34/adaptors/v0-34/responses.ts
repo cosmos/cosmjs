@@ -284,10 +284,10 @@ interface RpcBlockId {
 
 function decodeBlockId(data: RpcBlockId): responses.BlockId {
   return {
-    hash: fromHex(assertNotEmpty(data.hash)),
+    hash: fromHex(data.hash),
     parts: {
-      total: assertNotEmpty(data.parts.total),
-      hash: fromHex(assertNotEmpty(data.parts.hash)),
+      total: data.parts.total,
+      hash: fromHex(data.parts.hash),
     },
   };
 }
@@ -349,7 +349,7 @@ function decodeHeader(data: RpcHeader): responses.Header {
     validatorsHash: fromHex(assertNotEmpty(data.validators_hash)),
     nextValidatorsHash: fromHex(assertNotEmpty(data.next_validators_hash)),
     consensusHash: fromHex(assertNotEmpty(data.consensus_hash)),
-    appHash: fromHex(assertNotEmpty(data.app_hash)),
+    appHash: fromHex(data.app_hash),
     lastResultsHash: fromHex(assertSet(data.last_results_hash)),
 
     evidenceHash: fromHex(assertSet(data.evidence_hash)),
