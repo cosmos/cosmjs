@@ -217,7 +217,10 @@ export interface BlockId {
 
 export interface Block {
   readonly header: Header;
-  readonly lastCommit: Commit;
+  /**
+   * For the block at height 1, last commit is not set.
+   */
+  readonly lastCommit: Commit | null;
   readonly txs: readonly Uint8Array[];
   readonly evidence?: readonly Evidence[];
 }
@@ -269,8 +272,10 @@ export interface Header {
   readonly height: number;
   readonly time: ReadonlyDateWithNanoseconds;
 
-  // prev block info
-  readonly lastBlockId: BlockId;
+  /**
+   * Block ID of the previous block. This can be `null` when the currect block is height 1.
+   */
+  readonly lastBlockId: BlockId | null;
 
   // hashes of block data
   readonly lastCommitHash: Uint8Array;

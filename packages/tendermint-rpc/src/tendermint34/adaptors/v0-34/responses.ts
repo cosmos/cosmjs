@@ -284,10 +284,10 @@ interface RpcBlockId {
 
 function decodeBlockId(data: RpcBlockId): responses.BlockId {
   return {
-    hash: fromHex(data.hash),
+    hash: fromHex(assertNotEmpty(data.hash)),
     parts: {
-      total: data.parts.total,
-      hash: fromHex(data.parts.hash),
+      total: assertNotEmpty(data.parts.total),
+      hash: fromHex(assertNotEmpty(data.parts.hash)),
     },
   };
 }
@@ -341,7 +341,9 @@ function decodeHeader(data: RpcHeader): responses.Header {
     height: Integer.parse(assertNotEmpty(data.height)),
     time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
 
-    lastBlockId: decodeBlockId(data.last_block_id),
+    // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
+    // { hash: '', parts: { total: 0, hash: '' } }
+    lastBlockId: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
 
     lastCommitHash: fromHex(assertNotEmpty(data.last_commit_hash)),
     dataHash: fromHex(assertSet(data.data_hash)),
@@ -765,7 +767,9 @@ interface RpcBlock {
 function decodeBlock(data: RpcBlock): responses.Block {
   return {
     header: decodeHeader(assertObject(data.header)),
-    lastCommit: decodeCommit(assertObject(data.last_commit)),
+    // For the block at height 1, last commit is not set. This is represented in an empty object like this:
+    // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
+    lastCommit: data.last_commit.block_id.hash ? decodeCommit(assertObject(data.last_commit)) : null,
     txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
     evidence: data.evidence && may(decodeEvidences, data.evidence.evidence),
   };

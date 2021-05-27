@@ -12,6 +12,12 @@ and this project adheres to
   `Tendermint34Client.blockSearchAll` were added to allow searching blocks in
   Tendermint 0.34.9+ backends.
 
+### Changes
+
+- @cosmjs/tendermint-rpc: Make `tendermint34.Header.lastBlockId` and
+  `tendermint34.Block.lastCommit` optional to better handle the case of height 1
+  where there is no previous block.
+
 ## [0.25.3] - 2021-05-18
 
 ### Fixed
