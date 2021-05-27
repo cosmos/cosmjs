@@ -345,13 +345,13 @@ function decodeHeader(data: RpcHeader): responses.Header {
     // { hash: '', parts: { total: 0, hash: '' } }
     lastBlockId: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
 
-    lastCommitHash: fromHex(assertNotEmpty(data.last_commit_hash)),
+    lastCommitHash: fromHex(assertSet(data.last_commit_hash)),
     dataHash: fromHex(assertSet(data.data_hash)),
 
-    validatorsHash: fromHex(assertNotEmpty(data.validators_hash)),
-    nextValidatorsHash: fromHex(assertNotEmpty(data.next_validators_hash)),
-    consensusHash: fromHex(assertNotEmpty(data.consensus_hash)),
-    appHash: fromHex(data.app_hash),
+    validatorsHash: fromHex(assertSet(data.validators_hash)),
+    nextValidatorsHash: fromHex(assertSet(data.next_validators_hash)),
+    consensusHash: fromHex(assertSet(data.consensus_hash)),
+    appHash: fromHex(assertSet(data.app_hash)),
     lastResultsHash: fromHex(assertSet(data.last_results_hash)),
 
     evidenceHash: fromHex(assertSet(data.evidence_hash)),

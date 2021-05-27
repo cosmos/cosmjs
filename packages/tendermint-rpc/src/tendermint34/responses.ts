@@ -277,18 +277,34 @@ export interface Header {
    */
   readonly lastBlockId: BlockId | null;
 
-  // hashes of block data
+  /**
+   * Hashes of block data.
+   *
+   * This is `sha256("")` for height 1 🤷‍
+   */
   readonly lastCommitHash: Uint8Array;
-  readonly dataHash: Uint8Array; // empty when number of transaction is 0
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
+  readonly dataHash: Uint8Array;
 
   // hashes from the app output from the prev block
   readonly validatorsHash: Uint8Array;
   readonly nextValidatorsHash: Uint8Array;
   readonly consensusHash: Uint8Array;
+  /**
+   * This can be an empty string for height 1 and turn into "0000000000000000" later on 🤷‍
+   */
   readonly appHash: Uint8Array;
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
   readonly lastResultsHash: Uint8Array;
 
   // consensus info
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
   readonly evidenceHash: Uint8Array;
   readonly proposerAddress: Uint8Array;
 }
