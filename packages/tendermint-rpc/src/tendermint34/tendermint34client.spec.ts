@@ -244,7 +244,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       // second page
       const s2 = await client.blockSearch({ query: query, page: 2, per_page: 2 });
       expect(s2.totalCount).toEqual(3);
-      expect(s2.blocks.length).toEqual(2);
+      expect(s2.blocks.length).toEqual(1);
 
       client.disconnect();
     });
