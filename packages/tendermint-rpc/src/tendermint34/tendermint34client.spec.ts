@@ -205,16 +205,13 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   describe("blockSearch", () => {
-    const key = randomString();
-
     beforeAll(async () => {
       if (tendermintEnabled()) {
         const client = await Tendermint34Client.create(rpcFactory());
 
         // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<void> {
-          const me = randomString();
-          const tx = buildKvTx(key, me);
+          const tx = buildKvTx(randomString(), randomString());
 
           const txRes = await client.broadcastTxCommit({ tx: tx });
           expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
@@ -233,20 +230,20 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       }
     });
 
-    it("can paginate over txSearch results", async () => {
+    it("can paginate over blockSearch results", async () => {
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 5" });
+      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
 
       // expect one page of results
       const s1 = await client.blockSearch({ query: query, page: 1, per_page: 2 });
-      expect(s1.totalCount).toEqual(5);
+      expect(s1.totalCount).toEqual(3);
       expect(s1.blocks.length).toEqual(2);
 
       // second page
       const s2 = await client.blockSearch({ query: query, page: 2, per_page: 2 });
-      expect(s2.totalCount).toEqual(5);
+      expect(s2.totalCount).toEqual(3);
       expect(s2.blocks.length).toEqual(2);
 
       client.disconnect();
