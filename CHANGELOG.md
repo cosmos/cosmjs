@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
+  `Tendermint34Client.blockSearchAll` were added to allow searching blocks in
+  Tendermint 0.34.9+ backends.
+
 ## [0.25.3] - 2021-05-18
 
 ### Fixed
