@@ -60,6 +60,11 @@ export interface BlockResultsResponse {
   readonly endBlockEvents: readonly Event[];
 }
 
+export interface BlockSearchResponse {
+  readonly blocks: readonly BlockResponse[];
+  readonly totalCount: number;
+}
+
 export interface BlockchainResponse {
   readonly lastHeight: number;
   readonly blockMetas: readonly BlockMeta[];
@@ -212,7 +217,10 @@ export interface BlockId {
 
 export interface Block {
   readonly header: Header;
-  readonly lastCommit: Commit;
+  /**
+   * For the block at height 1, last commit is not set.
+   */
+  readonly lastCommit: Commit | null;
   readonly txs: readonly Uint8Array[];
   readonly evidence?: readonly Evidence[];
 }
@@ -264,21 +272,39 @@ export interface Header {
   readonly height: number;
   readonly time: ReadonlyDateWithNanoseconds;
 
-  // prev block info
-  readonly lastBlockId: BlockId;
+  /**
+   * Block ID of the previous block. This can be `null` when the currect block is height 1.
+   */
+  readonly lastBlockId: BlockId | null;
 
-  // hashes of block data
+  /**
+   * Hashes of block data.
+   *
+   * This is `sha256("")` for height 1 🤷‍
+   */
   readonly lastCommitHash: Uint8Array;
-  readonly dataHash: Uint8Array; // empty when number of transaction is 0
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
+  readonly dataHash: Uint8Array;
 
   // hashes from the app output from the prev block
   readonly validatorsHash: Uint8Array;
   readonly nextValidatorsHash: Uint8Array;
   readonly consensusHash: Uint8Array;
+  /**
+   * This can be an empty string for height 1 and turn into "0000000000000000" later on 🤷‍
+   */
   readonly appHash: Uint8Array;
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
   readonly lastResultsHash: Uint8Array;
 
   // consensus info
+  /**
+   * This is `sha256("")` as long as there is no data 🤷‍
+   */
   readonly evidenceHash: Uint8Array;
   readonly proposerAddress: Uint8Array;
 }

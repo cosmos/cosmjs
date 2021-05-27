@@ -12,6 +12,7 @@ export enum Method {
   /** Get block headers for minHeight <= height <= maxHeight. */
   Blockchain = "blockchain",
   BlockResults = "block_results",
+  BlockSearch = "block_search",
   BroadcastTxAsync = "broadcast_tx_async",
   BroadcastTxSync = "broadcast_tx_sync",
   BroadcastTxCommit = "broadcast_tx_commit",
@@ -30,6 +31,7 @@ export type Request =
   | AbciInfoRequest
   | AbciQueryRequest
   | BlockRequest
+  | BlockSearchRequest
   | BlockchainRequest
   | BlockResultsRequest
   | BroadcastTxRequest
@@ -60,6 +62,7 @@ export interface AbciQueryRequest {
   readonly method: Method.AbciQuery;
   readonly params: AbciQueryParams;
 }
+
 export interface AbciQueryParams {
   readonly path: string;
   readonly data: Uint8Array;
@@ -97,10 +100,23 @@ export interface BlockResultsRequest {
   };
 }
 
+export interface BlockSearchRequest {
+  readonly method: Method.BlockSearch;
+  readonly params: BlockSearchParams;
+}
+
+export interface BlockSearchParams {
+  readonly query: string;
+  readonly page?: number;
+  readonly per_page?: number;
+  readonly order_by?: string;
+}
+
 export interface BroadcastTxRequest {
   readonly method: Method.BroadcastTxAsync | Method.BroadcastTxSync | Method.BroadcastTxCommit;
   readonly params: BroadcastTxParams;
 }
+
 export interface BroadcastTxParams {
   readonly tx: Uint8Array;
 }
@@ -141,6 +157,7 @@ export interface TxRequest {
   readonly method: Method.Tx;
   readonly params: TxParams;
 }
+
 export interface TxParams {
   readonly hash: Uint8Array;
   readonly prove?: boolean;

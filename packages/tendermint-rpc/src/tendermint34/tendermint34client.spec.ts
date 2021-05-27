@@ -204,6 +204,69 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
   });
 
+  describe("blockSearch", () => {
+    beforeAll(async () => {
+      if (tendermintEnabled()) {
+        const client = await Tendermint34Client.create(rpcFactory());
+
+        // eslint-disable-next-line no-inner-declarations
+        async function sendTx(): Promise<void> {
+          const tx = buildKvTx(randomString(), randomString());
+
+          const txRes = await client.broadcastTxCommit({ tx: tx });
+          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+          expect(txRes.height).toBeTruthy();
+          expect(txRes.hash.length).not.toEqual(0);
+        }
+
+        // send 3 txs
+        await sendTx();
+        await sendTx();
+        await sendTx();
+
+        client.disconnect();
+
+        await tendermintSearchIndexUpdated();
+      }
+    });
+
+    it("can paginate over blockSearch results", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
+
+      // expect one page of results
+      const s1 = await client.blockSearch({ query: query, page: 1, per_page: 2 });
+      expect(s1.totalCount).toEqual(3);
+      expect(s1.blocks.length).toEqual(2);
+
+      // second page
+      const s2 = await client.blockSearch({ query: query, page: 2, per_page: 2 });
+      expect(s2.totalCount).toEqual(3);
+      expect(s2.blocks.length).toEqual(1);
+
+      client.disconnect();
+    });
+
+    it("can get all search results in one call", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
+
+      const sall = await client.blockSearchAll({ query: query, per_page: 2 });
+      expect(sall.totalCount).toEqual(3);
+      expect(sall.blocks.length).toEqual(3);
+      // make sure there are in order from lowest to highest height
+      const [b1, b2, b3] = sall.blocks;
+      expect(b2.block.header.height).toEqual(b1.block.header.height + 1);
+      expect(b3.block.header.height).toEqual(b2.block.header.height + 1);
+
+      client.disconnect();
+    });
+  });
+
   describe("blockchain", () => {
     it("returns latest in descending order by default", async () => {
       pendingWithoutTendermint();
