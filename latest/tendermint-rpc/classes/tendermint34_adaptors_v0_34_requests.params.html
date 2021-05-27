@@ -91,6 +91,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodeabciquery" class="tsd-kind-icon">encode<wbr>Abci<wbr>Query</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblock" class="tsd-kind-icon">encode<wbr>Block</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblockresults" class="tsd-kind-icon">encode<wbr>Block<wbr>Results</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblocksearch" class="tsd-kind-icon">encode<wbr>Block<wbr>Search</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblockchain" class="tsd-kind-icon">encode<wbr>Blockchain</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodebroadcasttx" class="tsd-kind-icon">encode<wbr>Broadcast<wbr>Tx</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="tendermint34_adaptors_v0_34_requests.params.html#encodecommit" class="tsd-kind-icon">encode<wbr>Commit</a></li>
@@ -135,7 +136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L101">tendermint34/adaptors/v0-34/requests.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L116">tendermint34/adaptors/v0-34/requests.ts:116</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -158,7 +159,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L105">tendermint34/adaptors/v0-34/requests.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L120">tendermint34/adaptors/v0-34/requests.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L109">tendermint34/adaptors/v0-34/requests.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L124">tendermint34/adaptors/v0-34/requests.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -204,13 +205,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L117">tendermint34/adaptors/v0-34/requests.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L132">tendermint34/adaptors/v0-34/requests.ts:132</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>req: <a href="../interfaces/tendermint34_requests.blockresultsrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockResultsRequest</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">JsonRpcRequest</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="encodeblocksearch" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> encode<wbr>Block<wbr>Search</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">encode<wbr>Block<wbr>Search<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="../interfaces/tendermint34_requests.blocksearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockSearchRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JsonRpcRequest</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L136">tendermint34/adaptors/v0-34/requests.ts:136</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>req: <a href="../interfaces/tendermint34_requests.blocksearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockSearchRequest</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">JsonRpcRequest</span></h4>
@@ -227,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L113">tendermint34/adaptors/v0-34/requests.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L128">tendermint34/adaptors/v0-34/requests.ts:128</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -250,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L121">tendermint34/adaptors/v0-34/requests.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L140">tendermint34/adaptors/v0-34/requests.ts:140</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -273,7 +297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L125">tendermint34/adaptors/v0-34/requests.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L144">tendermint34/adaptors/v0-34/requests.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -296,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L129">tendermint34/adaptors/v0-34/requests.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L148">tendermint34/adaptors/v0-34/requests.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -319,7 +343,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L133">tendermint34/adaptors/v0-34/requests.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L152">tendermint34/adaptors/v0-34/requests.ts:152</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -342,7 +366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L137">tendermint34/adaptors/v0-34/requests.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L156">tendermint34/adaptors/v0-34/requests.ts:156</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -365,7 +389,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L141">tendermint34/adaptors/v0-34/requests.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L160">tendermint34/adaptors/v0-34/requests.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -388,7 +412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L147">tendermint34/adaptors/v0-34/requests.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L166">tendermint34/adaptors/v0-34/requests.ts:166</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -411,7 +435,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L152">tendermint34/adaptors/v0-34/requests.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L171">tendermint34/adaptors/v0-34/requests.ts:171</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -434,7 +458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L156">tendermint34/adaptors/v0-34/requests.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptors/v0-34/requests.ts#L175">tendermint34/adaptors/v0-34/requests.ts:175</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -481,6 +505,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblockresults" class="tsd-kind-icon">encode<wbr>Block<wbr>Results</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblocksearch" class="tsd-kind-icon">encode<wbr>Block<wbr>Search</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="tendermint34_adaptors_v0_34_requests.params.html#encodeblockchain" class="tsd-kind-icon">encode<wbr>Blockchain</a>

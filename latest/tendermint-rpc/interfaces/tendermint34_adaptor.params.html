@@ -85,6 +85,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodeabciquery" class="tsd-kind-icon">encode<wbr>Abci<wbr>Query</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodeblock" class="tsd-kind-icon">encode<wbr>Block</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodeblockresults" class="tsd-kind-icon">encode<wbr>Block<wbr>Results</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodeblocksearch" class="tsd-kind-icon">encode<wbr>Block<wbr>Search</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodeblockchain" class="tsd-kind-icon">encode<wbr>Blockchain</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodebroadcasttx" class="tsd-kind-icon">encode<wbr>Broadcast<wbr>Tx</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="tendermint34_adaptor.params.html#encodecommit" class="tsd-kind-icon">encode<wbr>Commit</a></li>
@@ -108,7 +109,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Abci<wbr>Info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.abciinforequest.html" class="tsd-signature-type" data-tsd-kind="Interface">AbciInfoRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L21">tendermint34/adaptor.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L21">tendermint34/adaptor.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -139,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Abci<wbr>Query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.abciqueryrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">AbciQueryRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L22">tendermint34/adaptor.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L22">tendermint34/adaptor.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -170,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Block<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.blockrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L23">tendermint34/adaptor.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L23">tendermint34/adaptor.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -201,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Block<wbr>Results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.blockresultsrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockResultsRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L25">tendermint34/adaptor.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L25">tendermint34/adaptor.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -227,12 +228,43 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="encodeblocksearch" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> encode<wbr>Block<wbr>Search</h3>
+					<div class="tsd-signature tsd-kind-icon">encode<wbr>Block<wbr>Search<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.blocksearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockSearchRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L26">tendermint34/adaptor.ts:26</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.blocksearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockSearchRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JsonRpcRequest</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>req: <a href="tendermint34_requests.blocksearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockSearchRequest</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">JsonRpcRequest</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="encodeblockchain" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> encode<wbr>Blockchain</h3>
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Blockchain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.blockchainrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockchainRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L24">tendermint34/adaptor.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L24">tendermint34/adaptor.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -263,7 +295,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Broadcast<wbr>Tx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.broadcasttxrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L26">tendermint34/adaptor.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L27">tendermint34/adaptor.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -294,7 +326,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Commit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.commitrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">CommitRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L27">tendermint34/adaptor.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L28">tendermint34/adaptor.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -325,7 +357,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Genesis<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.genesisrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">GenesisRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L28">tendermint34/adaptor.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L29">tendermint34/adaptor.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -356,7 +388,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Health<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.healthrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">HealthRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L29">tendermint34/adaptor.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L30">tendermint34/adaptor.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -387,7 +419,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.statusrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">StatusRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L30">tendermint34/adaptor.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L31">tendermint34/adaptor.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -418,7 +450,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Subscribe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.subscriberequest.html" class="tsd-signature-type" data-tsd-kind="Interface">SubscribeRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L31">tendermint34/adaptor.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L32">tendermint34/adaptor.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -449,7 +481,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Tx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.txrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">TxRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L32">tendermint34/adaptor.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L33">tendermint34/adaptor.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -480,7 +512,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>TxSearch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.txsearchrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">TxSearchRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L33">tendermint34/adaptor.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L34">tendermint34/adaptor.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -511,7 +543,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<wbr>Validators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="tendermint34_requests.validatorsrequest.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidatorsRequest</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">JsonRpcRequest</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/02f5439ce/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L34">tendermint34/adaptor.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/9767c2206/packages/tendermint-rpc/src/tendermint34/adaptor.ts#L35">tendermint34/adaptor.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -570,6 +602,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="tendermint34_adaptor.params.html#encodeblockresults" class="tsd-kind-icon">encode<wbr>Block<wbr>Results</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="tendermint34_adaptor.params.html#encodeblocksearch" class="tsd-kind-icon">encode<wbr>Block<wbr>Search</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="tendermint34_adaptor.params.html#encodeblockchain" class="tsd-kind-icon">encode<wbr>Blockchain</a>
