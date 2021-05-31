@@ -18,6 +18,18 @@ and this project adheres to
   `tendermint34.Block.lastCommit` optional to better handle the case of height 1
   where there is no previous block.
 
+### Fixed
+
+- @cosmjs/socket: Upgrade dependency "ws" to version 7 to avoid potential
+  security problems.
+
+## [0.25.4] - 2021-05-31
+
+### Fixed
+
+- @cosmjs/socket: Upgrade dependency "ws" to version 7 to avoid potential
+  security problems.
+
 ## [0.25.3] - 2021-05-18
 
 ### Fixed
@@ -486,6 +498,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[0.25.4]: https://github.com/cosmos/cosmjs/compare/v0.25.3...v0.25.4
 [0.25.3]: https://github.com/cosmos/cosmjs/compare/v0.25.2...v0.25.3
 [0.25.2]: https://github.com/cosmos/cosmjs/compare/v0.25.1...v0.25.2
 [0.25.1]: https://github.com/cosmos/cosmjs/compare/v0.25.0...v0.25.1
