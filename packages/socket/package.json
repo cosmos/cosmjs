@@ -44,7 +44,7 @@
   "dependencies": {
     "@cosmjs/stream": "^0.25.3",
     "isomorphic-ws": "^4.0.1",
-    "ws": "^6.2.0",
+    "ws": "^7",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
