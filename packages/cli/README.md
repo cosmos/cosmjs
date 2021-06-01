@@ -45,9 +45,8 @@ $ cosmwasm-cli
 
 ```ts
 // Get account information
-const { account_number, sequence } = (
-  await client.authAccounts(faucetAddress)
-).result.value;
+const { account_number, sequence } = (await client.authAccounts(faucetAddress))
+  .result.value;
 
 // Craft a send transaction
 const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));

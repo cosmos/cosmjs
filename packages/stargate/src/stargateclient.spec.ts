@@ -53,7 +53,7 @@ describe("StargateClient", () => {
     it("caches chain ID", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const openedClient = (client as unknown) as PrivateStargateClient;
+      const openedClient = client as unknown as PrivateStargateClient;
       const getCodeSpy = spyOn(openedClient.tmClient!, "status").and.callThrough();
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network

@@ -31,7 +31,7 @@ describe("SigningStargateClient", () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
-      const openedClient = (client as unknown) as PrivateSigningStargateClient;
+      const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -88,7 +88,7 @@ describe("SigningStargateClient", () => {
       registry.register("/custom.MsgCustom", MsgSend);
       const options = { registry: registry };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningStargateClient;
+      const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
     });
 
@@ -98,7 +98,7 @@ describe("SigningStargateClient", () => {
       const gasPrice = GasPrice.fromString("3.14utest");
       const options = { gasPrice: gasPrice };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningStargateClient;
+      const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -157,7 +157,7 @@ describe("SigningStargateClient", () => {
       };
       const options = { gasLimits: gasLimits };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningStargateClient;
+      const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [
@@ -216,7 +216,7 @@ describe("SigningStargateClient", () => {
       };
       const options = { gasPrice: gasPrice, gasLimits: gasLimits };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = (client as unknown) as PrivateSigningStargateClient;
+      const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
           amount: [

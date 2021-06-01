@@ -255,9 +255,8 @@ transactions, you need to setup the auth extension with:
 import { LcdClient, setupAuthExtension } from "@cosmjs/launchpad";
 
 const client = LcdClient.withExtensions({ apiUrl }, setupAuthExtension);
-const { account_number, sequence } = (
-  await client.auth.account(myAddress)
-).result.value;
+const { account_number, sequence } = (await client.auth.account(myAddress))
+  .result.value;
 ```
 
 A full client can use all of the following extensions:
@@ -424,9 +423,8 @@ const fee: StdFee = {
   gas: "89000000",
 };
 const memo = "Time for action";
-const { account_number, sequence } = (
-  await client.auth.account(myAddress)
-).result.value;
+const { account_number, sequence } = (await client.auth.account(myAddress))
+  .result.value;
 const signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
 const { signed, signature } = await signer.sign(myAddress, signDoc);
 const signedTx = makeStdTx(signed, signature);

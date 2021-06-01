@@ -41,7 +41,7 @@ describe("CosmosClient", () => {
     it("caches chain ID", async () => {
       pendingWithoutLaunchpad();
       const client = new CosmosClient(launchpad.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmosClient;
+      const openedClient = client as unknown as PrivateCosmosClient;
       const getCodeSpy = spyOn(openedClient.lcdClient, "nodeInfo").and.callThrough();
 
       expect(await client.getChainId()).toEqual(launchpad.chainId); // from network
@@ -55,7 +55,7 @@ describe("CosmosClient", () => {
     it("gets height via last block", async () => {
       pendingWithoutLaunchpad();
       const client = new CosmosClient(launchpad.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmosClient;
+      const openedClient = client as unknown as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
 
       const height1 = await client.getHeight();
@@ -72,7 +72,7 @@ describe("CosmosClient", () => {
       pendingWithoutLaunchpad();
       const client = new CosmosClient(launchpad.endpoint);
 
-      const openedClient = (client as unknown) as PrivateCosmosClient;
+      const openedClient = client as unknown as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 

@@ -67,7 +67,7 @@ export class QueryClient {
     B extends object,
     C extends object,
     D extends object,
-    E extends object
+    E extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -84,7 +84,7 @@ export class QueryClient {
     C extends object,
     D extends object,
     E extends object,
-    F extends object
+    F extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -103,7 +103,7 @@ export class QueryClient {
     D extends object,
     E extends object,
     F extends object,
-    G extends object
+    G extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -124,7 +124,7 @@ export class QueryClient {
     E extends object,
     F extends object,
     G extends object,
-    H extends object
+    H extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -147,7 +147,7 @@ export class QueryClient {
     F extends object,
     G extends object,
     H extends object,
-    I extends object
+    I extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -172,7 +172,7 @@ export class QueryClient {
     G extends object,
     H extends object,
     I extends object,
-    J extends object
+    J extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -199,7 +199,7 @@ export class QueryClient {
     H extends object,
     I extends object,
     J extends object,
-    K extends object
+    K extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -228,7 +228,7 @@ export class QueryClient {
     I extends object,
     J extends object,
     K extends object,
-    L extends object
+    L extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -259,7 +259,7 @@ export class QueryClient {
     J extends object,
     K extends object,
     L extends object,
-    M extends object
+    M extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -292,7 +292,7 @@ export class QueryClient {
     K extends object,
     L extends object,
     M extends object,
-    N extends object
+    N extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -327,7 +327,7 @@ export class QueryClient {
     L extends object,
     M extends object,
     N extends object,
-    O extends object
+    O extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -364,7 +364,7 @@ export class QueryClient {
     M extends object,
     N extends object,
     O extends object,
-    P extends object
+    P extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -403,7 +403,7 @@ export class QueryClient {
     N extends object,
     O extends object,
     P extends object,
-    Q extends object
+    Q extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
@@ -444,7 +444,7 @@ export class QueryClient {
     O extends object,
     P extends object,
     Q extends object,
-    R extends object
+    R extends object,
   >(
     tmClient: Tendermint34Client,
     setupExtensionA: QueryExtensionSetup<A>,
