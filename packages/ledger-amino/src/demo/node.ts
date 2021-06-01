@@ -22,9 +22,7 @@ export async function createSigner(): Promise<LedgerSigner> {
   });
 }
 
-export async function getAccounts(
-  signer: LedgerSigner,
-): Promise<
+export async function getAccounts(signer: LedgerSigner): Promise<
   ReadonlyArray<{
     readonly algo: string;
     readonly address: string;

@@ -28,9 +28,10 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   };
 }
 
-export function decodeSignature(
-  signature: StdSignature,
-): { readonly pubkey: Uint8Array; readonly signature: Uint8Array } {
+export function decodeSignature(signature: StdSignature): {
+  readonly pubkey: Uint8Array;
+  readonly signature: Uint8Array;
+} {
   switch (signature.pub_key.type) {
     // Note: please don't add cases here without writing additional unit tests
     case pubkeyType.secp256k1:

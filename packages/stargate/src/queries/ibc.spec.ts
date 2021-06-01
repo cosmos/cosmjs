@@ -228,11 +228,11 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.channel.unreceivedPackets(ibcTest.portId, ibcTest.channelId, [
-          1,
-          2,
-          3,
-        ]);
+        const response = await client.ibc.channel.unreceivedPackets(
+          ibcTest.portId,
+          ibcTest.channelId,
+          [1, 2, 3],
+        );
         expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
         expect(response.height).toBeDefined();
 
@@ -245,15 +245,11 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.channel.unreceivedAcks(ibcTest.portId, ibcTest.channelId, [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-        ]);
+        const response = await client.ibc.channel.unreceivedAcks(
+          ibcTest.portId,
+          ibcTest.channelId,
+          [1, 2, 3, 4, 5, 6, 7],
+        );
         expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
         expect(response.height).toBeDefined();
 
