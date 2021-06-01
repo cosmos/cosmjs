@@ -17,7 +17,8 @@ export const tendermintShortHashMatcher = /^[0-9a-f]{40}$/;
 export const dateTimeStampMatcher = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z$/;
 export const semverMatcher = /^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$/;
 /** @see https://rgxdb.com/r/1NUN74O6 */
-export const base64Matcher = /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;
+export const base64Matcher =
+  /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;
 export const hexMatcher = /^([0-9a-fA-F][0-9a-fA-F])*$/;
 
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32

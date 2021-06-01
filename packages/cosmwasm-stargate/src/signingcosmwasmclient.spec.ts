@@ -228,13 +228,8 @@ describe("SigningCosmWasmClient", () => {
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const wasm = getHackatom().data;
-      const {
-        codeId,
-        originalChecksum,
-        originalSize,
-        compressedChecksum,
-        compressedSize,
-      } = await client.upload(alice.address0, wasm);
+      const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
+        await client.upload(alice.address0, wasm);
       expect(originalChecksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);

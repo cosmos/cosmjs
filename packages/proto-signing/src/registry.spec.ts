@@ -23,11 +23,11 @@ describe("registry demo", () => {
       denom: "ucosm",
       amount: "1234567890",
     });
-    const msgSend = (MsgSend.fromPartial({
+    const msgSend = MsgSend.fromPartial({
       fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
-    }) as unknown) as IMsgSend;
+    }) as unknown as IMsgSend;
     const msgSendBytes = MsgSend.encode(msgSend).finish();
     const msgSendWrapped = Any.fromPartial({
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
