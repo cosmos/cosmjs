@@ -44,38 +44,18 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           command: yarn build
       - persist_to_workspace:
           root: .
           paths:
             - packages/*/build/*
-      - run:
-          name: Check for clean workspace
-          command: |
-            SOURCE_CHANGES=$(git status --porcelain)
-            if [[ -n "$SOURCE_CHANGES" ]]; then
-              echo "Error: repository contains changes."
-              echo "Showing 'git status' and 'git diff' for debugging now:"
-              git status
-              git --no-pager diff
-              exit 1
-            fi
   test:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -138,10 +118,6 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -150,12 +126,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
@@ -188,13 +159,13 @@ jobs:
           environment:
             SKIP_BUILD: 1
           command: |
-            ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/helpers.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/helpers.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
+            yarn node ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
       - run:
           name: Stop chains
           command: |
@@ -266,10 +237,6 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -278,12 +245,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
@@ -388,10 +350,6 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -400,12 +358,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
@@ -497,10 +450,6 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -509,12 +458,7 @@ jobs:
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
@@ -563,21 +507,12 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Build package docs
           command: yarn docs
@@ -609,6 +544,9 @@ jobs:
     docker:
       - image: circleci/node:10-buster
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: sudo apt-get install git-lfs
       - checkout
       - attach_workspace:
           at: /tmp/builds
@@ -624,21 +562,12 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+          command: yarn install --immutable --immutable-cache --check-cache
       - run:
           name: Lint
           command: yarn lint
@@ -648,14 +577,3 @@ jobs:
       - run:
           name: Format shell scripts
           command: yarn format-shell
-      - run:
-          name: Check for clean workspace
-          command: |
-            SOURCE_CHANGES=$(git status --porcelain)
-            if [[ -n "$SOURCE_CHANGES" ]]; then
-              echo "Error: repository contains changes."
-              echo "Showing 'git status' and 'git diff' for debugging now:"
-              git status
-              git --no-pager diff
-              exit 1
-            fi

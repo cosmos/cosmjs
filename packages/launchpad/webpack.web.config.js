@@ -23,9 +23,12 @@ module.exports = [
     ],
     resolve: {
       fallback: {
-        crypto: require.resolve("crypto-browserify"),
-        path: require.resolve("path-browserify"),
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
         stream: require.resolve("stream-browserify"),
+        string_decoder: false,
       },
     },
   },

@@ -16,17 +16,19 @@ module.exports = [
       filename: "tests.js",
     },
     plugins: [
-      new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "" }),
+      new webpack.EnvironmentPlugin({ SIMAPP_ENABLED: "", SLOW_SIMAPP_ENABLED: "" }),
       new webpack.ProvidePlugin({
         Buffer: ["buffer", "Buffer"],
       }),
-      new webpack.ProvidePlugin({ process: "process/browser" }),
     ],
     resolve: {
       fallback: {
-        crypto: require.resolve("crypto-browserify"),
-        path: require.resolve("path-browserify"),
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
         stream: require.resolve("stream-browserify"),
+        string_decoder: false,
       },
     },
   },

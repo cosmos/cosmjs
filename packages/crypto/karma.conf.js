@@ -1,7 +1,14 @@
+const chrome = require("karma-chrome-launcher");
+const firefox = require("karma-firefox-launcher");
+const jasmine = require("karma-jasmine");
+const kjhtml = require("karma-jasmine-html-reporter");
+
 module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: ".",
+    // registers plugins but does not activate them
+    plugins: [jasmine, kjhtml, chrome, firefox],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -30,10 +37,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-
-    // Use debug until Firefox starting issues on Travis are understood
-    // https://travis-ci.com/iov-one/iov-core/jobs/174888518
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,

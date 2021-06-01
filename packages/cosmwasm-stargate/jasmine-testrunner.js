@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable @typescript-eslint/naming-convention */
 
 if (process.env.SES_ENABLED) {
@@ -36,4 +35,4 @@ const reporter = new SpecReporter({
 // initialize and execute
 jasmine.env.clearReporters();
 jasmine.addReporter(reporter);
-jasmine.execute();
+void jasmine.execute();
