@@ -28,23 +28,15 @@ export const adaptor33 = v0_33;
  */
 export const adaptor34 = v0_33; // With this alias we can swap out the implementation without affecting caller code.
 
-const hashes = {
-  v0_34: [
-    "ca2c9df", // v0.34.0-rc6
-    "182fa32", // v0.34.0
-  ],
-};
-
 /**
  * Returns an Adaptor implementation for a given tendermint version.
  * Throws when version is not supported.
  *
  * @param version full Tendermint version string, e.g. "0.20.1"
  */
-export function adaptorForVersion(version: string): Adaptor {
-  if (version.startsWith("0.33.") || version.startsWith("0.34.") || hashes.v0_34.includes(version)) {
-    return v0_33;
-  } else {
-    throw new Error(`Unsupported tendermint version: ${version}`);
-  }
+export function adaptorForVersion(_version: string): Adaptor {
+  // Note: In some cases, Tendermint 0.34 returns an empty version value.
+  // This supports 0.33 and 0.34 now, no matter which version you provide.
+  // Very soon this function becomes obsolete (https://github.com/cosmos/cosmjs/issues/789).
+  return v0_33;
 }

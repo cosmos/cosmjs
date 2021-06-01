@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/socket",
-  "version": "0.25.3",
+  "version": "0.25.4",
   "description": "Utility functions for working with WebSockets",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -43,7 +43,7 @@
   "dependencies": {
     "@cosmjs/stream": "workspace:packages/stream",
     "isomorphic-ws": "^4.0.1",
-    "ws": "^6.2.0",
+    "ws": "^7",
     "xstream": "^11.14.0"
   },
   "devDependencies": {

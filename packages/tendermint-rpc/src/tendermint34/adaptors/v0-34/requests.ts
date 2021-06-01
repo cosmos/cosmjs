@@ -30,6 +30,21 @@ function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams):
   };
 }
 
+interface RpcBlockSearchParams {
+  readonly query: string;
+  readonly page?: string;
+  readonly per_page?: string;
+  readonly order_by?: string;
+}
+function encodeBlockSearchParams(params: requests.BlockSearchParams): RpcBlockSearchParams {
+  return {
+    query: params.query,
+    page: may(Integer.encode, params.page),
+    per_page: may(Integer.encode, params.per_page),
+    order_by: params.order_by,
+  };
+}
+
 interface RpcAbciQueryParams {
   readonly path: string;
   /** hex encoded */
@@ -116,6 +131,10 @@ export class Params {
 
   public static encodeBlockResults(req: requests.BlockResultsRequest): JsonRpcRequest {
     return createJsonRpcRequest(req.method, encodeHeightParam(req.params));
+  }
+
+  public static encodeBlockSearch(req: requests.BlockSearchRequest): JsonRpcRequest {
+    return createJsonRpcRequest(req.method, encodeBlockSearchParams(req.params));
   }
 
   public static encodeBroadcastTx(req: requests.BroadcastTxRequest): JsonRpcRequest {

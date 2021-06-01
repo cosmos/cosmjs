@@ -2,7 +2,7 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Header, NewBlockHeaderEvent, ProofOp, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { tendermint34, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 
@@ -10,7 +10,7 @@ import { ProofOps } from "../codec/tendermint/crypto/proof";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 
-function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
+function checkAndParseOp(op: tendermint34.ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
   if (op.type !== kind) {
     throw new Error(`Op expected to be ${kind}, got "${op.type}`);
   }
@@ -587,15 +587,15 @@ export class QueryClient {
 
   // this must return the header for height+1
   // throws an error if height is 0 or undefined
-  private async getNextHeader(height?: number): Promise<Header> {
+  private async getNextHeader(height?: number): Promise<tendermint34.Header> {
     assertDefined(height);
     if (height === 0) {
       throw new Error("Query returned height 0, cannot prove it");
     }
 
     const searchHeight = height + 1;
-    let nextHeader: Header | undefined;
-    let headersSubscription: Stream<NewBlockHeaderEvent> | undefined;
+    let nextHeader: tendermint34.Header | undefined;
+    let headersSubscription: Stream<tendermint34.NewBlockHeaderEvent> | undefined;
     try {
       headersSubscription = this.tmClient.subscribeNewBlockHeader();
     } catch {

@@ -46,6 +46,12 @@ function hashTree(hashes: readonly Uint8Array[]): Uint8Array {
 }
 
 export function hashBlock(header: Header): Uint8Array {
+  if (!header.lastBlockId) {
+    throw new Error(
+      "Hashing a block header with no last block ID (i.e. header at height 1) is not supported. If you need this, contributions are welcome. Please add documentation and test vectors for this case.",
+    );
+  }
+
   const encodedFields: readonly Uint8Array[] = [
     encodeVersion(header.version),
     encodeString(header.chainId),
