@@ -1053,6 +1053,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:2.8.5"
       ],
       [
+        "cosmjs-types",
+        "npm:0.1.0"
+      ],
+      [
         "create-hash",
         "npm:1.2.0"
       ],
@@ -3856,6 +3860,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:15.3.1"],
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.24.0"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.24.0"],
+            ["cosmjs-types", "npm:0.1.0"],
             ["eslint", "npm:7.26.0"],
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],
             ["eslint-import-resolver-node", "npm:0.3.4"],
@@ -4888,6 +4893,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-15.3.1-2d4ca53b7d-1c3c94f4c8.zip/node_modules/@types/node/",
           "packageDependencies": [
             ["@types/node", "npm:15.3.1"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:15.9.0", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-15.9.0-994b10396b-09399100ea.zip/node_modules/@types/node/",
+          "packageDependencies": [
+            ["@types/node", "npm:15.9.0"]
           ],
           "linkType": "HARD",
         }]
@@ -7123,6 +7135,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.0.7#builtin<compat/typescript>::version=4.0.7&hash=a45b0e"]
           ],
           "linkType": "SOFT",
+        }]
+      ]],
+      ["cosmjs-types", [
+        ["npm:0.1.0", {
+          "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.1.0-309209b1b4-ca08e65750.zip/node_modules/cosmjs-types/",
+          "packageDependencies": [
+            ["cosmjs-types", "npm:0.1.0"],
+            ["long", "npm:4.0.0"],
+            ["protobufjs", "npm:6.11.2"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["create-hash", [
@@ -10867,6 +10890,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@protobufjs/utf8", "npm:1.1.0"],
             ["@types/long", "npm:4.0.1"],
             ["@types/node", "npm:13.13.52"],
+            ["long", "npm:4.0.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:6.11.2", {
+          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.2-9b422ce98e/node_modules/protobufjs/",
+          "packageDependencies": [
+            ["protobufjs", "npm:6.11.2"],
+            ["@protobufjs/aspromise", "npm:1.1.2"],
+            ["@protobufjs/base64", "npm:1.1.2"],
+            ["@protobufjs/codegen", "npm:2.0.4"],
+            ["@protobufjs/eventemitter", "npm:1.1.0"],
+            ["@protobufjs/fetch", "npm:1.1.0"],
+            ["@protobufjs/float", "npm:1.0.2"],
+            ["@protobufjs/inquire", "npm:1.1.0"],
+            ["@protobufjs/path", "npm:1.1.2"],
+            ["@protobufjs/pool", "npm:1.1.0"],
+            ["@protobufjs/utf8", "npm:1.1.0"],
+            ["@types/long", "npm:4.0.1"],
+            ["@types/node", "npm:15.9.0"],
             ["long", "npm:4.0.0"]
           ],
           "linkType": "HARD",
