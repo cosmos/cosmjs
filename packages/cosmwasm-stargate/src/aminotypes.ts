@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoConverter, Coin } from "@cosmjs/stargate";
-import Long from "long";
-
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -10,7 +8,8 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/cosmwasm/wasm/v1beta1/tx";
+} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
+import Long from "long";
 
 // TODO: implement
 /**

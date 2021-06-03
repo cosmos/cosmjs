@@ -17,8 +17,8 @@ import {
   isBroadcastTxSuccess,
   isMsgSendEncodeObject,
 } from "@cosmjs/stargate";
-import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import {

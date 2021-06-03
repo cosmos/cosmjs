@@ -1,5 +1,4 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -7,7 +6,7 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/cosmwasm/wasm/v1beta1/tx";
+} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
 
 export interface MsgStoreCodeEncodeObject extends EncodeObject {
   readonly typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode";

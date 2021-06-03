@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoTypes, coins } from "@cosmjs/stargate";
+import {
+  MsgClearAdmin,
+  MsgExecuteContract,
+  MsgInstantiateContract,
+  MsgMigrateContract,
+  MsgStoreCode,
+  MsgUpdateAdmin,
+} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
 import Long from "long";
 
 import {
@@ -12,14 +20,6 @@ import {
   AminoMsgUpdateAdmin,
   cosmWasmTypes,
 } from "./aminotypes";
-import {
-  MsgClearAdmin,
-  MsgExecuteContract,
-  MsgInstantiateContract,
-  MsgMigrateContract,
-  MsgStoreCode,
-  MsgUpdateAdmin,
-} from "./codec/cosmwasm/wasm/v1beta1/tx";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

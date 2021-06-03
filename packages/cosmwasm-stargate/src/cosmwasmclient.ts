@@ -30,9 +30,9 @@ import {
 } from "@cosmjs/stargate";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
+import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
+import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1beta1/types";
 
-import { CodeInfoResponse } from "./codec/cosmwasm/wasm/v1beta1/query";
-import { ContractCodeHistoryOperationType } from "./codec/cosmwasm/wasm/v1beta1/types";
 import { setupWasmExtension, WasmExtension } from "./queries";
 
 // Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
