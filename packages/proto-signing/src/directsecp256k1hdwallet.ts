@@ -14,8 +14,8 @@ import {
 } from "@cosmjs/crypto";
 import { Bech32, fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils/build";
+import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer";
 import { makeSignBytes } from "./signing";
 import {

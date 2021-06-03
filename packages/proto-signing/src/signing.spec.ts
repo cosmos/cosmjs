@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
-import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { decodeTxRaw } from "./decode";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
 import { Registry } from "./registry";

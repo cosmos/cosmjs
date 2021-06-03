@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
+import { MsgSend as IMsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 import { Field, Type } from "protobufjs";
 
-import { MsgSend as IMsgSend } from "./codec/cosmos/bank/v1beta1/tx";
-import { TxBody } from "./codec/cosmos/tx/v1beta1/tx";
-import { Any } from "./codec/google/protobuf/any";
 import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry";
 
 describe("registry demo", () => {
