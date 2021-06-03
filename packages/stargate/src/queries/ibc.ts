@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
-import Long from "long";
-
-import { Any } from "../codec/google/protobuf/any";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import {
   QueryClientImpl as TransferQuery,
   QueryDenomTraceResponse,
   QueryDenomTracesResponse,
   QueryParamsResponse as QueryTransferParamsResponse,
-} from "../codec/ibc/applications/transfer/v1/query";
-import { Channel } from "../codec/ibc/core/channel/v1/channel";
+} from "cosmjs-types/ibc/applications/transfer/v1/query";
+import { Channel } from "cosmjs-types/ibc/core/channel/v1/channel";
 import {
   QueryChannelClientStateResponse,
   QueryChannelConsensusStateResponse,
@@ -26,8 +24,8 @@ import {
   QueryPacketReceiptResponse,
   QueryUnreceivedAcksResponse,
   QueryUnreceivedPacketsResponse,
-} from "../codec/ibc/core/channel/v1/query";
-import { Height } from "../codec/ibc/core/client/v1/client";
+} from "cosmjs-types/ibc/core/channel/v1/query";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 import {
   QueryClientImpl as ClientQuery,
   QueryClientParamsResponse,
@@ -36,7 +34,7 @@ import {
   QueryConsensusStateRequest,
   QueryConsensusStateResponse,
   QueryConsensusStatesResponse,
-} from "../codec/ibc/core/client/v1/query";
+} from "cosmjs-types/ibc/core/client/v1/query";
 import {
   QueryClientConnectionsResponse,
   QueryClientImpl as ConnectionQuery,
@@ -45,11 +43,13 @@ import {
   QueryConnectionConsensusStateResponse,
   QueryConnectionResponse,
   QueryConnectionsResponse,
-} from "../codec/ibc/core/connection/v1/query";
+} from "cosmjs-types/ibc/core/connection/v1/query";
 import {
   ClientState as TendermintClientState,
   ConsensusState as TendermintConsensusState,
-} from "../codec/ibc/lightclients/tendermint/v1/tendermint";
+} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
+import Long from "long";
+
 import { QueryClient } from "./queryclient";
 import { createPagination, createProtobufRpcClient } from "./utils";
 

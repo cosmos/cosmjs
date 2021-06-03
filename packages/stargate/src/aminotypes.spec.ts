@@ -2,6 +2,21 @@
 import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { coin, coins } from "@cosmjs/proto-signing";
+import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import {
+  MsgFundCommunityPool,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import {
+  MsgBeginRedelegate,
+  MsgCreateValidator,
+  MsgDelegate,
+  MsgEditValidator,
+  MsgUndelegate,
+} from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
 
 import {
@@ -19,21 +34,6 @@ import {
   AminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
-import { MsgMultiSend, MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
-import {
-  MsgFundCommunityPool,
-  MsgSetWithdrawAddress,
-  MsgWithdrawDelegatorReward,
-  MsgWithdrawValidatorCommission,
-} from "./codec/cosmos/distribution/v1beta1/tx";
-import {
-  MsgBeginRedelegate,
-  MsgCreateValidator,
-  MsgDelegate,
-  MsgEditValidator,
-  MsgUndelegate,
-} from "./codec/cosmos/staking/v1beta1/tx";
-import { MsgTransfer } from "./codec/ibc/applications/transfer/v1/tx";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

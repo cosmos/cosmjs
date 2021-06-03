@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "../codec/cosmos/bank/v1beta1/query";
-import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { nonNegativeIntegerMatcher, pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { toAccAddress } from "./utils";

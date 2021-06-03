@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import Long from "long";
-
 import {
   QueryClientImpl,
   QueryCommunityPoolResponse,
@@ -12,7 +10,9 @@ import {
   QueryValidatorCommissionResponse,
   QueryValidatorOutstandingRewardsResponse,
   QueryValidatorSlashesResponse,
-} from "../codec/cosmos/distribution/v1beta1/query";
+} from "cosmjs-types/cosmos/distribution/v1beta1/query";
+import Long from "long";
+
 import { QueryClient } from "./queryclient";
 import { createPagination, createProtobufRpcClient } from "./utils";
 
