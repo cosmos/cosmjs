@@ -3303,6 +3303,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.21.1"],
             ["babylon", "npm:6.18.0"],
             ["colors", "npm:1.4.0"],
+            ["cosmjs-types", "npm:0.1.0"],
             ["diff", "npm:4.0.2"],
             ["eslint", "npm:7.26.0"],
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],
