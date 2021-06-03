@@ -34,9 +34,7 @@
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
-    "get-proto": "rm -rf proto && WASM_REF=v0.16.0-alpha2 COSMOS_SDK_REF=v0.42.4 ./scripts/get-proto.sh",
-    "define-proto": "./scripts/define-proto.sh && prettier --write \"src/codec/**/*.ts\""
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:packages/amino",
