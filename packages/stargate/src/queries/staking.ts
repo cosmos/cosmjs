@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import Long from "long";
-
 import {
   QueryClientImpl,
   QueryDelegationResponse,
@@ -17,8 +15,10 @@ import {
   QueryValidatorResponse,
   QueryValidatorsResponse,
   QueryValidatorUnbondingDelegationsResponse,
-} from "../codec/cosmos/staking/v1beta1/query";
-import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
+} from "cosmjs-types/cosmos/staking/v1beta1/query";
+import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import Long from "long";
+
 import { QueryClient } from "./queryclient";
 import { createPagination, createProtobufRpcClient } from "./utils";
 

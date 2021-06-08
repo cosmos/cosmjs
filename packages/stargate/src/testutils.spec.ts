@@ -9,9 +9,8 @@ import {
   DirectSignResponse,
   makeAuthInfoBytes,
 } from "@cosmjs/proto-signing";
-
-import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignDoc, TxBody } from "./codec/cosmos/tx/v1beta1/tx";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP_ENABLED;

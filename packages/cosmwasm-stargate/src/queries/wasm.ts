@@ -2,8 +2,6 @@
 import { JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
 import { createPagination, createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
-import Long from "long";
-
 import {
   QueryAllContractStateResponse,
   QueryClientImpl,
@@ -13,7 +11,8 @@ import {
   QueryContractInfoResponse,
   QueryContractsByCodeResponse,
   QueryRawContractStateResponse,
-} from "../codec/cosmwasm/wasm/v1beta1/query";
+} from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
+import Long from "long";
 
 export interface WasmExtension {
   readonly wasm: {

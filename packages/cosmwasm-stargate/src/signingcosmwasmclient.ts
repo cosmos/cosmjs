@@ -44,16 +44,12 @@ import {
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
-import { MsgWithdrawDelegatorReward } from "@cosmjs/stargate/build/codec/cosmos/distribution/v1beta1/tx";
-import { MsgDelegate, MsgUndelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
-import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
-import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
-import Long from "long";
-import pako from "pako";
-
-import { cosmWasmTypes } from "./aminotypes";
+import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -61,7 +57,11 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "./codec/cosmwasm/wasm/v1beta1/tx";
+} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
+import Long from "long";
+import pako from "pako";
+
+import { cosmWasmTypes } from "./aminotypes";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
   MsgClearAdminEncodeObject,

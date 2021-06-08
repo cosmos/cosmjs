@@ -1,4 +1,4 @@
-import { AuthInfo, TxBody, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 export interface DecodedTxRaw {
   readonly authInfo: AuthInfo;

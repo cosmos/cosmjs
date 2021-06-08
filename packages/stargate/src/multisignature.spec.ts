@@ -7,9 +7,9 @@ import {
 } from "@cosmjs/amino";
 import { coins } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
-import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { MsgSendEncodeObject } from "./encodeobjects";
 import { makeCompactBitArray, makeMultisignedTx } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";

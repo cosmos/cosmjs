@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
+import { QueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { QueryClientImpl } from "../codec/cosmos/bank/v1beta1/query";
-import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { QueryClient } from "./queryclient";
 import { createProtobufRpcClient, toAccAddress } from "./utils";
 

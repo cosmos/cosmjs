@@ -2,10 +2,10 @@
 import { encodePubkey } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
+import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { BaseAccount } from "../codec/cosmos/auth/v1beta1/auth";
-import { Any } from "../codec/google/protobuf/any";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";

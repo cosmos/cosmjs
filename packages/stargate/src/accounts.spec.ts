@@ -1,5 +1,6 @@
+import { Any } from "cosmjs-types/google/protobuf/any";
+
 import { accountFromAny } from "./accounts";
-import { Any } from "./codec/google/protobuf/any";
 
 describe("accounts", () => {
   describe("accountFromAny", () => {

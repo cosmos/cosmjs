@@ -1,7 +1,7 @@
 import { Bech32 } from "@cosmjs/encoding";
+import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import Long from "long";
 
-import { PageRequest } from "../codec/cosmos/base/query/v1beta1/pagination";
 import { QueryClient } from "./queryclient";
 
 /**

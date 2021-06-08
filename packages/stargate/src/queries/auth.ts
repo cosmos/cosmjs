@@ -1,5 +1,6 @@
-import { QueryClientImpl } from "../codec/cosmos/auth/v1beta1/query";
-import { Any } from "../codec/google/protobuf/any";
+import { QueryClientImpl } from "cosmjs-types/cosmos/auth/v1beta1/query";
+import { Any } from "cosmjs-types/google/protobuf/any";
+
 import { QueryClient } from "./queryclient";
 import { createProtobufRpcClient, toAccAddress } from "./utils";
 

@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
-
-import { Coin } from "./codec/cosmos/base/v1beta1/coin";
-import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignDoc, SignerInfo } from "./codec/cosmos/tx/v1beta1/tx";
-import { Any } from "./codec/google/protobuf/any";
 
 /**
  * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.

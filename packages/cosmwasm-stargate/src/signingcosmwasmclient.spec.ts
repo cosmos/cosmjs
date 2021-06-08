@@ -14,16 +14,16 @@ import {
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
-import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
-import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
-import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
-import { AuthInfo, TxBody, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
+import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
-import { MsgStoreCode } from "./codec/cosmwasm/wasm/v1beta1/tx";
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {

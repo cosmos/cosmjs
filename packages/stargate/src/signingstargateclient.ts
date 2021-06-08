@@ -14,27 +14,24 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
-import Long from "long";
-
-import { AminoTypes } from "./aminotypes";
-import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
-import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   MsgFundCommunityPool,
   MsgSetWithdrawAddress,
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
-} from "./codec/cosmos/distribution/v1beta1/tx";
+} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
   MsgUndelegate,
-} from "./codec/cosmos/staking/v1beta1/tx";
-import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
-import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
-import { MsgTransfer } from "./codec/ibc/applications/transfer/v1/tx";
+} from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import {
   MsgAcknowledgement,
   MsgChannelCloseConfirm,
@@ -46,20 +43,23 @@ import {
   MsgRecvPacket,
   MsgTimeout,
   MsgTimeoutOnClose,
-} from "./codec/ibc/core/channel/v1/tx";
-import { Height } from "./codec/ibc/core/client/v1/client";
+} from "cosmjs-types/ibc/core/channel/v1/tx";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 import {
   MsgCreateClient,
   MsgSubmitMisbehaviour,
   MsgUpdateClient,
   MsgUpgradeClient,
-} from "./codec/ibc/core/client/v1/tx";
+} from "cosmjs-types/ibc/core/client/v1/tx";
 import {
   MsgConnectionOpenAck,
   MsgConnectionOpenConfirm,
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
-} from "./codec/ibc/core/connection/v1/tx";
+} from "cosmjs-types/ibc/core/connection/v1/tx";
+import Long from "long";
+
+import { AminoTypes } from "./aminotypes";
 import {
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,

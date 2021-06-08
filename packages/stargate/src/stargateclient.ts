@@ -3,10 +3,10 @@ import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
+import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 import { Account, accountFromAny } from "./accounts";
-import { MsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
-import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 import {
   isSearchByHeightQuery,
