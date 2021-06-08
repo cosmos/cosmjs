@@ -2,9 +2,9 @@
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-import { createJsonRpcRequest } from "../../../jsonrpc";
-import { assertNotEmpty, Integer, may } from "../../encodings";
-import * as requests from "../../requests";
+import { createJsonRpcRequest } from "../../jsonrpc";
+import { assertNotEmpty, Integer, may } from "../encodings";
+import * as requests from "../requests";
 
 interface HeightParam {
   readonly height?: number;
@@ -27,6 +27,21 @@ function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams):
   return {
     minHeight: may(Integer.encode, param.minHeight),
     maxHeight: may(Integer.encode, param.maxHeight),
+  };
+}
+
+interface RpcBlockSearchParams {
+  readonly query: string;
+  readonly page?: string;
+  readonly per_page?: string;
+  readonly order_by?: string;
+}
+function encodeBlockSearchParams(params: requests.BlockSearchParams): RpcBlockSearchParams {
+  return {
+    query: params.query,
+    page: may(Integer.encode, params.page),
+    per_page: may(Integer.encode, params.per_page),
+    order_by: params.order_by,
   };
 }
 
@@ -116,6 +131,10 @@ export class Params {
 
   public static encodeBlockResults(req: requests.BlockResultsRequest): JsonRpcRequest {
     return createJsonRpcRequest(req.method, encodeHeightParam(req.params));
+  }
+
+  public static encodeBlockSearch(req: requests.BlockSearchRequest): JsonRpcRequest {
+    return createJsonRpcRequest(req.method, encodeBlockSearchParams(req.params));
   }
 
   public static encodeBroadcastTx(req: requests.BroadcastTxRequest): JsonRpcRequest {

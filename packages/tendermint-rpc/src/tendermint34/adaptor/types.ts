@@ -1,8 +1,8 @@
 import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 
-import { SubscriptionEvent } from "../rpcclients";
-import * as requests from "./requests";
-import * as responses from "./responses";
+import { SubscriptionEvent } from "../../rpcclients";
+import * as requests from "../requests";
+import * as responses from "../responses";
 
 export interface Adaptor {
   readonly params: Params;
@@ -23,6 +23,7 @@ export interface Params {
   readonly encodeBlock: (req: requests.BlockRequest) => JsonRpcRequest;
   readonly encodeBlockchain: (req: requests.BlockchainRequest) => JsonRpcRequest;
   readonly encodeBlockResults: (req: requests.BlockResultsRequest) => JsonRpcRequest;
+  readonly encodeBlockSearch: (req: requests.BlockSearchRequest) => JsonRpcRequest;
   readonly encodeBroadcastTx: (req: requests.BroadcastTxRequest) => JsonRpcRequest;
   readonly encodeCommit: (req: requests.CommitRequest) => JsonRpcRequest;
   readonly encodeGenesis: (req: requests.GenesisRequest) => JsonRpcRequest;
@@ -39,6 +40,7 @@ export interface Responses {
   readonly decodeAbciQuery: (response: JsonRpcSuccessResponse) => responses.AbciQueryResponse;
   readonly decodeBlock: (response: JsonRpcSuccessResponse) => responses.BlockResponse;
   readonly decodeBlockResults: (response: JsonRpcSuccessResponse) => responses.BlockResultsResponse;
+  readonly decodeBlockSearch: (response: JsonRpcSuccessResponse) => responses.BlockSearchResponse;
   readonly decodeBlockchain: (response: JsonRpcSuccessResponse) => responses.BlockchainResponse;
   readonly decodeBroadcastTxSync: (response: JsonRpcSuccessResponse) => responses.BroadcastTxSyncResponse;
   readonly decodeBroadcastTxAsync: (response: JsonRpcSuccessResponse) => responses.BroadcastTxAsyncResponse;

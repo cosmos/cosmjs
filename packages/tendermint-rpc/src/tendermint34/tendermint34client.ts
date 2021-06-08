@@ -9,8 +9,7 @@ import {
   SubscriptionEvent,
   WebsocketClient,
 } from "../rpcclients";
-import { Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptor34 } from "./adaptors";
+import { adaptor34, Decoder, Encoder, Params, Responses } from "./adaptor";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
