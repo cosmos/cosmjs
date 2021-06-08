@@ -17,9 +17,9 @@ import {
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
 import { adaptor33 } from "./adaptor";
-import { Tendermint33Client } from "./tendermint33client";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
+import { Tendermint33Client } from "./tendermint33client";
 
 function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   describe("create", () => {
