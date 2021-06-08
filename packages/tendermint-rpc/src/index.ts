@@ -20,10 +20,8 @@ export {
   ValidatorSecp256k1Pubkey,
   ValidatorPubkey,
 } from "./types";
+export * as tendermint33 from "./tendermint33";
 export {
-  adaptor33,
-  adaptor34,
-  Adaptor,
   Tendermint33Client,
   AbciInfoResponse,
   AbciQueryResponse,
