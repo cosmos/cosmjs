@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { hashBlock, hashTx } from "../hasher";
 import { Params } from "./requests";
 import { Responses } from "./responses";
