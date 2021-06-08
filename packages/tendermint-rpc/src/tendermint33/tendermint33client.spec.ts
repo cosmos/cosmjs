@@ -16,13 +16,12 @@ import {
   tendermintInstances,
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
-import { Adaptor } from "./adaptor";
-import { adaptorForVersion } from "./adaptors";
+import { adaptor33 } from "./adaptors";
 import { Tendermint33Client } from "./tendermint33client";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 
-function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
+function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   describe("create", () => {
     it("can auto-discover Tendermint version and communicate", async () => {
       pendingWithoutTendermint();
@@ -70,7 +69,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
     pendingWithoutTendermint();
     const client = await Tendermint33Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
-    const calculatedTxHash = adaptor.hashTx(tx);
+    const calculatedTxHash = adaptor33.hashTx(tx);
 
     const response = await client.broadcastTxCommit({ tx: tx });
     expect(response.hash).toEqual(calculatedTxHash);
@@ -416,7 +415,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   });
 }
 
-function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
+function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   it("can subscribe to block header events", (done) => {
     pendingWithoutTendermint();
 
@@ -665,48 +664,46 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
   });
 }
 
-for (const { url, version, expected } of tendermintInstances) {
-  describe(`Client ${version}`, () => {
-    it("can connect to a given url", async () => {
-      pendingWithoutTendermint();
+describe(`Tendermint33Client`, () => {
+  const { url, expected } = tendermintInstances[0];
 
-      // default connection
-      {
-        const client = await Tendermint33Client.connect(url);
-        const info = await client.abciInfo();
-        expect(info).toBeTruthy();
-        client.disconnect();
-      }
+  it("can connect to a given url", async () => {
+    pendingWithoutTendermint();
 
-      // http connection
-      {
-        const client = await Tendermint33Client.connect("http://" + url);
-        const info = await client.abciInfo();
-        expect(info).toBeTruthy();
-        client.disconnect();
-      }
+    // default connection
+    {
+      const client = await Tendermint33Client.connect(url);
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    }
 
-      // ws connection
-      {
-        const client = await Tendermint33Client.connect("ws://" + url);
-        const info = await client.abciInfo();
-        expect(info).toBeTruthy();
-        client.disconnect();
-      }
-    });
+    // http connection
+    {
+      const client = await Tendermint33Client.connect("http://" + url);
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    }
 
-    describe("With HttpClient", () => {
-      const adaptor = adaptorForVersion(version);
-      defaultTestSuite(() => new HttpClient(url), adaptor, expected);
-    });
-
-    describe("With WebsocketClient", () => {
-      // don't print out WebSocket errors if marked pending
-      const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
-      const factory = (): WebsocketClient => new WebsocketClient(url, onError);
-      const adaptor = adaptorForVersion(version);
-      defaultTestSuite(factory, adaptor, expected);
-      websocketTestSuite(factory, adaptor, expected);
-    });
+    // ws connection
+    {
+      const client = await Tendermint33Client.connect("ws://" + url);
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    }
   });
-}
+
+  describe("With HttpClient", () => {
+    defaultTestSuite(() => new HttpClient(url), expected);
+  });
+
+  describe("With WebsocketClient", () => {
+    // don't print out WebSocket errors if marked pending
+    const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
+    const factory = (): WebsocketClient => new WebsocketClient(url, onError);
+    defaultTestSuite(factory, expected);
+    websocketTestSuite(factory, expected);
+  });
+});
