@@ -33,7 +33,7 @@ export class Tendermint33Client {
     // (our CI) when skipping the status call before doing other queries. Sleeping a little
     // while did not help. Thus we query the version as a way to say "hi" to the backend,
     // even in cases where we don't use the result.
-    const version = await this.detectVersion(rpcClient);
+    const _version = await this.detectVersion(rpcClient);
     return new Tendermint33Client(rpcClient);
   }
 
