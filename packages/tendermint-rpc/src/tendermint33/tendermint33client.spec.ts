@@ -34,7 +34,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("can connect to Tendermint with known version", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
       expect(await client.abciInfo()).toBeTruthy();
       client.disconnect();
     });
@@ -42,7 +42,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can get genesis", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const genesis = await client.genesis();
     expect(genesis).toBeTruthy();
     client.disconnect();
@@ -50,7 +50,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can broadcast a transaction", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
 
     const response = await client.broadcastTxCommit({ tx: tx });
@@ -68,7 +68,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("gets the same tx hash from backend as calculated locally", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
     const calculatedTxHash = adaptor.hashTx(tx);
 
@@ -80,7 +80,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can query the state", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
 
     const key = randomString();
     const value = randomString();
@@ -99,7 +99,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can get a commit", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const response = await client.commit(4);
 
     expect(response).toBeTruthy();
@@ -114,7 +114,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can get validators", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const response = await client.validators({});
 
     expect(response).toBeTruthy();
@@ -132,7 +132,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can get all validators", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const response = await client.validatorsAll();
 
     expect(response).toBeTruthy();
@@ -150,7 +150,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
   it("can call a bunch of methods", async () => {
     pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
 
     expect(await client.block()).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
@@ -162,7 +162,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   describe("status", () => {
     it("works", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const status = await client.status();
 
@@ -192,7 +192,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   describe("blockResults", () => {
     it("works", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const height = 3;
       const results = await client.blockResults(height);
@@ -208,7 +208,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   describe("blockchain", () => {
     it("returns latest in descending order by default", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       // Run in parallel to increase chance there is no block between the calls
       const [status, blockchain] = await Promise.all([client.status(), client.blockchain()]);
@@ -225,7 +225,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("can limit by maxHeight", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height - 1);
@@ -239,7 +239,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("works with maxHeight in the future", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height + 20);
@@ -253,7 +253,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("can limit by minHeight and maxHeight", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 2, height - 1);
@@ -267,7 +267,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("contains all the info", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 1, height - 1);
@@ -297,7 +297,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   describe("tx", () => {
     it("can query a tx properly", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const find = randomString();
       const me = randomString();
@@ -354,7 +354,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     beforeAll(async () => {
       if (tendermintEnabled()) {
-        const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+        const client = await Tendermint33Client.create(rpcFactory());
 
         // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<void> {
@@ -380,7 +380,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("can paginate over txSearch results", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
 
@@ -399,7 +399,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
 
     it("can get all search results in one call", async () => {
       pendingWithoutTendermint();
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
 
@@ -424,7 +424,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
 
     (async () => {
       const events: responses.NewBlockHeaderEvent[] = [];
-      const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+      const client = await Tendermint33Client.create(rpcFactory());
       const stream = client.subscribeNewBlockHeader();
       expect(stream).toBeTruthy();
       const subscription = stream.subscribe({
@@ -482,7 +482,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
     const transactionData2 = buildKvTx(randomString(), randomString());
 
     const events: responses.NewBlockEvent[] = [];
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const stream = client.subscribeNewBlock();
     const subscription = stream.subscribe({
       next: (event) => {
@@ -538,7 +538,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
     pendingWithoutTendermint();
 
     const events: responses.TxEvent[] = [];
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const stream = client.subscribeTx();
     const subscription = stream.subscribe({
       next: (event) => {
@@ -582,7 +582,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
     const transactionData2 = buildKvTx(randomString(), randomString());
 
     const events: responses.TxEvent[] = [];
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const query = buildQuery({ tags: [{ key: "app.creator", value: expected.appCreator }] });
     const stream = client.subscribeTx(query);
     expect(stream).toBeTruthy();
@@ -620,7 +620,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
   it("can unsubscribe and re-subscribe to the same stream", async () => {
     pendingWithoutTendermint();
 
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const stream = client.subscribeNewBlockHeader();
 
     const event1 = await firstEvent(stream);
@@ -653,7 +653,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
   it("can subscribe twice", async () => {
     pendingWithoutTendermint();
 
-    const client = await Tendermint33Client.create(rpcFactory(), adaptor);
+    const client = await Tendermint33Client.create(rpcFactory());
     const stream1 = client.subscribeNewBlockHeader();
     const stream2 = client.subscribeNewBlockHeader();
 

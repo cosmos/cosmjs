@@ -9,8 +9,8 @@ import {
   SubscriptionEvent,
   WebsocketClient,
 } from "../rpcclients";
-import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptorForVersion } from "./adaptors";
+import { Decoder, Encoder, Params, Responses } from "./adaptor";
+import { adaptor33 } from "./adaptors";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
@@ -19,27 +19,23 @@ export class Tendermint33Client {
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
-   *
-   * If the adaptor is not set an auto-detection is attempted.
    */
-  public static async connect(url: string, adaptor?: Adaptor): Promise<Tendermint33Client> {
+  public static async connect(url: string): Promise<Tendermint33Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
     const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
-    return Tendermint33Client.create(rpcClient, adaptor);
+    return Tendermint33Client.create(rpcClient);
   }
 
   /**
    * Creates a new Tendermint client given an RPC client.
-   *
-   * If the adaptor is not set an auto-detection is attempted.
    */
-  public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Tendermint33Client> {
+  public static async create(rpcClient: RpcClient): Promise<Tendermint33Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
     // (our CI) when skipping the status call before doing other queries. Sleeping a little
     // while did not help. Thus we query the version as a way to say "hi" to the backend,
     // even in cases where we don't use the result.
     const version = await this.detectVersion(rpcClient);
-    return new Tendermint33Client(rpcClient, adaptor || adaptorForVersion(version));
+    return new Tendermint33Client(rpcClient);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
@@ -63,12 +59,12 @@ export class Tendermint33Client {
   private readonly r: Responses;
 
   /**
-   * Use `Client.connect` or `Tendermint33Client.create` to create an instance.
+   * Use `Tendermint33Client.connect` or `Tendermint33Client.create` to create an instance.
    */
-  private constructor(client: RpcClient, adaptor: Adaptor) {
+  private constructor(client: RpcClient) {
     this.client = client;
-    this.p = adaptor.params;
-    this.r = adaptor.responses;
+    this.p = adaptor33.params;
+    this.r = adaptor33.responses;
   }
 
   public disconnect(): void {
