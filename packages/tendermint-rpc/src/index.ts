@@ -24,7 +24,7 @@ export {
   adaptor33,
   adaptor34,
   Adaptor,
-  Client,
+  Tendermint33Client,
   AbciInfoResponse,
   AbciQueryResponse,
   Attribute,
