@@ -1,6 +1,6 @@
 export { adaptor33, adaptor34 } from "./adaptors";
 export { Adaptor } from "./adaptor";
-export { Client } from "./client";
+export { Client } from "./tendermint33client";
 export {
   AbciInfoRequest,
   AbciQueryParams,
