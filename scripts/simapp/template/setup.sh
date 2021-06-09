@@ -2,6 +2,8 @@
 set -o errexit -o nounset
 command -v shellcheck >/dev/null && shellcheck "$0"
 
+gnused="$(command -v gsed || echo sed)"
+
 PASSWORD=${PASSWORD:-1234567890}
 CHAIN_ID=${CHAIN_ID:-simd-testing}
 MONIKER=${MONIKER:-simd-moniker}
@@ -15,7 +17,7 @@ START_BALANCE="10000000$STAKE,1000000000$FEE"
 
 echo "Creating genesis ..."
 simd init --chain-id "$CHAIN_ID" "$MONIKER"
-sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.simapp/config/genesis.json # staking/governance token is hardcoded in config, change this
+"$gnused" -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.simapp/config/genesis.json # staking/governance token is hardcoded in config, change this
 
 echo "Setting up validator ..."
 if ! simd keys show validator 2>/dev/null; then
