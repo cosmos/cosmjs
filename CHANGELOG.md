@@ -11,12 +11,21 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
   `Tendermint34Client.blockSearchAll` were added to allow searching blocks in
   Tendermint 0.34.9+ backends.
+- @cosmjs/tendermint-rpc: `Tendermint33Client` has been added to provide support
+  for Tendermint v0.33.
+- @cosmjs/tendermint-rpc: Exports relating to `Tendermint33Client` are now
+  available under `tendermint33`.
 
-### Changes
+### Changed
 
 - @cosmjs/tendermint-rpc: Make `tendermint34.Header.lastBlockId` and
   `tendermint34.Block.lastCommit` optional to better handle the case of height 1
   where there is no previous block.
+
+### Removed
+
+- @cosmjs/tendermint-rpc: `Client` has been removed. Please use
+  `Tendermint33Client` or `Tendermint34Client`, depending on your needs.
 
 ### Fixed
 

@@ -9,8 +9,7 @@ import {
   SubscriptionEvent,
   WebsocketClient,
 } from "../rpcclients";
-import { Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptor34 } from "./adaptors";
+import { adaptor34, Decoder, Encoder, Params, Responses } from "./adaptor";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
@@ -19,8 +18,6 @@ export class Tendermint34Client {
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
-   *
-   * If the adaptor is not set an auto-detection is attempted.
    */
   public static async connect(url: string): Promise<Tendermint34Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
@@ -30,8 +27,6 @@ export class Tendermint34Client {
 
   /**
    * Creates a new Tendermint client given an RPC client.
-   *
-   * If the adaptor is not set an auto-detection is attempted.
    */
   public static async create(rpcClient: RpcClient): Promise<Tendermint34Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
@@ -63,7 +58,7 @@ export class Tendermint34Client {
   private readonly r: Responses;
 
   /**
-   * Use `Client.connect` or `Client.create` to create an instance.
+   * Use `Tendermint34Client.connect` or `Tendermint34Client.create` to create an instance.
    */
   private constructor(client: RpcClient) {
     this.client = client;

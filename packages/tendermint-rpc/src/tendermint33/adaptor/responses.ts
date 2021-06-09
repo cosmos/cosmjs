@@ -3,9 +3,9 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
-import { DateWithNanoseconds, fromRfc3339WithNanoseconds } from "../../../dates";
-import { SubscriptionEvent } from "../../../rpcclients";
-import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../../types";
+import { fromRfc3339WithNanoseconds } from "../../dates";
+import { SubscriptionEvent } from "../../rpcclients";
+import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
 import {
   assertArray,
   assertBoolean,
@@ -18,9 +18,9 @@ import {
   Integer,
   may,
   optional,
-} from "../../encodings";
-import { hashTx } from "../../hasher";
-import * as responses from "../../responses";
+} from "../encodings";
+import { hashTx } from "../hasher";
+import * as responses from "../responses";
 
 interface AbciInfoResult {
   readonly response: RpcAbciInfoResponse;
@@ -126,25 +126,19 @@ function decodeEvents(events: readonly RpcEvent[]): readonly responses.Event[] {
 }
 
 interface RpcTxData {
-  readonly codespace?: string;
   readonly code?: number;
   readonly log?: string;
   /** base64 encoded */
   readonly data?: string;
-  readonly events?: readonly RpcEvent[];
-  readonly gas_wanted?: string;
-  readonly gas_used?: string;
+  readonly events: readonly RpcEvent[];
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
-    codeSpace: data.codespace,
-    log: data.log,
     data: may(fromBase64, data.data),
-    events: data.events ? decodeEvents(data.events) : [],
-    gasWanted: Integer.parse(optional<string>(data.gas_wanted, "0")),
-    gasUsed: Integer.parse(optional<string>(data.gas_used, "0")),
+    log: data.log,
+    code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
+    events: decodeEvents(data.events),
   };
 }
 
@@ -276,7 +270,7 @@ interface RpcBlockId {
   /** hex encoded */
   readonly hash: string;
   readonly parts: {
-    readonly total: number;
+    readonly total: string;
     /** hex encoded */
     readonly hash: string;
   };
@@ -286,7 +280,7 @@ function decodeBlockId(data: RpcBlockId): responses.BlockId {
   return {
     hash: fromHex(assertNotEmpty(data.hash)),
     parts: {
-      total: assertNotEmpty(data.parts.total),
+      total: Integer.parse(assertNotEmpty(data.parts.total)),
       hash: fromHex(assertNotEmpty(data.parts.hash)),
     },
   };
@@ -309,6 +303,8 @@ interface RpcHeader {
   readonly chain_id: string;
   readonly height: string;
   readonly time: string;
+  readonly num_txs: string;
+  readonly total_txs: string;
 
   readonly last_block_id: RpcBlockId;
 
@@ -341,17 +337,15 @@ function decodeHeader(data: RpcHeader): responses.Header {
     height: Integer.parse(assertNotEmpty(data.height)),
     time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
 
-    // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
-    // { hash: '', parts: { total: 0, hash: '' } }
-    lastBlockId: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
+    lastBlockId: decodeBlockId(data.last_block_id),
 
-    lastCommitHash: fromHex(assertSet(data.last_commit_hash)),
+    lastCommitHash: fromHex(assertNotEmpty(data.last_commit_hash)),
     dataHash: fromHex(assertSet(data.data_hash)),
 
-    validatorsHash: fromHex(assertSet(data.validators_hash)),
-    nextValidatorsHash: fromHex(assertSet(data.next_validators_hash)),
-    consensusHash: fromHex(assertSet(data.consensus_hash)),
-    appHash: fromHex(assertSet(data.app_hash)),
+    validatorsHash: fromHex(assertNotEmpty(data.validators_hash)),
+    nextValidatorsHash: fromHex(assertNotEmpty(data.next_validators_hash)),
+    consensusHash: fromHex(assertNotEmpty(data.consensus_hash)),
+    appHash: fromHex(assertNotEmpty(data.app_hash)),
     lastResultsHash: fromHex(assertSet(data.last_results_hash)),
 
     evidenceHash: fromHex(assertSet(data.evidence_hash)),
@@ -361,17 +355,13 @@ function decodeHeader(data: RpcHeader): responses.Header {
 
 interface RpcBlockMeta {
   readonly block_id: RpcBlockId;
-  readonly block_size: string;
   readonly header: RpcHeader;
-  readonly num_txs: string;
 }
 
 function decodeBlockMeta(data: RpcBlockMeta): responses.BlockMeta {
   return {
     blockId: decodeBlockId(data.block_id),
-    blockSize: Integer.parse(assertNotEmpty(data.block_size)),
     header: decodeHeader(data.header),
-    numTxs: Integer.parse(assertNotEmpty(data.num_txs)),
   };
 }
 
@@ -426,30 +416,16 @@ type RpcSignature = {
   /** hex encoded */
   readonly validator_address: string;
   readonly timestamp: string;
-  /**
-   * Base64 encoded signature.
-   * There are cases when this is not set, see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415.
-   */
-  readonly signature: string | null;
+  /** bae64 encoded */
+  readonly signature: string;
 };
-
-/**
- * In some cases a timestamp is optional and set to the value 0 in Go.
- * This can lead to strings like "0001-01-01T00:00:00Z" (see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415).
- * This decoder tries to clean up such encoding from the API and turn them
- * into undefined values.
- */
-function decodeOptionalTime(timestamp: string): DateWithNanoseconds | undefined {
-  const nonZeroTime = timestamp && !timestamp.startsWith("0001-01-01");
-  return nonZeroTime ? fromRfc3339WithNanoseconds(timestamp) : undefined;
-}
 
 function decodeCommitSignature(data: RpcSignature): CommitSignature {
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
-    validatorAddress: data.validator_address ? fromHex(data.validator_address) : undefined,
-    timestamp: decodeOptionalTime(data.timestamp),
-    signature: data.signature ? fromBase64(data.signature) : undefined,
+    validatorAddress: fromHex(data.validator_address),
+    timestamp: fromRfc3339WithNanoseconds(assertNotEmpty(data.timestamp)),
+    signature: fromBase64(assertNotEmpty(data.signature)),
   };
 }
 
@@ -767,9 +743,7 @@ interface RpcBlock {
 function decodeBlock(data: RpcBlock): responses.Block {
   return {
     header: decodeHeader(assertObject(data.header)),
-    // For the block at height 1, last commit is not set. This is represented in an empty object like this:
-    // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
-    lastCommit: data.last_commit.block_id.hash ? decodeCommit(assertObject(data.last_commit)) : null,
+    lastCommit: decodeCommit(assertObject(data.last_commit)),
     txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
     evidence: data.evidence && may(decodeEvidences, data.evidence.evidence),
   };
@@ -784,18 +758,6 @@ function decodeBlockResponse(data: RpcBlockResponse): responses.BlockResponse {
   return {
     blockId: decodeBlockId(data.block_id),
     block: decodeBlock(data.block),
-  };
-}
-
-interface RpcBlockSearchResponse {
-  readonly blocks: readonly RpcBlockResponse[];
-  readonly total_count: string;
-}
-
-function decodeBlockSearch(data: RpcBlockSearchResponse): responses.BlockSearchResponse {
-  return {
-    totalCount: Integer.parse(assertNotEmpty(data.total_count)),
-    blocks: assertArray(data.blocks).map(decodeBlockResponse),
   };
 }
 
@@ -814,10 +776,6 @@ export class Responses {
 
   public static decodeBlockResults(response: JsonRpcSuccessResponse): responses.BlockResultsResponse {
     return decodeBlockResults(response.result as RpcBlockResultsResponse);
-  }
-
-  public static decodeBlockSearch(response: JsonRpcSuccessResponse): responses.BlockSearchResponse {
-    return decodeBlockSearch(response.result as RpcBlockSearchResponse);
   }
 
   public static decodeBlockchain(response: JsonRpcSuccessResponse): responses.BlockchainResponse {

@@ -16,7 +16,7 @@ import {
   tendermintInstances,
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
-import { adaptor34 } from "./adaptors";
+import { adaptor34 } from "./adaptor";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { Tendermint34Client } from "./tendermint34client";

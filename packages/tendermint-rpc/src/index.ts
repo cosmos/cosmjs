@@ -5,10 +5,24 @@ export {
   rawSecp256k1PubkeyToRawAddress,
 } from "./addresses";
 export {
-  adaptor33,
-  adaptor34,
-  Adaptor,
-  Client,
+  DateTime,
+  ReadonlyDateWithNanoseconds,
+  fromRfc3339WithNanoseconds,
+  fromSeconds,
+  toRfc3339WithNanoseconds,
+  toSeconds,
+} from "./dates";
+export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
+export {
+  BlockIdFlag,
+  CommitSignature,
+  ValidatorEd25519Pubkey,
+  ValidatorSecp256k1Pubkey,
+  ValidatorPubkey,
+} from "./types";
+export * as tendermint33 from "./tendermint33";
+export {
+  Tendermint33Client,
   AbciInfoResponse,
   AbciQueryResponse,
   Attribute,
@@ -75,22 +89,6 @@ export {
   TxSearchRequest,
   ValidatorsRequest,
   ValidatorsParams,
-} from "./legacy";
-export {
-  DateTime,
-  ReadonlyDateWithNanoseconds,
-  fromRfc3339WithNanoseconds,
-  fromSeconds,
-  toRfc3339WithNanoseconds,
-  toSeconds,
-} from "./dates";
-export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
-export {
-  BlockIdFlag,
-  CommitSignature,
-  ValidatorEd25519Pubkey,
-  ValidatorSecp256k1Pubkey,
-  ValidatorPubkey,
-} from "./types";
+} from "./tendermint33";
 export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
