@@ -377,6 +377,41 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       }
     });
 
+    it("returns transactions in ascending order by default", async () => {
+      // NOTE: The Tendermint docs claim the default ordering is "desc" but it is actually "asc"
+      // Docs: https://docs.tendermint.com/master/rpc/#/Info/tx_search
+      // Code: https://github.com/tendermint/tendermint/blob/v0.33.9/rpc/core/tx.go#L84
+      pendingWithoutTendermint();
+      const client = await Tendermint33Client.create(rpcFactory());
+
+      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+
+      const s = await client.txSearch({ query: query });
+
+      expect(s.totalCount).toEqual(3);
+      s.txs.slice(1).reduce((lastHeight, { height }) => {
+        expect(height).toBeGreaterThanOrEqual(lastHeight);
+        return height;
+      }, s.txs[0].height);
+
+      client.disconnect();
+    });
+
+    it("can set the order", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint33Client.create(rpcFactory());
+
+      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+
+      const s1 = await client.txSearch({ query: query, order_by: "desc" });
+      const s2 = await client.txSearch({ query: query, order_by: "asc" });
+
+      expect(s1.totalCount).toEqual(s2.totalCount);
+      expect([...s1.txs].reverse()).toEqual(s2.txs);
+
+      client.disconnect();
+    });
+
     it("can paginate over txSearch results", async () => {
       pendingWithoutTendermint();
       const client = await Tendermint33Client.create(rpcFactory());

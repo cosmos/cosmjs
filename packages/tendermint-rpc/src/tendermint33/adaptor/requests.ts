@@ -74,6 +74,7 @@ interface RpcTxSearchParams {
   readonly prove?: boolean;
   readonly page?: string;
   readonly per_page?: string;
+  readonly order_by?: string;
 }
 function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParams {
   return {
@@ -81,6 +82,7 @@ function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParam
     prove: params.prove,
     page: may(Integer.encode, params.page),
     per_page: may(Integer.encode, params.per_page),
+    order_by: params.order_by,
   };
 }
 
