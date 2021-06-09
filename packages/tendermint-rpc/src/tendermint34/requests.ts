@@ -174,6 +174,7 @@ export interface TxSearchParams {
   readonly prove?: boolean;
   readonly page?: number;
   readonly per_page?: number;
+  readonly order_by?: string;
 }
 
 export interface ValidatorsRequest {
