@@ -9,6 +9,8 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 - Node.js 12+, Docker and yarn
 - `sha256sum`, which you
   [can get on macOS as well](https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos)
+- `gsed`, which you
+  [can get on macOS as well](https://formulae.brew.sh/formula/gnu-sed)
 
 ## Checking out code
 
