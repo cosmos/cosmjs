@@ -24,6 +24,7 @@ and this project adheres to
 
 ### Removed
 
+- Node.js v10 is no longer supported. Please use v12 or later.
 - @cosmjs/tendermint-rpc: `Client` has been removed. Please use
   `Tendermint33Client` or `Tendermint34Client`, depending on your needs.
 
