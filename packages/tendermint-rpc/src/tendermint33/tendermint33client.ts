@@ -210,12 +210,7 @@ export class Tendermint33Client {
    */
   public async txSearch(params: requests.TxSearchParams): Promise<responses.TxSearchResponse> {
     const query: requests.TxSearchRequest = { params: params, method: requests.Method.TxSearch };
-    const resp = await this.doCall(query, this.p.encodeTxSearch, this.r.decodeTxSearch);
-    return {
-      ...resp,
-      // make sure we sort by height, as tendermint may be sorting by string value of the height
-      txs: [...resp.txs].sort((a, b) => a.height - b.height),
-    };
+    return this.doCall(query, this.p.encodeTxSearch, this.r.decodeTxSearch);
   }
 
   // this should paginate through all txSearch options to ensure it returns all results.
@@ -234,9 +229,6 @@ export class Tendermint33Client {
         done = true;
       }
     }
-    // make sure we sort by height, as tendermint may be sorting by string value of the height
-    // and the earlier items may be in a higher page than the later items
-    txs.sort((a, b) => a.height - b.height);
 
     return {
       totalCount: txs.length,
