@@ -2888,6 +2888,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/launchpad", "workspace:packages/launchpad"],
             ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],
             ["@cosmjs/stargate", "workspace:packages/stargate"],
+            ["eslint", "npm:7.26.0"],
             ["prettier", "npm:2.3.0"],
             ["typescript", "patch:typescript@npm%3A4.0.7#builtin<compat/typescript>::version=4.0.7&hash=a45b0e"]
           ],
@@ -7134,6 +7135,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/launchpad", "workspace:packages/launchpad"],
             ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],
             ["@cosmjs/stargate", "workspace:packages/stargate"],
+            ["eslint", "npm:7.26.0"],
             ["prettier", "npm:2.3.0"],
             ["typescript", "patch:typescript@npm%3A4.0.7#builtin<compat/typescript>::version=4.0.7&hash=a45b0e"]
           ],
