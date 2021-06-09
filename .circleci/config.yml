@@ -35,7 +35,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:10-buster
+      - image: circleci/node:12-buster
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -108,7 +108,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -340,7 +340,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -440,7 +440,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -493,7 +493,7 @@ jobs:
             ./scripts/launchpad/stop.sh
   docs-build:
     docker:
-      - image: circleci/node:10-buster
+      - image: circleci/node:12-buster
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -524,7 +524,7 @@ jobs:
           paths: docs_deployment
   docs-deploy:
     docker:
-      - image: circleci/node:10-buster
+      - image: circleci/node:12-buster
     steps:
       - attach_workspace:
           at: .
@@ -542,7 +542,7 @@ jobs:
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
   lint:
     docker:
-      - image: circleci/node:10-buster
+      - image: circleci/node:12-buster
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
