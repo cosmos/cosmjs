@@ -2,6 +2,8 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
+gnused="$(command -v gsed || echo sed)"
+
 # Tendermint settings must be specified
 # Choose version from https://hub.docker.com/r/tendermint/tendermint/tags/
 for SETTING in "TENDERMINT_VERSION" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
@@ -24,7 +26,7 @@ docker run --rm \
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
-sed -ie 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
+"$gnused" -i -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
 
 # must enable tx index for search and subscribe
 docker run --rm \
