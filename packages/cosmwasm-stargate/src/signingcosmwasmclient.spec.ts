@@ -273,7 +273,7 @@ describe("SigningCosmWasmClient", () => {
         "My cool label",
         {
           memo: "Let's see if the memo is used",
-          transferAmount: funds,
+          funds: funds,
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
@@ -454,7 +454,7 @@ describe("SigningCosmWasmClient", () => {
         },
         "amazing random contract",
         {
-          transferAmount: funds,
+          funds: funds,
         },
       );
       // execute

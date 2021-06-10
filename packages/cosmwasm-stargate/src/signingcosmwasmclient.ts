@@ -245,7 +245,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
         initMsg: toUtf8(JSON.stringify(msg)),
-        funds: [...(options.transferAmount || [])],
+        funds: [...(options.funds || [])],
         admin: options.admin,
       }),
     };
