@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
@@ -25,7 +24,7 @@ import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
-import { SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
   alice,
   getHackatom,
