@@ -1,6 +1,6 @@
 import { Decimal } from "@cosmjs/math";
 
-import { GasPrice } from "./fee";
+import { calculateFee, GasPrice } from "./fee";
 
 describe("GasPrice", () => {
   it("can be constructed", () => {
@@ -56,6 +56,18 @@ describe("GasPrice", () => {
       // Checks details of <amount>
       expect(() => GasPrice.fromString("3.utkn")).toThrowError(/Fractional part missing/i);
       expect(() => GasPrice.fromString("..utkn")).toThrowError(/More than one separator found/i);
+    });
+  });
+});
+
+describe("calculateFee", () => {
+  it("multiplies the gas price by the gas limit", () => {
+    const gasLimit = 80000;
+    const gasPrice = GasPrice.fromString("0.025ucosm");
+    const fee = calculateFee(gasLimit, gasPrice);
+    expect(fee).toEqual({
+      amount: [{ amount: "2000", denom: "ucosm" }],
+      gas: "80000",
     });
   });
 });
