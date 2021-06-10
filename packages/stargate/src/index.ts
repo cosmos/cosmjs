@@ -51,7 +51,7 @@ export {
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
-export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
+export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
 export { makeMultisignedTx } from "./multisignature";
 export {
@@ -95,9 +95,6 @@ export {
   TimeoutError,
 } from "./stargateclient";
 export {
-  CosmosFeeTable,
-  defaultGasLimits,
-  defaultGasPrice,
   defaultRegistryTypes,
   SignerData,
   SigningStargateClient,

@@ -3,11 +3,6 @@ import { Decimal, Uint53 } from "@cosmjs/math";
 import { coins } from "@cosmjs/proto-signing";
 
 /**
- * This is the same as FeeTable from @cosmjs/launchpad but those might diverge in the future.
- */
-export type FeeTable = Record<string, StdFee>;
-
-/**
  * Denom checker for the Cosmos SDK 0.42 denom pattern
  * (https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601).
  *
@@ -56,37 +51,10 @@ export class GasPrice {
   }
 }
 
-/**
- * This is the same as GasLimits from @cosmjs/launchpad but those might diverge in the future.
- */
-export type GasLimits<T extends Record<string, StdFee>> = {
-  readonly [key in keyof T]: number;
-};
-
-/**
- * This is the same as calculateFee from @cosmjs/launchpad but those might diverge in the future.
- */
-function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
+export function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
   const amount = Math.ceil(gasPriceAmount.multiply(new Uint53(gasLimit)).toFloatApproximation());
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
   };
-}
-
-/**
- * This is the same as buildFeeTable from @cosmjs/launchpad but those might diverge in the future.
- */
-export function buildFeeTable<T extends Record<string, StdFee>>(
-  gasPrice: GasPrice,
-  defaultGasLimits: GasLimits<T>,
-  gasLimits: Partial<GasLimits<T>>,
-): T {
-  return Object.entries(defaultGasLimits).reduce(
-    (feeTable, [type, defaultGasLimit]) => ({
-      ...feeTable,
-      [type]: calculateFee(gasLimits[type] || defaultGasLimit, gasPrice),
-    }),
-    {} as T,
-  );
 }
