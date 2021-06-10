@@ -311,7 +311,7 @@ describe("SigningCosmWasmClient", () => {
         "My cool label",
         {
           memo: "Let's see if the memo is used",
-          transferAmount: funds,
+          funds: funds,
         },
       );
 
@@ -491,7 +491,7 @@ describe("SigningCosmWasmClient", () => {
         },
         "amazing random contract",
         {
-          transferAmount: funds,
+          funds: funds,
         },
       );
 
