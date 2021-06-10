@@ -1,15 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
-import {
-  ChangeAdminResult,
-  ExecuteResult,
-  InstantiateOptions,
-  InstantiateResult,
-  isValidBuilder,
-  MigrateResult,
-  UploadMeta,
-  UploadResult,
-} from "@cosmjs/cosmwasm-launchpad";
+import { isValidBuilder } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
@@ -72,18 +63,6 @@ import {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 
-// Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
-// For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
-export {
-  ChangeAdminResult, // returned by SigningCosmWasmClient.updateAdmin/SigningCosmWasmClient.clearAdmin
-  ExecuteResult, // returned by SigningCosmWasmClient.execute
-  InstantiateOptions, // argument type of SigningCosmWasmClient.instantiate
-  InstantiateResult, // returned by SigningCosmWasmClient.instantiate
-  MigrateResult, // returned by SigningCosmWasmClient.migrate
-  UploadMeta, // argument type of SigningCosmWasmClient.upload
-  UploadResult, // returned by SigningCosmWasmClient.upload
-};
-
 /**
  * These fees are used by the higher level methods of SigningCosmWasmClient
  */
@@ -113,6 +92,88 @@ export const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
   exec: 200_000,
   changeAdmin: 80_000,
 };
+
+export interface UploadMeta {
+  /**
+   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
+   *
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
+  readonly source?: string;
+  /**
+   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
+   *
+   * @example ```cosmwasm/rust-optimizer:0.8.0```
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
+  readonly builder?: string;
+}
+
+export interface UploadResult {
+  /** Size of the original wasm code in bytes */
+  readonly originalSize: number;
+  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
+  readonly originalChecksum: string;
+  /** Size of the compressed wasm code in bytes */
+  readonly compressedSize: number;
+  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
+  readonly compressedChecksum: string;
+  /** The ID of the code asigned by the chain */
+  readonly codeId: number;
+  readonly logs: readonly logs.Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+/**
+ * The options of an .instantiate() call.
+ * All properties are optional.
+ */
+export interface InstantiateOptions {
+  readonly memo?: string;
+  /**
+   * The funds that are transferred from the sender to the newly created contract.
+   * The funds are transferred as part of the message execution after the contract address is
+   * created and before the instantiation message is executed by the contract.
+   *
+   * Only native tokens are supported.
+   */
+  readonly funds?: readonly Coin[];
+  /**
+   * A bech32 encoded address of an admin account.
+   * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
+   */
+  readonly admin?: string;
+}
+
+export interface InstantiateResult {
+  /** The address of the newly instantiated contract */
+  readonly contractAddress: string;
+  readonly logs: readonly logs.Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+/**
+ * Result type of updateAdmin and clearAdmin
+ */
+export interface ChangeAdminResult {
+  readonly logs: readonly logs.Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+export interface MigrateResult {
+  readonly logs: readonly logs.Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+export interface ExecuteResult {
+  readonly logs: readonly logs.Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
 
 function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
@@ -245,7 +306,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
         initMsg: toUtf8(JSON.stringify(msg)),
-        funds: [...(options.transferAmount || [])],
+        funds: [...(options.funds || [])],
         admin: options.admin,
       }),
     };

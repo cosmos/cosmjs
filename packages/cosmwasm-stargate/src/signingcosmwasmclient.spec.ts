@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
@@ -25,7 +24,7 @@ import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
-import { SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
   alice,
   getHackatom,
@@ -273,7 +272,7 @@ describe("SigningCosmWasmClient", () => {
         "My cool label",
         {
           memo: "Let's see if the memo is used",
-          transferAmount: funds,
+          funds: funds,
         },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
@@ -454,7 +453,7 @@ describe("SigningCosmWasmClient", () => {
         },
         "amazing random contract",
         {
-          transferAmount: funds,
+          funds: funds,
         },
       );
       // execute

@@ -108,10 +108,8 @@ export interface InstantiateOptions {
    * created and before the instantiation message is executed by the contract.
    *
    * Only native tokens are supported.
-   *
-   * TODO: Rename to `funds` for consistency (https://github.com/cosmos/cosmjs/issues/806)
    */
-  readonly transferAmount?: readonly Coin[];
+  readonly funds?: readonly Coin[];
   /**
    * A bech32 encoded address of an admin account.
    * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
@@ -238,7 +236,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         code_id: new Uint53(codeId).toString(),
         label: label,
         init_msg: msg,
-        init_funds: options.transferAmount || [],
+        init_funds: options.funds || [],
         admin: options.admin,
       },
     };
