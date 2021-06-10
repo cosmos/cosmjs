@@ -18,6 +18,12 @@ and this project adheres to
 
 ### Changed
 
+- @cosmjs/cosmwasm-launchpad: The `transferAmount` property on
+  `InstantiateOptions` (accepted as a parameter to
+  `SigningCosmWasmClient.instantiate`) has been renamed to `funds`.
+- @cosmjs/cosmwasm-stargate: The `transferAmount` property on
+  `InstantiateOptions` (accepted as a parameter to
+  `SigningCosmWasmClient.instantiate`) has been renamed to `funds`.
 - @cosmjs/tendermint-rpc: Make `tendermint34.Header.lastBlockId` and
   `tendermint34.Block.lastCommit` optional to better handle the case of height 1
   where there is no previous block.
