@@ -87,8 +87,8 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="instantiateoptions.html#admin" class="tsd-kind-icon">admin</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="instantiateoptions.html#funds" class="tsd-kind-icon">funds</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="instantiateoptions.html#memo" class="tsd-kind-icon">memo</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="instantiateoptions.html#transferamount" class="tsd-kind-icon">transfer<wbr>Amount</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,7 +102,7 @@
 					<div class="tsd-signature tsd-kind-icon">admin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in cosmwasm-launchpad/build/signingcosmwasmclient.d.ts:64</li>
+							<li>Defined in cosmwasm-launchpad/build/signingcosmwasmclient.d.ts:62</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -110,6 +110,24 @@
 							<p>A bech32 encoded address of an admin account.
 							Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="funds" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> funds</h3>
+					<div class="tsd-signature tsd-kind-icon">funds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in cosmwasm-launchpad/build/signingcosmwasmclient.d.ts:57</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The funds that are transferred from the sender to the newly created contract.
+								The funds are transferred as part of the message execution after the contract address is
+							created and before the instantiation message is executed by the contract.</p>
+						</div>
+						<p>Only native tokens are supported.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -121,25 +139,6 @@
 							<li>Defined in cosmwasm-launchpad/build/signingcosmwasmclient.d.ts:49</li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="transferamount" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> transfer<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">transfer<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in cosmwasm-launchpad/build/signingcosmwasmclient.d.ts:59</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The funds that are transferred from the sender to the newly created contract.
-								The funds are transferred as part of the message execution after the contract address is
-							created and before the instantiation message is executed by the contract.</p>
-						</div>
-						<p>Only native tokens are supported.</p>
-						<p>TODO: Rename to <code>funds</code> for consistency (<a href="https://github.com/cosmos/cosmjs/issues/806">https://github.com/cosmos/cosmjs/issues/806</a>)</p>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -162,10 +161,10 @@
 								<a href="instantiateoptions.html#admin" class="tsd-kind-icon">admin</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="instantiateoptions.html#memo" class="tsd-kind-icon">memo</a>
+								<a href="instantiateoptions.html#funds" class="tsd-kind-icon">funds</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="instantiateoptions.html#transferamount" class="tsd-kind-icon">transfer<wbr>Amount</a>
+								<a href="instantiateoptions.html#memo" class="tsd-kind-icon">memo</a>
 							</li>
 						</ul>
 					</li>
