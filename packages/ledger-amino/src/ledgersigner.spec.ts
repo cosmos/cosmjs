@@ -6,7 +6,6 @@ import {
   makeSignDoc,
   Secp256k1HdWallet,
   serializeSignDoc,
-  StdFee,
 } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
@@ -16,6 +15,8 @@ import {
 } from "@cosmjs/launchpad";
 import {
   assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
+  calculateFee,
+  GasPrice,
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { sleep } from "@cosmjs/utils";
@@ -53,10 +54,7 @@ async function createTransport(): Promise<Transport> {
 
 describe("LedgerSigner", () => {
   const defaultChainId = "testing";
-  const defaultFee: StdFee = {
-    amount: coins(100, "ucosm"),
-    gas: "250",
-  };
+  const defaultFee = calculateFee(80_000, GasPrice.fromString("0.025ucosm"));
   const defaultMemo = "Some memo";
   const defaultSequence = "0";
   const defaultAccountNumber = "42";
@@ -69,7 +67,13 @@ describe("LedgerSigner", () => {
       const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, wallet);
       const amount = coins(226644, "ucosm");
       const memo = "Ensure chain has my pubkey";
-      const sendResult = await client.sendTokens(faucet.address, defaultLedgerAddress, amount, memo);
+      const sendResult = await client.sendTokens(
+        faucet.address,
+        defaultLedgerAddress,
+        amount,
+        defaultFee,
+        memo,
+      );
       assertIsBroadcastTxSuccessStargate(sendResult);
     }
   });
@@ -197,6 +201,7 @@ describe("LedgerSigner", () => {
           firstAccount.address,
           defaultLedgerAddress,
           coins(1234, "ucosm"),
+          defaultFee,
         );
         assertIsBroadcastTxSuccessStargate(result);
       },
