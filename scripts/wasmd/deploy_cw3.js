@@ -1,8 +1,9 @@
 #!/usr/bin/env -S yarn node
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
+const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
+const { GasPrice, calculateFee } = require("@cosmjs/stargate");
 const fs = require("fs");
 
 const endpoint = "http://localhost:26659";
@@ -63,35 +64,46 @@ const initData = [
 ];
 
 async function main() {
+  const gasPrice = GasPrice.fromString("0.025ucosm");
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: "wasm" });
   const client = await SigningCosmWasmClient.connectWithSigner(endpoint, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw3_fixed_multisig.wasm");
+  const uploadFee = calculateFee(1_500_000, gasPrice);
   const uploadReceipt = await client.upload(
     alice.address0,
     wasm,
+    uploadFee,
     codeMeta,
     "Upload CW3 fixed multisig contract",
   );
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
+  const instantiateFee = calculateFee(500_000, gasPrice);
+  const sendFee = calculateFee(80_000, gasPrice);
   for (const { admin, initMsg, label } of initData) {
     const { contractAddress } = await client.instantiate(
       alice.address0,
       uploadReceipt.codeId,
       initMsg,
       label,
+      instantiateFee,
       {
         memo: `Create a CW3 instance for ${initMsg.symbol}`,
         admin: admin,
       },
     );
-    await client.sendTokens(alice.address0, contractAddress, [
-      {
-        amount: "1000",
-        denom: "ucosm",
-      },
-    ]);
+    await client.sendTokens(
+      alice.address0,
+      contractAddress,
+      [
+        {
+          amount: "1000",
+          denom: "ucosm",
+        },
+      ],
+      sendFee,
+    );
     console.info(`Contract instantiated for ${label} at ${contractAddress}`);
   }
 }

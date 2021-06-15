@@ -5,7 +5,12 @@ const { coins } = require("@cosmjs/amino");
 const { Random } = require("@cosmjs/crypto");
 const { Bech32 } = require("@cosmjs/encoding");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
-const { assertIsBroadcastTxSuccess, SigningStargateClient } = require("@cosmjs/stargate");
+const {
+  assertIsBroadcastTxSuccess,
+  SigningStargateClient,
+  calculateFee,
+  GasPrice,
+} = require("@cosmjs/stargate");
 
 const rpcUrl = "http://localhost:26659";
 const prefix = "wasm";
@@ -20,8 +25,9 @@ async function main() {
   const client = await SigningStargateClient.connectWithSigner(rpcUrl, wallet, { prefix: prefix });
   const recipient = Bech32.encode(prefix, Random.getBytes(20));
   const amount = coins(226644, "ucosm");
+  const fee = calculateFee(80_000, GasPrice.fromString("0.025ucosm"));
   const memo = "Ensure chain has my pubkey";
-  const sendResult = await client.sendTokens(faucet.address0, recipient, amount, memo);
+  const sendResult = await client.sendTokens(faucet.address0, recipient, amount, fee, memo);
   assertIsBroadcastTxSuccess(sendResult);
 }
 
