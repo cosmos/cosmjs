@@ -24,6 +24,12 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: The `transferAmount` property on
   `InstantiateOptions` (accepted as a parameter to
   `SigningCosmWasmClient.instantiate`) has been renamed to `funds`.
+- @cosmjs/cosmwasm-stargate: Default fee/gas values have been removed. Fees now
+  need to be calculated and passed to `SigningCosmWasmClient` when calling any
+  methods which submit transactions to the blockchain.
+- @cosmjs/stargate: Default fee/gas values have been removed. Fees now need to
+  be calculated and passed to `SigningStargateClient` when calling any methods
+  which submit transactions to the blockchain.
 - @cosmjs/tendermint-rpc: Make `tendermint34.Header.lastBlockId` and
   `tendermint34.Block.lastCommit` optional to better handle the case of height 1
   where there is no previous block.
@@ -31,6 +37,11 @@ and this project adheres to
 ### Removed
 
 - Node.js v10 is no longer supported. Please use v12 or later.
+- @cosmjs/cosmwasm-stargate: Remove `CosmWasmFeeTable` type and
+  `defaultGasLimits` object.
+- @cosmjs/stargate: Remove types, objects and functions to do with default fees:
+  `CosmosFeeTable`, `FeeTable`, `GasLimits`, `defaultGasLimits`,
+  `defaultGasPrice` and `buildFeeTable`.
 - @cosmjs/tendermint-rpc: `Client` has been removed. Please use
   `Tendermint33Client` or `Tendermint34Client`, depending on your needs.
 
