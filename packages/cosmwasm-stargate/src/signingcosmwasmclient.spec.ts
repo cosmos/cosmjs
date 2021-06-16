@@ -9,7 +9,6 @@ import {
   assertIsBroadcastTxSuccess,
   coin,
   coins,
-  GasPrice,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
@@ -27,6 +26,13 @@ import { MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
   alice,
+  defaultClearAdminFee,
+  defaultExecuteFee,
+  defaultInstantiateFee,
+  defaultMigrateFee,
+  defaultSendFee,
+  defaultUpdateAdminFee,
+  defaultUploadFee,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -57,167 +63,6 @@ describe("SigningCosmWasmClient", () => {
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       expect(client.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
     });
-
-    it("can be constructed with custom gas price", async () => {
-      pendingWithoutWasmd();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = {
-        prefix: wasmd.prefix,
-        gasPrice: GasPrice.fromString("3.14utest"),
-      };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      expect(client.fees).toEqual({
-        upload: {
-          amount: coins(4710000, "utest"),
-          gas: "1500000",
-        },
-        init: {
-          amount: coins(1570000, "utest"),
-          gas: "500000",
-        },
-        migrate: {
-          amount: coins(628000, "utest"),
-          gas: "200000",
-        },
-        exec: {
-          amount: coins(628000, "utest"),
-          gas: "200000",
-        },
-        send: {
-          amount: coins(251200, "utest"),
-          gas: "80000",
-        },
-        changeAdmin: {
-          amount: coins(251200, "utest"),
-          gas: "80000",
-        },
-        delegate: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        transfer: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        undelegate: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        withdraw: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-      });
-    });
-
-    it("can be constructed with custom gas limits", async () => {
-      pendingWithoutWasmd();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = {
-        prefix: wasmd.prefix,
-        gasLimits: {
-          send: 160000,
-        },
-      };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      expect(client.fees).toEqual({
-        upload: {
-          amount: coins(37500, "ucosm"),
-          gas: "1500000",
-        },
-        init: {
-          amount: coins(12500, "ucosm"),
-          gas: "500000",
-        },
-        migrate: {
-          amount: coins(5000, "ucosm"),
-          gas: "200000",
-        },
-        exec: {
-          amount: coins(5000, "ucosm"),
-          gas: "200000",
-        },
-        send: {
-          amount: coins(4000, "ucosm"),
-          gas: "160000",
-        },
-        changeAdmin: {
-          amount: coins(2000, "ucosm"),
-          gas: "80000",
-        },
-        delegate: {
-          amount: coins(4000, "ucosm"),
-          gas: "160000",
-        },
-        transfer: {
-          amount: coins(4000, "ucosm"),
-          gas: "160000",
-        },
-        undelegate: {
-          amount: coins(4000, "ucosm"),
-          gas: "160000",
-        },
-        withdraw: {
-          amount: coins(4000, "ucosm"),
-          gas: "160000",
-        },
-      });
-    });
-
-    it("can be constructed with custom gas price and gas limits", async () => {
-      pendingWithoutWasmd();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = {
-        prefix: wasmd.prefix,
-        gasPrice: GasPrice.fromString("3.14utest"),
-        gasLimits: {
-          send: 160000,
-        },
-      };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      expect(client.fees).toEqual({
-        upload: {
-          amount: coins(4710000, "utest"),
-          gas: "1500000",
-        },
-        init: {
-          amount: coins(1570000, "utest"),
-          gas: "500000",
-        },
-        migrate: {
-          amount: coins(628000, "utest"),
-          gas: "200000",
-        },
-        exec: {
-          amount: coins(628000, "utest"),
-          gas: "200000",
-        },
-        send: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        changeAdmin: {
-          amount: coins(251200, "utest"),
-          gas: "80000",
-        },
-        delegate: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        transfer: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        undelegate: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-        withdraw: {
-          amount: coins(502400, "utest"),
-          gas: "160000",
-        },
-      });
-    });
   });
 
   describe("upload", () => {
@@ -228,7 +73,7 @@ describe("SigningCosmWasmClient", () => {
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const wasm = getHackatom().data;
       const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
-        await client.upload(alice.address0, wasm);
+        await client.upload(alice.address0, wasm, defaultUploadFee);
       expect(originalChecksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
@@ -246,7 +91,7 @@ describe("SigningCosmWasmClient", () => {
         source: "https://crates.io/api/v1/crates/cw-nameservice/0.1.0/download",
         builder: "confio/cosmwasm-opt:0.6.2",
       };
-      const { codeId } = await client.upload(alice.address0, hackatom.data, meta);
+      const { codeId } = await client.upload(alice.address0, hackatom.data, defaultUploadFee, meta);
       const codeDetails = await client.getCodeDetails(codeId);
       expect(codeDetails.source).toEqual(meta.source);
       expect(codeDetails.builder).toEqual(meta.builder);
@@ -259,7 +104,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
@@ -270,6 +115,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
+        defaultInstantiateFee,
         {
           memo: "Let's see if the memo is used",
           funds: funds,
@@ -287,7 +133,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -297,6 +143,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
+        defaultInstantiateFee,
         { admin: unused.address },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
@@ -310,7 +157,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const contractAddress1 = await client.instantiate(
         alice.address0,
         codeId,
@@ -319,6 +166,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: makeRandomAddress(),
         },
         "contract 1",
+        defaultInstantiateFee,
       );
       const contractAddress2 = await client.instantiate(
         alice.address0,
@@ -328,6 +176,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: makeRandomAddress(),
         },
         "contract 2",
+        defaultInstantiateFee,
       );
       expect(contractAddress1).not.toEqual(contractAddress2);
     });
@@ -339,7 +188,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -349,6 +198,8 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
+        defaultInstantiateFee,
+
         {
           admin: alice.address0,
         },
@@ -358,7 +209,7 @@ describe("SigningCosmWasmClient", () => {
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
-      await client.updateAdmin(alice.address0, contractAddress, unused.address);
+      await client.updateAdmin(alice.address0, contractAddress, unused.address, defaultUpdateAdminFee);
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual(unused.address);
@@ -371,7 +222,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -381,6 +232,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
+        defaultInstantiateFee,
         {
           admin: alice.address0,
         },
@@ -390,7 +242,7 @@ describe("SigningCosmWasmClient", () => {
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
-      await client.clearAdmin(alice.address0, contractAddress);
+      await client.clearAdmin(alice.address0, contractAddress, defaultClearAdminFee);
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual("");
@@ -403,8 +255,8 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data);
-      const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         alice.address0,
@@ -414,6 +266,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
+        defaultInstantiateFee,
         {
           admin: alice.address0,
         },
@@ -424,7 +277,13 @@ describe("SigningCosmWasmClient", () => {
       expect(contractInfo1.admin).toEqual(alice.address0);
 
       const newVerifier = makeRandomAddress();
-      await client.migrate(alice.address0, contractAddress, codeId2, { verifier: newVerifier });
+      await client.migrate(
+        alice.address0,
+        contractAddress,
+        codeId2,
+        { verifier: newVerifier },
+        defaultMigrateFee,
+      );
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect({ ...contractInfo2 }).toEqual({
@@ -440,7 +299,7 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const { codeId } = await client.upload(alice.address0, getHackatom().data);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       // instantiate
       const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
@@ -452,12 +311,18 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "amazing random contract",
+        defaultInstantiateFee,
         {
           funds: funds,
         },
       );
       // execute
-      const result = await client.execute(alice.address0, contractAddress, { release: {} }, undefined);
+      const result = await client.execute(
+        alice.address0,
+        contractAddress,
+        { release: {} },
+        defaultExecuteFee,
+      );
       const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
@@ -497,7 +362,13 @@ describe("SigningCosmWasmClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(alice.address0, beneficiaryAddress, amount, memo);
+      const result = await client.sendTokens(
+        alice.address0,
+        beneficiaryAddress,
+        amount,
+        defaultSendFee,
+        memo,
+      );
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
@@ -525,7 +396,13 @@ describe("SigningCosmWasmClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(alice.address0, beneficiaryAddress, amount, memo);
+      const result = await client.sendTokens(
+        alice.address0,
+        beneficiaryAddress,
+        amount,
+        defaultSendFee,
+        memo,
+      );
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 

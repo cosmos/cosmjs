@@ -12,6 +12,8 @@ import {
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
+import { calculateFee, GasPrice } from "./fee";
+
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP_ENABLED;
 }
@@ -45,6 +47,9 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
   return elements[0];
 }
+
+export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+export const defaultSendFee = calculateFee(80_000, defaultGasPrice);
 
 export const simapp = {
   tendermintUrl: "localhost:26658",

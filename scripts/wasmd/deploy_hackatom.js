@@ -1,8 +1,9 @@
 #!/usr/bin/env -S yarn node
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
+const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
+const { calculateFee, GasPrice } = require("@cosmjs/stargate");
 const fs = require("fs");
 
 const endpoint = "http://localhost:26659";
@@ -48,18 +49,34 @@ const inits = [
 ];
 
 async function main() {
+  const gasPrice = GasPrice.fromString("0.025ucosm");
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: "wasm" });
   const client = await SigningCosmWasmClient.connectWithSigner(endpoint, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/hackatom.wasm");
-  const uploadReceipt = await client.upload(alice.address0, wasm, codeMeta, "Upload hackatom contract");
+  const uploadFee = calculateFee(1_500_000, gasPrice);
+  const uploadReceipt = await client.upload(
+    alice.address0,
+    wasm,
+    uploadFee,
+    codeMeta,
+    "Upload hackatom contract",
+  );
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
+  const instantiateFee = calculateFee(500_000, gasPrice);
   for (const { label, msg, admin } of inits) {
-    const { contractAddress } = await client.instantiate(alice.address0, uploadReceipt.codeId, msg, label, {
-      memo: `Create a hackatom instance in deploy_hackatom.js`,
-      admin: admin,
-    });
+    const { contractAddress } = await client.instantiate(
+      alice.address0,
+      uploadReceipt.codeId,
+      msg,
+      label,
+      instantiateFee,
+      {
+        memo: `Create a hackatom instance in deploy_hackatom.js`,
+        admin: admin,
+      },
+    );
     console.info(`Contract instantiated at ${contractAddress}`);
   }
 }

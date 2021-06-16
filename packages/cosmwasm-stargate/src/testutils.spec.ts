@@ -11,7 +11,9 @@ import {
 import {
   AuthExtension,
   BankExtension,
+  calculateFee,
   coins,
+  GasPrice,
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
@@ -22,6 +24,15 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { setupWasmExtension, WasmExtension } from "./queries";
 import hackatom from "./testdata/contract.json";
+
+export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+export const defaultSendFee = calculateFee(80_000, defaultGasPrice);
+export const defaultUploadFee = calculateFee(1_500_000, defaultGasPrice);
+export const defaultInstantiateFee = calculateFee(500_000, defaultGasPrice);
+export const defaultExecuteFee = calculateFee(200_000, defaultGasPrice);
+export const defaultMigrateFee = calculateFee(200_000, defaultGasPrice);
+export const defaultUpdateAdminFee = calculateFee(80_000, defaultGasPrice);
+export const defaultClearAdminFee = calculateFee(80_000, defaultGasPrice);
 
 /** An internal testing type. SigningCosmWasmClient has a similar but different interface */
 export interface ContractUploadInstructions {

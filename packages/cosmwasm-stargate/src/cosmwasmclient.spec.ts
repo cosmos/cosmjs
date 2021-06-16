@@ -20,6 +20,8 @@ import { CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
+  defaultInstantiateFee,
+  defaultUploadFee,
   deployedHackatom,
   getHackatom,
   makeRandomAddress,
@@ -31,7 +33,7 @@ import {
 } from "./testutils.spec";
 
 interface HackatomInstance {
-  readonly initMsg: {
+  readonly instantiateMsg: {
     readonly verifier: string;
     readonly beneficiary: string;
   };
@@ -318,15 +320,17 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
-        const { codeId } = await client.upload(alice.address0, getHackatom().data);
-        const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+        const instantiateMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const label = "random hackatom";
         const { contractAddress } = await client.instantiate(
           alice.address0,
           codeId,
-          initMsg,
-          "random hackatom",
+          instantiateMsg,
+          label,
+          defaultInstantiateFee,
         );
-        contract = { initMsg: initMsg, address: contractAddress };
+        contract = { instantiateMsg: instantiateMsg, address: contractAddress };
       }
     });
 
@@ -338,8 +342,8 @@ describe("CosmWasmClient", () => {
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromAscii(raw))).toEqual({
-        verifier: contract.initMsg.verifier,
-        beneficiary: contract.initMsg.beneficiary,
+        verifier: contract.instantiateMsg.verifier,
+        beneficiary: contract.instantiateMsg.beneficiary,
         funder: alice.address0,
       });
     });
@@ -372,15 +376,17 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
-        const { codeId } = await client.upload(alice.address0, getHackatom().data);
-        const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+        const instantiateMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const label = "a different hackatom";
         const { contractAddress } = await client.instantiate(
           alice.address0,
           codeId,
-          initMsg,
-          "a different hackatom",
+          instantiateMsg,
+          label,
+          defaultInstantiateFee,
         );
-        contract = { initMsg: initMsg, address: contractAddress };
+        contract = { instantiateMsg: instantiateMsg, address: contractAddress };
       }
     });
 
@@ -390,7 +396,7 @@ describe("CosmWasmClient", () => {
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.queryContractSmart(contract.address, { verifier: {} });
-      expect(result).toEqual({ verifier: contract.initMsg.verifier });
+      expect(result).toEqual({ verifier: contract.instantiateMsg.verifier });
     });
 
     it("errors for malformed query message", async () => {

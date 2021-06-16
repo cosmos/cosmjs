@@ -5,6 +5,7 @@ import {
 } from "@cosmjs/launchpad";
 import {
   assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
+  calculateFee,
   SigningStargateClient,
   StargateClient,
 } from "@cosmjs/stargate";
@@ -88,7 +89,8 @@ export class Faucet {
       const result = await client.sendTokens(job.recipient, [job.amount], constants.memo);
       return assertIsBroadcastTxSuccessLaunchpad(result);
     }
-    const result = await client.sendTokens(job.sender, job.recipient, [job.amount], constants.memo);
+    const fee = calculateFee(constants.gasLimits.send, constants.gasPrice);
+    const result = await client.sendTokens(job.sender, job.recipient, [job.amount], fee, constants.memo);
     assertIsBroadcastTxSuccessStargate(result);
   }
 

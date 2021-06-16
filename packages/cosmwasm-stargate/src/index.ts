@@ -22,9 +22,7 @@ export {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 export {
-  defaultGasLimits,
   ChangeAdminResult,
-  CosmWasmFeeTable, // part of SigningCosmWasmClientOptions
   ExecuteResult,
   InstantiateOptions,
   InstantiateResult,

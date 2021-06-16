@@ -67,30 +67,7 @@ import {
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
-import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
-
-/**
- * These fees are used by the higher level methods of SigningCosmosClient
- *
- * This is the same as CosmosFeeTable from @cosmjs/launchpad but those might diverge in the future.
- */
-export interface CosmosFeeTable extends FeeTable {
-  readonly send: StdFee;
-  readonly delegate: StdFee;
-  readonly transfer: StdFee;
-  readonly undelegate: StdFee;
-  readonly withdraw: StdFee;
-}
-
-export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-export const defaultGasLimits: GasLimits<CosmosFeeTable> = {
-  send: 80_000,
-  delegate: 160_000,
-  transfer: 160_000,
-  undelegate: 160_000,
-  withdraw: 160_000,
-};
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -141,7 +118,6 @@ export interface SignerData {
 
 /** Use for testing only */
 export interface PrivateSigningStargateClient {
-  readonly fees: CosmosFeeTable;
   readonly registry: Registry;
 }
 
@@ -149,14 +125,11 @@ export interface SigningStargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
   readonly prefix?: string;
-  readonly gasPrice?: GasPrice;
-  readonly gasLimits?: Partial<GasLimits<CosmosFeeTable>>;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
 }
 
 export class SigningStargateClient extends StargateClient {
-  public readonly fees: CosmosFeeTable;
   public readonly registry: Registry;
   public readonly broadcastTimeoutMs: number | undefined;
   public readonly broadcastPollIntervalMs: number | undefined;
@@ -195,13 +168,8 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient);
-    const {
-      registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ prefix: options.prefix }),
-      gasPrice = defaultGasPrice,
-      gasLimits = {},
-    } = options;
-    this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix: options.prefix }) } =
+      options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
@@ -213,6 +181,7 @@ export class SigningStargateClient extends StargateClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
+    fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -223,13 +192,14 @@ export class SigningStargateClient extends StargateClient {
         amount: [...amount],
       },
     };
-    return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
+    return this.signAndBroadcast(senderAddress, [sendMsg], fee, memo);
   }
 
   public async delegateTokens(
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
+    fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -240,13 +210,14 @@ export class SigningStargateClient extends StargateClient {
         amount: amount,
       }),
     };
-    return this.signAndBroadcast(delegatorAddress, [delegateMsg], this.fees.delegate, memo);
+    return this.signAndBroadcast(delegatorAddress, [delegateMsg], fee, memo);
   }
 
   public async undelegateTokens(
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
+    fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -257,12 +228,13 @@ export class SigningStargateClient extends StargateClient {
         amount: amount,
       }),
     };
-    return this.signAndBroadcast(delegatorAddress, [undelegateMsg], this.fees.undelegate, memo);
+    return this.signAndBroadcast(delegatorAddress, [undelegateMsg], fee, memo);
   }
 
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
+    fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -272,7 +244,7 @@ export class SigningStargateClient extends StargateClient {
         validatorAddress: validatorAddress,
       }),
     };
-    return this.signAndBroadcast(delegatorAddress, [withdrawMsg], this.fees.withdraw, memo);
+    return this.signAndBroadcast(delegatorAddress, [withdrawMsg], fee, memo);
   }
 
   public async sendIbcTokens(
@@ -284,6 +256,7 @@ export class SigningStargateClient extends StargateClient {
     timeoutHeight: Height | undefined,
     /** timeout in seconds */
     timeoutTimestamp: number | undefined,
+    fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
@@ -301,7 +274,7 @@ export class SigningStargateClient extends StargateClient {
         timeoutTimestamp: timeoutTimestampNanoseconds,
       }),
     };
-    return this.signAndBroadcast(senderAddress, [transferMsg], this.fees.transfer, memo);
+    return this.signAndBroadcast(senderAddress, [transferMsg], fee, memo);
   }
 
   public async signAndBroadcast(

@@ -12,10 +12,10 @@ import { decodeTxRaw } from "../../proto-signing/build";
 import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
-import { GasPrice } from "./fee";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "./stargateclient";
 import {
+  defaultSendFee,
   faucet,
   makeRandomAddress,
   ModifyingDirectSecp256k1HdWallet,
@@ -27,60 +27,6 @@ import {
 
 describe("SigningStargateClient", () => {
   describe("constructor", () => {
-    it("can be constructed with default fees", async () => {
-      pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
-      const openedClient = client as unknown as PrivateSigningStargateClient;
-      expect(openedClient.fees).toEqual({
-        send: {
-          amount: [
-            {
-              amount: "2000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "80000",
-        },
-        delegate: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        transfer: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        undelegate: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        withdraw: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-      });
-    });
-
     it("can be constructed with custom registry", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
@@ -90,180 +36,6 @@ describe("SigningStargateClient", () => {
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
-    });
-
-    it("can be constructed with custom gas price", async () => {
-      pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const gasPrice = GasPrice.fromString("3.14utest");
-      const options = { gasPrice: gasPrice };
-      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = client as unknown as PrivateSigningStargateClient;
-      expect(openedClient.fees).toEqual({
-        send: {
-          amount: [
-            {
-              amount: "251200", // 3.14 * 80_000
-              denom: "utest",
-            },
-          ],
-          gas: "80000",
-        },
-        delegate: {
-          amount: [
-            {
-              amount: "502400", // 3.14 * 160_000
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        transfer: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        undelegate: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        withdraw: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-      });
-    });
-
-    it("can be constructed with custom gas limits", async () => {
-      pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const gasLimits = {
-        send: 160000,
-        delegate: 120000,
-      };
-      const options = { gasLimits: gasLimits };
-      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = client as unknown as PrivateSigningStargateClient;
-      expect(openedClient.fees).toEqual({
-        send: {
-          amount: [
-            {
-              amount: "4000", // 0.025 * 160_000
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        delegate: {
-          amount: [
-            {
-              amount: "3000", // 0.025 * 120_000
-              denom: "ucosm",
-            },
-          ],
-          gas: "120000",
-        },
-        transfer: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        undelegate: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-        withdraw: {
-          amount: [
-            {
-              amount: "4000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "160000",
-        },
-      });
-    });
-
-    it("can be constructed with custom gas price and gas limits", async () => {
-      pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const gasPrice = GasPrice.fromString("3.14utest");
-      const gasLimits = {
-        send: 160000,
-      };
-      const options = { gasPrice: gasPrice, gasLimits: gasLimits };
-      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
-      const openedClient = client as unknown as PrivateSigningStargateClient;
-      expect(openedClient.fees).toEqual({
-        send: {
-          amount: [
-            {
-              amount: "502400", // 3.14 * 160_000
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        delegate: {
-          amount: [
-            {
-              amount: "502400", // 3.14 * 160_000
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        transfer: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        undelegate: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-        withdraw: {
-          amount: [
-            {
-              amount: "502400",
-              denom: "utest",
-            },
-          ],
-          gas: "160000",
-        },
-      });
     });
   });
 
@@ -285,7 +57,13 @@ describe("SigningStargateClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, amount, memo);
+      const result = await client.sendTokens(
+        faucet.address0,
+        beneficiaryAddress,
+        amount,
+        defaultSendFee,
+        memo,
+      );
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
@@ -311,7 +89,13 @@ describe("SigningStargateClient", () => {
       });
 
       // send
-      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, amount, memo);
+      const result = await client.sendTokens(
+        faucet.address0,
+        beneficiaryAddress,
+        amount,
+        defaultSendFee,
+        memo,
+      );
       assertIsBroadcastTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
