@@ -16,7 +16,6 @@ import {
 import {
   assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
   calculateFee,
-  GasPrice,
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { sleep } from "@cosmjs/utils";
@@ -54,7 +53,7 @@ async function createTransport(): Promise<Transport> {
 
 describe("LedgerSigner", () => {
   const defaultChainId = "testing";
-  const defaultFee = calculateFee(80_000, GasPrice.fromString("0.025ucosm"));
+  const defaultFee = calculateFee(80_000, "0.025ucosm");
   const defaultMemo = "Some memo";
   const defaultSequence = "0";
   const defaultAccountNumber = "42";

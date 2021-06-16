@@ -48,7 +48,8 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   return elements[0];
 }
 
-export const defaultSendFee = calculateFee(80_000, GasPrice.fromString("0.025ucosm"));
+export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+export const defaultSendFee = calculateFee(80_000, defaultGasPrice);
 
 export const simapp = {
   tendermintUrl: "localhost:26658",

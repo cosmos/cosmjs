@@ -25,7 +25,7 @@ async function main() {
   const client = await SigningStargateClient.connectWithSigner(rpcUrl, wallet, { prefix: prefix });
   const recipient = Bech32.encode(prefix, Random.getBytes(20));
   const amount = coins(226644, "ucosm");
-  const fee = calculateFee(80_000, GasPrice.fromString("0.025ucosm"));
+  const fee = calculateFee(80_000, "0.025ucosm");
   const memo = "Ensure chain has my pubkey";
   const sendResult = await client.sendTokens(faucet.address0, recipient, amount, fee, memo);
   assertIsBroadcastTxSuccess(sendResult);
