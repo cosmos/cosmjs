@@ -70,4 +70,14 @@ describe("calculateFee", () => {
       gas: "80000",
     });
   });
+
+  it("accepts a string gas price", () => {
+    const gasLimit = 80000;
+    const gasPrice = "0.025ucosm";
+    const fee = calculateFee(gasLimit, gasPrice);
+    expect(fee).toEqual({
+      amount: [{ amount: "2000", denom: "ucosm" }],
+      gas: "80000",
+    });
+  });
 });

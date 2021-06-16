@@ -51,7 +51,9 @@ export class GasPrice {
   }
 }
 
-export function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
+export function calculateFee(gasLimit: number, gasPrice: GasPrice | string): StdFee {
+  const processedGasPrice = typeof gasPrice === "string" ? GasPrice.fromString(gasPrice) : gasPrice;
+  const { denom, amount: gasPriceAmount } = processedGasPrice;
   const amount = Math.ceil(gasPriceAmount.multiply(new Uint53(gasLimit)).toFloatApproximation());
   return {
     amount: coins(amount, denom),
