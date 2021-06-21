@@ -12,17 +12,17 @@ export function makeAuthInfoBytes(
   pubkeys: readonly Any[],
   feeAmount: readonly Coin[],
   gasLimit: number,
-  sequence: number,
+  sequences: number[],
   signMode = SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   const authInfo = {
     signerInfos: pubkeys.map(
-      (pubkey): SignerInfo => ({
+      (pubkey, index): SignerInfo => ({
         publicKey: pubkey,
         modeInfo: {
           single: { mode: signMode },
         },
-        sequence: Long.fromNumber(sequence),
+        sequence: Long.fromNumber(sequences[index]),
       }),
     ),
     fee: {

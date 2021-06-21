@@ -1,4 +1,4 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee, StdSignature } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 import {
@@ -283,7 +283,16 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    return this.signAndBroadcastWithMultiSigners([signerAddress], messages, fee, memo);
+  }
+
+  public async signAndBroadcastWithMultiSigners(
+    signerAddresses: string[],
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const txRaw = await this.signWithMultiSigners(signerAddresses, messages, fee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
@@ -305,83 +314,112 @@ export class SigningStargateClient extends StargateClient {
     memo: string,
     explicitSignerData?: SignerData,
   ): Promise<TxRaw> {
-    let signerData: SignerData;
-    if (explicitSignerData) {
-      signerData = explicitSignerData;
-    } else {
-      const { accountNumber, sequence } = await this.getSequence(signerAddress);
-      const chainId = await this.getChainId();
-      signerData = {
-        accountNumber: accountNumber,
-        sequence: sequence,
-        chainId: chainId,
-      };
-    }
-
-    return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
-      : this.signAmino(signerAddress, messages, fee, memo, signerData);
+    const explicitSignerDatas = explicitSignerData ? [explicitSignerData] : undefined;
+    return this.signWithMultiSigners([signerAddress], messages, fee, memo, explicitSignerDatas);
   }
 
-  private async signAmino(
-    signerAddress: string,
+  public async signWithMultiSigners(
+    signerAddresses: string[],
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-    { accountNumber, sequence, chainId }: SignerData,
+    explicitSignerDatas?: SignerData[],
+  ): Promise<TxRaw> {
+    let signerDatas: SignerData[] = [];
+    if (explicitSignerDatas) {
+      signerDatas = explicitSignerDatas;
+    } else {
+      for (const signerAddress of signerAddresses) {
+        const { accountNumber, sequence } = await this.getSequence(signerAddress);
+        const chainId = await this.getChainId();
+        const signerData = {
+          accountNumber: accountNumber,
+          sequence: sequence,
+          chainId: chainId,
+        };
+        signerDatas.push(signerData);
+      }
+    }
+
+    return isOfflineDirectSigner(this.signer)
+      ? this.signDirect(signerAddresses, messages, fee, memo, signerDatas)
+      : this.signAmino(signerAddresses, messages, fee, memo, signerDatas);
+  }
+
+  private async signAmino(
+    signerAddresses: string[],
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    signerDatas: SignerData[],
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
-    const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account) => account.address === signerAddress,
+    const accountsFromSigner = (await this.signer.getAccounts()).filter(
+      (account) => account.address in signerAddresses,
     );
-    if (!accountFromSigner) {
-      throw new Error("Failed to retrieve account from signer");
+    if (accountsFromSigner.length != signerAddresses.length) {
+      throw new Error("Failed to retrieve accounts from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const pubkeys = accountsFromSigner.map((account) => encodePubkey(encodeSecp256k1Pubkey(account.pubkey)));
+    const sequences = signerDatas.map((signerData) => signerData.sequence);
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
-    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+
+    const signatures: Uint8Array[] = [];
+    for (const i in signerDatas) {
+      const signerData = signerDatas[i];
+      const signDoc = makeSignDocAmino(
+        msgs,
+        fee,
+        signerData.chainId,
+        memo,
+        signerData.accountNumber,
+        signerData.sequence,
+      );
+      const { signature, signed } = await this.signer.signAmino(signerAddresses[i], signDoc);
+      signatures.push(fromBase64(signature.signature));
+    }
+
     const signedTxBody = {
-      messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
-      memo: signed.memo,
+      messages: msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
+      memo: memo,
     };
     const signedTxBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: signedTxBody,
     };
     const signedTxBodyBytes = this.registry.encode(signedTxBodyEncodeObject);
-    const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
-    const signedSequence = Int53.fromString(signed.sequence).toNumber();
+    const signedGasLimit = Int53.fromString(fee.gas).toNumber();
     const signedAuthInfoBytes = makeAuthInfoBytes(
-      [pubkey],
-      signed.fee.amount,
+      pubkeys,
+      fee.amount,
       signedGasLimit,
-      signedSequence,
+      sequences,
       signMode,
     );
     return TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
-      signatures: [fromBase64(signature.signature)],
+      signatures: signatures,
     });
   }
 
   private async signDirect(
-    signerAddress: string,
+    signerAddresses: string[],
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
-    { accountNumber, sequence, chainId }: SignerData,
+    signerDatas: SignerData[],
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
-    const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account) => account.address === signerAddress,
+    const accountsFromSigner = (await this.signer.getAccounts()).filter(
+      (account) => account.address in signerAddresses,
     );
-    if (!accountFromSigner) {
-      throw new Error("Failed to retrieve account from signer");
+    if (accountsFromSigner.length != signerAddresses.length) {
+      throw new Error("Failed to retrieve accounts from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const pubkeys = accountsFromSigner.map((account) => encodePubkey(encodeSecp256k1Pubkey(account.pubkey)));
+    const sequences = signerDatas.map((signerData) => signerData.sequence);
     const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {
@@ -391,13 +429,24 @@ export class SigningStargateClient extends StargateClient {
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
-    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+    const authInfoBytes = makeAuthInfoBytes(pubkeys, fee.amount, gasLimit, sequences);
+
+    const signatures: Uint8Array[] = [];
+    for (const i in signerDatas) {
+      const signDoc = makeSignDoc(
+        txBodyBytes,
+        authInfoBytes,
+        signerDatas[i].chainId,
+        signerDatas[i].accountNumber,
+      );
+      const { signature } = await this.signer.signDirect(signerAddresses[i], signDoc);
+      signatures.push(fromBase64(signature.signature));
+    }
+
     return TxRaw.fromPartial({
-      bodyBytes: signed.bodyBytes,
-      authInfoBytes: signed.authInfoBytes,
-      signatures: [fromBase64(signature.signature)],
+      bodyBytes: txBodyBytes,
+      authInfoBytes: authInfoBytes,
+      signatures: signatures,
     });
   }
 }

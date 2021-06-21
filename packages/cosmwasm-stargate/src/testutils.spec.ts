@@ -257,7 +257,7 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
         pubkeys,
         modifiedFeeAmount,
         modifiedGasLimit,
-        sequence,
+        [sequence],
         SignMode.SIGN_MODE_DIRECT,
       ),
     };
