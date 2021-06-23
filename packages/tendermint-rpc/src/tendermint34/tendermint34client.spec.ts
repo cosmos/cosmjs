@@ -166,7 +166,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const status = await client.status();
 
       // node info
-      expect(status.nodeInfo.version).toEqual(expected.version);
+      expect(status.nodeInfo.version).toMatch(expected.version);
       expect(status.nodeInfo.protocolVersion).toEqual({
         p2p: expected.p2pVersion,
         block: expected.blockVersion,
@@ -199,6 +199,73 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(results.results).toEqual([]);
       expect(results.beginBlockEvents).toEqual([]);
       expect(results.endBlockEvents).toEqual([]);
+
+      client.disconnect();
+    });
+  });
+
+  describe("blockSearch", () => {
+    beforeAll(async () => {
+      if (tendermintEnabled()) {
+        const client = await Tendermint34Client.create(rpcFactory());
+
+        // eslint-disable-next-line no-inner-declarations
+        async function sendTx(): Promise<void> {
+          const tx = buildKvTx(randomString(), randomString());
+
+          const txRes = await client.broadcastTxCommit({ tx: tx });
+          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+          expect(txRes.height).toBeTruthy();
+          expect(txRes.hash.length).not.toEqual(0);
+        }
+
+        // send 3 txs
+        await sendTx();
+        await sendTx();
+        await sendTx();
+
+        client.disconnect();
+
+        await tendermintSearchIndexUpdated();
+      }
+    });
+
+    it("can paginate over blockSearch results", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      // Note: Block height 1 is unsupported. This is fixed in https://github.com/cosmos/cosmjs/pull/815
+      // and will be released with CosmJS 0.26.
+      const query = buildQuery({ raw: "block.height >= 2 AND block.height <= 4" });
+
+      // expect one page of results
+      const s1 = await client.blockSearch({ query: query, page: 1, per_page: 2 });
+      expect(s1.totalCount).toEqual(3);
+      expect(s1.blocks.length).toEqual(2);
+
+      // second page
+      const s2 = await client.blockSearch({ query: query, page: 2, per_page: 2 });
+      expect(s2.totalCount).toEqual(3);
+      expect(s2.blocks.length).toEqual(1);
+
+      client.disconnect();
+    });
+
+    it("can get all search results in one call", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      // Note: Block height 1 is unsupported. This is fixed in https://github.com/cosmos/cosmjs/pull/815
+      // and will be released with CosmJS 0.26.
+      const query = buildQuery({ raw: "block.height >= 2 AND block.height <= 4" });
+
+      const sall = await client.blockSearchAll({ query: query, per_page: 2 });
+      expect(sall.totalCount).toEqual(3);
+      expect(sall.blocks.length).toEqual(3);
+      // make sure there are in order from lowest to highest height
+      const [b1, b2, b3] = sall.blocks;
+      expect(b2.block.header.height).toEqual(b1.block.header.height + 1);
+      expect(b3.block.header.height).toEqual(b2.block.header.height + 1);
 
       client.disconnect();
     });

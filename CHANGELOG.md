@@ -6,6 +6,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
+  `Tendermint34Client.blockSearchAll` were added to allow searching blocks in
+  Tendermint 0.34.9+ backends. This is a backport of [#815]. Note: Decoding
+  blocks of height 1 is unsupported. This is fixed in [#815] and will be
+  released as part of CosmJS 0.26.
+
+[#815]: https://github.com/cosmos/cosmjs/pull/815
+
 ## [0.25.4] - 2021-05-31
 
 ### Fixed
