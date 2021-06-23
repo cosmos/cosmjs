@@ -234,7 +234,9 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
+      // Note: Block height 1 is unsupported. This is fixed in https://github.com/cosmos/cosmjs/pull/815
+      // and will be released with CosmJS 0.26.
+      const query = buildQuery({ raw: "block.height >= 2 AND block.height <= 4" });
 
       // expect one page of results
       const s1 = await client.blockSearch({ query: query, page: 1, per_page: 2 });
@@ -253,7 +255,9 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
+      // Note: Block height 1 is unsupported. This is fixed in https://github.com/cosmos/cosmjs/pull/815
+      // and will be released with CosmJS 0.26.
+      const query = buildQuery({ raw: "block.height >= 2 AND block.height <= 4" });
 
       const sall = await client.blockSearchAll({ query: query, per_page: 2 });
       expect(sall.totalCount).toEqual(3);
