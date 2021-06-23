@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.25.5] - 2021-06-23
+
 ### Added
 
 - @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
@@ -491,6 +493,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[0.25.5]: https://github.com/cosmos/cosmjs/compare/v0.25.4...v0.25.5
 [0.25.4]: https://github.com/cosmos/cosmjs/compare/v0.25.3...v0.25.4
 [0.25.3]: https://github.com/cosmos/cosmjs/compare/v0.25.2...v0.25.3
 [0.25.2]: https://github.com/cosmos/cosmjs/compare/v0.25.1...v0.25.2
