@@ -50,6 +50,18 @@ and this project adheres to
 - @cosmjs/socket: Upgrade dependency "ws" to version 7 to avoid potential
   security problems.
 
+## [0.25.5] - 2021-06-23
+
+### Added
+
+- @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
+  `Tendermint34Client.blockSearchAll` were added to allow searching blocks in
+  Tendermint 0.34.9+ backends. This is a backport of [#815]. Note: Decoding
+  blocks of height 1 is unsupported. This is fixed in [#815] and will be
+  released as part of CosmJS 0.26.
+
+[#815]: https://github.com/cosmos/cosmjs/pull/815
+
 ## [0.25.4] - 2021-05-31
 
 ### Fixed
@@ -525,6 +537,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[0.25.5]: https://github.com/cosmos/cosmjs/compare/v0.25.4...v0.25.5
 [0.25.4]: https://github.com/cosmos/cosmjs/compare/v0.25.3...v0.25.4
 [0.25.3]: https://github.com/cosmos/cosmjs/compare/v0.25.2...v0.25.3
 [0.25.2]: https://github.com/cosmos/cosmjs/compare/v0.25.1...v0.25.2

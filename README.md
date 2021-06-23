@@ -101,6 +101,13 @@ discussion please reach out to the team.
 
 ## Known limitations
 
+### 0.25
+
+1. Decoding blocks of height 1 is unsupported. This is fixed in [#815] and will
+   be released as part of CosmJS 0.26.
+
+[#815]: https://github.com/cosmos/cosmjs/pull/815
+
 ### 0.24
 
 1. `AuthExtension` and all higher level Stargate clients only support
