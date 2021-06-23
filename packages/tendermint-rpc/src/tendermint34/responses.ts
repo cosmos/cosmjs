@@ -60,6 +60,11 @@ export interface BlockResultsResponse {
   readonly endBlockEvents: readonly Event[];
 }
 
+export interface BlockSearchResponse {
+  readonly blocks: readonly BlockResponse[];
+  readonly totalCount: number;
+}
+
 export interface BlockchainResponse {
   readonly lastHeight: number;
   readonly blockMetas: readonly BlockMeta[];

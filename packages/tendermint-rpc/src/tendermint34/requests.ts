@@ -12,6 +12,7 @@ export enum Method {
   /** Get block headers for minHeight <= height <= maxHeight. */
   Blockchain = "blockchain",
   BlockResults = "block_results",
+  BlockSearch = "block_search",
   BroadcastTxAsync = "broadcast_tx_async",
   BroadcastTxSync = "broadcast_tx_sync",
   BroadcastTxCommit = "broadcast_tx_commit",
@@ -30,6 +31,7 @@ export type Request =
   | AbciInfoRequest
   | AbciQueryRequest
   | BlockRequest
+  | BlockSearchRequest
   | BlockchainRequest
   | BlockResultsRequest
   | BroadcastTxRequest
@@ -95,6 +97,18 @@ export interface BlockResultsRequest {
   readonly params: {
     readonly height?: number;
   };
+}
+
+export interface BlockSearchRequest {
+  readonly method: Method.BlockSearch;
+  readonly params: BlockSearchParams;
+}
+
+export interface BlockSearchParams {
+  readonly query: string;
+  readonly page?: number;
+  readonly per_page?: number;
+  readonly order_by?: string;
 }
 
 export interface BroadcastTxRequest {
