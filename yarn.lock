@@ -309,8 +309,8 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -328,13 +328,13 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -363,8 +363,8 @@ __metadata:
     "@types/jasmine": ^3.6.10
     "@types/node": ^15.0.1
     "@types/yargs": ^15.0.4
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     axios: ^0.21.1
     babylon: ^6.18.0
     colors: ^1.3.3
@@ -380,11 +380,11 @@ __metadata:
     jasmine: ^3.5
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.0
+    typescript: ~4.3
     yargs: ^15.3.1
   bin:
     cosmwasm-cli: bin/cosmwasm-cli
@@ -408,8 +408,8 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
     "@types/pako": ^1.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -428,14 +428,14 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     pako: ^2.0.2
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -463,8 +463,8 @@ __metadata:
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
     "@types/pako": ^1.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     cosmjs-types: ^0.1.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -485,15 +485,15 @@ __metadata:
     long: ^4.0.0
     nyc: ^15.1.0
     pako: ^2.0.2
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     protobufjs: ~6.10.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -505,17 +505,17 @@ __metadata:
   dependencies:
     "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad"
     "@types/eslint-plugin-prettier": ^3
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
     eslint-plugin-import: ^2.22.1
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
-    prettier: ^2.0.5
-    typedoc: ^0.20
-    typescript: ~4.0
+    prettier: ^2.3.2
+    typedoc: ^0.21
+    typescript: ~4.3
   languageName: unknown
   linkType: soft
 
@@ -538,8 +538,8 @@ __metadata:
     "@types/node": ^15.0.1
     "@types/ripemd160": ^2.0.0
     "@types/sha.js": ^2.4.0
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     bip39: ^3.0.2
     bn.js: ^4.11.8
     buffer: ^6.0.3
@@ -563,15 +563,15 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ripemd160: ^2.0.2
     ses: ^0.11.0
     sha.js: ^2.4.11
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -589,8 +589,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     base64-js: ^1.3.0
     bech32: ^1.1.4
     eslint: ^7.5
@@ -610,13 +610,13 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -633,8 +633,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     axios: ^0.21.1
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -653,12 +653,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -682,8 +682,8 @@ __metadata:
     "@types/koa": ^2.11.0
     "@types/koa-bodyparser": ^4.3.0
     "@types/koa__cors": ^3.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -696,11 +696,11 @@ __metadata:
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.0
+    typescript: ~4.3
   bin:
     cosmos-faucet: bin/cosmos-faucet
   languageName: unknown
@@ -717,8 +717,8 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -736,12 +736,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -764,8 +764,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     axios: ^0.21.1
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -785,14 +785,14 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -819,8 +819,8 @@ __metadata:
     "@types/ledgerhq__hw-transport-node-hid": ^4.22.2
     "@types/ledgerhq__hw-transport-webusb": ^4.70.1
     "@types/semver": ^7.3.4
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -833,13 +833,13 @@ __metadata:
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     semver: ^7.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -856,8 +856,8 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     bn.js: ^4.11.8
     buffer: ^6.0.3
     eslint: ^7.5
@@ -877,12 +877,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -905,8 +905,8 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     cosmjs-types: ^0.1.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -926,14 +926,14 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     protobufjs: ~6.10.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -951,8 +951,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/ws": ^6.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -971,12 +971,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     ws: ^7
@@ -1005,8 +1005,8 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/long": ^4.0.1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     cosmjs-types: ^0.1.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -1026,15 +1026,15 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     protobufjs: ~6.10.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -1052,8 +1052,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -1071,12 +1071,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -1101,8 +1101,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     axios: ^0.21.1
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -1121,13 +1121,13 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -1145,8 +1145,8 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.22.1
-    "@typescript-eslint/parser": ^4.22.1
+    "@typescript-eslint/eslint-plugin": ^4.28
+    "@typescript-eslint/parser": ^4.28
     buffer: ^6.0.3
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -1165,12 +1165,12 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.0.5
+    prettier: ^2.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.20
-    typescript: ~4.0
+    typedoc: ^0.21
+    typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -1642,10 +1642,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.3, @types/json-schema@npm:^7.0.6":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.6":
   version: 7.0.7
   resolution: "@types/json-schema@npm:7.0.7"
   checksum: b9d2c509fa4e0b82f58e73f5e6ab76c60ff1884ba41bb82f37fb1cece226d4a3e5a62fedf78a43da0005373a6713d9abe61c1e592906402c41c08ad6ab26d52b
+  languageName: node
+  linkType: hard
+
+"@types/json-schema@npm:^7.0.7":
+  version: 7.0.8
+  resolution: "@types/json-schema@npm:7.0.8"
+  checksum: 435a3d18a88aeac7bc88c2cdd2c19466c62ce79303493edd72380cd4af9775c05f35d424d5e76ffe3f94575ebb535305c6cae928c5bfb9c39eafbfb6932520a1
   languageName: node
   linkType: hard
 
@@ -1913,103 +1920,102 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.22.1":
-  version: 4.24.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:4.24.0"
+"@typescript-eslint/eslint-plugin@npm:^4.28":
+  version: 4.28.4
+  resolution: "@typescript-eslint/eslint-plugin@npm:4.28.4"
   dependencies:
-    "@typescript-eslint/experimental-utils": 4.24.0
-    "@typescript-eslint/scope-manager": 4.24.0
-    debug: ^4.1.1
+    "@typescript-eslint/experimental-utils": 4.28.4
+    "@typescript-eslint/scope-manager": 4.28.4
+    debug: ^4.3.1
     functional-red-black-tree: ^1.0.1
-    lodash: ^4.17.15
-    regexpp: ^3.0.0
-    semver: ^7.3.2
-    tsutils: ^3.17.1
+    regexpp: ^3.1.0
+    semver: ^7.3.5
+    tsutils: ^3.21.0
   peerDependencies:
     "@typescript-eslint/parser": ^4.0.0
     eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: b3fb023320073cfbbc51d435313d63519a0c2ddb6360ace337e57be29851733edae54d2b4a893b54ee06080266021951f8a541b85084f2a00bf49c06d90e410d
+  checksum: 363b989839e88c16f0c46adc7fefb523730a979d7534252091eef902a7a9b9e2ef801916898cc0cf88d4a3608a754bbd7bd7f01141d9cdf823a5cefc4f03d6af
   languageName: node
   linkType: hard
 
-"@typescript-eslint/experimental-utils@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@typescript-eslint/experimental-utils@npm:4.24.0"
+"@typescript-eslint/experimental-utils@npm:4.28.4":
+  version: 4.28.4
+  resolution: "@typescript-eslint/experimental-utils@npm:4.28.4"
   dependencies:
-    "@types/json-schema": ^7.0.3
-    "@typescript-eslint/scope-manager": 4.24.0
-    "@typescript-eslint/types": 4.24.0
-    "@typescript-eslint/typescript-estree": 4.24.0
-    eslint-scope: ^5.0.0
-    eslint-utils: ^2.0.0
+    "@types/json-schema": ^7.0.7
+    "@typescript-eslint/scope-manager": 4.28.4
+    "@typescript-eslint/types": 4.28.4
+    "@typescript-eslint/typescript-estree": 4.28.4
+    eslint-scope: ^5.1.1
+    eslint-utils: ^3.0.0
   peerDependencies:
     eslint: "*"
-  checksum: 09a28e2b8b39739e7543afca53910b175d0ac4d9346da25479ef179bbeea3cb6d004bd5e931f5402fb39a1af7aa49b793c573da1faa1e773ea6d18006b781a5a
+  checksum: 8bb463ae1dcfd18417237abe4a1716fa6a7b459fc9cb131fdd6ba820e48bb60614a47d0cbd3693b08a12e5fed60dfafe872eb6bfdc23c42da9dbe627f24f9b54
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^4.22.1":
-  version: 4.24.0
-  resolution: "@typescript-eslint/parser@npm:4.24.0"
+"@typescript-eslint/parser@npm:^4.28":
+  version: 4.28.4
+  resolution: "@typescript-eslint/parser@npm:4.28.4"
   dependencies:
-    "@typescript-eslint/scope-manager": 4.24.0
-    "@typescript-eslint/types": 4.24.0
-    "@typescript-eslint/typescript-estree": 4.24.0
-    debug: ^4.1.1
+    "@typescript-eslint/scope-manager": 4.28.4
+    "@typescript-eslint/types": 4.28.4
+    "@typescript-eslint/typescript-estree": 4.28.4
+    debug: ^4.3.1
   peerDependencies:
     eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 30ff5e6b1e5e28a21f609576b6c504b6311ee7c26c6ffb1eaa986db16857765e7f5ad46c37c362a1fd809c3f3aead6be9c4e6b1289473be6764cf8f22e6f067e
+  checksum: 98eb4dcc86df20cc04d9b1e8669a2216f0e9846d1861a4b1909276c885882d516b9dbeab46bd9cb4e1505f45d8181d45e2b6465e2a9e7dc84f7b8aead42f3c26
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@typescript-eslint/scope-manager@npm:4.24.0"
+"@typescript-eslint/scope-manager@npm:4.28.4":
+  version: 4.28.4
+  resolution: "@typescript-eslint/scope-manager@npm:4.28.4"
   dependencies:
-    "@typescript-eslint/types": 4.24.0
-    "@typescript-eslint/visitor-keys": 4.24.0
-  checksum: 522d96e562bec1c717e5ec6665801ee54eaf18653044e3b385cf6967ffdfa0bdf17c0f058fff3af6ec935815abe8419969c26c6cf564e07db2487571f04c2ea4
+    "@typescript-eslint/types": 4.28.4
+    "@typescript-eslint/visitor-keys": 4.28.4
+  checksum: 13d09245c004f5f8d57b910e282d1b1d5efa66e5eca97468e900fd80d5bea5e9f0ad2942270fbcffbfdfeaa1daff7520812151ca0a680c3c0d231fef9a2fcc95
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@typescript-eslint/types@npm:4.24.0"
-  checksum: ed06724661da645419b353eefa4a81df6503a4ebd56d07113f58beb0f524414e2f3acaf82a997bb2a1cad8f99d9889cc5fc11ea0928262de65c75516eccadc59
+"@typescript-eslint/types@npm:4.28.4":
+  version: 4.28.4
+  resolution: "@typescript-eslint/types@npm:4.28.4"
+  checksum: 6901f6bc7438234455a348e4a5f6573c870f66c7007a936b5f0703a1bce2c7da1b95f4e1b1538bc177403b1624064a040ebce60a85a940ffecd76499a1e18819
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@typescript-eslint/typescript-estree@npm:4.24.0"
+"@typescript-eslint/typescript-estree@npm:4.28.4":
+  version: 4.28.4
+  resolution: "@typescript-eslint/typescript-estree@npm:4.28.4"
   dependencies:
-    "@typescript-eslint/types": 4.24.0
-    "@typescript-eslint/visitor-keys": 4.24.0
-    debug: ^4.1.1
-    globby: ^11.0.1
+    "@typescript-eslint/types": 4.28.4
+    "@typescript-eslint/visitor-keys": 4.28.4
+    debug: ^4.3.1
+    globby: ^11.0.3
     is-glob: ^4.0.1
-    semver: ^7.3.2
-    tsutils: ^3.17.1
+    semver: ^7.3.5
+    tsutils: ^3.21.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 7720b1f5e8c3c3bf212da3325d9beb699adb52c9cbbcf810f4a53a71e18752e299415794474fa3909671fe20fa5dc26f50c1ba476c8ae90bd2a5484f58c9b708
+  checksum: 8829b79e56752aca34265ac90c08a11d49732d18063551e4729b05f0c275fc84275a4091b1e34035713004e1a6cebc69089b901aa6ff7fae87f36d4ad835f101
   languageName: node
   linkType: hard
 
-"@typescript-eslint/visitor-keys@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@typescript-eslint/visitor-keys@npm:4.24.0"
+"@typescript-eslint/visitor-keys@npm:4.28.4":
+  version: 4.28.4
+  resolution: "@typescript-eslint/visitor-keys@npm:4.28.4"
   dependencies:
-    "@typescript-eslint/types": 4.24.0
+    "@typescript-eslint/types": 4.28.4
     eslint-visitor-keys: ^2.0.0
-  checksum: ec25df6705f3768b415abcfeae09ef6dc4ee7a7e77e9b7b795fc461668ed4a7c5a406a23af31e1471fa920adc705c515fe56e86a7cda6cddef8521f54afadffc
+  checksum: 49696c0a4195bd69a4a0a2024367efc9ee0e0ec2e55e2fda0d82b936f73f2399f965a15e2d088529c178194b6e02748c05bbab64f1550657c4ae6c0255703d09
   languageName: node
   linkType: hard
 
@@ -2474,13 +2480,6 @@ __metadata:
   version: 2.0.0
   resolution: "astral-regex@npm:2.0.0"
   checksum: bf049ee7048b70af5473580020f98faf09159af31a7fa5e223099966dc90e9e87760bd34030e19a6dcac05b45614b428f559bd71f027344d123555e524cb95ac
-  languageName: node
-  linkType: hard
-
-"at-least-node@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "at-least-node@npm:1.0.0"
-  checksum: 8f33efc16287ed39766065c718a2d36a469f702c66c6eb41fa460c0c62bca395301a6a02946e315ae4a84c9cc7f44c94ec73a556bc2a1049350da98d0b013afe
   languageName: node
   linkType: hard
 
@@ -3080,8 +3079,8 @@ __metadata:
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
     eslint: ^7.5
-    prettier: ^2.0.5
-    typescript: ~4.0
+    prettier: ^2.3.2
+    typescript: ~4.3
   languageName: unknown
   linkType: soft
 
@@ -3163,7 +3162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:~4.3.1":
+"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:~4.3.1":
   version: 4.3.2
   resolution: "debug@npm:4.3.2"
   dependencies:
@@ -3632,7 +3631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:^5.0.0, eslint-scope@npm:^5.1.1":
+"eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
   dependencies:
@@ -3642,12 +3641,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-utils@npm:^2.0.0, eslint-utils@npm:^2.1.0":
+"eslint-utils@npm:^2.1.0":
   version: 2.1.0
   resolution: "eslint-utils@npm:2.1.0"
   dependencies:
     eslint-visitor-keys: ^1.1.0
   checksum: a43892372a4205374982ac9d4c8edc5fe180cba76535ab9184c48f18a3d931b7ffdd6862cb2f8ca4305c47eface0e614e39884a75fbf169fcc55a6131af2ec48
+  languageName: node
+  linkType: hard
+
+"eslint-utils@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "eslint-utils@npm:3.0.0"
+  dependencies:
+    eslint-visitor-keys: ^2.0.0
+  peerDependencies:
+    eslint: ">=5"
+  checksum: 035451529f016e28edd26e8951f15e28a6a4e58adff67bd0cb494879f360080750b9c779e46561369aec0657ac2b89dd8b0aa38476e8cdf50e635aa872fa27b6
   languageName: node
   linkType: hard
 
@@ -4028,18 +4038,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "fs-extra@npm:9.1.0"
-  dependencies:
-    at-least-node: ^1.0.0
-    graceful-fs: ^4.2.0
-    jsonfile: ^6.0.1
-    universalify: ^2.0.0
-  checksum: e667d8df54113b527bf5830dd9db8f142618db488894b329fe07724c7020dfacf8a372b144a74e683ae44e66f56117adca9cac165950dda7d83537c46c10dc4b
-  languageName: node
-  linkType: hard
-
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -4166,7 +4164,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.0, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
   version: 7.1.7
   resolution: "glob@npm:7.1.7"
   dependencies:
@@ -4214,9 +4212,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"globby@npm:^11.0.1":
-  version: 11.0.3
-  resolution: "globby@npm:11.0.3"
+"globby@npm:^11.0.3":
+  version: 11.0.4
+  resolution: "globby@npm:11.0.4"
   dependencies:
     array-union: ^2.1.0
     dir-glob: ^3.0.1
@@ -4224,7 +4222,7 @@ fsevents@~2.3.1:
     ignore: ^5.1.4
     merge2: ^1.3.0
     slash: ^3.0.0
-  checksum: f17da0f869918656ec8c16c15ad100f025fbd13e4c157286cf340811eb1355a7d06dde77be1685a7a051970ec6abeff96a9b2a1a97525f84bc94fbd518c1d1db
+  checksum: 9f365b35b835c0235880e272fa2a2f5d9d78428e09af8dfc67536f1047953e7b0c66aab9bb6d41e6c0f4c3ec75a22840d9acb892f102daecaadd338b2c763219
   languageName: node
   linkType: hard
 
@@ -4574,13 +4572,6 @@ fsevents@~2.3.1:
   version: 1.3.8
   resolution: "ini@npm:1.3.8"
   checksum: 62189ce7ea44c5778e757e4232c581212e838f3c39e79d931bb9152fd4b9275f09fb20b96afdd60ba9f5d7996b92486cad6cc617fcb84ff4beedd1b33b86221e
-  languageName: node
-  linkType: hard
-
-"interpret@npm:^1.0.0":
-  version: 1.4.0
-  resolution: "interpret@npm:1.4.0"
-  checksum: f15725d76206525546f559030ddc967db025c6db904eb8798a70ec3c07e42c5537c5cbc73a15eafd4ae5cdabad35601abf8878261c03dcc8217747e8037575fe
   languageName: node
   linkType: hard
 
@@ -5056,19 +5047,6 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jsonfile@npm:^6.0.1":
-  version: 6.1.0
-  resolution: "jsonfile@npm:6.1.0"
-  dependencies:
-    graceful-fs: ^4.1.6
-    universalify: ^2.0.0
-  dependenciesMeta:
-    graceful-fs:
-      optional: true
-  checksum: 9419c886abc6f8a5088cbb222b7bc17c76e8ee9f6c0e5c38781a4e09488166084f25247bc0b58e025b08c43064c82ae860ad89a992e35fc8cfae639323b7edbc
-  languageName: node
-  linkType: hard
-
 "karma-chrome-launcher@npm:^3.1.0":
   version: 3.1.0
   resolution: "karma-chrome-launcher@npm:3.1.0"
@@ -5323,7 +5301,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.19, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 4983720b9abca930a4a46f18db163d7dad8dd00dbed6db0cc7b499b33b717cce69f80928b27bbb1ff2cbd3b19d251ee90669a8b5ea466072ca81c2ebe91e7468
@@ -5414,12 +5392,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"marked@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "marked@npm:2.0.3"
+"marked@npm:^2.1.1":
+  version: 2.1.3
+  resolution: "marked@npm:2.1.3"
   bin:
     marked: bin/marked
-  checksum: 18940065203f4eacf84538d57478cdab170ca024c01e8cb992871f48fedb8a534bb69a908edd5b2c4d0468fb751ed4da52996cda5a45f063e71e433bbb7f04f7
+  checksum: 9779b758ae413186be535109fe695be4fac23a671c6565b855606bb1ea70f796b580f10a9588a130e7b676a085916ef90c82982ef6a382a06b14864cbf802afb
   languageName: node
   linkType: hard
 
@@ -6260,12 +6238,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.0.5":
-  version: 2.3.0
-  resolution: "prettier@npm:2.3.0"
+"prettier@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "prettier@npm:2.3.2"
   bin:
     prettier: bin-prettier.js
-  checksum: 652640cc8b71bc5277cfb8bf6f161783ca588efcf683c3d630837b39da8d57fef35c9e00ae5855a8e3c75136c42274046c913cc2b2d2968558315f31c6a26981
+  checksum: 4fd89a7f6a12b13456d359fba2b1dd0fc0a17cf33f8f15953ab9f43b21ea9b09b5a2861d63b558ca0577274ce606d390e70628cf93e26d19d6cb7f19c9eebc31
   languageName: node
   linkType: hard
 
@@ -6533,15 +6511,6 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"rechoir@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "rechoir@npm:0.6.2"
-  dependencies:
-    resolve: ^1.1.6
-  checksum: 6646a6bce733282d182bf04816b15d4e2d63736b3453cf62a8568aaa1399621a73b3942315161f549e090f9a3c61bc09f4cb674f928c369a40037621e10295bd
-  languageName: node
-  linkType: hard
-
 "rechoir@npm:^0.7.0":
   version: 0.7.0
   resolution: "rechoir@npm:0.7.0"
@@ -6558,7 +6527,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"regexpp@npm:^3.0.0, regexpp@npm:^3.1.0":
+"regexpp@npm:^3.1.0":
   version: 3.1.0
   resolution: "regexpp@npm:3.1.0"
   checksum: 69d0ce6b449cf35d3732d6341a1e70850360ffc619f8eef10629871c462e614853fffb80d3f00fc17cd0bb5b8f34b0cde5be4b434e72c0eb3fbba2360c8b5ac4
@@ -6632,7 +6601,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"resolve@^1.1.6, resolve@^1.10.0, resolve@^1.13.1, resolve@^1.20.0, resolve@^1.9.0":
+"resolve@^1.10.0, resolve@^1.13.1, resolve@^1.20.0, resolve@^1.9.0":
   version: 1.20.0
   resolution: "resolve@npm:1.20.0"
   dependencies:
@@ -6642,7 +6611,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.6#builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
   version: 1.20.0
   resolution: "resolve@patch:resolve@npm%3A1.20.0#builtin<compat/resolve>::version=1.20.0&hash=3388aa"
   dependencies:
@@ -6848,19 +6817,6 @@ fsevents@~2.3.1:
   version: 3.0.0
   resolution: "shebang-regex@npm:3.0.0"
   checksum: ea18044ffaf18129ced5a246660a9171a7dff98999aaa9de8abb237d8a7711d8a1f76e16881399994ee429156717ce1c6a50c665bb18a4d55a7f80b9125b1f7d
-  languageName: node
-  linkType: hard
-
-"shelljs@npm:^0.8.4":
-  version: 0.8.4
-  resolution: "shelljs@npm:0.8.4"
-  dependencies:
-    glob: ^7.0.0
-    interpret: ^1.0.0
-    rechoir: ^0.6.2
-  bin:
-    shjs: bin/shjs
-  checksum: bdf68e3c2a8a6d191dde3be2800bfcfd688c126344ccaf6cf7024cdaf824d0d3523b8e514cd52264f739cbabd2b0569637dd5a8183377347225af918e03ff5dc
   languageName: node
   linkType: hard
 
@@ -7471,7 +7427,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"tsutils@npm:^3.17.1":
+"tsutils@npm:^3.21.0":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
   dependencies:
@@ -7540,46 +7496,43 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.20":
-  version: 0.20.36
-  resolution: "typedoc@npm:0.20.36"
+"typedoc@npm:^0.21":
+  version: 0.21.4
+  resolution: "typedoc@npm:0.21.4"
   dependencies:
-    colors: ^1.4.0
-    fs-extra: ^9.1.0
+    glob: ^7.1.7
     handlebars: ^4.7.7
-    lodash: ^4.17.21
     lunr: ^2.3.9
-    marked: ^2.0.3
+    marked: ^2.1.1
     minimatch: ^3.0.0
     progress: ^2.0.3
-    shelljs: ^0.8.4
     shiki: ^0.9.3
     typedoc-default-themes: ^0.12.10
   peerDependencies:
-    typescript: 3.9.x || 4.0.x || 4.1.x || 4.2.x
+    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x
   bin:
     typedoc: bin/typedoc
-  checksum: 362a576deee8225e7f0e2722c91f9de553d8d821f0a7b07ac4bf9b9fa704452f495aba035e7c73af415b7363c88e80689f666e0b2dab3f29bb42eb5f2d7ae93c
+  checksum: 109d93b11a6e2b34d6ed9bad648c4089e26f3c2771cb7d65f837f1b605260752e4e0d7b6d35bf613f2dd0fbc431058bdc4cd75ad9fedce4741c4992b00a21dfa
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.0#builtin<compat/typescript>":
-  version: 4.0.7
-  resolution: "typescript@patch:typescript@npm%3A4.0.7#builtin<compat/typescript>::version=4.0.7&hash=a45b0e"
+"typescript@patch:typescript@~4.3#builtin<compat/typescript>":
+  version: 4.3.5
+  resolution: "typescript@patch:typescript@npm%3A4.3.5#builtin<compat/typescript>::version=4.3.5&hash=ddfc1b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f234923fbef722077d00ee008aa3492b02adbfe5a67b1c31687a0f7c6cb9946b759665ea643ffc1174298ffb1c59de0cc2abe1a91e57415d51951589eff12446
+  checksum: 7f0b8343f71ecac18095be1476b398aca420ab60dc207cc1efe078f381eef5527b80a518297720257114cdbda65612f8839e4b63e85dc95e67ac5cbbade8bdf0
   languageName: node
   linkType: hard
 
-typescript@~4.0:
-  version: 4.0.7
-  resolution: "typescript@npm:4.0.7"
+typescript@~4.3:
+  version: 4.3.5
+  resolution: "typescript@npm:4.3.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1b4c63a228efd6ceec80382b6001dad2c27c9bd46022f965dab907a13275c9ceb7b4b4de8be8902457bd644d2b0f9ddd8cf03b561e35d7cd2d793cf7554afd2d
+  checksum: d9a8e78d72dd19896e6bfa73ab2a0fcea6eca2700d1d6e7c33f67a970af54a3e0fed8f715a8c4e6a0ff7fc0995067b394b2003518ab0aa84cd396377e54b760c
   languageName: node
   linkType: hard
 
@@ -7633,13 +7586,6 @@ typescript@~4.0:
   version: 0.1.2
   resolution: "universalify@npm:0.1.2"
   checksum: 420fc6547357782c700d53e9a92506a8e95345b13e97684c8f9ab75237912ec2ebb6af8ac10d4f7406b7b6bd21c58f6c5c0811414fb0b4091b78b4743fa6806e
-  languageName: node
-  linkType: hard
-
-"universalify@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "universalify@npm:2.0.0"
-  checksum: 36bfbdc97bd4b483596e66ea65e20663f5ab9ec3650157d99b075b7f97afcdefe46bbb23f89171dd75595d398cea3769a5b6d7130f5c66cae2a0f00904780f62
   languageName: node
   linkType: hard
 
