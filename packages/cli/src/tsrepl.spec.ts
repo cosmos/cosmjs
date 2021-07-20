@@ -40,7 +40,7 @@ describe("TsRepl", () => {
     await new TsRepl(tsConfigPath, "const const const;")
       .start()
       .then(() => fail("must not resolve"))
-      .catch((e) => expect(e).toMatch(/Variable declaration expected./));
+      .catch((e) => expect(e).toMatch(/'const' is not allowed as a variable declaration name./));
   });
 
   it("can be started with top level await", async () => {
