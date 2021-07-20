@@ -45,7 +45,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "prettier": "^2.3.2",
-    "typedoc": "^0.20",
+    "typedoc": "^0.21",
     "typescript": "~4.3"
   }
 }
