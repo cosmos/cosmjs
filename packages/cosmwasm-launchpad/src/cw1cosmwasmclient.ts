@@ -20,7 +20,7 @@ export class Cw1CosmWasmClient extends SigningCosmWasmClient {
     this.cw1ContractAddress = cw1ContractAddress;
   }
 
-  public async getAccount(address?: string): Promise<Account | undefined> {
+  public override async getAccount(address?: string): Promise<Account | undefined> {
     return super.getAccount(address || this.cw1ContractAddress);
   }
 

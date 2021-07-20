@@ -84,7 +84,7 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     this.cw3ContractAddress = cw3ContractAddress;
   }
 
-  public getAccount(address?: string): Promise<Account | undefined> {
+  public override getAccount(address?: string): Promise<Account | undefined> {
     return super.getAccount(address || this.cw3ContractAddress);
   }
 

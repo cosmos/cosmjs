@@ -184,11 +184,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.fees = buildFeeTable<CosmWasmFeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
-  public async getSequence(address?: string): Promise<GetSequenceResult> {
+  public override async getSequence(address?: string): Promise<GetSequenceResult> {
     return super.getSequence(address || this.signerAddress);
   }
 
-  public async getAccount(address?: string): Promise<Account | undefined> {
+  public override async getAccount(address?: string): Promise<Account | undefined> {
     return super.getAccount(address || this.signerAddress);
   }
 

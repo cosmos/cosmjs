@@ -204,7 +204,7 @@ export async function makeWasmClient(
  * A class for testing clients using an Amino signer which modifies the transaction it receives before signing
  */
 export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
-  public static async fromMnemonic(
+  public static override async fromMnemonic(
     mnemonic: string,
     options: Partial<Secp256k1HdWalletOptions> = {},
   ): Promise<ModifyingSecp256k1HdWallet> {
@@ -213,7 +213,7 @@ export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
     return new ModifyingSecp256k1HdWallet(mnemonicChecked, { ...options, seed: seed });
   }
 
-  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
+  public override async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
     const modifiedSignDoc = {
       ...signDoc,
       fee: {
@@ -230,7 +230,7 @@ export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
  * A class for testing clients using a direct signer which modifies the transaction it receives before signing
  */
 export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
-  public static async fromMnemonic(
+  public static override async fromMnemonic(
     mnemonic: string,
     options: Partial<DirectSecp256k1HdWalletOptions> = {},
   ): Promise<DirectSecp256k1HdWallet> {
@@ -239,7 +239,7 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     return new ModifyingDirectSecp256k1HdWallet(mnemonicChecked, { ...options, seed: seed });
   }
 
-  public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
+  public override async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
     const txBody = TxBody.decode(signDoc.bodyBytes);
     const modifiedTxBody = TxBody.fromPartial({
       ...txBody,
