@@ -70,15 +70,15 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-kind-icon">Encryption<wbr>Configuration</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/wallet.kdfconfiguration.html" class="tsd-kind-icon">Kdf<wbr>Configuration</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-kind-icon">Encryption<wbr>Configuration</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/wallet.KdfConfiguration.html" class="tsd-kind-icon">Kdf<wbr>Configuration</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="wallet.html#cosmjssalt" class="tsd-kind-icon">cosmjs<wbr>Salt</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="wallet.html#supportedalgorithms" class="tsd-kind-icon">supported<wbr>Algorithms</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="wallet.html#cosmjsSalt" class="tsd-kind-icon">cosmjs<wbr>Salt</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="wallet.html#supportedAlgorithms" class="tsd-kind-icon">supported<wbr>Algorithms</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -86,7 +86,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="wallet.html#decrypt" class="tsd-kind-icon">decrypt</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="wallet.html#encrypt" class="tsd-kind-icon">encrypt</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="wallet.html#executekdf" class="tsd-kind-icon">execute<wbr>Kdf</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="wallet.html#executeKdf" class="tsd-kind-icon">execute<wbr>Kdf</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,12 +95,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
-					<a name="cosmjssalt" class="tsd-anchor"></a>
+					<a name="cosmjsSalt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> cosmjs<wbr>Salt</h3>
 					<div class="tsd-signature tsd-kind-icon">cosmjs<wbr>Salt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/amino/src/wallet.ts#L15">wallet.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/amino/src/wallet.ts#L15">wallet.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -112,12 +112,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
-					<a name="supportedalgorithms" class="tsd-anchor"></a>
+					<a name="supportedAlgorithms" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> supported<wbr>Algorithms</h3>
 					<div class="tsd-signature tsd-kind-icon">supported<wbr>Algorithms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>xchacha20poly1305Ietf<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/amino/src/wallet.ts#L51">wallet.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/amino/src/wallet.ts#L51">wallet.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -136,13 +136,13 @@
 					<a name="decrypt" class="tsd-anchor"></a>
 					<h3>decrypt</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">decrypt<span class="tsd-signature-symbol">(</span>ciphertext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">decrypt<span class="tsd-signature-symbol">(</span>ciphertext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/amino/src/wallet.ts#L74">wallet.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/amino/src/wallet.ts#L74">wallet.ts:74</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -154,7 +154,7 @@
 									<h5>encryptionKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 								<li>
-									<h5>config: <a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a></h5>
+									<h5>config: <a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -165,13 +165,13 @@
 					<a name="encrypt" class="tsd-anchor"></a>
 					<h3>encrypt</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">encrypt<span class="tsd-signature-symbol">(</span>plaintext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">encrypt<span class="tsd-signature-symbol">(</span>plaintext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/amino/src/wallet.ts#L55">wallet.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/amino/src/wallet.ts#L55">wallet.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -183,7 +183,7 @@
 									<h5>encryptionKey: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 								<li>
-									<h5>config: <a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a></h5>
+									<h5>config: <a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">EncryptionConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -191,16 +191,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="executekdf" class="tsd-anchor"></a>
+					<a name="executeKdf" class="tsd-anchor"></a>
 					<h3>execute<wbr>Kdf</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">execute<wbr>Kdf<span class="tsd-signature-symbol">(</span>password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configuration<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.kdfconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">KdfConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">execute<wbr>Kdf<span class="tsd-signature-symbol">(</span>password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configuration<span class="tsd-signature-symbol">: </span><a href="../interfaces/wallet.KdfConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">KdfConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/amino/src/wallet.ts#L26">wallet.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/amino/src/wallet.ts#L26">wallet.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -209,7 +209,7 @@
 									<h5>password: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>configuration: <a href="../interfaces/wallet.kdfconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">KdfConfiguration</a></h5>
+									<h5>configuration: <a href="../interfaces/wallet.KdfConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">KdfConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -222,7 +222,7 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="../modules.html">Exports</a>
+						<a href="../modules.html">Modules</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="addresses.html">addresses</a>
@@ -268,16 +268,16 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/wallet.encryptionconfiguration.html" class="tsd-kind-icon">Encryption<wbr>Configuration</a>
+						<a href="../interfaces/wallet.EncryptionConfiguration.html" class="tsd-kind-icon">Encryption<wbr>Configuration</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/wallet.kdfconfiguration.html" class="tsd-kind-icon">Kdf<wbr>Configuration</a>
+						<a href="../interfaces/wallet.KdfConfiguration.html" class="tsd-kind-icon">Kdf<wbr>Configuration</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
-						<a href="wallet.html#cosmjssalt" class="tsd-kind-icon">cosmjs<wbr>Salt</a>
+						<a href="wallet.html#cosmjsSalt" class="tsd-kind-icon">cosmjs<wbr>Salt</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
-						<a href="wallet.html#supportedalgorithms" class="tsd-kind-icon">supported<wbr>Algorithms</a>
+						<a href="wallet.html#supportedAlgorithms" class="tsd-kind-icon">supported<wbr>Algorithms</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="wallet.html#decrypt" class="tsd-kind-icon">decrypt</a>
@@ -286,7 +286,7 @@
 						<a href="wallet.html#encrypt" class="tsd-kind-icon">encrypt</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="wallet.html#executekdf" class="tsd-kind-icon">execute<wbr>Kdf</a>
+						<a href="wallet.html#executeKdf" class="tsd-kind-icon">execute<wbr>Kdf</a>
 					</li>
 				</ul>
 			</nav>

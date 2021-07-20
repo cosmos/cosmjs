@@ -1,0 +1,1806 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>QueryClient | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@cosmjs/stargate Documentation</a>
+				</li>
+				<li>
+					<a href="../modules/queries_queryclient.html">queries/queryclient</a>
+				</li>
+				<li>
+					<a href="queries_queryclient.QueryClient.html">QueryClient</a>
+				</li>
+			</ul>
+			<h1>Class QueryClient</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">QueryClient</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="queries_queryclient.QueryClient.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="queries_queryclient.QueryClient.html#queryRawProof" class="tsd-kind-icon">query<wbr>Raw<wbr>Proof</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="queries_queryclient.QueryClient.html#queryUnverified" class="tsd-kind-icon">query<wbr>Unverified</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="queries_queryclient.QueryClient.html#queryVerified" class="tsd-kind-icon">query<wbr>Verified</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="queries_queryclient.QueryClient.html#withExtensions" class="tsd-kind-icon">with<wbr>Extensions</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Query<wbr>Client<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L494">stargate/src/queries/queryclient.ts:494</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="queryRawProof" class="tsd-anchor"></a>
+					<h3>query<wbr>Raw<wbr>Proof</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Raw<wbr>Proof<span class="tsd-signature-symbol">(</span>store<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, queryKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, desiredHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/queries_queryclient.ProvenQuery.html" class="tsd-signature-type" data-tsd-kind="Interface">ProvenQuery</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L529">stargate/src/queries/queryclient.ts:529</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>store: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>queryKey: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> desiredHeight: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/queries_queryclient.ProvenQuery.html" class="tsd-signature-type" data-tsd-kind="Interface">ProvenQuery</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="queryUnverified" class="tsd-anchor"></a>
+					<h3>query<wbr>Unverified</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Unverified<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L573">stargate/src/queries/queryclient.ts:573</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>request: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="queryVerified" class="tsd-anchor"></a>
+					<h3>query<wbr>Verified</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Verified<span class="tsd-signature-symbol">(</span>store<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, desiredHeight<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L498">stargate/src/queries/queryclient.ts:498</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>store: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>key: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> desiredHeight: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="withExtensions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> with<wbr>Extensions</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M, N&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M, N, O&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionO<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionO<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionP<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionO<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionP<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionQ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Q</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Extensions&lt;A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R&gt;<span class="tsd-signature-symbol">(</span>tmClient<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Tendermint34Client</span>, setupExtensionA<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionB<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionE<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionF<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionG<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionH<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionI<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionJ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionK<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionM<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionO<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionP<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionQ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol">&gt;</span>, setupExtensionR<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">R</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L31">stargate/src/queries/queryclient.ts:31</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 0 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L34">stargate/src/queries/queryclient.ts:34</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 1 extension</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L40">stargate/src/queries/queryclient.ts:40</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 2 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L47">stargate/src/queries/queryclient.ts:47</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 3 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L55">stargate/src/queries/queryclient.ts:55</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 4 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L64">stargate/src/queries/queryclient.ts:64</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 5 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L80">stargate/src/queries/queryclient.ts:80</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 6 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L98">stargate/src/queries/queryclient.ts:98</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 7 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L118">stargate/src/queries/queryclient.ts:118</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 8 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L140">stargate/src/queries/queryclient.ts:140</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 9 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L164">stargate/src/queries/queryclient.ts:164</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 10 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L190">stargate/src/queries/queryclient.ts:190</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 11 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L218">stargate/src/queries/queryclient.ts:218</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 12 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L248">stargate/src/queries/queryclient.ts:248</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 13 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L280">stargate/src/queries/queryclient.ts:280</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 14 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionN: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L314">stargate/src/queries/queryclient.ts:314</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 15 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>O<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionN: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionO: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L350">stargate/src/queries/queryclient.ts:350</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 16 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>O<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>P<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionN: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionO: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionP: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L388">stargate/src/queries/queryclient.ts:388</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 17 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>O<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>P<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>Q<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionN: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionO: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionP: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionQ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Q</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/stargate/src/queries/queryclient.ts#L428">stargate/src/queries/queryclient.ts:428</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs a QueryClient with 18 extensions</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>F<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>G<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>H<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>J<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>L<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>M<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>O<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>P<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>Q<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+								<li>
+									<h4>R<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tmClient: <span class="tsd-signature-type">Tendermint34Client</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionA: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionB: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionC: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionD: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionE: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionF: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionG: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionH: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionI: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionJ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionK: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionL: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionM: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionN: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionO: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionP: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionQ: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupExtensionR: <span class="tsd-signature-type">QueryExtensionSetup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">G</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">H</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">J</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Q</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">R</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/accounts.html">accounts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/aminomsgs.html">aminomsgs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/aminotypes.html">aminotypes</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/encodeobjects.html">encodeobjects</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/fee.html">fee</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/logs.html">logs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/multisignature.html">multisignature</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries.html">queries</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_auth.html">queries/auth</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_bank.html">queries/bank</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_distribution.html">queries/distribution</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_ibc.html">queries/ibc</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/queries_queryclient.html">queries/queryclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_staking.html">queries/staking</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/queries_utils.html">queries/utils</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/search.html">search</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/signingstargateclient.html">signingstargateclient</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/stargateclient.html">stargateclient</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="queries_queryclient.QueryClient.html" class="tsd-kind-icon">Query<wbr>Client</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="queries_queryclient.QueryClient.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="queries_queryclient.QueryClient.html#queryRawProof" class="tsd-kind-icon">query<wbr>Raw<wbr>Proof</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="queries_queryclient.QueryClient.html#queryUnverified" class="tsd-kind-icon">query<wbr>Unverified</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="queries_queryclient.QueryClient.html#queryVerified" class="tsd-kind-icon">query<wbr>Verified</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="queries_queryclient.QueryClient.html#withExtensions" class="tsd-kind-icon">with<wbr>Extensions</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/queries_queryclient.ProvenQuery.html" class="tsd-kind-icon">Proven<wbr>Query</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

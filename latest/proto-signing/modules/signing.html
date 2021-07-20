@@ -70,9 +70,9 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makeauthinfobytes" class="tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makesignbytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makeAuthInfoBytes" class="tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makeSignBytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="signing.html#makeSignDoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a></li>
 							</ul>
 						</section>
 					</div>
@@ -81,7 +81,7 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="makeauthinfobytes" class="tsd-anchor"></a>
+					<a name="makeAuthInfoBytes" class="tsd-anchor"></a>
 					<h3>make<wbr>Auth<wbr>Info<wbr>Bytes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes<span class="tsd-signature-symbol">(</span>pubkeys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Any</span><span class="tsd-signature-symbol">[]</span>, feeAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, gasLimit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, signMode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SignMode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
@@ -90,7 +90,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/proto-signing/src/signing.ts#L11">proto-signing/src/signing.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/proto-signing/src/signing.ts#L11">proto-signing/src/signing.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -121,7 +121,7 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="makesignbytes" class="tsd-anchor"></a>
+					<a name="makeSignBytes" class="tsd-anchor"></a>
 					<h3>make<wbr>Sign<wbr>Bytes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">make<wbr>Sign<wbr>Bytes<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SignDoc</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
@@ -130,7 +130,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/proto-signing/src/signing.ts#L50">proto-signing/src/signing.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/proto-signing/src/signing.ts#L50">proto-signing/src/signing.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -144,7 +144,7 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="makesigndoc" class="tsd-anchor"></a>
+					<a name="makeSignDoc" class="tsd-anchor"></a>
 					<h3>make<wbr>Sign<wbr>Doc</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">make<wbr>Sign<wbr>Doc<span class="tsd-signature-symbol">(</span>bodyBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, authInfoBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, chainId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, accountNumber<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SignDoc</span></li>
@@ -153,7 +153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/b79e49cb58/packages/proto-signing/src/signing.ts#L36">proto-signing/src/signing.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a3bdff276d/packages/proto-signing/src/signing.ts#L36">proto-signing/src/signing.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,7 +181,7 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="../modules.html">Exports</a>
+						<a href="../modules.html">Modules</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="decode.html">decode</a>
@@ -218,13 +218,13 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="signing.html#makeauthinfobytes" class="tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes</a>
+						<a href="signing.html#makeAuthInfoBytes" class="tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="signing.html#makesignbytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a>
+						<a href="signing.html#makeSignBytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="signing.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
+						<a href="signing.html#makeSignDoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
 					</li>
 				</ul>
 			</nav>
