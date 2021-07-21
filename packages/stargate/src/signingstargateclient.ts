@@ -393,7 +393,7 @@ export class SigningStargateClient extends StargateClient {
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
   }
 
-  public async experimentalAdr36Sign(signerAddress: string, data: Uint8Array): Promise<StdTx> {
+  public async experimentalAdr36Sign(signerAddress: string, data: Uint8Array | Uint8Array[]): Promise<StdTx> {
     const accountNumber = 0;
     const sequence = 0;
     const chainId = "";
@@ -403,13 +403,17 @@ export class SigningStargateClient extends StargateClient {
     };
     const memo = "";
 
-    const msg: MsgSignData = {
-      type: "sign/MsgSignData",
-      value: {
-        signer: signerAddress,
-        data: toBase64(data),
-      },
-    };
+    const datas = Array.isArray(data) ? data : [data];
+
+    const msgs: MsgSignData[] = datas.map(
+      (d): MsgSignData => ({
+        type: "sign/MsgSignData",
+        value: {
+          signer: signerAddress,
+          data: toBase64(d),
+        },
+      }),
+    );
 
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -418,7 +422,7 @@ export class SigningStargateClient extends StargateClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const signDoc = makeSignDocAmino([msg], fee, chainId, memo, accountNumber, sequence);
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     if (!equals(signDoc, signed)) {
       throw new Error(

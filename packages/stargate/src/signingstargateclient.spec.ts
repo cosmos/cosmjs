@@ -909,6 +909,49 @@ describe("SigningStargateClient", () => {
         memo: "",
       });
     });
+
+    it("works for multiple datas", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.offline(wallet);
+      const [firstAccount] = await wallet.getAccounts();
+
+      const data1 = toAscii("Hello");
+      const data2 = toAscii("World");
+      const signed = await client.experimentalAdr36Sign(firstAccount.address, [data1, data2]);
+      expect(signed).toEqual({
+        msg: [
+          {
+            type: "sign/MsgSignData",
+            value: {
+              signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+              data: "SGVsbG8=", // echo -n "Hello" | base64
+            },
+          },
+          {
+            type: "sign/MsgSignData",
+            value: {
+              signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+              data: "V29ybGQ=", // echo -n "World" | base64
+            },
+          },
+        ],
+        fee: {
+          amount: [],
+          gas: "0",
+        },
+        signatures: [
+          {
+            pub_key: {
+              type: "tendermint/PubKeySecp256k1",
+              value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+            },
+            signature:
+              "KvN9FM/WSfsJERv4PS91Ey7SUrnVJ/XHpHmMDh0sC94Niz2JLfF9KKE1QMfL5KtVFSRdMkJJsMtgl+aCaUyOCw==",
+          },
+        ],
+        memo: "",
+      });
+    });
   });
 
   describe("experimentalAdr36Verify", () => {
@@ -919,6 +962,18 @@ describe("SigningStargateClient", () => {
 
       const data = toAscii("Hello, world");
       const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
+      const ok = await SigningStargateClient.experimentalAdr36Verify(signed);
+      expect(ok).toEqual(true);
+    });
+
+    it("works with multiple datas", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.offline(wallet);
+      const [firstAccount] = await wallet.getAccounts();
+
+      const data1 = toAscii("Hello");
+      const data2 = toAscii("World");
+      const signed = await client.experimentalAdr36Sign(firstAccount.address, [data1, data2]);
       const ok = await SigningStargateClient.experimentalAdr36Verify(signed);
       expect(ok).toEqual(true);
     });
