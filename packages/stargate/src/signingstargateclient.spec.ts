@@ -919,7 +919,7 @@ describe("SigningStargateClient", () => {
 
       const data = toAscii("Hello, world");
       const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
-      const ok = await SigningStargateClient.experimentalAdr36Verify("haha does not matter", signed);
+      const ok = await SigningStargateClient.experimentalAdr36Verify(signed);
       expect(ok).toEqual(true);
     });
   });
