@@ -429,7 +429,7 @@ export class SigningStargateClient extends StargateClient {
     return makeStdTx(signDoc, signature);
   }
 
-  public async experimentalAdr36Verify(signerAddress: string, signed: StdTx): Promise<boolean> {
+  public static async experimentalAdr36Verify(signerAddress: string, signed: StdTx): Promise<boolean> {
     // Restrictions from ADR-036
     if (signed.memo !== "") throw new Error("Memo must be empty.");
     if (signed.fee.gas !== "0") throw new Error("Fee gas must 0.");
