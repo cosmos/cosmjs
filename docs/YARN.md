@@ -360,7 +360,7 @@ Make sure you have everything you want your IDE to use installed in the root of
 the project. I suggest `typescript` and `prettier` at least. Then run
 
 ```sh
-yarn dlx @yarnpkg/pnpify --sdk
+yarn dlx @yarnpkg/sdks
 ```
 
 This will set up your IDE and put a bunch of things in `.yarn/sdks`, which
