@@ -1,6 +1,7 @@
 // This type happens to be shared between Amino and Direct sign modes
-export { Coin, coin, coins, parseCoins } from "@cosmjs/amino";
+export { Coin, coin, coins } from "@cosmjs/amino";
 
+export { parseCoins } from "./coins";
 export { decodeTxRaw, DecodedTxRaw } from "./decode";
 export {
   DecodeObject,

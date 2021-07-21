@@ -21,6 +21,14 @@ export function coins(amount: number, denom: string): Coin[] {
 
 /**
  * Takes a coins list like "819966000ucosm,700000000ustake" and parses it.
+ *
+ * A Stargate-ready variant of this function is available via:
+ *
+ * ```
+ * import { parseCoins } from "@cosmjs/proto-signing";
+ * // or
+ * import { parseCoins } from "@cosmjs/stargate";
+ * ```
  */
 export function parseCoins(input: string): Coin[] {
   return input
