@@ -3398,7 +3398,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@cosmjs/cosmwasm-stargate", "workspace:packages/cosmwasm-stargate"],
             ["@cosmjs/amino", "workspace:packages/amino"],
-            ["@cosmjs/cosmwasm-launchpad", "workspace:packages/cosmwasm-launchpad"],
             ["@cosmjs/crypto", "workspace:packages/crypto"],
             ["@cosmjs/encoding", "workspace:packages/encoding"],
             ["@cosmjs/math", "workspace:packages/math"],
