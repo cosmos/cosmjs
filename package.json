@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:packages/amino",
-    "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad",
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate",
     "@cosmjs/crypto": "workspace:packages/crypto",
     "@cosmjs/encoding": "workspace:packages/encoding",

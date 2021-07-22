@@ -345,7 +345,6 @@ __metadata:
   resolution: "@cosmjs/cli@workspace:packages/cli"
   dependencies:
     "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad"
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
@@ -388,56 +387,6 @@ __metadata:
     yargs: ^15.3.1
   bin:
     cosmwasm-cli: bin/cosmwasm-cli
-  languageName: unknown
-  linkType: soft
-
-"@cosmjs/cosmwasm-launchpad@workspace:packages/cosmwasm-launchpad":
-  version: 0.0.0-use.local
-  resolution: "@cosmjs/cosmwasm-launchpad@workspace:packages/cosmwasm-launchpad"
-  dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/launchpad": "workspace:packages/launchpad"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
-    "@istanbuljs/nyc-config-typescript": ^1.0.1
-    "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
-    "@types/karma-firefox-launcher": ^2
-    "@types/karma-jasmine": ^4
-    "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
-    "@types/pako": ^1.0.1
-    "@typescript-eslint/eslint-plugin": ^4.28
-    "@typescript-eslint/parser": ^4.28
-    eslint: ^7.5
-    eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-node: ^0.3.4
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-prettier: ^3.4.0
-    eslint-plugin-simple-import-sort: ^7.0.0
-    esm: ^3.2.25
-    glob: ^7.1.6
-    jasmine: ^3.5
-    jasmine-core: ^3.7.1
-    jasmine-spec-reporter: ^6
-    karma: ^6.1.1
-    karma-chrome-launcher: ^3.1.0
-    karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
-    karma-jasmine-html-reporter: ^1.5.4
-    nyc: ^15.1.0
-    pako: ^2.0.2
-    prettier: ^2.3.2
-    readonly-date: ^1.0.0
-    ses: ^0.11.0
-    source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
-    ts-node: ^8
-    typedoc: ^0.21
-    typescript: ~4.3
-    webpack: ^5.32.0
-    webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
@@ -495,26 +444,6 @@ __metadata:
     typescript: ~4.3
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
-  languageName: unknown
-  linkType: soft
-
-"@cosmjs/cosmwasm@workspace:packages/cosmwasm":
-  version: 0.0.0-use.local
-  resolution: "@cosmjs/cosmwasm@workspace:packages/cosmwasm"
-  dependencies:
-    "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad"
-    "@types/eslint-plugin-prettier": ^3
-    "@typescript-eslint/eslint-plugin": ^4.28
-    "@typescript-eslint/parser": ^4.28
-    eslint: ^7.5
-    eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-node: ^0.3.4
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-prettier: ^3.4.0
-    eslint-plugin-simple-import-sort: ^7.0.0
-    prettier: ^2.3.2
-    typedoc: ^0.21
-    typescript: ~4.3
   languageName: unknown
   linkType: soft
 
@@ -3070,7 +2999,6 @@ __metadata:
   resolution: "cosmjs-monorepo-root@workspace:."
   dependencies:
     "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-launchpad": "workspace:packages/cosmwasm-launchpad"
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"

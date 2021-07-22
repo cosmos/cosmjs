@@ -91,14 +91,14 @@ In the `scripts/` folder, a bunch of blockchains and other backend systems are
 started for testing purposes. Some ports need to be changed from the default in
 order to avoid conflicts. Here is an overview of the ports used:
 
-| Port  | Application           | Usage                                                  |
-| ----- | --------------------- | ------------------------------------------------------ |
-| 1317  | wasmd LCD API         | @cosmjs/launchpad and @cosmjs/cosmwasm-launchpad tests |
-| 1318  | simapp LCD API        | Manual Stargate debugging                              |
-| 1319  | wasmd LCD API         | Manual Stargate debugging                              |
-| 4444  | socketserver          | @cosmjs/sockets tests                                  |
-| 4445  | socketserver slow     | @cosmjs/sockets tests                                  |
-| 11133 | Tendermint 0.33 RPC   | @cosmjs/tendermint-rpc tests                           |
-| 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests                           |
-| 26658 | simapp Tendermint RPC | Stargate client tests                                  |
-| 26659 | wasmd Tendermint RPC  | @cosmjs/cosmwasm-stargate tests                        |
+| Port  | Application           | Usage                           |
+| ----- | --------------------- | ------------------------------- |
+| 1317  | wasmd LCD API         | @cosmjs/launchpad tests         |
+| 1318  | simapp LCD API        | Manual Stargate debugging       |
+| 1319  | wasmd LCD API         | Manual Stargate debugging       |
+| 4444  | socketserver          | @cosmjs/sockets tests           |
+| 4445  | socketserver slow     | @cosmjs/sockets tests           |
+| 11133 | Tendermint 0.33 RPC   | @cosmjs/tendermint-rpc tests    |
+| 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests    |
+| 26658 | simapp Tendermint RPC | Stargate client tests           |
+| 26659 | wasmd Tendermint RPC  | @cosmjs/cosmwasm-stargate tests |

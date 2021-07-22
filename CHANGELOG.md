@@ -51,6 +51,10 @@ and this project adheres to
   `defaultGasPrice` and `buildFeeTable`.
 - @cosmjs/tendermint-rpc: `Client` has been removed. Please use
   `Tendermint33Client` or `Tendermint34Client`, depending on your needs.
+- @cosmjs/cosmwasm: Package removed ([#786]).
+- @cosmjs/cosmwasm-launchpad: Package removed ([#786]).
+
+[#786]: https://github.com/cosmos/cosmjs/issues/786
 
 ### Fixed
 
