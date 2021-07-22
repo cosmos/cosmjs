@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Contract, ContractCodeHistoryEntry } from "@cosmjs/cosmwasm-launchpad";
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
@@ -28,13 +27,6 @@ import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1beta1/types";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
-
-// Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
-// For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
-export {
-  Contract, // returned by CosmWasmClient.getContract
-  ContractCodeHistoryEntry, // returned by CosmWasmClient.getContractCodeHistory
-};
 
 // Re-exports that belong to public CosmWasmClient interfaces
 export {
@@ -65,6 +57,23 @@ export interface Code {
 export interface CodeDetails extends Code {
   /** The original Wasm bytes */
   readonly data: Uint8Array;
+}
+
+export interface Contract {
+  readonly address: string;
+  readonly codeId: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Bech32-encoded admin address */
+  readonly admin: string | undefined;
+  readonly label: string;
+}
+
+export interface ContractCodeHistoryEntry {
+  /** The source of this history entry */
+  readonly operation: "Genesis" | "Init" | "Migrate";
+  readonly codeId: number;
+  readonly msg: Record<string, unknown>;
 }
 
 /** Use for testing only */
