@@ -11,8 +11,8 @@ export async function createWallets(
   pathBuilder: PathBuilder,
   addressPrefix: string,
   numberOfDistributors: number,
-  stargate = true,
-  logging = false,
+  stargate: boolean,
+  logging: boolean,
 ): Promise<ReadonlyArray<readonly [string, OfflineSigner]>> {
   const createWallet = stargate ? DirectSecp256k1HdWallet.fromMnemonic : Secp256k1HdWallet.fromMnemonic;
   const wallets = new Array<readonly [string, OfflineSigner]>();
