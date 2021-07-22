@@ -36,6 +36,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:12-buster
+    # See https://circleci.com/docs/2.0/executor-types/#available-docker-resource-classes
+    # Use something faster than default because everything else depends on this job.
+    resource_class: large
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
