@@ -2,6 +2,9 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
+if [ -n "${SIMAPP_ENABLED:-}" ]; then
+  yarn node ./bin/cosmwasm-cli --init examples/cosmwasm.ts --code "process.exit(0)"
+fi
 yarn node ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
 if [ -n "${LAUNCHPAD_ENABLED:-}" ]; then
   yarn node ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"

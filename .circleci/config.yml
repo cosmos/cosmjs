@@ -159,6 +159,7 @@ jobs:
           environment:
             SKIP_BUILD: 1
           command: |
+            yarn node ./bin/cosmwasm-cli --init examples/cosmwasm.ts --code "process.exit(0)"
             yarn node ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
             yarn node ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
             yarn node ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
