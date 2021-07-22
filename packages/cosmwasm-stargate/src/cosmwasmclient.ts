@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Contract, ContractCodeHistoryEntry, JsonObject } from "@cosmjs/cosmwasm-launchpad";
+import { Contract, ContractCodeHistoryEntry } from "@cosmjs/cosmwasm-launchpad";
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
@@ -27,13 +27,17 @@ import { assert, sleep } from "@cosmjs/utils";
 import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1beta1/types";
 
-import { setupWasmExtension, WasmExtension } from "./queries";
+import { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
 
 // Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
 // For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
 export {
   Contract, // returned by CosmWasmClient.getContract
   ContractCodeHistoryEntry, // returned by CosmWasmClient.getContractCodeHistory
+};
+
+// Re-exports that belong to public CosmWasmClient interfaces
+export {
   JsonObject, // returned by CosmWasmClient.queryContractSmart
 };
 
