@@ -57,9 +57,9 @@ import {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 
-function prepareBuilder(builder: string | undefined): string {
-  if (builder === undefined) {
-    return ""; // normalization needed by backend
+function prepareBuilder(builder: string | undefined): string | undefined {
+  if (!builder) {
+    return undefined;
   } else {
     if (!isValidBuilder(builder)) throw new Error("The builder (Docker Hub image with tag) is not valid");
     return builder;
