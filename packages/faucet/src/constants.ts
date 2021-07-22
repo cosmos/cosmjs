@@ -13,6 +13,7 @@ export const concurrency: number = Number.parseInt(process.env.FAUCET_CONCURRENC
 export const port: number = Number.parseInt(process.env.FAUCET_PORT || "", 10) || 8000;
 export const mnemonic: string | undefined = process.env.FAUCET_MNEMONIC;
 export const addressPrefix = process.env.FAUCET_ADDRESS_PREFIX || "cosmos";
+export const pathPattern = process.env.FAUCET_PATH_PATTERN || "m/44'/118'/0'/0/a";
 export const tokenConfig: TokenConfiguration = {
   bankTokens: parseBankTokens(process.env.FAUCET_TOKENS || "ucosm, ustake"),
 };

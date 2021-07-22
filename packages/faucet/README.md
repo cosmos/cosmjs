@@ -52,6 +52,10 @@ FAUCET_GAS_PRICE          Gas price for transactions as a comma separated list.
 FAUCET_GAS_LIMIT          Gas limit for send transactions. Defaults to 80000.
 FAUCET_MNEMONIC           Secret mnemonic that serves as the base secret for the
                           faucet HD accounts
+FAUCET_PATH_PATTERN       The pattern of BIP32 paths for the faucet accounts.
+                          Must contain one "a" placeholder that is replaced with
+                          the account index.
+                          Defaults to the Cosmos Hub path "m/44'/118'/0'/0/a".
 FAUCET_ADDRESS_PREFIX     The bech32 address prefix. Defaults to "cosmos".
 FAUCET_TOKENS             A comma separated list of token denoms, e.g.
                           "uatom" or "ucosm, mstake".
