@@ -15,6 +15,8 @@ and this project adheres to
   for Tendermint v0.33.
 - @cosmjs/tendermint-rpc: Exports relating to `Tendermint33Client` are now
   available under `tendermint33`.
+- @cosmjs/proto-signing and @cosmjs/stargate: Create a Stargate-ready
+  `parseCoins` that replaces the `parseCoins` re-export from `@cosmjs/amino`.
 
 ### Changed
 
