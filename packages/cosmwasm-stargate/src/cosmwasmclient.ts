@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {
-  Code,
-  CodeDetails,
-  Contract,
-  ContractCodeHistoryEntry,
-  JsonObject,
-} from "@cosmjs/cosmwasm-launchpad";
+import { Contract, ContractCodeHistoryEntry, JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
@@ -38,12 +32,36 @@ import { setupWasmExtension, WasmExtension } from "./queries";
 // Those types can be copied over to allow them to evolve independently of @cosmjs/cosmwasm-launchpad.
 // For now just re-export them such that they can be imported via @cosmjs/cosmwasm-stargate.
 export {
-  Code, // returned by CosmWasmClient.getCode
-  CodeDetails, // returned by CosmWasmClient.getCodeDetails
   Contract, // returned by CosmWasmClient.getContract
   ContractCodeHistoryEntry, // returned by CosmWasmClient.getContractCodeHistory
   JsonObject, // returned by CosmWasmClient.queryContractSmart
 };
+
+export interface Code {
+  readonly id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Hex-encoded sha256 hash of the code stored here */
+  readonly checksum: string;
+  /**
+   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
+   *
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
+  readonly source?: string;
+  /**
+   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
+   *
+   * @example ```cosmwasm/rust-optimizer:0.8.0```
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
+  readonly builder?: string;
+}
+
+export interface CodeDetails extends Code {
+  /** The original Wasm bytes */
+  readonly data: Uint8Array;
+}
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromAscii, fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
@@ -16,7 +15,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 
-import { CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
+import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,

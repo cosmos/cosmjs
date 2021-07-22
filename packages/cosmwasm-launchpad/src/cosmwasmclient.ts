@@ -95,7 +95,7 @@ export interface Code {
 }
 
 export interface CodeDetails extends Code {
-  /** The original wasm bytes */
+  /** The original Wasm bytes */
   readonly data: Uint8Array;
 }
 
