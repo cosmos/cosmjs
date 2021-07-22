@@ -16,6 +16,7 @@
   },
   "scripts": {
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-examples": "prettier --write --loglevel warn \"./examples/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",

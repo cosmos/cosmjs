@@ -1,4 +1,12 @@
-import { coin, coins, makeSignDoc, makeStdTx, CosmosClient, MsgDelegate, Secp256k1HdWallet } from "@cosmjs/launchpad";
+import {
+  coin,
+  coins,
+  makeSignDoc,
+  makeStdTx,
+  CosmosClient,
+  MsgDelegate,
+  Secp256k1HdWallet,
+} from "@cosmjs/launchpad";
 
 const wallet = await Secp256k1HdWallet.fromMnemonic(
   "enlist hip relief stomach skate base shallow young switch frequent cry park",
