@@ -17,6 +17,8 @@ and this project adheres to
   available under `tendermint33`.
 - @cosmjs/proto-signing and @cosmjs/stargate: Create a Stargate-ready
   `parseCoins` that replaces the `parseCoins` re-export from `@cosmjs/amino`.
+- @cosmjs/cosmwasm-stargate: Export `isValidBuilder`, which is a clone of
+  `isValidBuilder` from @cosmjs/cosmwasm-launchpad.
 
 ### Changed
 

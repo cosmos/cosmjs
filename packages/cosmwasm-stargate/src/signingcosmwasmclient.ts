@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
-import { isValidBuilder } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
@@ -47,6 +46,7 @@ import Long from "long";
 import pako from "pako";
 
 import { cosmWasmTypes } from "./aminotypes";
+import { isValidBuilder } from "./builder";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
   MsgClearAdminEncodeObject,
