@@ -1,4 +1,5 @@
 export { cosmWasmTypes } from "./aminotypes";
+export { isValidBuilder } from "./builder";
 export {
   Code,
   CodeDetails,

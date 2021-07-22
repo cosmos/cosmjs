@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
 import { createPagination, createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import {
@@ -13,6 +12,14 @@ import {
   QueryRawContractStateResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
 import Long from "long";
+
+/**
+ * An object containing a parsed JSON document. The result of JSON.parse().
+ * This doesn't provide any type safety over `any` but expresses intent in the code.
+ *
+ * This type is returned by `queryContractSmart`.
+ */
+export type JsonObject = any;
 
 export interface WasmExtension {
   readonly wasm: {
