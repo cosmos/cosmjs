@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>queries/ibc | @cosmjs/stargate Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<title>coins | @cosmjs/proto-signing Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/proto-signing Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,13 +50,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">@cosmjs/stargate Documentation</a>
+					<a href="../modules.html">@cosmjs/proto-signing Documentation</a>
 				</li>
 				<li>
-					<a href="queries_ibc.html">queries/ibc</a>
+					<a href="coins.html">coins</a>
 				</li>
 			</ul>
-			<h1>Module queries/ibc</h1>
+			<h1>Module coins</h1>
 		</div>
 	</div>
 </header>
@@ -68,15 +68,9 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/queries_ibc.IbcExtension.html" class="tsd-kind-icon">Ibc<wbr>Extension</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="queries_ibc.html#setupIbcExtension" class="tsd-kind-icon">setup<wbr>Ibc<wbr>Extension</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="coins.html#parseCoins" class="tsd-kind-icon">parse<wbr>Coins</a></li>
 							</ul>
 						</section>
 					</div>
@@ -85,25 +79,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="setupIbcExtension" class="tsd-anchor"></a>
-					<h3>setup<wbr>Ibc<wbr>Extension</h3>
+					<a name="parseCoins" class="tsd-anchor"></a>
+					<h3>parse<wbr>Coins</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">setup<wbr>Ibc<wbr>Extension<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="../classes/queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/queries_ibc.IbcExtension.html" class="tsd-signature-type" data-tsd-kind="Interface">IbcExtension</a></li>
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Coins<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f2f2b3555c/packages/stargate/src/queries/ibc.ts#L189">stargate/src/queries/ibc.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f2f2b3555c/packages/proto-signing/src/coins.ts#L10">proto-signing/src/coins.ts:10</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a coins list like &quot;819966000ucosm,700000000ustake&quot; and parses it.</p>
+								</div>
+								<p>This is a Stargate ready version of parseCoins from @cosmjs/amino and @cosmjs/launchpad.
+								It supports more denoms.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>base: <a href="../classes/queries_queryclient.QueryClient.html" class="tsd-signature-type" data-tsd-kind="Class">QueryClient</a></h5>
+									<h5>input: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/queries_ibc.IbcExtension.html" class="tsd-signature-type" data-tsd-kind="Interface">IbcExtension</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -115,72 +116,45 @@
 					<li class=" ">
 						<a href="../modules.html">Modules</a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="accounts.html">accounts</a>
+					<li class="current tsd-kind-module">
+						<a href="coins.html">coins</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="aminomsgs.html">aminomsgs</a>
+						<a href="decode.html">decode</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="aminotypes.html">aminotypes</a>
+						<a href="directsecp256k1hdwallet.html">directsecp256k1hdwallet</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="encodeobjects.html">encodeobjects</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="fee.html">fee</a>
+						<a href="directsecp256k1wallet.html">directsecp256k1wallet</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="index.html">index</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="logs.html">logs</a>
+						<a href="paths.html">paths</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="multisignature.html">multisignature</a>
+						<a href="pubkey.html">pubkey</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="queries.html">queries</a>
+						<a href="registry.html">registry</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="queries_auth.html">queries/auth</a>
+						<a href="signer.html">signer</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="queries_bank.html">queries/bank</a>
+						<a href="signing.html">signing</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="queries_distribution.html">queries/distribution</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="queries_ibc.html">queries/ibc</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="queries_queryclient.html">queries/queryclient</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="queries_staking.html">queries/staking</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="queries_utils.html">queries/utils</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="search.html">search</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="signingstargateclient.html">signingstargateclient</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="stargateclient.html">stargateclient</a>
+						<a href="wallet.html">wallet</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/queries_ibc.IbcExtension.html" class="tsd-kind-icon">Ibc<wbr>Extension</a>
-					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="queries_ibc.html#setupIbcExtension" class="tsd-kind-icon">setup<wbr>Ibc<wbr>Extension</a>
+						<a href="coins.html#parseCoins" class="tsd-kind-icon">parse<wbr>Coins</a>
 					</li>
 				</ul>
 			</nav>
