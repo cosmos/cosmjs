@@ -1,7 +1,7 @@
 import { Random } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
 import { CosmosClient } from "@cosmjs/launchpad";
-import { StargateClient } from "@cosmjs/stargate";
+import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
 import { Faucet } from "./faucet";
@@ -32,6 +32,8 @@ const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
 describe("Faucet", () => {
+  const pathBuilder = makeCosmoshubPath;
+
   describe("launchpad", () => {
     const apiUrl = "http://localhost:1317";
     const stargate = false;
@@ -44,6 +46,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -59,6 +62,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           { bankTokens: [] },
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -73,6 +77,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -89,6 +94,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -122,6 +128,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -150,6 +157,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -174,6 +182,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -200,6 +209,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -216,6 +226,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           1,
           stargate,
         );
@@ -262,6 +273,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -277,6 +289,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           { bankTokens: [] },
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -291,6 +304,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -307,6 +321,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -340,6 +355,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -368,6 +384,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -392,6 +409,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -418,6 +436,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           3,
           stargate,
         );
@@ -434,6 +453,7 @@ describe("Faucet", () => {
           defaultAddressPrefix,
           defaultTokenConfig,
           faucetMnemonic,
+          pathBuilder,
           1,
           stargate,
         );

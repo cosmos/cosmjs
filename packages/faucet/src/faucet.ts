@@ -13,6 +13,7 @@ import { sleep } from "@cosmjs/utils";
 
 import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
+import { PathBuilder } from "./pathbuilder";
 import { createClients, createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
 import { MinimalAccount, SendJob } from "./types";
@@ -27,11 +28,19 @@ export class Faucet {
     addressPrefix: string,
     config: TokenConfiguration,
     mnemonic: string,
+    pathBuilder: PathBuilder,
     numberOfDistributors: number,
     stargate = true,
     logging = false,
   ): Promise<Faucet> {
-    const wallets = await createWallets(mnemonic, addressPrefix, numberOfDistributors, stargate, logging);
+    const wallets = await createWallets(
+      mnemonic,
+      pathBuilder,
+      addressPrefix,
+      numberOfDistributors,
+      stargate,
+      logging,
+    );
     const clients = await createClients(apiUrl, wallets);
     const readonlyClient = stargate ? await StargateClient.connect(apiUrl) : new CosmosClient(apiUrl);
     return new Faucet(addressPrefix, config, clients, readonlyClient, logging);

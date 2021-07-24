@@ -22,6 +22,10 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Copy symbols `Code`, `CodeDetails`, `Contract`,
   `ContractCodeHistoryEntry` and `JsonObject` from @cosmjs/cosmwasm-launchpad
   and remove dependency on @cosmjs/cosmwasm-launchpad.
+- @cosmjs/faucet: Add new configuration variable `FAUCET_PATH_PATTERN` to
+  configure the HD path of the faucet accounts ([#832]).
+
+[#832]: https://github.com/cosmos/cosmjs/issues/832
 
 ### Changed
 

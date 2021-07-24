@@ -5,6 +5,7 @@ import { Webserver } from "../api/webserver";
 import * as constants from "../constants";
 import { logAccountsState } from "../debugging";
 import { Faucet } from "../faucet";
+import { makePathBuilder } from "../pathbuilder";
 
 export async function start(args: readonly string[]): Promise<void> {
   if (args.length < 1) {
@@ -29,11 +30,13 @@ export async function start(args: readonly string[]): Promise<void> {
   // Faucet
   if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   const logging = true;
+  const pathBuilder = makePathBuilder(constants.pathPattern);
   const faucet = await Faucet.make(
     blockchainBaseUrl,
     constants.addressPrefix,
     constants.tokenConfig,
     constants.mnemonic,
+    pathBuilder,
     constants.concurrency,
     stargate,
     logging,
