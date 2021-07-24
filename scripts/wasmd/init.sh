@@ -26,5 +26,6 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
   sha256sum --check checksums.sha256
 )
 "$SCRIPT_DIR/deploy_hackatom.js"
+"$SCRIPT_DIR/deploy_ibc_reflect.js"
 # "$SCRIPT_DIR/deploy_cw3.js"
 # "$SCRIPT_DIR/deploy_cw1.js"

@@ -22,6 +22,7 @@ import {
   defaultInstantiateFee,
   defaultUploadFee,
   deployedHackatom,
+  deployedIbcReflect,
   getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -307,6 +308,19 @@ describe("CosmWasmClient", () => {
         admin: alice.address1,
         ibcPortId: undefined,
       });
+    });
+
+    it("works for instance with IBC port ID", async () => {
+      pendingWithoutWasmd();
+      const client = await CosmWasmClient.connect(wasmd.endpoint);
+      const contract = await client.getContract(deployedIbcReflect.instances[0]);
+      expect(contract).toEqual(
+        jasmine.objectContaining({
+          address: deployedIbcReflect.instances[0],
+          codeId: deployedIbcReflect.codeId,
+          ibcPortId: "wasm.wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te",
+        }),
+      );
     });
   });
 
