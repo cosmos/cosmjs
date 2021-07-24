@@ -67,6 +67,12 @@ export interface Contract {
   /** Bech32-encoded admin address */
   readonly admin: string | undefined;
   readonly label: string;
+  /**
+   * The IBC port ID assigned to this contract by wasmd.
+   *
+   * This is set for all IBC contracts (https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306).
+   */
+  readonly ibcPortId: string | undefined;
 }
 
 export interface ContractCodeHistoryEntry {
@@ -360,6 +366,7 @@ export class CosmWasmClient {
       creator: contractInfo.creator,
       admin: contractInfo.admin || undefined,
       label: contractInfo.label,
+      ibcPortId: contractInfo.ibcPortId || undefined,
     };
   }
 
