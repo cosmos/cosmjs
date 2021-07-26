@@ -357,10 +357,12 @@ export interface AminoMsgTransfer extends AminoMsg {
     /** Bech32 account address */
     readonly receiver: string;
     /**
-     * It is unclear if this is really optional. The Amino encoding expects unset values to be
-     * encoded as {}.
+     * The timeout as a (revision_number, revision_height) pair.
+     *
+     * This fied is is non-optional (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L49).
+     * In order to not set the timeout height, set it to {}.
      */
-    readonly timeout_height?: AminoHeight;
+    readonly timeout_height: AminoHeight;
     /**
      * Timeout timestamp (in nanoseconds). The timeout is disabled when set to 0.
      *
