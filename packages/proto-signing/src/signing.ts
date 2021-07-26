@@ -5,8 +5,20 @@ import { AuthInfo, SignDoc, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
+function makeSignerInfos(pubkeys: readonly Any[], sequence: number, signMode: SignMode): SignerInfo[] {
+  return pubkeys.map(
+    (pubkey): SignerInfo => ({
+      publicKey: pubkey,
+      modeInfo: {
+        single: { mode: signMode },
+      },
+      sequence: Long.fromNumber(sequence),
+    }),
+  );
+}
+
 /**
- * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
+ * Creates and serializes an AuthInfo document.
  */
 export function makeAuthInfoBytes(
   pubkeys: readonly Any[],
@@ -16,15 +28,7 @@ export function makeAuthInfoBytes(
   signMode = SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   const authInfo = {
-    signerInfos: pubkeys.map(
-      (pubkey): SignerInfo => ({
-        publicKey: pubkey,
-        modeInfo: {
-          single: { mode: signMode },
-        },
-        sequence: Long.fromNumber(sequence),
-      }),
-    ),
+    signerInfos: makeSignerInfos(pubkeys, sequence, signMode),
     fee: {
       amount: [...feeAmount],
       gasLimit: Long.fromNumber(gasLimit),
