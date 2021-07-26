@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.25.6] - 2021-07-26
+
+### Fixed
+
+- @cosmjs/stargate: Fix types `AminoMsgTransfer` and `AminoHeight` as well as
+  the encoding of `MsgTransfer` for Amino signing.
+
 ## [0.25.5] - 2021-06-23
 
 ### Added
@@ -493,6 +500,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[0.25.6]: https://github.com/cosmos/cosmjs/compare/v0.25.5...v0.25.6
 [0.25.5]: https://github.com/cosmos/cosmjs/compare/v0.25.4...v0.25.5
 [0.25.4]: https://github.com/cosmos/cosmjs/compare/v0.25.3...v0.25.4
 [0.25.3]: https://github.com/cosmos/cosmjs/compare/v0.25.2...v0.25.3

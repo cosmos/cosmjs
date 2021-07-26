@@ -2,6 +2,7 @@
 import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
+import Long from "long";
 import protobuf from "protobufjs/minimal";
 
 import { decodeTxRaw } from "../../proto-signing/build";
@@ -14,7 +15,7 @@ import { AuthInfo, TxBody, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
 import { GasPrice } from "./fee";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
-import { assertIsBroadcastTxSuccess } from "./stargateclient";
+import { assertIsBroadcastTxSuccess, isBroadcastTxFailure } from "./stargateclient";
 import {
   faucet,
   makeRandomAddress,
@@ -318,6 +319,86 @@ describe("SigningStargateClient", () => {
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       expect(after).toEqual(amount[0]);
+    });
+  });
+
+  describe("sendIbcTokens", () => {
+    it("works with direct signing", async () => {
+      pendingWithoutSimapp();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
+      const memo = "Cross-chain fun";
+
+      // both timeouts set
+      {
+        const result = await client.sendIbcTokens(
+          faucet.address0,
+          faucet.address1,
+          coin(1234, "ucosm"),
+          "fooPort",
+          "fooChannel",
+          { revisionHeight: Long.fromNumber(123), revisionNumber: Long.fromNumber(456) },
+          Math.floor(Date.now() / 1000) + 60,
+          memo,
+        );
+        // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
+        expect(isBroadcastTxFailure(result)).toEqual(true);
+      }
+
+      // no height timeout
+      {
+        const result = await client.sendIbcTokens(
+          faucet.address0,
+          faucet.address1,
+          coin(1234, "ucosm"),
+          "fooPort",
+          "fooChannel",
+          undefined,
+          Math.floor(Date.now() / 1000) + 60,
+          memo,
+        );
+        // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
+        expect(isBroadcastTxFailure(result)).toEqual(true);
+      }
+    });
+
+    it("works with Amino signing", async () => {
+      pendingWithoutSimapp();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
+      const memo = "Cross-chain fun";
+
+      // both timeouts set
+      {
+        const result = await client.sendIbcTokens(
+          faucet.address0,
+          faucet.address1,
+          coin(1234, "ucosm"),
+          "fooPort",
+          "fooChannel",
+          { revisionHeight: Long.fromNumber(123), revisionNumber: Long.fromNumber(456) },
+          Math.floor(Date.now() / 1000) + 60,
+          memo,
+        );
+        // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
+        expect(isBroadcastTxFailure(result)).toEqual(true);
+      }
+
+      // no height timeout
+      {
+        const result = await client.sendIbcTokens(
+          faucet.address0,
+          faucet.address1,
+          coin(1234, "ucosm"),
+          "fooPort",
+          "fooChannel",
+          undefined,
+          Math.floor(Date.now() / 1000) + 60,
+          memo,
+        );
+        // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
+        expect(isBroadcastTxFailure(result)).toEqual(true);
+      }
     });
   });
 
