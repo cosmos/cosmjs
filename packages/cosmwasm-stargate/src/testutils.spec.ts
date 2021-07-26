@@ -252,18 +252,19 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
       memo: "This was modified",
     });
     const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
-    const pubkeys = authInfo.signerInfos.map((signerInfo) => signerInfo.publicKey!);
-    const sequence = authInfo.signerInfos[0].sequence.toNumber();
+    const signers = authInfo.signerInfos.map((signerInfo) => ({
+      pubkey: signerInfo.publicKey!,
+      sequence: signerInfo.sequence.toNumber(),
+    }));
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
     const modifiedSignDoc = {
       ...signDoc,
       bodyBytes: Uint8Array.from(TxBody.encode(modifiedTxBody).finish()),
       authInfoBytes: makeAuthInfoBytes(
-        pubkeys,
+        signers,
         modifiedFeeAmount,
         modifiedGasLimit,
-        sequence,
         SignMode.SIGN_MODE_DIRECT,
       ),
     };

@@ -193,7 +193,7 @@ describe("CosmWasmClient", () => {
       const sequenceResponse = await client.getSequence(alice.address0);
       assert(sequenceResponse);
       const { accountNumber, sequence } = sequenceResponse;
-      const pubkeyAny = encodePubkey(alice.pubkey0);
+      const pubkey = encodePubkey(alice.pubkey0);
       const txBody: TxBodyEncodeObject = {
         typeUrl: "/cosmos.tx.v1beta1.TxBody",
         value: {
@@ -203,7 +203,7 @@ describe("CosmWasmClient", () => {
       };
       const txBodyBytes = registry.encode(txBody);
       const gasLimit = Int53.fromString(fee.gas).toNumber();
-      const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
+      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signed, signature } = await wallet.signDirect(alice.address0, signDoc);
       const txRaw = TxRaw.fromPartial({

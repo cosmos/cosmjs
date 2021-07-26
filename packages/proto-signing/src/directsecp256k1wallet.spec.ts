@@ -46,7 +46,7 @@ describe("DirectSecp256k1Wallet", () => {
       const chainId = "simd-testing";
       const signDoc = makeSignDoc(
         fromHex(bodyBytes),
-        makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),
+        makeAuthInfoBytes([{ pubkey, sequence }], fee, gasLimit),
         chainId,
         accountNumber,
       );
