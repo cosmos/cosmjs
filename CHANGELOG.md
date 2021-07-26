@@ -46,6 +46,8 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Make `tendermint34.Header.lastBlockId` and
   `tendermint34.Block.lastCommit` optional to better handle the case of height 1
   where there is no previous block.
+- @cosmjs/proto-signing: `makeAuthInfoBytes` now takes an array of pubkey
+  sequence pairs in order to support different sequences for different signers.
 
 ### Removed
 

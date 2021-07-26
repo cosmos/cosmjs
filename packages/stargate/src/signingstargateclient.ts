@@ -354,10 +354,9 @@ export class SigningStargateClient extends StargateClient {
     const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
     const signedSequence = Int53.fromString(signed.sequence).toNumber();
     const signedAuthInfoBytes = makeAuthInfoBytes(
-      [pubkey],
+      [{ pubkey, sequence: signedSequence }],
       signed.fee.amount,
       signedGasLimit,
-      signedSequence,
       signMode,
     );
     return TxRaw.fromPartial({
@@ -391,7 +390,7 @@ export class SigningStargateClient extends StargateClient {
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const authInfoBytes = makeAuthInfoBytes([pubkey], fee.amount, gasLimit, sequence);
+    const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     return TxRaw.fromPartial({
