@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/json-rpc",
-  "version": "0.25.5",
+  "version": "0.25.6",
   "description": "Framework for implementing a JSON-RPC 2.0 API",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -42,7 +42,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/stream": "^0.25.5",
+    "@cosmjs/stream": "^0.25.6",
     "xstream": "^11.14.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/amino",
-  "version": "0.25.5",
+  "version": "0.25.6",
   "description": "Helpers for Amino based signing which are shared between @cosmjs/launchpad and @cosmjs/stargate.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -40,9 +40,9 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.25.5",
-    "@cosmjs/encoding": "^0.25.5",
-    "@cosmjs/math": "^0.25.5",
-    "@cosmjs/utils": "^0.25.5"
+    "@cosmjs/crypto": "^0.25.6",
+    "@cosmjs/encoding": "^0.25.6",
+    "@cosmjs/math": "^0.25.6",
+    "@cosmjs/utils": "^0.25.6"
   }
 }
