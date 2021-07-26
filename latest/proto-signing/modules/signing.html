@@ -84,33 +84,31 @@
 					<a name="makeAuthInfoBytes" class="tsd-anchor"></a>
 					<h3>make<wbr>Auth<wbr>Info<wbr>Bytes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes<span class="tsd-signature-symbol">(</span>pubkeys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Any</span><span class="tsd-signature-symbol">[]</span>, feeAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, gasLimit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, signMode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SignMode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes<span class="tsd-signature-symbol">(</span>signers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Any</span><span class="tsd-signature-symbol">; </span>sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span>, feeAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, gasLimit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, signMode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SignMode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e924333b6b/packages/proto-signing/src/signing.ts#L11">proto-signing/src/signing.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a264c25c74/packages/proto-signing/src/signing.ts#L33">proto-signing/src/signing.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.</p>
+									<p>Creates and serializes an AuthInfo document.</p>
 								</div>
+								<p>This implementation does not support different signing modes for the different signers.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pubkeys: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>signers: <span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Any</span><span class="tsd-signature-symbol">; </span>sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>feeAmount: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
 									<h5>gasLimit: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>sequence: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
 									<h5>signMode: <span class="tsd-signature-type">SignMode</span><span class="tsd-signature-symbol"> = ...</span></h5>
@@ -130,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e924333b6b/packages/proto-signing/src/signing.ts#L50">proto-signing/src/signing.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a264c25c74/packages/proto-signing/src/signing.ts#L63">proto-signing/src/signing.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e924333b6b/packages/proto-signing/src/signing.ts#L36">proto-signing/src/signing.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a264c25c74/packages/proto-signing/src/signing.ts#L49">proto-signing/src/signing.ts:49</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
