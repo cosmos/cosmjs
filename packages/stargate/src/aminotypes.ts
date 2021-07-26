@@ -41,6 +41,22 @@ export interface AminoConverter {
   readonly fromAmino: (value: any) => any;
 }
 
+function omitDefault<T extends string | number | Long>(input: T): T | undefined {
+  if (typeof input === "string") {
+    return input === "" ? undefined : input;
+  }
+
+  if (typeof input === "number") {
+    return input === 0 ? undefined : input;
+  }
+
+  if (Long.isLong(input)) {
+    return input.isZero() ? undefined : input;
+  }
+
+  throw new Error(`Got unsupported type '${typeof input}'`);
+}
+
 function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
     "/cosmos.bank.v1beta1.MsgSend": {
@@ -345,11 +361,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         receiver: receiver,
         timeout_height: timeoutHeight
           ? {
-              revision_height: timeoutHeight.revisionHeight.toString(),
-              revision_number: timeoutHeight.revisionNumber.toString(),
+              revision_height: omitDefault(timeoutHeight.revisionHeight)?.toString(),
+              revision_number: omitDefault(timeoutHeight.revisionNumber)?.toString(),
             }
-          : undefined,
-        timeout_timestamp: timeoutTimestamp.toString(),
+          : {},
+        timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
       }),
       fromAmino: ({
         source_port,
@@ -367,11 +383,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         receiver: receiver,
         timeoutHeight: timeout_height
           ? {
-              revisionHeight: Long.fromString(timeout_height.revision_height, true),
-              revisionNumber: Long.fromString(timeout_height.revision_number, true),
+              revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
+              revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
             }
           : undefined,
-        timeoutTimestamp: Long.fromString(timeout_timestamp, true),
+        timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
       }),
     },
   };
