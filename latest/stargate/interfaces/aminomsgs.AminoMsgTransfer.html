@@ -109,18 +109,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides AminoMsg.type</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/d96c956fde/packages/stargate/src/aminomsgs.ts#L348">stargate/src/aminomsgs.ts:348</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7bddd8f2dc/packages/stargate/src/aminomsgs.ts#L350">stargate/src/aminomsgs.ts:350</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="value" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source_channel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source_port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>timeout_height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">AminoHeight</span><span class="tsd-signature-symbol">; </span>timeout_timestamp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>token<span class="tsd-signature-symbol">?: </span><a href="index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source_channel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source_port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>timeout_height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AminoHeight</span><span class="tsd-signature-symbol">; </span>timeout_timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>token<span class="tsd-signature-symbol">?: </span><a href="index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides AminoMsg.value</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/d96c956fde/packages/stargate/src/aminomsgs.ts#L349">stargate/src/aminomsgs.ts:349</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7bddd8f2dc/packages/stargate/src/aminomsgs.ts#L351">stargate/src/aminomsgs.ts:351</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -149,10 +149,23 @@
 								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> source_<wbr>port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> timeout_<wbr>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">AminoHeight</span></h5>
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> timeout_<wbr>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AminoHeight</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The timeout as a (revision_number, revision_height) pair.</p>
+									</div>
+									<p>This fied is is non-optional (<a href="https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L49">https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L49</a>).
+									In order to not set the timeout height, set it to {}.</p>
+								</div>
 							</li>
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> timeout_<wbr>timestamp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> timeout_<wbr>timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Timeout timestamp (in nanoseconds). The timeout is disabled when set to 0.</p>
+									</div>
+									<p>0 values must be omitted (<a href="https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52">https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52</a>).</p>
+								</div>
 							</li>
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> token<span class="tsd-signature-symbol">?: </span><a href="index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a></h5>
