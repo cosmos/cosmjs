@@ -138,6 +138,12 @@ export const deployedHackatom = {
 };
 
 /** Deployed as part of scripts/wasmd/init.sh */
+export const deployedIbcReflect = {
+  codeId: 2,
+  instances: ["wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te"],
+};
+
+/** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw3 = {
   codeId: 3,
   source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",

@@ -22,6 +22,7 @@ import {
   defaultInstantiateFee,
   defaultUploadFee,
   deployedHackatom,
+  deployedIbcReflect,
   getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -291,6 +292,7 @@ describe("CosmWasmClient", () => {
         creator: alice.address0,
         label: deployedHackatom.instances[0].label,
         admin: undefined,
+        ibcPortId: undefined,
       });
     });
 
@@ -298,13 +300,25 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const two = await client.getContract(deployedHackatom.instances[2].address);
-      expect(two).toEqual(
+      expect(two).toEqual({
+        address: deployedHackatom.instances[2].address,
+        codeId: deployedHackatom.codeId,
+        creator: alice.address0,
+        label: deployedHackatom.instances[2].label,
+        admin: alice.address1,
+        ibcPortId: undefined,
+      });
+    });
+
+    it("works for instance with IBC port ID", async () => {
+      pendingWithoutWasmd();
+      const client = await CosmWasmClient.connect(wasmd.endpoint);
+      const contract = await client.getContract(deployedIbcReflect.instances[0]);
+      expect(contract).toEqual(
         jasmine.objectContaining({
-          address: deployedHackatom.instances[2].address,
-          codeId: deployedHackatom.codeId,
-          creator: alice.address0,
-          label: deployedHackatom.instances[2].label,
-          admin: alice.address1,
+          address: deployedIbcReflect.instances[0],
+          codeId: deployedIbcReflect.codeId,
+          ibcPortId: "wasm.wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te",
         }),
       );
     });

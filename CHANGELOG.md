@@ -24,8 +24,10 @@ and this project adheres to
   and remove dependency on @cosmjs/cosmwasm-launchpad.
 - @cosmjs/faucet: Add new configuration variable `FAUCET_PATH_PATTERN` to
   configure the HD path of the faucet accounts ([#832]).
+- @cosmjs/cosmwasm-stargate: Add field `ibcPortId` to `Contract` ([#836]).
 
 [#832]: https://github.com/cosmos/cosmjs/issues/832
+[#836]: https://github.com/cosmos/cosmjs/issues/836
 
 ### Changed
 
