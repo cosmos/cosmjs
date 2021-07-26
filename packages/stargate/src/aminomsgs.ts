@@ -338,8 +338,10 @@ export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
 
 // https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/core/02-client/types/client.pb.go#L297-L312
 interface AminoHeight {
-  readonly revision_number: string;
-  readonly revision_height: string;
+  /** 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/core/02-client/types/client.pb.go#L252). */
+  readonly revision_number?: string;
+  /** 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/core/02-client/types/client.pb.go#L254). */
+  readonly revision_height?: string;
 }
 
 // https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/apps/transfer/types/tx.pb.go#L33-L53
@@ -354,10 +356,17 @@ export interface AminoMsgTransfer extends AminoMsg {
     readonly sender: string;
     /** Bech32 account address */
     readonly receiver: string;
+    /**
+     * It is unclear if this is really optional. The Amino encoding expects unset values to be
+     * encoded as {}.
+     */
     readonly timeout_height?: AminoHeight;
-    // Timeout timestamp (in nanoseconds) relative to the current block timestamp.
-    // The timeout is disabled when set to 0.
-    readonly timeout_timestamp: string;
+    /**
+     * Timeout timestamp (in nanoseconds). The timeout is disabled when set to 0.
+     *
+     * 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52).
+     */
+    readonly timeout_timestamp?: string;
   };
 }
 
