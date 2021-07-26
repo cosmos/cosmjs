@@ -32,12 +32,16 @@ cd scripts/launchpad/contracts
 sha256sum -c checksums.sha256
 ```
 
+## Installation
+
+1. Install dependencies: `yarn install`
+2. Install SDKs (to make IDE integration work): `yarn dlx @yarnpkg/sdks`
+
 ## Running tests
 
 For unit tests that don't connect to any blockchain, just do:
 
 ```sh
-yarn install
 yarn test
 ```
 
