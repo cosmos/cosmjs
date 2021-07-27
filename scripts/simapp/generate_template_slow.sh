@@ -9,6 +9,7 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # Create template for slow simapp
 (
   cd "$SCRIPT_DIR"
+  rm -rf template_slow
   cp -R template template_slow
   chmod +x "$SCRIPT_DIR/template_slow/setup.sh"
   chmod +x "$SCRIPT_DIR/template_slow/run_simd.sh"

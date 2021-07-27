@@ -6,7 +6,7 @@
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
           "account_number": "0",
-          "address": "cosmos1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5n86vyq",
+          "address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
           "pub_key": null,
           "sequence": "0"
         },
@@ -169,7 +169,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -182,7 +182,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -195,7 +195,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -208,7 +208,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -221,7 +221,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -234,7 +234,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -247,7 +247,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -260,7 +260,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -273,7 +273,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -286,7 +286,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -299,7 +299,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -312,7 +312,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -325,7 +325,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -338,7 +338,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -351,7 +351,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -364,7 +364,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -377,20 +377,20 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
         },
         {
-          "address": "cosmos1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5n86vyq",
+          "address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
           "coins": [
             {
               "amount": "1000000000",
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -403,7 +403,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -416,7 +416,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -429,7 +429,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "10000000",
+              "amount": "2000000000",
               "denom": "ustake"
             }
           ]
@@ -440,7 +440,16 @@
         "default_send_enabled": true,
         "send_enabled": []
       },
-      "supply": []
+      "supply": [
+        {
+          "amount": "21000000000",
+          "denom": "ucosm"
+        },
+        {
+          "amount": "42000000000",
+          "denom": "ustake"
+        }
+      ]
     },
     "capability": {
       "index": "1",
@@ -493,7 +502,7 @@
                 },
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "Ap1EN+TjP611NX0PicqFJXknbLmxBbhgoCgGtRF7SLQk"
+                  "key": "AtDcuH4cX1eaxZrJ5shheLG3tXPAoV4awoIZmNQtQxmf"
                 },
                 "sequence": "0"
               }
@@ -501,7 +510,7 @@
           },
           "body": {
             "extension_options": [],
-            "memo": "e81f12503951dfcf1d6419b8b7e5ac90f466c250@172.17.0.2:26656",
+            "memo": "ad7cdbcfe545eaaaea99378bc70bf22eef3401a4@172.17.0.2:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
@@ -510,7 +519,7 @@
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5n86vyq",
+                "delegator_address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
                 "description": {
                   "details": "",
                   "identity": "",
@@ -521,9 +530,9 @@
                 "min_self_delegation": "1",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "L6f41DzvG/B+jUIc+avA3d0+BOhqgKB0pfiYSaug+2I="
+                  "key": "cUJRDwHyty8ZMO3ctSqPvezcOP2SYp1SDCHd1/SpAuU="
                 },
-                "validator_address": "cosmosvaloper1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5knwegn",
+                "validator_address": "cosmosvaloper1urk9gy7cfws0ak9x5nu7lx4un9n6gqkrp230jk",
                 "value": {
                   "amount": "3000000",
                   "denom": "ustake"
@@ -534,7 +543,7 @@
             "timeout_height": "0"
           },
           "signatures": [
-            "GP2C29mfQ414xKeup0qxOqLEJK7mMoIghXJEqA/8bNxrtuvpzoF78aARH/ywm40bxYj95xPkBPVYAdxII8aUtg=="
+            "XCvdrkjv/gl819FCH0rnfDiBm6xIc3Kj1EiN3c3tI/MSekAEEBqNT4FuFFtjVOgs5WT6RZTY75h1JxvHmMfm4g=="
           ]
         }
       ]
@@ -911,6 +920,6 @@
     },
     "version": {}
   },
-  "genesis_time": "2021-01-11T12:11:46.0887675Z",
+  "genesis_time": "2021-07-27T15:14:14.2361126Z",
   "initial_height": "1"
 }

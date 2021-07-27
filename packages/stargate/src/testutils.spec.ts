@@ -112,7 +112,7 @@ export const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
   accountNumber: 16,
   sequence: 0,
-  balanceStaking: "10000000", // 10 STAKE
+  balanceStaking: "2000000000", // 2000 STAKE
   balanceFee: "1000000000", // 1000 COSM
 };
 
