@@ -36,7 +36,6 @@ describe("GovExtension", () => {
     title: "Test Proposal",
     description: "This proposal proposes to test whether this proposal passes",
   });
-  const minDeposit = coins(10000000, "ustake");
   const initialDeposit = coins(12300000, "ustake");
   let proposalId: string;
 
@@ -98,7 +97,7 @@ describe("GovExtension", () => {
       expect(response).toEqual(
         jasmine.objectContaining({
           depositParams: {
-            minDeposit: minDeposit,
+            minDeposit: simapp.govMinDeposit,
             maxDepositPeriod: {
               seconds: Long.fromNumber(172800, false),
               nanos: 0,
