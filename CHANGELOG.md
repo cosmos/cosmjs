@@ -25,6 +25,7 @@ and this project adheres to
 - @cosmjs/faucet: Add new configuration variable `FAUCET_PATH_PATTERN` to
   configure the HD path of the faucet accounts ([#832]).
 - @cosmjs/cosmwasm-stargate: Add field `ibcPortId` to `Contract` ([#836]).
+- @cosmjs/stargate: Add `GovExtension` for query client.
 
 [#832]: https://github.com/cosmos/cosmjs/issues/832
 [#836]: https://github.com/cosmos/cosmjs/issues/836
