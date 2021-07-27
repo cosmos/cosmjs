@@ -59,7 +59,7 @@ export const simapp = {
   denomStaking: "ustake",
   denomFee: "ucosm",
   blockTime: 1_000, // ms
-  totalSupply: 21000000000,
+  totalSupply: 21000000000, // ucosm
 };
 
 export const slowSimapp = {
@@ -70,7 +70,7 @@ export const slowSimapp = {
   denomStaking: "ustake",
   denomFee: "ucosm",
   blockTime: 10_000, // ms
-  totalSupply: 21000000000,
+  totalSupply: 21000000000, // ucosm
 };
 
 export const faucet = {
