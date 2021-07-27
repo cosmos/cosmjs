@@ -1,6 +1,7 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
@@ -58,4 +59,24 @@ export function isMsgTransferEncodeObject(
   encodeObject: EncodeObject,
 ): encodeObject is MsgTransferEncodeObject {
   return (encodeObject as MsgTransferEncodeObject).typeUrl === "/ibc.applications.transfer.v1.MsgTransfer";
+}
+
+export interface MsgSubmitProposalEncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal";
+  readonly value: Partial<MsgSubmitProposal>;
+}
+
+export function isMsgSubmitProposalEncodeObject(
+  encodeObject: EncodeObject,
+): encodeObject is MsgSubmitProposalEncodeObject {
+  return (encodeObject as MsgSubmitProposalEncodeObject).typeUrl === "/cosmos.gov.v1beta1.MsgSubmitProposal";
+}
+
+export interface MsgVoteEncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmos.gov.v1beta1.MsgVote";
+  readonly value: Partial<MsgVote>;
+}
+
+export function isMsgVoteEncodeObject(encodeObject: EncodeObject): encodeObject is MsgVoteEncodeObject {
+  return (encodeObject as MsgVoteEncodeObject).typeUrl === "/cosmos.gov.v1beta1.MsgVote";
 }

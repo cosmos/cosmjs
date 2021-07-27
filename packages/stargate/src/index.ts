@@ -42,13 +42,17 @@ export { AminoConverter, AminoTypes } from "./aminotypes";
 export {
   isMsgDelegateEncodeObject,
   isMsgSendEncodeObject,
+  isMsgSubmitProposalEncodeObject,
   isMsgTransferEncodeObject,
   isMsgUndelegateEncodeObject,
+  isMsgVoteEncodeObject,
   isMsgWithdrawDelegatorRewardEncodeObject,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
+  MsgSubmitProposalEncodeObject,
   MsgTransferEncodeObject,
   MsgUndelegateEncodeObject,
+  MsgVoteEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
 export { calculateFee, GasPrice } from "./fee";
