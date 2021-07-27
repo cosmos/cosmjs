@@ -59,7 +59,7 @@ export const simapp = {
   denomStaking: "ustake",
   denomFee: "ucosm",
   blockTime: 1_000, // ms
-  totalSupply: 21000000000,
+  totalSupply: 21000000000, // ucosm
 };
 
 export const slowSimapp = {
@@ -70,7 +70,7 @@ export const slowSimapp = {
   denomStaking: "ustake",
   denomFee: "ucosm",
   blockTime: 10_000, // ms
-  totalSupply: 21000000000,
+  totalSupply: 21000000000, // ucosm
 };
 
 export const faucet = {
@@ -112,7 +112,7 @@ export const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
   accountNumber: 16,
   sequence: 0,
-  balanceStaking: "10000000", // 10 STAKE
+  balanceStaking: "2000000000", // 2000 STAKE
   balanceFee: "1000000000", // 1000 COSM
 };
 
@@ -126,7 +126,7 @@ export const validator = {
    */
   pubkey: {
     type: "tendermint/PubKeySecp256k1",
-    value: "Ap1EN+TjP611NX0PicqFJXknbLmxBbhgoCgGtRF7SLQk",
+    value: "AtDcuH4cX1eaxZrJ5shheLG3tXPAoV4awoIZmNQtQxmf",
   },
   /**
    * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json
@@ -135,7 +135,7 @@ export const validator = {
    * jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/simapp/template/.simapp/config/genesis.json
    * ```
    */
-  delegatorAddress: "cosmos1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5n86vyq",
+  delegatorAddress: "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
   /**
    * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json
    *
@@ -143,7 +143,7 @@ export const validator = {
    * jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/simapp/template/.simapp/config/genesis.json
    * ```
    */
-  validatorAddress: "cosmosvaloper1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5knwegn",
+  validatorAddress: "cosmosvaloper1urk9gy7cfws0ak9x5nu7lx4un9n6gqkrp230jk",
   accountNumber: 0,
   sequence: 1,
 };
