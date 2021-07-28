@@ -305,7 +305,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -319,7 +319,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -359,7 +359,7 @@ __metadata:
     "@types/babylon": ^6.16.3
     "@types/diff": ^4
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/node": ^15.0.1
     "@types/yargs": ^15.0.4
     "@typescript-eslint/eslint-plugin": ^4.28
@@ -376,7 +376,7 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
     prettier: ^2.3.2
@@ -404,7 +404,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -422,7 +422,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -458,7 +458,7 @@ __metadata:
     "@types/bn.js": ^4.11.6
     "@types/elliptic": ^6.4.12
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -480,7 +480,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     js-sha3: ^0.8.0
@@ -512,7 +512,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/base64-js": ^1.2.5
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -529,7 +529,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -556,7 +556,7 @@ __metadata:
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -572,7 +572,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -606,7 +606,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@koa/cors": ^3.0.0
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/koa": ^2.11.0
     "@types/koa-bodyparser": ^4.3.0
     "@types/koa__cors": ^3.0.1
@@ -619,7 +619,7 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-spec-reporter: ^6
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
@@ -641,7 +641,7 @@ __metadata:
     "@cosmjs/stream": "workspace:packages/stream"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -655,7 +655,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -687,7 +687,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -704,7 +704,7 @@ __metadata:
     esm: ^3.2.25
     fast-deep-equal: ^3.1.3
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -742,7 +742,7 @@ __metadata:
     "@ledgerhq/hw-transport-node-hid": ^5.25.0
     "@ledgerhq/hw-transport-webusb": ^5.25.0
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/ledgerhq__hw-transport": ^4.21.3
     "@types/ledgerhq__hw-transport-node-hid": ^4.22.2
     "@types/ledgerhq__hw-transport-webusb": ^4.70.1
@@ -757,7 +757,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
@@ -780,7 +780,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/bn.js": ^4.11.6
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -796,7 +796,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -827,7 +827,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -844,7 +844,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -874,7 +874,7 @@ __metadata:
     "@cosmjs/stream": "workspace:packages/stream"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -890,7 +890,7 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     isomorphic-ws: ^4.0.1
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -927,7 +927,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -944,7 +944,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -975,7 +975,7 @@ __metadata:
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -990,7 +990,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -1024,7 +1024,7 @@ __metadata:
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -1040,7 +1040,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -1068,7 +1068,7 @@ __metadata:
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.6.10
+    "@types/jasmine": ^3.8
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -1084,7 +1084,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.5
+    jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
     karma: ^6.1.1
@@ -1563,10 +1563,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*, @types/jasmine@npm:^3.6.10":
-  version: 3.7.4
-  resolution: "@types/jasmine@npm:3.7.4"
-  checksum: 3e971cb107e781cebde9128d467bec26f96261b9127c489d7f9963bd43e2e159e088aa9bcdb79e201ec0328aa5154a14d9c6d147ad98b8cd8a508d01008b265e
+"@types/jasmine@npm:*, @types/jasmine@npm:^3.8":
+  version: 3.8.1
+  resolution: "@types/jasmine@npm:3.8.1"
+  checksum: 64ec2fd7c3dad9c1745670090f5dac22e96dc8adb4ccbc1fdcdd3b70c4b4d2ccfb61b8e2c6a95b60bb6d23fd67dd700707b86dbc8e65a8424c952590fcab3c14
   languageName: node
   linkType: hard
 
@@ -4831,10 +4831,10 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:^3.6.0, jasmine-core@npm:^3.7.1, jasmine-core@npm:~3.7.0":
-  version: 3.7.1
-  resolution: "jasmine-core@npm:3.7.1"
-  checksum: dd89c934653b893f2a2c0b5977286177d47343bed37f77ba4b1a6ee7c357f63a5d3040ca540e98f69f3438436d689449c4b3b2e3183cc854dd0cfb5f601206c6
+"jasmine-core@npm:^3.6.0, jasmine-core@npm:^3.7.1, jasmine-core@npm:~3.8.0":
+  version: 3.8.0
+  resolution: "jasmine-core@npm:3.8.0"
+  checksum: 1f6dcc5137107650eb0d7fbbd0908284e30e4376e794ef900ab8af73b1987b97101ca1a1c5c740c7bc1cdefe169ef7e06bd4c9ab1fab7e0981de8835ee864737
   languageName: node
   linkType: hard
 
@@ -4847,15 +4847,15 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jasmine@npm:^3.5":
-  version: 3.7.0
-  resolution: "jasmine@npm:3.7.0"
+"jasmine@npm:^3.8":
+  version: 3.8.0
+  resolution: "jasmine@npm:3.8.0"
   dependencies:
     glob: ^7.1.6
-    jasmine-core: ~3.7.0
+    jasmine-core: ~3.8.0
   bin:
     jasmine: bin/jasmine.js
-  checksum: 0a7d69988c4bfbedc0057bdfb8ef94447389469085c1ae6e6c1a99020f12bbbc4b9397e8bf1e247c9597431a5514e0812800f249df3f05babc3316d6af98156c
+  checksum: c46e7014045cbece560e19772942ff61e0cfae4a4c824be80c78d5bff9e91665e0741ae2f4b8484ffb2315f484132b6769c06cb85da1e16c270b8da729999ca2
   languageName: node
   linkType: hard
 
