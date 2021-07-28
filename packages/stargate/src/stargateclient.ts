@@ -7,7 +7,15 @@ import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 import { Account, accountFromAny } from "./accounts";
-import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
+import {
+  AuthExtension,
+  BankExtension,
+  QueryClient,
+  setupAuthExtension,
+  setupBankExtension,
+  setupStakingExtension,
+  StakingExtension,
+} from "./queries";
 import {
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -138,7 +146,7 @@ export interface PrivateStargateClient {
 
 export class StargateClient {
   private readonly tmClient: Tendermint34Client | undefined;
-  private readonly queryClient: (QueryClient & AuthExtension & BankExtension) | undefined;
+  private readonly queryClient: (QueryClient & AuthExtension & BankExtension & StakingExtension) | undefined;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -149,7 +157,12 @@ export class StargateClient {
   protected constructor(tmClient: Tendermint34Client | undefined) {
     if (tmClient) {
       this.tmClient = tmClient;
-      this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
+      this.queryClient = QueryClient.withExtensions(
+        tmClient,
+        setupAuthExtension,
+        setupBankExtension,
+        setupStakingExtension,
+      );
     }
   }
 
@@ -166,11 +179,11 @@ export class StargateClient {
     return this.tmClient;
   }
 
-  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension) | undefined {
+  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension & StakingExtension) | undefined {
     return this.queryClient;
   }
 
-  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension {
+  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & StakingExtension {
     if (!this.queryClient) {
       throw new Error("Query client not available. You cannot use online functionality in offline mode.");
     }
@@ -252,6 +265,22 @@ export class StargateClient {
    */
   public async getAllBalances(address: string): Promise<readonly Coin[]> {
     return this.forceGetQueryClient().bank.allBalances(address);
+  }
+
+  public async getDelegation(delegatorAddress: string, validatorAddress: string): Promise<Coin | null> {
+    let delegatedAmount: Coin | undefined;
+    try {
+      delegatedAmount = (
+        await this.forceGetQueryClient().staking.delegation(delegatorAddress, validatorAddress)
+      ).delegationResponse?.balance;
+    } catch (e) {
+      if (e.toString().includes("key not found")) {
+        // ignore, `delegatedAmount` remains undefined
+      } else {
+        throw e;
+      }
+    }
+    return delegatedAmount || null;
   }
 
   public async getTx(id: string): Promise<IndexedTx | null> {

@@ -1,4 +1,4 @@
-import { coins } from "@cosmjs/amino";
+import { coin, coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
@@ -7,7 +7,11 @@ import { ProposalStatus, TextProposal, VoteOption } from "cosmjs-types/cosmos/go
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../encodeobjects";
+import {
+  MsgDelegateEncodeObject,
+  MsgSubmitProposalEncodeObject,
+  MsgVoteEncodeObject,
+} from "../encodeobjects";
 import { SigningStargateClient } from "../signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "../stargateclient";
 import {
@@ -17,6 +21,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   simappEnabled,
+  validator,
 } from "../testutils.spec";
 import { GovExtension, setupGovExtension } from "./gov";
 import { QueryClient } from "./queryclient";
@@ -37,12 +42,19 @@ describe("GovExtension", () => {
     description: "This proposal proposes to test whether this proposal passes",
   });
   const initialDeposit = coins(12300000, "ustake");
+  const delegationVoter1 = coin(424242, "ustake");
+  const delegationVoter2 = coin(777, "ustake");
+  const voter1Address = faucet.address1;
+  const voter2Address = faucet.address2;
   let proposalId: string;
 
   beforeAll(async () => {
     if (simappEnabled()) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const [firstAccount] = await wallet.getAccounts();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
+        // This must match `voterAddress` above.
+        hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
+      });
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrl,
         wallet,
@@ -56,12 +68,12 @@ describe("GovExtension", () => {
             typeUrl: "/cosmos.gov.v1beta1.TextProposal",
             value: Uint8Array.from(TextProposal.encode(textProposal).finish()),
           }),
-          proposer: faucet.address0,
+          proposer: voter1Address,
           initialDeposit: initialDeposit,
         },
       };
       const proposalResult = await client.signAndBroadcast(
-        firstAccount.address,
+        voter1Address,
         [proposalMsg],
         defaultFee,
         "Test proposal for simd",
@@ -73,18 +85,65 @@ describe("GovExtension", () => {
         .attributes.find(({ key }: any) => key === "proposal_id").value;
       assert(proposalId.match(nonNegativeIntegerMatcher));
 
-      const voteMsg: MsgVoteEncodeObject = {
-        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-        value: {
-          proposalId: longify(proposalId),
-          voter: faucet.address0,
-          option: VoteOption.VOTE_OPTION_YES,
-        },
-      };
-      const voteMemo = "Test vote for simd";
-      await client.signAndBroadcast(firstAccount.address, [voteMsg], defaultFee, voteMemo);
+      // Voter 1
+      {
+        // My vote only counts when I delegate
+        if (!(await client.getDelegation(voter1Address, validator.validatorAddress))) {
+          const msgDelegate: MsgDelegateEncodeObject = {
+            typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+            value: {
+              delegatorAddress: voter1Address,
+              validatorAddress: validator.validatorAddress,
+              amount: delegationVoter1,
+            },
+          };
+          const result = await client.signAndBroadcast(voter1Address, [msgDelegate], defaultFee);
+          assertIsBroadcastTxSuccess(result);
+        }
+
+        const voteMsg: MsgVoteEncodeObject = {
+          typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+          value: {
+            proposalId: longify(proposalId),
+            voter: voter1Address,
+            option: VoteOption.VOTE_OPTION_YES,
+          },
+        };
+        const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
+        assertIsBroadcastTxSuccess(voteResult);
+      }
+
+      // Voter 2
+      {
+        // My vote only counts when I delegate
+        if (!(await client.getDelegation(voter2Address, validator.validatorAddress))) {
+          const msgDelegate: MsgDelegateEncodeObject = {
+            typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+            value: {
+              delegatorAddress: voter2Address,
+              validatorAddress: validator.validatorAddress,
+              amount: delegationVoter2,
+            },
+          };
+          const result = await client.signAndBroadcast(voter2Address, [msgDelegate], defaultFee);
+          assertIsBroadcastTxSuccess(result);
+        }
+
+        const voteMsg: MsgVoteEncodeObject = {
+          typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+          value: {
+            proposalId: longify(proposalId),
+            voter: voter2Address,
+            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+          },
+        };
+        const voteResult = await client.signAndBroadcast(voter2Address, [voteMsg], defaultFee);
+        assertIsBroadcastTxSuccess(voteResult);
+      }
 
       await sleep(75); // wait until transactions are indexed
+
+      client.disconnect();
     }
   });
 
@@ -155,8 +214,8 @@ describe("GovExtension", () => {
 
       const response = await client.gov.proposals(
         ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
-        faucet.address0,
-        faucet.address0,
+        voter1Address,
+        voter1Address,
       );
       expect(response.proposals.length).toBeGreaterThanOrEqual(1);
       expect(response.proposals[response.proposals.length - 1]).toEqual({
@@ -212,7 +271,7 @@ describe("GovExtension", () => {
       expect(response.deposits).toEqual([
         {
           proposalId: longify(proposalId),
-          depositor: faucet.address0,
+          depositor: voter1Address,
           amount: initialDeposit,
         },
       ]);
@@ -226,10 +285,10 @@ describe("GovExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
-      const response = await client.gov.deposit(proposalId, faucet.address0);
+      const response = await client.gov.deposit(proposalId, voter1Address);
       expect(response.deposit).toEqual({
         proposalId: longify(proposalId),
-        depositor: faucet.address0,
+        depositor: voter1Address,
         amount: initialDeposit,
       });
 
@@ -244,10 +303,10 @@ describe("GovExtension", () => {
 
       const response = await client.gov.tally(proposalId);
       expect(response.tally).toEqual({
-        yes: "0",
+        yes: delegationVoter1.amount,
         abstain: "0",
         no: "0",
-        noWithVeto: "0",
+        noWithVeto: delegationVoter2.amount,
       });
 
       tmClient.disconnect();
@@ -261,9 +320,15 @@ describe("GovExtension", () => {
 
       const response = await client.gov.votes(proposalId);
       expect(response.votes).toEqual([
+        // why is vote 2 first?
         {
           proposalId: longify(proposalId),
-          voter: faucet.address0,
+          voter: voter2Address,
+          option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+        },
+        {
+          proposalId: longify(proposalId),
+          voter: voter1Address,
           option: VoteOption.VOTE_OPTION_YES,
         },
       ]);
@@ -277,9 +342,9 @@ describe("GovExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
-      const response = await client.gov.vote(proposalId, faucet.address0);
+      const response = await client.gov.vote(proposalId, voter1Address);
       expect(response.vote).toEqual({
-        voter: faucet.address0,
+        voter: voter1Address,
         proposalId: longify(proposalId),
         option: VoteOption.VOTE_OPTION_YES,
       });
