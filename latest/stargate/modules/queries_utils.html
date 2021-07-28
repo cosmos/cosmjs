@@ -78,6 +78,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="queries_utils.html#createPagination" class="tsd-kind-icon">create<wbr>Pagination</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="queries_utils.html#createProtobufRpcClient" class="tsd-kind-icon">create<wbr>Protobuf<wbr>Rpc<wbr>Client</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="queries_utils.html#longify" class="tsd-kind-icon">longify</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="queries_utils.html#toAccAddress" class="tsd-kind-icon">to<wbr>Acc<wbr>Address</a></li>
 							</ul>
 						</section>
@@ -96,9 +97,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/d4be3b0d79/packages/stargate/src/queries/utils.ts#L16">stargate/src/queries/utils.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7ef4ee30aa/packages/stargate/src/queries/utils.ts#L24">stargate/src/queries/utils.ts:24</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>If paginationKey is set, return a <code>PageRequest</code> with the given key.
+									If paginationKey is unset, return <code>undefined</code>.</p>
+								</div>
+								<p>Use this with a query response&#39;s pagination next key to
+								request the next page.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -119,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/d4be3b0d79/packages/stargate/src/queries/utils.ts#L31">stargate/src/queries/utils.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7ef4ee30aa/packages/stargate/src/queries/utils.ts#L39">stargate/src/queries/utils.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,6 +142,35 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="longify" class="tsd-anchor"></a>
+					<h3>longify</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">longify<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint64</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Long</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7ef4ee30aa/packages/stargate/src/queries/utils.ts#L52">stargate/src/queries/utils.ts:52</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a uint64 value as string, number, Long or Uint64 and returns an unsigned Long instance
+									of it.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint64</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Long</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="toAccAddress" class="tsd-anchor"></a>
 					<h3>to<wbr>Acc<wbr>Address</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -142,7 +180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/d4be3b0d79/packages/stargate/src/queries/utils.ts#L12">stargate/src/queries/utils.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7ef4ee30aa/packages/stargate/src/queries/utils.ts#L13">stargate/src/queries/utils.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,6 +245,9 @@
 						<a href="queries_distribution.html">queries/distribution</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="queries_gov.html">queries/gov</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="queries_ibc.html">queries/ibc</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -239,6 +280,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="queries_utils.html#createProtobufRpcClient" class="tsd-kind-icon">create<wbr>Protobuf<wbr>Rpc<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="queries_utils.html#longify" class="tsd-kind-icon">longify</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="queries_utils.html#toAccAddress" class="tsd-kind-icon">to<wbr>Acc<wbr>Address</a>
