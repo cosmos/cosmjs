@@ -85,10 +85,10 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
         return queryService.Code(request);
       },
       listContractsByCodeId: async (id: number, paginationKey?: Uint8Array) => {
-        const pagination = {
+        const request = {
+          codeId: Long.fromNumber(id),
           pagination: createPagination(paginationKey),
         };
-        const request = { ...pagination, codeId: Long.fromNumber(id) };
         return queryService.ContractsByCode(request);
       },
       getContractInfo: async (address: string) => {
@@ -97,18 +97,18 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
       },
 
       getContractCodeHistory: async (address: string, paginationKey?: Uint8Array) => {
-        const pagination = {
+        const request = {
+          address: address,
           pagination: createPagination(paginationKey),
         };
-        const request = { ...pagination, address: address };
         return queryService.ContractHistory(request);
       },
 
       getAllContractState: async (address: string, paginationKey?: Uint8Array) => {
-        const pagination = {
+        const request = {
+          address: address,
           pagination: createPagination(paginationKey),
         };
-        const request = { ...pagination, address: address };
         return queryService.AllContractState(request);
       },
 

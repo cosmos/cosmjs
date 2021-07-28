@@ -14,6 +14,13 @@ export function toAccAddress(address: string): Uint8Array {
   return Bech32.decode(address).data;
 }
 
+/**
+ * If paginationKey is set, return a `PageRequest` with the given key.
+ * If paginationKey is unset, return `undefined`.
+ *
+ * Use this with a query response's pagination next key to
+ * request the next page.
+ */
 export function createPagination(paginationKey?: Uint8Array): PageRequest | undefined {
   return paginationKey
     ? {
