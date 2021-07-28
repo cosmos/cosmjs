@@ -14,7 +14,7 @@ import {
 import Long from "long";
 
 import { QueryClient } from "./queryclient";
-import { createProtobufRpcClient, longify } from "./utils";
+import { createPagination, createProtobufRpcClient, longify } from "./utils";
 
 export type GovParamsType = "deposit" | "tallying" | "voting";
 
@@ -50,13 +50,17 @@ export function setupGovExtension(base: QueryClient): GovExtension {
         const response = await queryService.Params({ paramsType: parametersType });
         return response;
       },
-      proposals: async (proposalStatus: ProposalStatus, depositorAddress: string, voterAddress: string) => {
-        // TODO: pagination
+      proposals: async (
+        proposalStatus: ProposalStatus,
+        depositorAddress: string,
+        voterAddress: string,
+        paginationKey?: Uint8Array,
+      ) => {
         const response = await queryService.Proposals({
           proposalStatus,
           depositor: depositorAddress,
           voter: voterAddress,
-          pagination: undefined,
+          pagination: createPagination(paginationKey),
         });
         return response;
       },
@@ -64,11 +68,10 @@ export function setupGovExtension(base: QueryClient): GovExtension {
         const response = await queryService.Proposal({ proposalId: longify(proposalId) });
         return response;
       },
-      deposits: async (proposalId: GovProposalId) => {
-        // TODO: pagination
+      deposits: async (proposalId: GovProposalId, paginationKey?: Uint8Array) => {
         const response = await queryService.Deposits({
           proposalId: longify(proposalId),
-          pagination: undefined,
+          pagination: createPagination(paginationKey),
         });
         return response;
       },
@@ -85,11 +88,10 @@ export function setupGovExtension(base: QueryClient): GovExtension {
         });
         return response;
       },
-      votes: async (proposalId: GovProposalId) => {
-        // TODO: pagination
+      votes: async (proposalId: GovProposalId, paginationKey?: Uint8Array) => {
         const response = await queryService.Votes({
           proposalId: longify(proposalId),
-          pagination: undefined,
+          pagination: createPagination(paginationKey),
         });
         return response;
       },
