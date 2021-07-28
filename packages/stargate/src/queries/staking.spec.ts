@@ -7,7 +7,14 @@ import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/
 import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "../encodeobjects";
 import { SigningStargateClient } from "../signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "../stargateclient";
-import { faucet, pendingWithoutSimapp, simapp, simappEnabled, validator } from "../testutils.spec";
+import {
+  defaultSigningClientOptions,
+  faucet,
+  pendingWithoutSimapp,
+  simapp,
+  simappEnabled,
+  validator,
+} from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { setupStakingExtension, StakingExtension } from "./staking";
 
@@ -27,7 +34,11 @@ describe("StakingExtension", () => {
   beforeAll(async () => {
     if (simappEnabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
+      const client = await SigningStargateClient.connectWithSigner(
+        simapp.tendermintUrl,
+        wallet,
+        defaultSigningClientOptions,
+      );
 
       {
         const msg: MsgDelegate = {

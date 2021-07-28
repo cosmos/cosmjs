@@ -21,6 +21,7 @@ import {
   StargateClient,
 } from "./stargateclient";
 import {
+  defaultSigningClientOptions,
   faucet,
   fromOneElementArray,
   makeRandomAddress,
@@ -89,7 +90,11 @@ async function sendTokens(
     signatures: [fromBase64(signature.signature)],
   });
   const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
-  const broadcastResponse = await client.broadcastTx(txRawBytes);
+  const broadcastResponse = await client.broadcastTx(
+    txRawBytes,
+    defaultSigningClientOptions.broadcastTimeoutMs,
+    defaultSigningClientOptions.broadcastPollIntervalMs,
+  );
   return {
     broadcastResponse: broadcastResponse,
     tx: txRawBytes,

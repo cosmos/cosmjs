@@ -13,6 +13,7 @@ import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { calculateFee, GasPrice } from "./fee";
+import { SigningStargateClientOptions } from "./signingstargateclient";
 
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP_ENABLED;
@@ -71,6 +72,12 @@ export const slowSimapp = {
   denomFee: "ucosm",
   blockTime: 10_000, // ms
   totalSupply: 21000000000, // ucosm
+};
+
+/** Setting to speed up testing */
+export const defaultSigningClientOptions: SigningStargateClientOptions = {
+  broadcastPollIntervalMs: 300,
+  broadcastTimeoutMs: 8_000,
 };
 
 export const faucet = {
