@@ -61,6 +61,7 @@ export const simapp = {
   denomFee: "ucosm",
   blockTime: 1_000, // ms
   totalSupply: 21000000000, // ucosm
+  govMinDeposit: coins(10000000, "ustake"),
 };
 
 export const slowSimapp = {
