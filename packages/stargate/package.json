@@ -45,7 +45,7 @@
     "@cosmjs/stream": "workspace:packages/stream",
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc",
     "@cosmjs/utils": "workspace:packages/utils",
-    "cosmjs-types": "^0.1.0",
+    "cosmjs-types": "^0.2.0",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2",
     "xstream": "^11.14.0"
