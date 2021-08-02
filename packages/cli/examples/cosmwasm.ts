@@ -23,15 +23,10 @@ async function main(hackatomWasmPath: string) {
   // Upload contract
   const wasm = fs.readFileSync(hackatomWasmPath);
   const uploadFee = calculateFee(1_500_000, gasPrice);
-  const codeMeta = {
-    source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-    builder: "cosmwasm/rust-optimizer:0.10.8",
-  };
   const uploadReceipt = await client.upload(
     alice.address0,
     wasm,
     uploadFee,
-    codeMeta,
     "Upload hackatom contract",
   );
   console.info("Upload succeeded. Receipt:", uploadReceipt);

@@ -16,11 +16,6 @@ const alice = {
   address4: "wasm1f7j7ryulwjfe9ljplvhtcaxa6wqgula3nh873j",
 };
 
-const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
-};
-
 const initData = [
   {
     admin: alice.address0,
@@ -74,7 +69,6 @@ async function main() {
     alice.address0,
     wasm,
     uploadFee,
-    codeMeta,
     "Upload CW3 fixed multisig contract",
   );
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);

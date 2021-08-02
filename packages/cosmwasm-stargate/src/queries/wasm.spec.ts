@@ -13,12 +13,8 @@ import {
   StdFee,
 } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
-import {
-  MsgExecuteContract,
-  MsgInstantiateContract,
-  MsgStoreCode,
-} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
-import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1beta1/types";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 
 import {
@@ -41,9 +37,9 @@ import {
 } from "../testutils.spec";
 
 const registry = new Registry([
-  ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
-  ["/cosmwasm.wasm.v1beta1.MsgStoreCode", MsgStoreCode],
-  ["/cosmwasm.wasm.v1beta1.MsgInstantiateContract", MsgInstantiateContract],
+  ["/cosmwasm.wasm.v1.MsgExecuteContract", MsgExecuteContract],
+  ["/cosmwasm.wasm.v1.MsgStoreCode", MsgStoreCode],
+  ["/cosmwasm.wasm.v1.MsgInstantiateContract", MsgInstantiateContract],
 ]);
 
 async function uploadContract(
@@ -52,12 +48,10 @@ async function uploadContract(
 ): Promise<BroadcastTxResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCodeEncodeObject = {
-    typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
+    typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
     value: MsgStoreCode.fromPartial({
       sender: alice.address0,
       wasmByteCode: contract.data,
-      source: contract.source || "",
-      builder: contract.builder || "",
     }),
   };
   const fee: StdFee = {
@@ -80,12 +74,12 @@ async function instantiateContract(
 ): Promise<BroadcastTxResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContractEncodeObject = {
-    typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
+    typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
     value: MsgInstantiateContract.fromPartial({
       sender: alice.address0,
       codeId: Long.fromNumber(codeId),
       label: "my escrow",
-      initMsg: toAscii(
+      msg: toAscii(
         JSON.stringify({
           verifier: alice.address0,
           beneficiary: beneficiaryAddress,
@@ -114,7 +108,7 @@ async function executeContract(
 ): Promise<BroadcastTxResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContractEncodeObject = {
-    typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
+    typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
     value: MsgExecuteContract.fromPartial({
       sender: alice.address0,
       contract: contractAddress,
@@ -171,8 +165,6 @@ describe("WasmExtension", () => {
       const lastCode = codeInfos[codeInfos.length - 1];
       expect(lastCode.codeId.toNumber()).toEqual(hackatomCodeId);
       expect(lastCode.creator).toEqual(alice.address0);
-      expect(lastCode.source).toEqual(hackatom.source ?? "");
-      expect(lastCode.builder).toEqual(hackatom.builder ?? "");
       expect(toHex(lastCode.dataHash)).toEqual(toHex(sha256(hackatom.data)));
     });
   });
@@ -183,11 +175,10 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const { codeInfo, data } = await client.wasm.getCode(hackatomCodeId);
-      expect(codeInfo!.codeId.toNumber()).toEqual(hackatomCodeId);
-      expect(codeInfo!.creator).toEqual(alice.address0);
-      expect(codeInfo!.source).toEqual(hackatom.source ?? "");
-      expect(codeInfo!.builder).toEqual(hackatom.builder ?? "");
-      expect(toHex(codeInfo!.dataHash)).toEqual(toHex(sha256(hackatom.data)));
+      assert(codeInfo);
+      expect(codeInfo.codeId.toNumber()).toEqual(hackatomCodeId);
+      expect(codeInfo.creator).toEqual(alice.address0);
+      expect(toHex(codeInfo.dataHash)).toEqual(toHex(sha256(hackatom.data)));
       expect(data).toEqual(hackatom.data);
     });
   });

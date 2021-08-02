@@ -39,8 +39,6 @@ export const defaultClearAdminFee = calculateFee(80_000, defaultGasPrice);
 export interface ContractUploadInstructions {
   /** The wasm bytecode */
   readonly data: Uint8Array;
-  readonly source?: string;
-  readonly builder?: string;
 }
 
 export const wasmd = {
@@ -62,8 +60,6 @@ export const defaultSigningClientOptions: SigningCosmWasmClientOptions = {
 export function getHackatom(): ContractUploadInstructions {
   return {
     data: fromBase64(hackatom.data),
-    source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-    builder: "cosmwasm/rust-optimizer:0.9.1",
   };
 }
 
@@ -122,8 +118,6 @@ export const validator = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedHackatom = {
   codeId: 1,
-  source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.10.8",
   checksum: "a32acdcfe15a2b3c8ba6963cf1e4ab63347725cc35a0f2434696dd492d63fb5f",
   instances: [
     {
@@ -153,8 +147,6 @@ export const deployedIbcReflect = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw3 = {
   codeId: 3,
-  source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
   instances: [
     "wasm1xqeym28j9xgv0p93pwwt6qcxf9tdvf9z83duy9", // Multisig (1/3)
     "wasm1jka38ckju8cpjap00jf9xdvdyttz9cauchu0zl", // Multisig (2/3)
@@ -165,8 +157,6 @@ export const deployedCw3 = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw1 = {
   codeId: 4,
-  source: "https://crates.io/api/v1/crates/cw1-subkeys/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
   instances: ["wasm1vs2vuks65rq7xj78mwtvn7vvnm2gn7ad78g6yp"],
 };
 

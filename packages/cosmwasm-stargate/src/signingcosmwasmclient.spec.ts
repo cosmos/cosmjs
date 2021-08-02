@@ -17,13 +17,13 @@ import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
+import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
 import { MsgStoreCodeEncodeObject } from "./encodeobjects";
-import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   defaultClearAdminFee,
@@ -85,22 +85,6 @@ describe("SigningCosmWasmClient", () => {
       expect(compressedSize).toBeLessThan(wasm.length * 0.5);
       expect(codeId).toBeGreaterThanOrEqual(1);
       client.disconnect();
-    });
-
-    it("can set builder and source", async () => {
-      pendingWithoutWasmd();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
-      const hackatom = getHackatom();
-      const meta: UploadMeta = {
-        source: "https://crates.io/api/v1/crates/cw-nameservice/0.1.0/download",
-        builder: "confio/cosmwasm-opt:0.6.2",
-      };
-      const { codeId } = await client.upload(alice.address0, hackatom.data, defaultUploadFee, meta);
-      const codeDetails = await client.getCodeDetails(codeId);
-      expect(codeDetails.source).toEqual(meta.source);
-      expect(codeDetails.builder).toEqual(meta.builder);
     });
   });
 
@@ -571,17 +555,15 @@ describe("SigningCosmWasmClient", () => {
           ...defaultSigningClientOptions,
           prefix: wasmd.prefix,
         });
-        const { data, builder, source } = getHackatom();
+        const { data } = getHackatom();
 
         const msgStoreCode: MsgStoreCode = {
           sender: alice.address0,
           wasmByteCode: pako.gzip(data),
-          source: source ?? "",
-          builder: builder ?? "",
           instantiatePermission: undefined,
         };
         const msgAny: MsgStoreCodeEncodeObject = {
-          typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
+          typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
           value: msgStoreCode,
         };
         const fee = {

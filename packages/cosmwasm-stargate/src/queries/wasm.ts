@@ -10,7 +10,7 @@ import {
   QueryContractInfoResponse,
   QueryContractsByCodeResponse,
   QueryRawContractStateResponse,
-} from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
+} from "cosmjs-types/cosmwasm/wasm/v1/query";
 import Long from "long";
 
 /**

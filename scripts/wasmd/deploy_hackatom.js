@@ -16,11 +16,6 @@ const alice = {
   address4: "wasm1f7j7ryulwjfe9ljplvhtcaxa6wqgula3nh873j",
 };
 
-const codeMeta = {
-  source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.10.8",
-};
-
 const inits = [
   {
     label: "From deploy_hackatom.js (0)",
@@ -59,7 +54,6 @@ async function main() {
     alice.address0,
     wasm,
     uploadFee,
-    codeMeta,
     "Upload hackatom contract",
   );
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);

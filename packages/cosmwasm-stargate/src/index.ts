@@ -1,5 +1,4 @@
 export { cosmWasmTypes } from "./aminotypes";
-export { isValidBuilder } from "./builder";
 export {
   Code,
   CodeDetails,
@@ -30,6 +29,5 @@ export {
   MigrateResult,
   SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
-  UploadMeta,
   UploadResult,
 } from "./signingcosmwasmclient";

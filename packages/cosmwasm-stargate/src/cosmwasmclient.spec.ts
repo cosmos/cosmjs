@@ -229,8 +229,6 @@ describe("CosmWasmClient", () => {
       const [first] = result;
       expect(first).toEqual({
         id: deployedHackatom.codeId,
-        source: deployedHackatom.source,
-        builder: deployedHackatom.builder,
         checksum: deployedHackatom.checksum,
         creator: alice.address0,
       });
@@ -245,8 +243,6 @@ describe("CosmWasmClient", () => {
 
       const expectedInfo: Code = {
         id: deployedHackatom.codeId,
-        source: deployedHackatom.source,
-        builder: deployedHackatom.builder,
         checksum: deployedHackatom.checksum,
         creator: alice.address0,
       };
