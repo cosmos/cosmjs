@@ -2,8 +2,8 @@
 
 # This must get from 2-3 different repos, fix the versions here:
 
-COSMWASM_VERSION="v0.14.0"
-PLUS_VERSION="v0.6.0"
+COSMWASM_VERSION="v0.16.0-rc5"
+PLUS_VERSION="v0.8.0-rc1"
 
 curl -L -O "https://github.com/CosmWasm/cosmwasm/releases/download/${COSMWASM_VERSION}/hackatom.wasm"
 curl -L -O "https://github.com/CosmWasm/cosmwasm/releases/download/${COSMWASM_VERSION}/ibc_reflect.wasm"

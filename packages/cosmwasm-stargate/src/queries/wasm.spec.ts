@@ -151,7 +151,7 @@ describe("WasmExtension", () => {
       assertIsBroadcastTxSuccess(instantiateResult);
       hackatomContractAddress = JSON.parse(instantiateResult.rawLog!)[0]
         .events.find((event: any) => event.type === "message")
-        .attributes.find((attribute: any) => attribute.key === "contract_address").value;
+        .attributes.find((attribute: any) => attribute.key === "_contract_address").value;
     }
   });
 
@@ -204,7 +204,7 @@ describe("WasmExtension", () => {
       assertIsBroadcastTxSuccess(result);
       const myAddress = JSON.parse(result.rawLog!)[0]
         .events.find((event: any) => event.type === "message")
-        .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
+        .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
 
       const { contracts: newContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
       assert(newContracts);
@@ -248,7 +248,7 @@ describe("WasmExtension", () => {
 
       const myAddress = JSON.parse(result.rawLog!)[0]
         .events.find((event: any) => event.type === "message")
-        .attributes!.find((attribute: any) => attribute.key === "contract_address").value;
+        .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
 
       const history = await client.wasm.getContractCodeHistory(myAddress);
       assert(history.entries);
@@ -393,7 +393,7 @@ describe("WasmExtension", () => {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsBroadcastTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
+        const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "_contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");

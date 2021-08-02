@@ -309,12 +309,12 @@ describe("CosmWasmClient", () => {
     it("works for instance with IBC port ID", async () => {
       pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const contract = await client.getContract(deployedIbcReflect.instances[0]);
+      const contract = await client.getContract(deployedIbcReflect.instances[0].address);
       expect(contract).toEqual(
         jasmine.objectContaining({
-          address: deployedIbcReflect.instances[0],
+          address: deployedIbcReflect.instances[0].address,
           codeId: deployedIbcReflect.codeId,
-          ibcPortId: "wasm.wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te",
+          ibcPortId: deployedIbcReflect.instances[0].ibcPortId,
         }),
       );
     });
