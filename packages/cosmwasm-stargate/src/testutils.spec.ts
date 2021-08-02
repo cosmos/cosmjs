@@ -23,6 +23,7 @@ import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { setupWasmExtension, WasmExtension } from "./queries";
+import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
 import hackatom from "./testdata/contract.json";
 
 export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
@@ -50,6 +51,12 @@ export const wasmd = {
   validator: {
     address: "wasmvaloper1m4vhsgne6u74ff78vf0tvkjq3q4hjf9vjfrmy2",
   },
+};
+
+/** Setting to speed up testing */
+export const defaultSigningClientOptions: SigningCosmWasmClientOptions = {
+  broadcastPollIntervalMs: 300,
+  broadcastTimeoutMs: 8_000,
 };
 
 export function getHackatom(): ContractUploadInstructions {
