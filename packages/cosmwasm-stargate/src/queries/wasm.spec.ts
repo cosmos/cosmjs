@@ -31,6 +31,7 @@ import {
   alice,
   bech32AddressMatcher,
   ContractUploadInstructions,
+  defaultSigningClientOptions,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -64,7 +65,10 @@ async function uploadContract(
     gas: "89000000",
   };
   const firstAddress = (await signer.getAccounts())[0].address;
-  const client = await SigningStargateClient.connectWithSigner(wasmd.endpoint, signer, { registry });
+  const client = await SigningStargateClient.connectWithSigner(wasmd.endpoint, signer, {
+    ...defaultSigningClientOptions,
+    registry,
+  });
   return client.signAndBroadcast(firstAddress, [theMsg], fee, memo);
 }
 
@@ -96,7 +100,10 @@ async function instantiateContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const client = await SigningStargateClient.connectWithSigner(wasmd.endpoint, signer, { registry });
+  const client = await SigningStargateClient.connectWithSigner(wasmd.endpoint, signer, {
+    ...defaultSigningClientOptions,
+    registry,
+  });
   return client.signAndBroadcast(firstAddress, [theMsg], fee, memo);
 }
 
@@ -121,7 +128,10 @@ async function executeContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, signer, { registry });
+  const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, signer, {
+    ...defaultSigningClientOptions,
+    registry,
+  });
   return client.signAndBroadcast(firstAddress, [theMsg], fee, memo);
 }
 

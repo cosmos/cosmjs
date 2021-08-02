@@ -31,6 +31,7 @@ import {
   defaultInstantiateFee,
   defaultMigrateFee,
   defaultSendFee,
+  defaultSigningClientOptions,
   defaultUpdateAdminFee,
   defaultUploadFee,
   getHackatom,
@@ -49,9 +50,12 @@ describe("SigningCosmWasmClient", () => {
     it("can be constructed", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+        ...defaultSigningClientOptions,
+        prefix: wasmd.prefix,
+      });
       expect(client).toBeTruthy();
+      client.disconnect();
     });
 
     it("can be constructed with custom registry", async () => {
@@ -59,9 +63,10 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const registry = new Registry();
       registry.register("/custom.MsgCustom", MsgSend);
-      const options = { prefix: wasmd.prefix, registry: registry };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix, registry: registry };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       expect(client.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
+      client.disconnect();
     });
   });
 
@@ -69,7 +74,7 @@ describe("SigningCosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const wasm = getHackatom().data;
       const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
@@ -79,6 +84,7 @@ describe("SigningCosmWasmClient", () => {
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
       expect(compressedSize).toBeLessThan(wasm.length * 0.5);
       expect(codeId).toBeGreaterThanOrEqual(1);
+      client.disconnect();
     });
 
     it("can set builder and source", async () => {
@@ -102,7 +108,7 @@ describe("SigningCosmWasmClient", () => {
     it("works with transfer amount", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
@@ -126,12 +132,13 @@ describe("SigningCosmWasmClient", () => {
       expect(ucosmBalance).toEqual(funds[0]);
       const ustakeBalance = await wasmClient.bank.balance(contractAddress, "ustake");
       expect(ustakeBalance).toEqual(funds[1]);
+      client.disconnect();
     });
 
     it("works with admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
@@ -150,12 +157,13 @@ describe("SigningCosmWasmClient", () => {
       const { contractInfo } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo);
       expect(contractInfo.admin).toEqual(unused.address);
+      client.disconnect();
     });
 
     it("can instantiate one code multiple times", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const contractAddress1 = await client.instantiate(
@@ -179,6 +187,7 @@ describe("SigningCosmWasmClient", () => {
         defaultInstantiateFee,
       );
       expect(contractAddress1).not.toEqual(contractAddress2);
+      client.disconnect();
     });
   });
 
@@ -186,7 +195,7 @@ describe("SigningCosmWasmClient", () => {
     it("can update an admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
@@ -213,6 +222,8 @@ describe("SigningCosmWasmClient", () => {
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual(unused.address);
+
+      client.disconnect();
     });
   });
 
@@ -220,7 +231,7 @@ describe("SigningCosmWasmClient", () => {
     it("can clear an admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
@@ -246,6 +257,8 @@ describe("SigningCosmWasmClient", () => {
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual("");
+
+      client.disconnect();
     });
   });
 
@@ -253,7 +266,7 @@ describe("SigningCosmWasmClient", () => {
     it("can can migrate from one code ID to another", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
@@ -290,6 +303,8 @@ describe("SigningCosmWasmClient", () => {
         ...contractInfo1,
         codeId: Long.fromNumber(codeId2, true),
       });
+
+      client.disconnect();
     });
   });
 
@@ -297,7 +312,7 @@ describe("SigningCosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       // instantiate
@@ -340,6 +355,8 @@ describe("SigningCosmWasmClient", () => {
       expect(contractBalanceUcosm).toEqual(coin(0, "ucosm"));
       const contractBalanceUstake = await wasmClient.bank.balance(contractAddress, "ustake");
       expect(contractBalanceUstake).toEqual(coin(0, "ustake"));
+
+      client.disconnect();
     });
   });
 
@@ -347,7 +364,7 @@ describe("SigningCosmWasmClient", () => {
     it("works with direct signer", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
       const amount = coins(7890, "ucosm");
@@ -376,12 +393,14 @@ describe("SigningCosmWasmClient", () => {
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       assert(after);
       expect(after).toEqual(amount[0]);
+
+      client.disconnect();
     });
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { prefix: wasmd.prefix };
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
       const amount = coins(7890, "ucosm");
@@ -410,6 +429,8 @@ describe("SigningCosmWasmClient", () => {
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       assert(after);
       expect(after).toEqual(amount[0]);
+
+      client.disconnect();
     });
   });
 
@@ -417,10 +438,12 @@ describe("SigningCosmWasmClient", () => {
     describe("direct mode", () => {
       it("works", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
         const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
@@ -438,14 +461,20 @@ describe("SigningCosmWasmClient", () => {
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a modifying signer", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
+        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+          prefix: wasmd.prefix,
+        });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
         const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
@@ -464,7 +493,7 @@ describe("SigningCosmWasmClient", () => {
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
 
-        await sleep(1000);
+        await sleep(500);
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
@@ -473,15 +502,19 @@ describe("SigningCosmWasmClient", () => {
         expect(tx.body.memo).toEqual("This was modified");
         expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
         expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+
+        client.disconnect();
       });
     });
 
     describe("legacy Amino mode", () => {
       it("works with bank MsgSend", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msgSend: MsgSend = {
           fromAddress: alice.address0,
@@ -499,13 +532,17 @@ describe("SigningCosmWasmClient", () => {
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with staking MsgDelegate", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msgDelegate: MsgDelegate = {
           delegatorAddress: alice.address0,
@@ -523,13 +560,17 @@ describe("SigningCosmWasmClient", () => {
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with wasm MsgStoreCode", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
         const { data, builder, source } = getHackatom();
 
         const msgStoreCode: MsgStoreCode = {
@@ -550,6 +591,8 @@ describe("SigningCosmWasmClient", () => {
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a custom registry and custom message", async () => {
@@ -649,7 +692,12 @@ describe("SigningCosmWasmClient", () => {
             },
           },
         });
-        const options = { prefix: wasmd.prefix, registry: customRegistry, aminoTypes: customAminoTypes };
+        const options = {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+          registry: customRegistry,
+          aminoTypes: customAminoTypes,
+        };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = {
@@ -668,13 +716,19 @@ describe("SigningCosmWasmClient", () => {
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a modifying signer", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+          prefix: wasmd.prefix,
+        });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msg = {
           delegatorAddress: alice.address0,
@@ -693,7 +747,7 @@ describe("SigningCosmWasmClient", () => {
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
         assertIsBroadcastTxSuccess(result);
 
-        await sleep(1000);
+        await sleep(500);
 
         const searchResult = await client.getTx(result.transactionHash);
         assert(searchResult, "Must find transaction");
@@ -702,6 +756,8 @@ describe("SigningCosmWasmClient", () => {
         expect(tx.body.memo).toEqual("This was modified");
         expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
         expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+
+        client.disconnect();
       });
     });
   });
@@ -710,9 +766,11 @@ describe("SigningCosmWasmClient", () => {
     describe("direct mode", () => {
       it("works", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
@@ -733,13 +791,19 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a modifying signer", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+          prefix: wasmd.prefix,
+        });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
@@ -767,15 +831,19 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
     });
 
     describe("legacy Amino mode", () => {
       it("works with bank MsgSend", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msgSend: MsgSend = {
           fromAddress: alice.address0,
@@ -796,13 +864,17 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with staking MsgDelegate", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msgDelegate: MsgDelegate = {
           delegatorAddress: alice.address0,
@@ -823,6 +895,8 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a custom registry and custom message", async () => {
@@ -920,7 +994,11 @@ describe("SigningCosmWasmClient", () => {
             },
           },
         });
-        const options = { registry: customRegistry, aminoTypes: customAminoTypes };
+        const options = {
+          ...defaultSigningClientOptions,
+          registry: customRegistry,
+          aminoTypes: customAminoTypes,
+        };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg: CustomMsgDelegate = {
@@ -942,13 +1020,19 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
 
       it("works with a modifying signer", async () => {
         pendingWithoutWasmd();
-        const options = { prefix: wasmd.prefix };
-        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(alice.mnemonic, options);
-        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+          prefix: wasmd.prefix,
+        });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+        });
 
         const msg: MsgDelegate = {
           delegatorAddress: alice.address0,
@@ -976,6 +1060,8 @@ describe("SigningCosmWasmClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
       });
     });
   });
