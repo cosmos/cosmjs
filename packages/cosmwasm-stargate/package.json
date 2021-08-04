@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.25.6",
+  "version": "0.26.0-alpha1",
   "description": "CosmWasm SDK",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
