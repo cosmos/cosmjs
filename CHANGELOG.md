@@ -50,6 +50,16 @@ and this project adheres to
   where there is no previous block.
 - @cosmjs/proto-signing: `makeAuthInfoBytes` now takes an array of pubkey
   sequence pairs in order to support different sequences for different signers.
+- @cosmjs/cosmwasm-stargate: Upgraded client to support wasmd 0.18 backends.
+  Other backends are not supported anymore. Update proto types from
+  `cosmwasm.wasm.v1beta1.*` to `cosmwasm.wasm.v1.*`. `MsgStoreCode.source` and
+  `MsgStoreCode.builder` were removed; `MsgInstantiateContract.initMsg` and
+  `MsgMigrateContract.migrateMsg` were renamed to `msg`; `Code.{source,builder}`
+  and `CodeDetails.{source,builder}` were removed; `isValidBuilder` was removed;
+  `UploadMeta` and the `meta` from `SigningCosmWasmClient.upload` were removed.
+  ([#863])
+
+[#863]: https://github.com/cosmos/cosmjs/pull/863
 
 ### Removed
 

@@ -41,12 +41,11 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "cosmjs-types/cosmwasm/wasm/v1beta1/tx";
+} from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import Long from "long";
 import pako from "pako";
 
 import { cosmWasmTypes } from "./aminotypes";
-import { isValidBuilder } from "./builder";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
   MsgClearAdminEncodeObject,
@@ -56,31 +55,6 @@ import {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
-
-function prepareBuilder(builder: string | undefined): string | undefined {
-  if (!builder) {
-    return undefined;
-  } else {
-    if (!isValidBuilder(builder)) throw new Error("The builder (Docker Hub image with tag) is not valid");
-    return builder;
-  }
-}
-
-export interface UploadMeta {
-  /**
-   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
-   *
-   * @see https://github.com/CosmWasm/cosmwasm-verify
-   */
-  readonly source?: string;
-  /**
-   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
-   *
-   * @example ```cosmwasm/rust-optimizer:0.8.0```
-   * @see https://github.com/CosmWasm/cosmwasm-verify
-   */
-  readonly builder?: string;
-}
 
 export interface UploadResult {
   /** Size of the original wasm code in bytes */
@@ -155,12 +129,12 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
 function createDefaultRegistry(): Registry {
   return new Registry([
     ...defaultRegistryTypes,
-    ["/cosmwasm.wasm.v1beta1.MsgClearAdmin", MsgClearAdmin],
-    ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
-    ["/cosmwasm.wasm.v1beta1.MsgMigrateContract", MsgMigrateContract],
-    ["/cosmwasm.wasm.v1beta1.MsgStoreCode", MsgStoreCode],
-    ["/cosmwasm.wasm.v1beta1.MsgInstantiateContract", MsgInstantiateContract],
-    ["/cosmwasm.wasm.v1beta1.MsgUpdateAdmin", MsgUpdateAdmin],
+    ["/cosmwasm.wasm.v1.MsgClearAdmin", MsgClearAdmin],
+    ["/cosmwasm.wasm.v1.MsgExecuteContract", MsgExecuteContract],
+    ["/cosmwasm.wasm.v1.MsgMigrateContract", MsgMigrateContract],
+    ["/cosmwasm.wasm.v1.MsgStoreCode", MsgStoreCode],
+    ["/cosmwasm.wasm.v1.MsgInstantiateContract", MsgInstantiateContract],
+    ["/cosmwasm.wasm.v1.MsgUpdateAdmin", MsgUpdateAdmin],
   ]);
 }
 
@@ -227,19 +201,14 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     wasmCode: Uint8Array,
     fee: StdFee,
-    meta: UploadMeta = {},
     memo = "",
   ): Promise<UploadResult> {
-    const source = meta.source || "";
-    const builder = prepareBuilder(meta.builder);
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCodeEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
+      typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
       value: MsgStoreCode.fromPartial({
         sender: senderAddress,
         wasmByteCode: compressed,
-        source: source,
-        builder: builder,
       }),
     };
 
@@ -269,12 +238,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateContractMsg: MsgInstantiateContractEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
+      typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
       value: MsgInstantiateContract.fromPartial({
         sender: senderAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
-        initMsg: toUtf8(JSON.stringify(msg)),
+        msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
         admin: options.admin,
       }),
@@ -284,7 +253,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
+    const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
       logs: parsedLogs,
@@ -300,7 +269,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdminEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin",
+      typeUrl: "/cosmwasm.wasm.v1.MsgUpdateAdmin",
       value: MsgUpdateAdmin.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
@@ -324,7 +293,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<ChangeAdminResult> {
     const clearAdminMsg: MsgClearAdminEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgClearAdmin",
+      typeUrl: "/cosmwasm.wasm.v1.MsgClearAdmin",
       value: MsgClearAdmin.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
@@ -349,12 +318,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<MigrateResult> {
     const migrateContractMsg: MsgMigrateContractEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgMigrateContract",
+      typeUrl: "/cosmwasm.wasm.v1.MsgMigrateContract",
       value: MsgMigrateContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
-        migrateMsg: toUtf8(JSON.stringify(migrateMsg)),
+        msg: toUtf8(JSON.stringify(migrateMsg)),
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [migrateContractMsg], fee, memo);
@@ -376,7 +345,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
     const executeContractMsg: MsgExecuteContractEncodeObject = {
-      typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,

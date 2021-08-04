@@ -39,8 +39,6 @@ export const defaultClearAdminFee = calculateFee(80_000, defaultGasPrice);
 export interface ContractUploadInstructions {
   /** The wasm bytecode */
   readonly data: Uint8Array;
-  readonly source?: string;
-  readonly builder?: string;
 }
 
 export const wasmd = {
@@ -62,8 +60,6 @@ export const defaultSigningClientOptions: SigningCosmWasmClientOptions = {
 export function getHackatom(): ContractUploadInstructions {
   return {
     data: fromBase64(hackatom.data),
-    source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-    builder: "cosmwasm/rust-optimizer:0.9.1",
   };
 }
 
@@ -122,23 +118,21 @@ export const validator = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedHackatom = {
   codeId: 1,
-  source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.10.8",
-  checksum: "a32acdcfe15a2b3c8ba6963cf1e4ab63347725cc35a0f2434696dd492d63fb5f",
+  checksum: "841f5aa187a26018fee0f3398ecba404b3367af03f71e2b938bdc433328e14e9",
   instances: [
     {
       beneficiary: alice.address0,
-      address: "wasm18vd8fpwxzck93qlwghaj6arh4p7c5n89k7fvsl",
+      address: "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujgqwg3",
       label: "From deploy_hackatom.js (0)",
     },
     {
       beneficiary: alice.address1,
-      address: "wasm1hqrdl6wstt8qzshwc6mrumpjk9338k0lffu40x",
+      address: "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8glszahxx",
       label: "From deploy_hackatom.js (1)",
     },
     {
       beneficiary: alice.address2,
-      address: "wasm18r5szma8hm93pvx6lwpjwyxruw27e0k5kjkyan",
+      address: "wasm1yyca08xqdgvjz0psg56z67ejh9xms6l49ntww0",
       label: "From deploy_hackatom.js (2)",
     },
   ],
@@ -147,14 +141,17 @@ export const deployedHackatom = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedIbcReflect = {
   codeId: 2,
-  instances: ["wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te"],
+  instances: [
+    {
+      address: "wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
+      ibcPortId: "wasm.wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
+    },
+  ],
 };
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw3 = {
   codeId: 3,
-  source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
   instances: [
     "wasm1xqeym28j9xgv0p93pwwt6qcxf9tdvf9z83duy9", // Multisig (1/3)
     "wasm1jka38ckju8cpjap00jf9xdvdyttz9cauchu0zl", // Multisig (2/3)
@@ -165,8 +162,6 @@ export const deployedCw3 = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedCw1 = {
   codeId: 4,
-  source: "https://crates.io/api/v1/crates/cw1-subkeys/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
   instances: ["wasm1vs2vuks65rq7xj78mwtvn7vvnm2gn7ad78g6yp"],
 };
 

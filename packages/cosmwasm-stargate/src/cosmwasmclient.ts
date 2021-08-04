@@ -23,8 +23,8 @@ import {
 } from "@cosmjs/stargate";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1beta1/query";
-import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1beta1/types";
+import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
+import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
 
@@ -39,19 +39,9 @@ export interface Code {
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
   readonly checksum: string;
-  /**
-   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
-   *
-   * @see https://github.com/CosmWasm/cosmwasm-verify
-   */
-  readonly source?: string;
-  /**
-   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
-   *
-   * @example ```cosmwasm/rust-optimizer:0.8.0```
-   * @see https://github.com/CosmWasm/cosmwasm-verify
-   */
-  readonly builder?: string;
+
+  // `source` and `builder` were removed in wasmd 0.18
+  // https://github.com/CosmWasm/wasmd/issues/540
 }
 
 export interface CodeDetails extends Code {
@@ -317,8 +307,6 @@ export class CosmWasmClient {
         id: entry.codeId.toNumber(),
         creator: entry.creator,
         checksum: toHex(entry.dataHash),
-        source: entry.source || undefined,
-        builder: entry.builder || undefined,
       };
     });
   }
@@ -336,8 +324,6 @@ export class CosmWasmClient {
       id: codeInfo.codeId.toNumber(),
       creator: codeInfo.creator,
       checksum: toHex(codeInfo.dataHash),
-      source: codeInfo.source || undefined,
-      builder: codeInfo.builder || undefined,
       data: data,
     };
     this.codesCache.set(codeId, codeDetails);

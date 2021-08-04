@@ -16,11 +16,6 @@ const alice = {
   // address4: "wasm1f7j7ryulwjfe9ljplvhtcaxa6wqgula3nh873j",
 };
 
-const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw1-subkeys/0.3.1/download",
-  builder: "cosmwasm/rust-optimizer:0.10.4",
-};
-
 async function main() {
   const gasPrice = GasPrice.fromString("0.025ucosm");
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: "wasm" });
@@ -32,7 +27,6 @@ async function main() {
     alice.address0,
     wasm,
     uploadFee,
-    codeMeta,
     "Upload CW1 subkeys contract",
   );
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);

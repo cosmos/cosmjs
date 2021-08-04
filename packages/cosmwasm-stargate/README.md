@@ -8,6 +8,7 @@ An SDK to build CosmWasm clients.
 
 | CosmWasm | x/wasm    | @cosmjs/cosmwasm-stargate |
 | -------- | --------- | ------------------------- |
+| 0.16     | 0.18      | `^0.26.0`                 |
 | 0.14     | 0.16      | `^0.25.0`                 |
 | 0.13     | 0.14-0.15 | `^0.24.0`                 |
 
