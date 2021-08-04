@@ -17,7 +17,8 @@
     "url": "https://github.com/cosmos/cosmjs"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "workspaces": [
     "packages/*"
@@ -34,7 +35,9 @@
     "coverage": "yarn workspaces foreach --topological-dev --parallel --verbose run coverage",
     "build": "yarn workspaces foreach --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --topological-dev --parallel --verbose run docs",
-    "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web"
+    "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web",
+    "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --tag next",
+    "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:packages/amino",

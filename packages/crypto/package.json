@@ -20,7 +20,8 @@
     "url": "https://github.com/cosmos/cosmjs/tree/main/packages/crypto"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "docs": "typedoc --options typedoc.js",

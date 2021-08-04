@@ -19,7 +19,8 @@
     "url": "https://github.com/CosmWasm/cosmjs/tree/main/packages/ledger-amino"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "docs": "typedoc --options typedoc.js",
