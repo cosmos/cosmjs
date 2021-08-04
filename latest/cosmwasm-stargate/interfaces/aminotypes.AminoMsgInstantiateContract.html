@@ -69,8 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The Amino JSON representation of
-						<a href="https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L47-L61">https://github.com/CosmWasm/wasmd/blob/v0.16.0-alpha2/proto/cosmwasm/wasm/v1beta1/tx.proto#L47-L61</a></p>
+						<p>The Amino JSON representation of [MsgInstantiateContract].</p>
 					</div>
 				</div>
 			</section>
@@ -104,17 +103,17 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;wasm/MsgInstantiateContract&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e7584125b9/packages/cosmwasm-stargate/src/aminotypes.ts#L61">aminotypes.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/aabca4f9f9/packages/cosmwasm-stargate/src/aminotypes.ts#L60">aminotypes.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>admin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>code_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>funds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>init_msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>label<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>admin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>code_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>funds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>label<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/e7584125b9/packages/cosmwasm-stargate/src/aminotypes.ts#L62">aminotypes.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/aabca4f9f9/packages/cosmwasm-stargate/src/aminotypes.ts#L61">aminotypes.ts:61</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -140,18 +139,18 @@
 								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> funds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> init_<wbr>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Init message as JavaScript object</p>
-									</div>
-								</div>
-							</li>
-							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> label<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>Human-readable label for this contract</p>
+									</div>
+								</div>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Instantiate message as JavaScript object</p>
 									</div>
 								</div>
 							</li>
@@ -176,9 +175,6 @@
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="../modules/aminotypes.html">aminotypes</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/builder.html">builder</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/cosmwasmclient.html">cosmwasmclient</a>
