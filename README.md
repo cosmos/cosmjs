@@ -1,5 +1,12 @@
 <h1><p align="center"><img alt="CosmJS" src="docs/logo-vertical-light.png" width="180" /></p></h1>
 
+<div align="center">
+  <a href="https://lgtm.com/projects/g/cosmos/cosmjs/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/cosmos/cosmjs.svg?logo=lgtm&logoWidth=18"/></a>
+  <a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">
+    <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/cosmos/cosmjs.svg" />
+  </a>
+</div>
+
 CosmJS is the Swiss Army knife to power JavaScript based client solutions
 ranging from Web apps/explorers over browser extensions to server-side clients
 like faucets/scrapers in the Cosmos ecosystem.
