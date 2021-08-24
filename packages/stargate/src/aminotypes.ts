@@ -2,7 +2,7 @@
 import { AminoMsg, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assert, assertDefinedAndNotNull, isNonNullObject } from "@cosmjs/utils";
 import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import {
   MsgFundCommunityPool,
@@ -10,6 +10,8 @@ import {
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { TextProposal, voteOptionFromJSON } from "cosmjs-types/cosmos/gov/v1beta1/gov";
+import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,
@@ -17,6 +19,7 @@ import {
   MsgEditValidator,
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
 
@@ -24,13 +27,16 @@ import {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
   AminoMsgDelegate,
+  AminoMsgDeposit,
   AminoMsgEditValidator,
   AminoMsgFundCommunityPool,
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
+  AminoMsgSubmitProposal,
   AminoMsgTransfer,
   AminoMsgUndelegate,
+  AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
@@ -59,6 +65,8 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
 
 function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
+    // bank
+
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
       toAmino: ({ fromAddress, toAddress, amount }: MsgSend): AminoMsgSend["value"] => ({
@@ -95,6 +103,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         })),
       }),
     },
+
+    // distribution
+
     "/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
       aminoType: "cosmos-sdk/MsgFundCommunityPool",
       toAmino: ({ amount, depositor }: MsgFundCommunityPool): AminoMsgFundCommunityPool["value"] => ({
@@ -153,6 +164,110 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorAddress: validator_address,
       }),
     },
+
+    // gov
+
+    "/cosmos.gov.v1beta1.MsgDeposit": {
+      aminoType: "cosmos-sdk/MsgDeposit",
+      toAmino: ({ amount, depositor, proposalId }: MsgDeposit): AminoMsgDeposit["value"] => {
+        return {
+          amount,
+          depositor,
+          proposal_id: proposalId.toString(),
+        };
+      },
+      fromAmino: ({ amount, depositor, proposal_id }: AminoMsgDeposit["value"]): MsgDeposit => {
+        return {
+          amount: Array.from(amount),
+          depositor,
+          proposalId: Long.fromString(proposal_id),
+        };
+      },
+    },
+    "/cosmos.gov.v1beta1.MsgVote": {
+      aminoType: "cosmos-sdk/MsgVote",
+      toAmino: ({ option, proposalId, voter }: MsgVote): AminoMsgVote["value"] => {
+        return {
+          option: option,
+          proposal_id: proposalId.toString(),
+          voter: voter,
+        };
+      },
+      fromAmino: ({ option, proposal_id, voter }: AminoMsgVote["value"]): MsgVote => {
+        return {
+          option: voteOptionFromJSON(option),
+          proposalId: Long.fromString(proposal_id),
+          voter: voter,
+        };
+      },
+    },
+    "/cosmos.gov.v1beta1.MsgSubmitProposal": {
+      aminoType: "cosmos-sdk/MsgSubmitProposal",
+      toAmino: ({
+        initialDeposit,
+        proposer,
+        content,
+      }: MsgSubmitProposal): AminoMsgSubmitProposal["value"] => {
+        assertDefinedAndNotNull(content);
+        let proposal: any;
+        switch (content.typeUrl) {
+          case "/cosmos.gov.v1beta1.TextProposal": {
+            const textProposal = TextProposal.decode(content.value);
+            proposal = {
+              type: "cosmos-sdk/TextProposal",
+              value: {
+                description: textProposal.description,
+                title: textProposal.title,
+              },
+            };
+            break;
+          }
+          default:
+            throw new Error(`Unsupported proposal type: '${content.typeUrl}'`);
+        }
+        return {
+          initial_deposit: initialDeposit,
+          proposer: proposer,
+          content: proposal,
+        };
+      },
+      fromAmino: ({
+        initial_deposit,
+        proposer,
+        content,
+      }: AminoMsgSubmitProposal["value"]): MsgSubmitProposal => {
+        let any_content: Any;
+        switch (content.type) {
+          case "cosmos-sdk/TextProposal": {
+            const { value } = content;
+            assert(isNonNullObject(value));
+            const { title, description } = value as any;
+            assert(typeof title === "string");
+            assert(typeof description === "string");
+            any_content = Any.fromPartial({
+              typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+              value: TextProposal.encode(
+                TextProposal.fromPartial({
+                  title: title,
+                  description: description,
+                }),
+              ).finish(),
+            });
+            break;
+          }
+          default:
+            throw new Error(`Unsupported proposal type: '${content.type}'`);
+        }
+        return {
+          initialDeposit: Array.from(initial_deposit),
+          proposer: proposer,
+          content: any_content,
+        };
+      },
+    },
+
+    // staking
+
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
       aminoType: "cosmos-sdk/MsgBeginRedelegate",
       toAmino: ({
@@ -343,6 +458,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         amount: amount,
       }),
     },
+
+    // ibc
+
     "/ibc.applications.transfer.v1.MsgTransfer": {
       aminoType: "cosmos-sdk/MsgTransfer",
       toAmino: ({

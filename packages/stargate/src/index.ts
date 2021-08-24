@@ -41,6 +41,7 @@ export {
 export { AminoConverter, AminoTypes } from "./aminotypes";
 export {
   isMsgDelegateEncodeObject,
+  isMsgDepositEncodeObject,
   isMsgSendEncodeObject,
   isMsgSubmitProposalEncodeObject,
   isMsgTransferEncodeObject,
@@ -48,6 +49,7 @@ export {
   isMsgVoteEncodeObject,
   isMsgWithdrawDelegatorRewardEncodeObject,
   MsgDelegateEncodeObject,
+  MsgDepositEncodeObject,
   MsgSendEncodeObject,
   MsgSubmitProposalEncodeObject,
   MsgTransferEncodeObject,

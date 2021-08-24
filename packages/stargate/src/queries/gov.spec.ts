@@ -46,7 +46,7 @@ describe("GovExtension", () => {
   const delegationVoter2 = coin(777, "ustake");
   const voter1Address = faucet.address1;
   const voter2Address = faucet.address2;
-  let proposalId: string;
+  let proposalId: string | undefined;
 
   beforeAll(async () => {
     if (simappEnabled()) {
@@ -83,6 +83,7 @@ describe("GovExtension", () => {
       proposalId = logs[0].events
         .find(({ type }: any) => type === "submit_proposal")
         .attributes.find(({ key }: any) => key === "proposal_id").value;
+      assert(proposalId, "Proposal ID not found in events");
       assert(proposalId.match(nonNegativeIntegerMatcher));
 
       // Voter 1
@@ -210,6 +211,7 @@ describe("GovExtension", () => {
   describe("proposals", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.proposals(
@@ -240,6 +242,7 @@ describe("GovExtension", () => {
   describe("proposal", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.proposal(proposalId);
@@ -265,6 +268,7 @@ describe("GovExtension", () => {
   describe("deposits", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.deposits(proposalId);
@@ -283,6 +287,7 @@ describe("GovExtension", () => {
   describe("deposit", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.deposit(proposalId, voter1Address);
@@ -299,6 +304,7 @@ describe("GovExtension", () => {
   describe("tally", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.tally(proposalId);
@@ -316,6 +322,7 @@ describe("GovExtension", () => {
   describe("votes", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.votes(proposalId);
@@ -340,6 +347,7 @@ describe("GovExtension", () => {
   describe("vote", () => {
     it("works", async () => {
       pendingWithoutSimapp();
+      assert(proposalId, "Missing proposal ID");
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.vote(proposalId, voter1Address);
