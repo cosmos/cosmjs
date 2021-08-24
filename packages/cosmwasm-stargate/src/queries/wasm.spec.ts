@@ -141,16 +141,16 @@ describe("WasmExtension", () => {
       const result = await uploadContract(wallet, hackatom);
       assertIsBroadcastTxSuccess(result);
       hackatomCodeId = Number.parseInt(
-        JSON.parse(result.rawLog!)[0].events[0].attributes.find(
-          (attribute: any) => attribute.key === "code_id",
-        ).value,
+        JSON.parse(result.rawLog!)[0]
+          .events.find((event: any) => event.type === "store_code")
+          .attributes.find((attribute: any) => attribute.key === "code_id").value,
         10,
       );
 
       const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
       assertIsBroadcastTxSuccess(instantiateResult);
       hackatomContractAddress = JSON.parse(instantiateResult.rawLog!)[0]
-        .events.find((event: any) => event.type === "message")
+        .events.find((event: any) => event.type === "instantiate")
         .attributes.find((attribute: any) => attribute.key === "_contract_address").value;
     }
   });
@@ -203,7 +203,7 @@ describe("WasmExtension", () => {
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsBroadcastTxSuccess(result);
       const myAddress = JSON.parse(result.rawLog!)[0]
-        .events.find((event: any) => event.type === "message")
+        .events.find((event: any) => event.type === "instantiate")
         .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
 
       const { contracts: newContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
@@ -247,7 +247,7 @@ describe("WasmExtension", () => {
       assertIsBroadcastTxSuccess(result);
 
       const myAddress = JSON.parse(result.rawLog!)[0]
-        .events.find((event: any) => event.type === "message")
+        .events.find((event: any) => event.type === "instantiate")
         .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
 
       const history = await client.wasm.getContractCodeHistory(myAddress);
@@ -378,12 +378,12 @@ describe("WasmExtension", () => {
         const result = await uploadContract(wallet, getHackatom());
         assertIsBroadcastTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
+        const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-        const actionAttr = logs.findAttribute(parsedLogs, "message", "action");
-        expect(actionAttr.value).toEqual("store-code");
+        const actionAttr = logs.findAttribute(parsedLogs, "message", "module");
+        expect(actionAttr.value).toEqual("wasm");
       }
 
       let contractAddress: string;
@@ -393,12 +393,12 @@ describe("WasmExtension", () => {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsBroadcastTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "_contract_address");
+        const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-        const actionAttr = logs.findAttribute(parsedLogs, "message", "action");
-        expect(actionAttr.value).toEqual("instantiate");
+        const actionAttr = logs.findAttribute(parsedLogs, "message", "module");
+        expect(actionAttr.value).toEqual("wasm");
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
         expect(balanceUcosm).toEqual(funds[0]);

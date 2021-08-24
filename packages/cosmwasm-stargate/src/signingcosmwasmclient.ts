@@ -217,7 +217,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
-    const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
+    const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
     return {
       originalSize: wasmCode.length,
       originalChecksum: toHex(sha256(wasmCode)),
@@ -253,7 +253,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "_contract_address");
+    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
       logs: parsedLogs,
