@@ -155,7 +155,23 @@ export function isAminoMsgSubmitEvidence(msg: AminoMsg): msg is AminoMsgSubmitEv
 export interface AminoMsgSubmitProposal extends AminoMsg {
   readonly type: "cosmos-sdk/MsgSubmitProposal";
   readonly value: {
-    readonly content: Any;
+    /**
+     * A proposal structure, e.g.
+     *
+     * ```
+     * {
+     *   type: 'cosmos-sdk/TextProposal',
+     *   value: {
+     *     description: 'This proposal proposes to test whether this proposal passes',
+     *     title: 'Test Proposal'
+     *   }
+     * }
+     * ```
+     */
+    readonly content: {
+      readonly type: string;
+      readonly value: any;
+    };
     readonly initial_deposit: readonly Coin[];
     /** Bech32 account address */
     readonly proposer: string;
@@ -166,14 +182,6 @@ export function isAminoMsgSubmitProposal(msg: AminoMsg): msg is AminoMsgSubmitPr
   return msg.type === "cosmos-sdk/MsgSubmitProposal";
 }
 
-enum VoteOption {
-  VoteOptionUnspecified,
-  VoteOptionYes,
-  VoteOptionAbstain,
-  VoteOptionNo,
-  VoteOptionNoWithVeto,
-}
-
 /** Casts a vote */
 export interface AminoMsgVote extends AminoMsg {
   readonly type: "cosmos-sdk/MsgVote";
@@ -181,7 +189,12 @@ export interface AminoMsgVote extends AminoMsg {
     readonly proposal_id: string;
     /** Bech32 account address */
     readonly voter: string;
-    readonly option: VoteOption;
+    /**
+     * VoteOption as integer from 0 to 4 🤷‍
+     *
+     * @see https://github.com/cosmos/cosmos-sdk/blob/v0.42.9/x/gov/types/gov.pb.go#L38-L49
+     */
+    readonly option: number;
   };
 }
 
