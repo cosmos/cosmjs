@@ -26,7 +26,8 @@ and this project adheres to
   configure the HD path of the faucet accounts ([#832]).
 - @cosmjs/cosmwasm-stargate: Add field `ibcPortId` to `Contract` ([#836]).
 - @cosmjs/stargate: Add `GovExtension` for query client.
-- @cosmjs/stargate: Add support for `MsgSubmitProposal` and `MsgVote`.
+- @cosmjs/stargate: Add support for `MsgDeposit`, `MsgSubmitProposal` and
+  `MsgVote`.
 
 [#832]: https://github.com/cosmos/cosmjs/issues/832
 [#836]: https://github.com/cosmos/cosmjs/issues/836
