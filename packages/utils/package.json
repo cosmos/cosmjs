@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/utils",
-  "version": "0.26.0-alpha2",
+  "version": "0.26.0-rc1",
   "description": "Utility tools, primarily for testing code",
   "contributors": [
     "IOV SAS <admin@iov.one>"

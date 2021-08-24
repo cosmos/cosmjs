@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/launchpad",
-  "version": "0.26.0-alpha2",
+  "version": "0.26.0-rc1",
   "description": "A client library for the Cosmos SDK 0.37 (cosmoshub-3), 0.38 and 0.39 (Launchpad)",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
