@@ -59,6 +59,8 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
 
 function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
+    // bank
+
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
       toAmino: ({ fromAddress, toAddress, amount }: MsgSend): AminoMsgSend["value"] => ({
@@ -95,6 +97,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         })),
       }),
     },
+
+    // distribution
+
     "/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
       aminoType: "cosmos-sdk/MsgFundCommunityPool",
       toAmino: ({ amount, depositor }: MsgFundCommunityPool): AminoMsgFundCommunityPool["value"] => ({
@@ -153,6 +158,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorAddress: validator_address,
       }),
     },
+
+    // staking
+
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
       aminoType: "cosmos-sdk/MsgBeginRedelegate",
       toAmino: ({
@@ -343,6 +351,9 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         amount: amount,
       }),
     },
+
+    // ibc
+
     "/ibc.applications.transfer.v1.MsgTransfer": {
       aminoType: "cosmos-sdk/MsgTransfer",
       toAmino: ({
