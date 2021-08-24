@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.26.0] - 2021-08-24
+
 ### Added
 
 - @cosmjs/tendermint-rpc: `Tendermint34Client.blockSearch` and
@@ -575,7 +577,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.25.3...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/cosmos/cosmjs/compare/v0.25.6...v0.26.0
 [0.25.6]: https://github.com/cosmos/cosmjs/compare/v0.25.5...v0.25.6
 [0.25.5]: https://github.com/cosmos/cosmjs/compare/v0.25.4...v0.25.5
 [0.25.4]: https://github.com/cosmos/cosmjs/compare/v0.25.3...v0.25.4
