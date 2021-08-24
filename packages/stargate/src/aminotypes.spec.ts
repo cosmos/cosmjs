@@ -37,6 +37,8 @@ import { AminoTypes } from "./aminotypes";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {
+    // bank
+
     it("works for MsgSend", () => {
       const msg: MsgSend = {
         fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
@@ -88,6 +90,8 @@ describe("AminoTypes", () => {
       };
       expect(aminoMsg).toEqual(expected);
     });
+
+    // distribution
 
     it("works for MsgFundCommunityPool", async () => {
       const msg: MsgFundCommunityPool = {
@@ -162,6 +166,8 @@ describe("AminoTypes", () => {
       };
       expect(aminoMsg).toEqual(expected);
     });
+
+    // staking
 
     it("works for MsgBeginRedelegate", () => {
       const msg: MsgBeginRedelegate = {
@@ -318,6 +324,8 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
 
+    // ibc
+
     it("works for MsgTransfer", () => {
       const msg: MsgTransfer = {
         sourcePort: "testport",
@@ -417,6 +425,8 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
 
+    // other
+
     it("works with custom type url", () => {
       const msg = {
         foo: "bar",
@@ -483,6 +493,8 @@ describe("AminoTypes", () => {
   });
 
   describe("fromAmino", () => {
+    // bank
+
     it("works for MsgSend", () => {
       const aminoMsg: AminoMsgSend = {
         type: "cosmos-sdk/MsgSend",
@@ -534,6 +546,15 @@ describe("AminoTypes", () => {
         value: expectedValue,
       });
     });
+
+    // distribution
+
+    // TODO: MsgFundCommunityPool
+    // TODO: MsgSetWithdrawAddress
+    // TODO: MsgWithdrawDelegatorReward
+    // TODO: MsgWithdrawValidatorCommission
+
+    // staking
 
     it("works for MsgBeginRedelegate", () => {
       const aminoMsg: AminoMsgBeginRedelegate = {
@@ -690,6 +711,8 @@ describe("AminoTypes", () => {
       });
     });
 
+    // ibc
+
     it("works for MsgTransfer", () => {
       const aminoMsg: AminoMsgTransfer = {
         type: "cosmos-sdk/MsgTransfer",
@@ -759,6 +782,8 @@ describe("AminoTypes", () => {
         value: expectedValue,
       });
     });
+
+    // other
 
     it("works for custom type url", () => {
       const aminoMsg = {
