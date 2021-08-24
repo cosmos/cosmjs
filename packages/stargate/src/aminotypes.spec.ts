@@ -9,6 +9,8 @@ import {
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
+import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,
@@ -23,13 +25,16 @@ import {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
   AminoMsgDelegate,
+  AminoMsgDeposit,
   AminoMsgEditValidator,
   AminoMsgFundCommunityPool,
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
+  AminoMsgSubmitProposal,
   AminoMsgTransfer,
   AminoMsgUndelegate,
+  AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
@@ -86,6 +91,83 @@ describe("AminoTypes", () => {
             { address: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k", coins: coins(6000, "ucosm") },
             { address: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx", coins: coins(912, "ucosm") },
           ],
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    // gov
+
+    it("works for MsgDeposit", () => {
+      const msg: MsgDeposit = {
+        amount: [{ amount: "12300000", denom: "ustake" }],
+        depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        proposalId: Long.fromNumber(5),
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
+        value: msg,
+      });
+      const expected: AminoMsgDeposit = {
+        type: "cosmos-sdk/MsgDeposit",
+        value: {
+          amount: [{ amount: "12300000", denom: "ustake" }],
+          depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          proposal_id: "5",
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgSubmitProposal", () => {
+      const msg: MsgSubmitProposal = {
+        initialDeposit: [{ amount: "12300000", denom: "ustake" }],
+        proposer: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        content: {
+          typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+          value: TextProposal.encode({
+            description: "This proposal proposes to test whether this proposal passes",
+            title: "Test Proposal",
+          }).finish(),
+        },
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: msg,
+      });
+      const expected: AminoMsgSubmitProposal = {
+        type: "cosmos-sdk/MsgSubmitProposal",
+        value: {
+          initial_deposit: [{ amount: "12300000", denom: "ustake" }],
+          proposer: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          content: {
+            type: "cosmos-sdk/TextProposal",
+            value: {
+              description: "This proposal proposes to test whether this proposal passes",
+              title: "Test Proposal",
+            },
+          },
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgVote", () => {
+      const msg: MsgVote = {
+        option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+        proposalId: Long.fromNumber(5),
+        voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: msg,
+      });
+      const expected: AminoMsgVote = {
+        type: "cosmos-sdk/MsgVote",
+        value: {
+          option: 4,
+          proposal_id: "5",
+          voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -543,6 +625,83 @@ describe("AminoTypes", () => {
       };
       expect(msg).toEqual({
         typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
+        value: expectedValue,
+      });
+    });
+
+    // gov
+
+    it("works for MsgDeposit", () => {
+      const aminoMsg: AminoMsgDeposit = {
+        type: "cosmos-sdk/MsgDeposit",
+        value: {
+          amount: [{ amount: "12300000", denom: "ustake" }],
+          depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          proposal_id: "5",
+        },
+      };
+      const msg = new AminoTypes().fromAmino(aminoMsg);
+      const expectedValue: MsgDeposit = {
+        amount: [{ amount: "12300000", denom: "ustake" }],
+        depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        proposalId: Long.fromNumber(5),
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgSubmitProposal", () => {
+      const aminoMsg: AminoMsgSubmitProposal = {
+        type: "cosmos-sdk/MsgSubmitProposal",
+        value: {
+          initial_deposit: [{ amount: "12300000", denom: "ustake" }],
+          proposer: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          content: {
+            type: "cosmos-sdk/TextProposal",
+            value: {
+              description: "This proposal proposes to test whether this proposal passes",
+              title: "Test Proposal",
+            },
+          },
+        },
+      };
+      const msg = new AminoTypes().fromAmino(aminoMsg);
+      const expectedValue: MsgSubmitProposal = {
+        initialDeposit: [{ amount: "12300000", denom: "ustake" }],
+        proposer: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        content: {
+          typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+          value: TextProposal.encode({
+            description: "This proposal proposes to test whether this proposal passes",
+            title: "Test Proposal",
+          }).finish(),
+        },
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgVote", () => {
+      const aminoMsg: AminoMsgVote = {
+        type: "cosmos-sdk/MsgVote",
+        value: {
+          option: 4,
+          proposal_id: "5",
+          voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+        },
+      };
+      const msg = new AminoTypes().fromAmino(aminoMsg);
+      const expectedValue: MsgVote = {
+        option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+        proposalId: Long.fromNumber(5),
+        voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
         value: expectedValue,
       });
     });
