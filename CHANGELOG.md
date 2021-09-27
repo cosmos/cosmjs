@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: Add missing pagination key arguments to query types in
+  `GovExtension`.
+
 ## [0.26.0] - 2021-08-24
 
 ### Added
