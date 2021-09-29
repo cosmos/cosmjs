@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
+import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -20,13 +21,13 @@ describe("signing", () => {
   it("correctly parses signed transactions from test vectors", async () => {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-    const prefixedPubkeyBytes = Uint8Array.from([0x0a, pubkeyBytes.length, ...pubkeyBytes]);
+    const prefixedPubkeyBytes = Uint8Array.from(PubKey.encode({ key: pubkeyBytes }).finish());
 
     testVectors.forEach(({ outputs: { signedTxBytes } }) => {
       const parsedTestTx = decodeTxRaw(fromHex(signedTxBytes));
       expect(parsedTestTx.signatures.length).toEqual(1);
       expect(parsedTestTx.authInfo.signerInfos.length).toEqual(1);
-      expect(Uint8Array.from(parsedTestTx.authInfo.signerInfos[0].publicKey!.value ?? [])).toEqual(
+      expect(Uint8Array.from(parsedTestTx.authInfo.signerInfos[0].publicKey!.value)).toEqual(
         prefixedPubkeyBytes,
       );
       expect(parsedTestTx.authInfo.signerInfos[0].modeInfo!.single!.mode).toEqual(SignMode.SIGN_MODE_DIRECT);
