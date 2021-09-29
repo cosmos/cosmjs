@@ -10,13 +10,13 @@ import {
 import { Pubkey } from "./pubkeys";
 import {
   testgroup1,
-  testgroup1Address,
+  testgroup1PubkeyBech32,
   testgroup2,
-  testgroup2Address,
+  testgroup2PubkeyBech32,
   testgroup3,
-  testgroup3Address,
+  testgroup3PubkeyBech32,
   testgroup4,
-  testgroup4Address,
+  testgroup4PubkeyBech32,
 } from "./testutils.spec";
 
 describe("encoding", () => {
@@ -147,16 +147,16 @@ describe("encoding", () => {
     });
 
     it("works for multisig", () => {
-      const expected1 = Bech32.decode(testgroup1Address).data;
+      const expected1 = Bech32.decode(testgroup1PubkeyBech32).data;
       expect(encodeAminoPubkey(testgroup1)).toEqual(expected1);
 
-      const expected2 = Bech32.decode(testgroup2Address).data;
+      const expected2 = Bech32.decode(testgroup2PubkeyBech32).data;
       expect(encodeAminoPubkey(testgroup2)).toEqual(expected2);
 
-      const expected3 = Bech32.decode(testgroup3Address).data;
+      const expected3 = Bech32.decode(testgroup3PubkeyBech32).data;
       expect(encodeAminoPubkey(testgroup3)).toEqual(expected3);
 
-      const expected4 = Bech32.decode(testgroup4Address).data;
+      const expected4 = Bech32.decode(testgroup4PubkeyBech32).data;
       expect(encodeAminoPubkey(testgroup4)).toEqual(expected4);
     });
   });
