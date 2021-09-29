@@ -6,6 +6,8 @@ import {
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
+  isSinglePubkey,
+  MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,
   Secp256k1Pubkey,
@@ -61,6 +63,9 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
       type: pubkeyType.sr25519,
       value: toBase64(rest),
     };
+  } else if (arrayContentStartsWith(data, pubkeyAminoPrefixMultisigThreshold)) {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    return decodeMultisigPubkey(data);
   } else {
     throw new Error("Unsupported public key type. Amino data starts with: " + toHex(data.slice(0, 5)));
   }
@@ -75,6 +80,53 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
 export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
   const { data } = Bech32.decode(bechEncoded);
   return decodeAminoPubkey(data);
+}
+
+/**
+ * Decodes a multisig pubkey to type object.
+ * Pubkey structure [ prefix + const + threshold + loop:(const + pubkeyLength + pubkey            ) ]
+ *                  [   4b   + 1b    +   1b      + loop:(1b    +    1b        + pubkeyLength bytes) ]
+ * @param data encoded pubkey
+ */
+function decodeMultisigPubkey(data: Uint8Array): MultisigThresholdPubkey {
+  if (data.length < 4 + 1 + 1) {
+    // verify that we can read at least threshold
+    throw new Error("Invalid multisig data length.");
+  }
+  let rest = data.slice(pubkeyAminoPrefixSecp256k1.length);
+  rest = rest.slice(1); // removing 0x08;
+  const threshold = rest[0];
+  rest = rest.slice(1); // removing threshold
+
+  const pubkeys = [];
+  while (rest.length > 0) {
+    if (rest.length < 1 + 1) {
+      // verify that we can read at least pubkeyLength
+      throw new Error("Invalid multisig data length.");
+    }
+    rest = rest.slice(1); // removing 0x12
+    const pubkeyLength = rest[0];
+    rest = rest.slice(1); // removing pubkey length
+    if (rest.length < pubkeyLength) {
+      // verify that we can read pubkey
+      throw new Error("Invalid multisig data length.");
+    }
+    const encodedPubkey = rest.slice(0, pubkeyLength);
+    rest = rest.slice(pubkeyLength); // removing pubkey
+    const pubkey = decodeAminoPubkey(encodedPubkey);
+    if (!isSinglePubkey(pubkey)) {
+      throw new Error("Unsupported multisig participant pubkey type");
+    }
+    pubkeys.push(pubkey);
+  }
+
+  return {
+    type: pubkeyType.multisigThreshold,
+    value: {
+      threshold: threshold.toString(),
+      pubkeys: pubkeys,
+    },
+  };
 }
 
 /**

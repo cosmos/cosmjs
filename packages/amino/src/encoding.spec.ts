@@ -95,6 +95,11 @@ describe("encoding", () => {
         value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
       });
     });
+
+    it("works for multisig", () => {
+      const decoded = decodeBech32Pubkey(testgroup1PubkeyBech32);
+      expect(decoded).toEqual(testgroup1);
+    });
   });
 
   describe("encodeAminoPubkey", () => {
