@@ -1,4 +1,4 @@
-import { Bech32, fromBase64 } from "@cosmjs/encoding";
+import { Bech32, fromBase64, fromHex } from "@cosmjs/encoding";
 
 import {
   decodeAminoPubkey,
@@ -63,6 +63,53 @@ describe("encoding", () => {
     it("works for sr25519", () => {
       pending("No test data available");
     });
+
+    it("works for multisig", () => {
+      const pubkeyData = Bech32.decode(
+        "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5",
+      ).data;
+      const pubkey = {
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      };
+
+      const data1 = fromHex("22C1F7E20805");
+      expect(decodeAminoPubkey(data1)).toEqual({
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "5",
+          pubkeys: [],
+        },
+      });
+
+      const data2 = Uint8Array.from([...fromHex("22C1F7E2081a"), 0x12, pubkeyData.length, ...pubkeyData]);
+      expect(decodeAminoPubkey(data2)).toEqual({
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "26",
+          pubkeys: [pubkey],
+        },
+      });
+
+      const data3 = Uint8Array.from([
+        ...fromHex("22C1F7E2081a"),
+        0x12,
+        pubkeyData.length,
+        ...pubkeyData,
+        0x12,
+        pubkeyData.length,
+        ...pubkeyData,
+      ]);
+      expect(decodeAminoPubkey(data3)).toEqual({
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "26",
+          pubkeys: [pubkey, pubkey],
+        },
+      });
+
+      expect(() => decodeAminoPubkey(fromHex("22C1F7E20705"))).toThrowError(/expecting 0x08 prefix/i);
+    });
   });
 
   describe("decodeBech32Pubkey", () => {
@@ -97,8 +144,9 @@ describe("encoding", () => {
     });
 
     it("works for multisig", () => {
-      const decoded = decodeBech32Pubkey(testgroup1PubkeyBech32);
-      expect(decoded).toEqual(testgroup1);
+      expect(decodeBech32Pubkey(testgroup1PubkeyBech32)).toEqual(testgroup1);
+      expect(decodeBech32Pubkey(testgroup2PubkeyBech32)).toEqual(testgroup2);
+      expect(decodeBech32Pubkey(testgroup3PubkeyBech32)).toEqual(testgroup3);
     });
   });
 
