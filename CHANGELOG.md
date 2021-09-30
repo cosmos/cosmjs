@@ -6,10 +6,17 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/amino: `decodeBech32Pubkey` and `decodeAminoPubkey` now support
+  decoding multisig public keys ([#882]).
+
 ### Fixed
 
 - @cosmjs/stargate: Add missing pagination key arguments to query types in
   `GovExtension`.
+
+[#882]: https://github.com/cosmos/cosmjs/issues/882
 
 ## [0.26.0] - 2021-08-24
 
