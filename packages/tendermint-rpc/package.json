@@ -48,7 +48,7 @@
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/socket": "workspace:packages/socket",
     "@cosmjs/stream": "workspace:packages/stream",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
