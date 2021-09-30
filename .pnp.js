@@ -2588,7 +2588,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "tar",
-        "npm:6.1.0"
+        "npm:6.1.11"
       ],
       [
         "tar-fs",
@@ -6548,7 +6548,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["promise-inflight", "virtual:8adc312a262cccdf4915241955289bfb26ac0e1ebab1cc568f36b50651793fc358863efdf800291c5b43d0603acbe4f022b374e6efe3a568ff4c9e5cf2f8b099#npm:1.0.1"],
             ["rimraf", "npm:3.0.2"],
             ["ssri", "npm:8.0.1"],
-            ["tar", "npm:6.1.0"],
+            ["tar", "npm:6.1.11"],
             ["unique-filename", "npm:1.1.1"]
           ],
           "linkType": "HARD",
@@ -10055,7 +10055,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["npmlog", "npm:4.1.2"],
             ["rimraf", "npm:3.0.2"],
             ["semver", "npm:7.3.5"],
-            ["tar", "npm:6.1.0"],
+            ["tar", "npm:6.1.11"],
             ["which", "npm:2.0.2"]
           ],
           "linkType": "HARD",
@@ -11774,10 +11774,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["tar", [
-        ["npm:6.1.0", {
-          "packageLocation": "./.yarn/cache/tar-npm-6.1.0-21d6116ed9-d1d988eceb.zip/node_modules/tar/",
+        ["npm:6.1.11", {
+          "packageLocation": "./.yarn/cache/tar-npm-6.1.11-e6ac3cba9c-f6cd9b0d7c.zip/node_modules/tar/",
           "packageDependencies": [
-            ["tar", "npm:6.1.0"],
+            ["tar", "npm:6.1.11"],
             ["chownr", "npm:2.0.0"],
             ["fs-minipass", "npm:2.1.0"],
             ["minipass", "npm:3.1.3"],
