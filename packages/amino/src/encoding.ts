@@ -64,7 +64,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
     };
   } else if (arrayContentStartsWith(data, pubkeyAminoPrefixMultisigThreshold)) {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    return decodeMultisigPubkey(Array.from(data));
+    return decodeMultisigPubkey(data);
   } else {
     throw new Error("Unsupported public key type. Amino data starts with: " + toHex(data.slice(0, 5)));
   }
@@ -83,14 +83,17 @@ export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
 
 /**
  * Uvarint decoder for Amino.
- * Decoding numbers > 127 is not supported here. Please tell those lazy CosmJS maintainers to port the binary.Varint implementation from the Go standard library and write some tests.
- *
  * @see https://github.com/tendermint/go-amino/blob/8e779b71f40d175/decoder.go#L64-76
  * @returns varint as number, and bytes count occupied by varaint
  */
 function decodeUvarint(reader: number[]): [number, number] {
   if (reader.length < 1) {
     throw new Error("Can't decode varint. EOF");
+  }
+  if (reader[0] > 127) {
+    throw new Error(
+      "Decoding numbers > 127 is not supported here. Please tell those lazy CosmJS maintainers to port the binary.Varint implementation from the Go standard library and write some tests.",
+    );
   }
   return [reader[0], 1];
 }
@@ -99,13 +102,10 @@ function decodeUvarint(reader: number[]): [number, number] {
  * Decodes a multisig pubkey to type object.
  * Pubkey structure [ prefix + const + threshold + loop:(const + pubkeyLength + pubkey            ) ]
  *                  [   4b   + 1b    +  varint   + loop:(1b    +    varint    + pubkeyLength bytes) ]
- * @param reader encoded pubkey
+ * @param data encoded pubkey
  */
-function decodeMultisigPubkey(reader: number[]): MultisigThresholdPubkey {
-  // verify that we can at least start reading threshold
-  if (reader.length < pubkeyAminoPrefixMultisigThreshold.length + 1 + 1) {
-    throw new Error("Invalid multisig data length.");
-  }
+function decodeMultisigPubkey(data: Uint8Array): MultisigThresholdPubkey {
+  const reader = Array.from(data);
 
   // remove multisig amino prefix;
   const prefixFromReader = reader.splice(0, pubkeyAminoPrefixMultisigThreshold.length);
@@ -125,11 +125,6 @@ function decodeMultisigPubkey(reader: number[]): MultisigThresholdPubkey {
   // read participants pubkeys
   const pubkeys = [];
   while (reader.length > 0) {
-    // verify that we can at least start reading pubkeyLength
-    if (reader.length < 1 + 1) {
-      throw new Error("Invalid multisig data length.");
-    }
-
     // remove 0x12 threshold prefix;
     if (reader.shift() != 0x12) {
       throw new Error("Invalid multisig data. Expecting 0x12 prefix before participant pubkey length.");
