@@ -6,7 +6,6 @@ import {
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
-  isSinglePubkey,
   MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,
@@ -65,7 +64,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
     };
   } else if (arrayContentStartsWith(data, pubkeyAminoPrefixMultisigThreshold)) {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    return decodeMultisigPubkey(data);
+    return decodeMultisigPubkey(Array.from(data));
   } else {
     throw new Error("Unsupported public key type. Amino data starts with: " + toHex(data.slice(0, 5)));
   }
@@ -83,40 +82,71 @@ export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
 }
 
 /**
+ * Uvarint decoder for Amino.
+ * Decoding numbers > 127 is not supported here. Please tell those lazy CosmJS maintainers to port the binary.Varint implementation from the Go standard library and write some tests.
+ *
+ * @see https://github.com/tendermint/go-amino/blob/8e779b71f40d175/decoder.go#L64-76
+ * @returns varint as number, and bytes count occupied by varaint
+ */
+function decodeUvarint(reader: number[]): [number, number] {
+  if (reader.length < 1) {
+    throw new Error("Can't decode varint. EOF");
+  }
+  return [reader[0], 1];
+}
+
+/**
  * Decodes a multisig pubkey to type object.
  * Pubkey structure [ prefix + const + threshold + loop:(const + pubkeyLength + pubkey            ) ]
- *                  [   4b   + 1b    +   1b      + loop:(1b    +    1b        + pubkeyLength bytes) ]
- * @param data encoded pubkey
+ *                  [   4b   + 1b    +  varint   + loop:(1b    +    varint    + pubkeyLength bytes) ]
+ * @param reader encoded pubkey
  */
-function decodeMultisigPubkey(data: Uint8Array): MultisigThresholdPubkey {
-  if (data.length < 4 + 1 + 1) {
-    // verify that we can read at least threshold
+function decodeMultisigPubkey(reader: number[]): MultisigThresholdPubkey {
+  // verify that we can at least start reading threshold
+  if (reader.length < pubkeyAminoPrefixMultisigThreshold.length + 1 + 1) {
     throw new Error("Invalid multisig data length.");
   }
-  let rest = data.slice(pubkeyAminoPrefixSecp256k1.length);
-  rest = rest.slice(1); // removing 0x08;
-  const threshold = rest[0];
-  rest = rest.slice(1); // removing threshold
 
+  // remove multisig amino prefix;
+  const prefixFromReader = reader.splice(0, pubkeyAminoPrefixMultisigThreshold.length);
+  if (!arrayContentStartsWith(prefixFromReader, pubkeyAminoPrefixMultisigThreshold)) {
+    throw new Error("Invalid multisig prefix.");
+  }
+
+  // remove 0x08 threshold prefix;
+  if (reader.shift() != 0x08) {
+    throw new Error("Invalid multisig data. Expecting 0x08 prefix before threshold.");
+  }
+
+  // read threshold
+  const [threshold, thresholdBytesLength] = decodeUvarint(reader);
+  reader.splice(0, thresholdBytesLength);
+
+  // read participants pubkeys
   const pubkeys = [];
-  while (rest.length > 0) {
-    if (rest.length < 1 + 1) {
-      // verify that we can read at least pubkeyLength
+  while (reader.length > 0) {
+    // verify that we can at least start reading pubkeyLength
+    if (reader.length < 1 + 1) {
       throw new Error("Invalid multisig data length.");
     }
-    rest = rest.slice(1); // removing 0x12
-    const pubkeyLength = rest[0];
-    rest = rest.slice(1); // removing pubkey length
-    if (rest.length < pubkeyLength) {
-      // verify that we can read pubkey
+
+    // remove 0x12 threshold prefix;
+    if (reader.shift() != 0x12) {
+      throw new Error("Invalid multisig data. Expecting 0x12 prefix before participant pubkey length.");
+    }
+
+    // read pubkey length
+    const [pubkeyLength, pubkeyLengthBytesSize] = decodeUvarint(reader);
+    reader.splice(0, pubkeyLengthBytesSize);
+
+    // verify that we can read pubkey
+    if (reader.length < pubkeyLength) {
       throw new Error("Invalid multisig data length.");
     }
-    const encodedPubkey = rest.slice(0, pubkeyLength);
-    rest = rest.slice(pubkeyLength); // removing pubkey
-    const pubkey = decodeAminoPubkey(encodedPubkey);
-    if (!isSinglePubkey(pubkey)) {
-      throw new Error("Unsupported multisig participant pubkey type");
-    }
+
+    // read and decode participant pubkey
+    const encodedPubkey = reader.splice(0, pubkeyLength);
+    const pubkey = decodeAminoPubkey(Uint8Array.from(encodedPubkey));
     pubkeys.push(pubkey);
   }
 
