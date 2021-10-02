@@ -175,26 +175,6 @@ export function pendingWithoutWasmd(): void {
   }
 }
 
-export function cw3Enabled(): boolean {
-  return !!process.env.CW3_ENABLED;
-}
-
-export function pendingWithoutCw3(): void {
-  if (!cw3Enabled()) {
-    return pending("Set CW3_ENABLED to enable CW3-based tests");
-  }
-}
-
-export function cw1Enabled(): boolean {
-  return !!process.env.CW1_ENABLED;
-}
-
-export function pendingWithoutCw1(): void {
-  if (!cw1Enabled()) {
-    return pending("Set CW1_ENABLED to enable CW1-based tests");
-  }
-}
-
 /** Returns first element. Throws if array has a different length than 1. */
 export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
