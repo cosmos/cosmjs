@@ -149,22 +149,6 @@ export const deployedIbcReflect = {
   ],
 };
 
-/** Deployed as part of scripts/wasmd/init.sh */
-export const deployedCw3 = {
-  codeId: 3,
-  instances: [
-    "wasm1xqeym28j9xgv0p93pwwt6qcxf9tdvf9z83duy9", // Multisig (1/3)
-    "wasm1jka38ckju8cpjap00jf9xdvdyttz9cauchu0zl", // Multisig (2/3)
-    "wasm12dnl585uxzddjw9hw4ca694f054shgpgffnawy", // Multisig (uneven weights)
-  ],
-};
-
-/** Deployed as part of scripts/wasmd/init.sh */
-export const deployedCw1 = {
-  codeId: 4,
-  instances: ["wasm1vs2vuks65rq7xj78mwtvn7vvnm2gn7ad78g6yp"],
-};
-
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
 }
@@ -172,26 +156,6 @@ export function wasmdEnabled(): boolean {
 export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
     return pending("Set WASMD_ENABLED to enable Wasmd-based tests");
-  }
-}
-
-export function cw3Enabled(): boolean {
-  return !!process.env.CW3_ENABLED;
-}
-
-export function pendingWithoutCw3(): void {
-  if (!cw3Enabled()) {
-    return pending("Set CW3_ENABLED to enable CW3-based tests");
-  }
-}
-
-export function cw1Enabled(): boolean {
-  return !!process.env.CW1_ENABLED;
-}
-
-export function pendingWithoutCw1(): void {
-  if (!cw1Enabled()) {
-    return pending("Set CW1_ENABLED to enable CW1-based tests");
   }
 }
 
