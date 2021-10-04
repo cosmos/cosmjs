@@ -24,18 +24,21 @@ function unharden(hdPath: HdPath): number[] {
 
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
+const cosmosLedgerAppName = "cosmos";
 const requiredCosmosAppVersion = "1.5.3";
 
 export interface LaunchpadLedgerOptions {
   readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
   readonly testModeAllowed?: boolean;
+  readonly ledgerAppName?: string
 }
 
 export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
+  private readonly ledgerAppName: string;
   private readonly app: CosmosApp;
 
   public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
@@ -43,11 +46,13 @@ export class LaunchpadLedger {
       hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,
       testModeAllowed: false,
+      ledgerAppName: cosmosLedgerAppName
     };
 
     this.testModeAllowed = options.testModeAllowed ?? defaultOptions.testModeAllowed;
     this.hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
     this.prefix = options.prefix ?? defaultOptions.prefix;
+    this.ledgerAppName = options.ledgerAppName ?? defaultOptions.ledgerAppName
     this.app = new CosmosApp(transport);
   }
 
@@ -125,8 +130,8 @@ export class LaunchpadLedger {
     if (appName.toLowerCase() === `dashboard`) {
       throw new Error(`Please open the Cosmos Ledger app on your Ledger device.`);
     }
-    if (appName.toLowerCase() !== `cosmos`) {
-      throw new Error(`Please close ${appName} and open the Cosmos Ledger app on your Ledger device.`);
+    if (appName.toLowerCase() !== this.ledgerAppName.toLowerCase()) {
+      throw new Error(`Please close ${appName} and open the ${this.ledgerAppName} Ledger app on your Ledger device.`);
     }
   }
 
