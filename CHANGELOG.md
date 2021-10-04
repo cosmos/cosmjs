@@ -17,7 +17,8 @@ and this project adheres to
 
 - @cosmjs/stargate: Add missing pagination key arguments to query types in
   `GovExtension`.
-
+- @cosmjs/stargate: remove extra space in messageTimeout registry.
+  
 [#882]: https://github.com/cosmos/cosmjs/issues/882
 
 ## [0.26.0] - 2021-08-24
