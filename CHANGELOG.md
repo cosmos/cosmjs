@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: remove extra space in messageTimeout registry.
+
 ## [0.26.1] - 2021-09-30
 
 ### Added
