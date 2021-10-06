@@ -100,10 +100,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -218,10 +220,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -331,10 +335,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -431,10 +437,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
