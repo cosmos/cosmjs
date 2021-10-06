@@ -24,7 +24,7 @@ function unharden(hdPath: HdPath): number[] {
 
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
-const cosmosLedgerAppName = "cosmos";
+const cosmosLedgerAppName = "Cosmos";
 const requiredCosmosAppVersion = "1.5.3";
 
 export interface LaunchpadLedgerOptions {
