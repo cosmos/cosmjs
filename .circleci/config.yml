@@ -115,7 +115,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -235,7 +235,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -350,7 +350,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -452,7 +452,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
