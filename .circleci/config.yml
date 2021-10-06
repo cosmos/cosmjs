@@ -65,7 +65,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -183,7 +183,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -296,7 +296,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -396,7 +396,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
