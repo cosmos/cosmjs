@@ -1,4 +1,8 @@
-version: 2
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.2.2
+
 workflows:
   version: 2
   workflow:
@@ -302,6 +306,7 @@ jobs:
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-2004:202107-02
     steps:
+      - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
       - run:
           name: Install Git Large File Storage (LFS)
           # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
