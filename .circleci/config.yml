@@ -1,4 +1,8 @@
-version: 2
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.2.2
+
 workflows:
   version: 2
   workflow:
@@ -22,7 +26,7 @@ workflows:
       - test:
           requires:
             - build
-      - test-node-v12:
+      - test-node-v14:
           requires:
             - build
       - test-chrome:
@@ -65,7 +69,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -100,10 +104,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -113,7 +119,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -174,7 +180,7 @@ jobs:
             ./scripts/simapp/slow_stop.sh
             ./scripts/wasmd/stop.sh
             ./scripts/launchpad/stop.sh
-  test-node-v12:
+  test-node-v14:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
       # However, we can't access the remote docker's network from the primary container. This is a
@@ -183,7 +189,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -218,20 +224,22 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.20.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -296,8 +304,9 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
+      - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
       - run:
           name: Install Git Large File Storage (LFS)
           # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
@@ -331,10 +340,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -344,7 +355,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
@@ -396,7 +407,7 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -431,10 +442,12 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
           # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
-          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+          command: |
+            nvm --version && nvm ls
+            mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
@@ -444,7 +457,7 @@ jobs:
       - run:
           name: Install yarn
           command: |
-            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.15_all.deb
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
