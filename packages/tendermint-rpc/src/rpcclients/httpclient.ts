@@ -24,7 +24,8 @@ function filterBadStatus(res: any): any {
  *
  * For some reason, fetch does not complain about missing server-side CORS support.
  */
-async function http(method: "POST", url: string, request?: any): Promise<any> {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export async function http(method: "POST", url: string, request?: any): Promise<any> {
   if (typeof fetch !== "undefined") {
     const body = request ? JSON.stringify(request) : undefined;
     return fetch(url, { method: method, body: body })
