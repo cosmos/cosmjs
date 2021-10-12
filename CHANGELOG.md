@@ -9,6 +9,11 @@ and this project adheres to
 ### Fixed
 
 - @cosmjs/stargate: remove extra space in messageTimeout registry.
+- @cosmjs/cosmwasm-stargate: Fix Amino JSON representation of
+  `MsgInstantiateContract`, `MsgMigrateContract` and `MsgExecuteContract` to
+  match the wasmd expectation. This was broken since the wasmd upgrade to
+  Stargate such that no Ledger signing was possible for those message types in
+  the meantime.
 
 ## [0.26.1] - 2021-09-30
 
