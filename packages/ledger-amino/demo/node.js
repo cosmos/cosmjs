@@ -10,18 +10,22 @@ async function run() {
 
   const accountNumber0 = 0;
   const address0 = accounts[accountNumber0].address;
+  console.info(
+    `Signing on Ledger device with account index ${accountNumber0} (${address0}). Please review and approve on the device now.`,
+  );
   const signature0 = await demo.sign(signer, accountNumber0, address0, address0);
-  console.info(`Signature from Ledger device for account number 0 (${address0}):`);
-  console.info(signature0);
+  console.info("Signature:", signature0);
 
   // It seems the Ledger device needs a bit of time to recover
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const accountNumber10 = 10;
   const address10 = accounts[accountNumbers.findIndex((n) => n === accountNumber10)].address;
+  console.info(
+    `Signing on Ledger device with account index ${accountNumber10} (${address10}). Please review and approve on the device now.`,
+  );
   const signature1 = await demo.sign(signer, accountNumber10, address10, address10);
-  console.info(`Signature from Ledger device for account number 10 (${address10}):`);
-  console.info(signature1);
+  console.info("Signature:", signature1);
 }
 
 run().catch(console.error);
