@@ -181,9 +181,7 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
           code_id: "98765",
-          msg: {
-            foo: "bar",
-          },
+          msg: toBase64(toUtf8(`{"foo":"bar"}`)),
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -338,9 +336,7 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
           code_id: "98765",
-          msg: {
-            foo: "bar",
-          },
+          msg: toBase64(toUtf8(`{"foo":"bar"}`)),
         },
       };
       const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
@@ -348,11 +344,7 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         codeId: Long.fromString("98765"),
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
+        msg: toUtf8(`{"foo":"bar"}`),
       };
       expect(msg).toEqual({
         typeUrl: "/cosmwasm.wasm.v1.MsgMigrateContract",

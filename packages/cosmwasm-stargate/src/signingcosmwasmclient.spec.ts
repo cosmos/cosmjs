@@ -282,7 +282,7 @@ describe("SigningCosmWasmClient", () => {
   });
 
   describe("migrate", () => {
-    it("can can migrate from one code ID to another", async () => {
+    it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
@@ -302,6 +302,48 @@ describe("SigningCosmWasmClient", () => {
         {
           admin: alice.address0,
         },
+      );
+      const wasmClient = await makeWasmClient(wasmd.endpoint);
+      const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
+      assert(contractInfo1);
+      expect(contractInfo1.admin).toEqual(alice.address0);
+
+      const newVerifier = makeRandomAddress();
+      await client.migrate(
+        alice.address0,
+        contractAddress,
+        codeId2,
+        { verifier: newVerifier },
+        defaultMigrateFee,
+      );
+      const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
+      assert(contractInfo2);
+      expect({ ...contractInfo2 }).toEqual({
+        ...contractInfo1,
+        codeId: Long.fromNumber(codeId2, true),
+      });
+
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        alice.address0,
+        codeId1,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        defaultInstantiateFee,
+        { admin: alice.address0 },
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
       const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
