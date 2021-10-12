@@ -94,8 +94,8 @@
 				<p>Visit the demo page in a browser, for example if using the Python 3 option:
 				<a href="http://localhost:8000/demo">http://localhost:8000/demo</a>.</p>
 				<p>Then follow the instructions on that page.</p>
-				<a href="#runnng-tests" id="runnng-tests" style="color: inherit; text-decoration: none;">
-					<h2>Runnng tests</h2>
+				<a href="#running-tests" id="running-tests" style="color: inherit; text-decoration: none;">
+					<h2>Running tests</h2>
 				</a>
 				<p>The tests in this package require a Ledger device
 					<a href="https://support.ledger.com/hc/en-us/articles/360005434914">initialized with the mnemonic</a>
@@ -104,7 +104,21 @@
 					(see &quot;Ledger: accounts for Ledger based demos and tests&quot;) with an installed
 					&quot;Cosmos (ATOM)&quot; app. The device must be connected via USB, unlocked and the
 					Cosmos app must be opened. The tests require the user to manually approve
-					transactions. Start a local Launchpad blockchain as described in
+				transactions.</p>
+				<a href="#stargate-tests" id="stargate-tests" style="color: inherit; text-decoration: none;">
+					<h3>Stargate tests</h3>
+				</a>
+				<p>Start a local Stargate blockchain as described in
+					<a href="https://github.com/cosmos/cosmjs/blob/main/scripts/simapp/README.md">scripts/simapp/README.md</a>
+				and execute:</p>
+				<pre><code class="language-sh"><span style="color: #0000FF">export</span><span style="color: #000000"> LEDGER_ENABLED=1</span>
+<span style="color: #0000FF">export</span><span style="color: #000000"> SIMAPP_ENABLED=1</span>
+<span style="color: #000000">yarn </span><span style="color: #795E26">test</span>
+</code></pre>
+				<a href="#launchpad-tests" id="launchpad-tests" style="color: inherit; text-decoration: none;">
+					<h3>Launchpad tests</h3>
+				</a>
+				<p>Start a local Launchpad blockchain as described in
 					<a href="https://github.com/cosmos/cosmjs/blob/main/scripts/launchpad/README.md">scripts/launchpad/README.md</a>
 				and execute:</p>
 				<pre><code class="language-sh"><span style="color: #0000FF">export</span><span style="color: #000000"> LEDGER_ENABLED=1</span>
