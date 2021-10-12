@@ -1,6 +1,6 @@
 import { createJsonRpcRequest } from "../jsonrpc";
 import { defaultInstance } from "../testutil.spec";
-import { HttpClient } from "./httpclient";
+import { http, HttpClient } from "./httpclient";
 
 function pendingWithoutTendermint(): void {
   if (!process.env.TENDERMINT_ENABLED) {
@@ -8,9 +8,23 @@ function pendingWithoutTendermint(): void {
   }
 }
 
-describe("HttpClient", () => {
-  const tendermintUrl = defaultInstance.url;
+const tendermintUrl = defaultInstance.url;
 
+describe("http", () => {
+  it("can send a health request", async () => {
+    pendingWithoutTendermint();
+    const response = await http("POST", `http://${tendermintUrl}`, createJsonRpcRequest("health"));
+    expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
+  });
+
+  it("errors for non-open port", async () => {
+    await expectAsync(
+      http("POST", `http://localhost:56745`, createJsonRpcRequest("health")),
+    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch)/i);
+  });
+});
+
+describe("HttpClient", () => {
   it("can make a simple call", async () => {
     pendingWithoutTendermint();
     const client = new HttpClient(tendermintUrl);
