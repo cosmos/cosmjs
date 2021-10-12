@@ -152,7 +152,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       label: label,
       msg: JSON.parse(fromUtf8(msg)),
       funds: funds,
-      admin: admin ?? undefined,
+      admin: admin || undefined,
     }),
     fromAmino: ({
       sender,

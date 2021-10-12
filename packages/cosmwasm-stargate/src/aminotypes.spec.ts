@@ -44,36 +44,61 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgInstantiateContract", () => {
-      const msg: MsgInstantiateContract = {
-        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-        codeId: Long.fromString("12345"),
-        label: "sticky",
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
-        funds: coins(1234, "ucosm"),
-        admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-      };
-      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
-        typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
-        value: msg,
-      });
-      const expected: AminoMsgInstantiateContract = {
-        type: "wasm/MsgInstantiateContract",
-        value: {
+      // With admin
+      {
+        const msg: MsgInstantiateContract = {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-          code_id: "12345",
+          codeId: Long.fromString("12345"),
           label: "sticky",
-          msg: {
-            foo: "bar",
-          },
+          msg: toUtf8(`{"foo":"bar"}`),
           funds: coins(1234, "ucosm"),
           admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-        },
-      };
-      expect(aminoMsg).toEqual(expected);
+        };
+        const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
+          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+          value: msg,
+        });
+        const expected: AminoMsgInstantiateContract = {
+          type: "wasm/MsgInstantiateContract",
+          value: {
+            sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            code_id: "12345",
+            label: "sticky",
+            msg: { foo: "bar" },
+            funds: coins(1234, "ucosm"),
+            admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          },
+        };
+        expect(aminoMsg).toEqual(expected);
+      }
+
+      // Without admin
+      {
+        const msg: MsgInstantiateContract = {
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          codeId: Long.fromString("12345"),
+          label: "sticky",
+          msg: toUtf8(`{"foo":"bar"}`),
+          funds: coins(1234, "ucosm"),
+          admin: "",
+        };
+        const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
+          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+          value: msg,
+        });
+        const expected: AminoMsgInstantiateContract = {
+          type: "wasm/MsgInstantiateContract",
+          value: {
+            sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            code_id: "12345",
+            label: "sticky",
+            msg: { foo: "bar" },
+            funds: coins(1234, "ucosm"),
+            admin: undefined,
+          },
+        };
+        expect(aminoMsg).toEqual(expected);
+      }
     });
 
     it("works for MsgUpdateAdmin", () => {
@@ -197,36 +222,60 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgInstantiateContract", () => {
-      const aminoMsg: AminoMsgInstantiateContract = {
-        type: "wasm/MsgInstantiateContract",
-        value: {
-          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-          code_id: "12345",
-          label: "sticky",
-          msg: {
-            foo: "bar",
+      // With admin
+      {
+        const aminoMsg: AminoMsgInstantiateContract = {
+          type: "wasm/MsgInstantiateContract",
+          value: {
+            sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            code_id: "12345",
+            label: "sticky",
+            msg: { foo: "bar" },
+            funds: coins(1234, "ucosm"),
+            admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           },
+        };
+        const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
+        const expectedValue: MsgInstantiateContract = {
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          codeId: Long.fromString("12345"),
+          label: "sticky",
+          msg: toUtf8(`{"foo":"bar"}`),
           funds: coins(1234, "ucosm"),
           admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-        },
-      };
-      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
-      const expectedValue: MsgInstantiateContract = {
-        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-        codeId: Long.fromString("12345"),
-        label: "sticky",
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
-        funds: coins(1234, "ucosm"),
-        admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-      };
-      expect(msg).toEqual({
-        typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
-        value: expectedValue,
-      });
+        };
+        expect(msg).toEqual({
+          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+          value: expectedValue,
+        });
+      }
+
+      // Without admin
+      {
+        const aminoMsg: AminoMsgInstantiateContract = {
+          type: "wasm/MsgInstantiateContract",
+          value: {
+            sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            code_id: "12345",
+            label: "sticky",
+            msg: { foo: "bar" },
+            funds: coins(1234, "ucosm"),
+          },
+        };
+        const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
+        const expectedValue: MsgInstantiateContract = {
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          codeId: Long.fromString("12345"),
+          label: "sticky",
+          msg: toUtf8(`{"foo":"bar"}`),
+          funds: coins(1234, "ucosm"),
+          admin: "",
+        };
+        expect(msg).toEqual({
+          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+          value: expectedValue,
+        });
+      }
     });
 
     it("works for MsgUpdateAdmin", () => {
