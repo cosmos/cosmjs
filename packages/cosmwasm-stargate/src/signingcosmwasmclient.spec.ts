@@ -34,6 +34,7 @@ import {
   defaultSigningClientOptions,
   defaultUpdateAdminFee,
   defaultUploadFee,
+  deployedHackatom,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -150,7 +151,7 @@ describe("SigningCosmWasmClient", () => {
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
-      const contractAddress1 = await client.instantiate(
+      const { contractAddress: address1 } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -160,7 +161,7 @@ describe("SigningCosmWasmClient", () => {
         "contract 1",
         defaultInstantiateFee,
       );
-      const contractAddress2 = await client.instantiate(
+      const { contractAddress: address2 } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -170,7 +171,41 @@ describe("SigningCosmWasmClient", () => {
         "contract 2",
         defaultInstantiateFee,
       );
-      expect(contractAddress1).not.toEqual(contractAddress2);
+      expect(address1).not.toEqual(address2);
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+
+      // With admin
+      await client.instantiate(
+        alice.address0,
+        deployedHackatom.codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 1",
+        defaultInstantiateFee,
+        { admin: makeRandomAddress() },
+      );
+
+      // Without admin
+      await client.instantiate(
+        alice.address0,
+        deployedHackatom.codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 1",
+        defaultInstantiateFee,
+      );
+
       client.disconnect();
     });
   });
@@ -247,7 +282,7 @@ describe("SigningCosmWasmClient", () => {
   });
 
   describe("migrate", () => {
-    it("can can migrate from one code ID to another", async () => {
+    it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
@@ -290,12 +325,104 @@ describe("SigningCosmWasmClient", () => {
 
       client.disconnect();
     });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        alice.address0,
+        codeId1,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        defaultInstantiateFee,
+        { admin: alice.address0 },
+      );
+      const wasmClient = await makeWasmClient(wasmd.endpoint);
+      const { contractInfo: contractInfo1 } = await wasmClient.wasm.getContractInfo(contractAddress);
+      assert(contractInfo1);
+      expect(contractInfo1.admin).toEqual(alice.address0);
+
+      const newVerifier = makeRandomAddress();
+      await client.migrate(
+        alice.address0,
+        contractAddress,
+        codeId2,
+        { verifier: newVerifier },
+        defaultMigrateFee,
+      );
+      const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
+      assert(contractInfo2);
+      expect({ ...contractInfo2 }).toEqual({
+        ...contractInfo1,
+        codeId: Long.fromNumber(codeId2, true),
+      });
+
+      client.disconnect();
+    });
   });
 
   describe("execute", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      // instantiate
+      const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        alice.address0,
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "amazing random contract",
+        defaultInstantiateFee,
+        {
+          funds: funds,
+        },
+      );
+      // execute
+      const result = await client.execute(
+        alice.address0,
+        contractAddress,
+        { release: {} },
+        defaultExecuteFee,
+      );
+      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      assert(wasmEvent, "Event of type wasm expected");
+      expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
+      expect(wasmEvent.attributes).toContain({
+        key: "destination",
+        value: beneficiaryAddress,
+      });
+      // Verify token transfer from contract to beneficiary
+      const wasmClient = await makeWasmClient(wasmd.endpoint);
+      const beneficiaryBalanceUcosm = await wasmClient.bank.balance(beneficiaryAddress, "ucosm");
+      expect(beneficiaryBalanceUcosm).toEqual(funds[0]);
+      const beneficiaryBalanceUstake = await wasmClient.bank.balance(beneficiaryAddress, "ustake");
+      expect(beneficiaryBalanceUstake).toEqual(funds[1]);
+      const contractBalanceUcosm = await wasmClient.bank.balance(contractAddress, "ucosm");
+      expect(contractBalanceUcosm).toEqual(coin(0, "ucosm"));
+      const contractBalanceUstake = await wasmClient.bank.balance(contractAddress, "ustake");
+      expect(contractBalanceUstake).toEqual(coin(0, "ustake"));
+
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
