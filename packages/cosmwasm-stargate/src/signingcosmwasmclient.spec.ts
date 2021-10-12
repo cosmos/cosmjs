@@ -377,6 +377,56 @@ describe("SigningCosmWasmClient", () => {
 
       client.disconnect();
     });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      // instantiate
+      const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        alice.address0,
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "amazing random contract",
+        defaultInstantiateFee,
+        {
+          funds: funds,
+        },
+      );
+      // execute
+      const result = await client.execute(
+        alice.address0,
+        contractAddress,
+        { release: {} },
+        defaultExecuteFee,
+      );
+      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      assert(wasmEvent, "Event of type wasm expected");
+      expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
+      expect(wasmEvent.attributes).toContain({
+        key: "destination",
+        value: beneficiaryAddress,
+      });
+      // Verify token transfer from contract to beneficiary
+      const wasmClient = await makeWasmClient(wasmd.endpoint);
+      const beneficiaryBalanceUcosm = await wasmClient.bank.balance(beneficiaryAddress, "ucosm");
+      expect(beneficiaryBalanceUcosm).toEqual(funds[0]);
+      const beneficiaryBalanceUstake = await wasmClient.bank.balance(beneficiaryAddress, "ustake");
+      expect(beneficiaryBalanceUstake).toEqual(funds[1]);
+      const contractBalanceUcosm = await wasmClient.bank.balance(contractAddress, "ucosm");
+      expect(contractBalanceUcosm).toEqual(coin(0, "ucosm"));
+      const contractBalanceUstake = await wasmClient.bank.balance(contractAddress, "ustake");
+      expect(contractBalanceUstake).toEqual(coin(0, "ustake"));
+
+      client.disconnect();
+    });
   });
 
   describe("sendTokens", () => {

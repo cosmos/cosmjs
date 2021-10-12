@@ -45,8 +45,8 @@ export interface AminoMsgExecuteContract {
     readonly sender: string;
     /** Bech32 account address */
     readonly contract: string;
-    /** Handle message as JavaScript object */
-    readonly msg: any;
+    /** Execute message as base64 encoded JSON */
+    readonly msg: string;
     readonly funds: readonly Coin[];
   };
 }
@@ -199,13 +199,13 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
     toAmino: ({ sender, contract, msg, funds }: MsgExecuteContract): AminoMsgExecuteContract["value"] => ({
       sender: sender,
       contract: contract,
-      msg: JSON.parse(fromUtf8(msg)),
+      msg: toBase64(msg),
       funds: funds,
     }),
     fromAmino: ({ sender, contract, msg, funds }: AminoMsgExecuteContract["value"]): MsgExecuteContract => ({
       sender: sender,
       contract: contract,
-      msg: toUtf8(JSON.stringify(msg)),
+      msg: fromBase64(msg),
       funds: [...funds],
     }),
   },

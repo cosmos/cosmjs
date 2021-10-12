@@ -145,11 +145,7 @@ describe("AminoTypes", () => {
       const msg: MsgExecuteContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
+        msg: toUtf8(`{"foo":"bar"}`),
         funds: coins(1234, "ucosm"),
       };
       const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
@@ -161,9 +157,7 @@ describe("AminoTypes", () => {
         value: {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-          msg: {
-            foo: "bar",
-          },
+          msg: toBase64(toUtf8(`{"foo":"bar"}`)),
           funds: coins(1234, "ucosm"),
         },
       };
@@ -175,11 +169,7 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         codeId: Long.fromString("98765"),
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
+        msg: toUtf8(`{"foo":"bar"}`),
       };
       const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1.MsgMigrateContract",
@@ -324,9 +314,7 @@ describe("AminoTypes", () => {
         value: {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-          msg: {
-            foo: "bar",
-          },
+          msg: toBase64(toUtf8(`{"foo":"bar"}`)),
           funds: coins(1234, "ucosm"),
         },
       };
@@ -334,11 +322,7 @@ describe("AminoTypes", () => {
       const expectedValue: MsgExecuteContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-        msg: toUtf8(
-          JSON.stringify({
-            foo: "bar",
-          }),
-        ),
+        msg: toUtf8(`{"foo":"bar"}`),
         funds: coins(1234, "ucosm"),
       };
       expect(msg).toEqual({
