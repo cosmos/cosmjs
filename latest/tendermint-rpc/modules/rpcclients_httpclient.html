@@ -73,7 +73,51 @@
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/rpcclients_httpclient.HttpClient.html" class="tsd-kind-icon">Http<wbr>Client</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="rpcclients_httpclient.html#http" class="tsd-kind-icon">http</a></li>
+							</ul>
+						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="http" class="tsd-anchor"></a>
+					<h3>http</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">http<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;POST&quot;</span>, url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, request<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/37aa102e86/packages/tendermint-rpc/src/rpcclients/httpclient.ts#L28">rpcclients/httpclient.ts:28</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Helper to work around missing CORS support in Tendermint (<a href="https://github.com/tendermint/tendermint/pull/2800">https://github.com/tendermint/tendermint/pull/2800</a>)</p>
+								</div>
+								<p>For some reason, fetch does not complain about missing server-side CORS support.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>method: <span class="tsd-signature-type">&quot;POST&quot;</span></h5>
+								</li>
+								<li>
+									<h5>url: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> request: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -92,6 +136,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/rpcclients_httpclient.HttpClient.html" class="tsd-kind-icon">Http<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="rpcclients_httpclient.html#http" class="tsd-kind-icon">http</a>
 					</li>
 				</ul>
 			</nav>
