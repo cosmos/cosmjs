@@ -73,8 +73,8 @@
 						</tr>
 					</thead>
 					<tbody><tr>
-							<td>0.16</td>
-							<td>0.18</td>
+							<td>0.16-1.0.0-beta</td>
+							<td>0.18-0.20</td>
 							<td><code>^0.26.0</code></td>
 						</tr>
 						<tr>
@@ -93,7 +93,7 @@
 				</a>
 				<p>Updating Hackatom development contract in <code>src/testdata/contract.json</code>:</p>
 				<pre><code class="language-sh"><span style="color: #795E26">cd</span><span style="color: #000000"> packages/cosmwasm-stargate</span>
-<span style="color: #0000FF">export</span><span style="color: #000000"> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v0.14.0/hackatom.wasm</span>
+<span style="color: #0000FF">export</span><span style="color: #000000"> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v1.0.0-beta/hackatom.wasm</span>
 <span style="color: #795E26">echo</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;{</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">// source</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">, </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">data</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">$(curl -sS  --location </span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #A31515"> </span><span style="color: #000000">|</span><span style="color: #A31515"> base64 </span><span style="color: #000000">|</span><span style="color: #A31515"> tr -d &#039;[:space:]&#039;)</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515"> }&quot;</span><span style="color: #000000"> | jq &gt; src/testdata/contract.json</span>
 </code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
