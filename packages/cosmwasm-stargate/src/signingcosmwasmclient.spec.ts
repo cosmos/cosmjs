@@ -34,6 +34,7 @@ import {
   defaultSigningClientOptions,
   defaultUpdateAdminFee,
   defaultUploadFee,
+  deployedHackatom,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -150,7 +151,7 @@ describe("SigningCosmWasmClient", () => {
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
-      const contractAddress1 = await client.instantiate(
+      const { contractAddress: address1 } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -160,7 +161,7 @@ describe("SigningCosmWasmClient", () => {
         "contract 1",
         defaultInstantiateFee,
       );
-      const contractAddress2 = await client.instantiate(
+      const { contractAddress: address2 } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -170,7 +171,41 @@ describe("SigningCosmWasmClient", () => {
         "contract 2",
         defaultInstantiateFee,
       );
-      expect(contractAddress1).not.toEqual(contractAddress2);
+      expect(address1).not.toEqual(address2);
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+
+      // With admin
+      await client.instantiate(
+        alice.address0,
+        deployedHackatom.codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 1",
+        defaultInstantiateFee,
+        { admin: makeRandomAddress() },
+      );
+
+      // Without admin
+      await client.instantiate(
+        alice.address0,
+        deployedHackatom.codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 1",
+        defaultInstantiateFee,
+      );
+
       client.disconnect();
     });
   });

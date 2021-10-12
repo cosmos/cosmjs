@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64, toUtf8 } from "@cosmjs/encoding";
+import { fromBase64, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoTypes, coins } from "@cosmjs/stargate";
 import {
   MsgClearAdmin,
@@ -64,7 +64,7 @@ describe("AminoTypes", () => {
             sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
             code_id: "12345",
             label: "sticky",
-            msg: { foo: "bar" },
+            msg: toBase64(toUtf8(`{"foo":"bar"}`)),
             funds: coins(1234, "ucosm"),
             admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           },
@@ -92,7 +92,7 @@ describe("AminoTypes", () => {
             sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
             code_id: "12345",
             label: "sticky",
-            msg: { foo: "bar" },
+            msg: toBase64(toUtf8(`{"foo":"bar"}`)),
             funds: coins(1234, "ucosm"),
             admin: undefined,
           },
@@ -230,7 +230,7 @@ describe("AminoTypes", () => {
             sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
             code_id: "12345",
             label: "sticky",
-            msg: { foo: "bar" },
+            msg: toBase64(toUtf8(`{"foo":"bar"}`)),
             funds: coins(1234, "ucosm"),
             admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           },
@@ -258,7 +258,7 @@ describe("AminoTypes", () => {
             sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
             code_id: "12345",
             label: "sticky",
-            msg: { foo: "bar" },
+            msg: toBase64(toUtf8(`{"foo":"bar"}`)),
             funds: coins(1234, "ucosm"),
           },
         };

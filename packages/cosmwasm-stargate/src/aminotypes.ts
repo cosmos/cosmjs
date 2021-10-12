@@ -65,8 +65,8 @@ export interface AminoMsgInstantiateContract {
     readonly code_id: string;
     /** Human-readable label for this contract */
     readonly label: string;
-    /** Instantiate message as JavaScript object */
-    readonly msg: any;
+    /** Instantiate message as base64 encoded JSON */
+    readonly msg: string;
     readonly funds: readonly Coin[];
     /** Bech32-encoded admin address */
     readonly admin?: string;
@@ -150,7 +150,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       sender: sender,
       code_id: codeId.toString(),
       label: label,
-      msg: JSON.parse(fromUtf8(msg)),
+      msg: toBase64(msg),
       funds: funds,
       admin: admin || undefined,
     }),
@@ -165,7 +165,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       sender: sender,
       codeId: Long.fromString(code_id),
       label: label,
-      msg: toUtf8(JSON.stringify(msg)),
+      msg: fromBase64(msg),
       funds: [...funds],
       admin: admin ?? "",
     }),
