@@ -118,7 +118,7 @@ export const validator = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedHackatom = {
   codeId: 1,
-  checksum: "716a97b1c086e0d7769ae7887edaa0e34faba2d7b8cda07f741f9fbf95706e8c",
+  checksum: "13a1fc994cc6d1c81b746ee0c0ff6f90043875e0bf1d9be6b7d779fc978dc2a5",
   instances: [
     {
       beneficiary: alice.address0,
