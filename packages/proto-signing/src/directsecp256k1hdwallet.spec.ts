@@ -299,6 +299,15 @@ describe("DirectSecp256k1HdWallet", () => {
         data: jasmine.stringMatching(base64Matcher),
       });
     });
+    
+    it("Store a salt next to the serialization options", async () => {
+      const original = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic);
+      const password = "123";
+      const serialized = await original.serialize(password);
+      const parsed = JSON.parse(serialized);
+
+      expect(Object.keys(parsed.kdf.params)).toContain('salt');
+    });
   });
 
   describe("serializeWithEncryptionKey", () => {
