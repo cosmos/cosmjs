@@ -435,7 +435,25 @@
           ]
         }
       ],
-      "denom_metadata": [],
+      "denom_metadata": [
+        {
+          "description": "The fee token of this test chain",
+          "denom_units": [
+            {
+              "denom": "ucosm",
+              "exponent": 0,
+              "aliases": []
+            },
+            {
+              "denom": "COSM",
+              "exponent": 6,
+              "aliases": []
+            }
+          ],
+          "base": "ucosm",
+          "display": "COSM"
+        }
+      ],
       "params": {
         "default_send_enabled": true,
         "send_enabled": []
