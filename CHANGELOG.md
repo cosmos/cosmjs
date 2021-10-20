@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/ledger-amino: Add support for using forks of the Cosmos Ledger app by
+  adding the fields `LaunchpadLedgerOptions.ledgerAppName` and
+  `.minLedgerAppVersion`.
+
 ## [0.26.2] - 2021-10-12
 
 ### Fixed

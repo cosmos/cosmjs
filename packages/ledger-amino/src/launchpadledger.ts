@@ -24,18 +24,39 @@ function unharden(hdPath: HdPath): number[] {
 
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
+const cosmosLedgerAppName = "Cosmos";
 const requiredCosmosAppVersion = "1.5.3";
 
 export interface LaunchpadLedgerOptions {
   readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
   readonly testModeAllowed?: boolean;
+  /**
+   * The name of the app the user must have opened on the Ledger.
+   * This allows you to use this connector with forks of the Cosmos Hub Ledger app.
+   * Support is provided on an best effort basis and only as long as those forks do not
+   * significantly differ from the original app.
+   *
+   * Defaults to "Cosmos".
+   */
+  readonly ledgerAppName?: string;
+  /**
+   * The min version of the app the user must have opened on the Ledger.
+   * This allows you to use this connector with forks of the Cosmos Hub Ledger app.
+   * Support is provided on an best effort basis and only as long as those forks do not
+   * significantly differ from the original app.
+   *
+   * Defaults to "1.5.3".
+   */
+  readonly minLedgerAppVersion?: string;
 }
 
 export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
+  private readonly ledgerAppName: string;
+  private readonly minLedgerAppVersion: string;
   private readonly app: CosmosApp;
 
   public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
@@ -43,17 +64,21 @@ export class LaunchpadLedger {
       hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,
       testModeAllowed: false,
+      ledgerAppName: cosmosLedgerAppName,
+      requiredLedgerAppVersion: requiredCosmosAppVersion,
     };
 
     this.testModeAllowed = options.testModeAllowed ?? defaultOptions.testModeAllowed;
     this.hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
     this.prefix = options.prefix ?? defaultOptions.prefix;
+    this.ledgerAppName = options.ledgerAppName ?? defaultOptions.ledgerAppName;
+    this.minLedgerAppVersion = options.minLedgerAppVersion ?? defaultOptions.requiredLedgerAppVersion;
     this.app = new CosmosApp(transport);
   }
 
   public async getCosmosAppVersion(): Promise<string> {
     await this.verifyCosmosAppIsOpen();
-    assert(this.app, "Cosmos Ledger App is not connected");
+    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const response = await this.app.getVersion();
     this.handleLedgerErrors(response);
@@ -65,7 +90,7 @@ export class LaunchpadLedger {
 
   public async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
     await this.verifyDeviceIsReady();
-    assert(this.app, "Cosmos Ledger App is not connected");
+    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
@@ -89,7 +114,7 @@ export class LaunchpadLedger {
 
   public async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
     await this.verifyDeviceIsReady();
-    assert(this.app, "Cosmos Ledger App is not connected");
+    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
@@ -100,12 +125,14 @@ export class LaunchpadLedger {
 
   private verifyAppMode(testMode: boolean): void {
     if (testMode && !this.testModeAllowed) {
-      throw new Error(`DANGER: The Cosmos Ledger app is in test mode and should not be used on mainnet!`);
+      throw new Error(
+        `DANGER: The ${this.ledgerAppName} Ledger app is in test mode and should not be used on mainnet!`,
+      );
     }
   }
 
   private async getOpenAppName(): Promise<string> {
-    assert(this.app, "Cosmos Ledger App is not connected");
+    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const response = await this.app.appInfo();
     this.handleLedgerErrors(response);
@@ -114,8 +141,10 @@ export class LaunchpadLedger {
 
   private async verifyAppVersion(): Promise<void> {
     const version = await this.getCosmosAppVersion();
-    if (!semver.gte(version, requiredCosmosAppVersion)) {
-      throw new Error("Outdated version: Please update Cosmos Ledger App to the latest version.");
+    if (!semver.gte(version, this.minLedgerAppVersion)) {
+      throw new Error(
+        `Outdated version: Please update ${this.ledgerAppName} Ledger App to the latest version.`,
+      );
     }
   }
 
@@ -123,10 +152,12 @@ export class LaunchpadLedger {
     const appName = await this.getOpenAppName();
 
     if (appName.toLowerCase() === `dashboard`) {
-      throw new Error(`Please open the Cosmos Ledger app on your Ledger device.`);
+      throw new Error(`Please open the ${this.ledgerAppName} Ledger app on your Ledger device.`);
     }
-    if (appName.toLowerCase() !== `cosmos`) {
-      throw new Error(`Please close ${appName} and open the Cosmos Ledger app on your Ledger device.`);
+    if (appName.toLowerCase() !== this.ledgerAppName.toLowerCase()) {
+      throw new Error(
+        `Please close ${appName} and open the ${this.ledgerAppName} Ledger app on your Ledger device.`,
+      );
     }
   }
 
@@ -151,7 +182,7 @@ export class LaunchpadLedger {
       case "U2F: Timeout":
         throw new Error("Connection timed out. Please try again.");
       case "Cosmos app does not seem to be open":
-        throw new Error("Cosmos app is not open");
+        throw new Error(`${this.ledgerAppName} app is not open`);
       case "Command not allowed":
         throw new Error("Transaction rejected");
       case "Transaction rejected":
@@ -160,7 +191,7 @@ export class LaunchpadLedger {
         throw new Error("Ledger’s screensaver mode is on");
       case "Instruction not supported":
         throw new Error(
-          `Your Cosmos Ledger App is not up to date. Please update to version ${requiredCosmosAppVersion}.`,
+          `Your ${this.ledgerAppName} Ledger App is not up to date. Please update to version ${this.minLedgerAppVersion} or newer.`,
         );
       case "No errors":
         break;
