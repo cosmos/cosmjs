@@ -91,7 +91,7 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/ibc.core.channel.v1.MsgChannelCloseInit", MsgChannelCloseInit],
   ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],
   ["/ibc.core.channel.v1.MsgRecvPacket", MsgRecvPacket],
-  ["/ibc.core.channel.v1.MsgTimeout ", MsgTimeout],
+  ["/ibc.core.channel.v1.MsgTimeout", MsgTimeout],
   ["/ibc.core.channel.v1.MsgTimeoutOnClose", MsgTimeoutOnClose],
   ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
   ["/ibc.core.client.v1.MsgCreateClient", MsgCreateClient],

@@ -6,6 +6,17 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.26.2] - 2021-10-12
+
+### Fixed
+
+- @cosmjs/stargate: remove extra space in messageTimeout registry.
+- @cosmjs/cosmwasm-stargate: Fix Amino JSON representation of
+  `MsgInstantiateContract`, `MsgMigrateContract` and `MsgExecuteContract` to
+  match the wasmd expectation. This was broken since the wasmd upgrade to
+  Stargate such that no Ledger signing was possible for those message types in
+  the meantime.
+
 ## [0.26.1] - 2021-09-30
 
 ### Added
@@ -591,7 +602,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.2...HEAD
+[0.26.2]: https://github.com/cosmos/cosmjs/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/cosmos/cosmjs/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/cosmos/cosmjs/compare/v0.25.6...v0.26.0
 [0.25.6]: https://github.com/cosmos/cosmjs/compare/v0.25.5...v0.25.6
