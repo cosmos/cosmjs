@@ -39,8 +39,8 @@ export interface LaunchpadLedgerOptions {
    *
    * Defaults to "cosmos".
    */
-  readonly ledgerAppName?: string
-  readonly requiredLedgerAppVersion?: string
+  readonly ledgerAppName?: string;
+  readonly requiredLedgerAppVersion?: string;
 }
 
 export class LaunchpadLedger {
@@ -57,14 +57,15 @@ export class LaunchpadLedger {
       prefix: cosmosBech32Prefix,
       testModeAllowed: false,
       ledgerAppName: cosmosLedgerAppName,
-      requiredLedgerAppVersion: requiredCosmosAppVersion
+      requiredLedgerAppVersion: requiredCosmosAppVersion,
     };
 
     this.testModeAllowed = options.testModeAllowed ?? defaultOptions.testModeAllowed;
     this.hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
     this.prefix = options.prefix ?? defaultOptions.prefix;
-    this.ledgerAppName = options.ledgerAppName ?? defaultOptions.ledgerAppName
-    this.requiredLedgerAppVersion = options.requiredLedgerAppVersion ?? defaultOptions.requiredLedgerAppVersion
+    this.ledgerAppName = options.ledgerAppName ?? defaultOptions.ledgerAppName;
+    this.requiredLedgerAppVersion =
+      options.requiredLedgerAppVersion ?? defaultOptions.requiredLedgerAppVersion;
     this.app = new CosmosApp(transport);
   }
 
@@ -117,7 +118,9 @@ export class LaunchpadLedger {
 
   private verifyAppMode(testMode: boolean): void {
     if (testMode && !this.testModeAllowed) {
-      throw new Error(`DANGER: The ${this.ledgerAppName} Ledger app is in test mode and should not be used on mainnet!`);
+      throw new Error(
+        `DANGER: The ${this.ledgerAppName} Ledger app is in test mode and should not be used on mainnet!`,
+      );
     }
   }
 
@@ -132,7 +135,9 @@ export class LaunchpadLedger {
   private async verifyAppVersion(): Promise<void> {
     const version = await this.getCosmosAppVersion();
     if (!semver.gte(version, this.requiredLedgerAppVersion)) {
-      throw new Error(`Outdated version: Please update ${this.ledgerAppName} Ledger App to the latest version.`);
+      throw new Error(
+        `Outdated version: Please update ${this.ledgerAppName} Ledger App to the latest version.`,
+      );
     }
   }
 
@@ -143,7 +148,9 @@ export class LaunchpadLedger {
       throw new Error(`Please open the ${this.ledgerAppName} Ledger app on your Ledger device.`);
     }
     if (appName.toLowerCase() !== this.ledgerAppName.toLowerCase()) {
-      throw new Error(`Please close ${appName} and open the ${this.ledgerAppName} Ledger app on your Ledger device.`);
+      throw new Error(
+        `Please close ${appName} and open the ${this.ledgerAppName} Ledger app on your Ledger device.`,
+      );
     }
   }
 
