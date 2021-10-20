@@ -12,6 +12,17 @@ and this project adheres to
   adding the fields `LaunchpadLedgerOptions.ledgerAppName` and
   `.minLedgerAppVersion`.
 
+### Changed
+
+- @cosmjs/stargate: Remove verified queries from `AuthExtension` and
+  `BankExtension` as well as `StargateClient.getAccountVerified` because the
+  storage layout is not stable across multiple Cosmos SDK releases. Verified
+  queries remain available in the `IbcExtension` because for IBC the storage
+  layout is standardized. Such queries can still be implemented in CosmJS caller
+  code that only needs to support one backend. ([#865])
+
+[#865]: https://github.com/cosmos/cosmjs/issues/865
+
 ## [0.26.2] - 2021-10-12
 
 ### Fixed

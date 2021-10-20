@@ -143,46 +143,4 @@ describe("BankExtension", () => {
       tmClient.disconnect();
     });
   });
-
-  describe("verified", () => {
-    describe("balance", () => {
-      it("works for different existing balances", async () => {
-        pendingWithoutSimapp();
-        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
-
-        const response1 = await client.bank.verified.balance(unused.address, simapp.denomFee);
-        expect(response1).toEqual({
-          amount: unused.balanceFee,
-          denom: simapp.denomFee,
-        });
-        const response2 = await client.bank.verified.balance(unused.address, simapp.denomStaking);
-        expect(response2).toEqual({
-          amount: unused.balanceStaking,
-          denom: simapp.denomStaking,
-        });
-
-        tmClient.disconnect();
-      });
-
-      it("returns null for non-existent balance", async () => {
-        pendingWithoutSimapp();
-        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
-
-        const response = await client.bank.verified.balance(unused.address, "gintonic");
-        expect(response).toBeNull();
-
-        tmClient.disconnect();
-      });
-
-      it("returns null for non-existent address", async () => {
-        pendingWithoutSimapp();
-        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
-
-        const response = await client.bank.verified.balance(nonExistentAddress, simapp.denomFee);
-        expect(response).toBeNull();
-
-        tmClient.disconnect();
-      });
-    });
-  });
 });
