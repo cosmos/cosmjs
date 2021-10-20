@@ -40,7 +40,7 @@ export interface LaunchpadLedgerOptions {
    * Defaults to "cosmos".
    */
   readonly ledgerAppName?: string;
-  readonly requiredLedgerAppVersion?: string;
+  readonly minLedgerAppVersion?: string;
 }
 
 export class LaunchpadLedger {
@@ -48,7 +48,7 @@ export class LaunchpadLedger {
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
   private readonly ledgerAppName: string;
-  private readonly requiredLedgerAppVersion: string;
+  private readonly minLedgerAppVersion: string;
   private readonly app: CosmosApp;
 
   public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
@@ -64,8 +64,7 @@ export class LaunchpadLedger {
     this.hdPaths = options.hdPaths ?? defaultOptions.hdPaths;
     this.prefix = options.prefix ?? defaultOptions.prefix;
     this.ledgerAppName = options.ledgerAppName ?? defaultOptions.ledgerAppName;
-    this.requiredLedgerAppVersion =
-      options.requiredLedgerAppVersion ?? defaultOptions.requiredLedgerAppVersion;
+    this.minLedgerAppVersion = options.minLedgerAppVersion ?? defaultOptions.requiredLedgerAppVersion;
     this.app = new CosmosApp(transport);
   }
 
@@ -134,7 +133,7 @@ export class LaunchpadLedger {
 
   private async verifyAppVersion(): Promise<void> {
     const version = await this.getCosmosAppVersion();
-    if (!semver.gte(version, this.requiredLedgerAppVersion)) {
+    if (!semver.gte(version, this.minLedgerAppVersion)) {
       throw new Error(
         `Outdated version: Please update ${this.ledgerAppName} Ledger App to the latest version.`,
       );
@@ -184,7 +183,7 @@ export class LaunchpadLedger {
         throw new Error("Ledger’s screensaver mode is on");
       case "Instruction not supported":
         throw new Error(
-          `Your ${this.ledgerAppName} Ledger App is not up to date. Please update to version ${this.requiredLedgerAppVersion}.`,
+          `Your ${this.ledgerAppName} Ledger App is not up to date. Please update to version ${this.minLedgerAppVersion} or newer.`,
         );
       case "No errors":
         break;
