@@ -37,9 +37,17 @@ export interface LaunchpadLedgerOptions {
    * Support is provided on an best effort basis and only as long as those forks do not
    * significantly differ from the original app.
    *
-   * Defaults to "cosmos".
+   * Defaults to "Cosmos".
    */
   readonly ledgerAppName?: string;
+  /**
+   * The min version of the app the user must have opened on the Ledger.
+   * This allows you to use this connector with forks of the Cosmos Hub Ledger app.
+   * Support is provided on an best effort basis and only as long as those forks do not
+   * significantly differ from the original app.
+   *
+   * Defaults to "1.5.3".
+   */
   readonly minLedgerAppVersion?: string;
 }
 
