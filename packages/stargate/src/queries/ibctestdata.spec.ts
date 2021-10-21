@@ -17,7 +17,7 @@ import {
 } from "cosmjs-types/ibc/core/connection/v1/connection";
 import Long from "long";
 
-// From scripts/simapp/genesis-ibc.json
+// From scripts/simapp42/genesis-ibc.json
 
 export const portId = "transfer";
 export const channelId = "channel-0";
@@ -50,7 +50,7 @@ export const identifiedChannel = IdentifiedChannel.fromPartial({
 
 /**
  * ```
- * jq ".channel_genesis.commitments[0]" scripts/simapp/genesis-ibc.json
+ * jq ".channel_genesis.commitments[0]" scripts/simapp42/genesis-ibc.json
  * ```
  */
 export const commitment = {
@@ -69,7 +69,7 @@ export const packetState = PacketState.fromPartial({
  * Unfortunatly empty right now
  *
  * ```
- * jq ".channel_genesis.acknowledgements" scripts/simapp/genesis-ibc.json
+ * jq ".channel_genesis.acknowledgements" scripts/simapp42/genesis-ibc.json
  * ```
  */
 export const packetAcknowledgements: PacketState[] = [];

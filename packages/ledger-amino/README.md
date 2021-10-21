@@ -58,7 +58,7 @@ transactions.
 ### Stargate tests
 
 Start a local Stargate blockchain as described in
-[scripts/simapp/README.md](https://github.com/cosmos/cosmjs/blob/main/scripts/simapp/README.md)
+[scripts/simapp42/README.md](https://github.com/cosmos/cosmjs/blob/main/scripts/simapp42/README.md)
 and execute:
 
 ```sh
