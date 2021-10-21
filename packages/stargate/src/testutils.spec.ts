@@ -15,23 +15,37 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
+export function simapp42Enabled(): boolean {
+  return !!process.env.SIMAPP42_ENABLED;
+}
+
+export function simapp44Enabled(): boolean {
+  return !!process.env.SIMAPP44_ENABLED;
+}
+
 export function simappEnabled(): boolean {
-  return !!process.env.SIMAPP_ENABLED;
+  return simapp42Enabled() || simapp44Enabled();
+}
+
+export function pendingWithoutSimapp42(): void {
+  if (!simapp42Enabled()) {
+    return pending("Set SIMAPP44_ENABLED to enable Simapp based tests");
+  }
 }
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP_ENABLED to enable Simapp based tests");
+    return pending("Set SIMAPP42_ENABLED or SIMAPP44_ENABLED to enable Simapp based tests");
   }
 }
 
 export function slowSimappEnabled(): boolean {
-  return !!process.env.SLOW_SIMAPP_ENABLED;
+  return !!process.env.SLOW_SIMAPP42_ENABLED || !!process.env.SLOW_SIMAPP44_ENABLED;
 }
 
 export function pendingWithoutSlowSimapp(): void {
   if (!slowSimappEnabled()) {
-    return pending("Set SLOW_SIMAPP_ENABLED to enable slow Simapp based tests");
+    return pending("Set SLOW_SIMAPP42_ENABLED or SLOW_SIMAPP44_ENABLED to enable slow Simapp based tests");
   }
 }
 

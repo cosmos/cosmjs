@@ -146,8 +146,8 @@ jobs:
           environment:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
-            SIMAPP_ENABLED: 1
-            SLOW_SIMAPP_ENABLED: 1
+            SIMAPP42_ENABLED: 1
+            SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -266,8 +266,8 @@ jobs:
           environment:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
-            SIMAPP_ENABLED: 1
-            SLOW_SIMAPP_ENABLED: 1
+            SIMAPP42_ENABLED: 1
+            SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -382,8 +382,8 @@ jobs:
           environment:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
-            SIMAPP_ENABLED: 1
-            SLOW_SIMAPP_ENABLED: 1
+            SIMAPP42_ENABLED: 1
+            SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -484,8 +484,8 @@ jobs:
           environment:
             LAUNCHPAD_ENABLED: 1
             ERC20_ENABLED: 1
-            SIMAPP_ENABLED: 1
-            SLOW_SIMAPP_ENABLED: 1
+            SIMAPP42_ENABLED: 1
+            SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1

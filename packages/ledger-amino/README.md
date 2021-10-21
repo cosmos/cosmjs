@@ -63,7 +63,7 @@ and execute:
 
 ```sh
 export LEDGER_ENABLED=1
-export SIMAPP_ENABLED=1
+export SIMAPP42_ENABLED=1
 yarn test
 ```
 
