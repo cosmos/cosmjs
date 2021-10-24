@@ -109,6 +109,16 @@ discussion please reach out to the team.
 
 ## Known limitations
 
+### 0.26
+
+1. When connecting to a Cosmos SDK 0.44+ backend, the verified queries from
+   `AuthExtension` and `BankExtension` as well as
+   `StargateClient.getAccountVerified` will fail because the storage keys are
+   not stable. Unverified queries can be used instead. Those queries are
+   deprecated now and will be removed in 0.27 ([#910]).
+
+[#910]: https://github.com/cosmos/cosmjs/pull/910
+
 ### 0.25
 
 1. Decoding blocks of height 1 is unsupported. This is fixed in [#815] and will

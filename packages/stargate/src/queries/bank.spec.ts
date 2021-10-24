@@ -4,6 +4,7 @@ import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
+  pendingWithoutSimapp42,
   simapp,
   unused,
 } from "../testutils.spec";
@@ -147,7 +148,7 @@ describe("BankExtension", () => {
   describe("verified", () => {
     describe("balance", () => {
       it("works for different existing balances", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response1 = await client.bank.verified.balance(unused.address, simapp.denomFee);
@@ -165,7 +166,7 @@ describe("BankExtension", () => {
       });
 
       it("returns null for non-existent balance", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.verified.balance(unused.address, "gintonic");
@@ -175,7 +176,7 @@ describe("BankExtension", () => {
       });
 
       it("returns null for non-existent address", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.verified.balance(nonExistentAddress, simapp.denomFee);

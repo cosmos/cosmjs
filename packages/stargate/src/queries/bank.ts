@@ -13,6 +13,11 @@ export interface BankExtension {
     readonly allBalances: (address: string) => Promise<Coin[]>;
     readonly totalSupply: () => Promise<Coin[]>;
     readonly supplyOf: (denom: string) => Promise<Coin>;
+    /**
+     * @deprecated Verified queries are not supported with Cosmos SDK 0.44+.
+     * See "Known limitations" in README.md.
+     * Will be rmoved in CosmJS 0.27 (https://github.com/cosmos/cosmjs/pull/910).
+     */
     readonly verified: {
       readonly balance: (address: string, denom: string) => Promise<Coin | null>;
     };
