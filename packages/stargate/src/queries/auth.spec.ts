@@ -6,7 +6,14 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
+import {
+  nonExistentAddress,
+  pendingWithoutSimapp,
+  pendingWithoutSimapp42,
+  simapp,
+  unused,
+  validator,
+} from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
 
@@ -68,7 +75,7 @@ describe("AuthExtension", () => {
   describe("verified", () => {
     describe("account", () => {
       it("works for unused account", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
         const account = await client.auth.verified.account(unused.address);
         assert(account);
@@ -85,7 +92,7 @@ describe("AuthExtension", () => {
       });
 
       it("works for account with pubkey and non-zero sequence", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
         const account = await client.auth.verified.account(validator.delegatorAddress);
         assert(account);
@@ -102,7 +109,7 @@ describe("AuthExtension", () => {
       });
 
       it("returns null for non-existent address", async () => {
-        pendingWithoutSimapp();
+        pendingWithoutSimapp42(); // Not supported with 0.44, see "Known limitations" in README.md
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
         const account = await client.auth.verified.account(nonExistentAddress);
 

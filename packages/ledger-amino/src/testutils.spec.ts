@@ -29,12 +29,12 @@ export function pendingWithoutLaunchpad(): void {
 }
 
 export function simappEnabled(): boolean {
-  return !!process.env.SIMAPP_ENABLED;
+  return !!process.env.SIMAPP42_ENABLED || !!process.env.SIMAPP44_ENABLED;
 }
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP_ENABLED to enable Simapp-based tests");
+    return pending("Set SIMAPP42_ENABLED or SIMAPP44_ENABLED to enable Simapp-based tests");
   }
 }
 

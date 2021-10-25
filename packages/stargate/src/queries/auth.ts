@@ -14,6 +14,11 @@ export interface AuthExtension {
      * `typeUrl` and decode the `value` using its own type decoder.
      */
     readonly account: (address: string) => Promise<Any | null>;
+    /**
+     * @deprecated Verified queries are not supported with Cosmos SDK 0.44+.
+     * See "Known limitations" in README.md.
+     * Will be rmoved in CosmJS 0.27 (https://github.com/cosmos/cosmjs/pull/910).
+     */
     readonly verified: {
       /**
        * Returns an account if it exists and `null` otherwise.

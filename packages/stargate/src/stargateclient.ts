@@ -218,6 +218,11 @@ export class StargateClient {
     }
   }
 
+  /**
+   * @deprecated Verified queries are not supported with Cosmos SDK 0.44+.
+   * See "Known limitations" in README.md.
+   * Will be rmoved in CosmJS 0.27 (https://github.com/cosmos/cosmjs/pull/910).
+   */
   public async getAccountVerified(searchAddress: string): Promise<Account | null> {
     const account = await this.forceGetQueryClient().auth.verified.account(searchAddress);
     return account ? accountFromAny(account) : null;
