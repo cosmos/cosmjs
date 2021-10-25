@@ -12,6 +12,14 @@ and this project adheres to
   adding the fields `LaunchpadLedgerOptions.ledgerAppName` and
   `.minLedgerAppVersion`.
 
+### Deprecated
+
+- @cosmjs/stargate: The verified queries from `AuthExtension` and
+  `BankExtension` as well as `StargateClient.getAccountVerified` are deprecated
+  and will be removed in 0.27 ([#910]).
+
+[#910]: https://github.com/cosmos/cosmjs/pull/910
+
 ## [0.26.2] - 2021-10-12
 
 ### Fixed
