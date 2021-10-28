@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
 import { createPagination, createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import {
