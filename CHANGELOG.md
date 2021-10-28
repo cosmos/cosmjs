@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.26.4] - 2021-10-28
+
 ### Fixed
 
 - @cosmjs/cosmwasm-stargate: Fix response error handling for smart queries.
@@ -622,7 +624,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.3...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.4...HEAD
+[0.26.4]: https://github.com/cosmos/cosmjs/compare/v0.26.3...v0.26.4
 [0.26.3]: https://github.com/cosmos/cosmjs/compare/v0.26.2...v0.26.3
 [0.26.2]: https://github.com/cosmos/cosmjs/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/cosmos/cosmjs/compare/v0.26.0...v0.26.1
