@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Fix response error handling for smart queries.
+
 ## [0.26.3] - 2021-10-25
 
 ### Added
