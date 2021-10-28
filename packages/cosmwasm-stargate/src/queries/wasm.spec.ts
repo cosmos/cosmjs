@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { sha256 } from "@cosmjs/crypto";
 import { fromAscii, fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
