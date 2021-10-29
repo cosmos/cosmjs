@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import RIPEMD160 from "ripemd160";
 
 import { HashFunction } from "./hash";
