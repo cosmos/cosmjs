@@ -67,6 +67,7 @@ import {
   MsgTransferEncodeObject,
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
+  MsgBeginRedelegateEncodeObject
 } from "./encodeobjects";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
@@ -243,7 +244,7 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const redelegateMsg: MsgBeginRedelegate = {
+    const redelegateMsg: MsgBeginRedelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
       value: MsgBeginRedelegate.fromPartial({
         delegatorAddress: delegatorAddress,
