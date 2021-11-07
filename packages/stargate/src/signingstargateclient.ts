@@ -235,6 +235,26 @@ export class SigningStargateClient extends StargateClient {
     return this.signAndBroadcast(delegatorAddress, [undelegateMsg], fee, memo);
   }
 
+  public async redelegateTokens(
+    delegatorAddress: string,
+    validatorSrcAddress: string,
+    validatorDstAddress: string,
+    amount: Coin,
+    fee: StdFee,
+    memo = "",
+  ): Promise<BroadcastTxResponse> {
+    const redelegateMsg: MsgBeginRedelegate = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+      value: MsgBeginRedelegate.fromPartial({
+        delegatorAddress: delegatorAddress,
+        validatorSrcAddress: validatorSrcAddress,
+        validatorDstAddress: validatorDstAddress,
+        amount: amount
+      }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [redelegateMsg], fee, memo);
+  }
+
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
