@@ -62,12 +62,12 @@ import Long from "long";
 
 import { AminoTypes } from "./aminotypes";
 import {
+  MsgBeginRedelegateEncodeObject,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
   MsgTransferEncodeObject,
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
-  MsgBeginRedelegateEncodeObject,
 } from "./encodeobjects";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
