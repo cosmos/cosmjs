@@ -44,7 +44,9 @@ export interface MsgBeginRedelegateEncodeObject extends EncodeObject {
 export function isMsgBeginRedelegateObject(
   encodeObject: EncodeObject,
 ): encodeObject is MsgBeginRedelegateEncodeObject {
-  return (encodeObject as MsgBeginRedelegateEncodeObject).typeUrl === "/cosmos.staking.v1beta1.MsgBeginRedelegate";
+  return (
+    (encodeObject as MsgBeginRedelegateEncodeObject).typeUrl === "/cosmos.staking.v1beta1.MsgBeginRedelegate"
+  );
 }
 
 export interface MsgWithdrawDelegatorRewardEncodeObject extends EncodeObject {
