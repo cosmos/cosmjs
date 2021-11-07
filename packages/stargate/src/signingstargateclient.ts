@@ -67,7 +67,7 @@ import {
   MsgTransferEncodeObject,
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
-  MsgBeginRedelegateEncodeObject
+  MsgBeginRedelegateEncodeObject,
 } from "./encodeobjects";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
@@ -250,7 +250,7 @@ export class SigningStargateClient extends StargateClient {
         delegatorAddress: delegatorAddress,
         validatorSrcAddress: validatorSrcAddress,
         validatorDstAddress: validatorDstAddress,
-        amount: amount
+        amount: amount,
       }),
     };
     return this.signAndBroadcast(delegatorAddress, [redelegateMsg], fee, memo);
