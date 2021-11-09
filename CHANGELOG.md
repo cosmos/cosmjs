@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/amino: The `coin` and `coins` helpers now support both `number` and
+  `string` as input types for the amount. This is useful if your values exceed
+  the safe integer range.
+
 ## [0.26.4] - 2021-10-28
 
 ### Fixed
