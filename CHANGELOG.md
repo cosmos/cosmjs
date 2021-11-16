@@ -6,12 +6,6 @@ and this project adheres to
 
 ## [Unreleased]
 
-### Added
-
-- @cosmjs/ledger-amino: Add support for using forks of the Cosmos Ledger app by
-  adding the fields `LaunchpadLedgerOptions.ledgerAppName` and
-  `.minLedgerAppVersion`.
-
 ### Changed
 
 - @cosmjs/stargate: Remove verified queries from `AuthExtension` and
@@ -22,6 +16,28 @@ and this project adheres to
   code that only needs to support one backend. ([#865])
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
+
+## [0.26.4] - 2021-10-28
+
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Fix response error handling for smart queries.
+
+## [0.26.3] - 2021-10-25
+
+### Added
+
+- @cosmjs/ledger-amino: Add support for using forks of the Cosmos Ledger app by
+  adding the fields `LaunchpadLedgerOptions.ledgerAppName` and
+  `.minLedgerAppVersion`.
+
+### Deprecated
+
+- @cosmjs/stargate: The verified queries from `AuthExtension` and
+  `BankExtension` as well as `StargateClient.getAccountVerified` are deprecated
+  and will be removed in 0.27 ([#910]).
+
+[#910]: https://github.com/cosmos/cosmjs/pull/910
 
 ## [0.26.2] - 2021-10-12
 
@@ -619,7 +635,9 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.2...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.4...HEAD
+[0.26.4]: https://github.com/cosmos/cosmjs/compare/v0.26.3...v0.26.4
+[0.26.3]: https://github.com/cosmos/cosmjs/compare/v0.26.2...v0.26.3
 [0.26.2]: https://github.com/cosmos/cosmjs/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/cosmos/cosmjs/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/cosmos/cosmjs/compare/v0.25.6...v0.26.0

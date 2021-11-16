@@ -14,8 +14,8 @@ function pendingWithoutLaunchpad(): void {
 }
 
 function pendingWithoutSimapp(): void {
-  if (!process.env.SIMAPP_ENABLED) {
-    return pending("Set SIMAPP_ENABLED to enabled Stargate node-based tests");
+  if (!process.env.SIMAPP42_ENABLED && !process.env.SIMAPP44_ENABLED) {
+    return pending("Set SIMAPP42_ENABLED or SIMAPP44_ENABLED to enabled Stargate node-based tests");
   }
 }
 

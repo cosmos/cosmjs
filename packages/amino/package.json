@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/amino",
-  "version": "0.26.2",
+  "version": "0.26.4",
   "description": "Helpers for Amino based signing which are shared between @cosmjs/launchpad and @cosmjs/stargate.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"

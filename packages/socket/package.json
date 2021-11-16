@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/socket",
-  "version": "0.26.2",
+  "version": "0.26.4",
   "description": "Utility functions for working with WebSockets",
   "contributors": [
     "IOV SAS <admin@iov.one>",

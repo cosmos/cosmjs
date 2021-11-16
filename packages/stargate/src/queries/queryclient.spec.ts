@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { nonNegativeIntegerMatcher, pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
+import { pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
-import { toAccAddress } from "./utils";
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
   const tmClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient), tmClient];
 }
+
+/**
+ * See
+ * - https://github.com/cosmos/cosmos-sdk/blob/v0.42.10/x/bank/types/key.go#L27
+ * - https://github.com/cosmos/cosmos-sdk/blob/v0.44.2/x/bank/types/key.go#L28
+ */
+const denomMetadataPrefix = new Uint8Array([0x01]);
 
 describe("QueryClient", () => {
   describe("queryVerified", () => {
@@ -19,15 +25,18 @@ describe("QueryClient", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
 
+      // "keys before 0.45 had denom two times in the key"
+      // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
       const key = Uint8Array.from([
-        ...toAscii("balances"),
-        ...toAccAddress(unused.address),
+        ...denomMetadataPrefix,
+        ...toAscii(simapp.denomFee),
         ...toAscii(simapp.denomFee),
       ]);
       const data = await client.queryVerified("bank", key);
-      const response = Coin.decode(data);
-      expect(response.amount).toMatch(nonNegativeIntegerMatcher);
-      expect(response.denom).toEqual(simapp.denomFee);
+
+      const response = Metadata.decode(data);
+      expect(response.base).toEqual(simapp.denomFee);
+      expect(response.description).toEqual("The fee token of this test chain");
 
       tmClient.disconnect();
     });
@@ -36,15 +45,18 @@ describe("QueryClient", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClient(simapp.tendermintUrlHttp);
 
+      // "keys before 0.45 had denom two times in the key"
+      // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
       const key = Uint8Array.from([
-        ...toAscii("balances"),
-        ...toAccAddress(unused.address),
+        ...denomMetadataPrefix,
+        ...toAscii(simapp.denomFee),
         ...toAscii(simapp.denomFee),
       ]);
       const data = await client.queryVerified("bank", key);
-      const response = Coin.decode(data);
-      expect(response.amount).toMatch(nonNegativeIntegerMatcher);
-      expect(response.denom).toEqual(simapp.denomFee);
+
+      const response = Metadata.decode(data);
+      expect(response.base).toEqual(simapp.denomFee);
+      expect(response.description).toEqual("The fee token of this test chain");
 
       tmClient.disconnect();
     });
