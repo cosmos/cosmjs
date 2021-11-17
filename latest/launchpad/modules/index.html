@@ -907,7 +907,7 @@
 					<div class="tsd-signature tsd-kind-icon">Pub<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SinglePubkey</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/099d667cb1/packages/launchpad/src/index.ts#L35">launchpad/src/index.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f8bd2e3783/packages/launchpad/src/index.ts#L35">launchpad/src/index.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -976,24 +976,28 @@
 					<a name="coin" class="tsd-anchor"></a>
 					<h3>coin</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">coin<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a></li>
+						<li class="tsd-signature tsd-kind-icon">coin<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/coins.d.ts:8</li>
+									<li>Defined in amino/build/coins.d.ts:14</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a coin.</p>
 								</div>
+								<p>If your values do not exceed the safe integer range of JS numbers (53 bit),
+									you can use the number type here. This is the case for all typical Cosmos SDK
+								chains that use the default 6 decimals.</p>
+								<p>In case you need to supportr larger values, use unsigned integer strings instead.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>amount: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>denom: <span class="tsd-signature-type">string</span></h5>
@@ -1007,13 +1011,13 @@
 					<a name="coins" class="tsd-anchor"></a>
 					<h3>coins</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">coins<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">coins<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.Coin.html" class="tsd-signature-type" data-tsd-kind="Interface">Coin</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/coins.d.ts:12</li>
+									<li>Defined in amino/build/coins.d.ts:18</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1024,7 +1028,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>amount: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>denom: <span class="tsd-signature-type">string</span></h5>
@@ -1376,7 +1380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in amino/build/coins.d.ts:24</li>
+									<li>Defined in amino/build/coins.d.ts:30</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
