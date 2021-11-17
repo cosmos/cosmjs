@@ -117,6 +117,13 @@ export class Registry {
     return type;
   }
 
+  /**
+   * Takes a typeUrl/value pair and encodes the value to protobuf if
+   * the given type was previously registered.
+   *
+   * If the value has to be wrapped in an Any, this needs to be done
+   * manually after this call. Or use `encodeAsAny` instead.
+   */
   public encode(encodeObject: EncodeObject): Uint8Array {
     const { value, typeUrl } = encodeObject;
     if (isTxBodyEncodeObject(encodeObject)) {
@@ -127,14 +134,20 @@ export class Registry {
     return type.encode(instance).finish();
   }
 
-  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
-    const wrappedMessages = txBodyFields.messages.map((message) => {
-      const messageBytes = this.encode(message);
-      return Any.fromPartial({
-        typeUrl: message.typeUrl,
-        value: messageBytes,
-      });
+  /**
+   * Takes a typeUrl/value pair and encodes the value to an Any if
+   * the given type was previously registered.
+   */
+  public encodeAsAny(encodeObject: EncodeObject): Any {
+    const binaryValue = this.encode(encodeObject);
+    return Any.fromPartial({
+      typeUrl: encodeObject.typeUrl,
+      value: binaryValue,
     });
+  }
+
+  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
+    const wrappedMessages = txBodyFields.messages.map((message) => this.encodeAsAny(message));
     const txBody = TxBody.fromPartial({
       ...txBodyFields,
       messages: wrappedMessages,
