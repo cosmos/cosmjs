@@ -14,7 +14,9 @@ import {
   setupAuthExtension,
   setupBankExtension,
   setupStakingExtension,
+  setupTxExtension,
   StakingExtension,
+  TxExtension,
 } from "./queries";
 import {
   isSearchByHeightQuery,
@@ -146,7 +148,9 @@ export interface PrivateStargateClient {
 
 export class StargateClient {
   private readonly tmClient: Tendermint34Client | undefined;
-  private readonly queryClient: (QueryClient & AuthExtension & BankExtension & StakingExtension) | undefined;
+  private readonly queryClient:
+    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | undefined;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -162,6 +166,7 @@ export class StargateClient {
         setupAuthExtension,
         setupBankExtension,
         setupStakingExtension,
+        setupTxExtension,
       );
     }
   }
@@ -179,11 +184,17 @@ export class StargateClient {
     return this.tmClient;
   }
 
-  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension & StakingExtension) | undefined {
+  protected getQueryClient():
+    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | undefined {
     return this.queryClient;
   }
 
-  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & StakingExtension {
+  protected forceGetQueryClient(): QueryClient &
+    AuthExtension &
+    BankExtension &
+    StakingExtension &
+    TxExtension {
     if (!this.queryClient) {
       throw new Error("Query client not available. You cannot use online functionality in offline mode.");
     }

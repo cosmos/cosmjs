@@ -42,6 +42,34 @@ describe("SigningStargateClient", () => {
     });
   });
 
+  describe("simulate", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(
+        simapp.tendermintUrl,
+        wallet,
+        defaultSigningClientOptions,
+      );
+
+      const msg = MsgDelegate.fromPartial({
+        delegatorAddress: faucet.address0,
+        validatorAddress: validator.validatorAddress,
+        amount: coin(1234, "ustake"),
+      });
+      const msgAny: MsgDelegateEncodeObject = {
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: msg,
+      };
+      const memo = "Use your power wisely";
+      const gasUsed = await client.simulate(faucet.address0, [msgAny], memo);
+      expect(gasUsed).toBeGreaterThanOrEqual(101_000);
+      expect(gasUsed).toBeLessThanOrEqual(106_000);
+
+      client.disconnect();
+    });
+  });
+
   describe("sendTokens", () => {
     it("works with direct signer", async () => {
       pendingWithoutSimapp();
