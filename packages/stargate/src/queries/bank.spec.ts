@@ -4,7 +4,6 @@ import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
-  pendingWithoutSimapp42,
   simapp,
   unused,
 } from "../testutils.spec";

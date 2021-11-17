@@ -6,14 +6,7 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import {
-  nonExistentAddress,
-  pendingWithoutSimapp,
-  pendingWithoutSimapp42,
-  simapp,
-  unused,
-  validator,
-} from "../testutils.spec";
+import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
 
