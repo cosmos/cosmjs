@@ -29,7 +29,7 @@ import {
   StdFee,
 } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { assert } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
@@ -194,6 +194,25 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.signer = signer;
     this.broadcastTimeoutMs = options.broadcastTimeoutMs;
     this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
+  }
+
+  public async simulate(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    memo: string | undefined,
+  ): Promise<number> {
+    const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
+    const { sequence } = await this.getSequence(signerAddress);
+    const { gasInfo } = await this.forceGetQueryClient().tx.simulate(anyMsgs, memo, pubkey, sequence);
+    assertDefined(gasInfo);
+    return Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
   }
 
   /** Uploads code and returns a receipt, including the code ID */
