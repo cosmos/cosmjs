@@ -23,12 +23,7 @@ async function main(hackatomWasmPath: string) {
   // Upload contract
   const wasm = fs.readFileSync(hackatomWasmPath);
   const uploadFee = calculateFee(1_500_000, gasPrice);
-  const uploadReceipt = await client.upload(
-    alice.address0,
-    wasm,
-    uploadFee,
-    "Upload hackatom contract",
-  );
+  const uploadReceipt = await client.upload(alice.address0, wasm, uploadFee, "Upload hackatom contract");
   console.info("Upload succeeded. Receipt:", uploadReceipt);
 
   // Instantiate
