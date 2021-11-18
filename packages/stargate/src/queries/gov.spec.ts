@@ -3,7 +3,13 @@ import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { ProposalStatus, TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
+import {
+  ProposalStatus,
+  TextProposal,
+  Vote,
+  VoteOption,
+  WeightedVoteOption,
+} from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
@@ -20,6 +26,7 @@ import {
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
   simapp,
+  simapp42Enabled,
   simappEnabled,
   validator,
 } from "../testutils.spec";
@@ -326,19 +333,47 @@ describe("GovExtension", () => {
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.votes(proposalId);
-      expect(response.votes).toEqual([
-        // why is vote 2 first?
-        {
-          proposalId: longify(proposalId),
-          voter: voter2Address,
-          option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
-        },
-        {
-          proposalId: longify(proposalId),
-          voter: voter1Address,
-          option: VoteOption.VOTE_OPTION_YES,
-        },
-      ]);
+      if (simapp42Enabled()) {
+        expect(response.votes).toEqual([
+          // why is vote 2 first?
+          Vote.fromPartial({
+            proposalId: longify(proposalId),
+            voter: voter2Address,
+            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+          }),
+          Vote.fromPartial({
+            proposalId: longify(proposalId),
+            voter: voter1Address,
+            option: VoteOption.VOTE_OPTION_YES,
+          }),
+        ]);
+      } else {
+        expect(response.votes).toEqual([
+          // why is vote 2 first?
+          Vote.fromPartial({
+            proposalId: longify(proposalId),
+            voter: voter2Address,
+            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+            options: [
+              WeightedVoteOption.fromPartial({
+                option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+                weight: "1000000000000000000",
+              }),
+            ],
+          }),
+          Vote.fromPartial({
+            proposalId: longify(proposalId),
+            voter: voter1Address,
+            option: VoteOption.VOTE_OPTION_YES,
+            options: [
+              WeightedVoteOption.fromPartial({
+                option: VoteOption.VOTE_OPTION_YES,
+                weight: "1000000000000000000",
+              }),
+            ],
+          }),
+        ]);
+      }
 
       tmClient.disconnect();
     });
@@ -351,11 +386,29 @@ describe("GovExtension", () => {
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.vote(proposalId, voter1Address);
-      expect(response.vote).toEqual({
-        voter: voter1Address,
-        proposalId: longify(proposalId),
-        option: VoteOption.VOTE_OPTION_YES,
-      });
+      if (simapp42Enabled()) {
+        expect(response.vote).toEqual(
+          Vote.fromPartial({
+            voter: voter1Address,
+            proposalId: longify(proposalId),
+            option: VoteOption.VOTE_OPTION_YES,
+          }),
+        );
+      } else {
+        expect(response.vote).toEqual(
+          Vote.fromPartial({
+            voter: voter1Address,
+            proposalId: longify(proposalId),
+            option: VoteOption.VOTE_OPTION_YES,
+            options: [
+              WeightedVoteOption.fromPartial({
+                option: VoteOption.VOTE_OPTION_YES,
+                weight: "1000000000000000000",
+              }),
+            ],
+          }),
+        );
+      }
 
       tmClient.disconnect();
     });
