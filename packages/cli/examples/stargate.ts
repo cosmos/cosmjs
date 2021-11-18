@@ -1,4 +1,4 @@
-import { makeCosmoshubPath } from "@cosmjs/amino";
+import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { assertIsBroadcastTxSuccess, calculateFee, GasPrice, SigningStargateClient } from "@cosmjs/stargate";
 
@@ -20,15 +20,12 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
 
 // Send transaction
 const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
-const amount = {
-  denom: "ucosm",
-  amount: "1234567",
-};
+const amount = coins(1234567, "ucosm");
 const fee = calculateFee(200_000, gasPrice);
 const result = await client.sendTokens(
   account.address,
   recipient,
-  [amount],
+  amount,
   fee,
   "Have fun with your star coins",
 );

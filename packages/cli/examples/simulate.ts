@@ -1,4 +1,4 @@
-import { makeCosmoshubPath } from "@cosmjs/amino";
+import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import {
   assertIsBroadcastTxSuccess,
@@ -26,22 +26,19 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
 
 // Send transaction (using simulate)
 const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
-const amount = {
-  denom: "ucosm",
-  amount: "1234567",
-};
+const amount = coins(1234567, "ucosm");
 const sendMsg: MsgSendEncodeObject = {
   typeUrl: "/cosmos.bank.v1beta1.MsgSend",
   value: {
     fromAddress: account.address,
     toAddress: recipient,
-    amount: [amount],
+    amount: amount,
   },
 };
 const memo = "With simulate";
 const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
 const fee = calculateFee(Math.floor(gasEstimation * 1.3), gasPrice);
-const result = await client.sendTokens(account.address, recipient, [amount], fee, memo);
+const result = await client.sendTokens(account.address, recipient, amount, fee, memo);
 assertIsBroadcastTxSuccess(result);
 console.log("Successfully broadcasted:", result);
 
