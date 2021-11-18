@@ -64,7 +64,7 @@ describe("SigningStargateClient", () => {
       const memo = "Use your power wisely";
       const gasUsed = await client.simulate(faucet.address0, [msgAny], memo);
       expect(gasUsed).toBeGreaterThanOrEqual(101_000);
-      expect(gasUsed).toBeLessThanOrEqual(106_000);
+      expect(gasUsed).toBeLessThanOrEqual(150_000);
 
       client.disconnect();
     });
