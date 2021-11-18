@@ -48,7 +48,7 @@
     "@cosmjs/proto-signing": "workspace:packages/proto-signing",
     "@cosmjs/stargate": "workspace:packages/stargate",
     "eslint": "^7.5",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.1",
     "typescript": "~4.3"
   }
 }

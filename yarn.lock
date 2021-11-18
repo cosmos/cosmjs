@@ -328,7 +328,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
@@ -379,7 +379,7 @@ __metadata:
     jasmine: ^3.8
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -433,7 +433,7 @@ __metadata:
     long: ^4.0.0
     nyc: ^15.1.0
     pako: ^2.0.2
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     protobufjs: ~6.10.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
@@ -491,7 +491,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ripemd160: ^2.0.2
     ses: ^0.11.0
     sha.js: ^2.4.11
@@ -538,7 +538,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -581,7 +581,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -624,7 +624,7 @@ __metadata:
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -664,7 +664,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -713,7 +713,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -761,7 +761,7 @@ __metadata:
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     semver: ^7.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -805,7 +805,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -854,7 +854,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     protobufjs: ~6.10.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -899,7 +899,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -954,7 +954,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     protobufjs: ~6.10.2
     readonly-date: ^1.0.0
     ses: ^0.11.0
@@ -999,7 +999,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -1049,7 +1049,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -1093,7 +1093,7 @@ __metadata:
     karma-jasmine: ^4.0.1
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -3006,7 +3006,7 @@ __metadata:
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
     eslint: ^7.5
-    prettier: ^2.3.2
+    prettier: ^2.4.1
     typescript: ~4.3
   languageName: unknown
   linkType: soft
@@ -6165,12 +6165,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "prettier@npm:2.3.2"
+"prettier@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "prettier@npm:2.4.1"
   bin:
     prettier: bin-prettier.js
-  checksum: 4fd89a7f6a12b13456d359fba2b1dd0fc0a17cf33f8f15953ab9f43b21ea9b09b5a2861d63b558ca0577274ce606d390e70628cf93e26d19d6cb7f19c9eebc31
+  checksum: d72ebe33441651cdb334d05d8d180bedbb6f8ca9db47163719b9763f3f471d27b9dc86b9f2c9383773681ff836eb5951acd1809871077c9313609f7b7e05554e
   languageName: node
   linkType: hard
 

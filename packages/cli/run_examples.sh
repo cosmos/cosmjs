@@ -2,7 +2,7 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
-if [ -n "${SIMAPP42_ENABLED:-}" ]; then
+if [ -n "${WASMD_ENABLED:-}" ]; then
   yarn node ./bin/cosmwasm-cli --init examples/cosmwasm.ts --code "process.exit(0)"
 fi
 if [ -n "${LAUNCHPAD_ENABLED:-}" ]; then
