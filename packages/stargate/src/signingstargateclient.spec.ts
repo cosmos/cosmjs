@@ -16,6 +16,7 @@ import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess, isBroadcastTxFailure } from "./stargateclient";
 import {
+  defaultGasPrice,
   defaultSendFee,
   defaultSigningClientOptions,
   faucet,
@@ -270,6 +271,27 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+      });
+
+      it("works with auto gas", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, {
+          ...defaultSigningClientOptions,
+          gasPrice: defaultGasPrice,
+        });
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], "auto");
         assertIsBroadcastTxSuccess(result);
       });
 

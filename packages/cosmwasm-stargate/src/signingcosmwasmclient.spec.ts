@@ -28,6 +28,7 @@ import {
   alice,
   defaultClearAdminFee,
   defaultExecuteFee,
+  defaultGasPrice,
   defaultInstantiateFee,
   defaultMigrateFee,
   defaultSendFee,
@@ -595,6 +596,32 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
+      });
+
+      it("works with auto gas", async () => {
+        pendingWithoutWasmd();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+          gasPrice: defaultGasPrice,
+        });
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: alice.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(alice.address0, [msgAny], "auto", memo);
         assertIsBroadcastTxSuccess(result);
 
         client.disconnect();

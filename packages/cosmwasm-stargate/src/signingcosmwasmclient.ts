@@ -17,8 +17,10 @@ import {
   AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
+  calculateFee,
   Coin,
   defaultRegistryTypes,
+  GasPrice,
   isBroadcastTxFailure,
   logs,
   MsgDelegateEncodeObject,
@@ -144,6 +146,7 @@ export interface SigningCosmWasmClientOptions {
   readonly prefix?: string;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
+  readonly gasPrice?: GasPrice;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
@@ -153,6 +156,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
+  private readonly gasPrice: GasPrice | undefined;
 
   public static async connectWithSigner(
     endpoint: string,
@@ -194,6 +198,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.signer = signer;
     this.broadcastTimeoutMs = options.broadcastTimeoutMs;
     this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
+    this.gasPrice = options.gasPrice;
   }
 
   public async simulate(
@@ -219,7 +224,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async upload(
     senderAddress: string,
     wasmCode: Uint8Array,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<UploadResult> {
     const compressed = pako.gzip(wasmCode, { level: 9 });
@@ -253,7 +258,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     msg: Record<string, unknown>,
     label: string,
-    fee: StdFee,
+    fee: StdFee | "auto",
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateContractMsg: MsgInstantiateContractEncodeObject = {
@@ -284,7 +289,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     newAdmin: string,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdminEncodeObject = {
@@ -308,7 +313,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async clearAdmin(
     senderAddress: string,
     contractAddress: string,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<ChangeAdminResult> {
     const clearAdminMsg: MsgClearAdminEncodeObject = {
@@ -333,7 +338,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     contractAddress: string,
     codeId: number,
     migrateMsg: Record<string, unknown>,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<MigrateResult> {
     const migrateContractMsg: MsgMigrateContractEncodeObject = {
@@ -359,7 +364,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     msg: Record<string, unknown>,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
     funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
@@ -386,7 +391,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -404,7 +409,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -418,7 +423,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -431,7 +436,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawDelegatorRewardMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -452,10 +457,18 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    let usedFee: StdFee;
+    if (fee == "auto") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      usedFee = calculateFee(Math.round(gasEstimation * 1.3), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }

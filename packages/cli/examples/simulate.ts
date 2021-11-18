@@ -22,9 +22,19 @@ const rpcEndpoint = "ws://localhost:26658";
 const gasPrice = GasPrice.fromString("0.025ucosm");
 
 // Setup client
-const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet);
+const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet, { gasPrice: gasPrice });
 
-// Send transaction (using sendTokens)
+// Send transaction (using sendTokens with auto gas)
+{
+  const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
+  const amount = coins(1234567, "ucosm");
+  const memo = "With simulate";
+  const result = await client.sendTokens(account.address, recipient, amount, "auto", memo);
+  assertIsBroadcastTxSuccess(result);
+  console.log("Successfully broadcasted:", result);
+}
+
+// Send transaction (using sendTokens with manual gas)
 {
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
   const amount = coins(1234567, "ucosm");
@@ -38,13 +48,31 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
-  const fee = calculateFee(Math.floor(gasEstimation * 1.3), gasPrice);
+  const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
   const result = await client.sendTokens(account.address, recipient, amount, fee, memo);
   assertIsBroadcastTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
-// Send transaction (using signAndBroadcast)
+// Send transaction (using signAndBroadcast with auto gas)
+{
+  const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
+  const amount = coins(1234567, "ucosm");
+  const sendMsg: MsgSendEncodeObject = {
+    typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+    value: {
+      fromAddress: account.address,
+      toAddress: recipient,
+      amount: amount,
+    },
+  };
+  const memo = "With simulate";
+  const result = await client.signAndBroadcast(account.address, [sendMsg], "auto", memo);
+  assertIsBroadcastTxSuccess(result);
+  console.log("Successfully broadcasted:", result);
+}
+
+// Send transaction (using signAndBroadcast with manual gas)
 {
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
   const amount = coins(1234567, "ucosm");
@@ -58,7 +86,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
-  const fee = calculateFee(Math.floor(gasEstimation * 1.3), gasPrice);
+  const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
   const result = await client.signAndBroadcast(account.address, [sendMsg], fee, memo);
   assertIsBroadcastTxSuccess(result);
   console.log("Successfully broadcasted:", result);

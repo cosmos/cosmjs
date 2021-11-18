@@ -68,6 +68,7 @@ import {
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
+import { calculateFee, GasPrice } from "./fee";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
@@ -131,6 +132,7 @@ export interface SigningStargateClientOptions {
   readonly prefix?: string;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
+  readonly gasPrice?: GasPrice;
 }
 
 export class SigningStargateClient extends StargateClient {
@@ -140,6 +142,7 @@ export class SigningStargateClient extends StargateClient {
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
+  private readonly gasPrice: GasPrice | undefined;
 
   public static async connectWithSigner(
     endpoint: string,
@@ -179,6 +182,7 @@ export class SigningStargateClient extends StargateClient {
     this.signer = signer;
     this.broadcastTimeoutMs = options.broadcastTimeoutMs;
     this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
+    this.gasPrice = options.gasPrice;
   }
 
   public async simulate(
@@ -204,7 +208,7 @@ export class SigningStargateClient extends StargateClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -222,7 +226,7 @@ export class SigningStargateClient extends StargateClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -240,7 +244,7 @@ export class SigningStargateClient extends StargateClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -257,7 +261,7 @@ export class SigningStargateClient extends StargateClient {
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -279,7 +283,7 @@ export class SigningStargateClient extends StargateClient {
     timeoutHeight: Height | undefined,
     /** timeout in seconds */
     timeoutTimestamp: number | undefined,
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
@@ -303,10 +307,18 @@ export class SigningStargateClient extends StargateClient {
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
-    fee: StdFee,
+    fee: StdFee | "auto",
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    let usedFee: StdFee;
+    if (fee == "auto") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      usedFee = calculateFee(Math.round(gasEstimation * 1.3), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
