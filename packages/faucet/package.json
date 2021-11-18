@@ -69,7 +69,7 @@
     "jasmine": "^3.8",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.1",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^8",
