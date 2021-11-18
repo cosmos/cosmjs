@@ -23,12 +23,12 @@ export function toAccAddress(address: string): Uint8Array {
  */
 export function createPagination(paginationKey?: Uint8Array): PageRequest | undefined {
   return paginationKey
-    ? {
+    ? PageRequest.fromPartial({
         key: paginationKey,
         offset: Long.fromNumber(0, true),
         limit: Long.fromNumber(0, true),
         countTotal: false,
-      }
+      })
     : undefined;
 }
 

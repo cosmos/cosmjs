@@ -3,7 +3,7 @@ import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { ProposalStatus, TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
+import { ProposalStatus, TextProposal, Vote, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
@@ -328,16 +328,16 @@ describe("GovExtension", () => {
       const response = await client.gov.votes(proposalId);
       expect(response.votes).toEqual([
         // why is vote 2 first?
-        {
+        Vote.fromPartial({
           proposalId: longify(proposalId),
           voter: voter2Address,
           option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
-        },
-        {
+        }),
+        Vote.fromPartial({
           proposalId: longify(proposalId),
           voter: voter1Address,
           option: VoteOption.VOTE_OPTION_YES,
-        },
+        }),
       ]);
 
       tmClient.disconnect();
@@ -351,11 +351,13 @@ describe("GovExtension", () => {
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.vote(proposalId, voter1Address);
-      expect(response.vote).toEqual({
-        voter: voter1Address,
-        proposalId: longify(proposalId),
-        option: VoteOption.VOTE_OPTION_YES,
-      });
+      expect(response.vote).toEqual(
+        Vote.fromPartial({
+          voter: voter1Address,
+          proposalId: longify(proposalId),
+          option: VoteOption.VOTE_OPTION_YES,
+        }),
+      );
 
       tmClient.disconnect();
     });

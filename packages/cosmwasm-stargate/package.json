@@ -46,7 +46,7 @@
     "@cosmjs/stargate": "workspace:packages/stargate",
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc",
     "@cosmjs/utils": "workspace:packages/utils",
-    "cosmjs-types": "^0.2.0",
+    "cosmjs-types": "^0.3.0",
     "long": "^4.0.0",
     "pako": "^2.0.2",
     "protobufjs": "~6.10.2"
