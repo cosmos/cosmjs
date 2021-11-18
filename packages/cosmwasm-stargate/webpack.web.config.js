@@ -18,7 +18,6 @@ module.exports = [
     plugins: [
       new webpack.EnvironmentPlugin({
         WASMD_ENABLED: "",
-        ERC20_ENABLED: "",
       }),
       new webpack.ProvidePlugin({
         Buffer: ["buffer", "Buffer"],
