@@ -15,4 +15,5 @@ yarn node ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
 yarn node ./bin/cosmwasm-cli --init examples/multisig_address.ts --code "process.exit(0)"
 if [ -n "${SIMAPP42_ENABLED:-}" ]; then
   yarn node ./bin/cosmwasm-cli --init examples/stargate.ts --code "process.exit(0)"
+  yarn node ./bin/cosmwasm-cli --init examples/simulate.ts --code "process.exit(0)"
 fi
