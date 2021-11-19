@@ -34,6 +34,16 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   console.log("Successfully broadcasted:", result);
 }
 
+// Send transaction (using sendTokens with auto gas and custom muliplier)
+{
+  const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
+  const amount = coins(1234567, "ucosm");
+  const memo = "With simulate";
+  const result = await client.sendTokens(account.address, recipient, amount, 1.2, memo);
+  assertIsBroadcastTxSuccess(result);
+  console.log("Successfully broadcasted:", result);
+}
+
 // Send transaction (using sendTokens with manual gas)
 {
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
@@ -68,6 +78,24 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const result = await client.signAndBroadcast(account.address, [sendMsg], "auto", memo);
+  assertIsBroadcastTxSuccess(result);
+  console.log("Successfully broadcasted:", result);
+}
+
+// Send transaction (using signAndBroadcast with auto gas and custom muliplier)
+{
+  const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
+  const amount = coins(1234567, "ucosm");
+  const sendMsg: MsgSendEncodeObject = {
+    typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+    value: {
+      fromAddress: account.address,
+      toAddress: recipient,
+      amount: amount,
+    },
+  };
+  const memo = "With simulate";
+  const result = await client.signAndBroadcast(account.address, [sendMsg], 1.4, memo);
   assertIsBroadcastTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }

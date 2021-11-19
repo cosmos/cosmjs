@@ -208,7 +208,7 @@ export class SigningStargateClient extends StargateClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -226,7 +226,7 @@ export class SigningStargateClient extends StargateClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -244,7 +244,7 @@ export class SigningStargateClient extends StargateClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -261,7 +261,7 @@ export class SigningStargateClient extends StargateClient {
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -283,7 +283,7 @@ export class SigningStargateClient extends StargateClient {
     timeoutHeight: Height | undefined,
     /** timeout in seconds */
     timeoutTimestamp: number | undefined,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
@@ -307,14 +307,15 @@ export class SigningStargateClient extends StargateClient {
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     let usedFee: StdFee;
-    if (fee == "auto") {
+    if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      usedFee = calculateFee(Math.round(gasEstimation * 1.3), this.gasPrice);
+      const muliplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * muliplier), this.gasPrice);
     } else {
       usedFee = fee;
     }

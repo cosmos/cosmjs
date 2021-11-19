@@ -224,7 +224,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async upload(
     senderAddress: string,
     wasmCode: Uint8Array,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<UploadResult> {
     const compressed = pako.gzip(wasmCode, { level: 9 });
@@ -258,7 +258,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     msg: Record<string, unknown>,
     label: string,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateContractMsg: MsgInstantiateContractEncodeObject = {
@@ -289,7 +289,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     newAdmin: string,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdminEncodeObject = {
@@ -313,7 +313,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async clearAdmin(
     senderAddress: string,
     contractAddress: string,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<ChangeAdminResult> {
     const clearAdminMsg: MsgClearAdminEncodeObject = {
@@ -338,7 +338,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     contractAddress: string,
     codeId: number,
     migrateMsg: Record<string, unknown>,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
     const migrateContractMsg: MsgMigrateContractEncodeObject = {
@@ -364,7 +364,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     msg: Record<string, unknown>,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
     funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
@@ -391,7 +391,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -409,7 +409,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -423,7 +423,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -436,7 +436,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawDelegatorRewardMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -457,14 +457,15 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
-    fee: StdFee | "auto",
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     let usedFee: StdFee;
-    if (fee == "auto") {
+    if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      usedFee = calculateFee(Math.round(gasEstimation * 1.3), this.gasPrice);
+      const muliplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * muliplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
