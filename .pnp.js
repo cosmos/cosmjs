@@ -416,7 +416,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@types/bn.js",
-        "npm:4.11.6"
+        "npm:5.1.0"
       ],
       [
         "@types/body-parser",
@@ -848,7 +848,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "bn.js",
-        "npm:4.12.0"
+        "npm:5.2.0"
       ],
       [
         "body-parser",
@@ -3366,7 +3366,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/math", "workspace:packages/math"],
             ["@cosmjs/utils", "workspace:packages/utils"],
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],
-            ["@types/bn.js", "npm:4.11.6"],
+            ["@types/bn.js", "npm:5.1.0"],
             ["@types/elliptic", "npm:6.4.12"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jasmine", "npm:3.8.1"],
@@ -3380,7 +3380,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["bip39", "npm:3.0.4"],
-            ["bn.js", "npm:4.12.0"],
+            ["bn.js", "npm:5.2.0"],
             ["buffer", "npm:6.0.3"],
             ["elliptic", "npm:6.5.4"],
             ["eslint", "npm:7.26.0"],
@@ -3701,7 +3701,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@cosmjs/math", "workspace:packages/math"],
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],
-            ["@types/bn.js", "npm:4.11.6"],
+            ["@types/bn.js", "npm:5.1.0"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jasmine", "npm:3.8.1"],
             ["@types/karma-firefox-launcher", "npm:2.1.0"],
@@ -3709,7 +3709,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
-            ["bn.js", "npm:4.12.0"],
+            ["bn.js", "npm:5.2.0"],
             ["buffer", "npm:6.0.3"],
             ["eslint", "npm:7.26.0"],
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],
@@ -4400,14 +4400,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/bn.js", [
-        ["npm:4.11.6", {
-          "packageLocation": "./.yarn/cache/@types-bn.js-npm-4.11.6-85f0d125f5-0f6cbfb3d1.zip/node_modules/@types/bn.js/",
-          "packageDependencies": [
-            ["@types/bn.js", "npm:4.11.6"],
-            ["@types/node", "npm:15.3.1"]
-          ],
-          "linkType": "HARD",
-        }],
         ["npm:5.1.0", {
           "packageLocation": "./.yarn/cache/@types-bn.js-npm-5.1.0-4a0335ff4f-e33009f99b.zip/node_modules/@types/bn.js/",
           "packageDependencies": [
@@ -6423,6 +6415,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/bn.js-npm-4.12.0-3ec6c884f6-cfe7494de9.zip/node_modules/bn.js/",
           "packageDependencies": [
             ["bn.js", "npm:4.12.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:5.2.0", {
+          "packageLocation": "./.yarn/cache/bn.js-npm-5.2.0-11748c0b07-7a73bdbba6.zip/node_modules/bn.js/",
+          "packageDependencies": [
+            ["bn.js", "npm:5.2.0"]
           ],
           "linkType": "HARD",
         }]
