@@ -14,11 +14,14 @@ and this project adheres to
   queries remain available in the `IbcExtension` because for IBC the storage
   layout is standardized. Such queries can still be implemented in CosmJS caller
   code that only needs to support one backend. ([#865])
+- @cosmjs/tendermint-rpc: Remove default URL from `HttpClient` and
+  `WebsocketClient` constructors ([#897]).
 - all: Upgrade cosmjs-types to 0.3. This includes the types of the Cosmos SDK
   0.44 modules x/authz and x/feegrant. It causes a few breaking changes by
   adding fields to interfaces. ([#928])
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
+[#897]: https://github.com/cosmos/cosmjs/issues/897
 [#928]: https://github.com/cosmos/cosmjs/issues/928
 
 ### Added

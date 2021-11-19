@@ -39,7 +39,7 @@ export async function http(method: "POST", url: string, request?: any): Promise<
 export class HttpClient implements RpcClient {
   protected readonly url: string;
 
-  public constructor(url = "http://localhost:46657") {
+  public constructor(url: string) {
     // accept host.name:port and assume http protocol
     this.url = hasProtocol(url) ? url : "http://" + url;
   }
