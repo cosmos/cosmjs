@@ -829,7 +829,7 @@ export class Responses {
   }
 
   public static decodeBroadcastTxAsync(response: JsonRpcSuccessResponse): responses.BroadcastTxAsyncResponse {
-    return this.decodeBroadcastTxSync(response);
+    return decodeBroadcastTxSync(response.result as RpcBroadcastTxSyncResponse);
   }
 
   public static decodeBroadcastTxCommit(
