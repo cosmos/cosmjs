@@ -45,7 +45,7 @@
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/utils": "workspace:packages/utils",
     "bip39": "^3.0.2",
-    "bn.js": "^4.11.8",
+    "bn.js": "^5.2.0",
     "elliptic": "^6.5.3",
     "js-sha3": "^0.8.0",
     "libsodium-wrappers": "^0.7.6",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/bn.js": "^4.11.6",
+    "@types/bn.js": "^5",
     "@types/elliptic": "^6.4.12",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^3.8",
