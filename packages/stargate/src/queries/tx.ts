@@ -59,7 +59,7 @@ export function setupTxExtension(base: QueryClient): TxExtension {
                 {
                   publicKey: encodePubkey(signer),
                   sequence: Long.fromNumber(sequence, true),
-                  modeInfo: { single: { mode: SignMode.SIGN_MODE_DIRECT } },
+                  modeInfo: { single: { mode: SignMode.SIGN_MODE_UNSPECIFIED } },
                 },
               ],
             }),
