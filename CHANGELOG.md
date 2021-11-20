@@ -12,6 +12,13 @@ and this project adheres to
   `string` as input types for the amount. This is useful if your values exceed
   the safe integer range.
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: Fix undefined `this` in `decodeBroadcastTxAsync` and
+  `broadcastTxAsync` ([#937]).
+
+[#937]: https://github.com/cosmos/cosmjs/pull/937
+
 ## [0.26.4] - 2021-10-28
 
 ### Fixed

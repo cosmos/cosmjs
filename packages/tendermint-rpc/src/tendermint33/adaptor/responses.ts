@@ -121,8 +121,8 @@ function decodeEvent(event: RpcEvent): responses.Event {
   };
 }
 
-function decodeEvents(events: readonly RpcEvent[]): readonly responses.Event[] {
-  return assertArray(events).map(decodeEvent);
+function decodeEvents(events: readonly RpcEvent[] | undefined): readonly responses.Event[] {
+  return assertArray(events ?? []).map(decodeEvent);
 }
 
 interface RpcTxData {
@@ -130,7 +130,7 @@ interface RpcTxData {
   readonly log?: string;
   /** base64 encoded */
   readonly data?: string;
-  readonly events: readonly RpcEvent[];
+  readonly events?: readonly RpcEvent[];
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
@@ -787,7 +787,7 @@ export class Responses {
   }
 
   public static decodeBroadcastTxAsync(response: JsonRpcSuccessResponse): responses.BroadcastTxAsyncResponse {
-    return this.decodeBroadcastTxSync(response);
+    return Responses.decodeBroadcastTxSync(response);
   }
 
   public static decodeBroadcastTxCommit(
