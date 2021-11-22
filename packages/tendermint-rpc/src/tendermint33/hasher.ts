@@ -1,13 +1,7 @@
-import { Sha256, sha256 } from "@cosmjs/crypto";
+import { Sha256 } from "@cosmjs/crypto";
 
 import { encodeBlockId, encodeBytes, encodeInt, encodeString, encodeTime, encodeVersion } from "./encodings";
 import { Header } from "./responses";
-
-// hash is sha256
-// https://github.com/tendermint/tendermint/blob/master/UPGRADING.md#v0260
-export function hashTx(tx: Uint8Array): Uint8Array {
-  return sha256(tx);
-}
 
 function getSplitPoint(n: number): number {
   if (n < 1) throw new Error("Cannot split an empty tree");

@@ -36,18 +36,6 @@ export interface TendermintInstance {
  */
 export const tendermintInstances: readonly TendermintInstance[] = [
   {
-    url: "localhost:11133",
-    version: "0.33.x",
-    blockTime: 1000,
-    expected: {
-      version: "0.33.8",
-      appCreator: "Cosmoshi Netowoko",
-      p2pVersion: 7,
-      blockVersion: 10,
-      appVersion: 1,
-    },
-  },
-  {
     url: "localhost:11134",
     version: "0.34.x",
     blockTime: 500,

@@ -1,7 +1,6 @@
 // Note: all exports in this module are public available via
 // `import { tendermint33 } from "@cosmjs/tendermint-rpc"`
 
-export { Tendermint33Client } from "./tendermint33client";
 export {
   AbciInfoRequest,
   AbciQueryParams,

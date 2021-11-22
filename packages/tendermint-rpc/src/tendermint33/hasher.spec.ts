@@ -2,17 +2,9 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { ReadonlyDate } from "readonly-date";
 
 import { ReadonlyDateWithNanoseconds } from "../dates";
-import { hashBlock, hashTx } from "./hasher";
+import { hashBlock } from "./hasher";
 
 describe("Hasher", () => {
-  it("creates transaction hash equal to local test", () => {
-    // This was taken from a result from /tx_search of some random test transaction
-    // curl "http://localhost:11127/tx_search?query=\"tx.hash='5CB2CF94A1097A4BC19258BC2353C3E76102B6D528458BE45C855DC5563C1DB2'\""
-    const txId = fromHex("5CB2CF94A1097A4BC19258BC2353C3E76102B6D528458BE45C855DC5563C1DB2");
-    const txData = fromBase64("YUpxZDY2NURaUDMxPWd2TzBPdnNrVWFWYg==");
-    expect(hashTx(txData)).toEqual(txId);
-  });
-
   it("creates block hash equal to local test for empty block", () => {
     // This was taken from a result from /block of some random empty block
     // curl "http://localhost:11133/block"
