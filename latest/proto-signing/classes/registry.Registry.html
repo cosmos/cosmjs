@@ -90,6 +90,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#decode" class="tsd-kind-icon">decode</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#decodeTxBody" class="tsd-kind-icon">decode<wbr>TxBody</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#encode" class="tsd-kind-icon">encode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#encodeAsAny" class="tsd-kind-icon">encode<wbr>AsAny</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#encodeTxBody" class="tsd-kind-icon">encode<wbr>TxBody</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#lookupType" class="tsd-kind-icon">lookup<wbr>Type</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="registry.Registry.html#register" class="tsd-kind-icon">register</a></li>
@@ -110,7 +111,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L79">proto-signing/src/registry.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L79">proto-signing/src/registry.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -136,7 +137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L145">proto-signing/src/registry.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L158">proto-signing/src/registry.ts:158</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -159,7 +160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L159">proto-signing/src/registry.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L172">proto-signing/src/registry.ts:172</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -182,9 +183,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L120">proto-signing/src/registry.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L127">proto-signing/src/registry.ts:127</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a typeUrl/value pair and encodes the value to protobuf if
+									the given type was previously registered.</p>
+								</div>
+								<p>If the value has to be wrapped in an Any, this needs to be done
+								manually after this call. Or use <code>encodeAsAny</code> instead.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -192,6 +201,35 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="encodeAsAny" class="tsd-anchor"></a>
+					<h3>encode<wbr>AsAny</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">encode<wbr>AsAny<span class="tsd-signature-symbol">(</span>encodeObject<span class="tsd-signature-symbol">: </span><a href="../interfaces/registry.EncodeObject.html" class="tsd-signature-type" data-tsd-kind="Interface">EncodeObject</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L141">proto-signing/src/registry.ts:141</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a typeUrl/value pair and encodes the value to an Any if
+									the given type was previously registered.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>encodeObject: <a href="../interfaces/registry.EncodeObject.html" class="tsd-signature-type" data-tsd-kind="Interface">EncodeObject</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -205,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L130">proto-signing/src/registry.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L149">proto-signing/src/registry.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -228,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L108">proto-signing/src/registry.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L108">proto-signing/src/registry.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -266,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/bbd169d99b/packages/proto-signing/src/registry.ts#L88">proto-signing/src/registry.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/0d9108e3a1/packages/proto-signing/src/registry.ts#L88">proto-signing/src/registry.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -343,6 +381,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="registry.Registry.html#encode" class="tsd-kind-icon">encode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="registry.Registry.html#encodeAsAny" class="tsd-kind-icon">encode<wbr>AsAny</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="registry.Registry.html#encodeTxBody" class="tsd-kind-icon">encode<wbr>TxBody</a>
