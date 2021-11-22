@@ -87,6 +87,6 @@ export {
   TxSearchRequest,
   ValidatorsRequest,
   ValidatorsParams,
-} from "./tendermint33";
+} from "./tendermint34";
 export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
