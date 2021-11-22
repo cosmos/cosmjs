@@ -17,8 +17,10 @@ import {
   AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
+  calculateFee,
   Coin,
   defaultRegistryTypes,
+  GasPrice,
   isBroadcastTxFailure,
   logs,
   MsgDelegateEncodeObject,
@@ -29,7 +31,7 @@ import {
   StdFee,
 } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { assert } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
@@ -144,6 +146,7 @@ export interface SigningCosmWasmClientOptions {
   readonly prefix?: string;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
+  readonly gasPrice?: GasPrice;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
@@ -153,6 +156,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
+  private readonly gasPrice: GasPrice | undefined;
 
   public static async connectWithSigner(
     endpoint: string,
@@ -194,13 +198,33 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.signer = signer;
     this.broadcastTimeoutMs = options.broadcastTimeoutMs;
     this.broadcastPollIntervalMs = options.broadcastPollIntervalMs;
+    this.gasPrice = options.gasPrice;
+  }
+
+  public async simulate(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    memo: string | undefined,
+  ): Promise<number> {
+    const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
+    const { sequence } = await this.getSequence(signerAddress);
+    const { gasInfo } = await this.forceGetQueryClient().tx.simulate(anyMsgs, memo, pubkey, sequence);
+    assertDefined(gasInfo);
+    return Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
   }
 
   /** Uploads code and returns a receipt, including the code ID */
   public async upload(
     senderAddress: string,
     wasmCode: Uint8Array,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<UploadResult> {
     const compressed = pako.gzip(wasmCode, { level: 9 });
@@ -234,7 +258,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     msg: Record<string, unknown>,
     label: string,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateContractMsg: MsgInstantiateContractEncodeObject = {
@@ -265,7 +289,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     newAdmin: string,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdminEncodeObject = {
@@ -289,7 +313,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async clearAdmin(
     senderAddress: string,
     contractAddress: string,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<ChangeAdminResult> {
     const clearAdminMsg: MsgClearAdminEncodeObject = {
@@ -314,7 +338,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     contractAddress: string,
     codeId: number,
     migrateMsg: Record<string, unknown>,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
     const migrateContractMsg: MsgMigrateContractEncodeObject = {
@@ -340,7 +364,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     msg: Record<string, unknown>,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
     funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
@@ -367,7 +391,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     recipientAddress: string,
     amount: readonly Coin[],
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
@@ -385,7 +409,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
@@ -399,7 +423,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
@@ -412,7 +436,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async withdrawRewards(
     delegatorAddress: string,
     validatorAddress: string,
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const withdrawDelegatorRewardMsg: MsgWithdrawDelegatorRewardEncodeObject = {
@@ -433,10 +457,19 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
-    fee: StdFee,
+    fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    const txRaw = await this.sign(signerAddress, messages, fee, memo);
+    let usedFee: StdFee;
+    if (fee == "auto" || typeof fee === "number") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const muliplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * muliplier), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }

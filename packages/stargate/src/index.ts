@@ -78,7 +78,9 @@ export {
   setupGovExtension,
   setupIbcExtension,
   setupStakingExtension,
+  setupTxExtension,
   StakingExtension,
+  TxExtension,
 } from "./queries";
 export {
   SearchByHeightQuery,

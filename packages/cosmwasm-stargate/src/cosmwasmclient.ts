@@ -19,7 +19,9 @@ import {
   SequenceResponse,
   setupAuthExtension,
   setupBankExtension,
+  setupTxExtension,
   TimeoutError,
+  TxExtension,
 } from "@cosmjs/stargate";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
@@ -75,12 +77,16 @@ export interface ContractCodeHistoryEntry {
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
   readonly tmClient: Tendermint34Client | undefined;
-  readonly queryClient: (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined;
+  readonly queryClient:
+    | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
+    | undefined;
 }
 
 export class CosmWasmClient {
   private readonly tmClient: Tendermint34Client | undefined;
-  private readonly queryClient: (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined;
+  private readonly queryClient:
+    | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
+    | undefined;
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
@@ -97,6 +103,7 @@ export class CosmWasmClient {
         setupAuthExtension,
         setupBankExtension,
         setupWasmExtension,
+        setupTxExtension,
       );
     }
   }
@@ -114,11 +121,13 @@ export class CosmWasmClient {
     return this.tmClient;
   }
 
-  protected getQueryClient(): (QueryClient & AuthExtension & BankExtension & WasmExtension) | undefined {
+  protected getQueryClient():
+    | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
+    | undefined {
     return this.queryClient;
   }
 
-  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & WasmExtension {
+  protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension {
     if (!this.queryClient) {
       throw new Error("Query client not available. You cannot use online functionality in offline mode.");
     }

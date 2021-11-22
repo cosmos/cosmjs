@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { sha256 } from "@cosmjs/crypto";
-import { toHex } from "@cosmjs/encoding";
+import { toHex, toUtf8 } from "@cosmjs/encoding";
 import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import {
   AminoMsgDelegate,
@@ -17,17 +17,18 @@ import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
-import { MsgStoreCodeEncodeObject } from "./encodeobjects";
+import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   defaultClearAdminFee,
   defaultExecuteFee,
+  defaultGasPrice,
   defaultInstantiateFee,
   defaultMigrateFee,
   defaultSendFee,
@@ -67,6 +68,30 @@ describe("SigningCosmWasmClient", () => {
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix, registry: registry };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       expect(client.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
+      client.disconnect();
+    });
+  });
+
+  describe("simulate", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+
+      const executeContractMsg: MsgExecuteContractEncodeObject = {
+        typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+        value: MsgExecuteContract.fromPartial({
+          sender: alice.address0,
+          contract: deployedHackatom.instances[0].address,
+          msg: toUtf8(`{"release":{}}`),
+          funds: [],
+        }),
+      };
+      const memo = "Go go go";
+      const gasUsed = await client.simulate(alice.address0, [executeContractMsg], memo);
+      expect(gasUsed).toBeGreaterThanOrEqual(101_000);
+      expect(gasUsed).toBeLessThanOrEqual(150_000);
       client.disconnect();
     });
   });
@@ -571,6 +596,32 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+
+        client.disconnect();
+      });
+
+      it("works with auto gas", async () => {
+        pendingWithoutWasmd();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
+          ...defaultSigningClientOptions,
+          prefix: wasmd.prefix,
+          gasPrice: defaultGasPrice,
+        });
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: alice.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(alice.address0, [msgAny], "auto", memo);
         assertIsBroadcastTxSuccess(result);
 
         client.disconnect();
