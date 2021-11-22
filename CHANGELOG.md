@@ -19,10 +19,13 @@ and this project adheres to
 - all: Upgrade cosmjs-types to 0.3. This includes the types of the Cosmos SDK
   0.44 modules x/authz and x/feegrant. It causes a few breaking changes by
   adding fields to interfaces. ([#928])
+- @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Add simulation support
+  ([#931]).
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
 [#897]: https://github.com/cosmos/cosmjs/issues/897
 [#928]: https://github.com/cosmos/cosmjs/issues/928
+[#931]: https://github.com/cosmos/cosmjs/pull/931
 
 ## [0.26.5] - 2021-11-20
 
