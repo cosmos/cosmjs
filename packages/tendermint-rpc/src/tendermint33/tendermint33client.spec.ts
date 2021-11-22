@@ -47,22 +47,53 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     client.disconnect();
   });
 
-  it("can broadcast a transaction", async () => {
-    pendingWithoutTendermint();
-    const client = await Tendermint33Client.create(rpcFactory());
-    const tx = buildKvTx(randomString(), randomString());
+  describe("broadcastTxCommit", () => {
+    it("can broadcast a transaction", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint33Client.create(rpcFactory());
+      const tx = buildKvTx(randomString(), randomString());
 
-    const response = await client.broadcastTxCommit({ tx: tx });
-    expect(response.height).toBeGreaterThan(2);
-    expect(response.hash).toBeTruthy();
-    // verify success
-    expect(response.checkTx.code).toBeFalsy();
-    expect(response.deliverTx).toBeTruthy();
-    if (response.deliverTx) {
-      expect(response.deliverTx.code).toBeFalsy();
-    }
+      const response = await client.broadcastTxCommit({ tx: tx });
+      expect(response.height).toBeGreaterThan(2);
+      expect(response.hash).toBeTruthy();
+      // verify success
+      expect(response.checkTx.code).toBeFalsy();
+      expect(response.deliverTx).toBeTruthy();
+      if (response.deliverTx) {
+        expect(response.deliverTx.code).toBeFalsy();
+      }
 
-    client.disconnect();
+      client.disconnect();
+    });
+  });
+
+  describe("broadcastTxSync", () => {
+    it("can broadcast a transaction", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint33Client.create(rpcFactory());
+      const tx = buildKvTx(randomString(), randomString());
+
+      const response = await client.broadcastTxSync({ tx: tx });
+      expect(response.hash.length).toEqual(32);
+      // verify success
+      expect(response.code).toBeFalsy();
+
+      client.disconnect();
+    });
+  });
+
+  describe("broadcastTxAsync", () => {
+    it("can broadcast a transaction", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint33Client.create(rpcFactory());
+      const tx = buildKvTx(randomString(), randomString());
+
+      const response = await client.broadcastTxAsync({ tx: tx });
+      // TODO: Remove any cast after https://github.com/cosmos/cosmjs/issues/938
+      expect((response as any).hash.length).toEqual(32);
+
+      client.disconnect();
+    });
   });
 
   it("gets the same tx hash from backend as calculated locally", async () => {
