@@ -794,7 +794,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 }
 
 describe("Tendermint34Client", () => {
-  const { url, expected } = tendermintInstances[1];
+  const { url, expected } = tendermintInstances[0];
 
   it("can connect to a given url", async () => {
     pendingWithoutTendermint();

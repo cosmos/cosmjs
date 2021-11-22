@@ -21,11 +21,13 @@ and this project adheres to
   adding fields to interfaces. ([#928])
 - @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Add simulation support
   ([#931]).
+- @cosmjs/tendermint-rpc: Remove `Tendermint33Client` and related symbols.
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
 [#897]: https://github.com/cosmos/cosmjs/issues/897
 [#928]: https://github.com/cosmos/cosmjs/issues/928
 [#931]: https://github.com/cosmos/cosmjs/pull/931
+[#709]: https://github.com/cosmos/cosmjs/issues/709
 
 ## [0.26.5] - 2021-11-20
 
