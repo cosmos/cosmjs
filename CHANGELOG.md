@@ -10,8 +10,11 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: Add `hash` field to `BroadcastTxAsyncResponse`
   ([#938]).
+- @cosmjs/stargate: Add `denomMetadata` and `denomsMetadata` to `BankExtension`
+  ([#932]).
 
 [#938]: https://github.com/cosmos/cosmjs/issues/938
+[#932]: https://github.com/cosmos/cosmjs/issues/932
 
 ### Fixed
 

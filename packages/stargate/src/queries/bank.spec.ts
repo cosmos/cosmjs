@@ -143,4 +143,74 @@ describe("BankExtension", () => {
       tmClient.disconnect();
     });
   });
+
+  describe("denomMetadata", () => {
+    it("works for existent denom", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
+
+      const metadata = await client.bank.denomMetadata("ucosm");
+      expect(metadata).toEqual({
+        description: "The fee token of this test chain",
+        denomUnits: [
+          {
+            denom: "ucosm",
+            exponent: 0,
+            aliases: [],
+          },
+          {
+            denom: "COSM",
+            exponent: 6,
+            aliases: [],
+          },
+        ],
+        base: "ucosm",
+        display: "COSM",
+        name: "",
+        symbol: "",
+      });
+
+      tmClient.disconnect();
+    });
+
+    it("works for non-existent denom", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
+
+      await expectAsync(client.bank.denomMetadata("nothere")).toBeRejectedWithError(/code = NotFound/i);
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("denomsMetadata", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
+
+      const metadatas = await client.bank.denomsMetadata();
+      expect(metadatas.length).toEqual(1);
+      expect(metadatas[0]).toEqual({
+        description: "The fee token of this test chain",
+        denomUnits: [
+          {
+            denom: "ucosm",
+            exponent: 0,
+            aliases: [],
+          },
+          {
+            denom: "COSM",
+            exponent: 6,
+            aliases: [],
+          },
+        ],
+        base: "ucosm",
+        display: "COSM",
+        name: "",
+        symbol: "",
+      });
+
+      tmClient.disconnect();
+    });
+  });
 });
