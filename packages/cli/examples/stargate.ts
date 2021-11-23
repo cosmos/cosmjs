@@ -1,6 +1,6 @@
 import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { assertIsBroadcastTxSuccess, calculateFee, GasPrice, SigningStargateClient } from "@cosmjs/stargate";
+import { assertIsDeliverTxSuccess, calculateFee, GasPrice, SigningStargateClient } from "@cosmjs/stargate";
 
 // Wallet
 const mnemonic =
@@ -29,7 +29,7 @@ const result = await client.sendTokens(
   fee,
   "Have fun with your star coins",
 );
-assertIsBroadcastTxSuccess(result);
+assertIsDeliverTxSuccess(result);
 console.log("Successfully broadcasted:", result);
 
 client.disconnect();

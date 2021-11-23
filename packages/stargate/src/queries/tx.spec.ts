@@ -5,7 +5,7 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import Long from "long";
 
 import { defaultRegistryTypes, SigningStargateClient } from "../signingstargateclient";
-import { assertIsBroadcastTxSuccess, StargateClient } from "../stargateclient";
+import { assertIsDeliverTxSuccess, StargateClient } from "../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -51,7 +51,7 @@ describe("TxExtension", () => {
           defaultFee,
           memo,
         );
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
         txHash = result.transactionHash;
       }
 

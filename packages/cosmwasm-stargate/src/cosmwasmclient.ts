@@ -7,8 +7,8 @@ import {
   AuthExtension,
   BankExtension,
   Block,
-  BroadcastTxResponse,
   Coin,
+  DeliverTxResponse,
   IndexedTx,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -251,7 +251,7 @@ export class CosmWasmClient {
    *
    * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
    *
-   * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
+   * If the transaction is included in a block, a `DeliverTxResponse` is returned. The caller then
    * usually needs to check for execution success or failure.
    */
   // NOTE: This method is tested against slow chains and timeouts in the @cosmjs/stargate package.
@@ -260,13 +260,13 @@ export class CosmWasmClient {
     tx: Uint8Array,
     timeoutMs = 60_000,
     pollIntervalMs = 3_000,
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     let timedOut = false;
     const txPollTimeout = setTimeout(() => {
       timedOut = true;
     }, timeoutMs);
 
-    const pollForTx = async (txId: string): Promise<BroadcastTxResponse> => {
+    const pollForTx = async (txId: string): Promise<DeliverTxResponse> => {
       if (timedOut) {
         throw new TimeoutError(
           `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,

@@ -6,7 +6,7 @@ import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/
 
 import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "../encodeobjects";
 import { SigningStargateClient } from "../signingstargateclient";
-import { assertIsBroadcastTxSuccess } from "../stargateclient";
+import { assertIsDeliverTxSuccess } from "../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -52,7 +52,7 @@ describe("StakingExtension", () => {
         };
         const memo = "Test delegation for Stargate";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       }
       {
         const msg: MsgUndelegate = {
@@ -66,7 +66,7 @@ describe("StakingExtension", () => {
         };
         const memo = "Test undelegation for Stargate";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       }
 
       await sleep(75); // wait until transactions are indexed

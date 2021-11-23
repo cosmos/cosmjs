@@ -6,7 +6,7 @@ const { Random } = require("@cosmjs/crypto");
 const { Bech32 } = require("@cosmjs/encoding");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const {
-  assertIsBroadcastTxSuccess,
+  assertIsDeliverTxSuccess,
   SigningStargateClient,
   calculateFee,
   GasPrice,
@@ -28,7 +28,7 @@ async function main() {
   const fee = calculateFee(80_000, "0.025ucosm");
   const memo = "Ensure chain has my pubkey";
   const sendResult = await client.sendTokens(faucet.address0, recipient, amount, fee, memo);
-  assertIsBroadcastTxSuccess(sendResult);
+  assertIsDeliverTxSuccess(sendResult);
 }
 
 main().then(

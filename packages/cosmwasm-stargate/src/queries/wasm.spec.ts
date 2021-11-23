@@ -2,11 +2,11 @@ import { sha256 } from "@cosmjs/crypto";
 import { fromAscii, fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
 import {
-  assertIsBroadcastTxSuccess,
-  BroadcastTxResponse,
+  assertIsDeliverTxSuccess,
   Coin,
   coin,
   coins,
+  DeliverTxResponse,
   logs,
   SigningStargateClient,
   StdFee,
@@ -44,7 +44,7 @@ const registry = new Registry([
 async function uploadContract(
   signer: OfflineDirectSigner,
   contract: ContractUploadInstructions,
-): Promise<BroadcastTxResponse> {
+): Promise<DeliverTxResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCodeEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
@@ -70,7 +70,7 @@ async function instantiateContract(
   codeId: number,
   beneficiaryAddress: string,
   funds?: readonly Coin[],
-): Promise<BroadcastTxResponse> {
+): Promise<DeliverTxResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContractEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
@@ -104,7 +104,7 @@ async function executeContract(
   signer: OfflineDirectSigner,
   contractAddress: string,
   msg: Record<string, unknown>,
-): Promise<BroadcastTxResponse> {
+): Promise<DeliverTxResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContractEncodeObject = {
     typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
@@ -138,7 +138,7 @@ describe("WasmExtension", () => {
     if (wasmdEnabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const result = await uploadContract(wallet, hackatom);
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       hackatomCodeId = Number.parseInt(
         JSON.parse(result.rawLog!)[0]
           .events.find((event: any) => event.type === "store_code")
@@ -147,7 +147,7 @@ describe("WasmExtension", () => {
       );
 
       const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
-      assertIsBroadcastTxSuccess(instantiateResult);
+      assertIsDeliverTxSuccess(instantiateResult);
       hackatomContractAddress = JSON.parse(instantiateResult.rawLog!)[0]
         .events.find((event: any) => event.type === "instantiate")
         .attributes.find((attribute: any) => attribute.key === "_contract_address").value;
@@ -200,7 +200,7 @@ describe("WasmExtension", () => {
       const beneficiaryAddress = makeRandomAddress();
       const funds = coins(707707, "ucosm");
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       const myAddress = JSON.parse(result.rawLog!)[0]
         .events.find((event: any) => event.type === "instantiate")
         .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
@@ -243,7 +243,7 @@ describe("WasmExtension", () => {
       const beneficiaryAddress = makeRandomAddress();
       const funds = coins(707707, "ucosm");
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
 
       const myAddress = JSON.parse(result.rawLog!)[0]
         .events.find((event: any) => event.type === "instantiate")
@@ -375,7 +375,7 @@ describe("WasmExtension", () => {
       // upload
       {
         const result = await uploadContract(wallet, getHackatom());
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
@@ -390,7 +390,7 @@ describe("WasmExtension", () => {
       // instantiate
       {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
         contractAddress = contractAddressAttr.value;
@@ -408,7 +408,7 @@ describe("WasmExtension", () => {
       // execute
       {
         const result = await executeContract(wallet, contractAddress, { release: {} });
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
         const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
         const wasmEvent = parsedLogs.find(() => true)?.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");

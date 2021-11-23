@@ -4,7 +4,7 @@ import {
   SigningCosmosClient,
 } from "@cosmjs/launchpad";
 import {
-  assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
+  assertIsDeliverTxSuccess as assertIsDeliverTxSuccessStargate,
   calculateFee,
   SigningStargateClient,
   StargateClient,
@@ -100,7 +100,7 @@ export class Faucet {
     }
     const fee = calculateFee(constants.gasLimits.send, constants.gasPrice);
     const result = await client.sendTokens(job.sender, job.recipient, [job.amount], fee, constants.memo);
-    assertIsBroadcastTxSuccessStargate(result);
+    assertIsDeliverTxSuccessStargate(result);
   }
 
   /** Use one of the distributor accounts to send tokens to user */

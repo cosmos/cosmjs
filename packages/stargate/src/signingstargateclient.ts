@@ -69,7 +69,7 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
 import { calculateFee, GasPrice } from "./fee";
-import { BroadcastTxResponse, StargateClient } from "./stargateclient";
+import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
@@ -210,7 +210,7 @@ export class SigningStargateClient extends StargateClient {
     amount: readonly Coin[],
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: {
@@ -228,7 +228,7 @@ export class SigningStargateClient extends StargateClient {
     amount: Coin,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
       value: MsgDelegate.fromPartial({
@@ -246,7 +246,7 @@ export class SigningStargateClient extends StargateClient {
     amount: Coin,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
       value: MsgUndelegate.fromPartial({
@@ -263,7 +263,7 @@ export class SigningStargateClient extends StargateClient {
     validatorAddress: string,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const withdrawMsg: MsgWithdrawDelegatorRewardEncodeObject = {
       typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
       value: MsgWithdrawDelegatorReward.fromPartial({
@@ -285,7 +285,7 @@ export class SigningStargateClient extends StargateClient {
     timeoutTimestamp: number | undefined,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
       ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
       : undefined;
@@ -309,7 +309,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");

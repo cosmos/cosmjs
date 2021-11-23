@@ -19,7 +19,7 @@ import {
   MsgVoteEncodeObject,
 } from "../encodeobjects";
 import { SigningStargateClient } from "../signingstargateclient";
-import { assertIsBroadcastTxSuccess } from "../stargateclient";
+import { assertIsDeliverTxSuccess } from "../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -85,7 +85,7 @@ describe("GovExtension", () => {
         defaultFee,
         "Test proposal for simd",
       );
-      assertIsBroadcastTxSuccess(proposalResult);
+      assertIsDeliverTxSuccess(proposalResult);
       const logs = JSON.parse(proposalResult.rawLog || "");
       proposalId = logs[0].events
         .find(({ type }: any) => type === "submit_proposal")
@@ -106,7 +106,7 @@ describe("GovExtension", () => {
             },
           };
           const result = await client.signAndBroadcast(voter1Address, [msgDelegate], defaultFee);
-          assertIsBroadcastTxSuccess(result);
+          assertIsDeliverTxSuccess(result);
         }
 
         const voteMsg: MsgVoteEncodeObject = {
@@ -118,7 +118,7 @@ describe("GovExtension", () => {
           },
         };
         const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
-        assertIsBroadcastTxSuccess(voteResult);
+        assertIsDeliverTxSuccess(voteResult);
       }
 
       // Voter 2
@@ -134,7 +134,7 @@ describe("GovExtension", () => {
             },
           };
           const result = await client.signAndBroadcast(voter2Address, [msgDelegate], defaultFee);
-          assertIsBroadcastTxSuccess(result);
+          assertIsDeliverTxSuccess(result);
         }
 
         const voteMsg: MsgVoteEncodeObject = {
@@ -146,7 +146,7 @@ describe("GovExtension", () => {
           },
         };
         const voteResult = await client.signAndBroadcast(voter2Address, [voteMsg], defaultFee);
-        assertIsBroadcastTxSuccess(voteResult);
+        assertIsDeliverTxSuccess(voteResult);
       }
 
       await sleep(75); // wait until transactions are indexed

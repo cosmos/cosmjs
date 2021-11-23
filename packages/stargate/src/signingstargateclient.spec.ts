@@ -14,7 +14,7 @@ import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
-import { assertIsBroadcastTxSuccess, isBroadcastTxFailure } from "./stargateclient";
+import { assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
   defaultGasPrice,
   defaultSendFee,
@@ -100,7 +100,7 @@ describe("SigningStargateClient", () => {
         defaultSendFee,
         memo,
       );
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
@@ -136,7 +136,7 @@ describe("SigningStargateClient", () => {
         defaultSendFee,
         memo,
       );
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
@@ -174,7 +174,7 @@ describe("SigningStargateClient", () => {
           memo,
         );
         // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
-        expect(isBroadcastTxFailure(result)).toEqual(true);
+        expect(isDeliverTxFailure(result)).toEqual(true);
       }
 
       // no height timeout
@@ -191,7 +191,7 @@ describe("SigningStargateClient", () => {
           memo,
         );
         // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
-        expect(isBroadcastTxFailure(result)).toEqual(true);
+        expect(isDeliverTxFailure(result)).toEqual(true);
       }
     });
 
@@ -223,7 +223,7 @@ describe("SigningStargateClient", () => {
           memo,
         );
         // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
-        expect(isBroadcastTxFailure(result)).toEqual(true);
+        expect(isDeliverTxFailure(result)).toEqual(true);
       }
 
       // no height timeout
@@ -240,7 +240,7 @@ describe("SigningStargateClient", () => {
           memo,
         );
         // CheckTx must pass but the execution must fail in DeliverTx due to invalid channel/port
-        expect(isBroadcastTxFailure(result)).toEqual(true);
+        expect(isDeliverTxFailure(result)).toEqual(true);
       }
     });
   });
@@ -271,7 +271,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with auto gas", async () => {
@@ -292,7 +292,7 @@ describe("SigningStargateClient", () => {
           value: msg,
         };
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], "auto");
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a modifying signer", async () => {
@@ -319,7 +319,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         await sleep(1000);
 
@@ -358,7 +358,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with staking MsgDelegate", async () => {
@@ -385,7 +385,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a custom registry and custom message", async () => {
@@ -505,7 +505,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a modifying signer", async () => {
@@ -532,7 +532,7 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         await sleep(1000);
 
@@ -576,7 +576,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a modifying signer", async () => {
@@ -613,7 +613,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
     });
 
@@ -645,7 +645,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with staking MsgDelegate", async () => {
@@ -675,7 +675,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a custom registry and custom message", async () => {
@@ -798,7 +798,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
 
       it("works with a modifying signer", async () => {
@@ -835,7 +835,7 @@ describe("SigningStargateClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       });
     });
   });

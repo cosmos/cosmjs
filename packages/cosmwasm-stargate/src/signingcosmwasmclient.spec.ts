@@ -6,7 +6,7 @@ import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-si
 import {
   AminoMsgDelegate,
   AminoTypes,
-  assertIsBroadcastTxSuccess,
+  assertIsDeliverTxSuccess,
   coin,
   coins,
   MsgDelegateEncodeObject,
@@ -522,7 +522,7 @@ describe("SigningCosmWasmClient", () => {
         defaultSendFee,
         memo,
       );
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
@@ -558,7 +558,7 @@ describe("SigningCosmWasmClient", () => {
         defaultSendFee,
         memo,
       );
-      assertIsBroadcastTxSuccess(result);
+      assertIsDeliverTxSuccess(result);
       expect(result.rawLog).toBeTruthy();
 
       // got tokens
@@ -596,7 +596,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -622,7 +622,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], "auto", memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -653,7 +653,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         await sleep(500);
 
@@ -693,7 +693,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -721,7 +721,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -750,7 +750,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your tokens wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -875,7 +875,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -905,7 +905,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         await sleep(500);
 
@@ -950,7 +950,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -990,7 +990,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -1023,7 +1023,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -1054,7 +1054,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -1179,7 +1179,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });
@@ -1219,7 +1219,7 @@ describe("SigningCosmWasmClient", () => {
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
 
         client.disconnect();
       });

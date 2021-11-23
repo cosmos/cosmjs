@@ -14,7 +14,7 @@ import {
   SigningCosmosClient,
 } from "@cosmjs/launchpad";
 import {
-  assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
+  assertIsDeliverTxSuccess as assertIsDeliverTxSuccessStargate,
   calculateFee,
   SigningStargateClient,
 } from "@cosmjs/stargate";
@@ -73,7 +73,7 @@ describe("LedgerSigner", () => {
         defaultFee,
         memo,
       );
-      assertIsBroadcastTxSuccessStargate(sendResult);
+      assertIsDeliverTxSuccessStargate(sendResult);
     }
   });
 
@@ -202,7 +202,7 @@ describe("LedgerSigner", () => {
           coins(1234, "ucosm"),
           defaultFee,
         );
-        assertIsBroadcastTxSuccessStargate(result);
+        assertIsDeliverTxSuccessStargate(result);
       },
       interactiveTimeout,
     );
