@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: Add missing `BlockSearchResponse` case to `Response`.
+
 ### Changed
 
 - @cosmjs/stargate: Remove verified queries from `AuthExtension` and

@@ -8,6 +8,7 @@ export type Response =
   | AbciQueryResponse
   | BlockResponse
   | BlockResultsResponse
+  | BlockSearchResponse
   | BlockchainResponse
   | BroadcastTxAsyncResponse
   | BroadcastTxSyncResponse
