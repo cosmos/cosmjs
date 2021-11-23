@@ -30,7 +30,7 @@
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.js\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "test-node": "node --require esm jasmine-testrunner.js",
+    "test-node": "yarn node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
     "demo-node": "yarn build-or-skip && node ./demo/node.js",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
