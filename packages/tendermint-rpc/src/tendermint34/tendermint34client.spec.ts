@@ -90,8 +90,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const tx = buildKvTx(randomString(), randomString());
 
       const response = await client.broadcastTxAsync({ tx: tx });
-      // TODO: Remove any cast after https://github.com/cosmos/cosmjs/issues/938
-      expect((response as any).hash.length).toEqual(32);
+      expect(response.hash.length).toEqual(32);
 
       client.disconnect();
     });

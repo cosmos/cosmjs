@@ -71,8 +71,12 @@ export interface BlockchainResponse {
   readonly blockMetas: readonly BlockMeta[];
 }
 
-/** No data in here because RPC method BroadcastTxAsync "returns right away, with no response" */
-export interface BroadcastTxAsyncResponse {}
+/**
+ * No transaction data in here because RPC method BroadcastTxAsync "returns right away, with no response"
+ */
+export interface BroadcastTxAsyncResponse {
+  readonly hash: Uint8Array;
+}
 
 export interface BroadcastTxSyncResponse extends TxData {
   readonly hash: Uint8Array;

@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: Add `hash` field to `BroadcastTxAsyncResponse`
+  ([#938]).
+
+[#938]: https://github.com/cosmos/cosmjs/issues/938
+
 ### Fixed
 
 - @cosmjs/tendermint-rpc: Add missing `BlockSearchResponse` case to `Response`.
