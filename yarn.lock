@@ -333,7 +333,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -440,7 +440,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -498,7 +498,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -543,7 +543,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -585,7 +585,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -668,7 +668,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -719,7 +719,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -766,7 +766,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -809,7 +809,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -860,7 +860,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -903,7 +903,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -961,7 +961,7 @@ __metadata:
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -1003,7 +1003,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -1054,7 +1054,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -1097,7 +1097,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.21
+    typedoc: ^0.22
     typescript: ~4.4
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
@@ -4090,7 +4090,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
+"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
   version: 7.1.7
   resolution: "glob@npm:7.1.7"
   dependencies:
@@ -4101,6 +4101,20 @@ fsevents@~2.3.1:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: b61f48973bbdcf5159997b0874a2165db572b368b931135832599875919c237fc05c12984e38fe828e69aa8a921eb0e8a4997266211c517c9cfaae8a93988bb8
+  languageName: node
+  linkType: hard
+
+"glob@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "glob@npm:7.2.0"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^3.0.4
+    once: ^1.3.0
+    path-is-absolute: ^1.0.0
+  checksum: 78a8ea942331f08ed2e055cb5b9e40fe6f46f579d7fd3d694f3412fe5db23223d29b7fee1575440202e9a7ff9a72ab106a39fee39934c7bedafe5e5f8ae20134
   languageName: node
   linkType: hard
 
@@ -4156,24 +4170,6 @@ fsevents@~2.3.1:
   version: 4.2.6
   resolution: "graceful-fs@npm:4.2.6"
   checksum: 792e64aafda05a151289f83eaa16aff34ef259658cefd65393883d959409f5a2389b0ec9ebf28f3d21f1b0ddc8f594a1162ae9b18e2b507a6799a70706ec573d
-  languageName: node
-  linkType: hard
-
-"handlebars@npm:^4.7.7":
-  version: 4.7.7
-  resolution: "handlebars@npm:4.7.7"
-  dependencies:
-    minimist: ^1.2.5
-    neo-async: ^2.6.0
-    source-map: ^0.6.1
-    uglify-js: ^3.1.4
-    wordwrap: ^1.0.0
-  dependenciesMeta:
-    uglify-js:
-      optional: true
-  bin:
-    handlebars: bin/handlebars
-  checksum: 1e79a43f5e18d15742977cb987923eab3e2a8f44f2d9d340982bcb69e1735ed049226e534d7c1074eaddaf37e4fb4f471a8adb71cddd5bc8cf3f894241df5cee
   languageName: node
   linkType: hard
 
@@ -4950,7 +4946,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2, json5@npm:^2.2.0":
+"json5@npm:^2.1.2":
   version: 2.2.0
   resolution: "json5@npm:2.2.0"
   dependencies:
@@ -4958,6 +4954,13 @@ fsevents@~2.3.1:
   bin:
     json5: lib/cli.js
   checksum: e88fc5274bb58fc99547baa777886b069d2dd96d9cfc4490b305fd16d711dabd5979e35a4f90873cefbeb552e216b041a304fe56702bedba76e19bc7845f208d
+  languageName: node
+  linkType: hard
+
+"jsonc-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "jsonc-parser@npm:3.0.0"
+  checksum: 1df2326f1f9688de30c70ff19c5b2a83ba3b89a1036160da79821d1361090775e9db502dc57a67c11b56e1186fc1ed70b887f25c5febf9a3ec4f91435836c99d
   languageName: node
   linkType: hard
 
@@ -5318,12 +5321,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"marked@npm:^2.1.1":
-  version: 2.1.3
-  resolution: "marked@npm:2.1.3"
+"marked@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "marked@npm:3.0.8"
   bin:
     marked: bin/marked
-  checksum: 21a5ecd4941bc760aba21dfd97185853ec3b464cf707ad971e3ddb3aeb2f44d0deeb36b0889932afdb6f734975a994d92f18815dd0fabadbd902bdaff997cc5b
+  checksum: 3cdeaa126bbeca5b1b8d2f91e9728018dcd63b250233f3607009a4d70bb6bd9df8c769f1bc52ce9856d1316c91c9dacb1d94d80696f76d094146b4fab126a4eb
   languageName: node
   linkType: hard
 
@@ -5422,7 +5425,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^3.0.0, minimatch@npm:^3.0.4":
+"minimatch@npm:^3.0.4":
   version: 3.0.4
   resolution: "minimatch@npm:3.0.4"
   dependencies:
@@ -5566,7 +5569,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.6.0, neo-async@npm:^2.6.2":
+"neo-async@npm:^2.6.2":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
@@ -6189,7 +6192,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"progress@npm:^2.0.0, progress@npm:^2.0.3":
+"progress@npm:^2.0.0":
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
   checksum: f67403fe7b34912148d9252cb7481266a354bd99ce82c835f79070643bb3c6583d10dbcfda4d41e04bbc1d8437e9af0fb1e1f2135727878f5308682a579429b7
@@ -6746,14 +6749,14 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"shiki@npm:^0.9.3":
-  version: 0.9.4
-  resolution: "shiki@npm:0.9.4"
+"shiki@npm:^0.9.12":
+  version: 0.9.12
+  resolution: "shiki@npm:0.9.12"
   dependencies:
-    json5: ^2.2.0
+    jsonc-parser: ^3.0.0
     onigasm: ^2.2.5
     vscode-textmate: 5.2.0
-  checksum: 9d2801e849c8eadca296d9817f15eb2bc7872ac290d15fcc1f88bfed5e8b5c011c96a6954df888113ec7f181042c824882e1c4cbf3f39cc6d93efd1dc938c068
+  checksum: ee2ca7b997ffe6d412af946c7fa3909f2ade3fe505fe03b5c3f3c5cc90a9b10dbe34a208c9557ee0376d7a64c23995445cdb7c69e60da855cf80305bafdc018e
   languageName: node
   linkType: hard
 
@@ -7415,30 +7418,20 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"typedoc-default-themes@npm:^0.12.10":
-  version: 0.12.10
-  resolution: "typedoc-default-themes@npm:0.12.10"
-  checksum: 4c19a0fecdf24777bd153c6ae4a4f2b23c95521a83483cdbee89aaeef985d7e37f2665b37d55f809ef36d0eb4433a921209dc45a1055791d81464bffeea77dfd
-  languageName: node
-  linkType: hard
-
-"typedoc@npm:^0.21":
-  version: 0.21.4
-  resolution: "typedoc@npm:0.21.4"
+"typedoc@npm:^0.22":
+  version: 0.22.9
+  resolution: "typedoc@npm:0.22.9"
   dependencies:
-    glob: ^7.1.7
-    handlebars: ^4.7.7
+    glob: ^7.2.0
     lunr: ^2.3.9
-    marked: ^2.1.1
-    minimatch: ^3.0.0
-    progress: ^2.0.3
-    shiki: ^0.9.3
-    typedoc-default-themes: ^0.12.10
+    marked: ^3.0.8
+    minimatch: ^3.0.4
+    shiki: ^0.9.12
   peerDependencies:
-    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x
+    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x
   bin:
     typedoc: bin/typedoc
-  checksum: 16bbbfbe1e858c006c5bdc86be8052c9db3be5f95dda7c720e1d2b78a6dc233798d442b0fbfcdb7f6d9e5d0cd41bc9038035c16a83d8880fb042891dbdf0c5f2
+  checksum: a9728074a357fd48fdcbd661ced298f37e2f5b366e5eb921cf06767eabf87fada30ffe791059272e2336cb1d02f1034116a72ca6f159df811906eb82e03071e3
   languageName: node
   linkType: hard
 
@@ -7466,15 +7459,6 @@ fsevents@~2.3.1:
   version: 0.7.28
   resolution: "ua-parser-js@npm:0.7.28"
   checksum: a7da4ad54527211e878ee016c2ef64efad5c2f5a31277d36c9da93b4c89ecaa64f391ad4cf158ada76a9ad8e53004a950705ff1c2f27a52ca8bfb3f1381c39ff
-  languageName: node
-  linkType: hard
-
-"uglify-js@npm:^3.1.4":
-  version: 3.13.7
-  resolution: "uglify-js@npm:3.13.7"
-  bin:
-    uglifyjs: bin/uglifyjs
-  checksum: 0cee6a2f4299e30bf1741b11f75e795a9bef1c1878aa300dec30e5b46fb3b416f15bb41131fafe47d4796223c9982f39c72e65e3f7613080b974b74b559e89db
   languageName: node
   linkType: hard
 
@@ -7773,13 +7757,6 @@ fsevents@~2.3.1:
   version: 1.2.3
   resolution: "word-wrap@npm:1.2.3"
   checksum: 30b48f91fcf12106ed3186ae4fa86a6a1842416df425be7b60485de14bec665a54a68e4b5156647dec3a70f25e84d270ca8bc8cd23182ed095f5c7206a938c1f
-  languageName: node
-  linkType: hard
-
-"wordwrap@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "wordwrap@npm:1.0.0"
-  checksum: 2a44b2788165d0a3de71fd517d4880a8e20ea3a82c080ce46e294f0b68b69a2e49cff5f99c600e275c698a90d12c5ea32aff06c311f0db2eb3f1201f3e7b2a04
   languageName: node
   linkType: hard
 
