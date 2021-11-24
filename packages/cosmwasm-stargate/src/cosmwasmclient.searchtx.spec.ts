@@ -10,11 +10,11 @@ import {
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import {
-  BroadcastTxResponse,
   Coin,
   coins,
-  isBroadcastTxFailure,
-  isBroadcastTxSuccess,
+  DeliverTxResponse,
+  isDeliverTxFailure,
+  isDeliverTxSuccess,
   isMsgSendEncodeObject,
 } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
@@ -46,7 +46,7 @@ async function sendTokens(
   amount: readonly Coin[],
   memo: string,
 ): Promise<{
-  readonly broadcastResponse: BroadcastTxResponse;
+  readonly broadcastResponse: DeliverTxResponse;
   readonly tx: Uint8Array;
 }> {
   const [{ address: walletAddress, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -118,7 +118,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
         coins(123456700000000, "ucosm"),
         "Sending more than I can afford",
       );
-      if (isBroadcastTxFailure(unsuccessfulResult.broadcastResponse)) {
+      if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
         sendUnsuccessful = {
           sender: alice.address0,
           recipient: unsuccessfulRecipient,
@@ -135,7 +135,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
         coins(1234567, "ucosm"),
         "Something I can afford",
       );
-      if (isBroadcastTxSuccess(successfulResult.broadcastResponse)) {
+      if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
         sendSuccessful = {
           sender: alice.address0,
           recipient: successfulRecipient,

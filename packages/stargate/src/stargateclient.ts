@@ -92,7 +92,7 @@ export interface SequenceResponse {
   readonly sequence: number;
 }
 
-export interface BroadcastTxFailure {
+export interface DeliverTxFailure {
   readonly height: number;
   readonly code: number;
   readonly transactionHash: string;
@@ -100,7 +100,7 @@ export interface BroadcastTxFailure {
   readonly data?: readonly MsgData[];
 }
 
-export interface BroadcastTxSuccess {
+export interface DeliverTxSuccess {
   readonly height: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
@@ -112,29 +112,22 @@ export interface BroadcastTxSuccess {
 /**
  * The response after successfully broadcasting a transaction.
  * Success or failure refer to the execution result.
- *
- * The name is a bit misleading as this contains the result of the execution
- * in a block. Both `BroadcastTxSuccess` and `BroadcastTxFailure` contain a height
- * field, which is the height of the block that contains the transaction. This means
- * transactions that were never included in a block cannot be expressed with this type.
  */
-export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
+export type DeliverTxResponse = DeliverTxSuccess | DeliverTxFailure;
 
-export function isBroadcastTxFailure(result: BroadcastTxResponse): result is BroadcastTxFailure {
-  return !!(result as BroadcastTxFailure).code;
+export function isDeliverTxFailure(result: DeliverTxResponse): result is DeliverTxFailure {
+  return !!(result as DeliverTxFailure).code;
 }
 
-export function isBroadcastTxSuccess(result: BroadcastTxResponse): result is BroadcastTxSuccess {
-  return !isBroadcastTxFailure(result);
+export function isDeliverTxSuccess(result: DeliverTxResponse): result is DeliverTxSuccess {
+  return !isDeliverTxFailure(result);
 }
 
 /**
  * Ensures the given result is a success. Throws a detailed error message otherwise.
  */
-export function assertIsBroadcastTxSuccess(
-  result: BroadcastTxResponse,
-): asserts result is BroadcastTxSuccess {
-  if (isBroadcastTxFailure(result)) {
+export function assertIsDeliverTxSuccess(result: DeliverTxResponse): asserts result is DeliverTxSuccess {
+  if (isDeliverTxFailure(result)) {
     throw new Error(
       `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
     );
@@ -344,20 +337,20 @@ export class StargateClient {
    *
    * If the transaction is not included in a block before the provided timeout, this errors with a `TimeoutError`.
    *
-   * If the transaction is included in a block, a `BroadcastTxResponse` is returned. The caller then
+   * If the transaction is included in a block, a `DeliverTxResponse` is returned. The caller then
    * usually needs to check for execution success or failure.
    */
   public async broadcastTx(
     tx: Uint8Array,
     timeoutMs = 60_000,
     pollIntervalMs = 3_000,
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     let timedOut = false;
     const txPollTimeout = setTimeout(() => {
       timedOut = true;
     }, timeoutMs);
 
-    const pollForTx = async (txId: string): Promise<BroadcastTxResponse> => {
+    const pollForTx = async (txId: string): Promise<DeliverTxResponse> => {
       if (timedOut) {
         throw new TimeoutError(
           `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,

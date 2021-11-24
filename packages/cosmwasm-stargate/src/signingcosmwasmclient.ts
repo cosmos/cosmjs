@@ -15,13 +15,13 @@ import {
 } from "@cosmjs/proto-signing";
 import {
   AminoTypes,
-  BroadcastTxFailure,
-  BroadcastTxResponse,
   calculateFee,
   Coin,
   defaultRegistryTypes,
+  DeliverTxFailure,
+  DeliverTxResponse,
   GasPrice,
-  isBroadcastTxFailure,
+  isDeliverTxFailure,
   logs,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
@@ -124,7 +124,7 @@ export interface ExecuteResult {
   readonly transactionHash: string;
 }
 
-function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
+function createBroadcastTxErrorMessage(result: DeliverTxFailure): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
@@ -237,7 +237,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], fee, memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
@@ -273,7 +273,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [instantiateContractMsg], fee, options.memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
@@ -301,7 +301,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [updateAdminMsg], fee, memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
@@ -324,7 +324,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [clearAdminMsg], fee, memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
@@ -351,7 +351,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [migrateContractMsg], fee, memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
@@ -378,7 +378,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [executeContractMsg], fee, memo);
-    if (isBroadcastTxFailure(result)) {
+    if (isDeliverTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
@@ -393,7 +393,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     amount: readonly Coin[],
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const sendMsg: MsgSendEncodeObject = {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: {
@@ -411,7 +411,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     amount: Coin,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const delegateMsg: MsgDelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
       value: MsgDelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
@@ -425,7 +425,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     amount: Coin,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const undelegateMsg: MsgUndelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
       value: MsgUndelegate.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress, amount }),
@@ -438,7 +438,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     validatorAddress: string,
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const withdrawDelegatorRewardMsg: MsgWithdrawDelegatorRewardEncodeObject = {
       typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
       value: MsgWithdrawDelegatorReward.fromPartial({ delegatorAddress: delegatorAddress, validatorAddress }),
@@ -459,7 +459,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");

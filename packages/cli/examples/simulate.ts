@@ -1,7 +1,7 @@
 import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import {
-  assertIsBroadcastTxSuccess,
+  assertIsDeliverTxSuccess,
   calculateFee,
   GasPrice,
   MsgSendEncodeObject,
@@ -30,7 +30,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   const amount = coins(1234567, "ucosm");
   const memo = "With simulate";
   const result = await client.sendTokens(account.address, recipient, amount, "auto", memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
@@ -40,7 +40,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   const amount = coins(1234567, "ucosm");
   const memo = "With simulate";
   const result = await client.sendTokens(account.address, recipient, amount, 1.2, memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
@@ -60,7 +60,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
   const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
   const result = await client.sendTokens(account.address, recipient, amount, fee, memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
@@ -78,7 +78,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const result = await client.signAndBroadcast(account.address, [sendMsg], "auto", memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
@@ -96,7 +96,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const result = await client.signAndBroadcast(account.address, [sendMsg], 1.4, memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 
@@ -116,7 +116,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
   const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
   const result = await client.signAndBroadcast(account.address, [sendMsg], fee, memo);
-  assertIsBroadcastTxSuccess(result);
+  assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
 

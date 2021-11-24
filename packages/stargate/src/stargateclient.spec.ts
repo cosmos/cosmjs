@@ -14,7 +14,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 
 import {
-  assertIsBroadcastTxSuccess,
+  assertIsDeliverTxSuccess,
   PrivateStargateClient,
   StargateClient,
   TimeoutError,
@@ -327,7 +327,7 @@ describe("StargateClient", () => {
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const txResult = await client.broadcastTx(txRawBytes);
-      assertIsBroadcastTxSuccess(txResult);
+      assertIsDeliverTxSuccess(txResult);
 
       const { gasUsed, rawLog, transactionHash } = txResult;
       expect(gasUsed).toBeGreaterThan(0);
@@ -436,7 +436,7 @@ describe("StargateClient", () => {
       const txRawBytes1 = Uint8Array.from(TxRaw.encode(txRaw1).finish());
       const largeTimeoutMs = 30_000;
       const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
-      assertIsBroadcastTxSuccess(txResult);
+      assertIsDeliverTxSuccess(txResult);
 
       const { accountNumber: accountNumber2, sequence: sequence2 } = (await client.getSequence(address))!;
       const authInfoBytes2 = makeAuthInfoBytes([{ pubkey, sequence: sequence2 }], feeAmount, gasLimit);

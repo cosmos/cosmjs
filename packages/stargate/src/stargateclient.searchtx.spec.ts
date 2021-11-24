@@ -14,12 +14,7 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { isMsgSendEncodeObject } from "./encodeobjects";
-import {
-  BroadcastTxResponse,
-  isBroadcastTxFailure,
-  isBroadcastTxSuccess,
-  StargateClient,
-} from "./stargateclient";
+import { DeliverTxResponse, isDeliverTxFailure, isDeliverTxSuccess, StargateClient } from "./stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -46,7 +41,7 @@ async function sendTokens(
   amount: readonly Coin[],
   memo: string,
 ): Promise<{
-  readonly broadcastResponse: BroadcastTxResponse;
+  readonly broadcastResponse: DeliverTxResponse;
   readonly tx: Uint8Array;
 }> {
   const [{ address: walletAddress, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -122,7 +117,7 @@ describe("StargateClient.getTx and .searchTx", () => {
         coins(123456700000000, "ucosm"),
         "Sending more than I can afford",
       );
-      if (isBroadcastTxFailure(unsuccessfulResult.broadcastResponse)) {
+      if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
         sendUnsuccessful = {
           sender: faucet.address0,
           recipient: unsuccessfulRecipient,
@@ -139,7 +134,7 @@ describe("StargateClient.getTx and .searchTx", () => {
         coins(1234567, "ucosm"),
         "Something I can afford",
       );
-      if (isBroadcastTxSuccess(successfulResult.broadcastResponse)) {
+      if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
         sendSuccessful = {
           sender: faucet.address0,
           recipient: successfulRecipient,

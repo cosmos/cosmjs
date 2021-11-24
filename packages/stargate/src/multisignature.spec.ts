@@ -13,7 +13,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgSendEncodeObject } from "./encodeobjects";
 import { makeCompactBitArray, makeMultisignedTx } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
-import { assertIsBroadcastTxSuccess, StargateClient } from "./stargateclient";
+import { assertIsDeliverTxSuccess, StargateClient } from "./stargateclient";
 import { faucet, pendingWithoutSimapp, simapp } from "./testutils.spec";
 
 describe("multisignature", () => {
@@ -268,7 +268,7 @@ describe("multisignature", () => {
         );
         // ensure signature is valid
         const result = await broadcaster.broadcastTx(Uint8Array.from(TxRaw.encode(signedTx).finish()));
-        assertIsBroadcastTxSuccess(result);
+        assertIsDeliverTxSuccess(result);
       }
     });
   });
