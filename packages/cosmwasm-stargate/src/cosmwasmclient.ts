@@ -155,7 +155,7 @@ export class CosmWasmClient {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
       return account ? accountFromAny(account) : null;
     } catch (error) {
-      if (/rpc error: code = NotFound/i.test(error)) {
+      if (typeof error === "string" && /rpc error: code = NotFound/i.test(error)) {
         return null;
       }
       throw error;

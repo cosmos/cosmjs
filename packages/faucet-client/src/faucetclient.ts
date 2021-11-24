@@ -21,7 +21,7 @@ export class FaucetClient {
 
     try {
       await axios.post(this.baseUrl + "/credit", body);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         // append response body to error message
         throw new Error(`${error}; response body: ${JSON.stringify(error.response.data)}`);

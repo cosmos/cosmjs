@@ -16,7 +16,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
   let request: JsonRpcRequest;
   try {
     request = parseJsonRpcRequest(event.data);
-  } catch (error) {
+  } catch (error: any) {
     const requestId = parseJsonRpcId(event.data);
     const errorResponse: JsonRpcErrorResponse = {
       jsonrpc: "2.0",
