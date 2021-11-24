@@ -15,6 +15,8 @@ import { ReadonlyDate } from "readonly-date";
 
 import {
   assertIsDeliverTxSuccess,
+  isDeliverTxFailure,
+  isDeliverTxSuccess,
   PrivateStargateClient,
   StargateClient,
   TimeoutError,
@@ -31,6 +33,39 @@ import {
   unused,
   validator,
 } from "./testutils.spec";
+
+const resultFailure = {
+  code: 5,
+  height: 219901,
+  rawLog:
+    "failed to execute message; message index: 0: 1855527000ufct is smaller than 20000000000000000000000ufct: insufficient funds",
+  transactionHash: "FDC4FB701AABD465935F7D04AE490D1EF5F2BD4B227601C4E98B57EB077D9B7D",
+  gasUsed: 54396,
+  gasWanted: 200000,
+};
+const resultSuccess = {
+  code: 0,
+  height: 219894,
+  rawLog:
+    '[{"events":[{"type":"message","attributes":[{"key":"action","value":"send"},{"key":"sender","value":"firma1trqyle9m2nvyafc2n25frkpwed2504y6avgfzr"},{"key":"module","value":"bank"}]},{"type":"transfer","attributes":[{"key":"recipient","value":"firma12er8ls2sf5zess3jgjxz59xat9xtf8hz0hk6n4"},{"key":"sender","value":"firma1trqyle9m2nvyafc2n25frkpwed2504y6avgfzr"},{"key":"amount","value":"2000000ufct"}]}]}]',
+  transactionHash: "C0B416CA868C55C2B8C1BBB8F3CFA233854F13A5CB15D3E9599F50CAF7B3D161",
+  gasUsed: 61556,
+  gasWanted: 200000,
+};
+
+describe("isDeliverTxFailure", () => {
+  it("works", () => {
+    expect(isDeliverTxFailure(resultFailure)).toEqual(true);
+    expect(isDeliverTxFailure(resultSuccess)).toEqual(false);
+  });
+});
+
+describe("isDeliverTxSuccess", () => {
+  it("works", () => {
+    expect(isDeliverTxSuccess(resultFailure)).toEqual(false);
+    expect(isDeliverTxSuccess(resultSuccess)).toEqual(true);
+  });
+});
 
 describe("StargateClient", () => {
   describe("connect", () => {

@@ -12,9 +12,13 @@ and this project adheres to
   ([#938]).
 - @cosmjs/stargate: Add `denomMetadata` and `denomsMetadata` to `BankExtension`
   ([#932]).
+- @cosmjs/stargate: Merge `DeliverTxFailure` and `DeliverTxSuccess` into a
+  single `DeliverTxResponse` ([#878], [#949]). Add `assertIsDeliverTxFailure`.
 
 [#938]: https://github.com/cosmos/cosmjs/issues/938
 [#932]: https://github.com/cosmos/cosmjs/issues/932
+[#878]: https://github.com/cosmos/cosmjs/issues/878
+[#949]: https://github.com/cosmos/cosmjs/issues/949
 
 ### Fixed
 

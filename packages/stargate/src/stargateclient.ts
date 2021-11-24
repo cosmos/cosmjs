@@ -92,16 +92,14 @@ export interface SequenceResponse {
   readonly sequence: number;
 }
 
-export interface DeliverTxFailure {
+/**
+ * The response after successfully broadcasting a transaction.
+ * Success or failure refer to the execution result.
+ */
+export interface DeliverTxResponse {
   readonly height: number;
+  /** Error code. The transaction suceeded iff code is 0. */
   readonly code: number;
-  readonly transactionHash: string;
-  readonly rawLog?: string;
-  readonly data?: readonly MsgData[];
-}
-
-export interface DeliverTxSuccess {
-  readonly height: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
   readonly data?: readonly MsgData[];
@@ -109,27 +107,32 @@ export interface DeliverTxSuccess {
   readonly gasWanted: number;
 }
 
-/**
- * The response after successfully broadcasting a transaction.
- * Success or failure refer to the execution result.
- */
-export type DeliverTxResponse = DeliverTxSuccess | DeliverTxFailure;
-
-export function isDeliverTxFailure(result: DeliverTxResponse): result is DeliverTxFailure {
-  return !!(result as DeliverTxFailure).code;
+export function isDeliverTxFailure(result: DeliverTxResponse): boolean {
+  return !!result.code;
 }
 
-export function isDeliverTxSuccess(result: DeliverTxResponse): result is DeliverTxSuccess {
+export function isDeliverTxSuccess(result: DeliverTxResponse): boolean {
   return !isDeliverTxFailure(result);
 }
 
 /**
  * Ensures the given result is a success. Throws a detailed error message otherwise.
  */
-export function assertIsDeliverTxSuccess(result: DeliverTxResponse): asserts result is DeliverTxSuccess {
+export function assertIsDeliverTxSuccess(result: DeliverTxResponse): void {
   if (isDeliverTxFailure(result)) {
     throw new Error(
       `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+    );
+  }
+}
+
+/**
+ * Ensures the given result is a failure. Throws a detailed error message otherwise.
+ */
+export function assertIsDeliverTxFailure(result: DeliverTxResponse): void {
+  if (isDeliverTxSuccess(result)) {
+    throw new Error(
+      `Transaction ${result.transactionHash} did not fail at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
     );
   }
 }
