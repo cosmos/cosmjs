@@ -36,12 +36,16 @@ and this project adheres to
 - @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Add simulation support
   ([#931]).
 - @cosmjs/tendermint-rpc: Remove `Tendermint33Client` and related symbols.
+- @cosmjs/cosmwasm-stargate: Add support for wasmd 0.21. This changes the AMINO
+  JSON representation of `Msg{Execute,Instantiate,Migrate}Contract.msg` from
+  base64 strings to JSON objects. ([#948])
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
 [#897]: https://github.com/cosmos/cosmjs/issues/897
 [#928]: https://github.com/cosmos/cosmjs/issues/928
 [#931]: https://github.com/cosmos/cosmjs/pull/931
 [#709]: https://github.com/cosmos/cosmjs/issues/709
+[#948]: https://github.com/cosmos/cosmjs/pull/948
 
 ## [0.26.5] - 2021-11-20
 
