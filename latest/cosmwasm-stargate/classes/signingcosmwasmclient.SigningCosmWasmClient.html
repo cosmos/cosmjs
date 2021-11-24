@@ -155,7 +155,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L186">signingcosmwasmclient.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L186">signingcosmwasmclient.ts:186</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -183,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">broadcast<wbr>Poll<wbr>Interval<wbr>Ms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L155">signingcosmwasmclient.ts:155</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L155">signingcosmwasmclient.ts:155</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">broadcast<wbr>Timeout<wbr>Ms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L154">signingcosmwasmclient.ts:154</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L154">signingcosmwasmclient.ts:154</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">registry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Registry</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L153">signingcosmwasmclient.ts:153</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L153">signingcosmwasmclient.ts:153</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -214,14 +214,14 @@
 					<a name="broadcastTx" class="tsd-anchor"></a>
 					<h3>broadcast<wbr>Tx</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">broadcast<wbr>Tx<span class="tsd-signature-symbol">(</span>tx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, timeoutMs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, pollIntervalMs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">broadcast<wbr>Tx<span class="tsd-signature-symbol">(</span>tx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, timeoutMs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, pollIntervalMs<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#broadcastTx">broadcastTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L259">cosmwasmclient.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L259">cosmwasmclient.ts:259</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -231,7 +231,7 @@
 								<p>If broadcasting is rejected by the node for some reason (e.g. because of a CheckTx failure),
 								an error is thrown.</p>
 								<p>If the transaction is not included in a block before the provided timeout, this errors with a <code>TimeoutError</code>.</p>
-								<p>If the transaction is included in a block, a <code>BroadcastTxResponse</code> is returned. The caller then
+								<p>If the transaction is included in a block, a <code>DeliverTxResponse</code> is returned. The caller then
 								usually needs to check for execution success or failure.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -246,7 +246,7 @@
 									<h5>pollIntervalMs: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 3_000</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -260,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L313">signingcosmwasmclient.ts:313</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L313">signingcosmwasmclient.ts:313</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -286,13 +286,13 @@
 					<a name="delegateTokens" class="tsd-anchor"></a>
 					<h3>delegate<wbr>Tokens</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Coin</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Coin</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L408">signingcosmwasmclient.ts:408</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L408">signingcosmwasmclient.ts:408</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -313,7 +313,7 @@
 									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -328,7 +328,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#disconnect">disconnect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L242">cosmwasmclient.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L242">cosmwasmclient.ts:242</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -345,7 +345,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L363">signingcosmwasmclient.ts:363</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L363">signingcosmwasmclient.ts:363</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -384,7 +384,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#forceGetQueryClient">forceGetQueryClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L130">cosmwasmclient.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L130">cosmwasmclient.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">QueryClient</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">AuthExtension</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">BankExtension</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TxExtension</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_wasm.WasmExtension.html" class="tsd-signature-type" data-tsd-kind="Interface">WasmExtension</a></h4>
@@ -402,7 +402,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#forceGetTmClient">forceGetTmClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L115">cosmwasmclient.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L115">cosmwasmclient.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Tendermint34Client</span></h4>
@@ -420,7 +420,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getAccount">getAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L153">cosmwasmclient.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L153">cosmwasmclient.ts:153</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -444,7 +444,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getBalance">getBalance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L195">cosmwasmclient.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L195">cosmwasmclient.ts:195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -471,7 +471,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getBlock">getBlock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L178">cosmwasmclient.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L178">cosmwasmclient.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -495,7 +495,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getChainId">getChainId</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L137">cosmwasmclient.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L137">cosmwasmclient.ts:137</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -513,7 +513,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getCodeDetails">getCodeDetails</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L323">cosmwasmclient.ts:323</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L323">cosmwasmclient.ts:323</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -537,7 +537,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getCodes">getCodes</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L311">cosmwasmclient.ts:311</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L311">cosmwasmclient.ts:311</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><a href="../interfaces/cosmwasmclient.Code.html" class="tsd-signature-type" data-tsd-kind="Interface">Code</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -555,7 +555,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getContract">getContract</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L351">cosmwasmclient.ts:351</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L351">cosmwasmclient.ts:351</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,7 +584,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getContractCodeHistory">getContractCodeHistory</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L371">cosmwasmclient.ts:371</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L371">cosmwasmclient.ts:371</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -613,7 +613,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getContracts">getContracts</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L342">cosmwasmclient.ts:342</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L342">cosmwasmclient.ts:342</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -637,7 +637,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getHeight">getHeight</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L148">cosmwasmclient.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L148">cosmwasmclient.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -655,7 +655,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getQueryClient">getQueryClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L124">cosmwasmclient.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L124">cosmwasmclient.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">QueryClient</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">AuthExtension</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">BankExtension</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TxExtension</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/queries_wasm.WasmExtension.html" class="tsd-signature-type" data-tsd-kind="Interface">WasmExtension</a><span class="tsd-signature-symbol">)</span></h4>
@@ -673,7 +673,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getSequence">getSequence</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L165">cosmwasmclient.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L165">cosmwasmclient.ts:165</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -697,7 +697,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getTmClient">getTmClient</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L111">cosmwasmclient.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L111">cosmwasmclient.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Tendermint34Client</span></h4>
@@ -715,7 +715,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#getTx">getTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L199">cosmwasmclient.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L199">cosmwasmclient.ts:199</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -738,7 +738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L256">signingcosmwasmclient.ts:256</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L256">signingcosmwasmclient.ts:256</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -776,7 +776,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L336">signingcosmwasmclient.ts:336</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L336">signingcosmwasmclient.ts:336</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -815,7 +815,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#queryContractRaw">queryContractRaw</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L395">cosmwasmclient.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L395">cosmwasmclient.ts:395</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -849,7 +849,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#queryContractSmart">queryContractSmart</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L410">cosmwasmclient.ts:410</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L410">cosmwasmclient.ts:410</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -884,7 +884,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#searchTx">searchTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L204">cosmwasmclient.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L204">cosmwasmclient.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -904,13 +904,13 @@
 					<a name="sendTokens" class="tsd-anchor"></a>
 					<h3>send<wbr>Tokens</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Tokens<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, recipientAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Tokens<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, recipientAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L390">signingcosmwasmclient.ts:390</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L390">signingcosmwasmclient.ts:390</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -931,7 +931,7 @@
 									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -945,7 +945,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L477">signingcosmwasmclient.ts:477</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L477">signingcosmwasmclient.ts:477</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -974,13 +974,13 @@
 					<a name="signAndBroadcast" class="tsd-anchor"></a>
 					<h3>sign<wbr>And<wbr>Broadcast</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<wbr>And<wbr>Broadcast<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">EncodeObject</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>And<wbr>Broadcast<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">EncodeObject</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L457">signingcosmwasmclient.ts:457</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L457">signingcosmwasmclient.ts:457</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1008,7 +1008,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1022,7 +1022,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L204">signingcosmwasmclient.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L204">signingcosmwasmclient.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1045,13 +1045,13 @@
 					<a name="undelegateTokens" class="tsd-anchor"></a>
 					<h3>undelegate<wbr>Tokens</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">undelegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Coin</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">undelegate<wbr>Tokens<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Coin</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L422">signingcosmwasmclient.ts:422</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L422">signingcosmwasmclient.ts:422</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1072,7 +1072,7 @@
 									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1086,7 +1086,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L288">signingcosmwasmclient.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L288">signingcosmwasmclient.ts:288</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1121,7 +1121,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L224">signingcosmwasmclient.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L224">signingcosmwasmclient.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1152,13 +1152,13 @@
 					<a name="withdrawRewards" class="tsd-anchor"></a>
 					<h3>withdraw<wbr>Rewards</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">withdraw<wbr>Rewards<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">withdraw<wbr>Rewards<span class="tsd-signature-symbol">(</span>delegatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, validatorAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;auto&quot;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L436">signingcosmwasmclient.ts:436</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L436">signingcosmwasmclient.ts:436</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1176,7 +1176,7 @@
 									<h5>memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DeliverTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1191,7 +1191,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmwasmclient.CosmWasmClient.html">CosmWasmClient</a>.<a href="cosmwasmclient.CosmWasmClient.html#connect">connect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L93">cosmwasmclient.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L93">cosmwasmclient.ts:93</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1214,7 +1214,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L161">signingcosmwasmclient.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L161">signingcosmwasmclient.ts:161</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1243,7 +1243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L179">signingcosmwasmclient.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L179">signingcosmwasmclient.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

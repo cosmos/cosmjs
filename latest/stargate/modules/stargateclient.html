@@ -79,8 +79,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.Block.html" class="tsd-kind-icon">Block</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.BlockHeader.html" class="tsd-kind-icon">Block<wbr>Header</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.BroadcastTxFailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.DeliverTxFailure.html" class="tsd-kind-icon">Deliver<wbr>TxFailure</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-kind-icon">Deliver<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.IndexedTx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.PrivateStargateClient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stargateclient.SequenceResponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a></li>
@@ -89,15 +89,15 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stargateclient.html#BroadcastTxResponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stargateclient.html#DeliverTxResponse" class="tsd-kind-icon">Deliver<wbr>TxResponse</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#assertIsBroadcastTxSuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#isBroadcastTxFailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#isBroadcastTxSuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#assertIsDeliverTxSuccess" class="tsd-kind-icon">assert<wbr>IsDeliver<wbr>TxSuccess</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#isDeliverTxFailure" class="tsd-kind-icon">is<wbr>Deliver<wbr>TxFailure</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="stargateclient.html#isDeliverTxSuccess" class="tsd-kind-icon">is<wbr>Deliver<wbr>TxSuccess</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,12 +106,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="BroadcastTxResponse" class="tsd-anchor"></a>
-					<h3>Broadcast<wbr>TxResponse</h3>
-					<div class="tsd-signature tsd-kind-icon">Broadcast<wbr>TxResponse<span class="tsd-signature-symbol">:</span> <a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxSuccess</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/stargateclient.BroadcastTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxFailure</a></div>
+					<a name="DeliverTxResponse" class="tsd-anchor"></a>
+					<h3>Deliver<wbr>TxResponse</h3>
+					<div class="tsd-signature tsd-kind-icon">Deliver<wbr>TxResponse<span class="tsd-signature-symbol">:</span> <a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxSuccess</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/stargateclient.DeliverTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxFailure</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/stargate/src/stargateclient.ts#L121">stargate/src/stargateclient.ts:121</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/stargate/src/stargateclient.ts#L116">stargate/src/stargateclient.ts:116</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -119,26 +119,22 @@
 							<p>The response after successfully broadcasting a transaction.
 							Success or failure refer to the execution result.</p>
 						</div>
-						<p>The name is a bit misleading as this contains the result of the execution
-							in a block. Both <code>BroadcastTxSuccess</code> and <code>BroadcastTxFailure</code> contain a height
-							field, which is the height of the block that contains the transaction. This means
-						transactions that were never included in a block cannot be expressed with this type.</p>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="assertIsBroadcastTxSuccess" class="tsd-anchor"></a>
-					<h3>assert<wbr>IsBroadcast<wbr>TxSuccess</h3>
+					<a name="assertIsDeliverTxSuccess" class="tsd-anchor"></a>
+					<h3>assert<wbr>IsDeliver<wbr>TxSuccess</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">asserts </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxSuccess</a></li>
+						<li class="tsd-signature tsd-kind-icon">assert<wbr>IsDeliver<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">asserts </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxSuccess</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/stargate/src/stargateclient.ts#L134">stargate/src/stargateclient.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/stargate/src/stargateclient.ts#L129">stargate/src/stargateclient.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -149,56 +145,56 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>result: <a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a></h5>
+									<h5>result: <a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">asserts </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxSuccess</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">asserts </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxSuccess</a></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isBroadcastTxFailure" class="tsd-anchor"></a>
-					<h3>is<wbr>Broadcast<wbr>TxFailure</h3>
+					<a name="isDeliverTxFailure" class="tsd-anchor"></a>
+					<h3>is<wbr>Deliver<wbr>TxFailure</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxFailure</a></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Deliver<wbr>TxFailure<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxFailure</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/stargate/src/stargateclient.ts#L123">stargate/src/stargateclient.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/stargate/src/stargateclient.ts#L118">stargate/src/stargateclient.ts:118</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>result: <a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a></h5>
+									<h5>result: <a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxFailure</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxFailure.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxFailure</a></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isBroadcastTxSuccess" class="tsd-anchor"></a>
-					<h3>is<wbr>Broadcast<wbr>TxSuccess</h3>
+					<a name="isDeliverTxSuccess" class="tsd-anchor"></a>
+					<h3>is<wbr>Deliver<wbr>TxSuccess</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxSuccess</a></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Deliver<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxSuccess</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/96f8a9d1d6/packages/stargate/src/stargateclient.ts#L127">stargate/src/stargateclient.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/baa4e5e049/packages/stargate/src/stargateclient.ts#L122">stargate/src/stargateclient.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>result: <a href="stargateclient.html#BroadcastTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">BroadcastTxResponse</a></h5>
+									<h5>result: <a href="stargateclient.html#DeliverTxResponse" class="tsd-signature-type" data-tsd-kind="Type alias">DeliverTxResponse</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">BroadcastTxSuccess</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-signature-type" data-tsd-kind="Interface">DeliverTxSuccess</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -290,10 +286,10 @@
 						<a href="../interfaces/stargateclient.BlockHeader.html" class="tsd-kind-icon">Block<wbr>Header</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/stargateclient.BroadcastTxFailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
+						<a href="../interfaces/stargateclient.DeliverTxFailure.html" class="tsd-kind-icon">Deliver<wbr>TxFailure</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/stargateclient.BroadcastTxSuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
+						<a href="../interfaces/stargateclient.DeliverTxSuccess.html" class="tsd-kind-icon">Deliver<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/stargateclient.IndexedTx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a>
@@ -305,16 +301,16 @@
 						<a href="../interfaces/stargateclient.SequenceResponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="stargateclient.html#BroadcastTxResponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
+						<a href="stargateclient.html#DeliverTxResponse" class="tsd-kind-icon">Deliver<wbr>TxResponse</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="stargateclient.html#assertIsBroadcastTxSuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a>
+						<a href="stargateclient.html#assertIsDeliverTxSuccess" class="tsd-kind-icon">assert<wbr>IsDeliver<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="stargateclient.html#isBroadcastTxFailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
+						<a href="stargateclient.html#isDeliverTxFailure" class="tsd-kind-icon">is<wbr>Deliver<wbr>TxFailure</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="stargateclient.html#isBroadcastTxSuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
+						<a href="stargateclient.html#isDeliverTxSuccess" class="tsd-kind-icon">is<wbr>Deliver<wbr>TxSuccess</a>
 					</li>
 				</ul>
 			</nav>
