@@ -214,8 +214,8 @@ export class StargateClient {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
       return account ? accountFromAny(account) : null;
-    } catch (error) {
-      if (typeof error === "string" && /rpc error: code = NotFound/i.test(error)) {
+    } catch (error: any) {
+      if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;
       }
       throw error;
