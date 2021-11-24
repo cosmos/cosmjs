@@ -1,138 +1,23 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@cosmjs/encoding Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/encoding Documentation">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@cosmjs/encoding Documentation</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@cosmjs/encoding Documentation</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#cosmjsencoding" id="cosmjsencoding" style="color: inherit; text-decoration: none;">
-					<h1>@cosmjs/encoding</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/@cosmjs/encoding"><img src="https://img.shields.io/npm/v/@cosmjs/encoding.svg" alt="npm version"></a></p>
-				<p>This package is an extension to the JavaScript standard library that is not
-					bound to blockchain products. It provides basic hex/base64/ascii encoding to
-					Uint8Array that doesn&#39;t rely on Buffer and also provides better error messages
-				on invalid input.</p>
-				<a href="#convert-between-bech32-and-hex-addresses" id="convert-between-bech32-and-hex-addresses" style="color: inherit; text-decoration: none;">
-					<h2>Convert between bech32 and hex addresses</h2>
-				</a>
-				<pre><code><span style="color: #000000">&gt;&gt; </span><span style="color: #001080">Bech32</span><span style="color: #000000">.</span><span style="color: #795E26">encode</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;tiov&quot;</span><span style="color: #000000">, </span><span style="color: #795E26">fromHex</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;1234ABCD0000AA0000FFFF0000AA00001234ABCD&quot;</span><span style="color: #000000">))</span>
-<span style="color: #A31515">&#039;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&#039;</span>
-<span style="color: #000000">&gt;&gt; </span><span style="color: #795E26">toHex</span><span style="color: #000000">(</span><span style="color: #001080">Bech32</span><span style="color: #000000">.</span><span style="color: #795E26">decode</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&quot;</span><span style="color: #000000">).</span><span style="color: #001080">data</span><span style="color: #000000">)</span>
-<span style="color: #A31515">&#039;1234abcd0000aa0000ffff0000aa00001234abcd&#039;</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@cosmjs/encoding Documentation</title><meta name="description" content="Documentation for @cosmjs/encoding Documentation"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@cosmjs/encoding Documentation</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@cosmjs/encoding Documentation</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#cosmjsencoding" id="cosmjsencoding" style="color: inherit; text-decoration: none;">
+  <h1>@cosmjs/encoding</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/@cosmjs/encoding"><img src="https://img.shields.io/npm/v/@cosmjs/encoding.svg" alt="npm version"></a></p>
+<p>This package is an extension to the JavaScript standard library that is not
+bound to blockchain products. It provides basic hex/base64/ascii encoding to
+Uint8Array that doesn&#39;t rely on Buffer and also provides better error messages
+on invalid input.</p>
+
+<a href="#convert-between-bech32-and-hex-addresses" id="convert-between-bech32-and-hex-addresses" style="color: inherit; text-decoration: none;">
+  <h2>Convert between bech32 and hex addresses</h2>
+</a>
+<pre><code><span class="hl-0">&gt;&gt; </span><span class="hl-1">Bech32</span><span class="hl-0">.</span><span class="hl-2">encode</span><span class="hl-0">(</span><span class="hl-3">&quot;tiov&quot;</span><span class="hl-0">, </span><span class="hl-2">fromHex</span><span class="hl-0">(</span><span class="hl-3">&quot;1234ABCD0000AA0000FFFF0000AA00001234ABCD&quot;</span><span class="hl-0">))</span><br/><span class="hl-3">&#39;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&#39;</span><br/><span class="hl-0">&gt;&gt; </span><span class="hl-2">toHex</span><span class="hl-0">(</span><span class="hl-1">Bech32</span><span class="hl-0">.</span><span class="hl-2">decode</span><span class="hl-0">(</span><span class="hl-3">&quot;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&quot;</span><span class="hl-0">).</span><span class="hl-1">data</span><span class="hl-0">)</span><br/><span class="hl-3">&#39;1234abcd0000aa0000ffff0000aa00001234abcd&#39;</span>
 </code></pre>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p>This package is part of the cosmjs repository, licensed under the Apache License
-					2.0 (see <a href="https://github.com/cosmos/cosmjs/blob/main/NOTICE">NOTICE</a> and
-				<a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">LICENSE</a>).</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/ascii.html">ascii</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/base64.html">base64</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/bech32.html">bech32</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/hex.html">hex</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/rfc3339.html">rfc3339</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/utf8.html">utf8</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>This package is part of the cosmjs repository, licensed under the Apache License
+2.0 (see <a href="https://github.com/cosmos/cosmjs/blob/main/NOTICE">NOTICE</a> and
+<a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">LICENSE</a>).</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/Bech32.html" class="tsd-kind-icon">Bech32</a></li><li class="tsd-kind-function"><a href="modules.html#fromAscii" class="tsd-kind-icon">from<wbr/>Ascii</a></li><li class="tsd-kind-function"><a href="modules.html#fromBase64" class="tsd-kind-icon">from<wbr/>Base64</a></li><li class="tsd-kind-function"><a href="modules.html#fromHex" class="tsd-kind-icon">from<wbr/>Hex</a></li><li class="tsd-kind-function"><a href="modules.html#fromRfc3339" class="tsd-kind-icon">from<wbr/>Rfc3339</a></li><li class="tsd-kind-function"><a href="modules.html#fromUtf8" class="tsd-kind-icon">from<wbr/>Utf8</a></li><li class="tsd-kind-function"><a href="modules.html#toAscii" class="tsd-kind-icon">to<wbr/>Ascii</a></li><li class="tsd-kind-function"><a href="modules.html#toBase64" class="tsd-kind-icon">to<wbr/>Base64</a></li><li class="tsd-kind-function"><a href="modules.html#toHex" class="tsd-kind-icon">to<wbr/>Hex</a></li><li class="tsd-kind-function"><a href="modules.html#toRfc3339" class="tsd-kind-icon">to<wbr/>Rfc3339</a></li><li class="tsd-kind-function"><a href="modules.html#toUtf8" class="tsd-kind-icon">to<wbr/>Utf8</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

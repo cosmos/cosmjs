@@ -1,172 +1,54 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@cosmjs/cosmwasm-stargate Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/cosmwasm-stargate Documentation">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@cosmjs/cosmwasm-stargate Documentation</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@cosmjs/cosmwasm-stargate Documentation</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#cosmjscosmwasm-stargate" id="cosmjscosmwasm-stargate" style="color: inherit; text-decoration: none;">
-					<h1>@cosmjs/cosmwasm-stargate</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/@cosmjs/cosmwasm-stargate"><img src="https://img.shields.io/npm/v/@cosmjs/cosmwasm-stargate.svg" alt="npm version"></a></p>
-				<p>An SDK to build CosmWasm clients.</p>
-				<a href="#compatibility" id="compatibility" style="color: inherit; text-decoration: none;">
-					<h2>Compatibility</h2>
-				</a>
-				<table>
-					<thead>
-						<tr>
-							<th>CosmWasm</th>
-							<th>x/wasm</th>
-							<th>@cosmjs/cosmwasm-stargate</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td>0.16-1.0.0-beta</td>
-							<td>0.21</td>
-							<td><code>^0.27.0</code></td>
-						</tr>
-						<tr>
-							<td>0.16-1.0.0-beta</td>
-							<td>0.18-0.20</td>
-							<td><code>^0.26.0</code></td>
-						</tr>
-						<tr>
-							<td>0.14</td>
-							<td>0.16</td>
-							<td><code>^0.25.0</code></td>
-						</tr>
-						<tr>
-							<td>0.13</td>
-							<td>0.14-0.15</td>
-							<td><code>^0.24.0</code></td>
-						</tr>
-				</tbody></table>
-				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
-					<h2>Development</h2>
-				</a>
-				<p>Updating Hackatom development contract in <code>src/testdata/contract.json</code>:</p>
-				<pre><code class="language-sh"><span style="color: #795E26">cd</span><span style="color: #000000"> packages/cosmwasm-stargate</span>
-<span style="color: #0000FF">export</span><span style="color: #000000"> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v1.0.0-beta/hackatom.wasm</span>
-<span style="color: #795E26">echo</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;{</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">// source</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">, </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">data</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">: </span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515">$(curl -sS  --location </span><span style="color: #001080">$HACKATOM_URL</span><span style="color: #A31515"> </span><span style="color: #000000">|</span><span style="color: #A31515"> base64 </span><span style="color: #000000">|</span><span style="color: #A31515"> tr -d &#039;[:space:]&#039;)</span><span style="color: #EE0000">\&quot;</span><span style="color: #A31515"> }&quot;</span><span style="color: #000000"> | jq &gt; src/testdata/contract.json</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@cosmjs/cosmwasm-stargate Documentation</title><meta name="description" content="Documentation for @cosmjs/cosmwasm-stargate Documentation"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@cosmjs/cosmwasm-stargate Documentation</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@cosmjs/cosmwasm-stargate Documentation</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#cosmjscosmwasm-stargate" id="cosmjscosmwasm-stargate" style="color: inherit; text-decoration: none;">
+  <h1>@cosmjs/cosmwasm-stargate</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/@cosmjs/cosmwasm-stargate"><img src="https://img.shields.io/npm/v/@cosmjs/cosmwasm-stargate.svg" alt="npm version"></a></p>
+<p>An SDK to build CosmWasm clients.</p>
+
+<a href="#compatibility" id="compatibility" style="color: inherit; text-decoration: none;">
+  <h2>Compatibility</h2>
+</a>
+<table>
+<thead>
+<tr>
+<th>CosmWasm</th>
+<th>x/wasm</th>
+<th>@cosmjs/cosmwasm-stargate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.16-1.0.0-beta</td>
+<td>0.21</td>
+<td><code>^0.27.0</code></td>
+</tr>
+<tr>
+<td>0.16-1.0.0-beta</td>
+<td>0.18-0.20</td>
+<td><code>^0.26.0</code></td>
+</tr>
+<tr>
+<td>0.14</td>
+<td>0.16</td>
+<td><code>^0.25.0</code></td>
+</tr>
+<tr>
+<td>0.13</td>
+<td>0.14-0.15</td>
+<td><code>^0.24.0</code></td>
+</tr>
+</tbody></table>
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h2>Development</h2>
+</a>
+<p>Updating Hackatom development contract in <code>src/testdata/contract.json</code>:</p>
+<pre><code class="language-sh"><span class="hl-0">cd</span><span class="hl-1"> packages/cosmwasm-stargate</span><br/><span class="hl-2">export</span><span class="hl-1"> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v1.0.0-beta/hackatom.wasm</span><br/><span class="hl-0">echo</span><span class="hl-1"> </span><span class="hl-3">&quot;{</span><span class="hl-4">\&quot;</span><span class="hl-3">// source</span><span class="hl-4">\&quot;</span><span class="hl-3">: </span><span class="hl-4">\&quot;</span><span class="hl-5">$HACKATOM_URL</span><span class="hl-4">\&quot;</span><span class="hl-3">, </span><span class="hl-4">\&quot;</span><span class="hl-3">data</span><span class="hl-4">\&quot;</span><span class="hl-3">: </span><span class="hl-4">\&quot;</span><span class="hl-3">$(curl -sS  --location </span><span class="hl-5">$HACKATOM_URL</span><span class="hl-3"> </span><span class="hl-1">|</span><span class="hl-3"> base64 </span><span class="hl-1">|</span><span class="hl-3"> tr -d &#39;[:space:]&#39;)</span><span class="hl-4">\&quot;</span><span class="hl-3"> }&quot;</span><span class="hl-1"> | jq &gt; src/testdata/contract.json</span>
 </code></pre>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p>This package is part of the cosmjs repository, licensed under the Apache License
-					2.0 (see <a href="https://github.com/cosmos/cosmjs/blob/main/NOTICE">NOTICE</a> and
-				<a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">LICENSE</a>).</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/aminotypes.html">aminotypes</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/cosmwasmclient.html">cosmwasmclient</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/encodeobjects.html">encodeobjects</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/queries.html">queries</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/queries_wasm.html">queries/wasm</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/signingcosmwasmclient.html">signingcosmwasmclient</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>This package is part of the cosmjs repository, licensed under the Apache License
+2.0 (see <a href="https://github.com/cosmos/cosmjs/blob/main/NOTICE">NOTICE</a> and
+<a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">LICENSE</a>).</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/CosmWasmClient.html" class="tsd-kind-icon">Cosm<wbr/>Wasm<wbr/>Client</a></li><li class="tsd-kind-class"><a href="classes/SigningCosmWasmClient.html" class="tsd-kind-icon">Signing<wbr/>Cosm<wbr/>Wasm<wbr/>Client</a></li><li class="tsd-kind-interface"><a href="interfaces/ChangeAdminResult.html" class="tsd-kind-icon">Change<wbr/>Admin<wbr/>Result</a></li><li class="tsd-kind-interface"><a href="interfaces/Code.html" class="tsd-kind-icon">Code</a></li><li class="tsd-kind-interface"><a href="interfaces/CodeDetails.html" class="tsd-kind-icon">Code<wbr/>Details</a></li><li class="tsd-kind-interface"><a href="interfaces/Contract.html" class="tsd-kind-icon">Contract</a></li><li class="tsd-kind-interface"><a href="interfaces/ContractCodeHistoryEntry.html" class="tsd-kind-icon">Contract<wbr/>Code<wbr/>History<wbr/>Entry</a></li><li class="tsd-kind-interface"><a href="interfaces/ExecuteResult.html" class="tsd-kind-icon">Execute<wbr/>Result</a></li><li class="tsd-kind-interface"><a href="interfaces/InstantiateOptions.html" class="tsd-kind-icon">Instantiate<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/InstantiateResult.html" class="tsd-kind-icon">Instantiate<wbr/>Result</a></li><li class="tsd-kind-interface"><a href="interfaces/MigrateResult.html" class="tsd-kind-icon">Migrate<wbr/>Result</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgClearAdminEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Clear<wbr/>Admin<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgExecuteContractEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Execute<wbr/>Contract<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgInstantiateContractEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Instantiate<wbr/>Contract<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgMigrateContractEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Migrate<wbr/>Contract<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgStoreCodeEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Store<wbr/>Code<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/MsgUpdateAdminEncodeObject.html" class="tsd-kind-icon">Msg<wbr/>Update<wbr/>Admin<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-interface"><a href="interfaces/SigningCosmWasmClientOptions.html" class="tsd-kind-icon">Signing<wbr/>Cosm<wbr/>Wasm<wbr/>Client<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/UploadResult.html" class="tsd-kind-icon">Upload<wbr/>Result</a></li><li class="tsd-kind-type-alias"><a href="modules.html#JsonObject" class="tsd-kind-icon">Json<wbr/>Object</a></li><li class="tsd-kind-variable"><a href="modules.html#cosmWasmTypes" class="tsd-kind-icon">cosm<wbr/>Wasm<wbr/>Types</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgClearAdminEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Clear<wbr/>Admin<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgExecuteEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Execute<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgInstantiateContractEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Instantiate<wbr/>Contract<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgMigrateEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Migrate<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgStoreCodeEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Store<wbr/>Code<wbr/>Encode<wbr/>Object</a></li><li class="tsd-kind-function"><a href="modules.html#isMsgUpdateAdminEncodeObject" class="tsd-kind-icon">is<wbr/>Msg<wbr/>Update<wbr/>Admin<wbr/>Encode<wbr/>Object</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
