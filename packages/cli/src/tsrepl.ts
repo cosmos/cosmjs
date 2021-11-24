@@ -184,7 +184,7 @@ export class TsRepl {
         result: result,
         error: null,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (this.debuggingEnabled) {
         console.info("Current REPL TypeScript program:");
         console.info(this.evalData.input);
