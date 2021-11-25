@@ -94,11 +94,10 @@ export {
 } from "./search";
 export {
   assertIsDeliverTxSuccess,
+  assertIsDeliverTxFailure,
   Block,
   BlockHeader,
-  DeliverTxFailure,
   DeliverTxResponse,
-  DeliverTxSuccess,
   IndexedTx,
   isDeliverTxFailure,
   isDeliverTxSuccess,

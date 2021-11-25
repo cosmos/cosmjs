@@ -18,7 +18,6 @@ import {
   calculateFee,
   Coin,
   defaultRegistryTypes,
-  DeliverTxFailure,
   DeliverTxResponse,
   GasPrice,
   isDeliverTxFailure,
@@ -124,7 +123,7 @@ export interface ExecuteResult {
   readonly transactionHash: string;
 }
 
-function createBroadcastTxErrorMessage(result: DeliverTxFailure): string {
+function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
@@ -238,7 +237,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], fee, memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
     const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
@@ -274,7 +273,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const result = await this.signAndBroadcast(senderAddress, [instantiateContractMsg], fee, options.memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     const parsedLogs = logs.parseRawLog(result.rawLog);
     const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
@@ -302,7 +301,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const result = await this.signAndBroadcast(senderAddress, [updateAdminMsg], fee, memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
@@ -325,7 +324,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const result = await this.signAndBroadcast(senderAddress, [clearAdminMsg], fee, memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
@@ -352,7 +351,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const result = await this.signAndBroadcast(senderAddress, [migrateContractMsg], fee, memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
@@ -379,7 +378,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const result = await this.signAndBroadcast(senderAddress, [executeContractMsg], fee, memo);
     if (isDeliverTxFailure(result)) {
-      throw new Error(createBroadcastTxErrorMessage(result));
+      throw new Error(createDeliverTxResponseErrorMessage(result));
     }
     return {
       logs: logs.parseRawLog(result.rawLog),

@@ -13,7 +13,7 @@ import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
-import { assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
+import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
   defaultGasPrice,
   defaultSendFee,
@@ -271,6 +271,40 @@ describe("SigningStargateClient", () => {
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
         assertIsDeliverTxSuccess(result);
+        expect(result.code).toEqual(0);
+        expect(result.gasWanted).toEqual(180_000);
+        expect(result.gasUsed).toBeLessThanOrEqual(180_000);
+        expect(result.gasUsed).toBeGreaterThan(100_000);
+      });
+
+      it("returns DeliverTxFailure on DeliverTx failure", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(Number.MAX_SAFE_INTEGER, "ustake"),
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "99000",
+        };
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee);
+        assertIsDeliverTxFailure(result);
+        expect(result.code).toBeGreaterThan(0);
+        expect(result.gasWanted).toEqual(99_000);
+        expect(result.gasUsed).toBeLessThanOrEqual(99_000);
+        expect(result.gasUsed).toBeGreaterThan(40_000);
       });
 
       it("works with auto gas", async () => {
