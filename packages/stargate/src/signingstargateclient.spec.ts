@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
+import { coin, coins, decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -9,7 +9,6 @@ import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import Long from "long";
 import protobuf from "protobufjs/minimal";
 
-import { decodeTxRaw } from "../../proto-signing/build";
 import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
 import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
