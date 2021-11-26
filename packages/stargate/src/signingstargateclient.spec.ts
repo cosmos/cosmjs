@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
+import { toAscii } from "@cosmjs/encoding";
 import { coin, coins, decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
@@ -869,6 +870,43 @@ describe("SigningStargateClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsDeliverTxSuccess(result);
+      });
+    });
+  });
+
+  describe("experimentalAdr36Sign", () => {
+    it("works", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.offline(wallet);
+      const [firstAccount] = await wallet.getAccounts();
+
+      const data = toAscii("Hello, world");
+      const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
+      expect(signed).toEqual({
+        msg: [
+          {
+            type: "sign/MsgSignData",
+            value: {
+              signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+              data: "SGVsbG8sIHdvcmxk", // echo -n "Hello, world" | base64
+            },
+          },
+        ],
+        fee: {
+          amount: [],
+          gas: "0",
+        },
+        signatures: [
+          {
+            pub_key: {
+              type: "tendermint/PubKeySecp256k1",
+              value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+            },
+            signature:
+              "x9jjSFv8/n1F8gOSRjddakYDbvroQm8ZoDWht/Imc1t5xUW49+Xaq7gwcsE+LCpqYoTBxnaXLg/xgJjYymCWvw==",
+          },
+        ],
+        memo: "",
       });
     });
   });

@@ -1,5 +1,12 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
-import { fromBase64 } from "@cosmjs/encoding";
+import {
+  AminoMsg,
+  encodeSecp256k1Pubkey,
+  makeSignDoc as makeSignDocAmino,
+  makeStdTx,
+  StdFee,
+  StdTx,
+} from "@cosmjs/amino";
+import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
   EncodeObject,
@@ -58,6 +65,7 @@ import {
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
 } from "cosmjs-types/ibc/core/connection/v1/tx";
+import equals from "fast-deep-equal";
 import Long from "long";
 
 import { AminoTypes } from "./aminotypes";
@@ -357,6 +365,42 @@ export class SigningStargateClient extends StargateClient {
     return isOfflineDirectSigner(this.signer)
       ? this.signDirect(signerAddress, messages, fee, memo, signerData)
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
+  }
+
+  public async experimentalAdr36Sign(signerAddress: string, data: Uint8Array): Promise<StdTx> {
+    const accountNumber = 0;
+    const sequence = 0;
+    const chainId = "";
+    const fee: StdFee = {
+      gas: "0",
+      amount: [],
+    };
+    const memo = "";
+
+    const msg: AminoMsg = {
+      type: "sign/MsgSignData",
+      value: {
+        signer: signerAddress,
+        data: toBase64(data),
+      },
+    };
+
+    assert(!isOfflineDirectSigner(this.signer));
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const signDoc = makeSignDocAmino([msg], fee, chainId, memo, accountNumber, sequence);
+    const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+    if (!equals(signDoc, signed)) {
+      throw new Error(
+        "The signed document differs from the signing instruction. This is not supported for ADR-036.",
+      );
+    }
+
+    return makeStdTx(signDoc, signature);
   }
 
   private async signAmino(
