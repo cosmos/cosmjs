@@ -910,4 +910,17 @@ describe("SigningStargateClient", () => {
       });
     });
   });
+
+  describe("experimentalAdr36Verify", () => {
+    it("works", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.offline(wallet);
+      const [firstAccount] = await wallet.getAccounts();
+
+      const data = toAscii("Hello, world");
+      const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
+      const ok = await client.experimentalAdr36Verify("haha does not matter", signed);
+      expect(ok).toEqual(true);
+    });
+  });
 });
