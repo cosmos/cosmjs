@@ -1,6 +1,3 @@
-export { StdFee } from "@cosmjs/amino";
-export { Coin, coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
-
 export { Account, accountFromAny } from "./accounts";
 export {
   AminoMsgBeginRedelegate,
@@ -83,18 +80,24 @@ export {
   TxExtension,
 } from "./queries";
 export {
-  SearchByHeightQuery,
-  SearchBySentFromOrToQuery,
-  SearchByTagsQuery,
-  SearchTxQuery,
-  SearchTxFilter,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
+  SearchByHeightQuery,
+  SearchBySentFromOrToQuery,
+  SearchByTagsQuery,
+  SearchTxFilter,
+  SearchTxQuery,
 } from "./search";
 export {
-  assertIsDeliverTxSuccess,
+  defaultRegistryTypes,
+  SignerData,
+  SigningStargateClient,
+  SigningStargateClientOptions,
+} from "./signingstargateclient";
+export {
   assertIsDeliverTxFailure,
+  assertIsDeliverTxSuccess,
   Block,
   BlockHeader,
   DeliverTxResponse,
@@ -105,9 +108,5 @@ export {
   StargateClient,
   TimeoutError,
 } from "./stargateclient";
-export {
-  defaultRegistryTypes,
-  SignerData,
-  SigningStargateClient,
-  SigningStargateClientOptions,
-} from "./signingstargateclient";
+export { StdFee } from "@cosmjs/amino";
+export { Coin, coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
