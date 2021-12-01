@@ -1,32 +1,31 @@
 // Note: all exports in this module are publicly available via
 // `import { tendermint34 } from "@cosmjs/tendermint-rpc"`
 
-export { Tendermint34Client } from "./tendermint34client";
 export {
   AbciInfoRequest,
   AbciQueryParams,
   AbciQueryRequest,
-  BlockRequest,
   BlockchainRequest,
+  BlockRequest,
+  BlockResultsRequest,
   BlockSearchParams,
   BlockSearchRequest,
-  BlockResultsRequest,
-  BroadcastTxRequest,
   BroadcastTxParams,
+  BroadcastTxRequest,
   CommitRequest,
   GenesisRequest,
   HealthRequest,
   Method,
-  Request,
   QueryTag,
+  Request,
   StatusRequest,
   SubscriptionEventType,
   TxParams,
   TxRequest,
   TxSearchParams,
   TxSearchRequest,
-  ValidatorsRequest,
   ValidatorsParams,
+  ValidatorsRequest,
 } from "./requests";
 export {
   AbciInfoResponse,
@@ -75,3 +74,4 @@ export {
   Vote,
   VoteType,
 } from "./responses";
+export { Tendermint34Client } from "./tendermint34client";

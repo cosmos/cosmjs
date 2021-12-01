@@ -4,13 +4,13 @@ export { HashFunction } from "./hash";
 export { Hmac } from "./hmac";
 export { Keccak256, keccak256 } from "./keccak";
 export {
-  Xchacha20poly1305Ietf,
-  xchacha20NonceLength,
   Argon2id,
   Argon2idOptions,
-  isArgon2idOptions,
   Ed25519,
   Ed25519Keypair,
+  isArgon2idOptions,
+  xchacha20NonceLength,
+  Xchacha20poly1305Ietf,
 } from "./libsodium";
 export { Random } from "./random";
 export { Ripemd160, ripemd160 } from "./ripemd";
@@ -20,10 +20,10 @@ export { Sha1, sha1, Sha256, sha256, Sha512, sha512 } from "./sha";
 export {
   HdPath,
   pathToString,
-  stringToPath,
   Slip10,
   Slip10Curve,
+  slip10CurveFromString,
   Slip10RawIndex,
   Slip10Result,
-  slip10CurveFromString,
+  stringToPath,
 } from "./slip10";

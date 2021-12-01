@@ -2,7 +2,7 @@
 // Standard modules (see tracking issue https://github.com/cosmos/cosmjs/issues/276)
 //
 
-export { AuthExtension, AuthAccountsResponse, BaseAccount, setupAuthExtension } from "./auth";
+export { AuthAccountsResponse, AuthExtension, BaseAccount, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
   DistributionCommunityPoolResponse,
@@ -17,16 +17,16 @@ export {
   setupDistributionExtension,
 } from "./distribution";
 export {
+  GovDepositResponse,
+  GovDepositsResponse,
   GovExtension,
   GovParametersResponse,
-  GovProposalsResponse,
   GovProposalResponse,
+  GovProposalsResponse,
   GovProposerResponse,
-  GovDepositsResponse,
-  GovDepositResponse,
   GovTallyResponse,
-  GovVotesResponse,
   GovVoteResponse,
+  GovVotesResponse,
   setupGovExtension,
 } from "./gov";
 export {
@@ -44,22 +44,22 @@ export {
 } from "./slashing";
 export {
   setupStakingExtension,
-  StakingDelegatorDelegationsResponse,
-  StakingDelegatorUnbondingDelegationsResponse,
-  StakingDelegatorTransactionsResponse,
-  StakingDelegatorValidatorsResponse,
-  StakingDelegatorValidatorResponse,
   StakingDelegationResponse,
-  StakingUnbondingDelegationResponse,
-  StakingRedelegationsResponse,
-  StakingValidatorsResponse,
-  StakingValidatorResponse,
-  StakingValidatorDelegationsResponse,
-  StakingValidatorUnbondingDelegationsResponse,
-  StakingHistoricalInfoResponse,
+  StakingDelegatorDelegationsResponse,
+  StakingDelegatorTransactionsResponse,
+  StakingDelegatorUnbondingDelegationsResponse,
+  StakingDelegatorValidatorResponse,
+  StakingDelegatorValidatorsResponse,
   StakingExtension,
+  StakingHistoricalInfoResponse,
   StakingParametersResponse,
   StakingPoolResponse,
+  StakingRedelegationsResponse,
+  StakingUnbondingDelegationResponse,
+  StakingValidatorDelegationsResponse,
+  StakingValidatorResponse,
+  StakingValidatorsResponse,
+  StakingValidatorUnbondingDelegationsResponse,
 } from "./staking";
 export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 
@@ -70,8 +70,8 @@ export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSup
 export {
   BlockResponse,
   BroadcastMode,
-  EncodeTxResponse,
   BroadcastTxsResponse,
+  EncodeTxResponse,
   NodeInfoResponse,
   SearchTxsResponse,
   TxsResponse,

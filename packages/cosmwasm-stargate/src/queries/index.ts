@@ -1,1 +1,1 @@
-export { setupWasmExtension, JsonObject, WasmExtension } from "./wasm";
+export { JsonObject, setupWasmExtension, WasmExtension } from "./wasm";

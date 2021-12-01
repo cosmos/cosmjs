@@ -1,28 +1,26 @@
 // This type happens to be shared between Amino and Direct sign modes
-export { Coin, coin, coins } from "@cosmjs/amino";
-
 export { parseCoins } from "./coins";
-export { decodeTxRaw, DecodedTxRaw } from "./decode";
+export { DecodedTxRaw, decodeTxRaw } from "./decode";
+export {
+  DirectSecp256k1HdWallet,
+  DirectSecp256k1HdWalletOptions,
+  extractKdfConfiguration,
+} from "./directsecp256k1hdwallet";
+export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
+export { makeCosmoshubPath } from "./paths";
+export { decodePubkey, encodePubkey } from "./pubkey";
 export {
   DecodeObject,
   EncodeObject,
   GeneratedType,
-  isTxBodyEncodeObject,
   isPbjsGeneratedType,
   isTsProtoGeneratedType,
+  isTxBodyEncodeObject,
   PbjsGeneratedType,
   Registry,
   TsProtoGeneratedType,
   TxBodyEncodeObject,
 } from "./registry";
-export {
-  extractKdfConfiguration,
-  DirectSecp256k1HdWallet,
-  DirectSecp256k1HdWalletOptions,
-} from "./directsecp256k1hdwallet";
-export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
-export { makeCosmoshubPath } from "./paths";
-export { decodePubkey, encodePubkey } from "./pubkey";
 export {
   AccountData,
   Algo,
@@ -33,3 +31,4 @@ export {
 } from "./signer";
 export { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 export { executeKdf, KdfConfiguration } from "./wallet";
+export { Coin, coin, coins } from "@cosmjs/amino";
