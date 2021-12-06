@@ -37,7 +37,7 @@ and this project adheres to
   code that only needs to support one backend. ([#865])
 - @cosmjs/tendermint-rpc: Remove default URL from `HttpClient` and
   `WebsocketClient` constructors ([#897]).
-- all: Upgrade cosmjs-types to 0.3. This includes the types of the Cosmos SDK
+- all: Upgrade cosmjs-types to 0.4. This includes the types of the Cosmos SDK
   0.44 modules x/authz and x/feegrant. It causes a few breaking changes by
   adding fields to interfaces. ([#928])
 - @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Add simulation support
