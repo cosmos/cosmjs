@@ -455,6 +455,7 @@ __metadata:
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
+    "@noble/hashes": ^1
     "@types/bn.js": ^5
     "@types/elliptic": ^6.4.12
     "@types/eslint-plugin-prettier": ^3
@@ -464,7 +465,6 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/libsodium-wrappers": ^0.7.7
     "@types/node": ^15.0.1
-    "@types/ripemd160": ^2.0.0
     "@types/sha.js": ^2.4.0
     "@typescript-eslint/eslint-plugin": ^4.28
     "@typescript-eslint/parser": ^4.28
@@ -492,7 +492,6 @@ __metadata:
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
     prettier: ^2.4.1
-    ripemd160: ^2.0.2
     ses: ^0.11.0
     sha.js: ^2.4.11
     source-map-support: ^0.5.19
@@ -1248,6 +1247,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/hashes@npm:^1":
+  version: 1.0.0
+  resolution: "@noble/hashes@npm:1.0.0"
+  checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.4":
   version: 2.1.4
   resolution: "@nodelib/fs.scandir@npm:2.1.4"
@@ -1776,15 +1782,6 @@ __metadata:
   version: 1.2.3
   resolution: "@types/range-parser@npm:1.2.3"
   checksum: a0a4218214d2c599e2128a8965e9183d1f0b8fc614def43a2183cf80534d10fcf86357c823c7907e779df0ab048fd1fa3818b4c8f0f6f99ba150a3f99df7d03d
-  languageName: node
-  linkType: hard
-
-"@types/ripemd160@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/ripemd160@npm:2.0.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: eb0eb2d380734a957a1e584f22af874552fe2ce1b28bc079ea5e361dec4bfcee5285d34dc6acdbce31616ac93210343a6c92809a45e18e3b3fd7f462c65b5166
   languageName: node
   linkType: hard
 

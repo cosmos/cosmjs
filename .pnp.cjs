@@ -343,6 +343,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:5.50.0"
       ],
       [
+        "@noble/hashes",
+        "npm:1.0.0"
+      ],
+      [
         "@nodelib/fs.scandir",
         "npm:2.1.4"
       ],
@@ -581,10 +585,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "@types/range-parser",
         "npm:1.2.3"
-      ],
-      [
-        "@types/ripemd160",
-        "npm:2.0.0"
       ],
       [
         "@types/semver",
@@ -3372,6 +3372,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/math", "workspace:packages/math"],
             ["@cosmjs/utils", "workspace:packages/utils"],
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],
+            ["@noble/hashes", "npm:1.0.0"],
             ["@types/bn.js", "npm:5.1.0"],
             ["@types/elliptic", "npm:6.4.12"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
@@ -3381,7 +3382,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],
             ["@types/libsodium-wrappers", "npm:0.7.9"],
             ["@types/node", "npm:15.3.1"],
-            ["@types/ripemd160", "npm:2.0.0"],
             ["@types/sha.js", "npm:2.4.0"],
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
@@ -3409,7 +3409,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["libsodium-wrappers", "npm:0.7.9"],
             ["nyc", "npm:15.1.0"],
             ["prettier", "npm:2.4.1"],
-            ["ripemd160", "npm:2.0.2"],
             ["ses", "npm:0.11.1"],
             ["sha.js", "npm:2.4.11"],
             ["source-map-support", "npm:0.5.19"],
@@ -4224,6 +4223,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@noble/hashes", [
+        ["npm:1.0.0", {
+          "packageLocation": "./.yarn/cache/@noble-hashes-npm-1.0.0-893cbd74b3-bdf1c28a4b.zip/node_modules/@noble/hashes/",
+          "packageDependencies": [
+            ["@noble/hashes", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@nodelib/fs.scandir", [
         ["npm:2.1.4", {
           "packageLocation": "./.yarn/cache/@nodelib-fs.scandir-npm-2.1.4-6f6ddb2372-18c2150ab5.zip/node_modules/@nodelib/fs.scandir/",
@@ -4843,16 +4851,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-range-parser-npm-1.2.3-c06253b351-a0a4218214.zip/node_modules/@types/range-parser/",
           "packageDependencies": [
             ["@types/range-parser", "npm:1.2.3"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@types/ripemd160", [
-        ["npm:2.0.0", {
-          "packageLocation": "./.yarn/cache/@types-ripemd160-npm-2.0.0-0e635eba3e-eb0eb2d380.zip/node_modules/@types/ripemd160/",
-          "packageDependencies": [
-            ["@types/ripemd160", "npm:2.0.0"],
-            ["@types/node", "npm:15.3.1"]
           ],
           "linkType": "HARD",
         }]
