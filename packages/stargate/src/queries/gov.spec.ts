@@ -235,11 +235,11 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: jasmine.any(Date),
-        depositEndTime: jasmine.any(Date),
+        submitTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: jasmine.any(Date),
-        votingEndTime: jasmine.any(Date),
+        votingStartTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
@@ -261,11 +261,11 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: jasmine.any(Date),
-        depositEndTime: jasmine.any(Date),
+        submitTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: jasmine.any(Date),
-        votingEndTime: jasmine.any(Date),
+        votingStartTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
