@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/json-rpc",
-  "version": "0.27.0-rc1",
+  "version": "0.27.0-rc2",
   "description": "Framework for implementing a JSON-RPC 2.0 API",
   "contributors": [
     "IOV SAS <admin@iov.one>",
