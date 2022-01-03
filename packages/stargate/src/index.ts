@@ -62,6 +62,7 @@ export {
   BankExtension,
   createPagination,
   createProtobufRpcClient,
+  decodeCosmosSdkDecFromProto,
   DistributionExtension,
   GovExtension,
   GovParamsType,

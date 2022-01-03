@@ -14,6 +14,8 @@ and this project adheres to
   ([#932]).
 - @cosmjs/stargate: Merge `DeliverTxFailure` and `DeliverTxSuccess` into a
   single `DeliverTxResponse` ([#878], [#949]). Add `assertIsDeliverTxFailure`.
+- @cosmjs/stargate: Created `types.Dec` decoder function
+  `decodeCosmosSdkDecFromProto`.
 - @cosmjs/amino: Added `StdTx`, `isStdTx` and `makeStdTx` and removed them from
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.

@@ -11,4 +11,9 @@ export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from ".
 export { IbcExtension, setupIbcExtension } from "./ibc";
 export { setupStakingExtension, StakingExtension } from "./staking";
 export { setupTxExtension, TxExtension } from "./tx";
-export { createPagination, createProtobufRpcClient, ProtobufRpcClient } from "./utils";
+export {
+  createPagination,
+  createProtobufRpcClient,
+  decodeCosmosSdkDecFromProto,
+  ProtobufRpcClient,
+} from "./utils";
