@@ -17,6 +17,7 @@ and this project adheres to
 - @cosmjs/amino: Added `StdTx`, `isStdTx` and `makeStdTx` and removed them from
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.
+- @cosmjs/ledger-amino: Added `showAddress` in ledgerSigner.
 
 [#938]: https://github.com/cosmos/cosmjs/issues/938
 [#932]: https://github.com/cosmos/cosmjs/issues/932
