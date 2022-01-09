@@ -11,6 +11,7 @@ import { HdPath } from "@cosmjs/crypto";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
+import {AddressAndPublicKeyResponse, ErrorResponse} from "ledger-cosmos-js";
 
 export class LedgerSigner implements OfflineAminoSigner {
   private readonly ledger: LaunchpadLedger;
@@ -35,6 +36,10 @@ export class LedgerSigner implements OfflineAminoSigner {
     }
 
     return this.accounts;
+  }
+
+  public async showAddress(path: HdPath): Promise<AddressAndPublicKeyResponse | ErrorResponse> {
+    return await this.ledger.verifyAddress(path);
   }
 
   public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
