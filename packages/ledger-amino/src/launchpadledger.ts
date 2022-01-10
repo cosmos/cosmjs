@@ -169,11 +169,11 @@ export class LaunchpadLedger {
 
   public async verifyAddress(hdPath: HdPath): Promise<AddressAndPublicKeyResponse | ErrorResponse> {
     await this.verifyDeviceIsReady();
-    assert(this.app, "Persistence Ledger App is not connected");
+    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const hdPathToUse = hdPath;
     // ledger-cosmos-js hardens the first three indices
-    const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), "persistence");
+    const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
     this.handleLedgerErrors(response);
     return (response as AddressAndPublicKeyResponse)
   }
