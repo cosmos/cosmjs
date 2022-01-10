@@ -646,7 +646,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.5...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.26.6...HEAD
+[0.26.6]: https://github.com/cosmos/cosmjs/compare/v0.26.5...v0.26.6
 [0.26.5]: https://github.com/cosmos/cosmjs/compare/v0.26.4...v0.26.5
 [0.26.4]: https://github.com/cosmos/cosmjs/compare/v0.26.3...v0.26.4
 [0.26.3]: https://github.com/cosmos/cosmjs/compare/v0.26.2...v0.26.3
