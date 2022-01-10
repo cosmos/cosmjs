@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/crypto",
-  "version": "0.26.5",
+  "version": "0.26.6",
   "description": "Cryptography resources for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>",
