@@ -1,11 +1,10 @@
 import axios from "axios";
+import chalk from "chalk";
 import * as fs from "fs";
 import { join } from "path";
 import yargs from "yargs";
 
 import { TsRepl } from "./tsrepl";
-
-import colors = require("colors/safe");
 
 export async function installedPackages(): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -49,12 +48,12 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
-  console.info(colors.green("Initializing session for you. Have fun!"));
+  console.info(chalk.green("Initializing session for you. Have fun!"));
   const visiblePackages = (await installedPackages()).filter(
     (name) => name.startsWith("@cosmjs/") || name === "axios",
   );
-  console.info(colors.yellow("The following packages have been installed and can be imported:"));
-  console.info(colors.yellow(visiblePackages.join(", ")));
+  console.info(chalk.yellow("The following packages have been installed and can be imported:"));
+  console.info(chalk.yellow(visiblePackages.join(", ")));
 
   let init = "";
   if (args.selftest) {

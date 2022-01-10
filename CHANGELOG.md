@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.26.6] - 2022-01-10
+
+### Changed
+
+- @cosmjs/cli: Replace `colors` dependency with `chalk` (see
+  https://snyk.io/blog/open-source-npm-packages-colors-faker/)
+
 ## [0.26.5] - 2021-11-20
 
 ### Added
