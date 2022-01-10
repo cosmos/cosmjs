@@ -49,6 +49,14 @@ export class GasPrice {
     const decimalAmount = Decimal.fromUserInput(amount, fractionalDigits);
     return new GasPrice(decimalAmount, denom);
   }
+
+  /**
+   * Returns a string representation of this gas price, e.g. "0.025uatom".
+   * This can be used as an input to `GasPrice.fromString`.
+   */
+  public toString(): string {
+    return this.amount.toString() + this.denom;
+  }
 }
 
 export function calculateFee(gasLimit: number, gasPrice: GasPrice | string): StdFee {
