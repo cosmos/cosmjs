@@ -50,6 +50,8 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add support for wasmd 0.21. This changes the AMINO
   JSON representation of `Msg{Execute,Instantiate,Migrate}Contract.msg` from
   base64 strings to JSON objects. ([#948])
+- @cosmjs/cli: Replace `colors` dependency with `chalk` (see
+  https://snyk.io/blog/open-source-npm-packages-colors-faker/)
 
 [#865]: https://github.com/cosmos/cosmjs/issues/865
 [#897]: https://github.com/cosmos/cosmjs/issues/897
