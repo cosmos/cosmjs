@@ -5,7 +5,7 @@ import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 import CosmosApp, {
   AddressAndPublicKeyResponse,
-  AppInfoResponse, ErrorResponse,
+  AppInfoResponse,
   PublicKeyResponse,
   SignResponse,
   VersionResponse,
@@ -167,11 +167,10 @@ export class LaunchpadLedger {
     await this.verifyCosmosAppIsOpen();
   }
 
-  public async verifyAddress(hdPath: HdPath): Promise<AddressAndPublicKeyResponse | ErrorResponse> {
+  public async verifyAddress(hdPath: HdPath): Promise<AddressAndPublicKeyResponse> {
     await this.verifyDeviceIsReady();
-    assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
-    const hdPathToUse = hdPath;
+    const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
     const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
     this.handleLedgerErrors(response);
