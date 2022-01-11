@@ -167,7 +167,7 @@ export class LaunchpadLedger {
     await this.verifyCosmosAppIsOpen();
   }
 
-  public async verifyAddress(hdPath: HdPath): Promise<AddressAndPublicKeyResponse> {
+  public async verifyAddress(hdPath?: HdPath): Promise<AddressAndPublicKeyResponse> {
     await this.verifyDeviceIsReady();
 
     const hdPathToUse = hdPath || this.hdPaths[0];
