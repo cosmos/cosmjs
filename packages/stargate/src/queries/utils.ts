@@ -1,5 +1,5 @@
-import { Bech32 } from "@cosmjs/encoding";
-import { Uint64 } from "@cosmjs/math";
+import { Bech32, fromAscii } from "@cosmjs/encoding";
+import { Decimal, Uint64 } from "@cosmjs/math";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import Long from "long";
 
@@ -52,4 +52,15 @@ export function createProtobufRpcClient(base: QueryClient): ProtobufRpcClient {
 export function longify(value: string | number | Long | Uint64): Long {
   const checkedValue = Uint64.fromString(value.toString());
   return Long.fromBytesBE([...checkedValue.toBytesBigEndian()], true);
+}
+
+/**
+ * Takes a string or binary encoded `github.com/cosmos/cosmos-sdk/types.Dec` from the
+ * protobuf API and converts it into a `Decimal` with 18 fractional digits.
+ *
+ * See https://github.com/cosmos/cosmos-sdk/issues/10863 for more context why this is needed.
+ */
+export function decodeCosmosSdkDecFromProto(input: string | Uint8Array): Decimal {
+  const asString = typeof input === "string" ? input : fromAscii(input);
+  return Decimal.fromAtomics(asString, 18);
 }
