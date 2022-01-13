@@ -21,6 +21,7 @@ export {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
+export { fromBinary, toBinary } from "./encoding";
 export {
   ChangeAdminResult,
   ExecuteResult,
