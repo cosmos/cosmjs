@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/cosmwasm-stargate: Add `fromBinary`/`toBinary` to convert between
+  JavaScript objects and the JSON representation of `cosmwasm_std::Binary`
+  (base64).
+
 ## [0.27.0] - 2022-01-10
 
 ### Added
