@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import { Tendermint34Client, toRfc3339WithNanoseconds, RpcClient } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -149,7 +149,7 @@ export class StargateClient {
     | undefined;
   private chainId: string | undefined;
 
-  public static async connect(endpoint: string): Promise<StargateClient> {
+  public static async connect(endpoint: string | RpcClient): Promise<StargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
     return new StargateClient(tmClient);
   }

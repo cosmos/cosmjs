@@ -19,9 +19,14 @@ export class Tendermint34Client {
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    */
-  public static async connect(url: string): Promise<Tendermint34Client> {
-    const useHttp = url.startsWith("http://") || url.startsWith("https://");
-    const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
+  public static async connect(url: string | RpcClient): Promise<Tendermint34Client> {
+    let rpcClient: RpcClient;
+    if (typeof url === 'string') {
+      const useHttp = url.startsWith("http://") || url.startsWith("https://");
+      rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
+    } else {
+      rpcClient = url;
+    }
     return Tendermint34Client.create(rpcClient);
   }
 
