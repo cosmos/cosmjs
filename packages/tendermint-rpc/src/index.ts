@@ -12,7 +12,7 @@ export {
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
-export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
+export { HttpClient, RpcClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export {
   AbciInfoRequest,
   AbciInfoResponse,
