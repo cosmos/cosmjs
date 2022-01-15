@@ -21,7 +21,7 @@ export class Tendermint34Client {
    */
   public static async connect(url: string | RpcClient): Promise<Tendermint34Client> {
     let rpcClient: RpcClient;
-    if (typeof url === 'string') {
+    if (typeof url === "string") {
       const useHttp = url.startsWith("http://") || url.startsWith("https://");
       rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
     } else {
