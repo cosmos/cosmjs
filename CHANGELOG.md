@@ -12,6 +12,13 @@ and this project adheres to
   JavaScript objects and the JSON representation of `cosmwasm_std::Binary`
   (base64).
 
+### Changed
+
+- @cosmjs/stargate: The error messages for missing types in `AminoTypes` now
+  contain the type that was searched for ([#990]).
+
+[#990]: https://github.com/cosmos/cosmjs/pull/990
+
 ## [0.27.0] - 2022-01-10
 
 ### Added

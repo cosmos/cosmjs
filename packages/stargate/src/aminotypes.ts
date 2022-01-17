@@ -539,7 +539,7 @@ export class AminoTypes {
     const converter = this.register[typeUrl];
     if (!converter) {
       throw new Error(
-        "Type URL does not exist in the Amino message type register. " +
+        `Type URL '${typeUrl}' does not exist in the Amino message type register. ` +
           "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
           "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
       );
@@ -554,7 +554,7 @@ export class AminoTypes {
     const result = Object.entries(this.register).find(([_typeUrl, { aminoType }]) => aminoType === type);
     if (!result) {
       throw new Error(
-        "Type does not exist in the Amino message type register. " +
+        `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
           "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
           "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
       );

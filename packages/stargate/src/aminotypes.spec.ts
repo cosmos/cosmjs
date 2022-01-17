@@ -569,7 +569,7 @@ describe("AminoTypes", () => {
 
     it("throws for unknown type url", () => {
       expect(() => new AminoTypes().toAmino({ typeUrl: "/xxx.Unknown", value: { foo: "bar" } })).toThrowError(
-        /Type URL does not exist in the Amino message type register./i,
+        /Type URL '\/xxx\.Unknown' does not exist in the Amino message type register./i,
       );
     });
   });
@@ -1005,7 +1005,9 @@ describe("AminoTypes", () => {
     it("throws for unknown type url", () => {
       expect(() =>
         new AminoTypes().fromAmino({ type: "cosmos-sdk/MsgUnknown", value: { foo: "bar" } }),
-      ).toThrowError(/Type does not exist in the Amino message type register./i);
+      ).toThrowError(
+        /Amino type identifier 'cosmos-sdk\/MsgUnknown' does not exist in the Amino message type register./i,
+      );
     });
   });
 });
