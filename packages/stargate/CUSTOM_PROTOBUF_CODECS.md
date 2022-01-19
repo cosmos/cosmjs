@@ -108,13 +108,14 @@ For example:
 
 ```ts
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
-import { defaultRegistryTypes, SigningStargateClient } from "@cosmjs/stargate";
+import {
+  defaultRegistryTypes as defaultStargateTypes,
+  SigningStargateClient,
+} from "@cosmjs/stargate";
 import { MsgXxx } from "./path/to/generated/codec/my/custom/tx"; // Replace with your own Msg import
 
-const myRegistry = new Registry([
-  ...defaultRegistryTypes,
-  ["/my.custom.MsgXxx", MsgXxx], // Replace with your own type URL and Msg class
-]);
+const myRegistry = new Registry(defaultStargateTypes);
+myRegistry.register("/my.custom.MsgXxx", MsgXxx); // Replace with your own type URL and Msg class
 const mnemonic = // Replace with your own mnemonic
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 

@@ -64,7 +64,8 @@ describe("registry demo", () => {
       .add(new Field("body", 3, "string"))
       .add(new Field("attachment", 4, "bytes"));
 
-    const registry = new Registry([[typeUrl, MsgCreatePostOriginal]]);
+    const registry = new Registry();
+    registry.register(typeUrl, MsgCreatePostOriginal);
     const MsgCreatePost = registry.lookupType(typeUrl);
     assert(MsgCreatePost);
     assert(isPbjsGeneratedType(MsgCreatePost));
