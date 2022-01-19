@@ -3333,8 +3333,8 @@ __metadata:
   linkType: hard
 
 "engine.io@npm:~4.1.0":
-  version: 4.1.1
-  resolution: "engine.io@npm:4.1.1"
+  version: 4.1.2
+  resolution: "engine.io@npm:4.1.2"
   dependencies:
     accepts: ~1.3.4
     base64id: 2.0.0
@@ -3343,7 +3343,7 @@ __metadata:
     debug: ~4.3.1
     engine.io-parser: ~4.0.0
     ws: ~7.4.2
-  checksum: 773fc7be6ecc2b8af95f72e6371feaa44957e481e175e614513a92307b55a33fa779d491a918af7f9071c11ad36fd52133b44d09c996baca88b5524d934ce4f7
+  checksum: 3b56aa4f13eca1296fa7de631ebc503ee1c16d3b90c8c97a86f36528d6f842c2bcfc065ca65caef5ba6164b372d67c07f812b77c2572642ccd4f245680e21621
   languageName: node
   linkType: hard
 
