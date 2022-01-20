@@ -377,7 +377,7 @@ export interface AminoMsgTransfer extends AminoMsg {
      */
     readonly timeout_height: AminoHeight;
     /**
-     * Timeout timestamp (in nanoseconds). The timeout is disabled when set to 0.
+     * Timeout timestamp in nanoseconds since Unix epoch. The timeout is disabled when set to 0.
      *
      * 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52).
      */
