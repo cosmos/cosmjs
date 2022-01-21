@@ -174,7 +174,7 @@ export class LaunchpadLedger {
     // ledger-cosmos-js hardens the first three indices
     const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
     this.handleLedgerErrors(response);
-    return (response as AddressAndPublicKeyResponse)
+    return response as AddressAndPublicKeyResponse;
   }
 
   private handleLedgerErrors(
@@ -211,4 +211,3 @@ export class LaunchpadLedger {
     }
   }
 }
-

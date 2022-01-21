@@ -4,6 +4,7 @@ import {
   encodeSecp256k1Signature,
   makeCosmoshubPath,
   OfflineAminoSigner,
+  Secp256k1Pubkey,
   serializeSignDoc,
   StdSignDoc,
 } from "@cosmjs/amino";
@@ -11,7 +12,11 @@ import { HdPath } from "@cosmjs/crypto";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
-import {AddressAndPublicKeyResponse} from "ledger-cosmos-js";
+
+export interface AddressAndPubkey {
+  readonly address: string;
+  readonly pubkey: Secp256k1Pubkey;
+}
 
 export class LedgerSigner implements OfflineAminoSigner {
   private readonly ledger: LaunchpadLedger;
@@ -38,8 +43,17 @@ export class LedgerSigner implements OfflineAminoSigner {
     return this.accounts;
   }
 
-  public async showAddress(path: HdPath): Promise<AddressAndPublicKeyResponse> {
-    return await this.ledger.verifyAddress(path);
+  public async showAddress(path: HdPath): Promise<AddressAndPubkey> {
+    const response = await this.ledger.verifyAddress(path);
+
+    if (response.error_message) {
+      throw new Error(response.error_message);
+    }
+
+    return {
+      address: response.address,
+      pubkey: response.compressed_pk,
+    };
   }
 
   public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {

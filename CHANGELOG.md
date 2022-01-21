@@ -22,7 +22,7 @@ and this project adheres to
 - @cosmjs/amino: Added `StdTx`, `isStdTx` and `makeStdTx` and removed them from
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.
-- @cosmjs/ledger-amino: Added `showAddress` in ledgerSigner.
+- @cosmjs/ledger-amino: Added `showAddress` in LedgerSigner.
 - @cosmjs/stargate: Add `GasPrice.toString`.
 
 [#938]: https://github.com/cosmos/cosmjs/issues/938
