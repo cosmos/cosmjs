@@ -1,15 +1,13 @@
-import jssha3 from "js-sha3";
+import { keccak_256 } from "@noble/hashes/sha3";
 
 import { HashFunction } from "./hash";
 
 export class Keccak256 implements HashFunction {
   public readonly blockSize = 512 / 8;
 
-  private readonly impl: jssha3.Hasher;
+  private readonly impl = keccak_256.create();
 
   public constructor(firstData?: Uint8Array) {
-    this.impl = jssha3.keccak256.create();
-
     if (firstData) {
       this.update(firstData);
     }
@@ -21,7 +19,7 @@ export class Keccak256 implements HashFunction {
   }
 
   public digest(): Uint8Array {
-    return new Uint8Array(this.impl.digest());
+    return this.impl.digest();
   }
 }
 

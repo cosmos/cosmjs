@@ -1771,10 +1771,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:26.6.2"
       ],
       [
-        "js-sha3",
-        "npm:0.8.0"
-      ],
-      [
         "js-sha512",
         "npm:0.8.0"
       ],
@@ -3400,7 +3396,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["js-sha3", "npm:0.8.0"],
             ["karma", "npm:6.3.2"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
@@ -9237,15 +9232,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:15.3.1"],
             ["merge-stream", "npm:2.0.0"],
             ["supports-color", "npm:7.2.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["js-sha3", [
-        ["npm:0.8.0", {
-          "packageLocation": "./.yarn/cache/js-sha3-npm-0.8.0-decf3ddcfa-75df77c1fc.zip/node_modules/js-sha3/",
-          "packageDependencies": [
-            ["js-sha3", "npm:0.8.0"]
           ],
           "linkType": "HARD",
         }]

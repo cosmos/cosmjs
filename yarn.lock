@@ -483,7 +483,6 @@ __metadata:
     jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
-    js-sha3: ^0.8.0
     karma: ^6.1.1
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
@@ -4845,13 +4844,6 @@ fsevents@~2.3.1:
     merge-stream: ^2.0.0
     supports-color: ^7.0.0
   checksum: f9afa3b88e3f12027901e4964ba3ff048285b5783b5225cab28fac25b4058cea8ad54001e9a1577ee2bed125fac3ccf5c80dc507b120300cc1bbcb368796533e
-  languageName: node
-  linkType: hard
-
-"js-sha3@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "js-sha3@npm:0.8.0"
-  checksum: 75df77c1fc266973f06cce8309ce010e9e9f07ec35ab12022ed29b7f0d9c8757f5a73e1b35aa24840dced0dea7059085aa143d817aea9e188e2a80d569d9adce
   languageName: node
   linkType: hard
 
