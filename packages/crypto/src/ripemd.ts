@@ -1,6 +1,7 @@
 import { ripemd160 as nobleRipemd160 } from "@noble/hashes/ripemd160";
 
 import { HashFunction } from "./hash";
+import { toRealUint8Array } from "./utils";
 
 export class Ripemd160 implements HashFunction {
   public readonly blockSize = 512 / 8;
@@ -14,7 +15,7 @@ export class Ripemd160 implements HashFunction {
   }
 
   public update(data: Uint8Array): Ripemd160 {
-    this.impl.update(data);
+    this.impl.update(toRealUint8Array(data));
     return this;
   }
 

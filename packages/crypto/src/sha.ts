@@ -2,6 +2,7 @@ import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
 
 import { HashFunction } from "./hash";
+import { toRealUint8Array } from "./utils";
 
 export class Sha256 implements HashFunction {
   public readonly blockSize = 512 / 8;
@@ -15,7 +16,7 @@ export class Sha256 implements HashFunction {
   }
 
   public update(data: Uint8Array): Sha256 {
-    this.impl.update(data);
+    this.impl.update(toRealUint8Array(data));
     return this;
   }
 
@@ -41,7 +42,7 @@ export class Sha512 implements HashFunction {
   }
 
   public update(data: Uint8Array): Sha512 {
-    this.impl.update(data);
+    this.impl.update(toRealUint8Array(data));
     return this;
   }
 

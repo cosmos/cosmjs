@@ -1,6 +1,7 @@
 import { keccak_256 } from "@noble/hashes/sha3";
 
 import { HashFunction } from "./hash";
+import { toRealUint8Array } from "./utils";
 
 export class Keccak256 implements HashFunction {
   public readonly blockSize = 512 / 8;
@@ -14,7 +15,7 @@ export class Keccak256 implements HashFunction {
   }
 
   public update(data: Uint8Array): Keccak256 {
-    this.impl.update(data);
+    this.impl.update(toRealUint8Array(data));
     return this;
   }
 
