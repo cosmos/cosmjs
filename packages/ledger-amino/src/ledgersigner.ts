@@ -37,7 +37,15 @@ export class LedgerSigner implements OfflineAminoSigner {
     return this.accounts;
   }
 
-  public async showAddress(path: HdPath): Promise<AddressAndPubkey> {
+  /**
+   * Shows the user's address in the device and returns an address/pubkey pair.
+   *
+   * The address will be shown with the native prefix of the app (e.g. cosmos, persistence, desmos)
+   * and does not support the usage of other address prefixes.
+   *
+   * @param path The HD path to show the address for. If unset, this is the first account.
+   */
+  public async showAddress(path?: HdPath): Promise<AddressAndPubkey> {
     return this.ledger.showAddress(path);
   }
 
