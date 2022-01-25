@@ -1,12 +1,5 @@
 export { cosmWasmTypes } from "./aminotypes";
-export {
-  Code,
-  CodeDetails,
-  Contract,
-  ContractCodeHistoryEntry,
-  CosmWasmClient,
-  JsonObject,
-} from "./cosmwasmclient";
+export { Code, CodeDetails, Contract, ContractCodeHistoryEntry, CosmWasmClient } from "./cosmwasmclient";
 export {
   isMsgClearAdminEncodeObject,
   isMsgExecuteEncodeObject,
@@ -22,6 +15,7 @@ export {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 export { fromBinary, toBinary } from "./encoding";
+export { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
 export {
   ChangeAdminResult,
   ExecuteResult,
