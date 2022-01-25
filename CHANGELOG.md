@@ -6,6 +6,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Removed
+
+- @cosmjs/crypto: Remove the SHA1 implementation (`Sha1` and `sha1`) as it is
+  not used in the Cosmos tech stack and not implemented in the hashing lib we
+  want to migrate to ([#1003]). Also it has known weaknesses.
+
+[#1003]: https://github.com/cosmos/cosmjs/issues/1003
+
 ## [0.27.1] - 2022-01-26
 
 ### Added
