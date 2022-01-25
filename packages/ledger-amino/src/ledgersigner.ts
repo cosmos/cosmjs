@@ -1,6 +1,7 @@
 import {
   AccountData,
   AminoSignResponse,
+  encodeSecp256k1Pubkey,
   encodeSecp256k1Signature,
   makeCosmoshubPath,
   OfflineAminoSigner,
@@ -52,7 +53,7 @@ export class LedgerSigner implements OfflineAminoSigner {
 
     return {
       address: response.address,
-      pubkey: response.compressed_pk,
+      pubkey: encodeSecp256k1Pubkey(response.compressed_pk),
     };
   }
 
