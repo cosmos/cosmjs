@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 const glob = require("glob");
 const path = require("path");
+const webpack = require("webpack");
 
 const target = "web";
 const demodir = path.join(__dirname, "dist", "demo");
@@ -14,6 +15,11 @@ module.exports = [
       path: demodir,
       filename: "ledger.js",
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
     resolve: {
       fallback: {
         buffer: false,
