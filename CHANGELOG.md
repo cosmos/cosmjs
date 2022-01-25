@@ -11,6 +11,7 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add `fromBinary`/`toBinary` to convert between
   JavaScript objects and the JSON representation of `cosmwasm_std::Binary`
   (base64).
+- @cosmjs/cosmwasm-stargate: Export `WasmExtension` and `setupWasmExtension`.
 
 ### Changed
 
