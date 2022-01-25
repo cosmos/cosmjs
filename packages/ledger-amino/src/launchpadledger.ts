@@ -1,4 +1,4 @@
-import { encodeSecp256k1Pubkey, makeCosmoshubPath, Secp256k1Pubkey } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeCosmoshubPath, pubkeyToAddress, Secp256k1Pubkey } from "@cosmjs/amino";
 import { HdPath, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
@@ -115,7 +115,7 @@ export class LaunchpadLedger {
 
   public async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
     const pubkeyToUse = pubkey || (await this.getPubkey());
-    return CosmosApp.getBech32FromPK(this.prefix, Buffer.from(pubkeyToUse));
+    return pubkeyToAddress(encodeSecp256k1Pubkey(pubkeyToUse), this.prefix);
   }
 
   public async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
