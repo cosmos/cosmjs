@@ -455,6 +455,7 @@ __metadata:
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
+    "@noble/hashes": ^1
     "@types/bn.js": ^5
     "@types/elliptic": ^6.4.12
     "@types/eslint-plugin-prettier": ^3
@@ -464,8 +465,6 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/libsodium-wrappers": ^0.7.7
     "@types/node": ^15.0.1
-    "@types/ripemd160": ^2.0.0
-    "@types/sha.js": ^2.4.0
     "@typescript-eslint/eslint-plugin": ^4.28
     "@typescript-eslint/parser": ^4.28
     bip39: ^3.0.2
@@ -483,7 +482,6 @@ __metadata:
     jasmine: ^3.8
     jasmine-core: ^3.7.1
     jasmine-spec-reporter: ^6
-    js-sha3: ^0.8.0
     karma: ^6.1.1
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
@@ -492,9 +490,7 @@ __metadata:
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
     prettier: ^2.4.1
-    ripemd160: ^2.0.2
     ses: ^0.11.0
-    sha.js: ^2.4.11
     source-map-support: ^0.5.19
     stream-browserify: ^3.0.0
     ts-node: ^8
@@ -1248,6 +1244,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/hashes@npm:^1":
+  version: 1.0.0
+  resolution: "@noble/hashes@npm:1.0.0"
+  checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.4":
   version: 2.1.4
   resolution: "@nodelib/fs.scandir@npm:2.1.4"
@@ -1779,15 +1782,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ripemd160@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/ripemd160@npm:2.0.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: eb0eb2d380734a957a1e584f22af874552fe2ce1b28bc079ea5e361dec4bfcee5285d34dc6acdbce31616ac93210343a6c92809a45e18e3b3fd7f462c65b5166
-  languageName: node
-  linkType: hard
-
 "@types/semver@npm:^7.3.4":
   version: 7.3.6
   resolution: "@types/semver@npm:7.3.6"
@@ -1802,15 +1796,6 @@ __metadata:
     "@types/mime": ^1
     "@types/node": "*"
   checksum: 5c5f3b64e9fe7c51fb428ef70f1f2365b897fc3c8400be6d6afc8db0f152639182b360361ebd3d0cbaeb607b125dee03bf0c50bf7e08642ff150028f05bb7381
-  languageName: node
-  linkType: hard
-
-"@types/sha.js@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@types/sha.js@npm:2.4.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: 0e1bd1a98d88dbbf87180b8ef81ab2bf8c2bd066a99858c76299fb599fd912df807072a55a6f484077498dd972a1b55eaa03aae6ea2654027a4dd0331db7e201
   languageName: node
   linkType: hard
 
@@ -4848,13 +4833,6 @@ fsevents@~2.3.1:
     merge-stream: ^2.0.0
     supports-color: ^7.0.0
   checksum: f9afa3b88e3f12027901e4964ba3ff048285b5783b5225cab28fac25b4058cea8ad54001e9a1577ee2bed125fac3ccf5c80dc507b120300cc1bbcb368796533e
-  languageName: node
-  linkType: hard
-
-"js-sha3@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "js-sha3@npm:0.8.0"
-  checksum: 75df77c1fc266973f06cce8309ce010e9e9f07ec35ab12022ed29b7f0d9c8757f5a73e1b35aa24840dced0dea7059085aa143d817aea9e188e2a80d569d9adce
   languageName: node
   linkType: hard
 
