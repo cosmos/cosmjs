@@ -175,8 +175,9 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient);
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix: options.prefix }) } =
-      options;
+    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
+    const prefix = options.prefix ?? "cosmos";
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix }) } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;

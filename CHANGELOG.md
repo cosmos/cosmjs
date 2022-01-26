@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/stargate: The `AminoTypes` now always requires an argument of type
+  `AminoTypesOptions`. This is an object with a required `prefix` field. Before
+  the prefix defaulted to "cosmos" but this is almost never the right choice for
+  CosmJS users that need to add Amino types manually. ([#989])
+
+[#989]: https://github.com/cosmos/cosmjs/issues/989
+
 ### Removed
 
 - @cosmjs/crypto: Remove the SHA1 implementation (`Sha1` and `sha1`) as it is

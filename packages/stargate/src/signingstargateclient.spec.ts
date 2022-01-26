@@ -484,6 +484,7 @@ describe("SigningStargateClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
+          prefix: "cosmos",
           additions: {
             "/cosmos.staking.v1beta1.MsgDelegate": {
               aminoType: "cosmos-sdk/MsgDelegate",
@@ -774,6 +775,7 @@ describe("SigningStargateClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
+          prefix: "cosmos",
           additions: {
             "/cosmos.staking.v1beta1.MsgDelegate": {
               aminoType: "cosmos-sdk/MsgDelegate",

@@ -35,7 +35,7 @@ export {
   isAminoMsgWithdrawDelegatorReward,
   isAminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
-export { AminoConverter, AminoTypes } from "./aminotypes";
+export { AminoConverter, AminoTypes, AminoTypesOptions } from "./aminotypes";
 export {
   isMsgDelegateEncodeObject,
   isMsgDepositEncodeObject,
