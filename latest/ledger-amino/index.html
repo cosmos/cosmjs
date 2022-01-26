@@ -32,11 +32,8 @@ will also build the package):</p>
 <a href="#browser" id="browser" style="color: inherit; text-decoration: none;">
   <h3>Browser</h3>
 </a>
-<p>Build the package for web:</p>
-<pre><code class="language-sh"><span class="hl-0">yarn pack-web</span>
-</code></pre>
-<p>Host the <code>ledger-amino</code> package directory, for example using Python 3:</p>
-<pre><code class="language-sh"><span class="hl-0">python3 -m http.server</span>
+<p>Serve the project locally:</p>
+<pre><code class="language-sh"><span class="hl-1"># Build the package for web</span><br/><span class="hl-0">yarn pack-web</span><br/><br/><span class="hl-1"># Host the `ledger-amino` package directory, for example using Python 3</span><br/><span class="hl-0">python3 -m http.server</span>
 </code></pre>
 <p>Visit the demo page in a browser, for example if using the Python 3 option:
 <a href="http://localhost:8000/demo">http://localhost:8000/demo</a>.</p>
@@ -60,7 +57,7 @@ transactions.</p>
 <p>Start a local Stargate blockchain as described in
 <a href="https://github.com/cosmos/cosmjs/blob/main/scripts/simapp42/README.md">scripts/simapp42/README.md</a>
 and execute:</p>
-<pre><code class="language-sh"><span class="hl-1">export</span><span class="hl-0"> LEDGER_ENABLED=1</span><br/><span class="hl-1">export</span><span class="hl-0"> SIMAPP42_ENABLED=1</span><br/><span class="hl-0">yarn </span><span class="hl-2">test</span>
+<pre><code class="language-sh"><span class="hl-2">export</span><span class="hl-0"> LEDGER_ENABLED=1</span><br/><span class="hl-2">export</span><span class="hl-0"> SIMAPP42_ENABLED=1</span><br/><span class="hl-0">yarn </span><span class="hl-3">test</span>
 </code></pre>
 
 <a href="#launchpad-tests" id="launchpad-tests" style="color: inherit; text-decoration: none;">
@@ -69,7 +66,7 @@ and execute:</p>
 <p>Start a local Launchpad blockchain as described in
 <a href="https://github.com/cosmos/cosmjs/blob/main/scripts/launchpad/README.md">scripts/launchpad/README.md</a>
 and execute:</p>
-<pre><code class="language-sh"><span class="hl-1">export</span><span class="hl-0"> LEDGER_ENABLED=1</span><br/><span class="hl-1">export</span><span class="hl-0"> LAUNCHPAD_ENABLED=1</span><br/><span class="hl-0">yarn </span><span class="hl-2">test</span>
+<pre><code class="language-sh"><span class="hl-2">export</span><span class="hl-0"> LEDGER_ENABLED=1</span><br/><span class="hl-2">export</span><span class="hl-0"> LAUNCHPAD_ENABLED=1</span><br/><span class="hl-0">yarn </span><span class="hl-3">test</span>
 </code></pre>
 
 <a href="#license" id="license" style="color: inherit; text-decoration: none;">
@@ -78,4 +75,4 @@ and execute:</p>
 <p>This package is part of the cosmjs repository, licensed under the Apache License
 2.0 (see <a href="https://github.com/cosmos/cosmjs/blob/main/NOTICE">NOTICE</a> and
 <a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">LICENSE</a>).</p>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/LaunchpadLedger.html" class="tsd-kind-icon">Launchpad<wbr/>Ledger</a></li><li class="tsd-kind-class"><a href="classes/LedgerSigner.html" class="tsd-kind-icon">Ledger<wbr/>Signer</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/LaunchpadLedger.html" class="tsd-kind-icon">Launchpad<wbr/>Ledger</a></li><li class="tsd-kind-class"><a href="classes/LedgerSigner.html" class="tsd-kind-icon">Ledger<wbr/>Signer</a></li><li class="tsd-kind-interface"><a href="interfaces/AddressAndPubkey.html" class="tsd-kind-icon">Address<wbr/>And<wbr/>Pubkey</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
