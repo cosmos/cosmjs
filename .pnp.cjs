@@ -3477,7 +3477,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/faucet", "workspace:packages/faucet"],
             ["@cosmjs/crypto", "workspace:packages/crypto"],
             ["@cosmjs/encoding", "workspace:packages/encoding"],
-            ["@cosmjs/launchpad", "workspace:packages/launchpad"],
             ["@cosmjs/math", "workspace:packages/math"],
             ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],
             ["@cosmjs/stargate", "workspace:packages/stargate"],

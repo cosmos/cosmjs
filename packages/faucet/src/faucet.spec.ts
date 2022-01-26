@@ -1,17 +1,10 @@
 import { Random } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
-import { CosmosClient } from "@cosmjs/launchpad";
 import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
 import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";
-
-function pendingWithoutLaunchpad(): void {
-  if (!process.env.LAUNCHPAD_ENABLED) {
-    return pending("Set LAUNCHPAD_ENABLED to enable Launchpad node-based tests");
-  }
-}
 
 function pendingWithoutSimapp(): void {
   if (!process.env.SIMAPP42_ENABLED && !process.env.SIMAPP44_ENABLED) {
@@ -34,237 +27,20 @@ const faucetMnemonic =
 describe("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
-  describe("launchpad", () => {
-    const apiUrl = "http://localhost:1317";
-    const stargate = false;
+  const apiUrl = "localhost:26658";
+  const stargate = true;
+  let originalEnvVariable: string | undefined;
 
-    describe("constructor", () => {
-      it("can be constructed", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        expect(faucet).toBeTruthy();
-      });
-    });
+  beforeAll(() => {
+    originalEnvVariable = process.env.FAUCET_CREDIT_AMOUNT_USTAKE;
+    process.env.FAUCET_CREDIT_AMOUNT_USTAKE = "100000";
+  });
 
-    describe("availableTokens", () => {
-      it("is empty when no tokens are configured", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          { bankTokens: [] },
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const tickers = await faucet.availableTokens();
-        expect(tickers).toEqual([]);
-      });
-
-      it("is not empty with default token config", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const tickers = await faucet.availableTokens();
-        expect(tickers).toEqual(["ucosm", "ustake"]);
-      });
-    });
-
-    describe("send", () => {
-      it("can send bank token", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const recipient = makeRandomAddress();
-        await faucet.send({
-          amount: {
-            amount: "23456",
-            denom: "ucosm",
-          },
-          sender: faucet.holderAddress,
-          recipient: recipient,
-        });
-
-        const readOnlyClient = new CosmosClient(apiUrl);
-        const account = await readOnlyClient.getAccount(recipient);
-        assert(account);
-        expect(account.balance).toEqual([
-          {
-            amount: "23456",
-            denom: "ucosm",
-          },
-        ]);
-      });
-    });
-
-    describe("refill", () => {
-      it("works", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        await faucet.refill();
-        const readOnlyClient = new CosmosClient(apiUrl);
-        const distributorBalance = (await readOnlyClient.getAccount(faucet.distributorAddresses[0]))?.balance;
-        assert(distributorBalance);
-        expect(distributorBalance).toEqual([
-          jasmine.objectContaining({
-            denom: "ucosm",
-          }),
-          jasmine.objectContaining({
-            denom: "ustake",
-          }),
-        ]);
-        expect(Number.parseInt(distributorBalance[0].amount, 10)).toBeGreaterThanOrEqual(80_000000);
-        expect(Number.parseInt(distributorBalance[1].amount, 10)).toBeGreaterThanOrEqual(80_000000);
-      });
-    });
-
-    describe("credit", () => {
-      it("works for fee token", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const recipient = makeRandomAddress();
-        await faucet.credit(recipient, "ucosm");
-
-        const readOnlyClient = new CosmosClient(apiUrl);
-        const account = await readOnlyClient.getAccount(recipient);
-        assert(account);
-        expect(account.balance).toEqual([
-          {
-            amount: "10000000",
-            denom: "ucosm",
-          },
-        ]);
-      });
-
-      it("works for stake token", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const recipient = makeRandomAddress();
-        await faucet.credit(recipient, "ustake");
-
-        const readOnlyClient = new CosmosClient(apiUrl);
-        const account = await readOnlyClient.getAccount(recipient);
-        assert(account);
-        expect(account.balance).toEqual([
-          {
-            amount: "10000000",
-            denom: "ustake",
-          },
-        ]);
-      });
-    });
-
-    describe("configuredTokens", () => {
-      it("works", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          3,
-          stargate,
-        );
-        const tickers = faucet.configuredTokens();
-        expect(tickers).toEqual(["ucosm", "ustake"]);
-      });
-    });
-
-    describe("loadAccounts", () => {
-      it("works", async () => {
-        pendingWithoutLaunchpad();
-        const faucet = await Faucet.make(
-          apiUrl,
-          defaultAddressPrefix,
-          defaultTokenConfig,
-          faucetMnemonic,
-          pathBuilder,
-          1,
-          stargate,
-        );
-        const accounts = await faucet.loadAccounts();
-
-        const readOnlyClient = new CosmosClient(apiUrl);
-        const expectedHolderAccount = await readOnlyClient.getAccount(faucet.holderAddress);
-        const expectedDistributorAccount = await readOnlyClient.getAccount(faucet.distributorAddresses[0]);
-        assert(expectedHolderAccount);
-        assert(expectedDistributorAccount);
-        expect(accounts).toEqual([
-          jasmine.objectContaining({
-            address: expectedHolderAccount.address,
-            balance: expectedHolderAccount.balance,
-          }),
-          jasmine.objectContaining({
-            address: expectedDistributorAccount.address,
-            balance: expectedDistributorAccount.balance,
-          }),
-        ]);
-      });
-    });
+  afterAll(() => {
+    process.env.FAUCET_CREDIT_AMOUNT_USTAKE = originalEnvVariable;
   });
 
   describe("stargate", () => {
-    const apiUrl = "localhost:26658";
-    const stargate = true;
-    let originalEnvVariable: string | undefined;
-
-    beforeAll(() => {
-      originalEnvVariable = process.env.FAUCET_CREDIT_AMOUNT_USTAKE;
-      process.env.FAUCET_CREDIT_AMOUNT_USTAKE = "100000";
-    });
-
-    afterAll(() => {
-      process.env.FAUCET_CREDIT_AMOUNT_USTAKE = originalEnvVariable;
-    });
-
     describe("constructor", () => {
       it("can be constructed", async () => {
         pendingWithoutSimapp();
