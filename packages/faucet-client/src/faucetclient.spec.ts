@@ -10,7 +10,7 @@ describe("FaucetClient", () => {
   const faucetUrl = "http://localhost:8000";
   const primaryToken = "ucosm";
   const secondaryToken = "ustake";
-  const defaultAddress = "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada";
+  const defaultAddress = "wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk";
 
   it("can be constructed", () => {
     // http
