@@ -1,4 +1,4 @@
-import { makeCosmoshubPath } from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeCosmoshubPath, Secp256k1Pubkey } from "@cosmjs/amino";
 import { HdPath, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
@@ -50,6 +50,11 @@ export interface LaunchpadLedgerOptions {
    * Defaults to "1.5.3".
    */
   readonly minLedgerAppVersion?: string;
+}
+
+export interface AddressAndPubkey {
+  readonly address: string;
+  readonly pubkey: Secp256k1Pubkey;
 }
 
 export class LaunchpadLedger {
@@ -167,14 +172,19 @@ export class LaunchpadLedger {
     await this.verifyCosmosAppIsOpen();
   }
 
-  public async verifyAddress(hdPath?: HdPath): Promise<AddressAndPublicKeyResponse> {
+  public async showAddress(hdPath?: HdPath): Promise<AddressAndPubkey> {
     await this.verifyDeviceIsReady();
 
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
     const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
     this.handleLedgerErrors(response);
-    return response as AddressAndPublicKeyResponse;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { address, compressed_pk } = response as AddressAndPublicKeyResponse;
+    return {
+      address: address,
+      pubkey: encodeSecp256k1Pubkey(compressed_pk),
+    };
   }
 
   private handleLedgerErrors(
