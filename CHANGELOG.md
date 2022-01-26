@@ -17,8 +17,13 @@ and this project adheres to
 
 - @cosmjs/stargate: The error messages for missing types in `AminoTypes` now
   contain the type that was searched for ([#990]).
+- @cosmjs/tendermint-rpc: Change the `Evidence` type to `any` and avoid decoding
+  it. The structure we had before was outdated and trying to decode it led to
+  exceptions at runtime when a block with actual values was encountered.
+  ([#980])
 
 [#990]: https://github.com/cosmos/cosmjs/pull/990
+[#980]: https://github.com/cosmos/cosmjs/issues/980
 
 ## [0.27.0] - 2022-01-10
 

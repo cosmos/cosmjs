@@ -227,16 +227,17 @@ export interface Block {
    */
   readonly lastCommit: Commit | null;
   readonly txs: readonly Uint8Array[];
+  // This field becomes non-optional in 0.28 (https://github.com/cosmos/cosmjs/issues/1011)
   readonly evidence?: readonly Evidence[];
 }
 
-export interface Evidence {
-  readonly type: string;
-  readonly validator: Validator;
-  readonly height: number;
-  readonly time: number;
-  readonly totalVotingPower: number;
-}
+/**
+ * We lost track on how the evidence structure actually looks like.
+ * This is any now and passed to the caller untouched.
+ *
+ * See also https://github.com/cosmos/cosmjs/issues/980.
+ */
+export type Evidence = any;
 
 export interface Commit {
   readonly blockId: BlockId;
