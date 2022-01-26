@@ -1,4 +1,5 @@
 import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/amino";
+import { pathToString, stringToPath } from "@cosmjs/crypto";
 import { toBase64 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
@@ -8,6 +9,9 @@ import { LedgerSigner } from "../ledgersigner";
 
 declare const window: any;
 declare const document: any;
+
+const accountNumbers = [0, 1, 2, 10];
+const paths = accountNumbers.map(makeCosmoshubPath);
 
 let accounts: readonly AccountData[] = [];
 
@@ -59,12 +63,22 @@ window.updateMessage = (accountNumberInput: unknown) => {
   signDocTextArea.textContent = createSignDoc(accountNumber, address);
 };
 
+window.setPath = (accountNumberInput: unknown) => {
+  assert(typeof accountNumberInput === "string");
+  const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
+
+  const path = pathToString(paths[accountNumber]);
+  const pathInput = document.getElementById("path");
+  pathInput.value = path;
+};
+
+// This must be called by the user an cannot be done on load (see "TransportWebUSBGestureRequired").
 window.createSigner = async function createSigner(): Promise<LedgerSigner> {
   const interactiveTimeout = 120_000;
   const ledgerTransport = await TransportWebUSB.create(interactiveTimeout, interactiveTimeout);
   return new LedgerSigner(ledgerTransport, {
     testModeAllowed: true,
-    hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
+    hdPaths: paths,
   });
 };
 
@@ -73,7 +87,8 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     console.error("Please wait for transport to connect");
     return;
   }
-  const accountNumberInput = document.getElementById("account-number");
+  const accountNumberInput1 = document.getElementById("account-number1");
+  const accountNumberInput2 = document.getElementById("account-number2");
   const addressInput = document.getElementById("address");
   const accountsDiv = document.getElementById("accounts");
   const signDocTextArea = document.getElementById("sign-doc");
@@ -87,14 +102,31 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     }));
     accountsDiv.textContent = JSON.stringify(prettyAccounts, null, "\n");
     const accountNumber = 0;
-    accountNumberInput.max = accounts.length - 1;
-    accountNumberInput.value = accountNumber;
+
+    // Show address block
+    accountNumberInput1.max = accounts.length - 1;
+    accountNumberInput1.value = accountNumber;
+    window.setPath(accountNumber.toString());
+
+    // Sign block
+    accountNumberInput2.max = accounts.length - 1;
+    accountNumberInput2.value = accountNumber;
     const address = accounts[0].address;
     addressInput.value = address;
     signDocTextArea.textContent = createSignDoc(accountNumber, address);
   } catch (error) {
+    console.error(error);
     accountsDiv.textContent = error;
   }
+};
+
+window.showAddress = async function showAddress(signer: LedgerSigner | undefined): Promise<void> {
+  if (signer === undefined) {
+    console.error("Please wait for transport to connect");
+    return;
+  }
+  const path = stringToPath(document.getElementById("path").value);
+  await signer.showAddress(path);
 };
 
 window.sign = async function sign(signer: LedgerSigner | undefined): Promise<void> {
@@ -114,8 +146,4 @@ window.sign = async function sign(signer: LedgerSigner | undefined): Promise<voi
   } catch (error) {
     signatureDiv.textContent = error;
   }
-};
-
-window.onload = async function onLoad(): Promise<void> {
-  window.signer = await window.createSigner();
 };

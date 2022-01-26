@@ -8,40 +8,63 @@
     <script src="../dist/demo/ledger.js"></script>
   </head>
   <body>
-    <div>
+    <section>
       <h1>Ledger Demo</h1>
-    </div>
-    <div>
+    </section>
+    <section>
       <ol>
         <li>Connect the Ledger device via USB</li>
         <li>Open the Cosmos app on the Ledger device</li>
         <li>Click the buttons below</li>
       </ol>
+    </section>
+    <section>
+      <button onclick="createSigner().then((signer) => {window.signer = signer; console.log('Connected')}, console.error)">
+        Connect to Ledger
+      </button>
     </div>
-    <div>
+    <section>
+      <h2>Accounts</h2>
       <button onclick="getAccounts(window.signer)">
         Get Accounts
       </button>
-    </div>
-    <div id="accounts"></div>
-    <div>
-      <label>Account No.</label>
-      <input id="account-number" type="number" value="" onchange="updateMessage(this.value)" min="0" max="0"></input>
-    </div>
-    <div>
-      <label>Address</label>
-      <input id="address" type="text" value="" disabled></input>
-    </div>
-    <div>
-      <label>Message</label>
-      <textarea id="sign-doc">
-      </textarea>
-    </div>
-    <div>
-      <button onclick="sign(window.signer)">
-        Sign Message
+      <div id="accounts"></div>
+    </section>
+    <section>
+      <h2>Show address</h2>
+      <div>
+        <label>Account No.</label>
+        <input id="account-number1" type="number" value="" onchange="setPath(this.value)" min="0" max="0"></input>
+      </div>
+      <div>
+        <label>Path</label>
+        <input id="path" type="text" value="" disabled></input>
+      </div>
+      <button onclick="showAddress(window.signer)">
+        Show address
       </button>
-    </div>
-    <div id="signature"></div>
+    </section>
+    <section>
+      <h2>Sign</h2>
+      <div>
+        <label>Account No.</label>
+        <input id="account-number2" type="number" value="" onchange="updateMessage(this.value)" min="0" max="0"></input>
+      </div>
+      <div>
+        <label>Address</label>
+        <input id="address" type="text" value="" disabled></input>
+      </div>
+      <div>
+        <label>Message</label>
+        <textarea id="sign-doc">
+        </textarea>
+      </div>
+      <div>
+        <button onclick="sign(window.signer)">
+          Sign Message
+        </button>
+      </div>
+      <div id="signature"></div>
+    </section>
   </body>
 </html>
