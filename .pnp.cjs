@@ -595,10 +595,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.13.9"
       ],
       [
-        "@types/sha.js",
-        "npm:2.4.0"
-      ],
-      [
         "@types/ws",
         "npm:6.0.4"
       ],
@@ -3378,7 +3374,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],
             ["@types/libsodium-wrappers", "npm:0.7.9"],
             ["@types/node", "npm:15.3.1"],
-            ["@types/sha.js", "npm:2.4.0"],
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["bip39", "npm:3.0.4"],
@@ -3405,7 +3400,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.1.0"],
             ["prettier", "npm:2.4.1"],
             ["ses", "npm:0.11.1"],
-            ["sha.js", "npm:2.4.11"],
             ["source-map-support", "npm:0.5.19"],
             ["stream-browserify", "npm:3.0.0"],
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],
@@ -4865,16 +4859,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@types/serve-static", "npm:1.13.9"],
             ["@types/mime", "npm:1.3.2"],
-            ["@types/node", "npm:15.3.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@types/sha.js", [
-        ["npm:2.4.0", {
-          "packageLocation": "./.yarn/cache/@types-sha.js-npm-2.4.0-844623a8de-0e1bd1a98d.zip/node_modules/@types/sha.js/",
-          "packageDependencies": [
-            ["@types/sha.js", "npm:2.4.0"],
             ["@types/node", "npm:15.3.1"]
           ],
           "linkType": "HARD",
