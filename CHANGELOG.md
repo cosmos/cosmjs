@@ -12,6 +12,7 @@ and this project adheres to
   JavaScript objects and the JSON representation of `cosmwasm_std::Binary`
   (base64).
 - @cosmjs/cosmwasm-stargate: Export `WasmExtension` and `setupWasmExtension`.
+- @cosmjs/ledger-amino: Added `showAddress` in LedgerSigner.
 
 ### Changed
 

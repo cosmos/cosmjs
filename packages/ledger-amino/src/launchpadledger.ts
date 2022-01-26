@@ -4,6 +4,7 @@ import { fromUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 import CosmosApp, {
+  AddressAndPublicKeyResponse,
   AppInfoResponse,
   PublicKeyResponse,
   SignResponse,
@@ -164,6 +165,16 @@ export class LaunchpadLedger {
   private async verifyDeviceIsReady(): Promise<void> {
     await this.verifyAppVersion();
     await this.verifyCosmosAppIsOpen();
+  }
+
+  public async verifyAddress(hdPath?: HdPath): Promise<AddressAndPublicKeyResponse> {
+    await this.verifyDeviceIsReady();
+
+    const hdPathToUse = hdPath || this.hdPaths[0];
+    // ledger-cosmos-js hardens the first three indices
+    const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
+    this.handleLedgerErrors(response);
+    return response as AddressAndPublicKeyResponse;
   }
 
   private handleLedgerErrors(
