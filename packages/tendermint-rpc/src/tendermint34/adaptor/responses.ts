@@ -730,27 +730,9 @@ function decodeValidators(data: RpcValidatorsResponse): responses.ValidatorsResp
   };
 }
 
-interface RpcEvidence {
-  readonly type: string;
-  readonly validator: RpcValidatorUpdate;
-  readonly height: string;
-  readonly time: string;
-  readonly totalVotingPower: string;
-}
-
-function decodeEvidence(data: RpcEvidence): responses.Evidence {
-  return {
-    type: assertNotEmpty(data.type),
-    height: Integer.parse(assertNotEmpty(data.height)),
-    time: Integer.parse(assertNotEmpty(data.time)),
-    totalVotingPower: Integer.parse(assertNotEmpty(data.totalVotingPower)),
-    validator: decodeValidatorUpdate(data.validator),
-  };
-}
-
-function decodeEvidences(ev: readonly RpcEvidence[]): readonly responses.Evidence[] {
-  return assertArray(ev).map(decodeEvidence);
-}
+// We lost track on how the evidence structure actually looks like.
+// This is any now and passed to the caller untouched.
+type RpcEvidence = any;
 
 interface RpcBlock {
   readonly header: RpcHeader;
@@ -759,6 +741,8 @@ interface RpcBlock {
     /** Raw tx bytes, base64 encoded */
     readonly txs?: readonly string[];
   };
+  // It's currently unclear why the deep nesting is requied.
+  // See https://github.com/tendermint/tendermint/issues/7697.
   readonly evidence?: {
     readonly evidence?: readonly RpcEvidence[];
   };
@@ -771,7 +755,9 @@ function decodeBlock(data: RpcBlock): responses.Block {
     // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
     lastCommit: data.last_commit.block_id.hash ? decodeCommit(assertObject(data.last_commit)) : null,
     txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
-    evidence: data.evidence && may(decodeEvidences, data.evidence.evidence),
+    // Lift up .evidence.evidence to just .evidence
+    // See https://github.com/tendermint/tendermint/issues/7697
+    evidence: data.evidence?.evidence,
   };
 }
 
