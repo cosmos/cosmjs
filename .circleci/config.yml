@@ -170,14 +170,15 @@ jobs:
           name: Run CLI examples
           working_directory: packages/cli
           environment:
+            LAUNCHPAD_ENABLED: 1
+            TENDERMINT_ENABLED: 1
+            SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
+            WASMD_ENABLED: 1
           command: |
-            yarn node ./bin/cosmwasm-cli --init examples/cosmwasm.ts --code "process.exit(0)"
-            yarn node ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
-            yarn node ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
-            yarn node ./bin/cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
-            yarn node ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
-            yarn node ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
+            [ "<< parameters.simapp >>" = "simapp42" ] && export SIMAPP42_ENABLED=1 SLOW_SIMAPP42_ENABLED=1
+            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
+            ./run_examples.sh
       - run:
           name: Stop chains
           command: |
