@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet-client",
-  "version": "0.27.0",
+  "version": "0.27.1",
   "description": "The faucet client",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"

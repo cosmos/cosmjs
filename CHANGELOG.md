@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.27.1] - 2022-01-26
+
 ### Added
 
 - @cosmjs/cosmwasm-stargate: Add `fromBinary`/`toBinary` to convert between
@@ -724,7 +726,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.27.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.27.1...HEAD
+[0.27.1]: https://github.com/cosmos/cosmjs/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/cosmos/cosmjs/compare/v0.26.6...v0.27.0
 [0.26.6]: https://github.com/cosmos/cosmjs/compare/v0.26.5...v0.26.6
 [0.26.5]: https://github.com/cosmos/cosmjs/compare/v0.26.4...v0.26.5
