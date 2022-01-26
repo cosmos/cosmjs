@@ -462,9 +462,9 @@ __metadata:
     "@types/karma-jasmine-html-reporter": ^1
     "@types/libsodium-wrappers": ^0.7.7
     "@types/node": ^15.0.1
+    "@types/pbkdf2": ^3.1.0
     "@typescript-eslint/eslint-plugin": ^4.28
     "@typescript-eslint/parser": ^4.28
-    bip39: ^3.0.2
     bn.js: ^5.2.0
     buffer: ^6.0.3
     elliptic: ^6.5.3
@@ -486,6 +486,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
+    pbkdf2: ^3.1.2
     prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -1692,13 +1693,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:11.11.6":
-  version: 11.11.6
-  resolution: "@types/node@npm:11.11.6"
-  checksum: 075f1c011cf568e49701419acbcb55c24906b3bb5a34d9412a3b88f228a7a78401a5ad4d3e1cd6855c99aaea5ef96e37fc86ca097e50f06da92cf822befc1fff
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:>=13.7.0":
   version: 15.9.0
   resolution: "@types/node@npm:15.9.0"
@@ -1717,6 +1711,15 @@ __metadata:
   version: 1.0.1
   resolution: "@types/pako@npm:1.0.1"
   checksum: 998b8be64d79fc656637adf25526137f582d72eceacb10b5de88c5adcaa3a1da27b061dedf0c9e953002fbe2cac30123dad87344ab6b2ae99463b2846459c67d
+  languageName: node
+  linkType: hard
+
+"@types/pbkdf2@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@types/pbkdf2@npm:3.1.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: d15024b1957c21cf3b8887329d9bd8dfde754cf13a09d76ae25f1391cfc62bb8b8d7b760773c5dbaa748172fba8b3e0c3dbe962af6ccbd69b76df12a48dfba40
   languageName: node
   linkType: hard
 
@@ -2398,18 +2401,6 @@ __metadata:
   dependencies:
     file-uri-to-path: 1.0.0
   checksum: 65b6b48095717c2e6105a021a7da4ea435aa8d3d3cd085cb9e85bcb6e5773cf318c4745c3f7c504412855940b585bdf9b918236612a1c7a7942491de176f1ae7
-  languageName: node
-  linkType: hard
-
-"bip39@npm:^3.0.2":
-  version: 3.0.4
-  resolution: "bip39@npm:3.0.4"
-  dependencies:
-    "@types/node": 11.11.6
-    create-hash: ^1.1.0
-    pbkdf2: ^3.0.9
-    randombytes: ^2.0.1
-  checksum: 79ce1600a03d1ba5053bdd4e6323f9463ec340764c7e52918b6c6b9dca81221940f2d9a65656447f108f9bc2c8d9ae8df319cca83bbd1dad63f53ef2768d9bae
   languageName: node
   linkType: hard
 
@@ -5947,7 +5938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pbkdf2@npm:^3.0.9":
+"pbkdf2@npm:^3.1.2":
   version: 3.1.2
   resolution: "pbkdf2@npm:3.1.2"
   dependencies:
@@ -6210,7 +6201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"randombytes@npm:^2.0.1, randombytes@npm:^2.1.0":
+"randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
   dependencies:

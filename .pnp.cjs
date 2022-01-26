@@ -574,6 +574,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.1"
       ],
       [
+        "@types/pbkdf2",
+        "npm:3.1.0"
+      ],
+      [
         "@types/qs",
         "npm:6.9.6"
       ],
@@ -840,10 +844,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "bindings",
         "npm:1.5.0"
-      ],
-      [
-        "bip39",
-        "npm:3.0.4"
       ],
       [
         "bl",
@@ -3357,9 +3357,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],
             ["@types/libsodium-wrappers", "npm:0.7.9"],
             ["@types/node", "npm:15.3.1"],
+            ["@types/pbkdf2", "npm:3.1.0"],
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.28.4"],
-            ["bip39", "npm:3.0.4"],
             ["bn.js", "npm:5.2.0"],
             ["buffer", "npm:6.0.3"],
             ["elliptic", "npm:6.5.4"],
@@ -3381,6 +3381,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],
             ["libsodium-wrappers", "npm:0.7.9"],
             ["nyc", "npm:15.1.0"],
+            ["pbkdf2", "npm:3.1.2"],
             ["prettier", "npm:2.4.1"],
             ["ses", "npm:0.11.1"],
             ["source-map-support", "npm:0.5.19"],
@@ -4716,13 +4717,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/node", [
-        ["npm:11.11.6", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-11.11.6-40abad0842-075f1c011c.zip/node_modules/@types/node/",
-          "packageDependencies": [
-            ["@types/node", "npm:11.11.6"]
-          ],
-          "linkType": "HARD",
-        }],
         ["npm:13.13.52", {
           "packageLocation": "./.yarn/cache/@types-node-npm-13.13.52-95159539bb-8f1afff497.zip/node_modules/@types/node/",
           "packageDependencies": [
@@ -4760,6 +4754,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-pako-npm-1.0.1-9e979aac42-998b8be64d.zip/node_modules/@types/pako/",
           "packageDependencies": [
             ["@types/pako", "npm:1.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/pbkdf2", [
+        ["npm:3.1.0", {
+          "packageLocation": "./.yarn/cache/@types-pbkdf2-npm-3.1.0-9fa74ff7fb-d15024b195.zip/node_modules/@types/pbkdf2/",
+          "packageDependencies": [
+            ["@types/pbkdf2", "npm:3.1.0"],
+            ["@types/node", "npm:15.3.1"]
           ],
           "linkType": "HARD",
         }]
@@ -6283,19 +6287,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["bindings", "npm:1.5.0"],
             ["file-uri-to-path", "npm:1.0.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["bip39", [
-        ["npm:3.0.4", {
-          "packageLocation": "./.yarn/cache/bip39-npm-3.0.4-7c69c9182f-79ce1600a0.zip/node_modules/bip39/",
-          "packageDependencies": [
-            ["bip39", "npm:3.0.4"],
-            ["@types/node", "npm:11.11.6"],
-            ["create-hash", "npm:1.2.0"],
-            ["pbkdf2", "npm:3.1.2"],
-            ["randombytes", "npm:2.1.0"]
           ],
           "linkType": "HARD",
         }]

@@ -1,5 +1,4 @@
-export { Bip39 } from "./bip39";
-export { EnglishMnemonic } from "./englishmnemonic";
+export { Bip39, EnglishMnemonic } from "./bip39";
 export { HashFunction } from "./hash";
 export { Hmac } from "./hmac";
 export { Keccak256, keccak256 } from "./keccak";
