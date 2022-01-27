@@ -8,6 +8,7 @@ and this project adheres to
 
 ### Changed
 
+- all: The TypeScript compilation target is now ES2018.
 - @cosmjs/stargate: The `AminoTypes` now always requires an argument of type
   `AminoTypesOptions`. This is an object with a required `prefix` field. Before
   the prefix defaulted to "cosmos" but this is almost never the right choice for
