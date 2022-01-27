@@ -511,9 +511,12 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   };
 }
 
-interface AminoTypesOptions {
+export interface AminoTypesOptions {
+  /**
+   * The Bech32 address prefix of the chain you work with (also called Bech32 human-readable part).
+   */
+  readonly prefix: string;
   readonly additions?: Record<string, AminoConverter>;
-  readonly prefix?: string;
 }
 
 /**
@@ -523,7 +526,7 @@ interface AminoTypesOptions {
 export class AminoTypes {
   private readonly register: Record<string, AminoConverter>;
 
-  public constructor({ additions = {}, prefix = "cosmos" }: AminoTypesOptions = {}) {
+  public constructor({ prefix, additions = {} }: AminoTypesOptions) {
     const additionalAminoTypes = Object.values(additions);
     const filteredDefaultTypes = Object.entries(createDefaultTypes(prefix)).reduce(
       (acc, [key, value]) =>
