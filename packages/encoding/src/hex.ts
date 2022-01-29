@@ -11,13 +11,14 @@ export function fromHex(hexstring: string): Uint8Array {
     throw new Error("hex string length must be a multiple of 2");
   }
 
-  const listOfInts: number[] = [];
-  for (let i = 0; i < hexstring.length; i += 2) {
-    const hexByteAsString = hexstring.substr(i, 2);
+  const out = new Uint8Array(hexstring.length / 2);
+  for (let i = 0; i < out.length; i++) {
+    const j = 2 * i;
+    const hexByteAsString = hexstring.slice(j, j + 2);
     if (!hexByteAsString.match(/[0-9a-f]{2}/i)) {
       throw new Error("hex string contains invalid characters");
     }
-    listOfInts.push(parseInt(hexByteAsString, 16));
+    out[i] = parseInt(hexByteAsString, 16);
   }
-  return new Uint8Array(listOfInts);
+  return out;
 }
