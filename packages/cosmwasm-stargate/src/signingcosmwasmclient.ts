@@ -69,6 +69,8 @@ export interface UploadResult {
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
   readonly logs: readonly logs.Log[];
+  /** Block height in which the transaction is included */
+  readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly gasWanted: number;
@@ -100,6 +102,8 @@ export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
   readonly logs: readonly logs.Log[];
+  /** Block height in which the transaction is included */
+  readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly gasWanted: number;
@@ -111,6 +115,8 @@ export interface InstantiateResult {
  */
 export interface ChangeAdminResult {
   readonly logs: readonly logs.Log[];
+  /** Block height in which the transaction is included */
+  readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly gasWanted: number;
@@ -119,6 +125,8 @@ export interface ChangeAdminResult {
 
 export interface MigrateResult {
   readonly logs: readonly logs.Log[];
+  /** Block height in which the transaction is included */
+  readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly gasWanted: number;
@@ -127,6 +135,8 @@ export interface MigrateResult {
 
 export interface ExecuteResult {
   readonly logs: readonly logs.Log[];
+  /** Block height in which the transaction is included */
+  readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly gasWanted: number;
@@ -259,6 +269,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       compressedChecksum: toHex(sha256(compressed)),
       codeId: Number.parseInt(codeIdAttr.value, 10),
       logs: parsedLogs,
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
@@ -293,6 +304,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return {
       contractAddress: contractAddressAttr.value,
       logs: parsedLogs,
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
@@ -320,6 +332,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
@@ -345,6 +358,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
@@ -374,6 +388,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
@@ -403,6 +418,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
     return {
       logs: logs.parseRawLog(result.rawLog),
+      height: result.height,
       transactionHash: result.transactionHash,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
