@@ -4,6 +4,7 @@
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { calculateFee, GasPrice } = require("@cosmjs/stargate");
+const { fromRfc3339, toRfc3339 } = require("@cosmjs/encoding");
 const fs = require("fs");
 
 const endpoint = "http://localhost:26659";
@@ -29,6 +30,10 @@ async function main() {
   console.info(`Upload succeeded. Result: ${JSON.stringify(uploadResult)}`);
   console.info("");
 
+  const startTime = Date.now();
+  const startHeight = await client.getHeight();
+  console.log(`Start time: ${toRfc3339(new Date(startTime))}, start height: ${startHeight}`);
+
   const instantiateResult = await client.instantiate(
     alice.address0,
     uploadResult.codeId,
@@ -48,6 +53,22 @@ async function main() {
       instantiateResult,
     )}`,
   );
+  const doneTime = Date.now();
+  const doneHeight = await client.getHeight();
+  console.log(`Done time: ${toRfc3339(new Date(doneTime))}, done height: ${doneHeight}`);
+  const runtime = (doneTime - startTime) / 1000;
+  console.info(`Instantiate call took ${runtime.toFixed(2)} seconds`);
+
+  for (let height2 = startHeight; height2 <= doneHeight; height2++) {
+    const height1 = height2 - 1;
+    const [block1, block2] = await Promise.all([client.getBlock(height1), client.getBlock(height2)]);
+    const date2 = fromRfc3339(block2.header.time);
+    const date1 = fromRfc3339(block1.header.time);
+    const blockTime = ((date2.getTime() - date1.getTime()) / 1000).toFixed(2);
+    console.info(
+      `Block ${height2} was created at ${block2.header.time}, ${blockTime} seconds after the previous block`,
+    );
+  }
 }
 
 main().then(
