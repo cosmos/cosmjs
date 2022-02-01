@@ -743,8 +743,8 @@ interface RpcBlock {
   };
   // It's currently unclear why the deep nesting is requied.
   // See https://github.com/tendermint/tendermint/issues/7697.
-  readonly evidence?: {
-    readonly evidence?: readonly RpcEvidence[];
+  readonly evidence: {
+    readonly evidence: readonly RpcEvidence[];
   };
 }
 
