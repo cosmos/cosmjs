@@ -743,8 +743,8 @@ interface RpcBlock {
   };
   // It's currently unclear why the deep nesting is requied.
   // See https://github.com/tendermint/tendermint/issues/7697.
-  readonly evidence: {
-    readonly evidence: readonly RpcEvidence[];
+  readonly evidence?: {
+    readonly evidence?: readonly RpcEvidence[];
   };
 }
 
@@ -757,7 +757,7 @@ function decodeBlock(data: RpcBlock): responses.Block {
     txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
     // Lift up .evidence.evidence to just .evidence
     // See https://github.com/tendermint/tendermint/issues/7697
-    evidence: data.evidence?.evidence,
+    evidence: data.evidence?.evidence ?? [],
   };
 }
 
