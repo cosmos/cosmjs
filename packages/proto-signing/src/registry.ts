@@ -97,12 +97,12 @@ export class Registry {
    */
   public constructor(customTypes?: Iterable<[string, GeneratedType]>) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
-      this.types = customTypes ? new Map<string, GeneratedType>([
-        ...customTypes
-      ]) : new Map<string, GeneratedType>([
-      [cosmosCoin, Coin],
-      [cosmosMsgSend, MsgSend],
-    ]);
+    this.types = customTypes
+      ? new Map<string, GeneratedType>([...customTypes])
+      : new Map<string, GeneratedType>([
+          [cosmosCoin, Coin],
+          [cosmosMsgSend, MsgSend],
+        ]);
   }
 
   public register(typeUrl: string, type: GeneratedType): void {
