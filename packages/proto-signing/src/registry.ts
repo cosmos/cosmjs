@@ -95,12 +95,13 @@ export class Registry {
    * change the `customTypes` argument to override the default types if set.
    * See https://github.com/cosmos/cosmjs/issues/994
    */
-  public constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
+  public constructor(customTypes?: Iterable<[string, GeneratedType]>) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
-    this.types = new Map<string, GeneratedType>([
+      this.types = customTypes ? new Map<string, GeneratedType>([
+        ...customTypes
+      ]) : new Map<string, GeneratedType>([
       [cosmosCoin, Coin],
       [cosmosMsgSend, MsgSend],
-      ...customTypes,
     ]);
   }
 

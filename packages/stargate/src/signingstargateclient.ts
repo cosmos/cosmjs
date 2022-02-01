@@ -72,6 +72,7 @@ import { calculateFee, GasPrice } from "./fee";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
+  ["/cosmos.base.v1beta1.Coin", Coin],
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
   ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
   ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
