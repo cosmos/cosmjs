@@ -81,19 +81,12 @@ export class Registry {
    * actual implementations. Those implementations are typically generated with ts-proto
    * but we also support protobuf.js as a type generator.
    *
-   * By default, a `new Registry()` constains amost no types. `Coin` and `MsgSend` are in there
-   * for historic reasons but this does not make a lot of sense.
-   *
+   * If there is no parameter given, a `new Registry()` adds the types `Coin` and `MsgSend`
+   * for historic reasons. Those can be overriden by customTypes.
+   * 
    * There are currently two methods for adding new types:
-   * 1. Using the `register()` method
-   * 2. Passing custom types to the constructor.
-   * This only creates confusion for users. The reason here is historical.
-   * Using `register()` is recommended and 2. is deprecated because its behaviour
-   * will change in https://github.com/cosmos/cosmjs/issues/994.
-   *
-   * There is currently no way to unregister/override the default types. We should
-   * change the `customTypes` argument to override the default types if set.
-   * See https://github.com/cosmos/cosmjs/issues/994
+   * 1. Passing types to the constructor.
+   * 2. Using the `register()` method
    */
   public constructor(customTypes?: Iterable<[string, GeneratedType]>) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
