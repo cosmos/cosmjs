@@ -13,8 +13,11 @@ and this project adheres to
   `AminoTypesOptions`. This is an object with a required `prefix` field. Before
   the prefix defaulted to "cosmos" but this is almost never the right choice for
   CosmJS users that need to add Amino types manually. ([#989])
+- @cosmjs/stargate: `MsgSend` and `Coin` are now parts of `defaultRegistryTypes`. ([#994])
+- @cosmjs/proto-signing: `Registry`'s constructor can now override default types. ([#994])
 
 [#989]: https://github.com/cosmos/cosmjs/issues/989
+[#994]: https://github.com/cosmos/cosmjs/issues/994
 
 ### Removed
 
