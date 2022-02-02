@@ -15,9 +15,12 @@ and this project adheres to
   CosmJS users that need to add Amino types manually. ([#989])
 - @cosmjs/stargate: `MsgSend` and `Coin` are now parts of `defaultRegistryTypes`. ([#994])
 - @cosmjs/proto-signing: `Registry`'s constructor can now override default types. ([#994])
+- @cosmjs/tendermint-rpc: The property `evidence` in the interface `Block` is now
+  non-optional. ([#1011])
 
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
+[#1011]: https://github.com/cosmos/cosmjs/issues/1011
 
 ### Removed
 
