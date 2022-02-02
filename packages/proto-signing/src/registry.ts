@@ -83,7 +83,7 @@ export class Registry {
    *
    * If there is no parameter given, a `new Registry()` adds the types `Coin` and `MsgSend`
    * for historic reasons. Those can be overriden by customTypes.
-   * 
+   *
    * There are currently two methods for adding new types:
    * 1. Passing types to the constructor.
    * 2. Using the `register()` method
