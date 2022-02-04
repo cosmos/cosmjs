@@ -1,5 +1,0 @@
-# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
-REPOSITORY="cosmwasm/wasmd"
-VERSION="v0.11.1"
-
-CONTAINER_NAME="launchpad"
