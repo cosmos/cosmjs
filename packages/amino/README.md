@@ -2,8 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@cosmjs/amino.svg)](https://www.npmjs.com/package/@cosmjs/amino)
 
-Helpers for Amino based signing which are shared between @cosmjs/launchpad and
-@cosmjs/stargate.
+Helpers for Amino for @cosmjs/stargate.
 
 ## License
 
