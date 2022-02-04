@@ -1,4 +1,6 @@
-import { LcdClient, Secp256k1HdWallet, StdFee } from "@cosmjs/launchpad";
+import { FaucetClient } from "@cosmjs/faucet-client"
+import { StdFee } from "@cosmjs/stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 
 const defaultHttpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -16,5 +18,5 @@ const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
-const wallet = await Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
-const client = new LcdClient(defaultHttpUrl);
+const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucetMnemonic);
+const client = new FaucetClient(defaultHttpUrl);
