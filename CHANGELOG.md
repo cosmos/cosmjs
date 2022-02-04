@@ -13,6 +13,8 @@ and this project adheres to
   `AminoTypesOptions`. This is an object with a required `prefix` field. Before
   the prefix defaulted to "cosmos" but this is almost never the right choice for
   CosmJS users that need to add Amino types manually. ([#989])
+- @cosmjs/cosmwasm-stargate: `height`, `gasWanted` and `gasUsed` have been added
+  to all result types of `SigningCosmWasmClient`
 
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 
