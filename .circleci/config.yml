@@ -85,10 +85,6 @@ jobs:
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
-          name: Start launchpad
-          command: ./scripts/launchpad/start.sh
-          background: true
-      - run: # start early for less wait time below
           name: Start wasmd
           command: ./scripts/wasmd/start.sh
           background: true
@@ -140,9 +136,6 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
-          name: Initialize launchpad (deploy contracts and friends)
-          command: ./scripts/launchpad/init.sh
-      - run:
           name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
@@ -151,7 +144,6 @@ jobs:
       - run:
           name: Run tests
           environment:
-            LAUNCHPAD_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -170,7 +162,6 @@ jobs:
           name: Run CLI examples
           working_directory: packages/cli
           environment:
-            LAUNCHPAD_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -187,7 +178,6 @@ jobs:
             ./scripts/<< parameters.simapp >>/stop.sh
             ./scripts/<< parameters.simapp >>/slow_stop.sh
             ./scripts/wasmd/stop.sh
-            ./scripts/launchpad/stop.sh
   test-node-v14:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -206,10 +196,6 @@ jobs:
             wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_2.12.1_amd64.deb/download.deb
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
-      - run: # start early for less wait time below
-          name: Start launchpad
-          command: ./scripts/launchpad/start.sh
-          background: true
       - run: # start early for less wait time below
           name: Start wasmd
           command: ./scripts/wasmd/start.sh
@@ -262,9 +248,6 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
-          name: Initialize launchpad (deploy contracts and friends)
-          command: ./scripts/launchpad/init.sh
-      - run:
           name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
@@ -272,7 +255,6 @@ jobs:
           command: ./scripts/socketserver/start.sh
       - run:
           environment:
-            LAUNCHPAD_ENABLED: 1
             SIMAPP42_ENABLED: 1
             SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
@@ -291,7 +273,6 @@ jobs:
           name: Run CLI examples
           working_directory: packages/cli
           environment:
-            LAUNCHPAD_ENABLED: 1
             SIMAPP42_ENABLED: 1
             SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
@@ -307,7 +288,6 @@ jobs:
             ./scripts/simapp42/stop.sh
             ./scripts/simapp42/slow_stop.sh
             ./scripts/wasmd/stop.sh
-            ./scripts/launchpad/stop.sh
   test-chrome:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -328,10 +308,6 @@ jobs:
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
-          name: Start launchpad
-          command: ./scripts/launchpad/start.sh
-          background: true
-      - run: # start early for less wait time below
           name: Start wasmd
           command: ./scripts/wasmd/start.sh
           background: true
@@ -383,9 +359,6 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
-          name: Initialize launchpad (deploy contracts and friends)
-          command: ./scripts/launchpad/init.sh
-      - run:
           name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
@@ -393,7 +366,6 @@ jobs:
           command: ./scripts/socketserver/start.sh
       - run:
           environment:
-            LAUNCHPAD_ENABLED: 1
             SIMAPP42_ENABLED: 1
             SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
@@ -409,7 +381,6 @@ jobs:
             ./scripts/simapp42/stop.sh
             ./scripts/simapp42/slow_stop.sh
             ./scripts/wasmd/stop.sh
-            ./scripts/launchpad/stop.sh
   coverage:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -429,10 +400,6 @@ jobs:
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
-          name: Start launchpad
-          command: ./scripts/launchpad/start.sh
-          background: true
-      - run: # start early for less wait time below
           name: Start wasmd
           command: ./scripts/wasmd/start.sh
           background: true
@@ -484,9 +451,6 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
-          name: Initialize launchpad (deploy contracts and friends)
-          command: ./scripts/launchpad/init.sh
-      - run:
           name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
@@ -494,7 +458,6 @@ jobs:
           command: ./scripts/socketserver/start.sh
       - run:
           environment:
-            LAUNCHPAD_ENABLED: 1
             SIMAPP42_ENABLED: 1
             SLOW_SIMAPP42_ENABLED: 1
             TENDERMINT_ENABLED: 1
@@ -513,7 +476,6 @@ jobs:
             ./scripts/simapp42/stop.sh
             ./scripts/simapp42/slow_stop.sh
             ./scripts/wasmd/stop.sh
-            ./scripts/launchpad/stop.sh
   docs-build:
     docker:
       - image: circleci/node:12-buster
