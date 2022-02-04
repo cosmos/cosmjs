@@ -3240,8 +3240,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:packages/cli", {
           "packageLocation": "./packages/cli/",
           "packageDependencies": [
-            ["@cosmjs/amino", "workspace:packages/amino"],
             ["@cosmjs/cli", "workspace:packages/cli"],
+            ["@cosmjs/amino", "workspace:packages/amino"],
             ["@cosmjs/cosmwasm-stargate", "workspace:packages/cosmwasm-stargate"],
             ["@cosmjs/crypto", "workspace:packages/crypto"],
             ["@cosmjs/encoding", "workspace:packages/encoding"],

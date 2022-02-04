@@ -340,12 +340,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/cli@^0.27.1, @cosmjs/cli@workspace:packages/cli":
+"@cosmjs/cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@cosmjs/cli@workspace:packages/cli"
   dependencies:
     "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cli": ^0.27.1
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
