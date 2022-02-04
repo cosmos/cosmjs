@@ -67,7 +67,5 @@ export function isJsonCompatibleDictionary(data: unknown): data is JsonCompatibl
     return false;
   }
 
-  // TODO: replace with Object.values when available (ES2017+)
-  const values = Object.getOwnPropertyNames(data).map((key) => (data as any)[key]);
-  return values.every(isJsonCompatibleValue);
+  return Object.values(data).every(isJsonCompatibleValue);
 }

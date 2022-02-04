@@ -14,7 +14,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
-import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   MsgFundCommunityPool,
@@ -72,6 +72,8 @@ import { calculateFee, GasPrice } from "./fee";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
+  ["/cosmos.base.v1beta1.Coin", Coin],
+  ["/cosmos.bank.v1beta1.MsgSend", MsgSend],
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
   ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
   ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
@@ -175,8 +177,9 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient);
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix: options.prefix }) } =
-      options;
+    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
+    const prefix = options.prefix ?? "cosmos";
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix }) } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;

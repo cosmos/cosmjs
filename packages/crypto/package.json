@@ -44,13 +44,11 @@
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/utils": "workspace:packages/utils",
+    "@noble/hashes": "^1",
     "bip39": "^3.0.2",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.3",
-    "js-sha3": "^0.8.0",
-    "libsodium-wrappers": "^0.7.6",
-    "ripemd160": "^2.0.2",
-    "sha.js": "^2.4.11"
+    "libsodium-wrappers": "^0.7.6"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -63,8 +61,6 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/libsodium-wrappers": "^0.7.7",
     "@types/node": "^15.0.1",
-    "@types/ripemd160": "^2.0.0",
-    "@types/sha.js": "^2.4.0",
     "@typescript-eslint/eslint-plugin": "^4.28",
     "@typescript-eslint/parser": "^4.28",
     "buffer": "^6.0.3",

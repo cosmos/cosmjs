@@ -4,7 +4,8 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2017"],
+    "lib": ["es2018"],
+    "target": "es2018",
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",
@@ -18,7 +19,6 @@
     "removeComments": false,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "strict": true
   }
 }

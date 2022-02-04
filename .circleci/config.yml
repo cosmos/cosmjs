@@ -23,15 +23,18 @@ workflows:
       - lint:
           requires:
             - build
-      - test:
+      - test-backends:
           requires:
             - build
           matrix:
             parameters:
               simapp: ["simapp42", "simapp44"]
-      - test-node-v14:
+      - test-node:
           requires:
             - build
+          matrix:
+            parameters:
+              node-version: ["12", "14", "16"]
       - test-chrome:
           requires:
             - build
@@ -42,7 +45,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:12-buster
+      - image: circleci/node:16.13-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -63,7 +66,7 @@ jobs:
           root: .
           paths:
             - packages/*/build/*
-  test:
+  test-backends:
     parameters:
       simapp:
         type: string
@@ -178,7 +181,10 @@ jobs:
             ./scripts/<< parameters.simapp >>/stop.sh
             ./scripts/<< parameters.simapp >>/slow_stop.sh
             ./scripts/wasmd/stop.sh
-  test-node-v14:
+  test-node:
+    parameters:
+      node-version:
+        type: string
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
       # However, we can't access the remote docker's network from the primary container. This is a
@@ -228,7 +234,12 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb
+            declare -A node_links=(
+              ["12"]="https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb"
+              ["14"]="https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb"
+              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb"
+            )
+            wget -O "$HOME/nodejs.deb" "${node_links[<< parameters.node-version >>]}"
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -478,7 +489,7 @@ jobs:
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:
-      - image: circleci/node:12-buster
+      - image: circleci/node:16.13-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -509,7 +520,7 @@ jobs:
           paths: docs_deployment
   docs-deploy:
     docker:
-      - image: circleci/node:12-buster
+      - image: circleci/node:16.13-bullseye
     steps:
       - attach_workspace:
           at: .
@@ -527,7 +538,7 @@ jobs:
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
   lint:
     docker:
-      - image: circleci/node:12-buster
+      - image: circleci/node:16.13-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)

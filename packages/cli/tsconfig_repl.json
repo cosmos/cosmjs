@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2017",
+    "target": "es2018",
     "noUnusedLocals": false,
     "noImplicitAny": false
   }
