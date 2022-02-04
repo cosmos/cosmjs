@@ -14,6 +14,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
+import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/authz/staking/v1beta1/tx";
 import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
@@ -22,6 +23,7 @@ import {
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgGrantAllowance, MsgRevokeAllowance} from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import {
   MsgBeginRedelegate,
@@ -85,6 +87,11 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
   ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
   ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+  ["/cosmos.authz.v1beta1.MsgGrant", MsgGrant],
+  ["/cosmos.authz.v1beta1.MsgExec", MsgExec],
+  ["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke],
+  ["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance],
+  ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance],
   ["/ibc.core.channel.v1.MsgChannelOpenInit", MsgChannelOpenInit],
   ["/ibc.core.channel.v1.MsgChannelOpenTry", MsgChannelOpenTry],
   ["/ibc.core.channel.v1.MsgChannelOpenAck", MsgChannelOpenAck],
