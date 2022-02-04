@@ -20,9 +20,7 @@ import Transport from "@ledgerhq/hw-transport";
 import { LedgerSigner } from "./ledgersigner";
 import {
   faucet,
-  launchpad,
   ledgerEnabled,
-  pendingWithoutLaunchpad,
   pendingWithoutLedger,
   pendingWithoutSimapp,
   simapp,
