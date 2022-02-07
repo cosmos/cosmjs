@@ -1,9 +1,11 @@
-import { FaucetClient } from "@cosmjs/faucet-client"
-import { StdFee } from "@cosmjs/stargate";
+import { StdFee, SigningStargateClient } from "@cosmjs/stargate";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { coins } from "@cosmjs/amino";
+import { Bech32 } from "@cosmjs/encoding";
+import { Random } from "@cosmjs/crypto";
 
-const defaultHttpUrl = "http://localhost:1317";
-const defaultNetworkId = "testing";
+const defaultHttpUrl = "http://localhost:26658";
 const defaultFee: StdFee = {
   amount: [
     {
@@ -19,4 +21,4 @@ const faucetMnemonic =
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
 const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucetMnemonic);
-const client = new FaucetClient(defaultHttpUrl);
+const client = await SigningStargateClient.connectWithSigner(defaultHttpUrl, wallet);

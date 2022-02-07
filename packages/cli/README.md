@@ -45,37 +45,29 @@ $ cosmwasm-cli
 
 ```ts
 // Get account information
-const { account_number, sequence } = (await client.authAccounts(faucetAddress))
-  .result.value;
+const account = await client.getAccount(faucetAddress);
 
 // Craft a send transaction
 const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));
-const memo = "My first contract on chain";
-const sendTokensMsg: MsgSend = {
-  type: "cosmos-sdk/MsgSend",
-  value: {
-    from_address: faucetAddress,
-    to_address: emptyAddress,
-    amount: [
-      {
-        denom: "ucosm",
-        amount: "1234567",
-      },
-    ],
-  },
+const memo = "My very first tx!";
+const msgSend = {
+  fromAddress: faucetAddress,
+  toAddress: emptyAddress,
+  amount: coins(1234, "ucosm"),
 };
 
-const signDoc = makeSignDoc(
-  [sendTokensMsg],
+const msgAny = {
+  typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+  value: msgSend,
+};
+
+// Broadcast and sign the transaction
+const broadcastResult = await client.signAndBroadcast(
+  faucetAddress,
+  [msgAny],
   defaultFee,
-  defaultNetworkId,
   memo,
-  account_number,
-  sequence,
 );
-const { signed, signature } = await wallet.signAmino(faucetAddress, signDoc);
-const signedTx = makeStdTx(signed, signature);
-const broadcastResult = await client.broadcastTx(signedTx);
 ```
 
 ## Extended helpers
