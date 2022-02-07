@@ -17,7 +17,7 @@ and this project adheres to
 - @cosmjs/proto-signing: `Registry`'s constructor can now override default types. ([#994])
 - @cosmjs/tendermint-rpc: The property `evidence` in the interface `Block` is now
   non-optional. ([#1011])
-- @cosmjs/stargate: Added the following message types to stargate's `defaultRegistryTypes`: 
+- @cosmjs/stargate: Added the following message types to stargate's `defaultRegistryTypes`: ([#1026])
   - cosmos.authz.v1beta1.MsgGrant
   - cosmos.authz.v1beta1.MsgExec
   - cosmos.authz.v1beta1.MsgRevoke
@@ -28,6 +28,7 @@ and this project adheres to
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
+[#1026]: https://github.com/cosmos/cosmjs/issues/1026
 
 ### Removed
 
