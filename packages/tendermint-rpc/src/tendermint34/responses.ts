@@ -227,8 +227,7 @@ export interface Block {
    */
   readonly lastCommit: Commit | null;
   readonly txs: readonly Uint8Array[];
-  // This field becomes non-optional in 0.28 (https://github.com/cosmos/cosmjs/issues/1011)
-  readonly evidence?: readonly Evidence[];
+  readonly evidence: readonly Evidence[];
 }
 
 /**
