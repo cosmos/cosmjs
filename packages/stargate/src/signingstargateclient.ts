@@ -14,6 +14,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
+import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
@@ -22,6 +23,7 @@ import {
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgGrantAllowance, MsgRevokeAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import {
   MsgBeginRedelegate,
@@ -72,13 +74,18 @@ import { calculateFee, GasPrice } from "./fee";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
-  ["/cosmos.base.v1beta1.Coin", Coin],
-  ["/cosmos.bank.v1beta1.MsgSend", MsgSend],
+  ["/cosmos.authz.v1beta1.MsgExec", MsgExec],
+  ["/cosmos.authz.v1beta1.MsgGrant", MsgGrant],
+  ["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke],
   ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+  ["/cosmos.bank.v1beta1.MsgSend", MsgSend],
+  ["/cosmos.base.v1beta1.Coin", Coin],
   ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
   ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
   ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
   ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
+  ["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance],
+  ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance],
   ["/cosmos.gov.v1beta1.MsgDeposit", MsgDeposit],
   ["/cosmos.gov.v1beta1.MsgSubmitProposal", MsgSubmitProposal],
   ["/cosmos.gov.v1beta1.MsgVote", MsgVote],
@@ -87,25 +94,25 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
   ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
   ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
-  ["/ibc.core.channel.v1.MsgChannelOpenInit", MsgChannelOpenInit],
-  ["/ibc.core.channel.v1.MsgChannelOpenTry", MsgChannelOpenTry],
+  ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],
+  ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
+  ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],
+  ["/ibc.core.channel.v1.MsgChannelCloseInit", MsgChannelCloseInit],
   ["/ibc.core.channel.v1.MsgChannelOpenAck", MsgChannelOpenAck],
   ["/ibc.core.channel.v1.MsgChannelOpenConfirm", MsgChannelOpenConfirm],
-  ["/ibc.core.channel.v1.MsgChannelCloseInit", MsgChannelCloseInit],
-  ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],
+  ["/ibc.core.channel.v1.MsgChannelOpenInit", MsgChannelOpenInit],
+  ["/ibc.core.channel.v1.MsgChannelOpenTry", MsgChannelOpenTry],
   ["/ibc.core.channel.v1.MsgRecvPacket", MsgRecvPacket],
   ["/ibc.core.channel.v1.MsgTimeout", MsgTimeout],
   ["/ibc.core.channel.v1.MsgTimeoutOnClose", MsgTimeoutOnClose],
-  ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
   ["/ibc.core.client.v1.MsgCreateClient", MsgCreateClient],
+  ["/ibc.core.client.v1.MsgSubmitMisbehaviour", MsgSubmitMisbehaviour],
   ["/ibc.core.client.v1.MsgUpdateClient", MsgUpdateClient],
   ["/ibc.core.client.v1.MsgUpgradeClient", MsgUpgradeClient],
-  ["/ibc.core.client.v1.MsgSubmitMisbehaviour", MsgSubmitMisbehaviour],
-  ["/ibc.core.connection.v1.MsgConnectionOpenInit", MsgConnectionOpenInit],
-  ["/ibc.core.connection.v1.MsgConnectionOpenTry", MsgConnectionOpenTry],
   ["/ibc.core.connection.v1.MsgConnectionOpenAck", MsgConnectionOpenAck],
   ["/ibc.core.connection.v1.MsgConnectionOpenConfirm", MsgConnectionOpenConfirm],
-  ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],
+  ["/ibc.core.connection.v1.MsgConnectionOpenInit", MsgConnectionOpenInit],
+  ["/ibc.core.connection.v1.MsgConnectionOpenTry", MsgConnectionOpenTry],
 ];
 
 function createDefaultRegistry(): Registry {
