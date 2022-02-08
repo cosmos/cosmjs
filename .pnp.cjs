@@ -2447,7 +2447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "simple-get",
-        "npm:3.1.0"
+        "npm:3.1.1"
       ],
       [
         "slash",
@@ -10489,7 +10489,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["npmlog", "npm:4.1.2"],
             ["pump", "npm:3.0.0"],
             ["rc", "npm:1.2.8"],
-            ["simple-get", "npm:3.1.0"],
+            ["simple-get", "npm:3.1.1"],
             ["tar-fs", "npm:2.1.1"],
             ["tunnel-agent", "npm:0.6.0"],
             ["which-pm-runs", "npm:1.0.0"]
@@ -10511,7 +10511,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["npmlog", "npm:4.1.2"],
             ["pump", "npm:3.0.0"],
             ["rc", "npm:1.2.8"],
-            ["simple-get", "npm:3.1.0"],
+            ["simple-get", "npm:3.1.1"],
             ["tar-fs", "npm:2.1.1"],
             ["tunnel-agent", "npm:0.6.0"]
           ],
@@ -11220,10 +11220,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["simple-get", [
-        ["npm:3.1.0", {
-          "packageLocation": "./.yarn/cache/simple-get-npm-3.1.0-8c6f03c4cd-cca91a9ab2.zip/node_modules/simple-get/",
+        ["npm:3.1.1", {
+          "packageLocation": "./.yarn/cache/simple-get-npm-3.1.1-dce5923dba-80195e70bf.zip/node_modules/simple-get/",
           "packageDependencies": [
-            ["simple-get", "npm:3.1.0"],
+            ["simple-get", "npm:3.1.1"],
             ["decompress-response", "npm:4.2.1"],
             ["once", "npm:1.4.0"],
             ["simple-concat", "npm:1.0.1"]
