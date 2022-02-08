@@ -8,7 +8,7 @@ First of all you will need an instance of wasmd running. From the root directory
 of this repository:
 
 ```sh
-./scripts/launchpad/start.sh && ./scripts/launchpad/init.sh
+./scripts/wasmd/start.sh && ./scripts/wasmd/init.sh
 ```
 
 You will also need a faucet. From the root directory of this repository:

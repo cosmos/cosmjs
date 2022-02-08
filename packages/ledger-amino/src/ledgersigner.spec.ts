@@ -10,10 +10,6 @@ import {
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
-  assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessLaunchpad,
-  SigningCosmosClient,
-} from "@cosmjs/launchpad";
-import {
   assertIsDeliverTxSuccess as assertIsDeliverTxSuccessStargate,
   calculateFee,
   SigningStargateClient,
@@ -24,9 +20,7 @@ import Transport from "@ledgerhq/hw-transport";
 import { LedgerSigner } from "./ledgersigner";
 import {
   faucet,
-  launchpad,
   ledgerEnabled,
-  pendingWithoutLaunchpad,
   pendingWithoutLedger,
   pendingWithoutSimapp,
   simapp,
@@ -162,24 +156,6 @@ describe("LedgerSigner", () => {
           firstAccount.pubkey,
         );
         expect(valid).toEqual(true);
-      },
-      interactiveTimeout,
-    );
-
-    it(
-      "creates signature accepted by Launchpad backend",
-      async () => {
-        pendingWithoutLedger();
-        pendingWithoutLaunchpad();
-        const signer = new LedgerSigner(transport, {
-          testModeAllowed: true,
-          hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
-        });
-        const [firstAccount] = await signer.getAccounts();
-
-        const client = new SigningCosmosClient(launchpad.endpoint, firstAccount.address, signer);
-        const result = await client.sendTokens(defaultLedgerAddress, coins(1234567, "ucosm"));
-        assertIsBroadcastTxSuccessLaunchpad(result);
       },
       interactiveTimeout,
     );

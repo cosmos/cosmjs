@@ -35,9 +35,6 @@ export class TimeoutError extends Error {
   }
 }
 
-/**
- * This is the same as BlockHeader from @cosmjs/launchpad but those might diverge in the future.
- */
 export interface BlockHeader {
   readonly version: {
     readonly block: string;
@@ -49,9 +46,6 @@ export interface BlockHeader {
   readonly time: string;
 }
 
-/**
- * This is the same as Block from @cosmjs/launchpad but those might diverge in the future.
- */
 export interface Block {
   /** The ID is a hash of the block header (uppercase hex) */
   readonly id: string;

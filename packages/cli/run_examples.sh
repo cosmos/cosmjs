@@ -5,7 +5,7 @@ command -v shellcheck >/dev/null && shellcheck "$0"
 if [ -n "${WASMD_ENABLED:-}" ]; then
   yarn node ./bin/cosmwasm-cli --init examples/cosmwasm.ts --code "process.exit(0)"
 fi
-if [ -n "${LAUNCHPAD_ENABLED:-}" ]; then
+if [ -n "${SIMAPP42_ENABLED:-}" ]; then
   yarn node ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
 fi
 yarn node ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"

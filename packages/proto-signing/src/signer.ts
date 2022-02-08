@@ -1,14 +1,7 @@
 import { OfflineAminoSigner, StdSignature } from "@cosmjs/amino";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-/**
- * This is the same as Algo from @cosmjs/launchpad but those might diverge in the future.
- */
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
-
-/**
- * This is the same as AccountData from @cosmjs/launchpad but those might diverge in the future.
- */
 export interface AccountData {
   /** A printable address (typically bech32 encoded) */
   readonly address: string;
