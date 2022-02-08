@@ -122,17 +122,17 @@ export const deployedHackatom = {
   instances: [
     {
       beneficiary: alice.address0,
-      address: "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujgqwg3",
+      address: "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s0phg4d",
       label: "From deploy_hackatom.js (0)",
     },
     {
       beneficiary: alice.address1,
-      address: "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8glszahxx",
+      address: "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrss5maay",
       label: "From deploy_hackatom.js (1)",
     },
     {
       beneficiary: alice.address2,
-      address: "wasm1yyca08xqdgvjz0psg56z67ejh9xms6l49ntww0",
+      address: "wasm1yyca08xqdgvjz0psg56z67ejh9xms6l436u8y58m82npdqqhmmtqas0cl7",
       label: "From deploy_hackatom.js (2)",
     },
   ],
@@ -143,7 +143,7 @@ export const deployedIbcReflect = {
   codeId: 2,
   instances: [
     {
-      address: "wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
+      address: "wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf49qmhm9mdjrfx036h4z5se0hfnq",
       ibcPortId: "wasm.wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
     },
   ],
