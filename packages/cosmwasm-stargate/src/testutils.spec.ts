@@ -27,7 +27,7 @@ import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
 import hackatom from "./testdata/contract.json";
 
 export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-export const defaultSendFee = calculateFee(80_000, defaultGasPrice);
+export const defaultSendFee = calculateFee(200_000, defaultGasPrice);
 export const defaultUploadFee = calculateFee(1_500_000, defaultGasPrice);
 export const defaultInstantiateFee = calculateFee(500_000, defaultGasPrice);
 export const defaultExecuteFee = calculateFee(200_000, defaultGasPrice);
@@ -72,7 +72,7 @@ export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const base64Matcher =
   /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
-export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
+export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38,58}$/;
 
 export const alice = {
   mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
@@ -122,17 +122,17 @@ export const deployedHackatom = {
   instances: [
     {
       beneficiary: alice.address0,
-      address: "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujgqwg3",
+      address: "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s0phg4d",
       label: "From deploy_hackatom.js (0)",
     },
     {
       beneficiary: alice.address1,
-      address: "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8glszahxx",
+      address: "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrss5maay",
       label: "From deploy_hackatom.js (1)",
     },
     {
       beneficiary: alice.address2,
-      address: "wasm1yyca08xqdgvjz0psg56z67ejh9xms6l49ntww0",
+      address: "wasm1yyca08xqdgvjz0psg56z67ejh9xms6l436u8y58m82npdqqhmmtqas0cl7",
       label: "From deploy_hackatom.js (2)",
     },
   ],
@@ -143,8 +143,8 @@ export const deployedIbcReflect = {
   codeId: 2,
   instances: [
     {
-      address: "wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
-      ibcPortId: "wasm.wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf4duy76f",
+      address: "wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf49qmhm9mdjrfx036h4z5se0hfnq",
+      ibcPortId: "wasm.wasm1aakfpghcanxtc45gpqlx8j3rq0zcpyf49qmhm9mdjrfx036h4z5se0hfnq",
     },
   ],
 };
