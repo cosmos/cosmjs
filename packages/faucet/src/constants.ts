@@ -6,7 +6,9 @@ import { parseBankTokens } from "./tokens";
 export const binaryName = "cosmos-faucet";
 export const memo: string | undefined = process.env.FAUCET_MEMO;
 export const gasPrice = GasPrice.fromString(process.env.FAUCET_GAS_PRICE || "0.025ucosm");
-export const gasLimitSend = parseInt(process.env.FAUCET_GAS_LIMIT || "200000", 10);
+export const gasLimitSend = process.env.FAUCET_GAS_LIMIT
+  ? parseInt(process.env.FAUCET_GAS_LIMIT, 10)
+  : 100_000;
 export const concurrency: number = Number.parseInt(process.env.FAUCET_CONCURRENCY || "", 10) || 5;
 export const port: number = Number.parseInt(process.env.FAUCET_PORT || "", 10) || 8000;
 export const mnemonic: string | undefined = process.env.FAUCET_MNEMONIC;
