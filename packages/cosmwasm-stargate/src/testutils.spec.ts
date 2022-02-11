@@ -27,7 +27,7 @@ import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
 import hackatom from "./testdata/contract.json";
 
 export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-export const defaultSendFee = calculateFee(200_000, defaultGasPrice);
+export const defaultSendFee = calculateFee(100_000, defaultGasPrice);
 export const defaultUploadFee = calculateFee(1_500_000, defaultGasPrice);
 export const defaultInstantiateFee = calculateFee(500_000, defaultGasPrice);
 export const defaultExecuteFee = calculateFee(200_000, defaultGasPrice);
