@@ -526,6 +526,15 @@ export interface AminoTypesOptions {
 export class AminoTypes {
   private readonly register: Record<string, AminoConverter>;
 
+  // Those message types cannot be signed using the Amino JSON
+  private readonly unsupportedTypes: string[] = [
+    "cosmos.authz.v1beta1.MsgGrant",
+    "cosmos.authz.v1beta1.MsgExec",
+    "cosmos.authz.v1beta1.MsgRevoke",
+    "cosmos.feegrant.v1beta1.MsgGrantAllowance",
+    "cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+  ];
+
   public constructor({ prefix, additions = {} }: AminoTypesOptions) {
     const additionalAminoTypes = Object.values(additions);
     const filteredDefaultTypes = Object.entries(createDefaultTypes(prefix)).reduce(
@@ -539,6 +548,12 @@ export class AminoTypes {
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
+    if (this.unsupportedTypes.includes(typeUrl)) {
+      throw new Error(
+        `The message type '${typeUrl}' cannot be signed using the Amino JSON sign mode because this is not implemented on-chain.`,
+      );
+    }
+
     const converter = this.register[typeUrl];
     if (!converter) {
       throw new Error(
