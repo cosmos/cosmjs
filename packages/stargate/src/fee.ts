@@ -17,8 +17,6 @@ function checkDenom(denom: string): void {
 /**
  * A gas price, i.e. the price of a single unit of gas. This is typically a fraction of
  * the smallest fee token unit, such as 0.012utoken.
- *
- * This is the same as GasPrice from @cosmjs/launchpad but those might diverge in the future.
  */
 export class GasPrice {
   public readonly amount: Decimal;

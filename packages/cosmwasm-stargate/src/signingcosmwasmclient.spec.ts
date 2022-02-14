@@ -123,7 +123,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
-      const { contractAddress } = await client.instantiate(
+      const { contractAddress, height, gasWanted, gasUsed } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -139,9 +139,12 @@ describe("SigningCosmWasmClient", () => {
       );
       const wasmClient = await makeWasmClient(wasmd.endpoint);
       const ucosmBalance = await wasmClient.bank.balance(contractAddress, "ucosm");
-      expect(ucosmBalance).toEqual(funds[0]);
       const ustakeBalance = await wasmClient.bank.balance(contractAddress, "ustake");
+      expect(ucosmBalance).toEqual(funds[0]);
       expect(ustakeBalance).toEqual(funds[1]);
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       client.disconnect();
     });
 
@@ -152,7 +155,7 @@ describe("SigningCosmWasmClient", () => {
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const beneficiaryAddress = makeRandomAddress();
-      const { contractAddress } = await client.instantiate(
+      const { contractAddress, height, gasWanted, gasUsed } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -166,6 +169,9 @@ describe("SigningCosmWasmClient", () => {
       const wasmClient = await makeWasmClient(wasmd.endpoint);
       const { contractInfo } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo);
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       expect(contractInfo.admin).toEqual(unused.address);
       client.disconnect();
     });
@@ -176,7 +182,12 @@ describe("SigningCosmWasmClient", () => {
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
-      const { contractAddress: address1 } = await client.instantiate(
+      const {
+        contractAddress: address1,
+        height,
+        gasWanted,
+        gasUsed,
+      } = await client.instantiate(
         alice.address0,
         codeId,
         {
@@ -196,6 +207,9 @@ describe("SigningCosmWasmClient", () => {
         "contract 2",
         defaultInstantiateFee,
       );
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       expect(address1).not.toEqual(address2);
       client.disconnect();
     });
@@ -262,11 +276,18 @@ describe("SigningCosmWasmClient", () => {
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
-      await client.updateAdmin(alice.address0, contractAddress, unused.address, defaultUpdateAdminFee);
+      const { height, gasUsed, gasWanted } = await client.updateAdmin(
+        alice.address0,
+        contractAddress,
+        unused.address,
+        defaultUpdateAdminFee,
+      );
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual(unused.address);
-
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       client.disconnect();
     });
   });
@@ -297,11 +318,17 @@ describe("SigningCosmWasmClient", () => {
       assert(contractInfo1);
       expect(contractInfo1.admin).toEqual(alice.address0);
 
-      await client.clearAdmin(alice.address0, contractAddress, defaultClearAdminFee);
+      const { height, gasUsed, gasWanted } = await client.clearAdmin(
+        alice.address0,
+        contractAddress,
+        defaultClearAdminFee,
+      );
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect(contractInfo2.admin).toEqual("");
-
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       client.disconnect();
     });
   });
@@ -334,13 +361,16 @@ describe("SigningCosmWasmClient", () => {
       expect(contractInfo1.admin).toEqual(alice.address0);
 
       const newVerifier = makeRandomAddress();
-      await client.migrate(
+      const { height, gasUsed, gasWanted } = await client.migrate(
         alice.address0,
         contractAddress,
         codeId2,
         { verifier: newVerifier },
         defaultMigrateFee,
       );
+      expect(height).toBeGreaterThan(0);
+      expect(gasWanted).toBeGreaterThan(0);
+      expect(gasUsed).toBeGreaterThan(0);
       const { contractInfo: contractInfo2 } = await wasmClient.wasm.getContractInfo(contractAddress);
       assert(contractInfo2);
       expect({ ...contractInfo2 }).toEqual({
@@ -424,6 +454,9 @@ describe("SigningCosmWasmClient", () => {
         { release: {} },
         defaultExecuteFee,
       );
+      expect(result.height).toBeGreaterThan(0);
+      expect(result.gasWanted).toBeGreaterThan(0);
+      expect(result.gasUsed).toBeGreaterThan(0);
       const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
