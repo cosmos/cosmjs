@@ -30,7 +30,9 @@ and this project adheres to
   - cosmos.authz.v1beta1.MsgRevoke
   - cosmos.feegrant.v1beta1.MsgGrantAllowance
   - cosmos.feegrant.v1beta1.MsgRevokeAllowance
+- @cosmjs/stargate: Added support for slashing queries ([#927])
 
+[#927]: https://github.com/cosmos/cosmjs/issues/927
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
