@@ -13,8 +13,10 @@ import {
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
+  setupSlashingExtension,
   setupStakingExtension,
   setupTxExtension,
+  SlashingExtension,
   StakingExtension,
   TxExtension,
 } from "./queries";
@@ -145,7 +147,7 @@ export interface PrivateStargateClient {
 export class StargateClient {
   private readonly tmClient: Tendermint34Client | undefined;
   private readonly queryClient:
-    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension & SlashingExtension)
     | undefined;
   private chainId: string | undefined;
 
@@ -163,6 +165,7 @@ export class StargateClient {
         setupBankExtension,
         setupStakingExtension,
         setupTxExtension,
+        setupSlashingExtension,
       );
     }
   }
@@ -181,7 +184,7 @@ export class StargateClient {
   }
 
   protected getQueryClient():
-    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension & SlashingExtension)
     | undefined {
     return this.queryClient;
   }
@@ -190,6 +193,7 @@ export class StargateClient {
     AuthExtension &
     BankExtension &
     StakingExtension &
+    SlashingExtension &
     TxExtension {
     if (!this.queryClient) {
       throw new Error("Query client not available. You cannot use online functionality in offline mode.");
