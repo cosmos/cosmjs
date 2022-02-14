@@ -14,8 +14,14 @@ export interface ChainConstants {
   readonly chainId: string;
 }
 
+export interface IpEntry {
+  ip: string;
+  date: number;
+}
+
 export class Webserver {
   private readonly api = new Koa();
+  private readonly ipCounter: IpEntry[] = [];
 
   public constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
@@ -47,6 +53,16 @@ export class Webserver {
           break;
         }
         case "/credit": {
+          const ipUsed = this.ipCounter.find((x) => x.ip === context.request.ip);
+          if (ipUsed !== undefined) {
+            if (ipUsed.date + 24 * 3600 > Date.now()) {
+              throw new HttpError(
+                405,
+                "Too many request from the same IP. Blocked to prevent draining. Please wait 24h and try it again!",
+              );
+            }
+          }
+
           if (context.request.method !== "POST") {
             throw new HttpError(405, "This endpoint requires a POST request");
           }
@@ -73,6 +89,10 @@ export class Webserver {
 
           try {
             await faucet.credit(address, matchingDenom);
+            // Count IPs to prevent draining
+            if (context.request.ip) {
+              this.ipCounter.push({ ip: context.request.ip, date: Date.now() });
+            }
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");
