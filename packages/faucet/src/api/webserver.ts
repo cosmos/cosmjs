@@ -14,14 +14,14 @@ export interface ChainConstants {
   readonly chainId: string;
 }
 
-export interface IpEntry {
-  ip: string;
+export interface AddressEntry {
+  address: string;
   date: number;
 }
 
 export class Webserver {
   private readonly api = new Koa();
-  private readonly ipCounter: IpEntry[] = [];
+  private readonly addressCounter: AddressEntry[] = [];
 
   public constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
@@ -53,16 +53,6 @@ export class Webserver {
           break;
         }
         case "/credit": {
-          const ipUsed = this.ipCounter.find((x) => x.ip === context.request.ip);
-          if (ipUsed !== undefined) {
-            if (ipUsed.date + 24 * 3600 > Date.now()) {
-              throw new HttpError(
-                405,
-                "Too many request from the same IP. Blocked to prevent draining. Please wait 24h and try it again!",
-              );
-            }
-          }
-
           if (context.request.method !== "POST") {
             throw new HttpError(405, "This endpoint requires a POST request");
           }
@@ -74,11 +64,20 @@ export class Webserver {
           // context.request.body is set by the bodyParser() plugin
           const requestBody = context.request.body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
-
           const { address, denom } = creditBody;
 
           if (!isValidAddress(address, constants.addressPrefix)) {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
+          }
+
+          const addressUsed = this.addressCounter.find((x) => x.address === address);
+          if (addressUsed !== undefined) {
+            if (addressUsed.date + 24 * 3600 > Date.now()) {
+              throw new HttpError(
+                405,
+                "Too many request from the same address. Blocked to prevent draining. Please wait 24h and try it again!",
+              );
+            }
           }
 
           const availableTokens = await faucet.availableTokens();
@@ -91,7 +90,7 @@ export class Webserver {
             await faucet.credit(address, matchingDenom);
             // Count IPs to prevent draining
             if (context.request.ip) {
-              this.ipCounter.push({ ip: context.request.ip, date: Date.now() });
+              this.addressCounter.push({ address: address, date: Date.now() });
             }
           } catch (e) {
             console.error(e);
