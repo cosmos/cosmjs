@@ -88,10 +88,8 @@ export class Webserver {
 
           try {
             await faucet.credit(address, matchingDenom);
-            // Count IPs to prevent draining
-            if (context.request.ip) {
-              this.addressCounter.push({ address: address, date: Date.now() });
-            }
+            // Count addresses to prevent draining
+            this.addressCounter.push({ address: address, date: Date.now() });
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");
