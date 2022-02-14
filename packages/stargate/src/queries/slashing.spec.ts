@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
-import { pendingWithoutSimapp, simapp, validator } from "../testutils.spec";
+import { pendingWithoutSimapp, simapp } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { setupSlashingExtension, SlashingExtension } from "./slashing";
 
@@ -13,19 +13,6 @@ async function makeClientWithSlashing(
 }
 
 describe("slashing", () => {
-  describe("signingInfo", () => {
-    it("works", async () => {
-      pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithSlashing(simapp.tendermintUrl);
-
-      const response = await client.slashing.signingInfo(validator.validatorAddress);
-      expect(response.valSigningInfo).toBeDefined();
-      expect(response.valSigningInfo).not.toBeNull();
-
-      tmClient.disconnect();
-    });
-  });
-
   describe("signingInfos", () => {
     it("works", async () => {
       pendingWithoutSimapp();
