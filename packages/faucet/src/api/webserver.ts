@@ -14,14 +14,9 @@ export interface ChainConstants {
   readonly chainId: string;
 }
 
-export interface AddressEntry {
-  address: string;
-  date: number;
-}
-
 export class Webserver {
   private readonly api = new Koa();
-  private readonly addressCounter: AddressEntry[] = [];
+  private readonly addressCounter = new Map<string, Date>();
 
   public constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
@@ -70,9 +65,9 @@ export class Webserver {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
           }
 
-          const addressUsed = this.addressCounter.find((x) => x.address === address);
-          if (addressUsed !== undefined) {
-            if (addressUsed.date + 24 * 3600 > Date.now()) {
+          const entry: Date | undefined = this.addressCounter.get(address);
+          if (entry !== undefined) {
+            if (entry.getDate() + 24 * 3600 > Date.now()) {
               throw new HttpError(
                 405,
                 "Too many request from the same address. Blocked to prevent draining. Please wait 24h and try it again!",
@@ -80,7 +75,7 @@ export class Webserver {
             }
           }
 
-          const availableTokens = await faucet.availableTokens();
+          const availableTokens: string[] = await faucet.availableTokens();
           const matchingDenom = availableTokens.find((availableDenom) => availableDenom === denom);
           if (matchingDenom === undefined) {
             throw new HttpError(422, `Token is not available. Available tokens are: ${availableTokens}`);
@@ -89,7 +84,7 @@ export class Webserver {
           try {
             await faucet.credit(address, matchingDenom);
             // Count addresses to prevent draining
-            this.addressCounter.push({ address: address, date: Date.now() });
+            this.addressCounter.set(address, new Date());
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");
