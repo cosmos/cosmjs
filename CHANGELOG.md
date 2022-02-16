@@ -84,7 +84,10 @@ and this project adheres to
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.
 - @cosmjs/stargate: Add `GasPrice.toString`.
+- @cosmjs/faucet: Added a new functionality to faucet: Each address is only
+  allowed to get credits once every 24h to prevent draining. ([#962]))
 
+[#962]: https://github.com/cosmos/cosmjs/issues/962
 [#938]: https://github.com/cosmos/cosmjs/issues/938
 [#932]: https://github.com/cosmos/cosmjs/issues/932
 [#878]: https://github.com/cosmos/cosmjs/issues/878
