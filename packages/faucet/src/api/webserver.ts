@@ -65,7 +65,7 @@ export class Webserver {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
           }
 
-          const entry: Date | undefined = this.addressCounter.get(address);
+          const entry = this.addressCounter.get(address);
           if (entry !== undefined) {
             if (entry.getDate() + 24 * 3600 > Date.now()) {
               throw new HttpError(
@@ -75,7 +75,7 @@ export class Webserver {
             }
           }
 
-          const availableTokens: string[] = await faucet.availableTokens();
+          const availableTokens = await faucet.availableTokens();
           const matchingDenom = availableTokens.find((availableDenom) => availableDenom === denom);
           if (matchingDenom === undefined) {
             throw new HttpError(422, `Token is not available. Available tokens are: ${availableTokens}`);
