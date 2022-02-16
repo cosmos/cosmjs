@@ -63,10 +63,14 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
   throw new Error(`Got unsupported type '${typeof input}'`);
 }
 
-function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
+function createDefaultTypes(prefix: string): Record<string, AminoConverter | "not_implemented_on_chain"> {
   return {
-    // bank
+    // authz
+    "/cosmos.authz.v1beta1.MsgGrant": "not_implemented_on_chain",
+    "/cosmos.authz.v1beta1.MsgExec": "not_implemented_on_chain",
+    "/cosmos.authz.v1beta1.MsgRevoke": "not_implemented_on_chain",
 
+    // bank
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
       toAmino: ({ fromAddress, toAddress, amount }: MsgSend): AminoMsgSend["value"] => ({
@@ -508,6 +512,8 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
       }),
     },
+    "/cosmos.feegrant.v1beta1.MsgGrantAllowance": "not_implemented_on_chain",
+    "/cosmos.feegrant.v1beta1.MsgRevokeAllowance": "not_implemented_on_chain",
   };
 }
 
@@ -519,27 +525,29 @@ export interface AminoTypesOptions {
   readonly additions?: Record<string, AminoConverter>;
 }
 
+function isAminoConverter(
+  converter: [string, AminoConverter | "not_implemented_on_chain"],
+): converter is [string, AminoConverter] {
+  return typeof converter !== "string";
+}
+
 /**
  * A map from Stargate message types as used in the messages's `Any` type
  * to Amino types.
  */
 export class AminoTypes {
-  private readonly register: Record<string, AminoConverter>;
-
-  // Those message types cannot be signed using the Amino JSON
-  private readonly unsupportedTypes: string[] = [
-    "cosmos.authz.v1beta1.MsgGrant",
-    "cosmos.authz.v1beta1.MsgExec",
-    "cosmos.authz.v1beta1.MsgRevoke",
-    "cosmos.feegrant.v1beta1.MsgGrantAllowance",
-    "cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-  ];
+  private readonly register: Record<string, AminoConverter | "not_implemented_on_chain">;
 
   public constructor({ prefix, additions = {} }: AminoTypesOptions) {
     const additionalAminoTypes = Object.values(additions);
     const filteredDefaultTypes = Object.entries(createDefaultTypes(prefix)).reduce(
       (acc, [key, value]) =>
-        additionalAminoTypes.find(({ aminoType }) => value.aminoType === aminoType)
+        additionalAminoTypes.find(({ aminoType }) => {
+          if (value !== "not_implemented_on_chain") {
+            return value.aminoType === aminoType;
+          }
+          return false;
+        })
           ? acc
           : { ...acc, [key]: value },
       {},
@@ -548,13 +556,12 @@ export class AminoTypes {
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
-    if (this.unsupportedTypes.includes(typeUrl)) {
+    const converter = this.register[typeUrl];
+    if (converter === "not_implemented_on_chain") {
       throw new Error(
         `The message type '${typeUrl}' cannot be signed using the Amino JSON sign mode because this is not implemented on-chain.`,
       );
     }
-
-    const converter = this.register[typeUrl];
     if (!converter) {
       throw new Error(
         `Type URL '${typeUrl}' does not exist in the Amino message type register. ` +
@@ -569,7 +576,10 @@ export class AminoTypes {
   }
 
   public fromAmino({ type, value }: AminoMsg): EncodeObject {
-    const result = Object.entries(this.register).find(([_typeUrl, { aminoType }]) => aminoType === type);
+    const result = Object.entries(this.register)
+      .filter(isAminoConverter)
+      .find((x) => x[1].aminoType === type);
+
     if (!result) {
       throw new Error(
         `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
@@ -578,6 +588,7 @@ export class AminoTypes {
       );
     }
     const [typeUrl, converter] = result;
+
     return {
       typeUrl: typeUrl,
       value: converter.fromAmino(value),
