@@ -528,7 +528,7 @@ export interface AminoTypesOptions {
 function isAminoConverter(
   converter: [string, AminoConverter | "not_implemented_on_chain"],
 ): converter is [string, AminoConverter] {
-  return typeof converter !== "string";
+  return typeof converter[1] !== "string";
 }
 
 /**
