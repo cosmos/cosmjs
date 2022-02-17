@@ -41,6 +41,83 @@ import {
 import { AminoTypes } from "./aminotypes";
 
 describe("AminoTypes", () => {
+  describe("constructor", () => {
+    const msg: MsgDelegate = {
+      delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+      validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+      amount: coin(1234, "ucosm"),
+    };
+
+    it("can override type by type URL", () => {
+      const types = new AminoTypes({
+        prefix: "cosmos",
+        additions: {
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "my-override/MsgDelegate",
+            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+              foo: m.delegatorAddress ?? "",
+            }),
+            fromAmino: () => ({
+              bar: 123,
+            }),
+          },
+        },
+      });
+
+      const aminoMsg = types.toAmino({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: msg,
+      });
+      expect(aminoMsg).toEqual({
+        type: "my-override/MsgDelegate",
+        value: {
+          foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      });
+      expect(types.fromAmino(aminoMsg)).toEqual({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: {
+          bar: 123,
+        },
+      });
+    });
+
+    // This is a feature we have right now but we don't need
+    it("can override type by Amino type", () => {
+      const types = new AminoTypes({
+        prefix: "cosmos",
+        additions: {
+          "/cosmos.staking.otherVersion456.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+              foo: m.delegatorAddress ?? "",
+            }),
+            fromAmino: () => ({
+              bar: 123,
+            }),
+          },
+        },
+      });
+
+      const aminoMsg = types.toAmino({
+        typeUrl: "/cosmos.staking.otherVersion456.MsgDelegate",
+        value: msg,
+      });
+      expect(aminoMsg).toEqual({
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
+          foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      });
+      expect(types.fromAmino(aminoMsg)).toEqual({
+        typeUrl: "/cosmos.staking.otherVersion456.MsgDelegate",
+        value: {
+          bar: 123,
+        },
+      });
+    });
+  });
+
   describe("toAmino", () => {
     // bank
 
