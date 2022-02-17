@@ -9,6 +9,7 @@ and this project adheres to
 ### Changed
 
 - all: The TypeScript compilation target is now ES2018.
+- @cosmjs/crypto: Add `Secp256k1.uncompressPubkey`.
 - @cosmjs/faucet: Set default value of `FAUCET_GAS_LIMIT` to 100_000 to better
   support Cosmos SDK 0.45 chains.
 - @cosmjs/stargate: The `AminoTypes` now always requires an argument of type

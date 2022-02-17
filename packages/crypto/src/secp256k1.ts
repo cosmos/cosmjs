@@ -121,6 +121,22 @@ export class Secp256k1 {
     }
   }
 
+  /**
+   * Takes a compressed or uncompressed pubkey and returns an uncompressed one.
+   *
+   * This function is idempotent.
+   */
+  public static uncompressPubkey(pubkey: Uint8Array): Uint8Array {
+    switch (pubkey.length) {
+      case 33:
+        return Uint8Array.from(secp256k1.keyFromPublic(pubkey).getPublic(false, "array"));
+      case 65:
+        return pubkey;
+      default:
+        throw new Error("Invalid pubkey length");
+    }
+  }
+
   public static trimRecoveryByte(signature: Uint8Array): Uint8Array {
     switch (signature.length) {
       case 64:
