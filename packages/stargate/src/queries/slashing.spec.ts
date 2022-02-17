@@ -12,7 +12,7 @@ async function makeClientWithSlashing(
   return [QueryClient.withExtensions(tmClient, setupSlashingExtension), tmClient];
 }
 
-describe("slashing", () => {
+describe("SlashingExtension", () => {
   describe("signingInfos", () => {
     it("works", async () => {
       pendingWithoutSimapp();
