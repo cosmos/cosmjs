@@ -30,6 +30,10 @@ and this project adheres to
   - cosmos.authz.v1beta1.MsgRevoke
   - cosmos.feegrant.v1beta1.MsgGrantAllowance
   - cosmos.feegrant.v1beta1.MsgRevokeAllowance
+- @cosmjs/stargate: In `AminoTypes` the uniqueness of the Amino type identifier
+  is checked in `fromAmino` now instead of the constructor. This only affects
+  you if multiple different protobuf type URLs map to the same Amino type
+  identifier which should not be the case anyways.
 
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994

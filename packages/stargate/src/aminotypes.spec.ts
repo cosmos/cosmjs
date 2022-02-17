@@ -82,8 +82,7 @@ describe("AminoTypes", () => {
       });
     });
 
-    // This is a feature we have right now but we don't need
-    it("can override type by Amino type", () => {
+    it("can override type with Amino type collision", () => {
       const types = new AminoTypes({
         prefix: "cosmos",
         additions: {
@@ -109,12 +108,9 @@ describe("AminoTypes", () => {
           foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         },
       });
-      expect(types.fromAmino(aminoMsg)).toEqual({
-        typeUrl: "/cosmos.staking.otherVersion456.MsgDelegate",
-        value: {
-          bar: 123,
-        },
-      });
+      expect(() => types.fromAmino(aminoMsg)).toThrowError(
+        "Multiple types are registered with Amino type identifier 'cosmos-sdk/MsgDelegate': '/cosmos.staking.otherVersion456.MsgDelegate', '/cosmos.staking.v1beta1.MsgDelegate'. Thus fromAmino cannot be performed.",
+      );
     });
   });
 
@@ -1052,12 +1048,12 @@ describe("AminoTypes", () => {
       });
     });
 
-    it("works with overridden type url", () => {
+    it("works with overridden type URL", () => {
       const msg = new AminoTypes({
         prefix: "cosmos",
         additions: {
-          "/my.OverrideType": {
-            aminoType: "cosmos-sdk/MsgDelegate",
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate2",
             toAmino: () => {},
             fromAmino: ({ foo }: { readonly foo: string }): MsgDelegate => ({
               delegatorAddress: foo,
@@ -1067,20 +1063,19 @@ describe("AminoTypes", () => {
           },
         },
       }).fromAmino({
-        type: "cosmos-sdk/MsgDelegate",
+        type: "cosmos-sdk/MsgDelegate2",
         value: {
           foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         },
       });
-      const expected: { readonly typeUrl: "/my.OverrideType"; readonly value: MsgDelegate } = {
-        typeUrl: "/my.OverrideType",
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: {
           delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           amount: coin(1234, "ucosm"),
         },
-      };
-      expect(msg).toEqual(expected);
+      });
     });
 
     it("throws for unknown type url", () => {

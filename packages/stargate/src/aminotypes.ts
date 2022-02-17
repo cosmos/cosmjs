@@ -519,31 +519,20 @@ export interface AminoTypesOptions {
   readonly additions?: Record<string, AminoConverter>;
 }
 
-function sameAminoType(a: AminoConverter, b: AminoConverter): boolean {
-  return a.aminoType === b.aminoType;
-}
-
 /**
  * A map from Stargate message types as used in the messages's `Any` type
  * to Amino types.
  */
 export class AminoTypes {
+  // The map type here ensures uniqueness of the protobuf type URL in the key.
+  // There is no uniqueness guarantee of the Amino type identifier in the type
+  // system or constructor. Instead it's the user's responsibility to ensure
+  // there is no overlap when fromAmino is called.
   private readonly register: Record<string, AminoConverter>;
 
   public constructor({ prefix, additions = {} }: AminoTypesOptions) {
     const defaultTypes = createDefaultTypes(prefix);
-    const additionalAminoTypes = Object.values(additions);
-    // `filteredDefaultTypes` contains all types of `defaultTypes`
-    // that are not included in the `additions`. Not included
-    // means not having the same Amino type identifier.
-    const filteredDefaultTypes = Object.entries(defaultTypes).reduce(
-      (acc, [key, value]) =>
-        additionalAminoTypes.find((addition) => sameAminoType(value, addition))
-          ? acc /* Skip this defaultTypes entry */
-          : { ...acc, [key]: value } /* Add this defaultTypes entry */,
-      {},
-    );
-    this.register = { ...filteredDefaultTypes, ...additions };
+    this.register = { ...defaultTypes, ...additions };
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
@@ -562,18 +551,31 @@ export class AminoTypes {
   }
 
   public fromAmino({ type, value }: AminoMsg): EncodeObject {
-    const result = Object.entries(this.register).find(([_typeUrl, { aminoType }]) => aminoType === type);
-    if (!result) {
-      throw new Error(
-        `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
-          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
-          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
-      );
+    const matches = Object.entries(this.register).filter(([_typeUrl, { aminoType }]) => aminoType === type);
+    switch (matches.length) {
+      case 0: {
+        throw new Error(
+          `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
+            "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+            "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+        );
+      }
+      case 1: {
+        const [typeUrl, converter] = matches[0];
+        return {
+          typeUrl: typeUrl,
+          value: converter.fromAmino(value),
+        };
+      }
+      default:
+        throw new Error(
+          `Multiple types are registered with Amino type identifier '${type}': '` +
+            matches
+              .map(([key, _value]) => key)
+              .sort()
+              .join("', '") +
+            "'. Thus fromAmino cannot be performed.",
+        );
     }
-    const [typeUrl, converter] = result;
-    return {
-      typeUrl: typeUrl,
-      value: converter.fromAmino(value),
-    };
   }
 }
