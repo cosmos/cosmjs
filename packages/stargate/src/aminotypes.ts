@@ -519,6 +519,10 @@ export interface AminoTypesOptions {
   readonly additions?: Record<string, AminoConverter>;
 }
 
+function sameAminoType(a: AminoConverter, b: AminoConverter): boolean {
+  return a.aminoType === b.aminoType;
+}
+
 /**
  * A map from Stargate message types as used in the messages's `Any` type
  * to Amino types.
@@ -527,12 +531,16 @@ export class AminoTypes {
   private readonly register: Record<string, AminoConverter>;
 
   public constructor({ prefix, additions = {} }: AminoTypesOptions) {
+    const defaultTypes = createDefaultTypes(prefix);
     const additionalAminoTypes = Object.values(additions);
-    const filteredDefaultTypes = Object.entries(createDefaultTypes(prefix)).reduce(
+    // `filteredDefaultTypes` contains all types of `defaultTypes`
+    // that are not included in the `additions`. Not included
+    // means not having the same Amino type identifier.
+    const filteredDefaultTypes = Object.entries(defaultTypes).reduce(
       (acc, [key, value]) =>
-        additionalAminoTypes.find(({ aminoType }) => value.aminoType === aminoType)
-          ? acc
-          : { ...acc, [key]: value },
+        additionalAminoTypes.find((addition) => sameAminoType(value, addition))
+          ? acc /* Skip this defaultTypes entry */
+          : { ...acc, [key]: value } /* Add this defaultTypes entry */,
       {},
     );
     this.register = { ...filteredDefaultTypes, ...additions };
