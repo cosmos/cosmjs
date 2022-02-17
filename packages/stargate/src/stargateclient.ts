@@ -156,7 +156,7 @@ export class StargateClient {
         setupAuthExtension,
         setupBankExtension,
         setupStakingExtension,
-        setupTxExtension
+        setupTxExtension,
       );
     }
   }
