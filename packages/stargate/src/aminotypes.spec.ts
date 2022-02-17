@@ -41,6 +41,79 @@ import {
 import { AminoTypes } from "./aminotypes";
 
 describe("AminoTypes", () => {
+  describe("constructor", () => {
+    const msg: MsgDelegate = {
+      delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+      validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+      amount: coin(1234, "ucosm"),
+    };
+
+    it("can override type by type URL", () => {
+      const types = new AminoTypes({
+        prefix: "cosmos",
+        additions: {
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "my-override/MsgDelegate",
+            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+              foo: m.delegatorAddress ?? "",
+            }),
+            fromAmino: () => ({
+              bar: 123,
+            }),
+          },
+        },
+      });
+
+      const aminoMsg = types.toAmino({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: msg,
+      });
+      expect(aminoMsg).toEqual({
+        type: "my-override/MsgDelegate",
+        value: {
+          foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      });
+      expect(types.fromAmino(aminoMsg)).toEqual({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: {
+          bar: 123,
+        },
+      });
+    });
+
+    it("can override type with Amino type collision", () => {
+      const types = new AminoTypes({
+        prefix: "cosmos",
+        additions: {
+          "/cosmos.staking.otherVersion456.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+              foo: m.delegatorAddress ?? "",
+            }),
+            fromAmino: () => ({
+              bar: 123,
+            }),
+          },
+        },
+      });
+
+      const aminoMsg = types.toAmino({
+        typeUrl: "/cosmos.staking.otherVersion456.MsgDelegate",
+        value: msg,
+      });
+      expect(aminoMsg).toEqual({
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
+          foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      });
+      expect(() => types.fromAmino(aminoMsg)).toThrowError(
+        "Multiple types are registered with Amino type identifier 'cosmos-sdk/MsgDelegate': '/cosmos.staking.otherVersion456.MsgDelegate', '/cosmos.staking.v1beta1.MsgDelegate'. Thus fromAmino cannot be performed.",
+      );
+    });
+  });
+
   describe("toAmino", () => {
     // bank
 
@@ -975,12 +1048,12 @@ describe("AminoTypes", () => {
       });
     });
 
-    it("works with overridden type url", () => {
+    it("works with overridden type URL", () => {
       const msg = new AminoTypes({
         prefix: "cosmos",
         additions: {
-          "/my.OverrideType": {
-            aminoType: "cosmos-sdk/MsgDelegate",
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate2",
             toAmino: () => {},
             fromAmino: ({ foo }: { readonly foo: string }): MsgDelegate => ({
               delegatorAddress: foo,
@@ -990,20 +1063,19 @@ describe("AminoTypes", () => {
           },
         },
       }).fromAmino({
-        type: "cosmos-sdk/MsgDelegate",
+        type: "cosmos-sdk/MsgDelegate2",
         value: {
           foo: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         },
       });
-      const expected: { readonly typeUrl: "/my.OverrideType"; readonly value: MsgDelegate } = {
-        typeUrl: "/my.OverrideType",
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: {
           delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           amount: coin(1234, "ucosm"),
         },
-      };
-      expect(msg).toEqual(expected);
+      });
     });
 
     it("throws for unknown type url", () => {

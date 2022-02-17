@@ -524,18 +524,15 @@ export interface AminoTypesOptions {
  * to Amino types.
  */
 export class AminoTypes {
+  // The map type here ensures uniqueness of the protobuf type URL in the key.
+  // There is no uniqueness guarantee of the Amino type identifier in the type
+  // system or constructor. Instead it's the user's responsibility to ensure
+  // there is no overlap when fromAmino is called.
   private readonly register: Record<string, AminoConverter>;
 
   public constructor({ prefix, additions = {} }: AminoTypesOptions) {
-    const additionalAminoTypes = Object.values(additions);
-    const filteredDefaultTypes = Object.entries(createDefaultTypes(prefix)).reduce(
-      (acc, [key, value]) =>
-        additionalAminoTypes.find(({ aminoType }) => value.aminoType === aminoType)
-          ? acc
-          : { ...acc, [key]: value },
-      {},
-    );
-    this.register = { ...filteredDefaultTypes, ...additions };
+    const defaultTypes = createDefaultTypes(prefix);
+    this.register = { ...defaultTypes, ...additions };
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
@@ -554,18 +551,31 @@ export class AminoTypes {
   }
 
   public fromAmino({ type, value }: AminoMsg): EncodeObject {
-    const result = Object.entries(this.register).find(([_typeUrl, { aminoType }]) => aminoType === type);
-    if (!result) {
-      throw new Error(
-        `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
-          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
-          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
-      );
+    const matches = Object.entries(this.register).filter(([_typeUrl, { aminoType }]) => aminoType === type);
+    switch (matches.length) {
+      case 0: {
+        throw new Error(
+          `Amino type identifier '${type}' does not exist in the Amino message type register. ` +
+            "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+            "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+        );
+      }
+      case 1: {
+        const [typeUrl, converter] = matches[0];
+        return {
+          typeUrl: typeUrl,
+          value: converter.fromAmino(value),
+        };
+      }
+      default:
+        throw new Error(
+          `Multiple types are registered with Amino type identifier '${type}': '` +
+            matches
+              .map(([key, _value]) => key)
+              .sort()
+              .join("', '") +
+            "'. Thus fromAmino cannot be performed.",
+        );
     }
-    const [typeUrl, converter] = result;
-    return {
-      typeUrl: typeUrl,
-      value: converter.fromAmino(value),
-    };
   }
 }
