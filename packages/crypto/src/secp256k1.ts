@@ -8,11 +8,26 @@ const secp256k1 = new elliptic.ec("secp256k1");
 const secp256k1N = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", "hex");
 
 export interface Secp256k1Keypair {
+  /** A 32 byte private key */
   readonly pubkey: Uint8Array;
+  /**
+   * A raw secp256k1 public key.
+   *
+   * The type itself does not give you any guarantee if this is
+   * compressed or uncompressed. If you are unsure where the data
+   * is coming from, use `Secp256k1.compressPubkey` or
+   * `Secp256k1.uncompressPubkey` (both idempotent) before processing it.
+   */
   readonly privkey: Uint8Array;
 }
 
 export class Secp256k1 {
+  /**
+   * Takes a 32 byte private key and returns a privkey/pubkey pair.
+   *
+   * The resulting pubkey is uncompressed. For the use in Cosmos it should
+   * be compressed first using `Secp256k1.compressPubkey`.
+   */
   public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
     if (privkey.length !== 32) {
       // is this check missing in secp256k1.validatePrivateKey?
@@ -43,10 +58,12 @@ export class Secp256k1 {
     return out;
   }
 
-  // Creates a signature that is
-  // - deterministic (RFC 6979)
-  // - lowS signature
-  // - DER encoded
+  /**
+   * Creates a signature that is
+   * - deterministic (RFC 6979)
+   * - lowS signature
+   * - DER encoded
+   */
   public static async createSignature(
     messageHash: Uint8Array,
     privkey: Uint8Array,
@@ -110,6 +127,11 @@ export class Secp256k1 {
     return fromHex(keypair.getPublic(false, "hex"));
   }
 
+  /**
+   * Takes a compressed or uncompressed pubkey and return a compressed one.
+   *
+   * This function is idempotent.
+   */
   public static compressPubkey(pubkey: Uint8Array): Uint8Array {
     switch (pubkey.length) {
       case 33:
