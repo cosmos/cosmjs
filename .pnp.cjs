@@ -215,7 +215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@confio/ics23",
-        "npm:0.6.5"
+        "npm:0.6.8"
       ],
       [
         "@cosmjs/amino",
@@ -1758,10 +1758,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:26.6.2"
       ],
       [
-        "js-sha512",
-        "npm:0.8.0"
-      ],
-      [
         "js-tokens",
         "npm:4.0.0"
       ],
@@ -3177,14 +3173,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@confio/ics23", [
-        ["npm:0.6.5", {
-          "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.5-21db74210e-dc658795ec.zip/node_modules/@confio/ics23/",
+        ["npm:0.6.8", {
+          "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.8-c87607eb2c-376d72f644.zip/node_modules/@confio/ics23/",
           "packageDependencies": [
-            ["@confio/ics23", "npm:0.6.5"],
-            ["js-sha512", "npm:0.8.0"],
-            ["protobufjs", "npm:6.10.2"],
-            ["ripemd160", "npm:2.0.2"],
-            ["sha.js", "npm:2.4.11"]
+            ["@confio/ics23", "npm:0.6.8"],
+            ["@noble/hashes", "npm:1.0.0"],
+            ["protobufjs", "npm:6.10.2"]
           ],
           "linkType": "HARD",
         }]
@@ -3774,7 +3768,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/stargate/",
           "packageDependencies": [
             ["@cosmjs/stargate", "workspace:packages/stargate"],
-            ["@confio/ics23", "npm:0.6.5"],
+            ["@confio/ics23", "npm:0.6.8"],
             ["@cosmjs/amino", "workspace:packages/amino"],
             ["@cosmjs/crypto", "workspace:packages/crypto"],
             ["@cosmjs/encoding", "workspace:packages/encoding"],
@@ -9102,15 +9096,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:15.3.1"],
             ["merge-stream", "npm:2.0.0"],
             ["supports-color", "npm:7.2.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["js-sha512", [
-        ["npm:0.8.0", {
-          "packageLocation": "./.yarn/cache/js-sha512-npm-0.8.0-48a1a122ac-32ca371ebd.zip/node_modules/js-sha512/",
-          "packageDependencies": [
-            ["js-sha512", "npm:0.8.0"]
           ],
           "linkType": "HARD",
         }]
