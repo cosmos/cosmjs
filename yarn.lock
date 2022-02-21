@@ -283,15 +283,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@confio/ics23@npm:^0.6.3":
-  version: 0.6.5
-  resolution: "@confio/ics23@npm:0.6.5"
+"@confio/ics23@npm:^0.6.8":
+  version: 0.6.8
+  resolution: "@confio/ics23@npm:0.6.8"
   dependencies:
-    js-sha512: ^0.8.0
+    "@noble/hashes": ^1.0.0
     protobufjs: ^6.8.8
-    ripemd160: ^2.0.2
-    sha.js: ^2.4.11
-  checksum: dc658795ec67ef60e281985463848e9f46e6804a4fa9a96fbb39809bf646b98f7e0e38e3fa4a8c683fd96e1a7e14a29cad5c14e8b3685da2cab3369ed66e7fe8
+  checksum: 376d72f6440db60611b002b00a13e3a5bfd0d3503e7682358dbcf79641e74d8c26c234c321452fb4a758baf66eecef25d950e08bdea270486d9d03ee489e2960
   languageName: node
   linkType: hard
 
@@ -349,7 +347,6 @@ __metadata:
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
     "@cosmjs/faucet-client": "workspace:packages/faucet-client"
-    "@cosmjs/launchpad": "workspace:packages/launchpad"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
@@ -594,7 +591,6 @@ __metadata:
   dependencies:
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/launchpad": "workspace:packages/launchpad"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
@@ -672,56 +668,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/launchpad@workspace:packages/launchpad":
-  version: 0.0.0-use.local
-  resolution: "@cosmjs/launchpad@workspace:packages/launchpad"
-  dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
-    "@istanbuljs/nyc-config-typescript": ^1.0.1
-    "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
-    "@types/karma-firefox-launcher": ^2
-    "@types/karma-jasmine": ^4
-    "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
-    "@typescript-eslint/eslint-plugin": ^4.28
-    "@typescript-eslint/parser": ^4.28
-    axios: ^0.21.2
-    eslint: ^7.5
-    eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-node: ^0.3.4
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-prettier: ^3.4.0
-    eslint-plugin-simple-import-sort: ^7.0.0
-    esm: ^3.2.25
-    fast-deep-equal: ^3.1.3
-    glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
-    jasmine-spec-reporter: ^6
-    karma: ^6.1.1
-    karma-chrome-launcher: ^3.1.0
-    karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
-    karma-jasmine-html-reporter: ^1.5.4
-    nyc: ^15.1.0
-    prettier: ^2.4.1
-    readonly-date: ^1.0.0
-    ses: ^0.11.0
-    source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
-    ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.4
-    webpack: ^5.32.0
-    webpack-cli: ^4.6.0
-  languageName: unknown
-  linkType: soft
-
 "@cosmjs/ledger-amino@workspace:packages/ledger-amino":
   version: 0.0.0-use.local
   resolution: "@cosmjs/ledger-amino@workspace:packages/ledger-amino"
@@ -729,7 +675,6 @@ __metadata:
     "@cosmjs/amino": "workspace:packages/amino"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/launchpad": "workspace:packages/launchpad"
     "@cosmjs/math": "workspace:packages/math"
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/utils": "workspace:packages/utils"
@@ -912,7 +857,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stargate@workspace:packages/stargate"
   dependencies:
-    "@confio/ics23": ^0.6.3
+    "@confio/ics23": ^0.6.8
     "@cosmjs/amino": "workspace:packages/amino"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
@@ -1244,7 +1189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^1":
+"@noble/hashes@npm:^1, @noble/hashes@npm:^1.0.0":
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
   checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
@@ -2985,7 +2930,6 @@ __metadata:
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/launchpad": "workspace:packages/launchpad"
     "@cosmjs/proto-signing": "workspace:packages/proto-signing"
     "@cosmjs/stargate": "workspace:packages/stargate"
     eslint: ^7.5
@@ -3737,7 +3681,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3":
+"fast-deep-equal@npm:^3.1.1":
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: e21a9d8d84f53493b6aa15efc9cfd53dd5b714a1f23f67fb5dc8f574af80df889b3bce25dc081887c6d25457cce704e636395333abad896ccdec03abaf1f3f9d
@@ -4833,13 +4777,6 @@ fsevents@~2.3.1:
     merge-stream: ^2.0.0
     supports-color: ^7.0.0
   checksum: f9afa3b88e3f12027901e4964ba3ff048285b5783b5225cab28fac25b4058cea8ad54001e9a1577ee2bed125fac3ccf5c80dc507b120300cc1bbcb368796533e
-  languageName: node
-  linkType: hard
-
-"js-sha512@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "js-sha512@npm:0.8.0"
-  checksum: 32ca371ebd14c6c5c83360fd8b036cad2211537bef546b199ac8b901917299cab4c68f7f7c26ae72f836bbce0349cb463df9a62cdb4c90e38090fdb4db89ee87
   languageName: node
   linkType: hard
 
@@ -6659,7 +6596,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"sha.js@npm:^2.4.0, sha.js@npm:^2.4.11, sha.js@npm:^2.4.8":
+"sha.js@npm:^2.4.0, sha.js@npm:^2.4.8":
   version: 2.4.11
   resolution: "sha.js@npm:2.4.11"
   dependencies:
@@ -6733,13 +6670,13 @@ fsevents@~2.3.1:
   linkType: hard
 
 "simple-get@npm:^3.0.3":
-  version: 3.1.0
-  resolution: "simple-get@npm:3.1.0"
+  version: 3.1.1
+  resolution: "simple-get@npm:3.1.1"
   dependencies:
     decompress-response: ^4.2.0
     once: ^1.3.1
     simple-concat: ^1.0.0
-  checksum: cca91a9ab2b532fa8d367757c196b54e2dfe3325aab0298d66a3e2a45a29a9d335d1a3fb41f036dad14000f78baddd4170fbf9621d72869791d2912baf9469aa
+  checksum: 80195e70bf171486e75c31e28e5485468195cc42f85940f8b45c4a68472160144d223eb4d07bc82ef80cb974b7c401db021a540deb2d34ac4b3b8883da2d6401
   languageName: node
   linkType: hard
 

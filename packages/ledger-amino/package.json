@@ -46,7 +46,6 @@
     "semver": "^7.3.2"
   },
   "devDependencies": {
-    "@cosmjs/launchpad": "workspace:packages/launchpad",
     "@cosmjs/stargate": "workspace:packages/stargate",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@ledgerhq/hw-transport": "^5.25.0",

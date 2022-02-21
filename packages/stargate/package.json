@@ -38,7 +38,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@confio/ics23": "^0.6.3",
+    "@confio/ics23": "^0.6.8",
     "@cosmjs/amino": "workspace:packages/amino",
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/math": "workspace:packages/math",

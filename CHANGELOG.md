@@ -9,12 +9,37 @@ and this project adheres to
 ### Changed
 
 - all: The TypeScript compilation target is now ES2018.
+- @cosmjs/crypto: Add `Secp256k1.uncompressPubkey`.
+- @cosmjs/faucet: Set default value of `FAUCET_GAS_LIMIT` to 100_000 to better
+  support Cosmos SDK 0.45 chains.
 - @cosmjs/stargate: The `AminoTypes` now always requires an argument of type
   `AminoTypesOptions`. This is an object with a required `prefix` field. Before
   the prefix defaulted to "cosmos" but this is almost never the right choice for
   CosmJS users that need to add Amino types manually. ([#989])
+- @cosmjs/cosmwasm-stargate: `height`, `gasWanted` and `gasUsed` have been added
+  to all result types of `SigningCosmWasmClient`
+- @cosmjs/stargate: `MsgSend` and `Coin` are now parts of
+  `defaultRegistryTypes`. ([#994])
+- @cosmjs/proto-signing: `Registry`'s constructor can now override default
+  types. ([#994])
+- @cosmjs/tendermint-rpc: The property `evidence` in the interface `Block` is
+  now non-optional. ([#1011])
+- @cosmjs/stargate: Added the following message types to stargate's
+  `defaultRegistryTypes`: ([#1026])
+  - cosmos.authz.v1beta1.MsgGrant
+  - cosmos.authz.v1beta1.MsgExec
+  - cosmos.authz.v1beta1.MsgRevoke
+  - cosmos.feegrant.v1beta1.MsgGrantAllowance
+  - cosmos.feegrant.v1beta1.MsgRevokeAllowance
+- @cosmjs/stargate: In `AminoTypes` the uniqueness of the Amino type identifier
+  is checked in `fromAmino` now instead of the constructor. This only affects
+  you if multiple different protobuf type URLs map to the same Amino type
+  identifier which should not be the case anyways.
 
 [#989]: https://github.com/cosmos/cosmjs/issues/989
+[#994]: https://github.com/cosmos/cosmjs/issues/994
+[#1011]: https://github.com/cosmos/cosmjs/issues/1011
+[#1026]: https://github.com/cosmos/cosmjs/issues/1026
 
 ### Removed
 
@@ -64,7 +89,10 @@ and this project adheres to
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.
 - @cosmjs/stargate: Add `GasPrice.toString`.
+- @cosmjs/faucet: Added a new functionality to faucet: Each address is only
+  allowed to get credits once every 24h to prevent draining. ([#962]))
 
+[#962]: https://github.com/cosmos/cosmjs/issues/962
 [#938]: https://github.com/cosmos/cosmjs/issues/938
 [#932]: https://github.com/cosmos/cosmjs/issues/932
 [#878]: https://github.com/cosmos/cosmjs/issues/878
