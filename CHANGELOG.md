@@ -9,6 +9,7 @@ and this project adheres to
 ### Changed
 
 - all: The TypeScript compilation target is now ES2018.
+- @cosmjs/crypto: Add `Secp256k1.uncompressPubkey`.
 - @cosmjs/faucet: Set default value of `FAUCET_GAS_LIMIT` to 100_000 to better
   support Cosmos SDK 0.45 chains.
 - @cosmjs/stargate: The `AminoTypes` now always requires an argument of type
@@ -30,6 +31,10 @@ and this project adheres to
   - cosmos.authz.v1beta1.MsgRevoke
   - cosmos.feegrant.v1beta1.MsgGrantAllowance
   - cosmos.feegrant.v1beta1.MsgRevokeAllowance
+- @cosmjs/stargate: In `AminoTypes` the uniqueness of the Amino type identifier
+  is checked in `fromAmino` now instead of the constructor. This only affects
+  you if multiple different protobuf type URLs map to the same Amino type
+  identifier which should not be the case anyways.
 - @cosmjs/stargate: Added support for slashing queries ([#927])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
@@ -86,7 +91,10 @@ and this project adheres to
   @cosmjs/launchpad. They are re-exported in @cosmjs/launchpad for backwards
   compatibility.
 - @cosmjs/stargate: Add `GasPrice.toString`.
+- @cosmjs/faucet: Added a new functionality to faucet: Each address is only
+  allowed to get credits once every 24h to prevent draining. ([#962]))
 
+[#962]: https://github.com/cosmos/cosmjs/issues/962
 [#938]: https://github.com/cosmos/cosmjs/issues/938
 [#932]: https://github.com/cosmos/cosmjs/issues/932
 [#878]: https://github.com/cosmos/cosmjs/issues/878

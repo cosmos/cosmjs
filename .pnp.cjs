@@ -215,7 +215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@confio/ics23",
-        "npm:0.6.5"
+        "npm:0.6.8"
       ],
       [
         "@cosmjs/amino",
@@ -394,6 +394,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.1.0"
       ],
       [
+        "@socket.io/base64-arraybuffer",
+        "npm:1.0.2"
+      ],
+      [
         "@tootallnate/once",
         "npm:1.1.2"
       ],
@@ -435,7 +439,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@types/cookie",
-        "npm:0.4.0"
+        "npm:0.4.1"
       ],
       [
         "@types/cookies",
@@ -443,7 +447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@types/cors",
-        "npm:2.8.10"
+        "npm:2.8.12"
       ],
       [
         "@types/diff",
@@ -818,10 +822,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.2"
       ],
       [
-        "base64-arraybuffer",
-        "npm:0.1.4"
-      ],
-      [
         "base64-js",
         "npm:1.5.1"
       ],
@@ -919,7 +919,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "chokidar",
-        "npm:3.5.1"
+        "npm:3.5.3"
       ],
       [
         "chownr",
@@ -1155,11 +1155,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "engine.io",
-        "npm:4.1.2"
+        "npm:6.1.2"
       ],
       [
         "engine.io-parser",
-        "npm:4.0.2"
+        "npm:5.0.3"
       ],
       [
         "enhanced-resolve",
@@ -1758,10 +1758,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:26.6.2"
       ],
       [
-        "js-sha512",
-        "npm:0.8.0"
-      ],
-      [
         "js-tokens",
         "npm:4.0.0"
       ],
@@ -1799,7 +1795,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "karma",
-        "npm:6.3.2"
+        "npm:6.3.16"
       ],
       [
         "karma-chrome-launcher",
@@ -1939,7 +1935,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "mime",
-        "npm:2.5.2"
+        "npm:2.6.0"
       ],
       [
         "mime-db",
@@ -2295,7 +2291,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "readdirp",
-        "npm:3.5.0"
+        "npm:3.6.0"
       ],
       [
         "readonly-date",
@@ -2463,11 +2459,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "socket.io",
-        "npm:3.1.2"
+        "npm:4.4.1"
       ],
       [
         "socket.io-adapter",
-        "npm:2.1.0"
+        "npm:2.3.3"
       ],
       [
         "socket.io-parser",
@@ -2675,7 +2671,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "ua-parser-js",
-        "npm:0.7.28"
+        "npm:0.7.31"
       ],
       [
         "unbox-primitive",
@@ -3177,14 +3173,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@confio/ics23", [
-        ["npm:0.6.5", {
-          "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.5-21db74210e-dc658795ec.zip/node_modules/@confio/ics23/",
+        ["npm:0.6.8", {
+          "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.8-c87607eb2c-376d72f644.zip/node_modules/@confio/ics23/",
           "packageDependencies": [
-            ["@confio/ics23", "npm:0.6.5"],
-            ["js-sha512", "npm:0.8.0"],
-            ["protobufjs", "npm:6.10.2"],
-            ["ripemd160", "npm:2.0.2"],
-            ["sha.js", "npm:2.4.11"]
+            ["@confio/ics23", "npm:0.6.8"],
+            ["@noble/hashes", "npm:1.0.0"],
+            ["protobufjs", "npm:6.10.2"]
           ],
           "linkType": "HARD",
         }]
@@ -3217,7 +3211,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3321,7 +3315,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3380,7 +3374,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3428,7 +3422,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3514,7 +3508,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3557,7 +3551,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3651,7 +3645,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3701,7 +3695,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3749,7 +3743,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3774,7 +3768,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/stargate/",
           "packageDependencies": [
             ["@cosmjs/stargate", "workspace:packages/stargate"],
-            ["@confio/ics23", "npm:0.6.5"],
+            ["@confio/ics23", "npm:0.6.8"],
             ["@cosmjs/amino", "workspace:packages/amino"],
             ["@cosmjs/crypto", "workspace:packages/crypto"],
             ["@cosmjs/encoding", "workspace:packages/encoding"],
@@ -3805,7 +3799,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3853,7 +3847,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3905,7 +3899,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -3951,7 +3945,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:3.8.0"],
             ["jasmine-core", "npm:3.8.0"],
             ["jasmine-spec-reporter", "npm:6.0.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-chrome-launcher", "npm:3.1.0"],
             ["karma-firefox-launcher", "npm:2.1.0"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
@@ -4290,6 +4284,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@socket.io/base64-arraybuffer", [
+        ["npm:1.0.2", {
+          "packageLocation": "./.yarn/cache/@socket.io-base64-arraybuffer-npm-1.0.2-066f9f7d09-fa3e58c758.zip/node_modules/@socket.io/base64-arraybuffer/",
+          "packageDependencies": [
+            ["@socket.io/base64-arraybuffer", "npm:1.0.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@tootallnate/once", [
         ["npm:1.1.2", {
           "packageLocation": "./.yarn/cache/@tootallnate-once-npm-1.1.2-0517220057-e1fb1bbbc1.zip/node_modules/@tootallnate/once/",
@@ -4387,10 +4390,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/cookie", [
-        ["npm:0.4.0", {
-          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.0-2e6e63f5fe-ffb58d8065.zip/node_modules/@types/cookie/",
+        ["npm:0.4.1", {
+          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.1-274a704dc6-3275534ed6.zip/node_modules/@types/cookie/",
           "packageDependencies": [
-            ["@types/cookie", "npm:0.4.0"]
+            ["@types/cookie", "npm:0.4.1"]
           ],
           "linkType": "HARD",
         }]
@@ -4409,10 +4412,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/cors", [
-        ["npm:2.8.10", {
-          "packageLocation": "./.yarn/cache/@types-cors-npm-2.8.10-53b686e0da-f87e2f7bb6.zip/node_modules/@types/cors/",
+        ["npm:2.8.12", {
+          "packageLocation": "./.yarn/cache/@types-cors-npm-2.8.12-ff52e8e514-8c45f112c7.zip/node_modules/@types/cors/",
           "packageDependencies": [
-            ["@types/cors", "npm:2.8.10"]
+            ["@types/cors", "npm:2.8.12"]
           ],
           "linkType": "HARD",
         }]
@@ -6238,15 +6241,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["base64-arraybuffer", [
-        ["npm:0.1.4", {
-          "packageLocation": "./.yarn/cache/base64-arraybuffer-npm-0.1.4-2f8efc60e0-d249a929e2.zip/node_modules/base64-arraybuffer/",
-          "packageDependencies": [
-            ["base64-arraybuffer", "npm:0.1.4"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["base64-js", [
         ["npm:1.5.1", {
           "packageLocation": "./.yarn/cache/base64-js-npm-1.5.1-b2f7275641-669632eb37.zip/node_modules/base64-js/",
@@ -6545,10 +6539,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["chokidar", [
-        ["npm:3.5.1", {
-          "packageLocation": "./.yarn/cache/chokidar-npm-3.5.1-205217279e-b7774e6e3a.zip/node_modules/chokidar/",
+        ["npm:3.5.3", {
+          "packageLocation": "./.yarn/cache/chokidar-npm-3.5.3-c5f9b0a56a-b49fcde401.zip/node_modules/chokidar/",
           "packageDependencies": [
-            ["chokidar", "npm:3.5.1"],
+            ["chokidar", "npm:3.5.3"],
             ["anymatch", "npm:3.1.2"],
             ["braces", "npm:3.0.2"],
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"],
@@ -6556,7 +6550,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["is-binary-path", "npm:2.1.0"],
             ["is-glob", "npm:4.0.1"],
             ["normalize-path", "npm:3.0.0"],
-            ["readdirp", "npm:3.5.0"]
+            ["readdirp", "npm:3.6.0"]
           ],
           "linkType": "HARD",
         }]
@@ -7292,27 +7286,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["engine.io", [
-        ["npm:4.1.2", {
-          "packageLocation": "./.yarn/cache/engine.io-npm-4.1.2-8aaff280a4-3b56aa4f13.zip/node_modules/engine.io/",
+        ["npm:6.1.2", {
+          "packageLocation": "./.yarn/cache/engine.io-npm-6.1.2-733cb68993-bd98d6ce2b.zip/node_modules/engine.io/",
           "packageDependencies": [
-            ["engine.io", "npm:4.1.2"],
+            ["engine.io", "npm:6.1.2"],
+            ["@types/cookie", "npm:0.4.1"],
+            ["@types/cors", "npm:2.8.12"],
+            ["@types/node", "npm:15.3.1"],
             ["accepts", "npm:1.3.7"],
             ["base64id", "npm:2.0.0"],
             ["cookie", "npm:0.4.1"],
             ["cors", "npm:2.8.5"],
             ["debug", "virtual:6d7ba8035a34a8cbc48e227f3e803dbc3acaabbab2521c3cd66a45a2853fa6bda5b3ccb3ab1942c8a738927bc0e228ea8d5baa6461d73e2cf6a345db629c4f47#npm:4.3.3"],
-            ["engine.io-parser", "npm:4.0.2"],
-            ["ws", "virtual:8aaff280a46d461927fa7415ad01e56d602b7f1da063f274fe2cba77e90e96accd16fa2b7b21acf0915345c96ade1344be1284db15c8d8548c4a8fff807f45d5#npm:7.4.5"]
+            ["engine.io-parser", "npm:5.0.3"],
+            ["ws", "virtual:733cb6899318fc97abde396915533fc4f9852a2d62abe85daf265f0103211854a5c657d9a2fa18cdee56e1c047ccecb37162ba0f185d142200181f148b16695f#npm:8.2.3"]
           ],
           "linkType": "HARD",
         }]
       ]],
       ["engine.io-parser", [
-        ["npm:4.0.2", {
-          "packageLocation": "./.yarn/cache/engine.io-parser-npm-4.0.2-50c8845f23-763b8a2cc4.zip/node_modules/engine.io-parser/",
+        ["npm:5.0.3", {
+          "packageLocation": "./.yarn/cache/engine.io-parser-npm-5.0.3-55c5b3beef-88d664420a.zip/node_modules/engine.io-parser/",
           "packageDependencies": [
-            ["engine.io-parser", "npm:4.0.2"],
-            ["base64-arraybuffer", "npm:0.1.4"]
+            ["engine.io-parser", "npm:5.0.3"],
+            ["@socket.io/base64-arraybuffer", "npm:1.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -9106,15 +9103,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["js-sha512", [
-        ["npm:0.8.0", {
-          "packageLocation": "./.yarn/cache/js-sha512-npm-0.8.0-48a1a122ac-32ca371ebd.zip/node_modules/js-sha512/",
-          "packageDependencies": [
-            ["js-sha512", "npm:0.8.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["js-tokens", [
         ["npm:4.0.0", {
           "packageLocation": "./.yarn/cache/js-tokens-npm-4.0.0-0ac852e9e2-8a95213a5a.zip/node_modules/js-tokens/",
@@ -9217,32 +9205,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["karma", [
-        ["npm:6.3.2", {
-          "packageLocation": "./.yarn/cache/karma-npm-6.3.2-988188dbfa-4ac2485cc3.zip/node_modules/karma/",
+        ["npm:6.3.16", {
+          "packageLocation": "./.yarn/cache/karma-npm-6.3.16-cf78707de2-eb1703d490.zip/node_modules/karma/",
           "packageDependencies": [
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["body-parser", "npm:1.19.0"],
             ["braces", "npm:3.0.2"],
-            ["chokidar", "npm:3.5.1"],
+            ["chokidar", "npm:3.5.3"],
             ["colors", "npm:1.4.0"],
             ["connect", "npm:3.7.0"],
             ["di", "npm:0.0.1"],
             ["dom-serialize", "npm:2.2.1"],
-            ["glob", "npm:7.1.7"],
+            ["glob", "npm:7.2.0"],
             ["graceful-fs", "npm:4.2.6"],
             ["http-proxy", "npm:1.18.1"],
             ["isbinaryfile", "npm:4.0.8"],
             ["lodash", "npm:4.17.21"],
             ["log4js", "npm:6.4.1"],
-            ["mime", "npm:2.5.2"],
+            ["mime", "npm:2.6.0"],
             ["minimatch", "npm:3.0.4"],
+            ["mkdirp", "npm:0.5.5"],
             ["qjobs", "npm:1.2.0"],
             ["range-parser", "npm:1.2.1"],
             ["rimraf", "npm:3.0.2"],
-            ["socket.io", "npm:3.1.2"],
+            ["socket.io", "npm:4.4.1"],
             ["source-map", "npm:0.6.1"],
             ["tmp", "npm:0.2.1"],
-            ["ua-parser-js", "npm:0.7.28"],
+            ["ua-parser-js", "npm:0.7.31"],
             ["yargs", "npm:16.2.0"]
           ],
           "linkType": "HARD",
@@ -9283,7 +9272,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"],
             ["@types/karma", null],
             ["jasmine-core", "npm:3.8.0"],
-            ["karma", "npm:6.3.2"]
+            ["karma", "npm:6.3.16"]
           ],
           "packagePeers": [
             "@types/karma",
@@ -9308,7 +9297,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma", null],
             ["@types/karma-jasmine", "npm:4.0.0"],
             ["jasmine-core", "npm:3.8.0"],
-            ["karma", "npm:6.3.2"],
+            ["karma", "npm:6.3.16"],
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:4.0.1"]
           ],
           "packagePeers": [
@@ -9677,10 +9666,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["mime", [
-        ["npm:2.5.2", {
-          "packageLocation": "./.yarn/cache/mime-npm-2.5.2-d3335c8166-dd3c93d433.zip/node_modules/mime/",
+        ["npm:2.6.0", {
+          "packageLocation": "./.yarn/cache/mime-npm-2.6.0-88b89d8de0-1497ba7b9f.zip/node_modules/mime/",
           "packageDependencies": [
-            ["mime", "npm:2.5.2"]
+            ["mime", "npm:2.6.0"]
           ],
           "linkType": "HARD",
         }]
@@ -9834,6 +9823,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["mkdirp", [
+        ["npm:0.5.5", {
+          "packageLocation": "./.yarn/cache/mkdirp-npm-0.5.5-6bc76534fc-3bce20ea52.zip/node_modules/mkdirp/",
+          "packageDependencies": [
+            ["mkdirp", "npm:0.5.5"],
+            ["minimist", "npm:1.2.5"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:1.0.4", {
           "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-a96865108c.zip/node_modules/mkdirp/",
           "packageDependencies": [
@@ -10810,10 +10807,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["readdirp", [
-        ["npm:3.5.0", {
-          "packageLocation": "./.yarn/cache/readdirp-npm-3.5.0-a1b1568d32-6b1a9341e2.zip/node_modules/readdirp/",
+        ["npm:3.6.0", {
+          "packageLocation": "./.yarn/cache/readdirp-npm-3.6.0-f950cc74ab-1ced032e6e.zip/node_modules/readdirp/",
           "packageDependencies": [
-            ["readdirp", "npm:3.5.0"],
+            ["readdirp", "npm:3.6.0"],
             ["picomatch", "npm:2.2.3"]
           ],
           "linkType": "HARD",
@@ -11262,28 +11259,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["socket.io", [
-        ["npm:3.1.2", {
-          "packageLocation": "./.yarn/cache/socket.io-npm-3.1.2-686189efcb-3fa5296f9f.zip/node_modules/socket.io/",
+        ["npm:4.4.1", {
+          "packageLocation": "./.yarn/cache/socket.io-npm-4.4.1-b2ec7c47a5-a559ae5235.zip/node_modules/socket.io/",
           "packageDependencies": [
-            ["socket.io", "npm:3.1.2"],
-            ["@types/cookie", "npm:0.4.0"],
-            ["@types/cors", "npm:2.8.10"],
-            ["@types/node", "npm:15.3.1"],
+            ["socket.io", "npm:4.4.1"],
             ["accepts", "npm:1.3.7"],
             ["base64id", "npm:2.0.0"],
             ["debug", "virtual:6d7ba8035a34a8cbc48e227f3e803dbc3acaabbab2521c3cd66a45a2853fa6bda5b3ccb3ab1942c8a738927bc0e228ea8d5baa6461d73e2cf6a345db629c4f47#npm:4.3.3"],
-            ["engine.io", "npm:4.1.2"],
-            ["socket.io-adapter", "npm:2.1.0"],
+            ["engine.io", "npm:6.1.2"],
+            ["socket.io-adapter", "npm:2.3.3"],
             ["socket.io-parser", "npm:4.0.4"]
           ],
           "linkType": "HARD",
         }]
       ]],
       ["socket.io-adapter", [
-        ["npm:2.1.0", {
-          "packageLocation": "./.yarn/cache/socket.io-adapter-npm-2.1.0-c482a48312-d5b18b1c00.zip/node_modules/socket.io-adapter/",
+        ["npm:2.3.3", {
+          "packageLocation": "./.yarn/cache/socket.io-adapter-npm-2.3.3-4fd6b5d0bd-73890e0a33.zip/node_modules/socket.io-adapter/",
           "packageDependencies": [
-            ["socket.io-adapter", "npm:2.1.0"]
+            ["socket.io-adapter", "npm:2.3.3"]
           ],
           "linkType": "HARD",
         }]
@@ -12245,10 +12239,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["ua-parser-js", [
-        ["npm:0.7.28", {
-          "packageLocation": "./.yarn/cache/ua-parser-js-npm-0.7.28-83c4e4d878-a7da4ad545.zip/node_modules/ua-parser-js/",
+        ["npm:0.7.31", {
+          "packageLocation": "./.yarn/cache/ua-parser-js-npm-0.7.31-aeb4c9aae9-e2f8324a83.zip/node_modules/ua-parser-js/",
           "packageDependencies": [
-            ["ua-parser-js", "npm:0.7.28"]
+            ["ua-parser-js", "npm:0.7.31"]
           ],
           "linkType": "HARD",
         }]
@@ -13676,13 +13670,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["ws", [
-        ["npm:7.4.5", {
-          "packageLocation": "./.yarn/cache/ws-npm-7.4.5-5c28d7e14e-5c7d1527f9.zip/node_modules/ws/",
-          "packageDependencies": [
-            ["ws", "npm:7.4.5"]
-          ],
-          "linkType": "SOFT",
-        }],
         ["npm:7.4.6", {
           "packageLocation": "./.yarn/cache/ws-npm-7.4.6-9c9a725604-3a990b32ed.zip/node_modules/ws/",
           "packageDependencies": [
@@ -13690,10 +13677,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:8aaff280a46d461927fa7415ad01e56d602b7f1da063f274fe2cba77e90e96accd16fa2b7b21acf0915345c96ade1344be1284db15c8d8548c4a8fff807f45d5#npm:7.4.5", {
-          "packageLocation": "./.yarn/__virtual__/ws-virtual-f22f4bef32/0/cache/ws-npm-7.4.5-5c28d7e14e-5c7d1527f9.zip/node_modules/ws/",
+        ["npm:8.2.3", {
+          "packageLocation": "./.yarn/cache/ws-npm-8.2.3-03a35b8ad7-c869296ccb.zip/node_modules/ws/",
           "packageDependencies": [
-            ["ws", "virtual:8aaff280a46d461927fa7415ad01e56d602b7f1da063f274fe2cba77e90e96accd16fa2b7b21acf0915345c96ade1344be1284db15c8d8548c4a8fff807f45d5#npm:7.4.5"],
+            ["ws", "npm:8.2.3"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:733cb6899318fc97abde396915533fc4f9852a2d62abe85daf265f0103211854a5c657d9a2fa18cdee56e1c047ccecb37162ba0f185d142200181f148b16695f#npm:8.2.3", {
+          "packageLocation": "./.yarn/__virtual__/ws-virtual-4b865e96d3/0/cache/ws-npm-8.2.3-03a35b8ad7-c869296ccb.zip/node_modules/ws/",
+          "packageDependencies": [
+            ["ws", "virtual:733cb6899318fc97abde396915533fc4f9852a2d62abe85daf265f0103211854a5c657d9a2fa18cdee56e1c047ccecb37162ba0f185d142200181f148b16695f#npm:8.2.3"],
             ["@types/bufferutil", null],
             ["@types/utf-8-validate", null],
             ["bufferutil", null],

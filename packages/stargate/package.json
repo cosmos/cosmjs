@@ -38,7 +38,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@confio/ics23": "^0.6.3",
+    "@confio/ics23": "^0.6.8",
     "@cosmjs/amino": "workspace:packages/amino",
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/math": "workspace:packages/math",
@@ -74,7 +74,7 @@
     "jasmine": "^3.8",
     "jasmine-core": "^3.7.1",
     "jasmine-spec-reporter": "^6",
-    "karma": "^6.1.1",
+    "karma": "^6.3.14",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
     "karma-jasmine": "^4.0.1",
