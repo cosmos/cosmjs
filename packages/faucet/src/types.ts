@@ -1,4 +1,4 @@
-import { Account, Coin } from "@cosmjs/launchpad";
+import { Coin } from "@cosmjs/stargate";
 
 export interface SendJob {
   readonly sender: string;
@@ -6,4 +6,8 @@ export interface SendJob {
   readonly amount: Coin;
 }
 
-export type MinimalAccount = Pick<Account, "address" | "balance">;
+export interface MinimalAccount {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly balance: readonly Coin[];
+}

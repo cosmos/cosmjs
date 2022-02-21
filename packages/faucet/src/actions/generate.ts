@@ -18,5 +18,5 @@ export async function generate(args: readonly string[]): Promise<void> {
   console.info(`FAUCET_PATH_PATTERN="${constants.pathPattern}"`);
 
   // Log the addresses
-  await createWallets(mnemonic, pathBuilder, constants.addressPrefix, constants.concurrency, true, true);
+  await createWallets(mnemonic, pathBuilder, constants.addressPrefix, constants.concurrency, true);
 }

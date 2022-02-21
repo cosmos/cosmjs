@@ -44,7 +44,6 @@
     "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate",
     "@cosmjs/crypto": "workspace:packages/crypto",
     "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/launchpad": "workspace:packages/launchpad",
     "@cosmjs/proto-signing": "workspace:packages/proto-signing",
     "@cosmjs/stargate": "workspace:packages/stargate",
     "eslint": "^7.5",
