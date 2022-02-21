@@ -1078,6 +1078,17 @@ describe("AminoTypes", () => {
       });
     });
 
+    it("throws for types which are not on chain yet", () => {
+      expect(() => {
+        new AminoTypes({ prefix: "cosmos" }).toAmino({
+          typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+          value: 0,
+        });
+      }).toThrowError(
+        /The message type '\/cosmos.feegrant.v1beta1.MsgRevokeAllowance' cannot be signed using the Amino JSON sign mode because this is not supported by chain./i,
+      );
+    });
+
     it("throws for unknown type url", () => {
       expect(() =>
         new AminoTypes({ prefix: "cosmos" }).fromAmino({
