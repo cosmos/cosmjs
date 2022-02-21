@@ -35,7 +35,9 @@ and this project adheres to
   is checked in `fromAmino` now instead of the constructor. This only affects
   you if multiple different protobuf type URLs map to the same Amino type
   identifier which should not be the case anyways.
+- @cosmjs/stargate: Added support for slashing queries ([#927])
 
+[#927]: https://github.com/cosmos/cosmjs/issues/927
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011

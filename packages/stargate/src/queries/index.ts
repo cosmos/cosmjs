@@ -10,6 +10,7 @@ export { DistributionExtension, setupDistributionExtension } from "./distributio
 export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from "./gov";
 export { IbcExtension, setupIbcExtension } from "./ibc";
 export { MintExtension, MintParams, setupMintExtension } from "./mint";
+export { setupSlashingExtension, SlashingExtension } from "./slashing";
 export { setupStakingExtension, StakingExtension } from "./staking";
 export { setupTxExtension, TxExtension } from "./tx";
 export {
