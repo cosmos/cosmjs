@@ -283,15 +283,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@confio/ics23@npm:^0.6.3":
-  version: 0.6.5
-  resolution: "@confio/ics23@npm:0.6.5"
+"@confio/ics23@npm:^0.6.8":
+  version: 0.6.8
+  resolution: "@confio/ics23@npm:0.6.8"
   dependencies:
-    js-sha512: ^0.8.0
+    "@noble/hashes": ^1.0.0
     protobufjs: ^6.8.8
-    ripemd160: ^2.0.2
-    sha.js: ^2.4.11
-  checksum: dc658795ec67ef60e281985463848e9f46e6804a4fa9a96fbb39809bf646b98f7e0e38e3fa4a8c683fd96e1a7e14a29cad5c14e8b3685da2cab3369ed66e7fe8
+  checksum: 376d72f6440db60611b002b00a13e3a5bfd0d3503e7682358dbcf79641e74d8c26c234c321452fb4a758baf66eecef25d950e08bdea270486d9d03ee489e2960
   languageName: node
   linkType: hard
 
@@ -859,7 +857,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stargate@workspace:packages/stargate"
   dependencies:
-    "@confio/ics23": ^0.6.3
+    "@confio/ics23": ^0.6.8
     "@cosmjs/amino": "workspace:packages/amino"
     "@cosmjs/crypto": "workspace:packages/crypto"
     "@cosmjs/encoding": "workspace:packages/encoding"
@@ -1191,7 +1189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^1":
+"@noble/hashes@npm:^1, @noble/hashes@npm:^1.0.0":
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
   checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
@@ -4782,13 +4780,6 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"js-sha512@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "js-sha512@npm:0.8.0"
-  checksum: 32ca371ebd14c6c5c83360fd8b036cad2211537bef546b199ac8b901917299cab4c68f7f7c26ae72f836bbce0349cb463df9a62cdb4c90e38090fdb4db89ee87
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -6605,7 +6596,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"sha.js@npm:^2.4.0, sha.js@npm:^2.4.11, sha.js@npm:^2.4.8":
+"sha.js@npm:^2.4.0, sha.js@npm:^2.4.8":
   version: 2.4.11
   resolution: "sha.js@npm:2.4.11"
   dependencies:

@@ -16,6 +16,7 @@ export interface ChainConstants {
 
 export class Webserver {
   private readonly api = new Koa();
+  private readonly addressCounter = new Map<string, Date>();
 
   public constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
@@ -58,11 +59,20 @@ export class Webserver {
           // context.request.body is set by the bodyParser() plugin
           const requestBody = context.request.body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
-
           const { address, denom } = creditBody;
 
           if (!isValidAddress(address, constants.addressPrefix)) {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
+          }
+
+          const entry = this.addressCounter.get(address);
+          if (entry !== undefined) {
+            if (entry.getTime() + 24 * 3600 > Date.now()) {
+              throw new HttpError(
+                405,
+                "Too many request from the same address. Blocked to prevent draining. Please wait 24h and try it again!",
+              );
+            }
           }
 
           const availableTokens = await faucet.availableTokens();
@@ -73,6 +83,8 @@ export class Webserver {
 
           try {
             await faucet.credit(address, matchingDenom);
+            // Count addresses to prevent draining
+            this.addressCounter.set(address, new Date());
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");

@@ -570,6 +570,30 @@ describe("Secp256k1", () => {
     });
   });
 
+  describe("uncompressPubkey", () => {
+    it("throws for a pubkey with invalid length", () => {
+      const pubkey = fromHex("aa".repeat(32));
+      expect(() => Secp256k1.uncompressPubkey(pubkey)).toThrowError(/invalid pubkey length/i);
+    });
+
+    it("returns an uncompressPubkey pubkey unchanged", () => {
+      // Test data generated at https://iancoleman.io/bitcoin-key-compression/
+      const pubkey = fromHex(
+        "044f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029013b587a681e836cc187a8164b98a5848a2b89b3173315fdd0740d5032e259cd5",
+      );
+      expect(Secp256k1.uncompressPubkey(pubkey)).toEqual(pubkey);
+    });
+
+    it("uncompresses a compressed pubkey", () => {
+      // Test data generated at https://iancoleman.io/bitcoin-key-compression/
+      const uncompressed = fromHex(
+        "044f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029013b587a681e836cc187a8164b98a5848a2b89b3173315fdd0740d5032e259cd5",
+      );
+      const compressed = fromHex("034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c70290");
+      expect(Secp256k1.uncompressPubkey(compressed)).toEqual(uncompressed);
+    });
+  });
+
   describe("trimRecoveryByte", () => {
     it("throws for a signature with invalid length", () => {
       const signature = fromHex("aa".repeat(66));
