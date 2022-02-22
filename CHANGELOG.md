@@ -38,7 +38,7 @@ and this project adheres to
 - @cosmjs/stargate: Added support for slashing queries ([#927])
 - @cosmjs/ledger-amino: Renamed `LaunchpadLedger` to `LedgerConnector` ([#955])
 - @cosmjs/encoding: Created `toBech32()` and `fromBech32()`. Class Bech32 is now
-  depricated and should not longer be used. ([#1053])
+  deprecated and should not longer be used. ([#1053])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
