@@ -36,8 +36,10 @@ and this project adheres to
   you if multiple different protobuf type URLs map to the same Amino type
   identifier which should not be the case anyways.
 - @cosmjs/stargate: Added support for slashing queries ([#927])
+- @cosmjs/ledger-amino: Renamed `LaunchpadLedger`to `LedgerConnector` ([#955])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
+[#955]: https://github.com/cosmos/cosmjs/issues/955
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
