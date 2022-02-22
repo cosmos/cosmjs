@@ -383,7 +383,7 @@ __metadata:
     typescript: ~4.4
     yargs: ^15.3.1
   bin:
-    cosmwasm-cli: bin/cosmwasm-cli
+    cosmjs-cli: bin/cosmjs-cli
   languageName: unknown
   linkType: soft
 

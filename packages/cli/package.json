@@ -23,14 +23,14 @@
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "start": "yarn build-or-skip && ./bin/cosmwasm-cli",
-    "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
+    "start": "yarn build-or-skip && ./bin/cosmjs-cli",
+    "selftest": "yarn build-or-skip && ./bin/cosmjs-cli --selftest",
     "test-node": "yarn node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
   },
   "bin": {
-    "cosmwasm-cli": "bin/cosmwasm-cli"
+    "cosmjs-cli": "bin/cosmjs-cli"
   },
   "files": [
     "build/",
