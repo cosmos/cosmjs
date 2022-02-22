@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoSignResponse, Secp256k1HdWallet, Secp256k1HdWalletOptions, StdSignDoc } from "@cosmjs/amino";
 import { Bip39, EnglishMnemonic, Random } from "@cosmjs/crypto";
-import { Bech32, fromBase64 } from "@cosmjs/encoding";
+import { fromBase64, toBech32 } from "@cosmjs/encoding";
 import {
   DirectSecp256k1HdWallet,
   DirectSecp256k1HdWalletOptions,
@@ -64,7 +64,7 @@ export function getHackatom(): ContractUploadInstructions {
 }
 
 export function makeRandomAddress(): string {
-  return Bech32.encode("wasm", Random.getBytes(20));
+  return toBech32("wasm", Random.getBytes(20));
 }
 
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;

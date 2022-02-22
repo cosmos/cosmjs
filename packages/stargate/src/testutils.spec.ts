@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoSignResponse, Secp256k1HdWallet, Secp256k1HdWalletOptions, StdSignDoc } from "@cosmjs/amino";
 import { Bip39, EnglishMnemonic, Random } from "@cosmjs/crypto";
-import { Bech32 } from "@cosmjs/encoding";
+import { toBech32 } from "@cosmjs/encoding";
 import {
   coins,
   DirectSecp256k1HdWallet,
@@ -54,7 +54,7 @@ export function makeRandomAddressBytes(): Uint8Array {
 }
 
 export function makeRandomAddress(): string {
-  return Bech32.encode("cosmos", makeRandomAddressBytes());
+  return toBech32("cosmos", makeRandomAddressBytes());
 }
 
 /** Returns first element. Throws if array has a different length than 1. */

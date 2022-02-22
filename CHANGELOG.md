@@ -37,6 +37,8 @@ and this project adheres to
   identifier which should not be the case anyways.
 - @cosmjs/stargate: Added support for slashing queries ([#927])
 - @cosmjs/ledger-amino: Renamed `LaunchpadLedger` to `LedgerConnector` ([#955])
+- @cosmjs/encoding: Created `toBech32()` and `fromBech32()`. Class Bech32 is now
+  deprecated and should not longer be used. ([#1053])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
@@ -44,6 +46,7 @@ and this project adheres to
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
 [#1026]: https://github.com/cosmos/cosmjs/issues/1026
+[#1053]: https://github.com/cosmos/cosmjs/issues/1053
 
 ### Removed
 
