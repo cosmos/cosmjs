@@ -24,7 +24,7 @@ export class Bech32 {
    * @deprecated This class is deprecated and will be removed soon. Please use fromBech32() and toBech32() instead. For more details please refer to https://github.com/cosmos/cosmjs/issues/1053.
    */
   public static encode(prefix: string, data: Uint8Array, limit?: number): string {
-    return toBech32(prefix, data, limit ?? undefined);
+    return toBech32(prefix, data, limit);
   }
 
   /**
