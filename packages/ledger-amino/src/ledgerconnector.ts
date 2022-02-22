@@ -28,7 +28,7 @@ const cosmosBech32Prefix = "cosmos";
 const cosmosLedgerAppName = "Cosmos";
 const requiredCosmosAppVersion = "1.5.3";
 
-export interface LaunchpadLedgerOptions {
+export interface LedgerConnectorOptions {
   readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
   readonly testModeAllowed?: boolean;
@@ -57,7 +57,7 @@ export interface AddressAndPubkey {
   readonly pubkey: Secp256k1Pubkey;
 }
 
-export class LaunchpadLedger {
+export class LedgerConnector {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
@@ -65,7 +65,7 @@ export class LaunchpadLedger {
   private readonly minLedgerAppVersion: string;
   private readonly app: CosmosApp;
 
-  public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
+  public constructor(transport: Transport, options: LedgerConnectorOptions = {}) {
     const defaultOptions = {
       hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,

@@ -1,2 +1,2 @@
-export { AddressAndPubkey, LaunchpadLedger } from "./launchpadledger";
+export { AddressAndPubkey, LedgerConnector } from "./ledgerconnector";
 export { LedgerSigner } from "./ledgersigner";

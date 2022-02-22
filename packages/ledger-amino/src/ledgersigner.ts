@@ -10,16 +10,16 @@ import {
 import { HdPath } from "@cosmjs/crypto";
 import Transport from "@ledgerhq/hw-transport";
 
-import { AddressAndPubkey, LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
+import { AddressAndPubkey, LedgerConnector, LedgerConnectorOptions } from "./ledgerconnector";
 
 export class LedgerSigner implements OfflineAminoSigner {
-  private readonly ledger: LaunchpadLedger;
+  private readonly ledger: LedgerConnector;
   private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
+  public constructor(transport: Transport, options: LedgerConnectorOptions = {}) {
     this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
-    this.ledger = new LaunchpadLedger(transport, options);
+    this.ledger = new LedgerConnector(transport, options);
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
