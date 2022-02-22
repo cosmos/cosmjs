@@ -10,9 +10,9 @@ on invalid input.
 ## Convert between bech32 and hex addresses
 
 ```
->> Bech32.encode("tiov", fromHex("1234ABCD0000AA0000FFFF0000AA00001234ABCD"))
+>> toBech32("tiov", fromHex("1234ABCD0000AA0000FFFF0000AA00001234ABCD"))
 'tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea'
->> toHex(Bech32.decode("tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea").data)
+>> toHex(fromBech32("tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea").data)
 '1234abcd0000aa0000ffff0000aa00001234abcd'
 ```
 

@@ -1,4 +1,4 @@
-import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
+import { fromBase64, fromBech32, fromHex, toBase64, toBech32, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { arrayContentStartsWith } from "@cosmjs/utils";
 
@@ -77,7 +77,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
  * @param bechEncoded the bech32 encoded pubkey
  */
 export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
-  const { data } = Bech32.decode(bechEncoded);
+  const { data } = fromBech32(bechEncoded);
   return decodeAminoPubkey(data);
 }
 
@@ -200,5 +200,5 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
  * @param prefix the bech32 prefix (human readable part)
  */
 export function encodeBech32Pubkey(pubkey: Pubkey, prefix: string): string {
-  return Bech32.encode(prefix, encodeAminoPubkey(pubkey));
+  return toBech32(prefix, encodeAminoPubkey(pubkey));
 }

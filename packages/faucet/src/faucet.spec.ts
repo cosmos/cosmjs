@@ -1,5 +1,5 @@
 import { Random } from "@cosmjs/crypto";
-import { Bech32 } from "@cosmjs/encoding";
+import { toBech32 } from "@cosmjs/encoding";
 import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
@@ -18,7 +18,7 @@ const defaultTokenConfig: TokenConfiguration = {
 const defaultAddressPrefix = "cosmos";
 
 function makeRandomAddress(): string {
-  return Bech32.encode(defaultAddressPrefix, Random.getBytes(20));
+  return toBech32(defaultAddressPrefix, Random.getBytes(20));
 }
 
 const faucetMnemonic =

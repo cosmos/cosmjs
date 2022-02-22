@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Random } from "@cosmjs/crypto";
-import { Bech32 } from "@cosmjs/encoding";
+import { toBech32 } from "@cosmjs/encoding";
 
 import { AminoMsg, makeSignDoc, sortedJsonStringify } from "./signdoc";
 
 function makeRandomAddress(): string {
-  return Bech32.encode("cosmos", Random.getBytes(20));
+  return toBech32("cosmos", Random.getBytes(20));
 }
 const testAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 const testValidatorAddress = "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr";
