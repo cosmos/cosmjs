@@ -9,6 +9,8 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
+import { assert, sleep } from "@cosmjs/utils";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {
   Coin,
   coins,
@@ -17,8 +19,6 @@ import {
   isDeliverTxSuccess,
   isMsgSendEncodeObject,
 } from "stargate-umee";
-import { assert, sleep } from "@cosmjs/utils";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import {

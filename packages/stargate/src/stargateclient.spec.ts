@@ -89,7 +89,7 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const openedClient = client as unknown as PrivateStargateClient;
-      const getCodeSpy = spyOn(openedClient.tmClient!, "status").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.tmClient, "status").and.callThrough();
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache

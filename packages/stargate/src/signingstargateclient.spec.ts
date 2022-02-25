@@ -361,8 +361,8 @@ describe("SigningStargateClient", () => {
         const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
         expect(tx.body.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect({ ...tx.authInfo.fee.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee.gasLimit.toNumber()).toEqual(333333);
       });
     });
 
@@ -575,8 +575,8 @@ describe("SigningStargateClient", () => {
         const tx = decodeTxRaw(searchResult.tx);
         // From ModifyingSecp256k1HdWallet
         expect(tx.body.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect({ ...tx.authInfo.fee.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo.fee.gasLimit.toNumber()).toEqual(333333);
       });
     });
   });
@@ -642,8 +642,8 @@ describe("SigningStargateClient", () => {
         const authInfo = AuthInfo.decode(signed.authInfoBytes);
         // From ModifyingDirectSecp256k1HdWallet
         expect(body.memo).toEqual("This was modified");
-        expect({ ...authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect({ ...authInfo.fee.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(authInfo.fee.gasLimit.toNumber()).toEqual(333333);
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -865,8 +865,8 @@ describe("SigningStargateClient", () => {
         const authInfo = AuthInfo.decode(signed.authInfoBytes);
         // From ModifyingSecp256k1HdWallet
         expect(body.memo).toEqual("This was modified");
-        expect({ ...authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
-        expect(authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
+        expect({ ...authInfo.fee.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(authInfo.fee.gasLimit.toNumber()).toEqual(333333);
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));

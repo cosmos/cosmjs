@@ -34,6 +34,7 @@ import {
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import {
   MsgAcknowledgement,
@@ -94,6 +95,7 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
   ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
   ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+  ["/cosmos.vesting.v1beta1.MsgCreateVestingAccount", MsgCreateVestingAccount],
   ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],
   ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
   ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
+import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import { assert, sleep } from "@cosmjs/utils";
+import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
+import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import {
   Account,
   accountFromAny,
@@ -23,10 +27,6 @@ import {
   TimeoutError,
   TxExtension,
 } from "stargate-umee";
-import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
-import { assert, sleep } from "@cosmjs/utils";
-import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
-import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
 

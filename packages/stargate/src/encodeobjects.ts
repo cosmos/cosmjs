@@ -3,6 +3,7 @@ import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
 export interface MsgSendEncodeObject extends EncodeObject {
@@ -47,6 +48,20 @@ export function isMsgWithdrawDelegatorRewardEncodeObject(
   return (
     (encodeObject as MsgWithdrawDelegatorRewardEncodeObject).typeUrl ===
     "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward"
+  );
+}
+
+export interface MsgCreateVestingAccountEncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmos.vesting.v1beta1.MsgCreateVestingAccount";
+  readonly value: Partial<MsgCreateVestingAccount>;
+}
+
+export function isMsgCreateVestingAccountEncodeObject(
+  encodeObject: EncodeObject,
+): encodeObject is MsgCreateVestingAccountEncodeObject {
+  return (
+    (encodeObject as MsgCreateVestingAccountEncodeObject).typeUrl ===
+    "/cosmos.vesting.v1beta1.MsgCreateVestingAccount"
   );
 }
 

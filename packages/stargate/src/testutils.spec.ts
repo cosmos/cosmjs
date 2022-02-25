@@ -222,7 +222,7 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     });
     const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
     const signers = authInfo.signerInfos.map((signerInfo) => ({
-      pubkey: signerInfo.publicKey!,
+      pubkey: signerInfo.publicKey,
       sequence: signerInfo.sequence.toNumber(),
     }));
     const modifiedFeeAmount = coins(3000, "ucosm");

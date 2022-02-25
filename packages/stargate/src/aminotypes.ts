@@ -19,14 +19,15 @@ import {
   MsgEditValidator,
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import Long from "long";
 
 import {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
+  AminoMsgCreateVestingAccount,
   AminoMsgDelegate,
   AminoMsgDeposit,
   AminoMsgEditValidator,
@@ -38,7 +39,6 @@ import {
   AminoMsgTransfer,
   AminoMsgUndelegate,
   AminoMsgVote,
-  AminoMsgCreateVestingAccount,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
@@ -521,7 +521,13 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter | "no
 
     "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": {
       aminoType: "cosmos-sdk/MsgCreateVestingAccount",
-      toAmino: ({ fromAddress, toAddress, amount, endTime, delayed }: MsgCreateVestingAccount): AminoMsgCreateVestingAccount["value"] => {
+      toAmino: ({
+        fromAddress,
+        toAddress,
+        amount,
+        endTime,
+        delayed,
+      }: MsgCreateVestingAccount): AminoMsgCreateVestingAccount["value"] => {
         return {
           from_address: fromAddress,
           to_address: toAddress,
@@ -530,7 +536,13 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter | "no
           delayed,
         };
       },
-      fromAmino: ({ from_address, to_address, amount, end_time, delayed }: AminoMsgCreateVestingAccount["value"]): MsgCreateVestingAccount=> {
+      fromAmino: ({
+        from_address,
+        to_address,
+        amount,
+        end_time,
+        delayed,
+      }: AminoMsgCreateVestingAccount["value"]): MsgCreateVestingAccount => {
         return {
           fromAddress: from_address,
           toAddress: to_address,
@@ -539,8 +551,8 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter | "no
           delayed: delayed,
         };
       },
-    }
-  }
+    },
+  };
 }
 
 export interface AminoTypesOptions {

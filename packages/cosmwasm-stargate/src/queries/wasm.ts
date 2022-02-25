@@ -1,5 +1,4 @@
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
-import { createPagination, createProtobufRpcClient, QueryClient } from "stargate-umee";
 import {
   QueryAllContractStateResponse,
   QueryClientImpl,
@@ -11,6 +10,7 @@ import {
   QueryRawContractStateResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import Long from "long";
+import { createPagination, createProtobufRpcClient, QueryClient } from "stargate-umee";
 
 /**
  * An object containing a parsed JSON document. The result of JSON.parse().

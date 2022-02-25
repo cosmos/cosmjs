@@ -1,7 +1,7 @@
 import { Random } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
-import { makeCosmoshubPath, StargateClient } from "stargate-umee";
 import { assert } from "@cosmjs/utils";
+import { makeCosmoshubPath, StargateClient } from "stargate-umee";
 
 import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";

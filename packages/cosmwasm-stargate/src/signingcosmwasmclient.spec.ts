@@ -3,15 +3,6 @@ import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex, toUtf8 } from "@cosmjs/encoding";
 import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
-import {
-  AminoMsgDelegate,
-  AminoTypes,
-  assertIsDeliverTxSuccess,
-  coin,
-  coins,
-  MsgDelegateEncodeObject,
-  MsgSendEncodeObject,
-} from "stargate-umee";
 import { assert, sleep } from "@cosmjs/utils";
 import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -21,6 +12,15 @@ import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
+import {
+  AminoMsgDelegate,
+  AminoTypes,
+  assertIsDeliverTxSuccess,
+  coin,
+  coins,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+} from "stargate-umee";
 
 import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./encodeobjects";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";

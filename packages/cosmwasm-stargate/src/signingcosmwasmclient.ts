@@ -13,22 +13,6 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import {
-  AminoTypes,
-  calculateFee,
-  Coin,
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  GasPrice,
-  isDeliverTxFailure,
-  logs,
-  MsgDelegateEncodeObject,
-  MsgSendEncodeObject,
-  MsgUndelegateEncodeObject,
-  MsgWithdrawDelegatorRewardEncodeObject,
-  SignerData,
-  StdFee,
-} from "stargate-umee";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -45,6 +29,22 @@ import {
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import Long from "long";
 import pako from "pako";
+import {
+  AminoTypes,
+  calculateFee,
+  Coin,
+  defaultRegistryTypes as defaultStargateTypes,
+  DeliverTxResponse,
+  GasPrice,
+  isDeliverTxFailure,
+  logs,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgWithdrawDelegatorRewardEncodeObject,
+  SignerData,
+  StdFee,
+} from "stargate-umee";
 
 import { cosmWasmTypes } from "./aminotypes";
 import { CosmWasmClient } from "./cosmwasmclient";
