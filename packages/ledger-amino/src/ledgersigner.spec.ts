@@ -13,7 +13,7 @@ import {
   assertIsDeliverTxSuccess as assertIsDeliverTxSuccessStargate,
   calculateFee,
   SigningStargateClient,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { sleep } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 

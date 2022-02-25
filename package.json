@@ -45,9 +45,9 @@
     "@cosmjs/crypto": "workspace:packages/crypto",
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
     "eslint": "^7.5",
     "prettier": "^2.4.1",
+    "stargate-umee": "workspace:packages/stargate",
     "typescript": "~4.4"
   }
 }

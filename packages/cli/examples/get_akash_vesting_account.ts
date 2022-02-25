@@ -1,4 +1,4 @@
-import { QueryClient, setupAuthExtension } from "@cosmjs/stargate";
+import { QueryClient, setupAuthExtension } from "stargate-umee";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Any } from "cosmjs-types/google/protobuf/any";
 

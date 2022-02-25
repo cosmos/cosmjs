@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@cosmjs/amino.svg)](https://www.npmjs.com/package/@cosmjs/amino)
 
-Helpers for Amino for @cosmjs/stargate.
+Helpers for Amino for stargate-umee.
 
 ## License
 

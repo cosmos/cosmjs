@@ -11,7 +11,7 @@ import {
   coins,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { assert, sleep } from "@cosmjs/utils";
 import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";

@@ -10,7 +10,7 @@ import {
   logs,
   SigningStargateClient,
   StdFee,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { assert } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";

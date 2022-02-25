@@ -28,7 +28,7 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
   SignerData,
   StdFee,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";

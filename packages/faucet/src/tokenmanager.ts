@@ -1,5 +1,5 @@
 import { Decimal, Uint53 } from "@cosmjs/math";
-import { Coin } from "@cosmjs/stargate";
+import { Coin } from "stargate-umee";
 
 import { MinimalAccount } from "./types";
 

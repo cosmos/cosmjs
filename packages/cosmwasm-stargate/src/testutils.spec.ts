@@ -17,7 +17,7 @@ import {
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";

@@ -51,7 +51,7 @@ export function coins(amount: number | string, denom: string): Coin[] {
  * ```
  * import { parseCoins } from "@cosmjs/proto-signing";
  * // or
- * import { parseCoins } from "@cosmjs/stargate";
+ * import { parseCoins } from "stargate-umee";
  * ```
  */
 export function parseCoins(input: string): Coin[] {

@@ -47,7 +47,6 @@
     "@cosmjs/faucet-client": "workspace:packages/faucet-client",
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
     "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc",
     "@cosmjs/utils": "workspace:packages/utils",
     "axios": "^0.21.2",
@@ -56,6 +55,7 @@
     "cosmjs-types": "^0.4.0",
     "diff": "^4",
     "recast": "^0.20",
+    "stargate-umee": "workspace:packages/stargate",
     "ts-node": "^8",
     "typescript": "~4.4",
     "yargs": "^15.3.1"

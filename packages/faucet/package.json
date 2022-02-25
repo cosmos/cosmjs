@@ -43,11 +43,11 @@
     "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
     "@cosmjs/utils": "workspace:packages/utils",
     "@koa/cors": "^3.0.0",
     "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1"
+    "koa-bodyparser": "^4.2.1",
+    "stargate-umee": "workspace:packages/stargate"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

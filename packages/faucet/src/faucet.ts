@@ -3,7 +3,7 @@ import {
   calculateFee,
   SigningStargateClient,
   StargateClient,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 import { sleep } from "@cosmjs/utils";
 
 import * as constants from "./constants";

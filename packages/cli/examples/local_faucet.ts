@@ -1,4 +1,4 @@
-import { StdFee, SigningStargateClient } from "@cosmjs/stargate";
+import { StdFee, SigningStargateClient } from "stargate-umee";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { coins } from "@cosmjs/amino";

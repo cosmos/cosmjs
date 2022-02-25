@@ -6,7 +6,7 @@ import {
   calculateFee,
   assertIsDeliverTxSuccess,
   GasPrice,
-} from "@cosmjs/stargate";
+} from "stargate-umee";
 
 // Wallet
 const wallet = await DirectSecp256k1HdWallet.fromMnemonic(
