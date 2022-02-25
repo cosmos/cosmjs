@@ -21,6 +21,7 @@ import {
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
+import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import Long from "long";
 
 import {
@@ -37,6 +38,7 @@ import {
   AminoMsgTransfer,
   AminoMsgUndelegate,
   AminoMsgVote,
+  AminoMsgCreateVestingAccount,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
 } from "./aminomsgs";
@@ -514,6 +516,26 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter | "no
     },
     "/cosmos.feegrant.v1beta1.MsgGrantAllowance": "not_supported_by_chain",
     "/cosmos.feegrant.v1beta1.MsgRevokeAllowance": "not_supported_by_chain",
+  },
+
+  // vesting
+
+  "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": {
+    aminoType: "cosmos-sdk/MsgCreateVestingAccount",
+    toAmino: ({ option, proposalId, voter }: MsgCreateVestingAccount): AminoMsgCreateVestingAccount["value"] => {
+      return {
+        option: option,
+        proposal_id: proposalId.toString(),
+        voter: voter,
+      };
+    },
+    fromAmino: ({ option, proposal_id, voter }: AminoMsgCreateVestingAccount["value"]): MsgCreateVestingAccount=> {
+      return {
+        option: voteOptionFromJSON(option),
+        proposalId: Long.fromString(proposal_id),
+        voter: voter,
+      };
+    },
   };
 }
 

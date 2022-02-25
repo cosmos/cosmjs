@@ -388,3 +388,22 @@ export interface AminoMsgTransfer extends AminoMsg {
 export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
   return msg.type === "cosmos-sdk/MsgTransfer";
 }
+
+
+/** Creates a vesting account
+ * https://docs.cosmos.network/v0.44/core/proto-docs.html#cosmos.vesting.v1beta1.MsgCreateVestingAccount
+ */
+export interface AminoMsgCreateVestingAccount extends AminoMsg {
+  readonly type: "cosmos-sdk/MsgCreateVestingAccount";
+  readonly value: {
+    readonly from_address: string;
+    readonly to_address: string;
+    readonly amount: Coin[];
+    readonly end_time: string;
+    readonly delayed: boolean;
+  };
+}
+
+export function isAminoMsgCreateVestingAccount(msg: AminoMsg): msg is AminoMsgCreateVestingAccount {
+  return msg.type === "cosmos-sdk/MsgCreateVestingAccount";
+}
