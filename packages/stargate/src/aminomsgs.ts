@@ -389,7 +389,6 @@ export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
   return msg.type === "cosmos-sdk/MsgTransfer";
 }
 
-
 /** Creates a vesting account
  * https://docs.cosmos.network/v0.44/core/proto-docs.html#cosmos.vesting.v1beta1.MsgCreateVestingAccount
  */
