@@ -1,8 +1,20 @@
 import { assert } from "@cosmjs/utils";
 
+/**
+ * Returns the Node.js crypto module when available and `undefined`
+ * otherwise.
+ *
+ * Detects an unimplemented fallback module from Webpack 5 and returns
+ * `undefined` in that case.
+ */
 export async function getCryptoModule(): Promise<any | undefined> {
   try {
     const crypto = await import("crypto");
+    // We get `Object{default: Object{}}` as a fallback when using
+    // `crypto: false` in Webpack 5, which we interprete as unavailable.
+    if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
+      return undefined;
+    }
     return crypto;
   } catch {
     return undefined;
