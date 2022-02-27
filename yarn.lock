@@ -329,7 +329,6 @@ __metadata:
     prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
     ts-node: ^8
     typedoc: ^0.22
     typescript: ~4.4
@@ -435,7 +434,6 @@ __metadata:
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
     ts-node: ^8
     typedoc: ^0.22
     typescript: ~4.4
@@ -488,7 +486,6 @@ __metadata:
     prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
     ts-node: ^8
     typedoc: ^0.22
     typescript: ~4.4
@@ -798,7 +795,6 @@ __metadata:
     protobufjs: ~6.10.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
     ts-node: ^8
     typedoc: ^0.22
     typescript: ~4.4
@@ -899,7 +895,6 @@ __metadata:
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
-    stream-browserify: ^3.0.0
     ts-node: ^8
     typedoc: ^0.22
     typescript: ~4.4
@@ -4337,7 +4332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3, inherits@npm:~2.0.4":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 4a48a733847879d6cf6691860a6b1e3f0f4754176e4d71494c41f3475553768b10f84b5ce1d40fbd0e34e6bfbb864ee35858ad4dd2cf31e02fc4a154b724d7f1
@@ -6219,7 +6214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^3.1.1, readable-stream@npm:^3.4.0, readable-stream@npm:^3.5.0, readable-stream@npm:^3.6.0":
+"readable-stream@npm:^3.1.1, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -6786,16 +6781,6 @@ __metadata:
   version: 1.5.0
   resolution: "statuses@npm:1.5.0"
   checksum: c469b9519de16a4bb19600205cffb39ee471a5f17b82589757ca7bd40a8d92ebb6ed9f98b5a540c5d302ccbc78f15dc03cc0280dd6e00df1335568a5d5758a5c
-  languageName: node
-  linkType: hard
-
-"stream-browserify@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "stream-browserify@npm:3.0.0"
-  dependencies:
-    inherits: ~2.0.4
-    readable-stream: ^3.5.0
-  checksum: 4c47ef64d6f03815a9ca3874e2319805e8e8a85f3550776c47ce523b6f4c6cd57f40e46ec6a9ab8ad260fde61863c2718f250d3bedb3fe9052444eb9abfd9921
   languageName: node
   linkType: hard
 
