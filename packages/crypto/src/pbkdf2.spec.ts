@@ -1,7 +1,7 @@
 import { fromHex, toAscii, toUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
-import { getSubtle, pbkdf2Sha512, pbkdf2Sha512Subtle } from "./pbkdf2";
+import { getCryptoModule, getSubtle, pbkdf2Sha512, pbkdf2Sha512Crypto, pbkdf2Sha512Subtle } from "./pbkdf2";
 
 interface TestVector {
   secret: Uint8Array;
@@ -135,6 +135,25 @@ describe("pbkdf2", () => {
       for (const [index, test] of brycxTests.entries()) {
         const { secret, salt, iterations, keylen, expected } = test;
         const hash = await pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
+        expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
+      }
+    });
+  });
+
+  describe("pbkdf2Sha512Crypto", () => {
+    it("works", async () => {
+      const crypto = await getCryptoModule();
+      assert(crypto);
+
+      {
+        const { secret, salt, iterations, keylen, expected } = botanTest;
+        const hash = await pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
+        expect(hash).toEqual(expected);
+      }
+
+      for (const [index, test] of brycxTests.entries()) {
+        const { secret, salt, iterations, keylen, expected } = test;
+        const hash = await pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
         expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
       }
     });

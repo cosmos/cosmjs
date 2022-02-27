@@ -1,11 +1,20 @@
 import { assert } from "@cosmjs/utils";
 
+export async function getCryptoModule(): Promise<any | undefined> {
+  try {
+    const crypto = await import("crypto");
+    return crypto;
+  } catch {
+    return undefined;
+  }
+}
+
 export async function getSubtle(): Promise<any | undefined> {
   const g: any = globalThis;
   let subtle = g.crypto && g.crypto.subtle;
   if (!subtle) {
-    const crypto: any = await import("crypto");
-    if (crypto.webcrypto && crypto.webcrypto.subtle) {
+    const crypto = await getCryptoModule();
+    if (crypto && crypto.webcrypto && crypto.webcrypto.subtle) {
       subtle = crypto.webcrypto.subtle;
     }
   }
@@ -41,6 +50,29 @@ export async function pbkdf2Sha512Subtle(
   );
 }
 
+export async function pbkdf2Sha512Crypto(
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  crypto: any,
+  secret: Uint8Array,
+  salt: Uint8Array,
+  iterations: number,
+  keylen: number,
+): Promise<Uint8Array> {
+  assert(crypto, "Argument crypto is falsy");
+  assert(typeof crypto === "object", "Argument crypto is not of type object");
+  assert(typeof crypto.pbkdf2 === "function", "crypto.pbkdf2 is not a function");
+
+  return new Promise((resolve, reject) => {
+    crypto.pbkdf2(secret, salt, iterations, keylen, "sha512", (error: any, result: any) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(Uint8Array.from(result));
+      }
+    });
+  });
+}
+
 /**
  * A pbkdf2 implementation for BIP39. This is not exported at package level and thus a private API.
  */
@@ -54,15 +86,14 @@ export async function pbkdf2Sha512(
   if (subtle) {
     return pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
   } else {
-    const module = await import("crypto");
-    return new Promise((resolve, reject) => {
-      module.pbkdf2(secret, salt, iterations, keylen, "sha512", (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(Uint8Array.from(result));
-        }
-      });
-    });
+    const crypto = await getCryptoModule();
+    if (crypto) {
+      return pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
+    } else {
+      throw new Error(
+        "Could not find a pbkdf2 implementation in subtle (WebCrypto) or the crypto module. " +
+          "If you need a pure software implementation, please open an issue at https://github.com/cosmos/cosmjs",
+      );
+    }
   }
 }
