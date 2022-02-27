@@ -47,8 +47,7 @@
     "@noble/hashes": "^1",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.3",
-    "libsodium-wrappers": "^0.7.6",
-    "pbkdf2": "^3.1.2"
+    "libsodium-wrappers": "^0.7.6"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -61,7 +60,6 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/libsodium-wrappers": "^0.7.7",
     "@types/node": "^15.0.1",
-    "@types/pbkdf2": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^4.28",
     "@typescript-eslint/parser": "^4.28",
     "buffer": "^6.0.3",
