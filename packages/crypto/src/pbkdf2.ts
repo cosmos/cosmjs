@@ -1,4 +1,6 @@
-async function getSubtle(): Promise<any | undefined> {
+import { assert } from "@cosmjs/utils";
+
+export async function getSubtle(): Promise<any | undefined> {
   const g: any = globalThis;
   let subtle = g.crypto && g.crypto.subtle;
   if (!subtle) {
@@ -8,6 +10,35 @@ async function getSubtle(): Promise<any | undefined> {
     }
   }
   return subtle;
+}
+
+export async function pbkdf2Sha512Subtle(
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  subtle: any,
+  secret: Uint8Array,
+  salt: Uint8Array,
+  iterations: number,
+  keylen: number,
+): Promise<Uint8Array> {
+  assert(subtle, "Argument subtle is falsy");
+  assert(typeof subtle === "object", "Argument subtle is not of type object");
+  assert(typeof subtle.importKey === "function", "subtle.importKey is not a function");
+  assert(typeof subtle.deriveBits === "function", "subtle.deriveBits is not a function");
+
+  return subtle.importKey("raw", secret, { name: "PBKDF2" }, false, ["deriveBits"]).then((key: Uint8Array) =>
+    subtle
+      .deriveBits(
+        {
+          name: "PBKDF2",
+          salt: salt,
+          iterations: iterations,
+          hash: { name: "SHA-512" },
+        },
+        key,
+        keylen * 8,
+      )
+      .then((buffer: ArrayBuffer) => new Uint8Array(buffer)),
+  );
 }
 
 /**
@@ -21,22 +52,7 @@ export async function pbkdf2Sha512(
 ): Promise<Uint8Array> {
   const subtle = await getSubtle();
   if (subtle) {
-    return subtle
-      .importKey("raw", secret, { name: "PBKDF2" }, false, ["deriveBits"])
-      .then((key: Uint8Array) =>
-        subtle
-          .deriveBits(
-            {
-              name: "PBKDF2",
-              salt: salt,
-              iterations: iterations,
-              hash: { name: "SHA-512" },
-            },
-            key,
-            keylen * 8,
-          )
-          .then((buffer: ArrayBuffer) => new Uint8Array(buffer)),
-      );
+    return pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
   } else {
     const module = await import("crypto");
     return new Promise((resolve, reject) => {
