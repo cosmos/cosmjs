@@ -49,14 +49,14 @@ describe("pbkdf2", () => {
       keylen: 20,
       expected: fromHex("d197b1b33db0143e018b12f3d1d1479e6cdebdcc"),
     },
-    // Test Case 4
-    {
-      secret: toUtf8("password"),
-      salt: toUtf8("salt"),
-      iterations: 16777216,
-      keylen: 20,
-      expected: fromHex("6180a3ceabab45cc3964112c811e0131bca93a35"),
-    },
+    // Test Case 4 (disabled by default because long running)
+    // {
+    //   secret: toUtf8("password"),
+    //   salt: toUtf8("salt"),
+    //   iterations: 16777216,
+    //   keylen: 20,
+    //   expected: fromHex("6180a3ceabab45cc3964112c811e0131bca93a35"),
+    // },
     // Test Case 5
     {
       secret: toUtf8("passwordPASSWORDpassword"),
