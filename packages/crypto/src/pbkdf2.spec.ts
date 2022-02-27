@@ -1,5 +1,4 @@
 import { fromHex, toAscii, toUtf8 } from "@cosmjs/encoding";
-import { assert } from "@cosmjs/utils";
 
 import { getCryptoModule, getSubtle, pbkdf2Sha512, pbkdf2Sha512Crypto, pbkdf2Sha512Subtle } from "./pbkdf2";
 
@@ -124,7 +123,7 @@ describe("pbkdf2", () => {
   describe("pbkdf2Sha512Subtle", () => {
     it("works", async () => {
       const subtle = await getSubtle();
-      assert(subtle);
+      if (!subtle) pending("Subtle is not available in this environment");
 
       {
         const { secret, salt, iterations, keylen, expected } = botanTest;
@@ -143,7 +142,7 @@ describe("pbkdf2", () => {
   describe("pbkdf2Sha512Crypto", () => {
     it("works", async () => {
       const crypto = await getCryptoModule();
-      assert(crypto);
+      if (!crypto) pending("The crypto module is not available in this environment");
 
       {
         const { secret, salt, iterations, keylen, expected } = botanTest;
