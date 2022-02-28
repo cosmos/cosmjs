@@ -10,6 +10,7 @@ and this project adheres to
 
 - all: The TypeScript compilation target is now ES2018.
 - @cosmjs/crypto: Add `Secp256k1.uncompressPubkey`.
+- @cosmjs/crypto: Replace hashing implementations with @noble/hashes ([#960]).
 - @cosmjs/faucet: Set default value of `FAUCET_GAS_LIMIT` to 100_000 to better
   support Cosmos SDK 0.45 chains.
 - @cosmjs/stargate: The `AminoTypes` now always requires an argument of type
@@ -42,14 +43,17 @@ and this project adheres to
 - @cosmjs/crypto: Use a custom BIP-39 implementation to reduce external
   dependencies. This should also reduce the bundle size as only the English
   wordlist is shipped. ([#966])
+- @cosmjs/cli: Rename binary `cosmwasm-cli` to `cosmjs-cli` ([#1033]).
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
+[#960]: https://github.com/cosmos/cosmjs/pull/960
 [#966]: https://github.com/cosmos/cosmjs/pull/966
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
 [#1026]: https://github.com/cosmos/cosmjs/issues/1026
+[#1033]: https://github.com/cosmos/cosmjs/issues/1033
 [#1053]: https://github.com/cosmos/cosmjs/issues/1053
 
 ### Removed
@@ -57,7 +61,10 @@ and this project adheres to
 - @cosmjs/crypto: Remove the SHA1 implementation (`Sha1` and `sha1`) as it is
   not used in the Cosmos tech stack and not implemented in the hashing lib we
   want to migrate to ([#1003]). Also it has known weaknesses.
+- @cosmjs/launchpad: Package was removed as no support for Cosmos SDK 0.37-0.39
+  is needed anymore ([#947]).
 
+[#947]: https://github.com/cosmos/cosmjs/issues/947
 [#1003]: https://github.com/cosmos/cosmjs/issues/1003
 
 ## [0.27.1] - 2022-01-26
