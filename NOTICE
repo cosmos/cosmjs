@@ -23,6 +23,9 @@ The code in packages/json-rpc was forked from https://github.com/iov-one/iov-cor
 
 The code in packages/socket and scripts/socketserver was forked from the folders packages/iov-socket and scripts/socketserver respectively of https://github.com/iov-one/iov-core at tag v2.5.0 on 2020-06-24.
 
+The code in packages/crypto/src/bip39.ts contains code forked from bitcoinjs/bip39 (https://github.com/bitcoinjs/bip39/blob/v3.0.4/LICENSE)
+on 2021-12-16. Copyright (c) 2014, Wei Lu and Daniel Cousens.
+
 Copyright 2018-2020 IOV SAS
 Copyright 2020-2021 Confio OÜ
 Copyright 2020 Simon Warta
