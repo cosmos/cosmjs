@@ -1,4 +1,6 @@
 import { assert } from "@cosmjs/utils";
+import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
+import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
 
 /**
  * Returns the Node.js crypto module when available and `undefined`
@@ -85,6 +87,15 @@ export async function pbkdf2Sha512Crypto(
   });
 }
 
+export async function pbkdf2Sha512Noble(
+  secret: Uint8Array,
+  salt: Uint8Array,
+  iterations: number,
+  keylen: number,
+): Promise<Uint8Array> {
+  return noblePbkdf2Async(nobleSha512, secret, salt, { c: iterations, dkLen: keylen });
+}
+
 /**
  * A pbkdf2 implementation for BIP39. This is not exported at package level and thus a private API.
  */
@@ -102,10 +113,7 @@ export async function pbkdf2Sha512(
     if (crypto) {
       return pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
     } else {
-      throw new Error(
-        "Could not find a pbkdf2 implementation in subtle (WebCrypto) or the crypto module. " +
-          "If you need a pure software implementation, please open an issue at https://github.com/cosmos/cosmjs",
-      );
+      return pbkdf2Sha512Noble(secret, salt, iterations, keylen);
     }
   }
 }
