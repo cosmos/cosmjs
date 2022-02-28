@@ -39,9 +39,13 @@ and this project adheres to
 - @cosmjs/ledger-amino: Renamed `LaunchpadLedger` to `LedgerConnector` ([#955])
 - @cosmjs/encoding: Created `toBech32()` and `fromBech32()`. Class Bech32 is now
   deprecated and should not longer be used. ([#1053])
+- @cosmjs/crypto: Use a custom BIP-39 implementation to reduce external
+  dependencies. This should also reduce the bundle size as only the English
+  wordlist is shipped. ([#966])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
+[#966]: https://github.com/cosmos/cosmjs/pull/966
 [#989]: https://github.com/cosmos/cosmjs/issues/989
 [#994]: https://github.com/cosmos/cosmjs/issues/994
 [#1011]: https://github.com/cosmos/cosmjs/issues/1011
