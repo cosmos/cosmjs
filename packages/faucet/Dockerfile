@@ -1,3 +1,8 @@
+# Build:
+#   docker build -t confio/cosmos-faucet:manual -f packages/faucet/Dockerfile .
+# Run:
+#   docker run --rm confio/cosmos-faucet:manual version
+
 FROM node:14-alpine
 
 ADD . /app
