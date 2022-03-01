@@ -10,5 +10,4 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 RUN yarn install && yarn run build
 
 EXPOSE 8000
-ENTRYPOINT ["/app/packages/faucet/bin/cosmos-faucet"]
-CMD ["node", "/app/packages/faucet/bin/cosmos-faucet"]
+ENTRYPOINT ["yarn", "node", "/app/packages/faucet/bin/cosmos-faucet"]
