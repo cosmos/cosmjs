@@ -11,5 +11,5 @@
 
 path_classifiers:
   generated:
-    - exclude: ./pnp.cjs
-    - exclude: ./pnp.loader.mjs
+    - pnp.cjs
+    - pnp.loader.mjs
