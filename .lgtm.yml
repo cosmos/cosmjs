@@ -1,0 +1,18 @@
+##########################################################################################
+# Customize file classifications.                                                        #
+# Results from files under any classifier will be excluded from LGTM                     #
+# statistics.                                                                            #
+##########################################################################################
+
+##########################################################################################
+# Use the `path_classifiers` block to define changes to the default classification of    #
+# files.                                                                                 #
+##########################################################################################
+
+path_classifiers:
+  generated:
+    - .pnp.cjs
+    - .pnp.loader.mjs
+
+  docs:
+    - packages/cli/examples/*.ts
