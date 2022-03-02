@@ -9,7 +9,7 @@ export class FaucetClient {
     }
 
     // Strip trailing /
-    const strippedBaseUrl = baseUrl.replace(/(\/)+$/, "");
+    const strippedBaseUrl = baseUrl.replace(/(\/+)$/, "");
     this.baseUrl = strippedBaseUrl;
   }
 

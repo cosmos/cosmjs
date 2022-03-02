@@ -9,7 +9,6 @@ const {
   assertIsDeliverTxSuccess,
   SigningStargateClient,
   calculateFee,
-  GasPrice,
 } = require("@cosmjs/stargate");
 
 const rpcUrl = "http://localhost:26659";
