@@ -11,5 +11,8 @@
 
 path_classifiers:
   generated:
-    - pnp.cjs
-    - pnp.loader.mjs
+    - .pnp.cjs
+    - .pnp.loader.mjs
+
+  docs:
+    - packages/cli/examples/*.ts
