@@ -1,7 +1,9 @@
+# Confio hosts a faucet build at https://hub.docker.com/r/confio/faucet
+#
 # Build:
-#   docker build -t confio/cosmos-faucet:manual -f packages/faucet/Dockerfile .
+#   docker build -t confio/faucet:manual -f packages/faucet/Dockerfile .
 # Run:
-#   docker run --rm confio/cosmos-faucet:manual version
+#   docker run --rm confio/faucet:manual version
 
 FROM node:14-alpine as build-env
 
