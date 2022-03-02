@@ -3,7 +3,7 @@
 # Run:
 #   docker run --rm confio/cosmos-faucet:manual version
 
-FROM node:14-alpine
+FROM node:14-alpine as build-env
 
 ADD . /app
 WORKDIR /app
@@ -13,6 +13,10 @@ RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 
 RUN yarn install && yarn run build
+
+FROM node:14-alpine
+COPY --from=build-env /app /app
+WORKDIR /app
 
 EXPOSE 8000
 ENTRYPOINT ["yarn", "node", "/app/packages/faucet/bin/cosmos-faucet"]
