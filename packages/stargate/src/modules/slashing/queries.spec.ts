@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
-import { pendingWithoutSimapp, simapp } from "../testutils.spec";
-import { QueryClient } from "./queryclient";
-import { setupSlashingExtension, SlashingExtension } from "./slashing";
+import { QueryClient } from "../../queryclient";
+import { pendingWithoutSimapp, simapp } from "../../testutils.spec";
+import { setupSlashingExtension, SlashingExtension } from "./queries";
 
 async function makeClientWithSlashing(
   rpcUrl: string,

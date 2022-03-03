@@ -19,8 +19,7 @@ import {
 import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import Long from "long";
 
-import { QueryClient } from "./queryclient";
-import { createPagination, createProtobufRpcClient } from "./utils";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
 export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 

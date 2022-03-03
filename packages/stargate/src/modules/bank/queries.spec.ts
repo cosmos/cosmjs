@@ -1,14 +1,14 @@
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
+import { QueryClient } from "../../queryclient";
 import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
   simapp,
   unused,
-} from "../testutils.spec";
-import { BankExtension, setupBankExtension } from "./bank";
-import { QueryClient } from "./queryclient";
+} from "../../testutils.spec";
+import { BankExtension, setupBankExtension } from "./queries";
 
 async function makeClientWithBank(
   rpcUrl: string,

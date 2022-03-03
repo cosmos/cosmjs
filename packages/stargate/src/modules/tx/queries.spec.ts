@@ -4,8 +4,9 @@ import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import Long from "long";
 
-import { defaultRegistryTypes, SigningStargateClient } from "../signingstargateclient";
-import { assertIsDeliverTxSuccess, StargateClient } from "../stargateclient";
+import { longify, QueryClient } from "../../queryclient";
+import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
+import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -14,10 +15,8 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../testutils.spec";
-import { QueryClient } from "./queryclient";
-import { setupTxExtension, TxExtension } from "./tx";
-import { longify } from "./utils";
+} from "../../testutils.spec";
+import { setupTxExtension, TxExtension } from "./queries";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, Tendermint34Client]> {
   const tmClient = await Tendermint34Client.connect(rpcUrl);

@@ -1,8 +1,8 @@
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../";
-import { pendingWithoutSimapp, simapp } from "../testutils.spec";
-import { MintExtension, setupMintExtension } from "./mint";
+import { QueryClient } from "../../queryclient";
+import { pendingWithoutSimapp, simapp } from "../../testutils.spec";
+import { MintExtension, setupMintExtension } from "./queries";
 
 async function makeClientWithMint(
   rpcUrl: string,

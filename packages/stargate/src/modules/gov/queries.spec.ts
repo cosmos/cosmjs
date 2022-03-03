@@ -17,9 +17,10 @@ import {
   MsgDelegateEncodeObject,
   MsgSubmitProposalEncodeObject,
   MsgVoteEncodeObject,
-} from "../encodeobjects";
-import { SigningStargateClient } from "../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../stargateclient";
+} from "../../encodeobjects";
+import { longify, QueryClient } from "../../queryclient";
+import { SigningStargateClient } from "../../signingstargateclient";
+import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -29,10 +30,8 @@ import {
   simapp42Enabled,
   simappEnabled,
   validator,
-} from "../testutils.spec";
-import { GovExtension, setupGovExtension } from "./gov";
-import { QueryClient } from "./queryclient";
-import { longify } from "./utils";
+} from "../../testutils.spec";
+import { GovExtension, setupGovExtension } from "./queries";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, Tendermint34Client]> {
   const tmClient = await Tendermint34Client.connect(rpcUrl);

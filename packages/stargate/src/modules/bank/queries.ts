@@ -4,8 +4,7 @@ import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { QueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { QueryClient } from "./queryclient";
-import { createProtobufRpcClient } from "./utils";
+import { createProtobufRpcClient, QueryClient } from "../../queryclient";
 
 export interface BankExtension {
   readonly bank: {

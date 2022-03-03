@@ -50,8 +50,7 @@ import {
 } from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
 import Long from "long";
 
-import { QueryClient } from "./queryclient";
-import { createPagination, createProtobufRpcClient } from "./utils";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
 function decodeTendermintClientStateAny(clientState: Any | undefined): TendermintClientState {
   if (clientState?.typeUrl !== "/ibc.lightclients.tendermint.v1.ClientState") {

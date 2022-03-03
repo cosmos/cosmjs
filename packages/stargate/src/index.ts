@@ -56,13 +56,9 @@ export {
 } from "./encodeobjects";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
-export { makeMultisignedTx } from "./multisignature";
 export {
   AuthExtension,
   BankExtension,
-  createPagination,
-  createProtobufRpcClient,
-  decodeCosmosSdkDecFromProto,
   DistributionExtension,
   GovExtension,
   GovParamsType,
@@ -70,8 +66,6 @@ export {
   IbcExtension,
   MintExtension,
   MintParams,
-  ProtobufRpcClient,
-  QueryClient,
   setupAuthExtension,
   setupBankExtension,
   setupDistributionExtension,
@@ -82,7 +76,15 @@ export {
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./queries";
+} from "./modules";
+export { makeMultisignedTx } from "./multisignature";
+export {
+  createPagination,
+  createProtobufRpcClient,
+  decodeCosmosSdkDecFromProto,
+  ProtobufRpcClient,
+  QueryClient,
+} from "./queryclient";
 export {
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,

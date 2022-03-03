@@ -13,8 +13,7 @@ import {
 } from "cosmjs-types/cosmos/distribution/v1beta1/query";
 import Long from "long";
 
-import { QueryClient } from "./queryclient";
-import { createPagination, createProtobufRpcClient } from "./utils";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
 export interface DistributionExtension {
   readonly distribution: {

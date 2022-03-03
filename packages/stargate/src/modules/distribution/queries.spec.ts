@@ -4,9 +4,10 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { MsgDelegateEncodeObject } from "../encodeobjects";
-import { SigningStargateClient } from "../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../stargateclient";
+import { MsgDelegateEncodeObject } from "../../encodeobjects";
+import { QueryClient } from "../../queryclient";
+import { SigningStargateClient } from "../../signingstargateclient";
+import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -14,9 +15,8 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../testutils.spec";
-import { DistributionExtension, setupDistributionExtension } from "./distribution";
-import { QueryClient } from "./queryclient";
+} from "../../testutils.spec";
+import { DistributionExtension, setupDistributionExtension } from "./queries";
 
 async function makeClientWithDistribution(
   rpcUrl: string,

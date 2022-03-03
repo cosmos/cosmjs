@@ -10,14 +10,14 @@ import { Account, accountFromAny } from "./accounts";
 import {
   AuthExtension,
   BankExtension,
-  QueryClient,
   setupAuthExtension,
   setupBankExtension,
   setupStakingExtension,
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./queries";
+} from "./modules";
+import { QueryClient } from "./queryclient";
 import {
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
