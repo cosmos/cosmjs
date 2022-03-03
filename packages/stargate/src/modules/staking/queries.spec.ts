@@ -4,7 +4,6 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "../../encodeobjects";
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
@@ -16,6 +15,7 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils.spec";
+import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
 import { setupStakingExtension, StakingExtension } from "./queries";
 
 async function makeClientWithStaking(

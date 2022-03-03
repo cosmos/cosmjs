@@ -24,13 +24,6 @@ import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 import Long from "long";
 
 import { AminoTypes } from "./aminotypes";
-import {
-  MsgDelegateEncodeObject,
-  MsgSendEncodeObject,
-  MsgTransferEncodeObject,
-  MsgUndelegateEncodeObject,
-  MsgWithdrawDelegatorRewardEncodeObject,
-} from "./encodeobjects";
 import { calculateFee, GasPrice } from "./fee";
 import {
   authzTypes,
@@ -39,6 +32,11 @@ import {
   feegrantTypes,
   govTypes,
   ibcTypes,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+  MsgTransferEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
 } from "./modules";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";

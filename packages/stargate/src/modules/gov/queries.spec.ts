@@ -13,11 +13,6 @@ import {
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import {
-  MsgDelegateEncodeObject,
-  MsgSubmitProposalEncodeObject,
-  MsgVoteEncodeObject,
-} from "../../encodeobjects";
 import { longify, QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
@@ -31,6 +26,7 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils.spec";
+import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { GovExtension, setupGovExtension } from "./queries";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, Tendermint34Client]> {
