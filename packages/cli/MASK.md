@@ -5,8 +5,8 @@ This assumes you have already run through the sample in the
 method (sharing with cli, customize blockchain) if you want. We will show
 uploading mask and using it on the Demo Net.
 
-Start with `./bin/cosmjs-cli --init examples/helpers.ts examples/mask.ts`
-(note the addition of `examples/mask.ts`)
+Start with `./bin/cosmjs-cli --init examples/helpers.ts examples/mask.ts` (note
+the addition of `examples/mask.ts`)
 
 ## Setup
 
