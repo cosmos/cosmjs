@@ -14,52 +14,13 @@ import {
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
-import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
-import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import {
-  MsgFundCommunityPool,
-  MsgSetWithdrawAddress,
-  MsgWithdrawDelegatorReward,
-  MsgWithdrawValidatorCommission,
-} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
-import { MsgGrantAllowance, MsgRevokeAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
-import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
-import {
-  MsgBeginRedelegate,
-  MsgCreateValidator,
-  MsgDelegate,
-  MsgEditValidator,
-  MsgUndelegate,
-} from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import {
-  MsgAcknowledgement,
-  MsgChannelCloseConfirm,
-  MsgChannelCloseInit,
-  MsgChannelOpenAck,
-  MsgChannelOpenConfirm,
-  MsgChannelOpenInit,
-  MsgChannelOpenTry,
-  MsgRecvPacket,
-  MsgTimeout,
-  MsgTimeoutOnClose,
-} from "cosmjs-types/ibc/core/channel/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
-import {
-  MsgCreateClient,
-  MsgSubmitMisbehaviour,
-  MsgUpdateClient,
-  MsgUpgradeClient,
-} from "cosmjs-types/ibc/core/client/v1/tx";
-import {
-  MsgConnectionOpenAck,
-  MsgConnectionOpenConfirm,
-  MsgConnectionOpenInit,
-  MsgConnectionOpenTry,
-} from "cosmjs-types/ibc/core/connection/v1/tx";
 import Long from "long";
 
 import { AminoTypes } from "./aminotypes";
@@ -71,48 +32,26 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./encodeobjects";
 import { calculateFee, GasPrice } from "./fee";
+import {
+  authzTypes,
+  bankTypes,
+  distributionTypes,
+  feegrantTypes,
+  govTypes,
+  ibcTypes,
+  stakingTypes,
+} from "./modules";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
-  ["/cosmos.authz.v1beta1.MsgExec", MsgExec],
-  ["/cosmos.authz.v1beta1.MsgGrant", MsgGrant],
-  ["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke],
-  ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
-  ["/cosmos.bank.v1beta1.MsgSend", MsgSend],
   ["/cosmos.base.v1beta1.Coin", Coin],
-  ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
-  ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
-  ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
-  ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
-  ["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance],
-  ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance],
-  ["/cosmos.gov.v1beta1.MsgDeposit", MsgDeposit],
-  ["/cosmos.gov.v1beta1.MsgSubmitProposal", MsgSubmitProposal],
-  ["/cosmos.gov.v1beta1.MsgVote", MsgVote],
-  ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
-  ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
-  ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
-  ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
-  ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
-  ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],
-  ["/ibc.core.channel.v1.MsgAcknowledgement", MsgAcknowledgement],
-  ["/ibc.core.channel.v1.MsgChannelCloseConfirm", MsgChannelCloseConfirm],
-  ["/ibc.core.channel.v1.MsgChannelCloseInit", MsgChannelCloseInit],
-  ["/ibc.core.channel.v1.MsgChannelOpenAck", MsgChannelOpenAck],
-  ["/ibc.core.channel.v1.MsgChannelOpenConfirm", MsgChannelOpenConfirm],
-  ["/ibc.core.channel.v1.MsgChannelOpenInit", MsgChannelOpenInit],
-  ["/ibc.core.channel.v1.MsgChannelOpenTry", MsgChannelOpenTry],
-  ["/ibc.core.channel.v1.MsgRecvPacket", MsgRecvPacket],
-  ["/ibc.core.channel.v1.MsgTimeout", MsgTimeout],
-  ["/ibc.core.channel.v1.MsgTimeoutOnClose", MsgTimeoutOnClose],
-  ["/ibc.core.client.v1.MsgCreateClient", MsgCreateClient],
-  ["/ibc.core.client.v1.MsgSubmitMisbehaviour", MsgSubmitMisbehaviour],
-  ["/ibc.core.client.v1.MsgUpdateClient", MsgUpdateClient],
-  ["/ibc.core.client.v1.MsgUpgradeClient", MsgUpgradeClient],
-  ["/ibc.core.connection.v1.MsgConnectionOpenAck", MsgConnectionOpenAck],
-  ["/ibc.core.connection.v1.MsgConnectionOpenConfirm", MsgConnectionOpenConfirm],
-  ["/ibc.core.connection.v1.MsgConnectionOpenInit", MsgConnectionOpenInit],
-  ["/ibc.core.connection.v1.MsgConnectionOpenTry", MsgConnectionOpenTry],
+  ...authzTypes,
+  ...bankTypes,
+  ...distributionTypes,
+  ...feegrantTypes,
+  ...govTypes,
+  ...stakingTypes,
+  ...ibcTypes,
 ];
 
 function createDefaultRegistry(): Registry {
