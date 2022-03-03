@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/crypto",
-  "version": "0.27.1",
+  "version": "0.28.0-rc1",
   "description": "Cryptography resources for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -88,5 +88,6 @@
     "typescript": "~4.4",
     "webpack": "^5.32.0",
     "webpack-cli": "^4.6.0"
-  }
+  },
+  "stableVersion": "0.27.1"
 }
