@@ -1,14 +1,43 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
+export { createAuthzAminoConverters } from "./authz/aminomessages";
 export { authzTypes } from "./authz/messages";
+export {
+  AminoMsgMultiSend,
+  AminoMsgSend,
+  createBankAminoConverters,
+  isAminoMsgMultiSend,
+  isAminoMsgSend,
+} from "./bank/aminomessages";
 export { bankTypes, isMsgSendEncodeObject, MsgSendEncodeObject } from "./bank/messages";
 export { BankExtension, setupBankExtension } from "./bank/queries";
+export {
+  AminoMsgFundCommunityPool,
+  AminoMsgSetWithdrawAddress,
+  AminoMsgWithdrawDelegatorReward,
+  AminoMsgWithdrawValidatorCommission,
+  createDistributionAminoConverters,
+  isAminoMsgFundCommunityPool,
+  isAminoMsgSetWithdrawAddress,
+  isAminoMsgWithdrawDelegatorReward,
+  isAminoMsgWithdrawValidatorCommission,
+} from "./distribution/aminomessages";
 export {
   distributionTypes,
   isMsgWithdrawDelegatorRewardEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./distribution/messages";
 export { DistributionExtension, setupDistributionExtension } from "./distribution/queries";
+export { createFreegrantAminoConverters } from "./feegrant/aminomessages";
 export { feegrantTypes } from "./feegrant/messages";
+export {
+  AminoMsgDeposit,
+  AminoMsgSubmitProposal,
+  AminoMsgVote,
+  createGovAminoConverters,
+  isAminoMsgDeposit,
+  isAminoMsgSubmitProposal,
+  isAminoMsgVote,
+} from "./gov/aminomessages";
 export {
   govTypes,
   isMsgDepositEncodeObject,
@@ -19,10 +48,24 @@ export {
   MsgVoteEncodeObject,
 } from "./gov/messages";
 export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from "./gov/queries";
+export { AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";
 export { ibcTypes, isMsgTransferEncodeObject, MsgTransferEncodeObject } from "./ibc/messages";
 export { IbcExtension, setupIbcExtension } from "./ibc/queries";
 export { MintExtension, MintParams, setupMintExtension } from "./mint/queries";
 export { setupSlashingExtension, SlashingExtension } from "./slashing/queries";
+export {
+  AminoMsgBeginRedelegate,
+  AminoMsgCreateValidator,
+  AminoMsgDelegate,
+  AminoMsgEditValidator,
+  AminoMsgUndelegate,
+  createStakingAminoConverters,
+  isAminoMsgBeginRedelegate,
+  isAminoMsgCreateValidator,
+  isAminoMsgDelegate,
+  isAminoMsgEditValidator,
+  isAminoMsgUndelegate,
+} from "./staking/aminomessages";
 export {
   isMsgDelegateEncodeObject,
   isMsgUndelegateEncodeObject,

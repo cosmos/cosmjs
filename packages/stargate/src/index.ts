@@ -1,4 +1,16 @@
 export { Account, accountFromAny } from "./accounts";
+export { AminoConverter } from "./aminoconverters";
+export {
+  AminoMsgSubmitEvidence,
+  AminoMsgUnjail,
+  AminoMsgVerifyInvariant,
+  isAminoMsgSubmitEvidence,
+  isAminoMsgUnjail,
+  isAminoMsgVerifyInvariant,
+} from "./aminomsgs";
+export { AminoTypes, AminoTypesOptions } from "./aminotypes";
+export { calculateFee, GasPrice } from "./fee";
+export * as logs from "./logs";
 export {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
@@ -9,14 +21,18 @@ export {
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
-  AminoMsgSubmitEvidence,
   AminoMsgSubmitProposal,
   AminoMsgUndelegate,
-  AminoMsgUnjail,
-  AminoMsgVerifyInvariant,
   AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
+  AuthExtension,
+  BankExtension,
+  DistributionExtension,
+  GovExtension,
+  GovParamsType,
+  GovProposalId,
+  IbcExtension,
   isAminoMsgBeginRedelegate,
   isAminoMsgCreateValidator,
   isAminoMsgDelegate,
@@ -26,26 +42,11 @@ export {
   isAminoMsgMultiSend,
   isAminoMsgSend,
   isAminoMsgSetWithdrawAddress,
-  isAminoMsgSubmitEvidence,
   isAminoMsgSubmitProposal,
   isAminoMsgUndelegate,
-  isAminoMsgUnjail,
-  isAminoMsgVerifyInvariant,
   isAminoMsgVote,
   isAminoMsgWithdrawDelegatorReward,
   isAminoMsgWithdrawValidatorCommission,
-} from "./aminomsgs";
-export { AminoConverter, AminoTypes, AminoTypesOptions } from "./aminotypes";
-export { calculateFee, GasPrice } from "./fee";
-export * as logs from "./logs";
-export {
-  AuthExtension,
-  BankExtension,
-  DistributionExtension,
-  GovExtension,
-  GovParamsType,
-  GovProposalId,
-  IbcExtension,
   isMsgDelegateEncodeObject,
   isMsgDepositEncodeObject,
   isMsgSendEncodeObject,
