@@ -1,4 +1,14 @@
 export {
+  AminoMsgClearAdmin,
+  AminoMsgExecuteContract,
+  AminoMsgInstantiateContract,
+  AminoMsgMigrateContract,
+  AminoMsgStoreCode,
+  AminoMsgUpdateAdmin,
+  cosmWasmTypes,
+  createWasmAminoConverters,
+} from "./wasm/aminomessages";
+export {
   isMsgClearAdminEncodeObject,
   isMsgExecuteEncodeObject,
   isMsgInstantiateContractEncodeObject,

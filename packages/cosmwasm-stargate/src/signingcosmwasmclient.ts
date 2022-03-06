@@ -46,9 +46,9 @@ import {
 import Long from "long";
 import pako from "pako";
 
-import { cosmWasmTypes } from "./aminotypes";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
+  createWasmAminoConverters,
   MsgClearAdminEncodeObject,
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
@@ -205,7 +205,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const prefix = options.prefix ?? "cosmos";
     const {
       registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ prefix, additions: cosmWasmTypes }),
+      aminoTypes = new AminoTypes({ prefix, additions: createWasmAminoConverters() }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;

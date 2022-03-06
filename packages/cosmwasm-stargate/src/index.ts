@@ -1,7 +1,8 @@
-export { cosmWasmTypes } from "./aminotypes";
 export { Code, CodeDetails, Contract, ContractCodeHistoryEntry, CosmWasmClient } from "./cosmwasmclient";
 export { fromBinary, toBinary } from "./encoding";
 export {
+  cosmWasmTypes,
+  createWasmAminoConverters,
   isMsgClearAdminEncodeObject,
   isMsgExecuteEncodeObject,
   isMsgInstantiateContractEncodeObject,

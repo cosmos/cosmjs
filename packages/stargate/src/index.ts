@@ -1,5 +1,5 @@
 export { Account, accountFromAny } from "./accounts";
-export { AminoConverter } from "./aminoconverters";
+export { AminoConverter, AminoConverters } from "./aminoconverters";
 export { AminoTypes, AminoTypesOptions } from "./aminotypes";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
