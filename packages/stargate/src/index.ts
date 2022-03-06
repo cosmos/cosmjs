@@ -1,13 +1,5 @@
 export { Account, accountFromAny } from "./accounts";
 export { AminoConverter } from "./aminoconverters";
-export {
-  AminoMsgSubmitEvidence,
-  AminoMsgUnjail,
-  AminoMsgVerifyInvariant,
-  isAminoMsgSubmitEvidence,
-  isAminoMsgUnjail,
-  isAminoMsgVerifyInvariant,
-} from "./aminomsgs";
 export { AminoTypes, AminoTypesOptions } from "./aminotypes";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
@@ -21,8 +13,11 @@ export {
   AminoMsgMultiSend,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
+  AminoMsgSubmitEvidence,
   AminoMsgSubmitProposal,
   AminoMsgUndelegate,
+  AminoMsgUnjail,
+  AminoMsgVerifyInvariant,
   AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
@@ -42,8 +37,11 @@ export {
   isAminoMsgMultiSend,
   isAminoMsgSend,
   isAminoMsgSetWithdrawAddress,
+  isAminoMsgSubmitEvidence,
   isAminoMsgSubmitProposal,
   isAminoMsgUndelegate,
+  isAminoMsgUnjail,
+  isAminoMsgVerifyInvariant,
   isAminoMsgVote,
   isAminoMsgWithdrawDelegatorReward,
   isAminoMsgWithdrawValidatorCommission,

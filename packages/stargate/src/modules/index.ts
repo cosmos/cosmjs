@@ -11,6 +11,11 @@ export {
 export { bankTypes, isMsgSendEncodeObject, MsgSendEncodeObject } from "./bank/messages";
 export { BankExtension, setupBankExtension } from "./bank/queries";
 export {
+  AminoMsgVerifyInvariant,
+  createCrysisAminoConverters,
+  isAminoMsgVerifyInvariant,
+} from "./crisis/aminomessages";
+export {
   AminoMsgFundCommunityPool,
   AminoMsgSetWithdrawAddress,
   AminoMsgWithdrawDelegatorReward,
@@ -27,6 +32,11 @@ export {
   MsgWithdrawDelegatorRewardEncodeObject,
 } from "./distribution/messages";
 export { DistributionExtension, setupDistributionExtension } from "./distribution/queries";
+export {
+  AminoMsgSubmitEvidence,
+  createEvidenceAminoConverters,
+  isAminoMsgSubmitEvidence,
+} from "./evidence/aminomessages";
 export { createFreegrantAminoConverters } from "./feegrant/aminomessages";
 export { feegrantTypes } from "./feegrant/messages";
 export {
@@ -52,6 +62,7 @@ export { AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "
 export { ibcTypes, isMsgTransferEncodeObject, MsgTransferEncodeObject } from "./ibc/messages";
 export { IbcExtension, setupIbcExtension } from "./ibc/queries";
 export { MintExtension, MintParams, setupMintExtension } from "./mint/queries";
+export { AminoMsgUnjail, createSlashingAminoConverters, isAminoMsgUnjail } from "./slashing/aminomessages";
 export { setupSlashingExtension, SlashingExtension } from "./slashing/queries";
 export {
   AminoMsgBeginRedelegate,
