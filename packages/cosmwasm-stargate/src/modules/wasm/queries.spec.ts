@@ -16,11 +16,6 @@ import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 
-import {
-  MsgExecuteContractEncodeObject,
-  MsgInstantiateContractEncodeObject,
-  MsgStoreCodeEncodeObject,
-} from "../../encodeobjects";
 import { SigningCosmWasmClient } from "../../signingcosmwasmclient";
 import {
   alice,
@@ -34,12 +29,14 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../../testutils.spec";
+import {
+  MsgExecuteContractEncodeObject,
+  MsgInstantiateContractEncodeObject,
+  MsgStoreCodeEncodeObject,
+  wasmTypes,
+} from "./messages";
 
-const registry = new Registry([
-  ["/cosmwasm.wasm.v1.MsgExecuteContract", MsgExecuteContract],
-  ["/cosmwasm.wasm.v1.MsgStoreCode", MsgStoreCode],
-  ["/cosmwasm.wasm.v1.MsgInstantiateContract", MsgInstantiateContract],
-]);
+const registry = new Registry(wasmTypes);
 
 async function uploadContract(
   signer: OfflineDirectSigner,

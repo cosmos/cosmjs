@@ -22,7 +22,7 @@ import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
-import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./encodeobjects";
+import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
