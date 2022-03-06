@@ -28,7 +28,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
+import { JsonObject, setupWasmExtension, WasmExtension } from "./modules";
 
 export interface Code {
   readonly id: number;

@@ -21,6 +21,7 @@ import {
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
 
+import { AminoTypes } from "./aminotypes";
 import {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
@@ -37,8 +38,7 @@ import {
   AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
-} from "./aminomsgs";
-import { AminoTypes } from "./aminotypes";
+} from "./modules";
 
 describe("AminoTypes", () => {
   describe("constructor", () => {

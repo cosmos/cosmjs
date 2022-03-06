@@ -46,16 +46,17 @@ import {
 import Long from "long";
 import pako from "pako";
 
-import { cosmWasmTypes } from "./aminotypes";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
+  createWasmAminoConverters,
   MsgClearAdminEncodeObject,
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
   MsgMigrateContractEncodeObject,
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
-} from "./encodeobjects";
+  wasmTypes,
+} from "./modules";
 
 export interface UploadResult {
   /** Size of the original wasm code in bytes */
@@ -148,14 +149,7 @@ function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string 
 }
 
 function createDefaultRegistry(): Registry {
-  const registry = new Registry(defaultStargateTypes);
-  registry.register("/cosmwasm.wasm.v1.MsgClearAdmin", MsgClearAdmin);
-  registry.register("/cosmwasm.wasm.v1.MsgExecuteContract", MsgExecuteContract);
-  registry.register("/cosmwasm.wasm.v1.MsgMigrateContract", MsgMigrateContract);
-  registry.register("/cosmwasm.wasm.v1.MsgStoreCode", MsgStoreCode);
-  registry.register("/cosmwasm.wasm.v1.MsgInstantiateContract", MsgInstantiateContract);
-  registry.register("/cosmwasm.wasm.v1.MsgUpdateAdmin", MsgUpdateAdmin);
-  return registry;
+  return new Registry([...defaultStargateTypes, ...wasmTypes]);
 }
 
 export interface SigningCosmWasmClientOptions {
@@ -211,7 +205,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const prefix = options.prefix ?? "cosmos";
     const {
       registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ prefix, additions: cosmWasmTypes }),
+      aminoTypes = new AminoTypes({ prefix, additions: createWasmAminoConverters() }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;

@@ -1,4 +1,8 @@
 export { Account, accountFromAny } from "./accounts";
+export { AminoConverter, AminoConverters } from "./aminoconverters";
+export { AminoTypes, AminoTypesOptions } from "./aminotypes";
+export { calculateFee, GasPrice } from "./fee";
+export * as logs from "./logs";
 export {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
@@ -17,6 +21,13 @@ export {
   AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
+  AuthExtension,
+  BankExtension,
+  DistributionExtension,
+  GovExtension,
+  GovParamsType,
+  GovProposalId,
+  IbcExtension,
   isAminoMsgBeginRedelegate,
   isAminoMsgCreateValidator,
   isAminoMsgDelegate,
@@ -34,9 +45,6 @@ export {
   isAminoMsgVote,
   isAminoMsgWithdrawDelegatorReward,
   isAminoMsgWithdrawValidatorCommission,
-} from "./aminomsgs";
-export { AminoConverter, AminoTypes, AminoTypesOptions } from "./aminotypes";
-export {
   isMsgDelegateEncodeObject,
   isMsgDepositEncodeObject,
   isMsgSendEncodeObject,
@@ -45,6 +53,8 @@ export {
   isMsgUndelegateEncodeObject,
   isMsgVoteEncodeObject,
   isMsgWithdrawDelegatorRewardEncodeObject,
+  MintExtension,
+  MintParams,
   MsgDelegateEncodeObject,
   MsgDepositEncodeObject,
   MsgSendEncodeObject,
@@ -53,25 +63,6 @@ export {
   MsgUndelegateEncodeObject,
   MsgVoteEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
-} from "./encodeobjects";
-export { calculateFee, GasPrice } from "./fee";
-export * as logs from "./logs";
-export { makeMultisignedTx } from "./multisignature";
-export {
-  AuthExtension,
-  BankExtension,
-  createPagination,
-  createProtobufRpcClient,
-  decodeCosmosSdkDecFromProto,
-  DistributionExtension,
-  GovExtension,
-  GovParamsType,
-  GovProposalId,
-  IbcExtension,
-  MintExtension,
-  MintParams,
-  ProtobufRpcClient,
-  QueryClient,
   setupAuthExtension,
   setupBankExtension,
   setupDistributionExtension,
@@ -82,7 +73,15 @@ export {
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./queries";
+} from "./modules";
+export { makeMultisignedTx } from "./multisignature";
+export {
+  createPagination,
+  createProtobufRpcClient,
+  decodeCosmosSdkDecFromProto,
+  ProtobufRpcClient,
+  QueryClient,
+} from "./queryclient";
 export {
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,

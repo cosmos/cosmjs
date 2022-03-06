@@ -9,9 +9,8 @@ import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import Long from "long";
 import protobuf from "protobufjs/minimal";
 
-import { AminoMsgDelegate } from "./aminomsgs";
 import { AminoTypes } from "./aminotypes";
-import { MsgDelegateEncodeObject, MsgSendEncodeObject } from "./encodeobjects";
+import { AminoMsgDelegate, MsgDelegateEncodeObject, MsgSendEncodeObject } from "./modules";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
