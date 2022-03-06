@@ -15,7 +15,7 @@ export {
   MsgUpdateAdminEncodeObject,
 } from "./encodeobjects";
 export { fromBinary, toBinary } from "./encoding";
-export { JsonObject, setupWasmExtension, WasmExtension } from "./queries";
+export { JsonObject, setupWasmExtension, WasmExtension } from "./modules";
 export {
   ChangeAdminResult,
   ExecuteResult,

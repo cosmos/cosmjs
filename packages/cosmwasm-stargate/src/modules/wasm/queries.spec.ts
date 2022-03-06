@@ -20,8 +20,8 @@ import {
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
   MsgStoreCodeEncodeObject,
-} from "../encodeobjects";
-import { SigningCosmWasmClient } from "../signingcosmwasmclient";
+} from "../../encodeobjects";
+import { SigningCosmWasmClient } from "../../signingcosmwasmclient";
 import {
   alice,
   bech32AddressMatcher,
@@ -33,7 +33,7 @@ import {
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
-} from "../testutils.spec";
+} from "../../testutils.spec";
 
 const registry = new Registry([
   ["/cosmwasm.wasm.v1.MsgExecuteContract", MsgExecuteContract],
