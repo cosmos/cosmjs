@@ -1,6 +1,6 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject, GeneratedType } from "@cosmjs/proto-signing";
-import { isNonNullObject } from "@cosmjs/utils";
+import { assert, isNonNullObject } from "@cosmjs/utils";
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -78,6 +78,55 @@ export function isMsgExecuteEncodeObject(object: EncodeObject): object is MsgExe
   return (object as MsgExecuteContractEncodeObject).typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract";
 }
 
+function getField(object: any, key: string | number): any {
+  if (!(key in object)) throw new Error(`Missing key '${key}' in object`);
+  return object[key];
+}
+
+function getStringField(object: any, key: string | number): string {
+  const value = getField(object, key);
+  if (typeof value !== "string") {
+    throw new Error(`Wrong type for key '${key}' in object: ${typeof value}. Must be a string.`);
+  }
+  return value;
+}
+
+function getArrayField(object: any, key: string | number): any[] {
+  const value = getField(object, key);
+  if (!Array.isArray(value)) {
+    throw new Error(`Wrong type for key '${key}' in object: ${typeof value}. Must be an array.`);
+  }
+  return value;
+}
+
+function importMsgExecuteContractEncodeObject(object: unknown): MsgExecuteContractEncodeObject {
+  assert(isNonNullObject(object));
+  return {
+    typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+    value: MsgExecuteContract.fromPartial({
+      sender: getStringField(object, "sender"),
+      contract: getStringField(object, "contract"),
+      msg: toUtf8(JSON.stringify(getField(object, "msg"))),
+      funds: getArrayField(object, "funds"),
+    }),
+  };
+}
+
+function importMsgInstantiateContract(object: unknown): MsgInstantiateContractEncodeObject {
+  assert(isNonNullObject(object));
+  return {
+    typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+    value: MsgInstantiateContract.fromPartial({
+      sender: getStringField(object, "sender"),
+      admin: getStringField(object, "admin"),
+      codeId: Long.fromString(getStringField(object, "code_id"), true, 10),
+      label: getStringField(object, "label"),
+      msg: toUtf8(JSON.stringify(getField(object, "msg"))),
+      funds: getArrayField(object, "funds"),
+    }),
+  };
+}
+
 /**
  * Takes a JSON representation of the Go implementation and imports it into CosmJS types
  *
@@ -92,40 +141,14 @@ export function importWasmMessages(
   const out = [];
   for (const element of doc) {
     if (!isNonNullObject(element)) throw new Error("Element must be an object");
-    if (!("@type" in element)) throw new Error("Element is missing a @type field");
-    const typeUrl = (element as any)["@type"];
-    if (typeof typeUrl !== "string") throw new Error("Element's @type fiels must be a string");
+    const typeUrl = getStringField(element, "@type");
     switch (typeUrl) {
-      case "/cosmwasm.wasm.v1.MsgExecuteContract": {
-        // console.log(element);
-        const msg: MsgExecuteContractEncodeObject = {
-          typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-          value: MsgExecuteContract.fromPartial({
-            sender: (element as any).sender,
-            contract: (element as any).contract,
-            msg: toUtf8(JSON.stringify((element as any).msg)),
-            funds: (element as any).funds,
-          }),
-        };
-        out.push(msg);
+      case "/cosmwasm.wasm.v1.MsgExecuteContract":
+        out.push(importMsgExecuteContractEncodeObject(element));
         break;
-      }
-      case "/cosmwasm.wasm.v1.MsgInstantiateContract": {
-        // console.log(element);
-        const msg: MsgInstantiateContractEncodeObject = {
-          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
-          value: MsgInstantiateContract.fromPartial({
-            sender: (element as any).sender,
-            admin: (element as any).admin,
-            codeId: Long.fromString((element as any).code_id, true, 10),
-            label: (element as any).label,
-            msg: toUtf8(JSON.stringify((element as any).msg)),
-            funds: (element as any).funds,
-          }),
-        };
-        out.push(msg);
+      case "/cosmwasm.wasm.v1.MsgInstantiateContract":
+        out.push(importMsgInstantiateContract(element));
         break;
-      }
       default:
         throw new Error(`Unsupported message type '${typeUrl}' found.`);
     }
