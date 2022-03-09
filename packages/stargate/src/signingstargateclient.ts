@@ -91,7 +91,7 @@ export interface SigningStargateClientOptions {
   readonly gasPrice?: GasPrice;
 }
 
-export function createDefaultTypes(prefix: string): AminoConverters {
+function createDefaultTypes(prefix: string): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
