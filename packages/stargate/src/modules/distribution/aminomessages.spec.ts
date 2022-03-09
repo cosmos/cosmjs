@@ -1,3 +1,21 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import { coins } from "@cosmjs/proto-signing";
+import {
+  MsgFundCommunityPool,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+
+import { AminoTypes } from "../../aminotypes";
+import {
+  AminoMsgFundCommunityPool,
+  AminoMsgSetWithdrawAddress,
+  AminoMsgWithdrawDelegatorReward,
+  AminoMsgWithdrawValidatorCommission,
+  createDistributionAminoConverters,
+} from "./aminomessages";
+
 describe("AminoTypes", () => {
   describe("toAmino", () => {
     it("works for MsgFundCommunityPool", async () => {
