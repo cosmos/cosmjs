@@ -17,6 +17,7 @@ import {
   AminoTypes,
   calculateFee,
   Coin,
+  createBankAminoConverters,
   defaultRegistryTypes as defaultStargateTypes,
   DeliverTxResponse,
   GasPrice,
@@ -203,7 +204,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     super(tmClient);
     const {
       registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ ...createWasmAminoConverters() }),
+      aminoTypes = new AminoTypes({ ...createWasmAminoConverters(), ...createBankAminoConverters() }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
