@@ -21,9 +21,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: Long.fromString("789", true),
       };
-      const aminoTypes = new AminoTypes({
-        ...createIbcAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
@@ -59,9 +57,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: Long.UZERO,
       };
-      const aminoTypes = new AminoTypes({
-        ...createIbcAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
@@ -94,7 +90,7 @@ describe("AminoTypes", () => {
         timeoutHeight: undefined,
         timeoutTimestamp: Long.UZERO,
       };
-      const aminoMsg = new AminoTypes({ ...createIbcAminoConverters() }).toAmino({
+      const aminoMsg = new AminoTypes(createIbcAminoConverters()).toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
       });
@@ -130,7 +126,7 @@ describe("AminoTypes", () => {
           timeout_timestamp: "789",
         },
       };
-      const msg = new AminoTypes({ ...createIbcAminoConverters() }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createIbcAminoConverters()).fromAmino(aminoMsg);
       const expectedValue: MsgTransfer = {
         sourcePort: "testport",
         sourceChannel: "testchannel",
@@ -165,7 +161,7 @@ describe("AminoTypes", () => {
           // timeout_timestamp omitted
         },
       };
-      const msg = new AminoTypes({ ...createIbcAminoConverters() }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createIbcAminoConverters()).fromAmino(aminoMsg);
       const expectedValue: MsgTransfer = {
         sourcePort: "testport",
         sourceChannel: "testchannel",

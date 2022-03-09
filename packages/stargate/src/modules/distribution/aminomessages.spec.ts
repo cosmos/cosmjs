@@ -23,9 +23,7 @@ describe("AminoTypes", () => {
         amount: coins(1234, "ucosm"),
         depositor: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       };
-      const aminoTypes = new AminoTypes({
-        ...createDistributionAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createDistributionAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
         value: msg,
@@ -45,9 +43,7 @@ describe("AminoTypes", () => {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         withdrawAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoTypes = new AminoTypes({
-        ...createDistributionAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createDistributionAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
         value: msg,
@@ -67,9 +63,7 @@ describe("AminoTypes", () => {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoTypes = new AminoTypes({
-        ...createDistributionAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createDistributionAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
         value: msg,
@@ -88,9 +82,7 @@ describe("AminoTypes", () => {
       const msg: MsgWithdrawValidatorCommission = {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoTypes = new AminoTypes({
-        ...createDistributionAminoConverters(),
-      });
+      const aminoTypes = new AminoTypes(createDistributionAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
         value: msg,

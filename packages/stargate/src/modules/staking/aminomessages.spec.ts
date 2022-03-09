@@ -29,9 +29,7 @@ describe("AminoTypes", () => {
         validatorDstAddress: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         amount: coin(1234, "ucosm"),
       };
-      const aminoTypes = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
-      });
+      const aminoTypes = new AminoTypes(createStakingAminoConverters("cosmos"));
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
         value: msg,
@@ -71,9 +69,7 @@ describe("AminoTypes", () => {
         },
         value: coin(1234, "ucosm"),
       };
-      const aminoTypes = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
-      });
+      const aminoTypes = new AminoTypes(createStakingAminoConverters("cosmos"));
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
         value: msg,
@@ -112,9 +108,7 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         amount: coin(1234, "ucosm"),
       };
-      const aminoTypes = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
-      });
+      const aminoTypes = new AminoTypes(createStakingAminoConverters("cosmos"));
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: msg,
@@ -143,9 +137,7 @@ describe("AminoTypes", () => {
         minSelfDelegation: "123",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoTypes = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
-      });
+      const aminoTypes = new AminoTypes(createStakingAminoConverters("cosmos"));
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
         value: msg,
@@ -174,9 +166,7 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         amount: coin(1234, "ucosm"),
       };
-      const aminoTypes = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
-      });
+      const aminoTypes = new AminoTypes(createStakingAminoConverters("cosmos"));
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value: msg,
@@ -203,7 +193,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createStakingAminoConverters("cosmos")).fromAmino(aminoMsg);
       const expectedValue: MsgBeginRedelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorSrcAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -242,7 +232,7 @@ describe("AminoTypes", () => {
           value: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createStakingAminoConverters("cosmos")).fromAmino(aminoMsg);
       const expectedValue: MsgCreateValidator = {
         description: {
           moniker: "validator",
@@ -280,7 +270,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createStakingAminoConverters("cosmos")).fromAmino(aminoMsg);
       const expectedValue: MsgDelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -308,7 +298,7 @@ describe("AminoTypes", () => {
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
       };
-      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createStakingAminoConverters("cosmos")).fromAmino(aminoMsg);
       const expectedValue: MsgEditValidator = {
         description: {
           moniker: "validator",
@@ -336,7 +326,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
+      const msg = new AminoTypes(createStakingAminoConverters("cosmos")).fromAmino(aminoMsg);
       const expectedValue: MsgUndelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
