@@ -38,6 +38,11 @@ import {
   AminoMsgVote,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
 } from "./modules";
 
 describe("AminoTypes", () => {
@@ -50,17 +55,14 @@ describe("AminoTypes", () => {
 
     it("can override type by type URL", () => {
       const types = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/cosmos.staking.v1beta1.MsgDelegate": {
-            aminoType: "my-override/MsgDelegate",
-            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
-              foo: m.delegatorAddress ?? "",
-            }),
-            fromAmino: () => ({
-              bar: 123,
-            }),
-          },
+        "/cosmos.staking.v1beta1.MsgDelegate": {
+          aminoType: "my-override/MsgDelegate",
+          toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+            foo: m.delegatorAddress ?? "",
+          }),
+          fromAmino: () => ({
+            bar: 123,
+          }),
         },
       });
 
@@ -84,17 +86,15 @@ describe("AminoTypes", () => {
 
     it("can override type with Amino type collision", () => {
       const types = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/cosmos.staking.otherVersion456.MsgDelegate": {
-            aminoType: "cosmos-sdk/MsgDelegate",
-            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
-              foo: m.delegatorAddress ?? "",
-            }),
-            fromAmino: () => ({
-              bar: 123,
-            }),
-          },
+        ...createStakingAminoConverters("cosmos"),
+        "/cosmos.staking.otherVersion456.MsgDelegate": {
+          aminoType: "cosmos-sdk/MsgDelegate",
+          toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+            foo: m.delegatorAddress ?? "",
+          }),
+          fromAmino: () => ({
+            bar: 123,
+          }),
         },
       });
 
@@ -123,7 +123,10 @@ describe("AminoTypes", () => {
         toAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         amount: coins(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createBankAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.bank.v1beta1.MsgSend",
         value: msg,
       });
@@ -149,7 +152,10 @@ describe("AminoTypes", () => {
           { address: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx", coins: coins(912, "ucosm") },
         ],
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createBankAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
         value: msg,
       });
@@ -177,7 +183,10 @@ describe("AminoTypes", () => {
         depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         proposalId: Long.fromNumber(5),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createGovAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
         value: msg,
       });
@@ -204,7 +213,10 @@ describe("AminoTypes", () => {
           }).finish(),
         },
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createGovAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
         value: msg,
       });
@@ -231,7 +243,10 @@ describe("AminoTypes", () => {
         proposalId: Long.fromNumber(5),
         voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createGovAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.gov.v1beta1.MsgVote",
         value: msg,
       });
@@ -253,7 +268,10 @@ describe("AminoTypes", () => {
         amount: coins(1234, "ucosm"),
         depositor: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createDistributionAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
         value: msg,
       });
@@ -272,7 +290,10 @@ describe("AminoTypes", () => {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         withdrawAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createDistributionAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
         value: msg,
       });
@@ -291,7 +312,10 @@ describe("AminoTypes", () => {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createDistributionAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
         value: msg,
       });
@@ -309,7 +333,10 @@ describe("AminoTypes", () => {
       const msg: MsgWithdrawValidatorCommission = {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createDistributionAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
         value: msg,
       });
@@ -331,7 +358,10 @@ describe("AminoTypes", () => {
         validatorDstAddress: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         amount: coin(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createStakingAminoConverters("cosmos"),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
         value: msg,
       });
@@ -370,7 +400,10 @@ describe("AminoTypes", () => {
         },
         value: coin(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createStakingAminoConverters("cosmos"),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
         value: msg,
       });
@@ -408,7 +441,10 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         amount: coin(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createStakingAminoConverters("cosmos"),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: msg,
       });
@@ -436,7 +472,10 @@ describe("AminoTypes", () => {
         minSelfDelegation: "123",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createStakingAminoConverters("cosmos"),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
         value: msg,
       });
@@ -464,7 +503,10 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         amount: coin(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createStakingAminoConverters("cosmos"),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value: msg,
       });
@@ -494,7 +536,10 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: Long.fromString("789", true),
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createIbcAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
       });
@@ -529,7 +574,10 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: Long.UZERO,
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoTypes = new AminoTypes({
+        ...createIbcAminoConverters(),
+      });
+      const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
       });
@@ -561,7 +609,7 @@ describe("AminoTypes", () => {
         timeoutHeight: undefined,
         timeoutTimestamp: Long.UZERO,
       };
-      const aminoMsg = new AminoTypes({ prefix: "cosmos" }).toAmino({
+      const aminoMsg = new AminoTypes({ ...createIbcAminoConverters() }).toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
       });
@@ -587,20 +635,17 @@ describe("AminoTypes", () => {
         foo: "bar",
       };
       const aminoMsg = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/my.CustomType": {
-            aminoType: "my-sdk/CustomType",
-            toAmino: ({
-              foo,
-            }: {
-              readonly foo: string;
-            }): { readonly foo: string; readonly constant: string } => ({
-              foo: `amino-prefix-${foo}`,
-              constant: "something-for-amino",
-            }),
-            fromAmino: () => {},
-          },
+        "/my.CustomType": {
+          aminoType: "my-sdk/CustomType",
+          toAmino: ({
+            foo,
+          }: {
+            readonly foo: string;
+          }): { readonly foo: string; readonly constant: string } => ({
+            foo: `amino-prefix-${foo}`,
+            constant: "something-for-amino",
+          }),
+          fromAmino: () => {},
         },
       }).toAmino({ typeUrl: "/my.CustomType", value: msg });
       expect(aminoMsg).toEqual({
@@ -619,15 +664,12 @@ describe("AminoTypes", () => {
         amount: coin(1234, "ucosm"),
       };
       const aminoMsg = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/cosmos.staking.v1beta1.MsgDelegate": {
-            aminoType: "my-override/MsgDelegate",
-            toAmino: (m: MsgDelegate): { readonly foo: string } => ({
-              foo: m.delegatorAddress ?? "",
-            }),
-            fromAmino: () => {},
-          },
+        "/cosmos.staking.v1beta1.MsgDelegate": {
+          aminoType: "my-override/MsgDelegate",
+          toAmino: (m: MsgDelegate): { readonly foo: string } => ({
+            foo: m.delegatorAddress ?? "",
+          }),
+          fromAmino: () => {},
         },
       }).toAmino({
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
@@ -644,7 +686,10 @@ describe("AminoTypes", () => {
 
     it("throws for unknown type url", () => {
       expect(() =>
-        new AminoTypes({ prefix: "cosmos" }).toAmino({ typeUrl: "/xxx.Unknown", value: { foo: "bar" } }),
+        new AminoTypes({ ...createBankAminoConverters() }).toAmino({
+          typeUrl: "/xxx.Unknown",
+          value: { foo: "bar" },
+        }),
       ).toThrowError(/Type URL '\/xxx\.Unknown' does not exist in the Amino message type register./i);
     });
   });
@@ -661,7 +706,7 @@ describe("AminoTypes", () => {
           amount: coins(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createBankAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgSend = {
         fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         toAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -687,7 +732,7 @@ describe("AminoTypes", () => {
           ],
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createBankAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgMultiSend = {
         inputs: [
           { address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6", coins: coins(1234, "ucosm") },
@@ -715,7 +760,7 @@ describe("AminoTypes", () => {
           proposal_id: "5",
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createGovAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgDeposit = {
         amount: [{ amount: "12300000", denom: "ustake" }],
         depositor: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -742,7 +787,7 @@ describe("AminoTypes", () => {
           },
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createGovAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgSubmitProposal = {
         initialDeposit: [{ amount: "12300000", denom: "ustake" }],
         proposer: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -769,7 +814,7 @@ describe("AminoTypes", () => {
           voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createGovAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgVote = {
         option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
         proposalId: Long.fromNumber(5),
@@ -800,7 +845,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
       const expectedValue: MsgBeginRedelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorSrcAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -839,7 +884,7 @@ describe("AminoTypes", () => {
           value: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
       const expectedValue: MsgCreateValidator = {
         description: {
           moniker: "validator",
@@ -877,7 +922,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
       const expectedValue: MsgDelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -905,7 +950,7 @@ describe("AminoTypes", () => {
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
       const expectedValue: MsgEditValidator = {
         description: {
           moniker: "validator",
@@ -933,7 +978,7 @@ describe("AminoTypes", () => {
           amount: coin(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createStakingAminoConverters("cosmos") }).fromAmino(aminoMsg);
       const expectedValue: MsgUndelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -963,7 +1008,7 @@ describe("AminoTypes", () => {
           timeout_timestamp: "789",
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createIbcAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgTransfer = {
         sourcePort: "testport",
         sourceChannel: "testchannel",
@@ -998,7 +1043,7 @@ describe("AminoTypes", () => {
           // timeout_timestamp omitted
         },
       };
-      const msg = new AminoTypes({ prefix: "cosmos" }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ ...createIbcAminoConverters() }).fromAmino(aminoMsg);
       const expectedValue: MsgTransfer = {
         sourcePort: "testport",
         sourceChannel: "testchannel",
@@ -1028,15 +1073,12 @@ describe("AminoTypes", () => {
         },
       };
       const msg = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/my.CustomType": {
-            aminoType: "my-sdk/CustomType",
-            toAmino: () => {},
-            fromAmino: ({ foo }: { readonly foo: string; readonly constant: string }): any => ({
-              foo: foo.slice(13),
-            }),
-          },
+        "/my.CustomType": {
+          aminoType: "my-sdk/CustomType",
+          toAmino: () => {},
+          fromAmino: ({ foo }: { readonly foo: string; readonly constant: string }): any => ({
+            foo: foo.slice(13),
+          }),
         },
       }).fromAmino(aminoMsg);
       const expectedValue = {
@@ -1050,17 +1092,14 @@ describe("AminoTypes", () => {
 
     it("works with overridden type URL", () => {
       const msg = new AminoTypes({
-        prefix: "cosmos",
-        additions: {
-          "/cosmos.staking.v1beta1.MsgDelegate": {
-            aminoType: "cosmos-sdk/MsgDelegate2",
-            toAmino: () => {},
-            fromAmino: ({ foo }: { readonly foo: string }): MsgDelegate => ({
-              delegatorAddress: foo,
-              validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-              amount: coin(1234, "ucosm"),
-            }),
-          },
+        "/cosmos.staking.v1beta1.MsgDelegate": {
+          aminoType: "cosmos-sdk/MsgDelegate2",
+          toAmino: () => {},
+          fromAmino: ({ foo }: { readonly foo: string }): MsgDelegate => ({
+            delegatorAddress: foo,
+            validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+            amount: coin(1234, "ucosm"),
+          }),
         },
       }).fromAmino({
         type: "cosmos-sdk/MsgDelegate2",
@@ -1080,7 +1119,7 @@ describe("AminoTypes", () => {
 
     it("throws for types which are not on chain yet", () => {
       expect(() => {
-        new AminoTypes({ prefix: "cosmos" }).toAmino({
+        new AminoTypes({ "/cosmos.feegrant.v1beta1.MsgRevokeAllowance": "not_supported_by_chain" }).toAmino({
           typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
           value: 0,
         });
@@ -1091,7 +1130,7 @@ describe("AminoTypes", () => {
 
     it("throws for unknown type url", () => {
       expect(() =>
-        new AminoTypes({ prefix: "cosmos" }).fromAmino({
+        new AminoTypes({ ...createBankAminoConverters() }).fromAmino({
           type: "cosmos-sdk/MsgUnknown",
           value: { foo: "bar" },
         }),

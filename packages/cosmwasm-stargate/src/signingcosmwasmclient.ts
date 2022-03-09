@@ -201,11 +201,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     options: SigningCosmWasmClientOptions,
   ) {
     super(tmClient);
-    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
-    const prefix = options.prefix ?? "cosmos";
     const {
       registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ prefix, additions: createWasmAminoConverters() }),
+      aminoTypes = new AminoTypes({ ...createWasmAminoConverters() }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;

@@ -1,6 +1,6 @@
 export { Account, accountFromAny } from "./accounts";
 export { AminoConverter, AminoConverters } from "./aminoconverters";
-export { AminoTypes, AminoTypesOptions } from "./aminotypes";
+export { AminoTypes } from "./aminotypes";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
 export {
@@ -73,6 +73,15 @@ export {
   setupTxExtension,
   StakingExtension,
   TxExtension,
+} from "./modules";
+export {
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createFreegrantAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
 } from "./modules";
 export { makeMultisignedTx } from "./multisignature";
 export {
