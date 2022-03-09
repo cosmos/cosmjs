@@ -130,7 +130,7 @@ describe("AminoTypes", () => {
 
     it("throws for unknown type url", () => {
       expect(() =>
-        new AminoTypes({ ...createBankAminoConverters() }).toAmino({
+        new AminoTypes(createBankAminoConverters()).toAmino({
           typeUrl: "/xxx.Unknown",
           value: { foo: "bar" },
         }),
@@ -205,7 +205,7 @@ describe("AminoTypes", () => {
 
     it("throws for unknown type url", () => {
       expect(() =>
-        new AminoTypes({ ...createBankAminoConverters() }).fromAmino({
+        new AminoTypes(createBankAminoConverters()).fromAmino({
           type: "cosmos-sdk/MsgUnknown",
           value: { foo: "bar" },
         }),
