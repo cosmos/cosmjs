@@ -66,17 +66,42 @@ describe("messages", () => {
     });
 
     it("works for MsgInstantiateContract", () => {
+      // All fields set
       // wasmd tx wasm instantiate 55 '{"contract":"specific"}' --label "unique instance" --admin wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y --amount 123ucosm --from wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd --chain-id test123 --offline --generate-only | jq .body.messages -c
-      const msgs = importWasmMessages(
+      const msgs1 = importWasmMessages(
         `[{"@type":"/cosmwasm.wasm.v1.MsgInstantiateContract","sender":"wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd","admin":"wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y","code_id":"55","label":"unique instance","msg":{"contract":"specific"},"funds":[{"denom":"ucosm","amount":"123"}]}]`,
       );
-      expect(msgs).toEqual([
+      expect(msgs1).toEqual([
         {
           typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
           value: {
             sender: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
             codeId: Long.fromNumber(55, true),
             admin: "wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y",
+            label: "unique instance",
+            msg: toUtf8(`{"contract":"specific"}`),
+            funds: [
+              {
+                denom: "ucosm",
+                amount: "123",
+              },
+            ],
+          },
+        },
+      ]);
+
+      // No admin
+      // wasmd tx wasm instantiate 55 '{"contract":"specific"}' --label "unique instance" --no-admin --amount 123ucosm --from wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd --chain-id test123 --offline --generate-only | jq .body.messages -c
+      const msgs2 = importWasmMessages(
+        `[{"@type":"/cosmwasm.wasm.v1.MsgInstantiateContract","sender":"wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd","admin":"","code_id":"55","label":"unique instance","msg":{"contract":"specific"},"funds":[{"denom":"ucosm","amount":"123"}]}]`,
+      );
+      expect(msgs2).toEqual([
+        {
+          typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
+          value: {
+            sender: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
+            codeId: Long.fromNumber(55, true),
+            admin: "",
             label: "unique instance",
             msg: toUtf8(`{"contract":"specific"}`),
             funds: [
