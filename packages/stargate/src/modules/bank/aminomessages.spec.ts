@@ -61,6 +61,7 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
   });
+
   describe("fromAmino", () => {
     it("works for MsgSend", () => {
       const aminoMsg: AminoMsgSend = {

@@ -96,6 +96,7 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
   });
+
   describe("fromAmino", () => {
     // TODO: MsgFundCommunityPool
     // TODO: MsgSetWithdrawAddress

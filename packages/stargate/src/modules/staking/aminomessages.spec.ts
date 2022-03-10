@@ -182,6 +182,7 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
   });
+
   describe("fromAmino", () => {
     it("works for MsgBeginRedelegate", () => {
       const aminoMsg: AminoMsgBeginRedelegate = {
