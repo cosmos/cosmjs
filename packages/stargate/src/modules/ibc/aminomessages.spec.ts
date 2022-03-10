@@ -109,6 +109,7 @@ describe("AminoTypes", () => {
       expect(aminoMsg).toEqual(expected);
     });
   });
+
   describe("fromAmino", () => {
     it("works for MsgTransfer", () => {
       const aminoMsg: AminoMsgTransfer = {
