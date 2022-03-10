@@ -9,6 +9,7 @@ import {
   assertIsDeliverTxSuccess,
   coin,
   coins,
+  createStakingAminoConverters,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
@@ -736,6 +737,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -918,6 +920,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -1064,6 +1067,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -1220,6 +1224,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
