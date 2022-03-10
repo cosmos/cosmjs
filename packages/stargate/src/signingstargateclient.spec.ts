@@ -483,37 +483,34 @@ describe("SigningStargateClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
-          prefix: "cosmos",
-          additions: {
-            "/cosmos.staking.v1beta1.MsgDelegate": {
-              aminoType: "cosmos-sdk/MsgDelegate",
-              toAmino: ({
-                customDelegatorAddress,
-                customValidatorAddress,
-                customAmount,
-              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
-                assert(customDelegatorAddress, "missing customDelegatorAddress");
-                assert(customValidatorAddress, "missing validatorAddress");
-                assert(customAmount, "missing amount");
-                return {
-                  delegator_address: customDelegatorAddress,
-                  validator_address: customValidatorAddress,
-                  amount: {
-                    amount: customAmount.amount,
-                    denom: customAmount.denom,
-                  },
-                };
-              },
-              fromAmino: ({
-                delegator_address,
-                validator_address,
-                amount,
-              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
-                customDelegatorAddress: delegator_address,
-                customValidatorAddress: validator_address,
-                customAmount: Coin.fromPartial(amount),
-              }),
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: ({
+              customDelegatorAddress,
+              customValidatorAddress,
+              customAmount,
+            }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
+              assert(customDelegatorAddress, "missing customDelegatorAddress");
+              assert(customValidatorAddress, "missing validatorAddress");
+              assert(customAmount, "missing amount");
+              return {
+                delegator_address: customDelegatorAddress,
+                validator_address: customValidatorAddress,
+                amount: {
+                  amount: customAmount.amount,
+                  denom: customAmount.denom,
+                },
+              };
             },
+            fromAmino: ({
+              delegator_address,
+              validator_address,
+              amount,
+            }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
+              customDelegatorAddress: delegator_address,
+              customValidatorAddress: validator_address,
+              customAmount: Coin.fromPartial(amount),
+            }),
           },
         });
         const options = {
@@ -774,37 +771,34 @@ describe("SigningStargateClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
-          prefix: "cosmos",
-          additions: {
-            "/cosmos.staking.v1beta1.MsgDelegate": {
-              aminoType: "cosmos-sdk/MsgDelegate",
-              toAmino: ({
-                customDelegatorAddress,
-                customValidatorAddress,
-                customAmount,
-              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
-                assert(customDelegatorAddress, "missing customDelegatorAddress");
-                assert(customValidatorAddress, "missing validatorAddress");
-                assert(customAmount, "missing amount");
-                return {
-                  delegator_address: customDelegatorAddress,
-                  validator_address: customValidatorAddress,
-                  amount: {
-                    amount: customAmount.amount,
-                    denom: customAmount.denom,
-                  },
-                };
-              },
-              fromAmino: ({
-                delegator_address,
-                validator_address,
-                amount,
-              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
-                customDelegatorAddress: delegator_address,
-                customValidatorAddress: validator_address,
-                customAmount: Coin.fromPartial(amount),
-              }),
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: ({
+              customDelegatorAddress,
+              customValidatorAddress,
+              customAmount,
+            }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
+              assert(customDelegatorAddress, "missing customDelegatorAddress");
+              assert(customValidatorAddress, "missing validatorAddress");
+              assert(customAmount, "missing amount");
+              return {
+                delegator_address: customDelegatorAddress,
+                validator_address: customValidatorAddress,
+                amount: {
+                  amount: customAmount.amount,
+                  denom: customAmount.denom,
+                },
+              };
             },
+            fromAmino: ({
+              delegator_address,
+              validator_address,
+              amount,
+            }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
+              customDelegatorAddress: delegator_address,
+              customValidatorAddress: validator_address,
+              customAmount: Coin.fromPartial(amount),
+            }),
           },
         });
         const options = {

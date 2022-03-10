@@ -23,7 +23,7 @@ import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 import Long from "long";
 
-import { AminoTypes } from "./aminotypes";
+import { AminoConverters, AminoTypes } from "./aminotypes";
 import { calculateFee, GasPrice } from "./fee";
 import {
   authzTypes,
@@ -38,6 +38,15 @@ import {
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
+} from "./modules";
+import {
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createFreegrantAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
 } from "./modules";
 import { DeliverTxResponse, StargateClient } from "./stargateclient";
 
@@ -79,6 +88,18 @@ export interface SigningStargateClientOptions {
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
   readonly gasPrice?: GasPrice;
+}
+
+function createDefaultTypes(prefix: string): AminoConverters {
+  return {
+    ...createAuthzAminoConverters(),
+    ...createBankAminoConverters(),
+    ...createDistributionAminoConverters(),
+    ...createGovAminoConverters(),
+    ...createStakingAminoConverters(prefix),
+    ...createIbcAminoConverters(),
+    ...createFreegrantAminoConverters(),
+  };
 }
 
 export class SigningStargateClient extends StargateClient {
@@ -123,7 +144,8 @@ export class SigningStargateClient extends StargateClient {
     super(tmClient);
     // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
     const prefix = options.prefix ?? "cosmos";
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes({ prefix }) } = options;
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes(prefix)) } =
+      options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;

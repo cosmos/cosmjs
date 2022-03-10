@@ -2,36 +2,14 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { EncodeObject } from "@cosmjs/proto-signing";
 
-import { AminoConverter, AminoConverters } from "./aminoconverters";
-import {
-  createAuthzAminoConverters,
-  createBankAminoConverters,
-  createDistributionAminoConverters,
-  createFreegrantAminoConverters,
-  createGovAminoConverters,
-  createIbcAminoConverters,
-  createStakingAminoConverters,
-} from "./modules";
-
-function createDefaultTypes(prefix: string): AminoConverters {
-  return {
-    ...createAuthzAminoConverters(),
-    ...createBankAminoConverters(),
-    ...createDistributionAminoConverters(),
-    ...createGovAminoConverters(),
-    ...createStakingAminoConverters(prefix),
-    ...createIbcAminoConverters(),
-    ...createFreegrantAminoConverters(),
-  };
+export interface AminoConverter {
+  readonly aminoType: string;
+  readonly toAmino: (value: any) => any;
+  readonly fromAmino: (value: any) => any;
 }
 
-export interface AminoTypesOptions {
-  /**
-   * The Bech32 address prefix of the chain you work with (also called Bech32 human-readable part).
-   */
-  readonly prefix: string;
-  readonly additions?: AminoConverters;
-}
+/** A map from protobuf type URL to the AminoConverter implementation if supported on chain */
+export type AminoConverters = Record<string, AminoConverter | "not_supported_by_chain">;
 
 function isAminoConverter(
   converter: [string, AminoConverter | "not_supported_by_chain"],
@@ -50,9 +28,8 @@ export class AminoTypes {
   // there is no overlap when fromAmino is called.
   private readonly register: Record<string, AminoConverter | "not_supported_by_chain">;
 
-  public constructor({ prefix, additions = {} }: AminoTypesOptions) {
-    const defaultTypes = createDefaultTypes(prefix);
-    this.register = { ...defaultTypes, ...additions };
+  public constructor(types: AminoConverters) {
+    this.register = types;
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {

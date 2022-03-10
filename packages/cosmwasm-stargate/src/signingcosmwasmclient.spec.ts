@@ -9,6 +9,7 @@ import {
   assertIsDeliverTxSuccess,
   coin,
   coins,
+  createStakingAminoConverters,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
@@ -736,6 +737,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -851,39 +853,36 @@ describe("SigningCosmWasmClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
-          prefix: "cosmos",
-          additions: {
-            "/cosmos.staking.v1beta1.MsgDelegate": {
-              aminoType: "cosmos-sdk/MsgDelegate",
-              toAmino: ({
-                customDelegatorAddress,
-                customValidatorAddress,
-                customAmount,
-              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
-                assert(customDelegatorAddress, "missing customDelegatorAddress");
-                assert(customValidatorAddress, "missing validatorAddress");
-                assert(customAmount, "missing amount");
-                assert(customAmount.amount, "missing amount.amount");
-                assert(customAmount.denom, "missing amount.denom");
-                return {
-                  delegator_address: customDelegatorAddress,
-                  validator_address: customValidatorAddress,
-                  amount: {
-                    amount: customAmount.amount,
-                    denom: customAmount.denom,
-                  },
-                };
-              },
-              fromAmino: ({
-                delegator_address,
-                validator_address,
-                amount,
-              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
-                customDelegatorAddress: delegator_address,
-                customValidatorAddress: validator_address,
-                customAmount: Coin.fromPartial(amount),
-              }),
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: ({
+              customDelegatorAddress,
+              customValidatorAddress,
+              customAmount,
+            }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
+              assert(customDelegatorAddress, "missing customDelegatorAddress");
+              assert(customValidatorAddress, "missing validatorAddress");
+              assert(customAmount, "missing amount");
+              assert(customAmount.amount, "missing amount.amount");
+              assert(customAmount.denom, "missing amount.denom");
+              return {
+                delegator_address: customDelegatorAddress,
+                validator_address: customValidatorAddress,
+                amount: {
+                  amount: customAmount.amount,
+                  denom: customAmount.denom,
+                },
+              };
             },
+            fromAmino: ({
+              delegator_address,
+              validator_address,
+              amount,
+            }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
+              customDelegatorAddress: delegator_address,
+              customValidatorAddress: validator_address,
+              customAmount: Coin.fromPartial(amount),
+            }),
           },
         });
         const options = {
@@ -921,6 +920,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -1067,6 +1067,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 
@@ -1156,37 +1157,34 @@ describe("SigningCosmWasmClient", () => {
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
-          prefix: "cosmos",
-          additions: {
-            "/cosmos.staking.v1beta1.MsgDelegate": {
-              aminoType: "cosmos-sdk/MsgDelegate",
-              toAmino: ({
-                customDelegatorAddress,
-                customValidatorAddress,
-                customAmount,
-              }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
-                assert(customDelegatorAddress, "missing customDelegatorAddress");
-                assert(customValidatorAddress, "missing validatorAddress");
-                assert(customAmount, "missing amount");
-                return {
-                  delegator_address: customDelegatorAddress,
-                  validator_address: customValidatorAddress,
-                  amount: {
-                    amount: customAmount.amount,
-                    denom: customAmount.denom,
-                  },
-                };
-              },
-              fromAmino: ({
-                delegator_address,
-                validator_address,
-                amount,
-              }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
-                customDelegatorAddress: delegator_address,
-                customValidatorAddress: validator_address,
-                customAmount: Coin.fromPartial(amount),
-              }),
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: ({
+              customDelegatorAddress,
+              customValidatorAddress,
+              customAmount,
+            }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
+              assert(customDelegatorAddress, "missing customDelegatorAddress");
+              assert(customValidatorAddress, "missing validatorAddress");
+              assert(customAmount, "missing amount");
+              return {
+                delegator_address: customDelegatorAddress,
+                validator_address: customValidatorAddress,
+                amount: {
+                  amount: customAmount.amount,
+                  denom: customAmount.denom,
+                },
+              };
             },
+            fromAmino: ({
+              delegator_address,
+              validator_address,
+              amount,
+            }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
+              customDelegatorAddress: delegator_address,
+              customValidatorAddress: validator_address,
+              customAmount: Coin.fromPartial(amount),
+            }),
           },
         });
         const options = {
@@ -1226,6 +1224,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
+          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
           prefix: wasmd.prefix,
         });
 

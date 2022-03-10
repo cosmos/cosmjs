@@ -6,7 +6,7 @@ import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { AminoConverters } from "../../aminoconverters";
+import { AminoConverters } from "../../aminotypes";
 
 /** Supports submitting arbitrary proposal content. */
 export interface AminoMsgSubmitProposal extends AminoMsg {
