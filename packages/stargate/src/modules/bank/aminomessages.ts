@@ -3,7 +3,7 @@ import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
 // eslint-disable-next-line import/no-cycle
-import { AminoConverters } from "../../aminoconverters";
+import { AminoConverters } from "../../aminotypes";
 
 /** A high level transaction of the coin module */
 export interface AminoMsgSend extends AminoMsg {

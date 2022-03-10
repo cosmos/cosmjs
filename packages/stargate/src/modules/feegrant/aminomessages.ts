@@ -1,4 +1,4 @@
-import { AminoConverters } from "../../aminoconverters";
+import { AminoConverters } from "../../aminotypes";
 
 export function createFreegrantAminoConverters(): AminoConverters {
   return {
