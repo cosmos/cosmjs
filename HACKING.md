@@ -37,6 +37,37 @@ sha256sum -c checksums.sha256
 1. Install dependencies: `yarn install`
 2. Install SDKs (to make IDE integration work): `yarn dlx @yarnpkg/sdks`
 
+## Webpack Configs
+With WebPack 5, you have to be explicit about the usage of Node.js types and modules that were simply replaced with re-implementations for browsers in Webpack 4.
+
+Configs for 0.28 and later:
+```ts
+resolve: {
+      fallback: {
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: false,
+        string_decoder: false,
+      },
+    },
+```
+
+Configs for CosmJS < 0.28
+```ts
+resolve: {
+      fallback: {
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: require.resolve("stream-browserify"),
+        string_decoder: false,
+      },
+    },
+```
+
 ## Running tests
 
 For unit tests that don't connect to any blockchain, just do:
