@@ -25,7 +25,7 @@ import {
 } from "@cosmjs/stargate";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { CodeInfoResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
+import { CodeInfoResponse, QueryContractsByCodeResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./modules";
@@ -334,10 +334,30 @@ export class CosmWasmClient {
     return codeDetails;
   }
 
+  /**
+   * getContracts() returns all contracts and is just looping through all pagination pages.
+   *
+   * This is potentially inefficient and advanced apps should consider creating
+   * their own query client to handle pagination together with the app's screens.
+   */
   public async getContracts(codeId: number): Promise<readonly string[]> {
-    // TODO: handle pagination - accept as arg or auto-loop
-    const { contracts } = await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId);
-    return contracts;
+    const allContracts = [];
+
+    try {
+      let startAtKey: Uint8Array | undefined = undefined;
+      do {
+        const { contracts, pagination }: QueryContractsByCodeResponse =
+          await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
+        const loadedContracts = contracts || [];
+        loadedContracts.reverse();
+        allContracts.unshift(...loadedContracts);
+        startAtKey = pagination?.nextKey;
+      } while (startAtKey?.length !== 0);
+    } catch (_e: any) {
+      throw new Error(_e);
+    }
+
+    return allContracts;
   }
 
   /**
