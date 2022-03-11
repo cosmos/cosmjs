@@ -318,7 +318,6 @@ export class CosmWasmClient {
         const { codeInfos, pagination }: QueryCodesResponse =
           await this.forceGetQueryClient().wasm.listCodeInfo(startAtKey);
         const loadedCodes = codeInfos || [];
-        loadedCodes.reverse();
         allCodes.unshift(...loadedCodes);
         startAtKey = pagination?.nextKey;
       } while (startAtKey?.length !== 0);
