@@ -6,6 +6,8 @@
 import { isNonNullObject } from "@cosmjs/utils";
 import sodium from "libsodium-wrappers";
 
+import { Random } from './random'
+
 export interface Argon2idOptions {
   /** Output length in bytes */
   readonly outputLength: number;
@@ -36,10 +38,11 @@ export function isArgon2idOptions(thing: unknown): thing is Argon2idOptions {
 export class Argon2id {
   public static async execute(
     password: string,
-    salt: Uint8Array,
+    saltInput: Uint8Array,
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
     await sodium.ready;
+    const salt: Uint8Array = saltInput || Random.getBytes(16);
     return sodium.crypto_pwhash(
       options.outputLength,
       password,
