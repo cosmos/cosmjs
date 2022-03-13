@@ -42,7 +42,7 @@ export class Argon2id {
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
     await sodium.ready;
-    const salt: Uint8Array = Random.getBytes(sodium.crypto_pwhash_SALTBYTES);
+    const salt: Uint8Array = saltInput || Random.getBytes(sodium.crypto_pwhash_SALTBYTES);
     return sodium.crypto_pwhash(
       options.outputLength,
       password,
