@@ -325,7 +325,7 @@ export class CosmWasmClient {
       throw new Error(_e);
     }
 
-    return (allCodes || []).map((entry: CodeInfoResponse): Code => {
+    return allCodes.map((entry: CodeInfoResponse): Code => {
       assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
       return {
         id: entry.codeId.toNumber(),
