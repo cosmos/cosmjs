@@ -8,7 +8,7 @@ export interface AuthzExtension {
       granter: string,
       grantee: string,
       msgTypeUrl: string,
-      pagination?: Uint8Array,
+      paginationLey?: Uint8Array,
     ) => Promise<QueryGrantsResponse>;
   };
 }
@@ -21,12 +21,12 @@ export function setupAuthzExtension(base: QueryClient): AuthzExtension {
 
   return {
     authz: {
-      grants: async (granter: string, grantee: string, msgTypeUrl: string, pagination?: Uint8Array) => {
+      grants: async (granter: string, grantee: string, msgTypeUrl: string, paginationKey?: Uint8Array) => {
         const response = await queryService.Grants({
           granter: granter,
           grantee: grantee,
           msgTypeUrl: msgTypeUrl,
-          pagination: createPagination(pagination),
+          pagination: createPagination(paginationKey),
         });
 
         return response;
