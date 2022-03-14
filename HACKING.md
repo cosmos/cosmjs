@@ -38,10 +38,17 @@ sha256sum -c checksums.sha256
 2. Install SDKs (to make IDE integration work): `yarn dlx @yarnpkg/sdks`
 
 ## Webpack Configs
-With WebPack 5, you have to be explicit about the usage of Node.js types and modules that were simply replaced with re-implementations for browsers in Webpack 4.
+
+With WebPack 5, you have to be explicit about the usage of Node.js types and
+modules that were simply replaced with re-implementations for browsers in
+Webpack 4.
 
 Configs for 0.28 and later:
-```ts
+
+```js
+module.exports = [
+  {
+   ...,
     resolve: {
       fallback: {
         buffer: false,
@@ -52,10 +59,16 @@ Configs for 0.28 and later:
         string_decoder: false,
       },
     },
+  },
+];
 ```
 
 Configs for CosmJS < 0.28
-```ts
+
+```js
+module.exports = [
+  {
+   ...,
     resolve: {
       fallback: {
         buffer: false,
@@ -66,6 +79,25 @@ Configs for CosmJS < 0.28
         string_decoder: false,
       },
     },
+  },
+];
+```
+
+Also, in both cases you need the Buffer plugin:
+
+```ts
+module.exports = [
+  {
+   ...,
+    plugins: [
+      ...,
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
+    ...
+  },
+];
 ```
 
 ## Running tests
