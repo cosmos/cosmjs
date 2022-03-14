@@ -342,20 +342,14 @@ export class CosmWasmClient {
    */
   public async getContracts(codeId: number): Promise<readonly string[]> {
     const allContracts = [];
-
-    try {
-      let startAtKey: Uint8Array | undefined = undefined;
-      do {
-        const { contracts, pagination }: QueryContractsByCodeResponse =
-          await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
-        const loadedContracts = contracts || [];
-        loadedContracts.reverse();
-        allContracts.unshift(...loadedContracts);
-        startAtKey = pagination?.nextKey;
-      } while (startAtKey?.length !== 0);
-    } catch (_e: any) {
-      throw new Error(_e);
-    }
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { contracts, pagination }: QueryContractsByCodeResponse =
+        await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
+      const loadedContracts = contracts || [];
+      allContracts.unshift(...loadedContracts);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0 && startAtKey !== undefined);
 
     return allContracts;
   }
