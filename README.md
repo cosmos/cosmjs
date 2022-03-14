@@ -96,6 +96,70 @@ We're happy to adjust this list according to users' needs as long as you don't
 ask for Internet Explorer support. If your environment does not support Wasm, we
 can work on a solution with swappable implementations.
 
+
+## Webpack Configs
+
+With WebPack 5, you have to be explicit about the usage of Node.js types and
+modules that were simply replaced with re-implementations for browsers in
+Webpack 4.
+
+Configs for 0.28 and later:
+
+```js
+module.exports = [
+  {
+   ...,
+    resolve: {
+      fallback: {
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: false,
+        string_decoder: false,
+      },
+    },
+  },
+];
+```
+
+Configs for CosmJS < 0.28
+
+```js
+module.exports = [
+  {
+   ...,
+    resolve: {
+      fallback: {
+        buffer: false,
+        crypto: false,
+        events: false,
+        path: false,
+        stream: require.resolve("stream-browserify"),
+        string_decoder: false,
+      },
+    },
+  },
+];
+```
+
+Also, in both cases you need the Buffer plugin:
+
+```ts
+module.exports = [
+  {
+   ...,
+    plugins: [
+      ...,
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
+    ...
+  },
+];
+```
+
 ## Roadmap
 
 We maintain a [development board](https://github.com/orgs/cosmos/projects/6),
