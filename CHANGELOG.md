@@ -45,7 +45,7 @@ and this project adheres to
   wordlist is shipped. ([#966])
 - @cosmjs/cli: Rename binary `cosmwasm-cli` to `cosmjs-cli` ([#1033]).
 - @cosmjs/stargate & @cosmjs/cosmwasm-stargate: Removed default types from AminoTypes. ([1079])
-- @cosmjs/stargate: Added Authz Queries. ([#1080]).
+- @cosmjs/stargate: Added Authz queries. ([#1080]).
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
