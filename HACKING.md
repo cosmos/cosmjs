@@ -42,7 +42,7 @@ With WebPack 5, you have to be explicit about the usage of Node.js types and mod
 
 Configs for 0.28 and later:
 ```ts
-resolve: {
+    resolve: {
       fallback: {
         buffer: false,
         crypto: false,
