@@ -56,7 +56,7 @@ resolve: {
 
 Configs for CosmJS < 0.28
 ```ts
-resolve: {
+    resolve: {
       fallback: {
         buffer: false,
         crypto: false,
