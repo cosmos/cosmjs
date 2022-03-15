@@ -25,7 +25,11 @@ import {
 } from "@cosmjs/stargate";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { CodeInfoResponse, QueryContractsByCodeResponse } from "cosmjs-types/cosmwasm/wasm/v1/query";
+import {
+  CodeInfoResponse,
+  QueryCodesResponse,
+  QueryContractsByCodeResponse,
+} from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./modules";
@@ -303,9 +307,25 @@ export class CosmWasmClient {
     );
   }
 
+  /**
+   * getCodes() returns all codes and is just looping through all pagination pages.
+   *
+   * This is potentially inefficient and advanced apps should consider creating
+   * their own query client to handle pagination together with the app's screens.
+   */
   public async getCodes(): Promise<readonly Code[]> {
-    const { codeInfos } = await this.forceGetQueryClient().wasm.listCodeInfo();
-    return (codeInfos || []).map((entry: CodeInfoResponse): Code => {
+    const allCodes = [];
+
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { codeInfos, pagination }: QueryCodesResponse =
+        await this.forceGetQueryClient().wasm.listCodeInfo(startAtKey);
+      const loadedCodes = codeInfos || [];
+      allCodes.push(...loadedCodes);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0);
+
+    return allCodes.map((entry: CodeInfoResponse): Code => {
       assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
       return {
         id: entry.codeId.toNumber(),

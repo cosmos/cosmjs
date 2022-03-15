@@ -58,6 +58,7 @@ and this project adheres to
 [#1033]: https://github.com/cosmos/cosmjs/issues/1033
 [#1053]: https://github.com/cosmos/cosmjs/issues/1053
 [#1077]: https://github.com/cosmos/cosmjs/issues/1077
+[#1078]: https://github.com/cosmos/cosmjs/issues/1078
 [#1079]: https://github.com/cosmos/cosmjs/issues/1079
 
 ### Removed
