@@ -350,7 +350,9 @@ export class StargateClient {
     const pollForTx = async (txId: string): Promise<DeliverTxResponse> => {
       if (timedOut) {
         throw new TimeoutError(
-          `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later.`,
+          `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later. There was a wait of ${
+            timeoutMs / 10000
+          } seconds. Approx. ${timeoutMs / pollIntervalMs} blocks were created during this time.`,
           txId,
         );
       }
