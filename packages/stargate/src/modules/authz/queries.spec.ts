@@ -10,7 +10,7 @@ import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
-  pendingWithoutSimapp,
+  pendingWithoutSimapp44,
   simapp,
   simapp44Enabled,
 } from "../../testutils.spec";
@@ -24,7 +24,6 @@ async function makeClientWithAuthz(
 }
 
 describe("AuthzExtension", () => {
-  pendingWithoutSimapp();
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -75,9 +74,8 @@ describe("AuthzExtension", () => {
     }
   });
   describe("grants", () => {
-    pendingWithoutSimapp();
     it("works", async () => {
-      pendingWithoutSimapp();
+      pendingWithoutSimapp44();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
 
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
