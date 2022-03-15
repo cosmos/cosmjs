@@ -335,7 +335,7 @@ export class CosmWasmClient {
   }
 
   /**
-   * getContracts() returns all contracts and is just looping through all pagination pages.
+   * getContracts() returns all contract instances for one code and is just looping through all pagination pages.
    *
    * This is potentially inefficient and advanced apps should consider creating
    * their own query client to handle pagination together with the app's screens.
