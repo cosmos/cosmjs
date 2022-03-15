@@ -352,7 +352,7 @@ export class StargateClient {
         throw new TimeoutError(
           `Transaction with ID ${txId} was submitted but was not yet found on the chain. You might want to check later. There was a wait of ${
             timeoutMs / 10000
-          } seconds. Approx. ${timeoutMs / pollIntervalMs} blocks were created during this time.`,
+          } seconds.`,
           txId,
         );
       }
