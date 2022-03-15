@@ -44,8 +44,12 @@ and this project adheres to
   dependencies. This should also reduce the bundle size as only the English
   wordlist is shipped. ([#966])
 - @cosmjs/cli: Rename binary `cosmwasm-cli` to `cosmjs-cli` ([#1033]).
-- @cosmjs/stargate & @cosmjs/cosmwasm-stargate: Removed default types from AminoTypes. ([#1079])
-- @cosmjs/cosmwasm-stargate: getCodes() automatically loops through all pagination pages now. ([#1077])
+- @cosmjs/stargate & @cosmjs/cosmwasm-stargate: Removed default types from
+  AminoTypes. ([#1079])
+- @cosmjs/cosmwasm-stargate: getCodes() automatically loops through all
+  pagination pages now. ([#1077])
+- @cosmjs/stargate & @cosmjs/cosmwasm-stargate: Timeout Errors shows more
+  relevant information about the timeout. ([#1066])
 
 [#927]: https://github.com/cosmos/cosmjs/issues/927
 [#955]: https://github.com/cosmos/cosmjs/issues/955
@@ -57,6 +61,7 @@ and this project adheres to
 [#1026]: https://github.com/cosmos/cosmjs/issues/1026
 [#1033]: https://github.com/cosmos/cosmjs/issues/1033
 [#1053]: https://github.com/cosmos/cosmjs/issues/1053
+[#1066]: https://github.com/cosmos/cosmjs/issues/1066
 [#1077]: https://github.com/cosmos/cosmjs/issues/1077
 [#1078]: https://github.com/cosmos/cosmjs/issues/1078
 [#1079]: https://github.com/cosmos/cosmjs/issues/1079
