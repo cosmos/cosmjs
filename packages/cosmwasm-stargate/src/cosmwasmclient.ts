@@ -312,18 +312,14 @@ export class CosmWasmClient {
   public async getCodes(): Promise<readonly Code[]> {
     const allCodes = [];
 
-    try {
-      let startAtKey: Uint8Array | undefined = undefined;
-      do {
-        const { codeInfos, pagination }: QueryCodesResponse =
-          await this.forceGetQueryClient().wasm.listCodeInfo(startAtKey);
-        const loadedCodes = codeInfos || [];
-        allCodes.unshift(...loadedCodes);
-        startAtKey = pagination?.nextKey;
-      } while (startAtKey?.length !== 0);
-    } catch (_e: any) {
-      throw new Error(_e);
-    }
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { codeInfos, pagination }: QueryCodesResponse =
+        await this.forceGetQueryClient().wasm.listCodeInfo(startAtKey);
+      const loadedCodes = codeInfos || [];
+      allCodes.push(...loadedCodes);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0);
 
     return allCodes.map((entry: CodeInfoResponse): Code => {
       assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
