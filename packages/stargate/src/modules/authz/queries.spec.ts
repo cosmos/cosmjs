@@ -10,6 +10,7 @@ import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
+  makeRandomAddress,
   pendingWithoutSimapp44,
   simapp,
   simapp44Enabled,
@@ -29,7 +30,7 @@ describe("AuthzExtension", () => {
     gas: "1500000", // 1.5 million
   };
   const granter1Address = faucet.address1;
-  const grantee1Address = faucet.address2;
+  const grantee1Address = makeRandomAddress();
 
   const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 
