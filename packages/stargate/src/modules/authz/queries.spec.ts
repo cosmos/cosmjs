@@ -73,6 +73,7 @@ describe("AuthzExtension", () => {
       client.disconnect();
     }
   });
+
   describe("grants", () => {
     it("works", async () => {
       pendingWithoutSimapp44();
