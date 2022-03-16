@@ -1,7 +1,7 @@
 import { makeCosmoshubPath } from "@cosmjs/amino";
 import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { sleep } from "@cosmjs/utils";
+import { assertDefined, sleep } from "@cosmjs/utils";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 
 import { QueryClient } from "../../queryclient";
@@ -85,20 +85,16 @@ describe("AuthzExtension", () => {
       const grant = response.grants[0];
 
       // Needs to respond with a grant
-      expect(grant.authorization).not.toBeUndefined();
-      expect(grant.authorization).not.toBeNull();
+      assertDefined(grant.authorization);
 
       // Needs to be GenericAuthorization to decode it below
-      expect(grant.authorization?.typeUrl).toBe("/cosmos.authz.v1beta1.GenericAuthorization");
+      expect(grant.authorization?.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
 
-      // If above is true
-      if (grant.authorization) {
-        // Decode the message
-        const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
+      // Decode the message
+      const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
 
-        // Check if its the same one then we granted
-        expect(msgDecoded).toEqual(grantedMsg);
-      }
+      // Check if its the same one then we granted
+      expect(msgDecoded).toEqual(grantedMsg);
 
       tmClient.disconnect();
     });
