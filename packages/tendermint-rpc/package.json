@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/tendermint-rpc",
-  "version": "0.28.0-rc1",
+  "version": "0.28.0-rc2",
   "description": "Tendermint RPC clients",
   "contributors": [
     "IOV SAS <admin@iov.one>",
