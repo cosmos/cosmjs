@@ -44,6 +44,7 @@ and this project adheres to
   dependencies. This should also reduce the bundle size as only the English
   wordlist is shipped. ([#966])
 - @cosmjs/cli: Rename binary `cosmwasm-cli` to `cosmjs-cli` ([#1033]).
+- @cosmjs/stargate: Added Authz queries. ([#1080]).
 - @cosmjs/stargate & @cosmjs/cosmwasm-stargate: Removed default types from
   AminoTypes. ([#1079])
 - @cosmjs/cosmwasm-stargate: getCodes() automatically loops through all
@@ -65,6 +66,7 @@ and this project adheres to
 [#1077]: https://github.com/cosmos/cosmjs/issues/1077
 [#1078]: https://github.com/cosmos/cosmjs/issues/1078
 [#1079]: https://github.com/cosmos/cosmjs/issues/1079
+[#1080]: https://github.com/cosmos/cosmjs/issues/1080
 
 ### Removed
 
