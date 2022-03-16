@@ -31,6 +31,8 @@ describe("AuthzExtension", () => {
   const granter1Address = faucet.address1;
   const grantee1Address = faucet.address2;
 
+  const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
+
   beforeAll(async () => {
     if (simapp44Enabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
@@ -54,7 +56,7 @@ describe("AuthzExtension", () => {
               typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
               value: GenericAuthorization.encode(
                 GenericAuthorization.fromPartial({
-                  msg: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+                  msg: grantedMsg,
                 }),
               ).finish(),
             },
@@ -77,10 +79,25 @@ describe("AuthzExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp44();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
-
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
-      expect(response).not.toBeUndefined();
-      expect(response).not.toBeNull();
+      const grant = response.grants[0];
+
+      // Needs to respond with a grant
+      expect(grant.authorization).not.toBeUndefined();
+      expect(grant.authorization).not.toBeNull();
+
+      // Needs to be GenericAuthorization to decode it below
+      expect(grant.authorization?.typeUrl).toBe("/cosmos.authz.v1beta1.GenericAuthorization");
+
+      // If above is true
+      if (grant.authorization) {
+        // Decode the message
+        const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
+
+        // Check if its the same one then we granted
+        expect(msgDecoded).toEqual(grantedMsg);
+      }
+
       tmClient.disconnect();
     });
   });
