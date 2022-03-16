@@ -8,7 +8,7 @@ export interface AuthzExtension {
       granter: string,
       grantee: string,
       msgTypeUrl: string,
-      paginationLey?: Uint8Array,
+      paginationKey?: Uint8Array,
     ) => Promise<QueryGrantsResponse>;
   };
 }
