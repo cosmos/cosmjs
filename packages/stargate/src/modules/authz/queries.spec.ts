@@ -89,7 +89,7 @@ describe("AuthzExtension", () => {
       assertDefined(grant.authorization);
 
       // Needs to be GenericAuthorization to decode it below
-      expect(grant.authorization?.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
+      expect(grant.authorization.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
 
       // Decode the message
       const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
