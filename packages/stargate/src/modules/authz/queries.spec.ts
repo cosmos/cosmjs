@@ -82,6 +82,7 @@ describe("AuthzExtension", () => {
       pendingWithoutSimapp44();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
+      expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
 
       // Needs to respond with a grant
