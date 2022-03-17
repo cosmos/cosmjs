@@ -150,6 +150,10 @@ and this project adheres to
   object. ([#928])
 - @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Add simulation support
   ([#931]).
+- @cosmjs/cosmwasm-stargate: Rename `BroadcastTx{Success,Failure}` to
+  `DeliverTx{Success,Failure}`, `BroadcastTxResponse` to `DeliverTxResponse`,
+  `isBroadcastTx{Success,Failure}` to `isDeliverTx{Success,Failure}` and
+  `assertIsBroadcastTxSuccess` to `assertIsDeliverTxSuccess`. ([#946])
 - @cosmjs/tendermint-rpc: Remove `Tendermint33Client` and related symbols.
 - @cosmjs/cosmwasm-stargate: Add support for wasmd 0.21. This changes the AMINO
   JSON representation of `Msg{Execute,Instantiate,Migrate}Contract.msg` from
@@ -162,6 +166,7 @@ and this project adheres to
 [#928]: https://github.com/cosmos/cosmjs/issues/928
 [#931]: https://github.com/cosmos/cosmjs/pull/931
 [#709]: https://github.com/cosmos/cosmjs/issues/709
+[#946]: https://github.com/cosmos/cosmjs/pull/946
 [#948]: https://github.com/cosmos/cosmjs/pull/948
 
 ## [0.26.6] - 2022-01-10
