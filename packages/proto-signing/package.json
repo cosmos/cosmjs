@@ -41,14 +41,14 @@
   "dependencies": {
     "@cosmjs/amino": "workspace:packages/amino",
     "@cosmjs/crypto": "workspace:packages/crypto",
+    "@cosmjs/encoding": "workspace:packages/encoding",
     "@cosmjs/math": "workspace:packages/math",
+    "@cosmjs/utils": "workspace:packages/utils",
     "cosmjs-types": "^0.4.0",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2"
   },
   "devDependencies": {
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/utils": "workspace:packages/utils",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^3.8",
