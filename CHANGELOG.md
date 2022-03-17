@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.28.0] - 2022-03-17
+
 ### Changed
 
 - all: The TypeScript compilation target is now ES2018.
@@ -802,7 +804,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.27.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.0...HEAD
+[0.28.0]: https://github.com/cosmos/cosmjs/compare/v0.27.1...v0.28.0
 [0.27.1]: https://github.com/cosmos/cosmjs/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/cosmos/cosmjs/compare/v0.26.6...v0.27.0
 [0.26.6]: https://github.com/cosmos/cosmjs/compare/v0.26.5...v0.26.6
