@@ -7,13 +7,11 @@ export function formatInteger(input: string): string {
 }
 
 export function formatDecimal(input: string): string {
-  let out = Decimal.fromUserInput(input, 18).toString(".", "'");
-  if (out.indexOf(".") === -1) out += ".0";
+  const out = Decimal.fromUserInput(input, 18).toString(".", "'");
   return out;
 }
 
 export function formatCoin(input: Coin, unit: Pick<DenomUnit, "denom" | "exponent">): string {
-  let out = Decimal.fromAtomics(input.amount, unit.exponent).toString(".", "'");
-  if (unit.exponent !== 0 && out.indexOf(".") === -1) out += ".0";
+  const out = Decimal.fromAtomics(input.amount, unit.exponent).toString(".", "'");
   return out + " " + unit.denom;
 }
