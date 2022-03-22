@@ -1,12 +1,12 @@
 import { fromBech32, toBech32 } from "./bech32";
 import { fromHex } from "./hex";
 
-describe("Bech32", () => {
+describe("bech32", () => {
   // test data generate using https://github.com/nym-zone/bech32
   // bech32 -e -h eth 9d4e856e572e442f0a4b2763e72d08a0e99d8ded
   const ethAddressRaw = fromHex("9d4e856e572e442f0a4b2763e72d08a0e99d8ded");
 
-  describe("encode", () => {
+  describe("toBech32", () => {
     it("works", () => {
       expect(toBech32("eth", ethAddressRaw)).toEqual("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw");
     });
@@ -44,7 +44,7 @@ describe("Bech32", () => {
     });
   });
 
-  describe("decode", () => {
+  describe("fromBech32", () => {
     it("works", () => {
       expect(fromBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toEqual({
         prefix: "eth",
