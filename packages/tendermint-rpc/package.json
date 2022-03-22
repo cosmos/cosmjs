@@ -48,12 +48,12 @@
     "@cosmjs/math": "workspace:packages/math",
     "@cosmjs/socket": "workspace:packages/socket",
     "@cosmjs/stream": "workspace:packages/stream",
+    "@cosmjs/utils": "workspace:packages/utils",
     "axios": "^0.21.2",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@cosmjs/utils": "workspace:packages/utils",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^3.8",

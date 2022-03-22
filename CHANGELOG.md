@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/proto-signing: Add missing runtime dependencies @cosmjs/encoding and
+  @cosmjs/utils.
+- @cosmjs/tendermint-rpc: Add missing runtime dependency @cosmjs/utils.
+
 ## [0.28.0] - 2022-03-17
 
 ### Changed
