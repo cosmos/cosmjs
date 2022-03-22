@@ -52,6 +52,15 @@ describe("bech32", () => {
       });
     });
 
+    it("works for upper case address", () => {
+      // "For presentation, lowercase is usually preferable, but inside QR codes uppercase SHOULD be used, as those permit the use of alphanumeric mode, which is 45% more compact than the normal byte mode."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(fromBech32("ETH1N48G2MJH9EZZ7ZJTYA37WTGG5R5EMR0DRKWLGW")).toEqual({
+        prefix: "eth",
+        data: ethAddressRaw,
+      });
+    });
+
     it("works for addresses which exceed the specification limit of 90 characters", () => {
       // Example from https://github.com/cosmos/cosmos-sdk/pull/6237#issuecomment-658116534
       expect(() =>
@@ -69,6 +78,15 @@ describe("bech32", () => {
           90,
         ),
       ).toThrowError(/exceeds length limit/i);
+    });
+
+    it("throws for mixed case addresses", () => {
+      // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(() => fromBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
     });
   });
 });
