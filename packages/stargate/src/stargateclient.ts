@@ -6,7 +6,7 @@ import { sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import {Account, accountFromAny, AccountParser} from "./accounts";
+import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
   AuthExtension,
   BankExtension,
@@ -25,7 +25,6 @@ import {
   SearchTxFilter,
   SearchTxQuery,
 } from "./search";
-import {Any} from "cosmjs-types/google/protobuf/any";
 
 export class TimeoutError extends Error {
   public readonly txId: string;
@@ -138,7 +137,7 @@ export interface PrivateStargateClient {
 }
 
 export interface StargateClientOptions {
-  readonly accountParser?: AccountParser
+  readonly accountParser?: AccountParser;
 }
 
 export class StargateClient {
@@ -149,7 +148,10 @@ export class StargateClient {
   private chainId: string | undefined;
   private readonly accountParser: AccountParser | undefined;
 
-  public static async connect(endpoint: string, options: StargateClientOptions = {}): Promise<StargateClient> {
+  public static async connect(
+    endpoint: string,
+    options: StargateClientOptions = {},
+  ): Promise<StargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
     return new StargateClient(tmClient, options);
   }

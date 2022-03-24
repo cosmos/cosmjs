@@ -1,4 +1,4 @@
-import {encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee, StdSignDoc} from "@cosmjs/amino";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee, StdSignDoc } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
@@ -18,7 +18,7 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import {SignDoc, TxRaw} from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { SignDoc, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 import Long from "long";
@@ -48,7 +48,7 @@ import {
   createIbcAminoConverters,
   createStakingAminoConverters,
 } from "./modules";
-import {DeliverTxResponse, StargateClient, StargateClientOptions} from "./stargateclient";
+import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -69,8 +69,8 @@ function createDefaultRegistry(): Registry {
  * Represents the various signing modes that can be supported by signers.
  */
 export enum SigningMode {
-  AMINO,
-  DIRECT,
+  Amino,
+  Direct,
 }
 
 /**
@@ -342,7 +342,7 @@ export class SigningStargateClient extends StargateClient {
       };
     }
 
-    return this.getSigningMode() == SigningMode.DIRECT
+    return this.getSigningMode() == SigningMode.Direct
       ? this.signDirect(signerAddress, messages, fee, memo, signerData)
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
   }
@@ -354,7 +354,7 @@ export class SigningStargateClient extends StargateClient {
    * @protected
    */
   protected getSigningMode(): SigningMode {
-    return isOfflineDirectSigner(this.signer) ? SigningMode.DIRECT : SigningMode.AMINO;
+    return isOfflineDirectSigner(this.signer) ? SigningMode.Direct : SigningMode.Amino;
   }
 
   protected async signAmino(
@@ -394,13 +394,13 @@ export class SigningStargateClient extends StargateClient {
       signMode,
     );
     return {
-      signerData: {accountNumber, sequence, chainId},
+      signerData: { accountNumber, sequence, chainId },
       signDoc,
       txRaw: TxRaw.fromPartial({
         bodyBytes: signedTxBodyBytes,
         authInfoBytes: signedAuthInfoBytes,
         signatures: [fromBase64(signature.signature)],
-      })
+      }),
     };
   }
 
@@ -432,13 +432,13 @@ export class SigningStargateClient extends StargateClient {
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     return {
-      signerData: {accountNumber, sequence, chainId},
+      signerData: { accountNumber, sequence, chainId },
       signDoc,
       txRaw: TxRaw.fromPartial({
         bodyBytes: signed.bodyBytes,
         authInfoBytes: signed.authInfoBytes,
         signatures: [fromBase64(signature.signature)],
-      })
+      }),
     };
   }
 }
