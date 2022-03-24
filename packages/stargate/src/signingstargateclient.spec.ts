@@ -602,10 +602,10 @@ describe("SigningStargateClient", () => {
           gas: "180000", // 180k
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
 
@@ -632,17 +632,17 @@ describe("SigningStargateClient", () => {
           gas: "180000", // 180k
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
-        const body = TxBody.decode(signed.bodyBytes);
-        const authInfo = AuthInfo.decode(signed.authInfoBytes);
+        const body = TxBody.decode(txRaw.bodyBytes);
+        const authInfo = AuthInfo.decode(txRaw.authInfoBytes);
         // From ModifyingDirectSecp256k1HdWallet
         expect(body.memo).toEqual("This was modified");
         expect({ ...authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
         expect(authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
     });
@@ -671,10 +671,10 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your tokens wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
 
@@ -701,10 +701,10 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your tokens wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
 
@@ -822,10 +822,10 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
 
@@ -852,17 +852,17 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const {txRaw} = await client.sign(faucet.address0, [msgAny], fee, memo);
 
-        const body = TxBody.decode(signed.bodyBytes);
-        const authInfo = AuthInfo.decode(signed.authInfoBytes);
+        const body = TxBody.decode(txRaw.bodyBytes);
+        const authInfo = AuthInfo.decode(txRaw.authInfoBytes);
         // From ModifyingSecp256k1HdWallet
         expect(body.memo).toEqual("This was modified");
         expect({ ...authInfo.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
         expect(authInfo.fee!.gasLimit.toNumber()).toEqual(333333);
 
         // ensure signature is valid
-        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(txRaw).finish()));
         assertIsDeliverTxSuccess(result);
       });
     });

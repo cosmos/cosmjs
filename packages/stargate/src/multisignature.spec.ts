@@ -226,7 +226,7 @@ describe("multisignature", () => {
             sequence: signingInstruction.sequence,
             chainId: signingInstruction.chainId,
           };
-          const { bodyBytes: bb, signatures } = await signingClient.sign(
+          const { txRaw: { bodyBytes: bb, signatures } } = await signingClient.sign(
             address,
             signingInstruction.msgs,
             signingInstruction.fee,
