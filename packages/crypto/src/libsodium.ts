@@ -6,8 +6,6 @@
 import { isNonNullObject } from "@cosmjs/utils";
 import sodium from "libsodium-wrappers";
 
-import { Random } from './random'
-
 export interface Argon2idOptions {
   /** Output length in bytes */
   readonly outputLength: number;
