@@ -34,7 +34,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   console.log("Successfully broadcasted:", result);
 }
 
-// Send transaction (using sendTokens with auto gas and custom muliplier)
+// Send transaction (using sendTokens with auto gas and custom multiplier)
 {
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
   const amount = coins(1234567, "ucosm");
@@ -82,7 +82,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   console.log("Successfully broadcasted:", result);
 }
 
-// Send transaction (using signAndBroadcast with auto gas and custom muliplier)
+// Send transaction (using signAndBroadcast with auto gas and custom multiplier)
 {
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
   const amount = coins(1234567, "ucosm");
