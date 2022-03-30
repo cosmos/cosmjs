@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate: Added the ability to specify a custom account parser for `StargateClient`
+
 ### Fixed
 
 - @cosmjs/proto-signing: Add missing runtime dependencies @cosmjs/encoding and

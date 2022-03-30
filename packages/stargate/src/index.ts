@@ -1,4 +1,4 @@
-export { Account, accountFromAny } from "./accounts";
+export { Account, accountFromAny, AccountParser } from "./accounts";
 export { AminoConverter, AminoConverters, AminoTypes } from "./aminotypes";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
@@ -117,6 +117,7 @@ export {
   isDeliverTxSuccess,
   SequenceResponse,
   StargateClient,
+  StargateClientOptions,
   TimeoutError,
 } from "./stargateclient";
 export { StdFee } from "@cosmjs/amino";

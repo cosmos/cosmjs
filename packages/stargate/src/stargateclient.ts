@@ -6,7 +6,7 @@ import { sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { Account, accountFromAny } from "./accounts";
+import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
   AuthExtension,
   BankExtension,
@@ -136,19 +136,27 @@ export interface PrivateStargateClient {
   readonly tmClient: Tendermint34Client | undefined;
 }
 
+export interface StargateClientOptions {
+  readonly accountParser?: AccountParser;
+}
+
 export class StargateClient {
   private readonly tmClient: Tendermint34Client | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
     | undefined;
   private chainId: string | undefined;
+  private readonly accountParser: AccountParser;
 
-  public static async connect(endpoint: string): Promise<StargateClient> {
+  public static async connect(
+    endpoint: string,
+    options: StargateClientOptions = {},
+  ): Promise<StargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
-    return new StargateClient(tmClient);
+    return new StargateClient(tmClient, options);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined) {
+  protected constructor(tmClient: Tendermint34Client | undefined, options: StargateClientOptions) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -159,6 +167,8 @@ export class StargateClient {
         setupTxExtension,
       );
     }
+    const { accountParser = accountFromAny } = options;
+    this.accountParser = accountParser;
   }
 
   protected getTmClient(): Tendermint34Client | undefined {
@@ -210,7 +220,7 @@ export class StargateClient {
   public async getAccount(searchAddress: string): Promise<Account | null> {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
-      return account ? accountFromAny(account) : null;
+      return account ? this.accountParser(account) : null;
     } catch (error: any) {
       if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;

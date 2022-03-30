@@ -48,7 +48,7 @@ import {
   createIbcAminoConverters,
   createStakingAminoConverters,
 } from "./modules";
-import { DeliverTxResponse, StargateClient } from "./stargateclient";
+import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -81,7 +81,7 @@ export interface PrivateSigningStargateClient {
   readonly registry: Registry;
 }
 
-export interface SigningStargateClientOptions {
+export interface SigningStargateClientOptions extends StargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
   readonly prefix?: string;
@@ -141,7 +141,7 @@ export class SigningStargateClient extends StargateClient {
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {
-    super(tmClient);
+    super(tmClient, options);
     // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
     const prefix = options.prefix ?? "cosmos";
     const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes(prefix)) } =
