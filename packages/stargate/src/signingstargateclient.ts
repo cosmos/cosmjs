@@ -283,8 +283,8 @@ export class SigningStargateClient extends StargateClient {
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const muliplier = typeof fee === "number" ? fee : 1.3;
-      usedFee = calculateFee(Math.round(gasEstimation * muliplier), this.gasPrice);
+      const multiplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
