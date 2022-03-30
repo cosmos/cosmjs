@@ -146,7 +146,7 @@ export class StargateClient {
     | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
     | undefined;
   private chainId: string | undefined;
-  private readonly accountParser: AccountParser | undefined;
+  private readonly accountParser: AccountParser;
 
   public static async connect(
     endpoint: string,
@@ -166,9 +166,9 @@ export class StargateClient {
         setupStakingExtension,
         setupTxExtension,
       );
-      const { accountParser = accountFromAny } = options;
-      this.accountParser = accountParser;
     }
+    const { accountParser = accountFromAny } = options;
+    this.accountParser = accountParser;
   }
 
   protected getTmClient(): Tendermint34Client | undefined {
@@ -201,17 +201,6 @@ export class StargateClient {
     return this.queryClient;
   }
 
-  protected getAccountParser(): AccountParser | undefined {
-    return this.accountParser;
-  }
-
-  protected forceGetAccountParser(): AccountParser {
-    if (!this.accountParser) {
-      throw new Error("Account parser not available. You cannot use online functionality in offline mode.");
-    }
-    return this.accountParser;
-  }
-
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
       const response = await this.forceGetTmClient().status();
@@ -231,7 +220,7 @@ export class StargateClient {
   public async getAccount(searchAddress: string): Promise<Account | null> {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
-      return account ? this.forceGetAccountParser()(account) : null;
+      return account ? this.accountParser(account) : null;
     } catch (error: any) {
       if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;
