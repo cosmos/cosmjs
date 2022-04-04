@@ -10,7 +10,7 @@ import {
   makeSignDoc,
   OfflineSigner,
   Registry,
-  TxBodyEncodeObject,
+  TxBodyEncodeObject
 } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
@@ -383,15 +383,14 @@ export class SigningStargateClient extends StargateClient {
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
     );
+
+    const account = await this.getAccount(signerAddress)
+
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
     let pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
-    const coinType = pathToString(this.signer.accounts[0].hdPath).split('/')[1]
-
-    if (coinType == "60") {
-      pubkey.typeUrl = '/ethermint.crypto.v1.ethsecp256k1.PubKey'
-    }
+    pubkey.typeUrl = account?.pubkey?.typeUrl
 
     const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
@@ -405,7 +404,7 @@ export class SigningStargateClient extends StargateClient {
     const gasLimit = Int53.fromString(fee.gas).toNumber();
     const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc, coinType);
+    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc, account?.pubkey?.typeUrl);
     return TxRaw.fromPartial({
       bodyBytes: signed.bodyBytes,
       authInfoBytes: signed.authInfoBytes,

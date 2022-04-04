@@ -269,7 +269,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     }));
   }
 
-  public async signDirect(signerAddress: string, signDoc: SignDoc, coinType?: string,): Promise<DirectSignResponse> {
+  public async signDirect(signerAddress: string, signDoc: SignDoc, urlType?: string,): Promise<DirectSignResponse> {
     const accounts = await this.getAccountsWithPrivkeys();
     const account = accounts.find(({ address }) => address === signerAddress);
     if (account === undefined) {
@@ -278,15 +278,15 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey, pubkey } = account;
     const signBytes = makeSignBytes(signDoc);
 
-    switch (coinType) {
-        case "60": {
+    switch (urlType) {
+        case '/ethermint.crypto.v1.ethsecp256k1.PubKey': {
             // eth signing 
             const hashedMessage = new Keccak256(signBytes).digest()
             const signature = await Secp256k1.createSignature(hashedMessage, privkey);
             const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
             const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes);
             let newStdsignature = stdSignature
-            newStdsignature.pub_key.type = '/ethermint.crypto.v1.ethsecp256k1.PubKey'
+            newStdsignature.pub_key.type = urlType
 
             return {
               signed: signDoc,
