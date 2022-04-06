@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs"
+    "url": "https://github.com/vincentysc/cosmjs.git"
   },
   "publishConfig": {
     "access": "public",
