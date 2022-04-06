@@ -12,6 +12,7 @@ and this project adheres to
 
 - @cosmjs/stargate: Added the ability to specify a custom account parser for
   `StargateClient`
+- @cosmjs/stargate: Added support for vesting messages.
 
 ### Fixed
 
