@@ -102,6 +102,7 @@ function createDefaultTypes(prefix: string): AminoConverters {
     ...createStakingAminoConverters(prefix),
     ...createIbcAminoConverters(),
     ...createFreegrantAminoConverters(),
+    ...createVestingAminoConverters(),
   };
 }
 
