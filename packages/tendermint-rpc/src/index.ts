@@ -12,6 +12,10 @@ export {
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
+export {
+  // This type is part of the Tendermint34Client.connect API
+  HttpEndpoint,
+} from "./rpcclients";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export {
   AbciInfoRequest,

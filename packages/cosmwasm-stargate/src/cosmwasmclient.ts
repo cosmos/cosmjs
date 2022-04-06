@@ -23,7 +23,7 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   CodeInfoResponse,
@@ -89,7 +89,7 @@ export class CosmWasmClient {
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
-  public static async connect(endpoint: string): Promise<CosmWasmClient> {
+  public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
     return new CosmWasmClient(tmClient);
   }

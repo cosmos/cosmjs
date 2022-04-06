@@ -12,7 +12,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -116,7 +116,7 @@ export class SigningStargateClient extends StargateClient {
   private readonly gasPrice: GasPrice | undefined;
 
   public static async connectWithSigner(
-    endpoint: string,
+    endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {

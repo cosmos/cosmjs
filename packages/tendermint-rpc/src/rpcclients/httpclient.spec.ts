@@ -13,13 +13,13 @@ const tendermintUrl = defaultInstance.url;
 describe("http", () => {
   it("can send a health request", async () => {
     pendingWithoutTendermint();
-    const response = await http("POST", `http://${tendermintUrl}`, createJsonRpcRequest("health"));
+    const response = await http("POST", `http://${tendermintUrl}`, undefined, createJsonRpcRequest("health"));
     expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
   });
 
   it("errors for non-open port", async () => {
     await expectAsync(
-      http("POST", `http://localhost:56745`, createJsonRpcRequest("health")),
+      http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
     ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch)/i);
   });
 });
