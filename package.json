@@ -1,6 +1,7 @@
 {
   "name": "cosmjs-monorepo-root",
   "description": "Transaction codec and client to communicate with any wasmd blockchain",
+  "version": "0.0.1",
   "private": true,
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
