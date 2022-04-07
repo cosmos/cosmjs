@@ -6,13 +6,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+- @cosmjs/stargate: Added support for vesting messages.
+
 ## [0.28.1] - 2022-03-30
 
 ### Added
 
 - @cosmjs/stargate: Added the ability to specify a custom account parser for
   `StargateClient`
-- @cosmjs/stargate: Added support for vesting messages.
 
 ### Fixed
 
