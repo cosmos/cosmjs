@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.28.2] - 2022-04-07
+
 ### Added
 
 - @cosmjs/encoding: Create `normalizeBech32`.
@@ -827,7 +829,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.2...HEAD
+[0.28.2]: https://github.com/cosmos/cosmjs/compare/v0.28.1...v0.28.2
 [0.28.1]: https://github.com/cosmos/cosmjs/compare/v0.28.0...v0.28.1
 [0.28.0]: https://github.com/cosmos/cosmjs/compare/v0.27.1...v0.28.0
 [0.27.1]: https://github.com/cosmos/cosmjs/compare/v0.27.0...v0.27.1
