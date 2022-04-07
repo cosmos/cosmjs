@@ -1,4 +1,4 @@
-import { fromBech32, toBech32 } from "./bech32";
+import { fromBech32, normalizeBech32, toBech32 } from "./bech32";
 import { fromHex } from "./hex";
 
 describe("bech32", () => {
@@ -87,6 +87,26 @@ describe("bech32", () => {
       expect(() => fromBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
       expect(() => fromBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
       expect(() => fromBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+    });
+  });
+
+  describe("normalizeBech32", () => {
+    it("works", () => {
+      expect(normalizeBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toEqual(
+        "eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw",
+      );
+      expect(normalizeBech32("ETH1N48G2MJH9EZZ7ZJTYA37WTGG5R5EMR0DRKWLGW")).toEqual(
+        "eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw",
+      );
+    });
+
+    it("throws for mixed case addresses", () => {
+      // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(() => normalizeBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
     });
   });
 });

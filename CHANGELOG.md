@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/encoding: Create `normalizeBech32`.
+
 ## [0.28.1] - 2022-03-30
 
 ### Added
