@@ -1,12 +1,12 @@
-import { fromBech32, toBech32 } from "./bech32";
+import { fromBech32, normalizeBech32, toBech32 } from "./bech32";
 import { fromHex } from "./hex";
 
-describe("Bech32", () => {
+describe("bech32", () => {
   // test data generate using https://github.com/nym-zone/bech32
   // bech32 -e -h eth 9d4e856e572e442f0a4b2763e72d08a0e99d8ded
   const ethAddressRaw = fromHex("9d4e856e572e442f0a4b2763e72d08a0e99d8ded");
 
-  describe("encode", () => {
+  describe("toBech32", () => {
     it("works", () => {
       expect(toBech32("eth", ethAddressRaw)).toEqual("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw");
     });
@@ -44,9 +44,18 @@ describe("Bech32", () => {
     });
   });
 
-  describe("decode", () => {
+  describe("fromBech32", () => {
     it("works", () => {
       expect(fromBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toEqual({
+        prefix: "eth",
+        data: ethAddressRaw,
+      });
+    });
+
+    it("works for upper case address", () => {
+      // "For presentation, lowercase is usually preferable, but inside QR codes uppercase SHOULD be used, as those permit the use of alphanumeric mode, which is 45% more compact than the normal byte mode."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(fromBech32("ETH1N48G2MJH9EZZ7ZJTYA37WTGG5R5EMR0DRKWLGW")).toEqual({
         prefix: "eth",
         data: ethAddressRaw,
       });
@@ -69,6 +78,35 @@ describe("Bech32", () => {
           90,
         ),
       ).toThrowError(/exceeds length limit/i);
+    });
+
+    it("throws for mixed case addresses", () => {
+      // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(() => fromBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+    });
+  });
+
+  describe("normalizeBech32", () => {
+    it("works", () => {
+      expect(normalizeBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toEqual(
+        "eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw",
+      );
+      expect(normalizeBech32("ETH1N48G2MJH9EZZ7ZJTYA37WTGG5R5EMR0DRKWLGW")).toEqual(
+        "eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw",
+      );
+    });
+
+    it("throws for mixed case addresses", () => {
+      // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
+      // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
+      expect(() => normalizeBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
     });
   });
 });

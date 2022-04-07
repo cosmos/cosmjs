@@ -17,6 +17,17 @@ export function fromBech32(
 }
 
 /**
+ * Takes a bech32 address and returns a normalized (i.e. lower case) representation of it.
+ *
+ * The input is validated along the way, which makes this significantly safer than
+ * using `address.toLowerCase()`.
+ */
+export function normalizeBech32(address: string): string {
+  const { prefix, data } = fromBech32(address);
+  return toBech32(prefix, data);
+}
+
+/**
  * @deprecated This class is deprecated and will be removed soon. Please use fromBech32() and toBech32() instead. For more details please refer to https://github.com/cosmos/cosmjs/issues/1053.
  */
 export class Bech32 {
