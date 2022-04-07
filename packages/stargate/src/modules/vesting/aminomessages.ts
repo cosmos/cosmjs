@@ -4,7 +4,6 @@ import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx"
 import Long from "long";
 
 import { AminoConverters } from "../../aminotypes";
-
 export interface AminoMsgCreateVestingAccount extends AminoMsg {
   readonly type: "cosmos-sdk/MsgCreateVestingAccount";
   readonly value: {
@@ -13,7 +12,7 @@ export interface AminoMsgCreateVestingAccount extends AminoMsg {
     /** Bech32 account address */
     readonly to_address: string;
     readonly amount: readonly Coin[];
-    readonly end_time: Long;
+    readonly end_time: string;
     readonly delayed: boolean;
   };
 }
@@ -36,7 +35,7 @@ export function createVestingAminoConverters(): AminoConverters {
         from_address: fromAddress,
         to_address: toAddress,
         amount: [...amount],
-        end_time: endTime,
+        end_time: endTime.toString(),
         delayed: delayed,
       }),
       fromAmino: ({
@@ -49,7 +48,7 @@ export function createVestingAminoConverters(): AminoConverters {
         fromAddress: from_address,
         toAddress: to_address,
         amount: [...amount],
-        endTime: end_time,
+        endTime: Long.fromString(end_time),
         delayed: delayed,
       }),
     },
