@@ -86,9 +86,5 @@ export {
 } from "./staking/messages";
 export { setupStakingExtension, StakingExtension } from "./staking/queries";
 export { setupTxExtension, TxExtension } from "./tx/queries";
-export {
-  AminoMsgCreateVestingAccount,
-  createVestingAminoConverters,
-  isAminoMsgCreateVestingAccount,
-} from "./vesting/aminomessages";
+export { createVestingAminoConverters } from "./vesting/aminomessages";
 export { vestingTypes } from "./vesting/messages";
