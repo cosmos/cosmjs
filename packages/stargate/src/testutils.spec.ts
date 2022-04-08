@@ -99,6 +99,7 @@ export const slowSimapp = {
 export const defaultSigningClientOptions: SigningStargateClientOptions = {
   broadcastPollIntervalMs: 300,
   broadcastTimeoutMs: 8_000,
+  gasPrice: GasPrice.fromString("0.01ucosm"),
 };
 
 export const faucet = {
