@@ -38,7 +38,6 @@ import {
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
-  vestingTypes,
 } from "./modules";
 import {
   createAuthzAminoConverters,
@@ -48,7 +47,6 @@ import {
   createGovAminoConverters,
   createIbcAminoConverters,
   createStakingAminoConverters,
-  createVestingAminoConverters,
 } from "./modules";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
@@ -61,7 +59,6 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ...govTypes,
   ...stakingTypes,
   ...ibcTypes,
-  ...vestingTypes,
 ];
 
 function createDefaultRegistry(): Registry {
@@ -102,7 +99,6 @@ function createDefaultTypes(prefix: string): AminoConverters {
     ...createStakingAminoConverters(prefix),
     ...createIbcAminoConverters(),
     ...createFreegrantAminoConverters(),
-    ...createVestingAminoConverters(),
   };
 }
 
