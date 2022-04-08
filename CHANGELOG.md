@@ -11,7 +11,12 @@ and this project adheres to
 ### Added
 
 - @cosmjs/encoding: Create `normalizeBech32`.
-- @cosmjs/stargate: Added support for vesting messages.
+- @cosmjs/stargate: Added support for `MsgCreateVestingAccount` ([#1074]).
+  Please note that Amino JSON signing is currently not available for this type
+  ([#1115]).
+
+[#1074]: https://github.com/cosmos/cosmjs/issues/1074
+[#1115]: https://github.com/cosmos/cosmjs/issues/1115
 
 ## [0.28.1] - 2022-03-30
 
