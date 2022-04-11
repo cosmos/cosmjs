@@ -284,13 +284,11 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
             const hashedMessage = new Keccak256(signBytes).digest()
             const signature = await Secp256k1.createSignature(hashedMessage, privkey);
             const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-            const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes);
-            let newStdsignature = stdSignature
-            newStdsignature.pub_key.type = urlType
+            const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes, "/ethermint.crypto.v1.ethsecp256k1.PubKey");
 
             return {
               signed: signDoc,
-              signature: newStdsignature
+              signature: stdSignature
             };
         }
         default: {
@@ -360,10 +358,10 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
     const { pubkey } = await Secp256k1.makeKeypair(privkey);
     
-    const coinType = pathToString(hdPath).split('/')[1]
+    const coinType = pathToString(hdPath).split('/')[2]
     switch (coinType) {
       // ETH cointype=60
-      case "60": // 65 byte len
+      case "60'": // 65 byte len
         return {
           privkey: privkey,
           pubkey: pubkey
@@ -381,19 +379,19 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
       this.accounts.map(async ({ hdPath, prefix }) => {
         const { privkey, pubkey } = await this.getKeyPair(hdPath);
 
-        const coinType = pathToString(hdPath).split('/')[1]
+        const coinType = pathToString(hdPath).split('/')[2]
         switch (coinType) {
-          case "60":
-            const hash = toHex(new Keccak256(pubkey.slice(1)).digest())
-            const lastTwentyBytes = hash.slice(-20);
+          case "60'":
+            const hash = new Keccak256(pubkey.slice(1)).digest()
+            const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address
-            const address = DirectSecp256k1HdWallet.toChecksummedAddress(lastTwentyBytes)
+            const address = DirectSecp256k1HdWallet.toChecksummedAddress('0x' + lastTwentyBytes)
 
             return {
               algo: "secp256k1" as const,
               privkey: privkey,
               pubkey: Secp256k1.compressPubkey(pubkey),
-              address: await DirectSecp256k1HdWallet.getBech32AddressFromEVMAddress(address.replace('0x', ''), prefix)
+              address: await DirectSecp256k1HdWallet.getBech32AddressFromEVMAddress(address, prefix)
             };
           default: 
             return {
@@ -407,7 +405,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     );
   }
   private static async getBech32AddressFromEVMAddress(evmAddress: string, bech32Prefix: string): Promise<string> {
-    if (!DirectSecp256k1HdWallet.isAddress(evmAddress)) {
+    if (!DirectSecp256k1HdWallet.isAddress(evmAddress.toLowerCase())) {
         throw new TypeError('Please provide a valid EVM compatible address.');
     }
 
