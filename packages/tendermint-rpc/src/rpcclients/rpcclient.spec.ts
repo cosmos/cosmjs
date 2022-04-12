@@ -6,7 +6,7 @@ import { WebsocketClient } from "./websocketclient";
 
 function pendingWithoutTendermint(): void {
   if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable tendermint rpc tests");
+    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
   }
 }
 
