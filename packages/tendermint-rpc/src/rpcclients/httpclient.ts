@@ -11,8 +11,6 @@ import { hasProtocol, RpcClient } from "./rpcclient";
 // Global symbols in some environments
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
 declare const fetch: any | undefined;
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const Headers: any | undefined;
 
 function filterBadStatus(res: any): any {
   if (res.status >= 400) {
@@ -34,11 +32,14 @@ export async function http(
   request?: any,
 ): Promise<any> {
   if (typeof fetch !== "undefined") {
-    const body = request ? JSON.stringify(request) : undefined;
     const settings = {
       method: method,
-      body: body,
-      headers: headers ? new Headers(headers) : undefined,
+      body: request ? JSON.stringify(request) : undefined,
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "Content-Type": "application/json",
+        ...headers,
+      },
     };
     return fetch(url, settings)
       .then(filterBadStatus)
