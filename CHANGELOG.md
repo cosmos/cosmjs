@@ -10,7 +10,14 @@ and this project adheres to
 
 - @cosmjs/math: Add `Decimal.zero` and `Decimal.one` ([#1110]).
 
+### Changed
+
+- @cosmjs/faucet: Docker build image is 90 % smaller now (from 500 MB to 50 MB)
+  due to build system optimizations ([#1120], [#1121]).
+
 [#1110]: https://github.com/cosmos/cosmjs/issues/1110
+[#1120]: https://github.com/cosmos/cosmjs/pull/1120
+[#1121]: https://github.com/cosmos/cosmjs/pull/1121
 
 ## [0.28.3] - 2022-04-11
 
