@@ -41,6 +41,7 @@ workflows:
       - coverage:
           requires:
             - build
+      - faucet-docker
 
 jobs:
   build:
@@ -573,3 +574,32 @@ jobs:
       - run:
           name: Format shell scripts
           command: yarn format-shell
+  faucet-docker:
+    docker:
+      - image: cimg/go:1.17.8
+    steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: |
+            sudo apt update
+            sudo apt install git-lfs
+      - checkout
+      - setup_remote_docker:
+          # >= v20.10 https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
+          version: 20.10.11
+      - run:
+          name: Build faucet Docker image
+          # Use ${CIRCLE_TAG}
+          command: |
+            docker build --pull -t "confio/faucet:$CIRCLE_SHA1" -f packages/faucet/Dockerfile .
+      - run:
+          name: Check docker image can be executed
+          command: |
+            docker run --rm "confio/faucet:$CIRCLE_SHA1" version
+            docker run --rm "confio/faucet:$CIRCLE_SHA1" generate
+      # - run:
+      #     name: Push image to Docker Hub
+      #     command: |
+      #       docker login --password-stdin -u "$DOCKER_USER" \<<<"$DOCKER_PASS"
+      #       docker push "confio/faucet:$CIRCLE_SHA1"
+      #       docker logout
