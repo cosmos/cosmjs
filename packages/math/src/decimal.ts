@@ -58,6 +58,28 @@ export class Decimal {
     return new Decimal(atomics, fractionalDigits);
   }
 
+  /**
+   * Creates a Decimal with value 0.0 and the given number of fractial digits.
+   *
+   * Fractional digits are not relevant for the value but needed to be able
+   * to perform arithmetic operations with other decimals.
+   */
+  public static zero(fractionalDigits: number): Decimal {
+    Decimal.verifyFractionalDigits(fractionalDigits);
+    return new Decimal("0", fractionalDigits);
+  }
+
+  /**
+   * Creates a Decimal with value 1.0 and the given number of fractial digits.
+   *
+   * Fractional digits are not relevant for the value but needed to be able
+   * to perform arithmetic operations with other decimals.
+   */
+  public static one(fractionalDigits: number): Decimal {
+    Decimal.verifyFractionalDigits(fractionalDigits);
+    return new Decimal("1" + "0".repeat(fractionalDigits), fractionalDigits);
+  }
+
   private static verifyFractionalDigits(fractionalDigits: number): void {
     if (!Number.isInteger(fractionalDigits)) throw new Error("Fractional digits is not an integer");
     if (fractionalDigits < 0) throw new Error("Fractional digits must not be negative");

@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/math: Add `Decimal.zero` and `Decimal.one` ([#1110]).
+
+[#1110]: https://github.com/cosmos/cosmjs/issues/1110
+
 ## [0.28.3] - 2022-04-11
 
 ### Added
