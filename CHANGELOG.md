@@ -14,7 +14,16 @@ and this project adheres to
 
 - @cosmjs/faucet: Docker build image is 90 % smaller now (from 500 MB to 50 MB)
   due to build system optimizations ([#1120], [#1121]).
+- @cosmjs/cosmwasm-stargate: `CosmWasmClient.connect` and
+  `SigningCosmWasmClient.connectWithSigner` now accept custom HTTP headers
+  ([#1007])
+- @cosmjs/stargate: `StargateClient.connect` and
+  `SigningStargateClient.connectWithSigner` now accept custom HTTP headers
+  ([#1007])
+- @cosmjs/tendermint-rpc: `Tendermint34Client.connect` now accepts custom HTTP
+  headers ([#1007]).
 
+[#1007]: https://github.com/cosmos/cosmjs/issues/1007
 [#1110]: https://github.com/cosmos/cosmjs/issues/1110
 [#1120]: https://github.com/cosmos/cosmjs/pull/1120
 [#1121]: https://github.com/cosmos/cosmjs/pull/1121
