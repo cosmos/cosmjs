@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toHex } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
-import { Decimal } from "@cosmjs/math";
+import { Decimal, Uint53 } from "@cosmjs/math";
 import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
