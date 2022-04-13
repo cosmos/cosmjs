@@ -17,3 +17,6 @@ if [ -n "${SIMAPP42_ENABLED:-}" ]; then
   yarn node ./bin/cosmjs-cli --init examples/stargate.ts --code "process.exit(0)"
   yarn node ./bin/cosmjs-cli --init examples/simulate.ts --code "process.exit(0)"
 fi
+
+# Disabled as this requires internet access
+# yarn node ./bin/cosmjs-cli --init examples/figment.ts --code "process.exit(0)"
