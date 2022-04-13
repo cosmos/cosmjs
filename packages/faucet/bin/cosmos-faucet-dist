@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+const path = require("path");
+
+// attempt to call in main file....
+const faucet = require(path.join(__dirname, "..", "dist", "node", "cli.js"));
+faucet.main(process.argv.slice(2));

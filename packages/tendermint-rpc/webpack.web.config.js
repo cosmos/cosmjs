@@ -16,7 +16,10 @@ module.exports = [
       filename: "tests.js",
     },
     plugins: [
-      new webpack.EnvironmentPlugin({ TENDERMINT_ENABLED: "" }),
+      new webpack.EnvironmentPlugin({
+        HTTPSERVER_ENABLED: "",
+        TENDERMINT_ENABLED: "",
+      }),
       new webpack.ProvidePlugin({
         Buffer: ["buffer", "Buffer"],
       }),

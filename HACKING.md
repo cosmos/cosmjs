@@ -28,7 +28,7 @@ To verify everything worked as expected, check if the testing contracts are
 correctly checked out:
 
 ```sh
-cd scripts/launchpad/contracts
+cd scripts/wasmd/contracts
 sha256sum -c checksums.sha256
 ```
 
@@ -64,13 +64,19 @@ export TENDERMINT_ENABLED=1
 ./scripts/socketserver/start.sh
 export SOCKETSERVER_ENABLED=1
 
+# Start Http server
+./scripts/httpserver/start.sh
+export HTTPSERVER_ENABLED=1
+
 # now more tests are running that were marked as "pending" before
 yarn test
 
 # And at the end of the day
+unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
 unset LAUNCHPAD_ENABLED
+./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh
 ./scripts/launchpad/stop.sh
@@ -100,6 +106,7 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 1319  | wasmd LCD API         | Manual Stargate debugging       |
 | 4444  | socketserver          | @cosmjs/sockets tests           |
 | 4445  | socketserver slow     | @cosmjs/sockets tests           |
+| 5555  | httpserver            | @cosmjs/tendermint-rpc tests    |
 | 9090  | simapp gRPC           | Manual Stargate debugging       |
 | 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests    |
 | 26658 | simapp Tendermint RPC | Stargate client tests           |

@@ -133,6 +133,50 @@ describe("Decimal", () => {
     });
   });
 
+  describe("zero", () => {
+    it("works", () => {
+      expect(Decimal.zero(0).toString()).toEqual("0");
+      expect(Decimal.zero(1).toString()).toEqual("0");
+      expect(Decimal.zero(2).toString()).toEqual("0");
+      expect(Decimal.zero(30).toString()).toEqual("0");
+
+      expect(Decimal.zero(0).fractionalDigits).toEqual(0);
+      expect(Decimal.zero(1).fractionalDigits).toEqual(1);
+      expect(Decimal.zero(2).fractionalDigits).toEqual(2);
+      expect(Decimal.zero(30).fractionalDigits).toEqual(30);
+
+      expect(Decimal.zero(0).atomics).toEqual("0");
+      expect(Decimal.zero(1).atomics).toEqual("0");
+      expect(Decimal.zero(2).atomics).toEqual("0");
+      expect(Decimal.zero(30).atomics).toEqual("0");
+
+      expect(() => Decimal.zero(NaN)).toThrowError(/Fractional digits is not an integer/i);
+      expect(() => Decimal.zero(1.2)).toThrowError(/Fractional digits is not an integer/i);
+    });
+  });
+
+  describe("one", () => {
+    it("works", () => {
+      expect(Decimal.one(0).toString()).toEqual("1");
+      expect(Decimal.one(1).toString()).toEqual("1");
+      expect(Decimal.one(2).toString()).toEqual("1");
+      expect(Decimal.one(30).toString()).toEqual("1");
+
+      expect(Decimal.one(0).fractionalDigits).toEqual(0);
+      expect(Decimal.one(1).fractionalDigits).toEqual(1);
+      expect(Decimal.one(2).fractionalDigits).toEqual(2);
+      expect(Decimal.one(30).fractionalDigits).toEqual(30);
+
+      expect(Decimal.one(0).atomics).toEqual("1");
+      expect(Decimal.one(1).atomics).toEqual("10");
+      expect(Decimal.one(2).atomics).toEqual("100");
+      expect(Decimal.one(30).atomics).toEqual("1000000000000000000000000000000");
+
+      expect(() => Decimal.one(NaN)).toThrowError(/Fractional digits is not an integer/i);
+      expect(() => Decimal.one(1.2)).toThrowError(/Fractional digits is not an integer/i);
+    });
+  });
+
   describe("toString", () => {
     it("displays no decimal point for full numbers", () => {
       expect(Decimal.fromUserInput("44", 0).toString()).toEqual("44");
