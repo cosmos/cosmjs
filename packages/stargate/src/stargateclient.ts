@@ -289,6 +289,7 @@ export class StargateClient {
 
     const sumValues = allDelegations.reduce(
       (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
+        // Safe because field is set to non-nullable (https://github.com/cosmos/cosmos-sdk/blob/v0.45.3/proto/cosmos/staking/v1beta1/staking.proto#L295)
         assert(currentValue.balance);
         return previousValue !== null
           ? this.addCoins(previousValue, currentValue.balance)
