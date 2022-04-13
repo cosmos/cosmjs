@@ -285,7 +285,7 @@ export class StargateClient {
       const loadedDelegations = delegationResponses || [];
       allDelegations.push(...loadedDelegations);
       startAtKey = pagination?.nextKey;
-    } while (startAtKey?.length !== 0 && startAtKey !== undefined);
+    } while (startAtKey !== undefined && startAtKey.length !== 0);
 
     const sumValues = allDelegations.reduce(
       (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
