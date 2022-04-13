@@ -263,7 +263,7 @@ describe("StargateClient", () => {
         const client = await StargateClient.connect(simapp.tendermintUrl);
         const response = await client.getBalanceStaked(faucet.address0);
 
-        expect(response).toEqual({ denom: "ustake", amount: "190422" });
+        expect(response).toEqual({ denom: "ustake", amount: "63474" });
       });
     });
 
