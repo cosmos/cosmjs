@@ -9,6 +9,8 @@ and this project adheres to
 ### Added
 
 - @cosmjs/math: Add `Decimal.zero` and `Decimal.one` ([#1110]).
+- @cosmjs/amino: Add `addCoins` ([#1116])
+- @cosmjs/stargate: Add `StargateClient.getBalanceStaked()` to query the sum of all staked balance. ([#1116])
 
 ### Changed
 
@@ -27,6 +29,7 @@ and this project adheres to
 [#1110]: https://github.com/cosmos/cosmjs/issues/1110
 [#1120]: https://github.com/cosmos/cosmjs/pull/1120
 [#1121]: https://github.com/cosmos/cosmjs/pull/1121
+[#1116]: https://github.com/cosmos/cosmjs/issues/1116
 
 ## [0.28.3] - 2022-04-11
 
