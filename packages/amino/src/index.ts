@@ -4,7 +4,7 @@ export {
   rawEd25519PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
 } from "./addresses";
-export { Coin, coin, coins, parseCoins } from "./coins";
+export { addCoins, Coin, coin, coins, parseCoins } from "./coins";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,

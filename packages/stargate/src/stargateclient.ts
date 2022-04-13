@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { addCoins } from "@cosmjs/amino";
 import { toHex } from "@cosmjs/encoding";
-import { Decimal, Uint53 } from "@cosmjs/math";
+import { Uint53 } from "@cosmjs/math";
 import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
@@ -291,9 +292,7 @@ export class StargateClient {
       (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
         // Safe because field is set to non-nullable (https://github.com/cosmos/cosmos-sdk/blob/v0.45.3/proto/cosmos/staking/v1beta1/staking.proto#L295)
         assert(currentValue.balance);
-        return previousValue !== null
-          ? this.addCoins(previousValue, currentValue.balance)
-          : currentValue.balance;
+        return previousValue !== null ? addCoins(previousValue, currentValue.balance) : currentValue.balance;
       },
       null,
     );
@@ -444,16 +443,5 @@ export class StargateClient {
         gasWanted: tx.result.gasWanted,
       };
     });
-  }
-
-  /**
-   * Function to sum up coins with type Coin
-   */
-  private addCoins(lhs: Coin, rhs: Coin): Coin {
-    if (lhs.denom !== rhs.denom) throw new Error("Trying to add two coins with different demoms");
-    return {
-      amount: Decimal.fromAtomics(lhs.amount, 0).plus(Decimal.fromAtomics(rhs.amount, 0)).atomics,
-      denom: lhs.denom,
-    };
   }
 }
