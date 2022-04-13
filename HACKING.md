@@ -28,7 +28,7 @@ To verify everything worked as expected, check if the testing contracts are
 correctly checked out:
 
 ```sh
-cd scripts/launchpad/contracts
+cd scripts/wasmd/contracts
 sha256sum -c checksums.sha256
 ```
 
