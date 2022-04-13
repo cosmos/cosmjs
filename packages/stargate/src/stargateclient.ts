@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { addCoins } from "@cosmjs/amino";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
+import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
@@ -271,6 +274,30 @@ export class StargateClient {
    */
   public async getAllBalances(address: string): Promise<readonly Coin[]> {
     return this.forceGetQueryClient().bank.allBalances(address);
+  }
+
+  public async getBalanceStaked(address: string): Promise<Coin | null> {
+    const allDelegations = [];
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { delegationResponses, pagination }: QueryDelegatorDelegationsResponse =
+        await this.forceGetQueryClient().staking.delegatorDelegations(address, startAtKey);
+
+      const loadedDelegations = delegationResponses || [];
+      allDelegations.push(...loadedDelegations);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey !== undefined && startAtKey.length !== 0);
+
+    const sumValues = allDelegations.reduce(
+      (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
+        // Safe because field is set to non-nullable (https://github.com/cosmos/cosmos-sdk/blob/v0.45.3/proto/cosmos/staking/v1beta1/staking.proto#L295)
+        assert(currentValue.balance);
+        return previousValue !== null ? addCoins(previousValue, currentValue.balance) : currentValue.balance;
+      },
+      null,
+    );
+
+    return sumValues;
   }
 
   public async getDelegation(delegatorAddress: string, validatorAddress: string): Promise<Coin | null> {

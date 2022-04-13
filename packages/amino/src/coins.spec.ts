@@ -1,4 +1,4 @@
-import { coin, coins, parseCoins } from "./coins";
+import { addCoins, coin, coins, parseCoins } from "./coins";
 
 describe("coins", () => {
   describe("coin", () => {
@@ -136,6 +136,41 @@ describe("coins", () => {
 
       // amount missing
       expect(() => parseCoins("ucosm")).toThrowError(/invalid coin string/i);
+    });
+  });
+
+  describe("addCoins", () => {
+    it("works with same denom", () => {
+      const balance1 = {
+        amount: "10000",
+        denom: "utest",
+      };
+
+      const balance2 = {
+        amount: "20000",
+        denom: "utest",
+      };
+
+      const expectedBalance = {
+        amount: "30000",
+        denom: "utest",
+      };
+      expect(addCoins(balance1, balance2)).toEqual(expectedBalance);
+    });
+
+    it("works with different denoms", () => {
+      const balance1 = {
+        amount: "10000",
+        denom: "utest",
+      };
+
+      const balance2 = {
+        amount: "20000",
+        denom: "ucosm",
+      };
+      expect(() => addCoins(balance1, balance2)).toThrowError(
+        /Trying to add two coins with different denoms/i,
+      );
     });
   });
 });
