@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
+import { Decimal } from "@cosmjs/math";
 import { Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
+import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
@@ -273,6 +276,31 @@ export class StargateClient {
     return this.forceGetQueryClient().bank.allBalances(address);
   }
 
+  public async getBalanceStaked(address: string): Promise<Coin | null> {
+    const allDelegations = [];
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { delegationResponses, pagination }: QueryDelegatorDelegationsResponse =
+        await this.forceGetQueryClient().staking.delegatorDelegations(address, startAtKey);
+
+      const loadedDelegations = delegationResponses || [];
+      allDelegations.push(...loadedDelegations);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0 && startAtKey !== undefined);
+
+    const sumValues = allDelegations.reduce(
+      (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
+        assert(currentValue.balance);
+        return previousValue !== null
+          ? this.addCoins(previousValue, currentValue.balance)
+          : currentValue.balance;
+      },
+      null,
+    );
+
+    return sumValues;
+  }
+
   public async getDelegation(delegatorAddress: string, validatorAddress: string): Promise<Coin | null> {
     let delegatedAmount: Coin | undefined;
     try {
@@ -416,5 +444,16 @@ export class StargateClient {
         gasWanted: tx.result.gasWanted,
       };
     });
+  }
+
+  /**
+   * Function to sum up coins with type Coin
+   */
+  private addCoins(lhs: Coin, rhs: Coin): Coin {
+    if (lhs.denom !== rhs.denom) throw new Error("Trying to add two coins with different demoms");
+    return {
+      amount: Decimal.fromAtomics(lhs.amount, 0).plus(Decimal.fromAtomics(rhs.amount, 0)).atomics,
+      denom: lhs.denom,
+    };
   }
 }
