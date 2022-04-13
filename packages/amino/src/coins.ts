@@ -72,7 +72,7 @@ export function parseCoins(input: string): Coin[] {
  * Function to sum up coins with type Coin
  */
 export function addCoins(lhs: Coin, rhs: Coin): Coin {
-  if (lhs.denom !== rhs.denom) throw new Error("Trying to add two coins with different demoms");
+  if (lhs.denom !== rhs.denom) throw new Error("Trying to add two coins with different denoms");
   return {
     amount: Decimal.fromAtomics(lhs.amount, 0).plus(Decimal.fromAtomics(rhs.amount, 0)).atomics,
     denom: lhs.denom,

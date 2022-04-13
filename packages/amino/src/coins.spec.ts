@@ -169,7 +169,7 @@ describe("coins", () => {
         denom: "ucosm",
       };
       expect(() => addCoins(balance1, balance2)).toThrowError(
-        /Trying to add two coins with different demoms/i,
+        /Trying to add two coins with different denoms/i,
       );
     });
   });
