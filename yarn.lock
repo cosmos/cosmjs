@@ -318,7 +318,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -419,7 +418,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -474,7 +472,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -519,7 +516,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -562,7 +558,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -646,7 +641,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -736,7 +730,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -784,7 +777,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -829,7 +821,6 @@ __metadata:
     glob: ^7.1.6
     isomorphic-ws: ^4.0.1
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -883,7 +874,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -928,7 +918,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -978,7 +967,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -1022,7 +1010,6 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     jasmine: ^3.99
-    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -4717,7 +4704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:^3.6.0, jasmine-core@npm:^3.99, jasmine-core@npm:~3.99.0":
+"jasmine-core@npm:^3.6.0, jasmine-core@npm:~3.99.0":
   version: 3.99.1
   resolution: "jasmine-core@npm:3.99.1"
   checksum: 4e4a89739d99e471b86c7ccc4c5c244a77cc6d1e17b2b0d87d81266b8415697354d8873f7e764790a10661744f73a753a6e9bcd9b3e48c66a0c9b8a092b071b7
