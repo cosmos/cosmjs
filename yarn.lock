@@ -317,8 +317,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -372,7 +372,7 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.8
+    jasmine: ^3.99
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -418,8 +418,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -473,8 +473,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -518,8 +518,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -561,8 +561,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -607,7 +607,7 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.8
+    jasmine: ^3.99
     jasmine-spec-reporter: ^6
     koa: ^2.11.0
     koa-bodyparser: ^4.2.1
@@ -645,8 +645,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -696,7 +696,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
+    jasmine: ^3.99
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
@@ -735,8 +735,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -783,8 +783,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -828,8 +828,8 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     isomorphic-ws: ^4.0.1
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -882,8 +882,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -927,8 +927,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -977,8 +977,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -1021,8 +1021,8 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.8
-    jasmine-core: ^3.7.1
+    jasmine: ^3.99
+    jasmine-core: ^3.99
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
@@ -4717,10 +4717,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:^3.6.0, jasmine-core@npm:^3.7.1, jasmine-core@npm:~3.8.0":
-  version: 3.8.0
-  resolution: "jasmine-core@npm:3.8.0"
-  checksum: 6490373bd96d4d2a3c74214d307f8c37394370b1e892b9f203d4c5eda56941d53f84aabee0e65538b6921a190710618f1e73af44bd1d93e6c6e6c3f5c4bbfab6
+"jasmine-core@npm:^3.6.0, jasmine-core@npm:^3.99, jasmine-core@npm:~3.99.0":
+  version: 3.99.1
+  resolution: "jasmine-core@npm:3.99.1"
+  checksum: 4e4a89739d99e471b86c7ccc4c5c244a77cc6d1e17b2b0d87d81266b8415697354d8873f7e764790a10661744f73a753a6e9bcd9b3e48c66a0c9b8a092b071b7
   languageName: node
   linkType: hard
 
@@ -4733,15 +4733,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine@npm:^3.8":
-  version: 3.8.0
-  resolution: "jasmine@npm:3.8.0"
+"jasmine@npm:^3.99":
+  version: 3.99.0
+  resolution: "jasmine@npm:3.99.0"
   dependencies:
     glob: ^7.1.6
-    jasmine-core: ~3.8.0
+    jasmine-core: ~3.99.0
   bin:
     jasmine: bin/jasmine.js
-  checksum: 2527ec4b72fe72575bbe13a89e75d4b41d073ecd54622d714e1046b9ec0fa31a43b6ae286d5b499b2785b2df90fe2da116d24d9207984bf5c734e502ccc3dc42
+  checksum: baa9a5d8555b844063cd6e11bb272d424a17fa3ebd31c62b211a80c9b8dbb4d9c26218b33212b4f8122e38204a443c2eefbcce89c1c72ee3f0044037ec651427
   languageName: node
   linkType: hard
 
