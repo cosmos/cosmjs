@@ -97,10 +97,10 @@ describe("AminoTypes", () => {
     });
   });
 
-  describe("fromAmino", () => {
-    // TODO: MsgFundCommunityPool
-    // TODO: MsgSetWithdrawAddress
-    // TODO: MsgWithdrawDelegatorReward
-    // TODO: MsgWithdrawValidatorCommission
-  });
+  // describe("fromAmino", () => {
+  // TODO: MsgFundCommunityPool
+  // TODO: MsgSetWithdrawAddress
+  // TODO: MsgWithdrawDelegatorReward
+  // TODO: MsgWithdrawValidatorCommission
+  // });
 });
