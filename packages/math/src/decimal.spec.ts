@@ -177,6 +177,42 @@ describe("Decimal", () => {
     });
   });
 
+  describe("floor", () => {
+    it("works", () => {
+      // whole numbers
+      expect(Decimal.fromUserInput("0", 0).floor().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1", 0).floor().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("44", 0).floor().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("0", 3).floor().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1", 3).floor().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("44", 3).floor().toString()).toEqual("44");
+
+      // with fractional part
+      expect(Decimal.fromUserInput("0.001", 3).floor().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1.999", 3).floor().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("0.000000000000000001", 18).floor().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1.999999999999999999", 18).floor().toString()).toEqual("1");
+    });
+  });
+
+  describe("ceil", () => {
+    it("works", () => {
+      // whole numbers
+      expect(Decimal.fromUserInput("0", 0).ceil().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1", 0).ceil().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("44", 0).ceil().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("0", 3).ceil().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1", 3).ceil().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("44", 3).ceil().toString()).toEqual("44");
+
+      // with fractional part
+      expect(Decimal.fromUserInput("0.001", 3).ceil().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("1.999", 3).ceil().toString()).toEqual("2");
+      expect(Decimal.fromUserInput("0.000000000000000001", 18).ceil().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("1.999999999999999999", 18).ceil().toString()).toEqual("2");
+    });
+  });
+
   describe("toString", () => {
     it("displays no decimal point for full numbers", () => {
       expect(Decimal.fromUserInput("44", 0).toString()).toEqual("44");

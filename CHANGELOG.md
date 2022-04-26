@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/math: Add `Decimal.floor` and `Decimal.ceil`.
+
 ## [0.28.4] - 2022-04-15
 
 ### Added
