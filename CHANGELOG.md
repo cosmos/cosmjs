@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/math: Add `Decimal.floor` and `Decimal.ceil`.
+
+### Changed
+
+- @cosmjs/stargate: Let `calculateFee` handle fee amounts that exceed the safe
+  integer range.
+
 ## [0.28.4] - 2022-04-15
 
 ### Added

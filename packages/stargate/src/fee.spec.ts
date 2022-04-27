@@ -93,4 +93,15 @@ describe("calculateFee", () => {
       gas: "80000",
     });
   });
+
+  it("works with large gas price", () => {
+    // "The default gas price is 5000000000000 (5e^12), as the native coin has 18 decimals it is exceeding the max safe integer"
+    // https://github.com/cosmos/cosmjs/issues/1134
+    const gasPrice = GasPrice.fromString("5000000000000tiny");
+    const fee = calculateFee(500_000, gasPrice);
+    expect(fee).toEqual({
+      amount: [{ amount: "2500000000000000000", denom: "tiny" }],
+      gas: "500000",
+    });
+  });
 });

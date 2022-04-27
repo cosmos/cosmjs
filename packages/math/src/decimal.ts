@@ -113,6 +113,37 @@ export class Decimal {
     };
   }
 
+  /** Creates a new instance with the same value */
+  private clone(): Decimal {
+    return new Decimal(this.atomics, this.fractionalDigits);
+  }
+
+  /** Returns the greatest decimal <= this which has no fractional part (rounding down) */
+  public floor(): Decimal {
+    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
+    const whole = this.data.atomics.div(factor);
+    const fractional = this.data.atomics.mod(factor);
+
+    if (fractional.isZero()) {
+      return this.clone();
+    } else {
+      return Decimal.fromAtomics(whole.mul(factor).toString(), this.fractionalDigits);
+    }
+  }
+
+  /** Returns the smallest decimal >= this which has no fractional part (rounding up) */
+  public ceil(): Decimal {
+    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
+    const whole = this.data.atomics.div(factor);
+    const fractional = this.data.atomics.mod(factor);
+
+    if (fractional.isZero()) {
+      return this.clone();
+    } else {
+      return Decimal.fromAtomics(whole.addn(1).mul(factor).toString(), this.fractionalDigits);
+    }
+  }
+
   public toString(): string {
     const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
     const whole = this.data.atomics.div(factor);

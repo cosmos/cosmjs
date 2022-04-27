@@ -60,7 +60,9 @@ export class GasPrice {
 export function calculateFee(gasLimit: number, gasPrice: GasPrice | string): StdFee {
   const processedGasPrice = typeof gasPrice === "string" ? GasPrice.fromString(gasPrice) : gasPrice;
   const { denom, amount: gasPriceAmount } = processedGasPrice;
-  const amount = Math.ceil(gasPriceAmount.multiply(new Uint53(gasLimit)).toFloatApproximation());
+  // Note: Amount can exceed the safe integer range (https://github.com/cosmos/cosmjs/issues/1134),
+  // which we handle by converting from Decimal to string without going through number.
+  const amount = gasPriceAmount.multiply(new Uint53(gasLimit)).ceil().toString();
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
