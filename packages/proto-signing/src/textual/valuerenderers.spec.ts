@@ -1,11 +1,13 @@
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 import coinData from "../testdata/coin.json";
+import coinsData from "../testdata/coins.json";
 import decimals from "../testdata/decimals.json";
 import integers from "../testdata/integers.json";
 import { DisplayUnit, formatCoin, formatCoins, formatDecimal, formatInteger } from "./valuerenderers";
 
 type TestDataCoin = Array<[Coin, DisplayUnit, string]>;
+type TestDataCoins = Array<[Coin[], Record<string, DisplayUnit>, string]>;
 
 describe("valuerenderers", () => {
   describe("formatInteger", () => {
@@ -57,6 +59,12 @@ describe("valuerenderers", () => {
         ustake: { denom: "STAKE", exponent: 6 },
       };
       expect(formatCoins([coin1, coin2], displayMap)).toEqual("0.000001 COSM, 0.000003 STAKE");
+
+      for (const [coins, units, expected] of coinsData as TestDataCoins) {
+        expect(formatCoins(coins, units))
+          .withContext(`Input '${JSON.stringify(coins)}'`)
+          .toEqual(expected);
+      }
     });
   });
 });

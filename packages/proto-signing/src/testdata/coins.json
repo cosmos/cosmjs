@@ -1,0 +1,27 @@
+[
+  [
+    [{ "amount": "1", "denom": "ucosm" }, { "amount": "3", "denom": "ustake" }],
+    {
+      "ucosm": { "denom": "COSM", "exponent": 6 },
+      "ustake": { "denom": "STAKE", "exponent": 6 }
+    },
+    "0.000001 COSM, 0.000003 STAKE"
+  ],
+  [
+    [{ "amount": "3", "denom": "ustake" }, { "amount": "1", "denom": "ucosm" }],
+    {
+      "ucosm": { "denom": "COSM", "exponent": 6 },
+      "ustake": { "denom": "STAKE", "exponent": 6 }
+    },
+    "0.000001 COSM, 0.000003 STAKE"
+  ],
+  [
+    [{ "amount": "1", "denom": "uaa" }, { "amount": "2", "denom": "ubb" }, { "amount": "3", "denom": "uatom" }],
+    {
+      "uaa": { "denom": "AA", "exponent": 6 },
+      "ubb": { "denom": "BB", "exponent": 6 },
+      "uatom": { "denom": "atom", "exponent": 6 }
+    },
+    "0.000001 AA, 0.000002 BB, 0.000003 atom"
+  ]
+]

@@ -19,10 +19,14 @@ export function formatCoin(input: Coin, unit: DisplayUnit): string {
 }
 
 export function formatCoins(input: Coin[], units: Record<string, DisplayUnit>): string {
-  const parts = input.map((coin) => {
+  // Pairs of value and display denom
+  const pairs = input.map((coin): [string, string] => {
     const unit = units[coin.denom] as undefined | DisplayUnit;
     if (!unit) throw new Error(`Missing display unit information for denom '${coin.denom}'`);
-    return formatCoin(coin, unit);
+    const [value, displayDenom] = formatCoin(coin, unit).split(" ");
+    return [value, displayDenom];
   });
-  return parts.join(", ");
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  pairs.sort((a, b) => a[1].codePointAt(0)! - b[1].codePointAt(0)!);
+  return pairs.map((pair) => pair.join(" ")).join(", ");
 }
