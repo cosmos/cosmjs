@@ -1,11 +1,11 @@
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import coins from "../testdata/coins.json";
+import coinData from "../testdata/coin.json";
 import decimals from "../testdata/decimals.json";
 import integers from "../testdata/integers.json";
 import { DisplayUnit, formatCoin, formatCoins, formatDecimal, formatInteger } from "./valuerenderers";
 
-type TestDataCoins = Array<[Coin, DisplayUnit, string]>;
+type TestDataCoin = Array<[Coin, DisplayUnit, string]>;
 
 describe("valuerenderers", () => {
   describe("formatInteger", () => {
@@ -40,7 +40,7 @@ describe("valuerenderers", () => {
         "0.000001 COSM",
       );
 
-      for (const [coin, unit, expected] of coins as TestDataCoins) {
+      for (const [coin, unit, expected] of coinData as TestDataCoin) {
         expect(formatCoin(coin, unit))
           .withContext(`Input '${JSON.stringify(coin)}'`)
           .toEqual(expected);
