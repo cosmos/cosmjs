@@ -18,6 +18,12 @@ export function formatCoin(input: Coin, unit: DisplayUnit): string {
   return out + " " + unit.denom;
 }
 
+function compareAscii(a: string, b: string): number {
+  if (a == b) return 0;
+  else if (a < b) return -5;
+  else return 5;
+}
+
 export function formatCoins(input: Coin[], units: Record<string, DisplayUnit>): string {
   // Pairs of value and display denom
   const pairs = input.map((coin): [string, string] => {
@@ -26,7 +32,6 @@ export function formatCoins(input: Coin[], units: Record<string, DisplayUnit>): 
     const [value, displayDenom] = formatCoin(coin, unit).split(" ");
     return [value, displayDenom];
   });
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  pairs.sort((a, b) => a[1].codePointAt(0)! - b[1].codePointAt(0)!);
+  pairs.sort((a, b) => compareAscii(a[1], b[1]));
   return pairs.map((pair) => pair.join(" ")).join(", ");
 }

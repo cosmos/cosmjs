@@ -23,5 +23,28 @@
       "uatom": { "denom": "atom", "exponent": 6 }
     },
     "0.000001 AA, 0.000002 BB, 0.000003 atom"
+  ],
+  [
+    [
+      { "amount": "8", "denom": "_uxc1" },
+      { "amount": "7", "denom": "_uxc" },
+      { "amount": "6", "denom": "_uxb" },
+      { "amount": "5", "denom": "_uxa" },
+      { "amount": "4", "denom": "uxc1" },
+      { "amount": "3", "denom": "uxc" },
+      { "amount": "2", "denom": "uxb" },
+      { "amount": "1", "denom": "uxa" }
+    ],
+    {
+      "uxa": { "denom": "xA", "exponent": 6 },
+      "uxb": { "denom": "xB", "exponent": 6 },
+      "uxc": { "denom": "xC", "exponent": 6 },
+      "uxc1": { "denom": "xC1", "exponent": 6 },
+      "_uxa": { "denom": "XA", "exponent": 6 },
+      "_uxb": { "denom": "XB", "exponent": 6 },
+      "_uxc": { "denom": "XC", "exponent": 6 },
+      "_uxc1": { "denom": "XC1", "exponent": 6 }
+    },
+    "0.000005 XA, 0.000006 XB, 0.000007 XC, 0.000008 XC1, 0.000001 xA, 0.000002 xB, 0.000003 xC, 0.000004 xC1"
   ]
 ]
