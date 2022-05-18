@@ -794,7 +794,7 @@ function decodeNumUnconfirmedTxs(data: RpcNumUnconfirmedTxsResponse): responses.
   return {
     total: Integer.parse(assertNotEmpty(data.total)),
     totalBytes: Integer.parse(assertNotEmpty(data.total_bytes)),
-  }
+  };
 }
 
 export class Responses {
@@ -848,7 +848,9 @@ export class Responses {
     return null;
   }
 
-  public static decodeNumUnconfirmedTxs(response: JsonRpcSuccessResponse): responses.NumUnconfirmedTxsResponse {
+  public static decodeNumUnconfirmedTxs(
+    response: JsonRpcSuccessResponse,
+  ): responses.NumUnconfirmedTxsResponse {
     return decodeNumUnconfirmedTxs(response.result as RpcNumUnconfirmedTxsResponse);
   }
 

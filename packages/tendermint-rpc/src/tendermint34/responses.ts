@@ -125,7 +125,7 @@ export interface GenesisResponse {
 
 export type HealthResponse = null;
 
-export type NumUnconfirmedTxsResponse = {
+export interface NumUnconfirmedTxsResponse {
   readonly total: number;
   readonly totalBytes: number;
 }
