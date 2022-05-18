@@ -39,7 +39,7 @@ export type Request =
   | CommitRequest
   | GenesisRequest
   | HealthRequest
-  | NumUnconfirmedTxs
+  | NumUnconfirmedTxsRequest
   | StatusRequest
   | TxRequest
   | TxSearchRequest

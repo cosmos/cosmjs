@@ -848,7 +848,7 @@ export class Responses {
     return null;
   }
 
-  public static decodeNumUnconfirmedTxs(): responses.NumUnconfirmedTxsResponse {
+  public static decodeNumUnconfirmedTxs(response: JsonRpcSuccessResponse): responses.NumUnconfirmedTxsResponse {
     return decodeNumUnconfirmedTxs(response.result as RpcNumUnconfirmedTxsResponse);
   }
 

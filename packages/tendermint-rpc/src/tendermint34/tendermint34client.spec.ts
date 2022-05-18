@@ -226,8 +226,8 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const response = await client.numUnconfirmedTxs();
 
-      expected(response.total).toBeGreaterThanOrEqual(0);
-      expected(response.totalBytes).toBeGreaterThanOrEqual(0);
+      expect(response.total).toBeGreaterThanOrEqual(0);
+      expect(response.totalBytes).toBeGreaterThanOrEqual(0);
 
       client.disconnect();
     });
