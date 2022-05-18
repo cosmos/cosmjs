@@ -28,6 +28,7 @@ export interface Params {
   readonly encodeCommit: (req: requests.CommitRequest) => JsonRpcRequest;
   readonly encodeGenesis: (req: requests.GenesisRequest) => JsonRpcRequest;
   readonly encodeHealth: (req: requests.HealthRequest) => JsonRpcRequest;
+  readonly encodeNumUnconfirmedTxs: (req: requests.NumUnconfirmedTxsRequest) => JsonRpcRequest;
   readonly encodeStatus: (req: requests.StatusRequest) => JsonRpcRequest;
   readonly encodeSubscribe: (req: requests.SubscribeRequest) => JsonRpcRequest;
   readonly encodeTx: (req: requests.TxRequest) => JsonRpcRequest;
@@ -48,6 +49,7 @@ export interface Responses {
   readonly decodeCommit: (response: JsonRpcSuccessResponse) => responses.CommitResponse;
   readonly decodeGenesis: (response: JsonRpcSuccessResponse) => responses.GenesisResponse;
   readonly decodeHealth: (response: JsonRpcSuccessResponse) => responses.HealthResponse;
+  readonly decodeNumUnconfirmedTxs: (response: JsonRpcSuccessResponse) => responses.NumUnconfirmedTxsResponse;
   readonly decodeStatus: (response: JsonRpcSuccessResponse) => responses.StatusResponse;
   readonly decodeTx: (response: JsonRpcSuccessResponse) => responses.TxResponse;
   readonly decodeTxSearch: (response: JsonRpcSuccessResponse) => responses.TxSearchResponse;

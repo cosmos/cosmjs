@@ -54,6 +54,8 @@ export {
   Header,
   HealthRequest,
   HealthResponse,
+  NumUnconfirmedTxsRequest,
+  NumUnconfirmedTxsResponse,
   Method,
   NewBlockEvent,
   NewBlockHeaderEvent,

@@ -155,6 +155,10 @@ export class Params {
     return createJsonRpcRequest(req.method);
   }
 
+  public static encodeNumUnconfirmedTxs(req: requests.NumUnconfirmedTxsRequest): JsonRpcRequest {
+    return createJsonRpcRequest(req.method);
+  }
+
   public static encodeStatus(req: requests.StatusRequest): JsonRpcRequest {
     return createJsonRpcRequest(req.method);
   }

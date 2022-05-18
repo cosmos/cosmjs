@@ -19,6 +19,7 @@ export enum Method {
   Commit = "commit",
   Genesis = "genesis",
   Health = "health",
+  NumUnconfirmedTxs = "num_unconfirmed_txs",
   Status = "status",
   Subscribe = "subscribe",
   Tx = "tx",
@@ -38,6 +39,7 @@ export type Request =
   | CommitRequest
   | GenesisRequest
   | HealthRequest
+  | NumUnconfirmedTxs
   | StatusRequest
   | TxRequest
   | TxSearchRequest
@@ -134,6 +136,10 @@ export interface GenesisRequest {
 
 export interface HealthRequest {
   readonly method: Method.Health;
+}
+
+export interface NumUnconfirmedTxsRequest {
+  readonly method: Method.NumUnconfirmedTxs;
 }
 
 export interface StatusRequest {
