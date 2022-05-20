@@ -9,6 +9,7 @@ and this project adheres to
 ### Added
 
 - @cosmjs/math: Add `Decimal.floor` and `Decimal.ceil`.
+- @cosmjs/tendermint-rpc: Add `num_unconfirmed_txs` endpoint. ([#1150])
 
 ### Changed
 
