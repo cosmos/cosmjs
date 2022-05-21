@@ -16,6 +16,7 @@ export type Response =
   | CommitResponse
   | GenesisResponse
   | HealthResponse
+  | NumUnconfirmedTxsResponse
   | StatusResponse
   | TxResponse
   | TxSearchResponse
@@ -123,6 +124,11 @@ export interface GenesisResponse {
 }
 
 export type HealthResponse = null;
+
+export interface NumUnconfirmedTxsResponse {
+  readonly total: number;
+  readonly totalBytes: number;
+}
 
 export interface StatusResponse {
   readonly nodeInfo: NodeInfo;

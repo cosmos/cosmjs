@@ -58,6 +58,8 @@ export {
   NewBlockEvent,
   NewBlockHeaderEvent,
   NodeInfo,
+  NumUnconfirmedTxsRequest,
+  NumUnconfirmedTxsResponse,
   ProofOp,
   QueryProof,
   QueryTag,

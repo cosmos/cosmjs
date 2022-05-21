@@ -213,6 +213,11 @@ export class Tendermint34Client {
     return this.doCall(query, this.p.encodeHealth, this.r.decodeHealth);
   }
 
+  public async numUnconfirmedTxs(): Promise<responses.NumUnconfirmedTxsResponse> {
+    const query: requests.NumUnconfirmedTxsRequest = { method: requests.Method.NumUnconfirmedTxs };
+    return this.doCall(query, this.p.encodeNumUnconfirmedTxs, this.r.decodeNumUnconfirmedTxs);
+  }
+
   public async status(): Promise<responses.StatusResponse> {
     const query: requests.StatusRequest = { method: requests.Method.Status };
     return this.doCall(query, this.p.encodeStatus, this.r.decodeStatus);

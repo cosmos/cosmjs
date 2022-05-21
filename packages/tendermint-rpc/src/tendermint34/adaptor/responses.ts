@@ -785,6 +785,18 @@ function decodeBlockSearch(data: RpcBlockSearchResponse): responses.BlockSearchR
   };
 }
 
+interface RpcNumUnconfirmedTxsResponse {
+  readonly total: string;
+  readonly total_bytes: string;
+}
+
+function decodeNumUnconfirmedTxs(data: RpcNumUnconfirmedTxsResponse): responses.NumUnconfirmedTxsResponse {
+  return {
+    total: Integer.parse(assertNotEmpty(data.total)),
+    totalBytes: Integer.parse(assertNotEmpty(data.total_bytes)),
+  };
+}
+
 export class Responses {
   public static decodeAbciInfo(response: JsonRpcSuccessResponse): responses.AbciInfoResponse {
     return decodeAbciInfo(assertObject((response.result as AbciInfoResult).response));
@@ -834,6 +846,12 @@ export class Responses {
 
   public static decodeHealth(): responses.HealthResponse {
     return null;
+  }
+
+  public static decodeNumUnconfirmedTxs(
+    response: JsonRpcSuccessResponse,
+  ): responses.NumUnconfirmedTxsResponse {
+    return decodeNumUnconfirmedTxs(response.result as RpcNumUnconfirmedTxsResponse);
   }
 
   public static decodeStatus(response: JsonRpcSuccessResponse): responses.StatusResponse {
