@@ -11,6 +11,8 @@ and this project adheres to
 - @cosmjs/math: Add `Decimal.floor` and `Decimal.ceil`.
 - @cosmjs/tendermint-rpc: Add `num_unconfirmed_txs` endpoint. ([#1150])
 
+[#1150]: https://github.com/cosmos/cosmjs/pull/1150
+
 ### Changed
 
 - @cosmjs/stargate: Let `calculateFee` handle fee amounts that exceed the safe
