@@ -18,6 +18,12 @@ and this project adheres to
 - @cosmjs/stargate: Let `calculateFee` handle fee amounts that exceed the safe
   integer range.
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: Fix block results validator update decoder. ([#1151])
+
+[#1151]: https://github.com/cosmos/cosmjs/issues/1151
+
 ## [0.28.4] - 2022-04-15
 
 ### Added

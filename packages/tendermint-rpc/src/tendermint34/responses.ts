@@ -56,7 +56,7 @@ export interface BlockResponse {
 export interface BlockResultsResponse {
   readonly height: number;
   readonly results: readonly TxData[];
-  readonly validatorUpdates: readonly Validator[];
+  readonly validatorUpdates: readonly ValidatorUpdate[];
   readonly consensusUpdates?: ConsensusParams;
   readonly beginBlockEvents: readonly Event[];
   readonly endBlockEvents: readonly Event[];
@@ -349,6 +349,11 @@ export interface Validator {
   readonly pubkey?: ValidatorPubkey;
   readonly votingPower: number;
   readonly proposerPriority?: number;
+}
+
+export interface ValidatorUpdate {
+  readonly pubkey: ValidatorPubkey;
+  readonly votingPower: number;
 }
 
 export interface ConsensusParams {

@@ -148,47 +148,49 @@ function decodeTxData(data: RpcTxData): responses.TxData {
   };
 }
 
-// yes, a different format for status and dump consensus state
-interface RpcPubkey {
-  readonly type: string;
-  /** base64 encoded */
-  readonly value: string;
-}
+type RpcPubkey =
+  | {
+      readonly type: string;
+      /** base64 encoded */
+      readonly value: string;
+    }
+  | {
+      // See: https://github.com/cosmos/cosmjs/issues/1142
+      readonly Sum: {
+        readonly type: string;
+        readonly value: {
+          /** base64 encoded */
+          [algorithm: string]: string;
+        };
+      };
+    };
 
 function decodePubkey(data: RpcPubkey): ValidatorPubkey {
-  switch (data.type) {
-    // go-amino special code
-    case "tendermint/PubKeyEd25519":
-      return {
-        algorithm: "ed25519",
-        data: fromBase64(assertNotEmpty(data.value)),
-      };
-    case "tendermint/PubKeySecp256k1":
-      return {
-        algorithm: "secp256k1",
-        data: fromBase64(assertNotEmpty(data.value)),
-      };
-    default:
-      throw new Error(`unknown pubkey type: ${data.type}`);
+  if ("Sum" in data) {
+    // we don't need to check type because we're checking algorithm
+    const [[algorithm, value]] = Object.entries(data.Sum.value);
+    assert(algorithm === "ed25519" || algorithm === "secp256k1", `unknown pubkey type: ${algorithm}`);
+    return {
+      algorithm,
+      data: fromBase64(assertNotEmpty(value)),
+    };
+  } else {
+    switch (data.type) {
+      // go-amino special code
+      case "tendermint/PubKeyEd25519":
+        return {
+          algorithm: "ed25519",
+          data: fromBase64(assertNotEmpty(data.value)),
+        };
+      case "tendermint/PubKeySecp256k1":
+        return {
+          algorithm: "secp256k1",
+          data: fromBase64(assertNotEmpty(data.value)),
+        };
+      default:
+        throw new Error(`unknown pubkey type: ${data.type}`);
+    }
   }
-}
-
-// for evidence, block results, etc.
-interface RpcValidatorUpdate {
-  /** hex encoded */
-  readonly address: string;
-  readonly pub_key: RpcPubkey;
-  readonly voting_power: string;
-  readonly proposer_priority: string;
-}
-
-function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.Validator {
-  return {
-    pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.voting_power)),
-    address: fromHex(assertNotEmpty(data.address)),
-    proposerPriority: Integer.parse(data.proposer_priority),
-  };
 }
 
 interface RpcBlockParams {
@@ -249,6 +251,19 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
   return {
     block: decodeBlockParams(assertObject(data.block)),
     evidence: decodeEvidenceParams(assertObject(data.evidence)),
+  };
+}
+
+// for block results
+interface RpcValidatorUpdate {
+  readonly pub_key: RpcPubkey;
+  readonly power: string;
+}
+
+export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
+  return {
+    pubkey: decodePubkey(assertObject(data.pub_key)),
+    votingPower: Integer.parse(assertNotEmpty(data.power)),
   };
 }
 
@@ -493,7 +508,7 @@ interface RpcValidatorGenesis {
   readonly name?: string;
 }
 
-function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
+export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
   return {
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
@@ -534,13 +549,15 @@ interface RpcValidatorInfo {
   readonly address: string;
   readonly pub_key: RpcPubkey;
   readonly voting_power: string;
+  readonly proposer_priority?: string;
 }
 
-function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
+export function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
     votingPower: Integer.parse(assertNotEmpty(data.voting_power)),
     address: fromHex(assertNotEmpty(data.address)),
+    proposerPriority: data.proposer_priority ? Integer.parse(data.proposer_priority) : undefined,
   };
 }
 
@@ -716,7 +733,7 @@ function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
 
 interface RpcValidatorsResponse {
   readonly block_height: string;
-  readonly validators: readonly RpcValidatorUpdate[];
+  readonly validators: readonly RpcValidatorInfo[];
   readonly count: string;
   readonly total: string;
 }
@@ -724,7 +741,7 @@ interface RpcValidatorsResponse {
 function decodeValidators(data: RpcValidatorsResponse): responses.ValidatorsResponse {
   return {
     blockHeight: Integer.parse(assertNotEmpty(data.block_height)),
-    validators: assertArray(data.validators).map(decodeValidatorUpdate),
+    validators: assertArray(data.validators).map(decodeValidatorInfo),
     count: Integer.parse(assertNotEmpty(data.count)),
     total: Integer.parse(assertNotEmpty(data.total)),
   };
