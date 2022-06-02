@@ -44,9 +44,10 @@ describe("DirectSecp256k1Wallet", () => {
       const fee = coins(2000, "ucosm");
       const gasLimit = 200000;
       const chainId = "simd-testing";
+      const feePayer = "";
       const signDoc = makeSignDoc(
         fromHex(bodyBytes),
-        makeAuthInfoBytes([{ pubkey, sequence }], fee, gasLimit),
+        makeAuthInfoBytes([{ pubkey, sequence }], fee, gasLimit, feePayer),
         chainId,
         accountNumber,
       );
