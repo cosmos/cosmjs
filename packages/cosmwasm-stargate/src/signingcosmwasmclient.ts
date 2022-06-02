@@ -582,7 +582,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const signedTxBodyBytes = this.registry.encode(signedTxBody);
     const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
     const signedSequence = Int53.fromString(signed.sequence).toNumber();
-    const signedFeePayer = ""
+    const signedFeePayer = "";
     const signedAuthInfoBytes = makeAuthInfoBytes(
       [{ pubkey, sequence: signedSequence }],
       signed.fee.amount,
@@ -621,7 +621,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const txBodyBytes = this.registry.encode(txBody);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const feePayer = fee.granter == undefined ? "" : fee.granter
+    const feePayer = fee.granter == undefined ? "" : fee.granter;
     const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit, feePayer);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
