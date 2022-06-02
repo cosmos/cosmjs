@@ -419,7 +419,13 @@ describe("StargateClient", () => {
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
       const feePayer = "";
-      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit, feePayer, sequence);
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        feeAmount,
+        gasLimit,
+        feePayer,
+        sequence,
+      );
 
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
@@ -473,7 +479,12 @@ describe("StargateClient", () => {
       const feePayer = "";
 
       const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
-      const authInfoBytes1 = makeAuthInfoBytes([{ pubkey, sequence: sequence1 }], feeAmount, gasLimit, feePayer);
+      const authInfoBytes1 = makeAuthInfoBytes(
+        [{ pubkey, sequence: sequence1 }],
+        feeAmount,
+        gasLimit,
+        feePayer,
+      );
       const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
       const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
       const txRaw1 = TxRaw.fromPartial({
@@ -487,7 +498,12 @@ describe("StargateClient", () => {
       assertIsDeliverTxSuccess(txResult);
 
       const { accountNumber: accountNumber2, sequence: sequence2 } = (await client.getSequence(address))!;
-      const authInfoBytes2 = makeAuthInfoBytes([{ pubkey, sequence: sequence2 }], feeAmount, gasLimit, feePayer);
+      const authInfoBytes2 = makeAuthInfoBytes(
+        [{ pubkey, sequence: sequence2 }],
+        feeAmount,
+        gasLimit,
+        feePayer,
+      );
       const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
       const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
       const txRaw2 = TxRaw.fromPartial({
