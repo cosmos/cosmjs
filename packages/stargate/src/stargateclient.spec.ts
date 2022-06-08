@@ -257,16 +257,6 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
-    describe("getBalanceStaked", () => {
-      it("works", async () => {
-        pendingWithoutSimapp();
-        const client = await StargateClient.connect(simapp.tendermintUrl);
-        const response = await client.getBalanceStaked(faucet.address0);
-
-        expect(response).toEqual({ denom: "ustake", amount: "63474" });
-      });
-    });
-
     it("returns 0 for non-existent balance", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
@@ -320,6 +310,18 @@ describe("StargateClient", () => {
 
       const balances = await client.getAllBalances(nonExistentAddress);
       expect(balances).toEqual([]);
+
+      client.disconnect();
+    });
+  });
+
+  describe("getBalanceStaked", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const response = await client.getBalanceStaked(faucet.address0);
+
+      expect(response).toEqual({ denom: "ustake", amount: "63474" });
 
       client.disconnect();
     });
