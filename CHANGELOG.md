@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.28.5] - 2022-06-08
+
 ### Added
 
 - @cosmjs/math: Add `Decimal.floor` and `Decimal.ceil`.
@@ -888,7 +890,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.4...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.5...HEAD
+[0.28.5]: https://github.com/cosmos/cosmjs/compare/v0.28.4...v0.28.5
 [0.28.4]: https://github.com/cosmos/cosmjs/compare/v0.28.3...v0.28.4
 [0.28.3]: https://github.com/cosmos/cosmjs/compare/v0.28.2...v0.28.3
 [0.28.2]: https://github.com/cosmos/cosmjs/compare/v0.28.1...v0.28.2
