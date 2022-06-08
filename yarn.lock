@@ -428,7 +428,7 @@ __metadata:
     nyc: ^15.1.0
     pako: ^2.0.2
     prettier: ^2.4.1
-    protobufjs: ~6.10.2
+    protobufjs: ~6.11.3
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -786,7 +786,7 @@ __metadata:
     long: ^4.0.0
     nyc: ^15.1.0
     prettier: ^2.4.1
-    protobufjs: ~6.10.2
+    protobufjs: ~6.11.3
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -883,7 +883,7 @@ __metadata:
     long: ^4.0.0
     nyc: ^15.1.0
     prettier: ^2.4.1
-    protobufjs: ~6.10.2
+    protobufjs: ~6.11.3
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -1679,13 +1679,6 @@ __metadata:
   version: 15.9.0
   resolution: "@types/node@npm:15.9.0"
   checksum: 6ba9033ee00cf2fd260755d7aeeb65d6287f507473e54c1bce0dbd687c03245aff636580c8dc9215bea16cc32096d60344d00a9cb0a110c9baaca885573dc402
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^13.7.0":
-  version: 13.13.52
-  resolution: "@types/node@npm:13.13.52"
-  checksum: 8f1afff497ebeba209e2dc340d823284e087a47632afe99a7daa30eaff80893e520f222ad400cd1f2d3b8288e93cf3eaded52a8e64eaefb8aacfe6c35de98f42
   languageName: node
   linkType: hard
 
@@ -6051,9 +6044,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.8.8, protobufjs@npm:~6.10.2":
-  version: 6.10.2
-  resolution: "protobufjs@npm:6.10.2"
+"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.3":
+  version: 6.11.3
+  resolution: "protobufjs@npm:6.11.3"
   dependencies:
     "@protobufjs/aspromise": ^1.1.2
     "@protobufjs/base64": ^1.1.2
@@ -6066,12 +6059,12 @@ __metadata:
     "@protobufjs/pool": ^1.1.0
     "@protobufjs/utf8": ^1.1.0
     "@types/long": ^4.0.1
-    "@types/node": ^13.7.0
+    "@types/node": ">=13.7.0"
     long: ^4.0.0
   bin:
     pbjs: bin/pbjs
     pbts: bin/pbts
-  checksum: b48257c90540533ace5940c95ea89eaf93ffdd5a13b00d8c13349b68e3a494e3b1dee8c3cb9271bacacf0179feac2acb20efe2979bf2fce7b5e1690f71e66332
+  checksum: 4a6ce1964167e4c45c53fd8a312d7646415c777dd31b4ba346719947b88e61654912326101f927da387d6b6473ab52a7ea4f54d6f15d63b31130ce28e2e15070
   languageName: node
   linkType: hard
 

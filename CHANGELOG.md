@@ -17,6 +17,8 @@ and this project adheres to
 
 - @cosmjs/stargate: Let `calculateFee` handle fee amounts that exceed the safe
   integer range.
+- @cosmjs/cosmwasm-stargate, @cosmjs/stargate, @cosmjs/proto-signing: Upgrade
+  protobufjs to 6.11.
 
 ### Fixed
 

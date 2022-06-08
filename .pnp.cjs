@@ -2219,7 +2219,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "protobufjs",
-        "npm:6.10.2"
+        "npm:6.11.3"
       ],
       [
         "pump",
@@ -3150,7 +3150,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@confio/ics23", "npm:0.6.8"],
             ["@noble/hashes", "npm:1.0.0"],
-            ["protobufjs", "npm:6.10.2"]
+            ["protobufjs", "npm:6.11.3"]
           ],
           "linkType": "HARD",
         }]
@@ -3293,7 +3293,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.1.0"],
             ["pako", "npm:2.0.3"],
             ["prettier", "npm:2.4.1"],
-            ["protobufjs", "npm:6.10.2"],
+            ["protobufjs", "npm:6.11.3"],
             ["readonly-date", "npm:1.0.0"],
             ["ses", "npm:0.11.1"],
             ["source-map-support", "npm:0.5.19"],
@@ -3665,7 +3665,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["long", "npm:4.0.0"],
             ["nyc", "npm:15.1.0"],
             ["prettier", "npm:2.4.1"],
-            ["protobufjs", "npm:6.10.2"],
+            ["protobufjs", "npm:6.11.3"],
             ["ses", "npm:0.11.1"],
             ["source-map-support", "npm:0.5.19"],
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],
@@ -3766,7 +3766,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["long", "npm:4.0.0"],
             ["nyc", "npm:15.1.0"],
             ["prettier", "npm:2.4.1"],
-            ["protobufjs", "npm:6.10.2"],
+            ["protobufjs", "npm:6.11.3"],
             ["readonly-date", "npm:1.0.0"],
             ["ses", "npm:0.11.1"],
             ["source-map-support", "npm:0.5.19"],
@@ -4671,13 +4671,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/node", [
-        ["npm:13.13.52", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-13.13.52-95159539bb-8f1afff497.zip/node_modules/@types/node/",
-          "packageDependencies": [
-            ["@types/node", "npm:13.13.52"]
-          ],
-          "linkType": "HARD",
-        }],
         ["npm:15.3.1", {
           "packageLocation": "./.yarn/cache/@types-node-npm-15.3.1-2d4ca53b7d-b62091a722.zip/node_modules/@types/node/",
           "packageDependencies": [
@@ -10567,10 +10560,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["protobufjs", [
-        ["npm:6.10.2", {
-          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.10.2-f0f2cab7fe/node_modules/protobufjs/",
+        ["npm:6.11.2", {
+          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.2-9b422ce98e/node_modules/protobufjs/",
           "packageDependencies": [
-            ["protobufjs", "npm:6.10.2"],
+            ["protobufjs", "npm:6.11.2"],
             ["@protobufjs/aspromise", "npm:1.1.2"],
             ["@protobufjs/base64", "npm:1.1.2"],
             ["@protobufjs/codegen", "npm:2.0.4"],
@@ -10582,15 +10575,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@protobufjs/pool", "npm:1.1.0"],
             ["@protobufjs/utf8", "npm:1.1.0"],
             ["@types/long", "npm:4.0.1"],
-            ["@types/node", "npm:13.13.52"],
+            ["@types/node", "npm:15.9.0"],
             ["long", "npm:4.0.0"]
           ],
           "linkType": "HARD",
         }],
-        ["npm:6.11.2", {
-          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.2-9b422ce98e/node_modules/protobufjs/",
+        ["npm:6.11.3", {
+          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.3-566fb31188/node_modules/protobufjs/",
           "packageDependencies": [
-            ["protobufjs", "npm:6.11.2"],
+            ["protobufjs", "npm:6.11.3"],
             ["@protobufjs/aspromise", "npm:1.1.2"],
             ["@protobufjs/base64", "npm:1.1.2"],
             ["@protobufjs/codegen", "npm:2.0.4"],
