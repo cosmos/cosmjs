@@ -48,8 +48,7 @@
     "@cosmjs/utils": "workspace:packages/utils",
     "cosmjs-types": "^0.4.0",
     "long": "^4.0.0",
-    "pako": "^2.0.2",
-    "protobufjs": "~6.11.3"
+    "pako": "^2.0.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -80,6 +79,7 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^2.4.1",
+    "protobufjs": "~6.11.3",
     "readonly-date": "^1.0.0",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
