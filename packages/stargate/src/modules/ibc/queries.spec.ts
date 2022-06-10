@@ -127,7 +127,7 @@ describe("IbcExtension", () => {
         const response = await client.ibc.channel.packetCommitment(
           ibcTest.portId,
           ibcTest.channelId,
-          Long.fromInt(ibcTest.commitment.sequence, true),
+          ibcTest.commitment.sequence,
         );
         expect(response.commitment).toEqual(ibcTest.commitment.data);
         expect(response.proofHeight).toBeDefined();
