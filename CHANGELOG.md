@@ -6,6 +6,9 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+- @cosmjs/stargate: change `packetCommitment` parameter `sequence` type from `Long` to `number`
+
 ## [0.28.6] - 2022-06-08
 
 ## [0.28.5] - 2022-06-08
