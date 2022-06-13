@@ -18,6 +18,7 @@ import {
   QueryConnectionChannelsResponse,
   QueryNextSequenceReceiveResponse,
   QueryPacketAcknowledgementResponse,
+  QueryPacketAcknowledgementsRequest,
   QueryPacketAcknowledgementsResponse,
   QueryPacketCommitmentResponse,
   QueryPacketCommitmentsResponse,
@@ -303,22 +304,25 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             sequence: Long.fromNumber(sequence, true),
           }),
-        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
-          channelQueryService.PacketAcknowledgements({
+        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
+          const request = QueryPacketAcknowledgementsRequest.fromPartial({
             portId: portId,
             channelId: channelId,
             pagination: createPagination(paginationKey),
-          }),
+          });
+          return channelQueryService.PacketAcknowledgements(request);
+        },
         allPacketAcknowledgements: async (portId: string, channelId: string) => {
           const acknowledgements = [];
           let response: QueryPacketAcknowledgementsResponse;
           let key: Uint8Array | undefined;
           do {
-            response = await channelQueryService.PacketAcknowledgements({
+            const request = QueryPacketAcknowledgementsRequest.fromPartial({
               channelId: channelId,
               portId: portId,
               pagination: createPagination(key),
             });
+            response = await channelQueryService.PacketAcknowledgements(request);
             acknowledgements.push(...response.acknowledgements);
             key = response.pagination?.nextKey;
           } while (key && key.length);
