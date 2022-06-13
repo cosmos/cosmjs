@@ -44,6 +44,7 @@ describe("decode", () => {
                 single: {
                   mode: SignMode.SIGN_MODE_DIRECT,
                 },
+                multi: undefined,
               },
               sequence: Long.fromNumber(0, true),
             },

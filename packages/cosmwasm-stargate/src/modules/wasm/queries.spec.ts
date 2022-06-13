@@ -210,12 +210,14 @@ describe("WasmExtension", () => {
 
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
-      expect({ ...contractInfo }).toEqual({
+      expect(contractInfo).toEqual({
         codeId: Long.fromNumber(hackatomCodeId, true),
         creator: alice.address0,
         label: "my escrow",
         admin: "",
         ibcPortId: "",
+        created: undefined,
+        extension: undefined,
       });
       expect(contractInfo.admin).toEqual("");
     });
