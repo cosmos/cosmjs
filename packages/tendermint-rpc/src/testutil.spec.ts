@@ -5,8 +5,8 @@ export const anyMatcher = /^.*$/; // Any string, including empty. Does not do mo
 
 export interface ExpectedValues {
   /** The Tendermint version as reported by Tendermint itself */
-  readonly version: string | RegExp;
-  readonly chainId: string | RegExp;
+  readonly version: RegExp;
+  readonly chainId: RegExp;
   readonly appCreator: string;
   readonly p2pVersion: number;
   readonly blockVersion: number;
@@ -41,7 +41,7 @@ export const tendermintInstances = {
     blockTime: 500,
     expected: {
       chainId: /^[-a-zA-Z0-9]{3,30}$/,
-      version: anyMatcher,
+      version: /^$/, // Unfortunately we don't get info here
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 8,
       blockVersion: 11,
@@ -53,8 +53,8 @@ export const tendermintInstances = {
     version: "0.35.x",
     blockTime: 500,
     expected: {
-      chainId: "dockerchain",
-      version: anyMatcher,
+      chainId: /^dockerchain$/,
+      version: /^$/, // Unfortunately we don't get info here
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 8,
       blockVersion: 11,

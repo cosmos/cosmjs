@@ -325,6 +325,9 @@ export interface NodeInfo {
   /** IP and port */
   readonly listenAddr: string;
   readonly network: string;
+  /**
+   * The Tendermint version. Can be empty (see https://github.com/cosmos/cosmos-sdk/issues/7963).
+   */
   readonly version: string;
   readonly channels: string; // ???
   readonly moniker: string;
