@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: Fix valid values of `BondStatusString` for `validators`
+  query ([#1170]).
+
+[#1170]: https://github.com/cosmos/cosmjs/issues/1170
+
 ## [0.28.6] - 2022-06-08
 
 ## [0.28.5] - 2022-06-08
