@@ -87,7 +87,7 @@ export interface IbcExtension {
       readonly packetCommitment: (
         portId: string,
         channelId: string,
-        sequence: Long,
+        sequence: number,
       ) => Promise<QueryPacketCommitmentResponse>;
       readonly packetCommitments: (
         portId: string,
@@ -261,11 +261,11 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             revisionNumber: Long.fromNumber(revisionNumber, true),
             revisionHeight: Long.fromNumber(revisionHeight, true),
           }),
-        packetCommitment: async (portId: string, channelId: string, sequence: Long) =>
+        packetCommitment: async (portId: string, channelId: string, sequence: number) =>
           channelQueryService.PacketCommitment({
             portId: portId,
             channelId: channelId,
-            sequence: sequence,
+            sequence: Long.fromNumber(sequence, true),
           }),
         packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
           channelQueryService.PacketCommitments({
