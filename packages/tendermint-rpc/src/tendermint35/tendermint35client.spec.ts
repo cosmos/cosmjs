@@ -320,7 +320,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const [status, blockchain] = await Promise.all([client.status(), client.blockchain()]);
       const height = status.syncInfo.latestBlockHeight;
 
-      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(3);
       expect(blockchain.blockMetas[0].header.height).toEqual(height);
       expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
@@ -349,7 +349,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height + 20);
-      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
       expect(blockchain.blockMetas[0].header.height).toEqual(height);
       expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
@@ -363,7 +363,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 2, height - 1);
-      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
       expect(blockchain.blockMetas.length).toEqual(2);
       expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
       expect(blockchain.blockMetas[1].header.height).toEqual(height - 2); // lower limit included
@@ -378,7 +378,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 1, height - 1);
 
-      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
       const meta = blockchain.blockMetas[0];
 
