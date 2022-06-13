@@ -22,7 +22,7 @@ docker run --rm \
   --user="$UID" \
   -v "${TMP_DIR}:/tendermint" \
   "tendermint/tendermint:${TENDERMINT_VERSION}" \
-  init
+  init validator
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
@@ -34,11 +34,11 @@ docker run --rm \
   --name "$TENDERMINT_NAME" \
   -p "${TENDERMINT_PORT}:26657" -v "${TMP_DIR}:/tendermint" \
   -e "TM_TX_INDEX_INDEX_ALL_KEYS=true" \
+  -e "PROXY_APP=kvstore" \
+  -e "LOG_LEVEL=state:info,rpc:info,*:error" \
   "tendermint/tendermint:${TENDERMINT_VERSION}" node \
-  --proxy_app=kvstore \
   --rpc.laddr=tcp://0.0.0.0:26657 \
-  --log_level=state:info,rpc:info,*:error \
-  >"$LOGFILE" &
+  >"$LOGFILE" 2>&1 &
 
 echo "Tendermint running and logging into $LOGFILE"
 
