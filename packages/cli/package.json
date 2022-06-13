@@ -53,7 +53,7 @@
     "axios": "^0.21.2",
     "babylon": "^6.18.0",
     "chalk": "^4",
-    "cosmjs-types": "^0.4.0",
+    "cosmjs-types": "^0.5.0",
     "diff": "^4",
     "recast": "^0.20",
     "ts-node": "^8",

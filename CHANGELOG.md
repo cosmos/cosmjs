@@ -15,9 +15,11 @@ and this project adheres to
 
 ### Changed
 
+- all: Upgrade cosmjs-types to 0.5 ([#1131]).
 - @cosmjs/stargate: Change `packetCommitment` parameter `sequence` type from
   `Long` to `number` ([#1168]).
 
+[#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 
 ## [0.28.6] - 2022-06-08

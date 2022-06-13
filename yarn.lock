@@ -362,7 +362,7 @@ __metadata:
     axios: ^0.21.2
     babylon: ^6.18.0
     chalk: ^4
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     diff: ^4
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -408,7 +408,7 @@ __metadata:
     "@types/pako": ^1.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -767,7 +767,7 @@ __metadata:
     "@types/node": ^15.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -864,7 +864,7 @@ __metadata:
     "@types/node": ^15.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -2903,13 +2903,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"cosmjs-types@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "cosmjs-types@npm:0.4.0"
+"cosmjs-types@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "cosmjs-types@npm:0.5.0"
   dependencies:
     long: ^4.0.0
     protobufjs: ~6.11.2
-  checksum: ffc3e6451e85023f81e17ae55cc221d2be77fa01ac65cbd51ec69b695c49a7fba5ddd50a913e519db8aae821f02f0c1a231a2d20337d4646ca520bb3584631a1
+  checksum: caface3c6d1fa1d2a848b13629fc1e1fe9afbd231bbea09a2b81ab3a7585937e139101bda6f1e85bff55ad5f7136356eff08b897d484c7f875de0d5da5b23dc0
   languageName: node
   linkType: hard
 
