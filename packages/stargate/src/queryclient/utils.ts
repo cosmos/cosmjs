@@ -25,8 +25,8 @@ export function createPagination(paginationKey?: Uint8Array): PageRequest | unde
   return paginationKey
     ? PageRequest.fromPartial({
         key: paginationKey,
-        offset: Long.fromNumber(0, true),
-        limit: Long.fromNumber(0, true),
+        offset: Long.UZERO,
+        limit: Long.UZERO,
         countTotal: false,
       })
     : undefined;
