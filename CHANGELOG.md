@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/proto-signing, @cosmjs/cosmwasm-stargate: Turn `protobufjs` into a
+  devDependency ([#1166]).
+
+[#1166]: https://github.com/cosmos/cosmjs/pull/1166
+
 ## [0.28.6] - 2022-06-08
 
 ## [0.28.5] - 2022-06-08
