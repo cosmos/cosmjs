@@ -666,17 +666,17 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const eventsWithTx = events.filter((e) => e.txs.length > 0);
 
     expect(eventsWithTx.length).toEqual(2);
+    // Block body
+    expect(eventsWithTx[0].txs.length).toEqual(1);
+    expect(eventsWithTx[0].txs[0]).toEqual(transactionData1);
+    expect(eventsWithTx[1].txs.length).toEqual(1);
+    expect(eventsWithTx[1].txs[0]).toEqual(transactionData2);
     // Block header
     expect(eventsWithTx[1].header.height).toBeGreaterThan(eventsWithTx[0].header.height);
     expect(eventsWithTx[1].header.chainId).toEqual(eventsWithTx[0].header.chainId);
     expect(eventsWithTx[1].header.time.getTime()).toBeGreaterThan(eventsWithTx[0].header.time.getTime());
     expect(eventsWithTx[1].header.appHash).not.toEqual(eventsWithTx[0].header.appHash);
     expect(eventsWithTx[1].header.validatorsHash).toEqual(eventsWithTx[0].header.validatorsHash);
-    // Block body
-    expect(eventsWithTx[0].txs.length).toEqual(1);
-    expect(eventsWithTx[0].txs[0]).toEqual(transactionData1);
-    expect(eventsWithTx[1].txs.length).toEqual(1);
-    expect(eventsWithTx[1].txs[0]).toEqual(transactionData2);
 
     client.disconnect();
   });
