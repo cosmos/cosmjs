@@ -350,9 +350,10 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height + 20);
       expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
-      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
-      expect(blockchain.blockMetas[0].header.height).toEqual(height);
-      expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(3);
+      expect(blockchain.blockMetas[0].header.height).toEqual(blockchain.lastHeight);
+      expect(blockchain.blockMetas[1].header.height).toEqual(blockchain.lastHeight - 1);
+      expect(blockchain.blockMetas[2].header.height).toEqual(blockchain.lastHeight - 2);
 
       client.disconnect();
     });
