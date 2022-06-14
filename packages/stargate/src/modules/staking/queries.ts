@@ -21,7 +21,14 @@ import Long from "long";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
-export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
+// It's an enum in Go and a string in the protobuf API. "BOND_STATUS_UNSPECIFIED"
+// is excluded and "" is supported instead 🤷.
+//
+// String values: https://github.com/cosmos/cosmos-sdk/blob/v0.45.5/x/staking/types/staking.pb.go#L57-L62
+// Validation: https://github.com/cosmos/cosmos-sdk/blob/v0.45.5/x/staking/keeper/grpc_query.go#L29-L32
+export type BondStatusString =
+  | keyof Pick<typeof BondStatus, "BOND_STATUS_BONDED" | "BOND_STATUS_UNBONDED" | "BOND_STATUS_UNBONDING">
+  | "";
 
 export interface StakingExtension {
   readonly staking: {
