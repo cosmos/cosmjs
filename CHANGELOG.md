@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.28.7] - 2022-06-14
+
 ### Fixed
 
 - @cosmjs/stargate: Fix valid values of `BondStatusString` for `validators`
@@ -906,7 +908,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.6...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.7...HEAD
+[0.28.7]: https://github.com/cosmos/cosmjs/compare/v0.28.6...v0.28.7
 [0.28.6]: https://github.com/cosmos/cosmjs/compare/v0.28.5...v0.28.6
 [0.28.5]: https://github.com/cosmos/cosmjs/compare/v0.28.4...v0.28.5
 [0.28.4]: https://github.com/cosmos/cosmjs/compare/v0.28.3...v0.28.4
