@@ -22,11 +22,15 @@ docker run --rm \
   --user="$UID" \
   -v "${TMP_DIR}:/tendermint" \
   "tendermint/tendermint:${TENDERMINT_VERSION}" \
-  init
+  init validator
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
+#
+# Tendermint <= 0.34 uses underscores
 "$gnused" -i -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
+# Tendermint 0.35 uses dashes
+"$gnused" -i -e 's/^cors-allowed-origins =.*$/cors-allowed-origins = ["*"]/' "${TMP_DIR}/config/config.toml"
 
 # must enable tx index for search and subscribe
 docker run --rm \
@@ -34,11 +38,11 @@ docker run --rm \
   --name "$TENDERMINT_NAME" \
   -p "${TENDERMINT_PORT}:26657" -v "${TMP_DIR}:/tendermint" \
   -e "TM_TX_INDEX_INDEX_ALL_KEYS=true" \
+  -e "PROXY_APP=kvstore" \
+  -e "LOG_LEVEL=state:info,rpc:info,*:error" \
   "tendermint/tendermint:${TENDERMINT_VERSION}" node \
-  --proxy_app=kvstore \
   --rpc.laddr=tcp://0.0.0.0:26657 \
-  --log_level=state:info,rpc:info,*:error \
-  >"$LOGFILE" &
+  >"$LOGFILE" 2>&1 &
 
 echo "Tendermint running and logging into $LOGFILE"
 

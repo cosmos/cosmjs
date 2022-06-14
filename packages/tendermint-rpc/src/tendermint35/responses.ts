@@ -179,15 +179,20 @@ export interface TxEvent {
 
 // Helper items used above
 
-/** An event attribute */
-export interface Attribute {
-  readonly key: Uint8Array;
-  readonly value: Uint8Array;
+/**
+ * An event attribute.
+ *
+ * In 0.35 the type of key and value was changed
+ * from bytes to string, such that no base64 encoding is used anymore.
+ */
+export interface EventAttribute {
+  readonly key: string;
+  readonly value: string;
 }
 
 export interface Event {
   readonly type: string;
-  readonly attributes: readonly Attribute[];
+  readonly attributes: readonly EventAttribute[];
 }
 
 export interface TxData {
