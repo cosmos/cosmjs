@@ -6891,7 +6891,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["cosmjs-types", "npm:0.5.0"],
             ["long", "npm:4.0.0"],
-            ["protobufjs", "npm:6.11.2"]
+            ["protobufjs", "npm:6.11.3"]
           ],
           "linkType": "HARD",
         }]
@@ -10560,26 +10560,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["protobufjs", [
-        ["npm:6.11.2", {
-          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.2-9b422ce98e/node_modules/protobufjs/",
-          "packageDependencies": [
-            ["protobufjs", "npm:6.11.2"],
-            ["@protobufjs/aspromise", "npm:1.1.2"],
-            ["@protobufjs/base64", "npm:1.1.2"],
-            ["@protobufjs/codegen", "npm:2.0.4"],
-            ["@protobufjs/eventemitter", "npm:1.1.0"],
-            ["@protobufjs/fetch", "npm:1.1.0"],
-            ["@protobufjs/float", "npm:1.0.2"],
-            ["@protobufjs/inquire", "npm:1.1.0"],
-            ["@protobufjs/path", "npm:1.1.2"],
-            ["@protobufjs/pool", "npm:1.1.0"],
-            ["@protobufjs/utf8", "npm:1.1.0"],
-            ["@types/long", "npm:4.0.1"],
-            ["@types/node", "npm:15.9.0"],
-            ["long", "npm:4.0.0"]
-          ],
-          "linkType": "HARD",
-        }],
         ["npm:6.11.3", {
           "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.3-566fb31188/node_modules/protobufjs/",
           "packageDependencies": [
