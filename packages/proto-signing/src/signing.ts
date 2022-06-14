@@ -34,7 +34,7 @@ export function makeAuthInfoBytes(
   signers: ReadonlyArray<{ readonly pubkey: Any; readonly sequence: number }>,
   feeAmount: readonly Coin[],
   gasLimit: number,
-  feePayer: string,
+  feePayer: string | undefined,
   signMode = SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   const authInfo = {
