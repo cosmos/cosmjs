@@ -26,7 +26,11 @@ docker run --rm \
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
+#
+# Tendermint <= 0.34 uses underscores
 "$gnused" -i -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
+# Tendermint 0.35 uses dashes
+"$gnused" -i -e 's/^cors-allowed-origins =.*$/cors-allowed-origins = ["*"]/' "${TMP_DIR}/config/config.toml"
 
 # must enable tx index for search and subscribe
 docker run --rm \
