@@ -259,13 +259,13 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
 // for block results
 interface RpcValidatorUpdate {
   readonly pub_key: RpcPubkey;
-  readonly power: string;
+  readonly power?: string;
 }
 
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.power)),
+    votingPower: data.power ? Integer.parse(data.power) : undefined,
   };
 }
 
