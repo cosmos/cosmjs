@@ -203,8 +203,15 @@ describe("CosmWasmClient", () => {
       };
       const txBodyBytes = registry.encode(txBody);
       const gasLimit = Int53.fromString(fee.gas).toNumber();
+      const feeGranter = "";
       const feePayer = "";
-      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit, feePayer);
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        fee.amount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signed, signature } = await wallet.signDirect(alice.address0, signDoc);
       const txRaw = TxRaw.fromPartial({

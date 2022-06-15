@@ -13,6 +13,7 @@ export interface StdFee {
   readonly amount: readonly Coin[];
   readonly gas: string;
   readonly granter?: string;
+  readonly payer?: string;
 }
 
 /**

@@ -364,8 +364,15 @@ describe("StargateClient", () => {
       const { accountNumber, sequence } = (await client.getSequence(address))!;
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
+      const feeGranter = "";
       const feePayer = "";
-      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit, feePayer);
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
 
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
@@ -422,11 +429,13 @@ describe("StargateClient", () => {
       const { accountNumber, sequence } = (await client.getSequence(address))!;
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
+      const feeGranter = "";
       const feePayer = "";
       const authInfoBytes = makeAuthInfoBytes(
         [{ pubkey, sequence }],
         feeAmount,
         gasLimit,
+        feeGranter,
         feePayer,
         sequence,
       );
@@ -490,6 +499,7 @@ describe("StargateClient", () => {
       const chainId = await client.getChainId();
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
+      const feeGranter = "";
       const feePayer = "";
 
       const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
@@ -497,6 +507,7 @@ describe("StargateClient", () => {
         [{ pubkey, sequence: sequence1 }],
         feeAmount,
         gasLimit,
+        feeGranter,
         feePayer,
       );
       const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
@@ -516,6 +527,7 @@ describe("StargateClient", () => {
         [{ pubkey, sequence: sequence2 }],
         feeAmount,
         gasLimit,
+        feeGranter,
         feePayer,
       );
       const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
