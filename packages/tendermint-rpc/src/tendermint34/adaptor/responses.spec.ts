@@ -57,10 +57,10 @@ describe("Adaptor Responses", () => {
           Sum: {
             type: "tendermint.crypto.PublicKey_Ed25519",
             value: {
-              ed25519: "HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE="
-            }
-          }
-        }
+              ed25519: "HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE=",
+            },
+          },
+        },
       });
       expect(update).toEqual({
         pubkey: {
