@@ -74,8 +74,9 @@ async function sendTokens(
     },
   ];
   const gasLimit = 200000;
+  const feeGranter = "";
   const feePayer = "";
-  const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit, feePayer);
+  const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit, feeGranter, feePayer);
 
   const chainId = await client.getChainId();
   const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);

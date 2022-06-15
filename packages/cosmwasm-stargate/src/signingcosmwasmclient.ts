@@ -559,11 +559,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const signedTxBodyBytes = this.registry.encode(signedTxBody);
     const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
     const signedSequence = Int53.fromString(signed.sequence).toNumber();
-    const signedFeePayer = "";
+    const signedFeeGranter = signed.fee.granter == undefined ? "" : signed.fee.granter;
+    const signedFeePayer = signed.fee.payer == undefined ? "" : signed.fee.payer;
     const signedAuthInfoBytes = makeAuthInfoBytes(
       [{ pubkey, sequence: signedSequence }],
       signed.fee.amount,
       signedGasLimit,
+      signedFeeGranter,
       signedFeePayer,
       signMode,
     );
@@ -598,8 +600,15 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const txBodyBytes = this.registry.encode(txBody);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const feePayer = fee.granter == undefined ? "" : fee.granter;
-    const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit, feePayer);
+    const feePayer = fee.payer == undefined ? "" : fee.payer;
+    const feeGranter = fee.granter == undefined ? "" : fee.granter;
+    const authInfoBytes = makeAuthInfoBytes(
+      [{ pubkey, sequence }],
+      fee.amount,
+      gasLimit,
+      feeGranter,
+      feePayer,
+    );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     return TxRaw.fromPartial({
