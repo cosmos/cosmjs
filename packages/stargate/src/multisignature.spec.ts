@@ -8,10 +8,9 @@ import {
 import { coins } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { MsgSendEncodeObject } from "./modules";
-import { makeCompactBitArray, makeMultisignedTx } from "./multisignature";
+import { makeCompactBitArray, makeMultisignedTxBytes } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxSuccess, StargateClient } from "./stargateclient";
 import { faucet, pendingWithoutSimapp, simapp } from "./testutils.spec";
@@ -169,7 +168,7 @@ describe("multisignature", () => {
     });
   });
 
-  describe("makeMultisignedTx", () => {
+  describe("makeMultisignedTxBytes", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
@@ -253,7 +252,7 @@ describe("multisignature", () => {
         const address4 = pubkeyToAddress(pubkey4, "cosmos");
 
         const broadcaster = await StargateClient.connect(simapp.tendermintUrl);
-        const signedTx = makeMultisignedTx(
+        const signedTx = makeMultisignedTxBytes(
           multisigPubkey,
           signingInstruction.sequence,
           signingInstruction.fee,
@@ -267,7 +266,7 @@ describe("multisignature", () => {
           ]),
         );
         // ensure signature is valid
-        const result = await broadcaster.broadcastTx(Uint8Array.from(TxRaw.encode(signedTx).finish()));
+        const result = await broadcaster.broadcastTx(signedTx);
         assertIsDeliverTxSuccess(result);
       }
     });
