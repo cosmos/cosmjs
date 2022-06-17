@@ -263,7 +263,10 @@ interface RpcValidatorUpdate {
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.power)),
+    get votingPower() {
+      delete (this as any).votingPower;
+      return (this as any).votingPower = Integer.parse(assertNotEmpty(data.power))
+    },
   };
 }
 
