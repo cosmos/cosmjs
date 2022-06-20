@@ -361,7 +361,7 @@ export interface Validator {
 
 export interface ValidatorUpdate {
   readonly pubkey: ValidatorPubkey;
-  readonly votingPower?: number;
+  readonly votingPower: number;
 }
 
 export interface ConsensusParams {

@@ -67,7 +67,7 @@ describe("Adaptor Responses", () => {
           algorithm: "ed25519",
           data: fromBase64("HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE="),
         },
-        votingPower: undefined,
+        votingPower: 0,
       });
     });
   });
