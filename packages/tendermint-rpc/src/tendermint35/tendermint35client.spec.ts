@@ -648,10 +648,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
         expect(event.header.validatorsHash).toBeTruthy();
 
         events.push(event);
-
-        if (events.length === 3) {
-          subscription.unsubscribe();
-        }
       },
       error: fail,
     });
@@ -661,6 +657,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
     // wait for events to be processed
     await sleep(100);
+
+    // Stop listening for new blocks
+    subscription.unsubscribe();
 
     // We don't know exactly in which block the transactions are added. So we look into those
     // with txs.
