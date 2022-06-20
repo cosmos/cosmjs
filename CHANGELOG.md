@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate: Add `makeMultisignedTxBytes` which is like
+  `makeMultisignedTx` but returns bytes ready to broadcast ([#1176]).
+
+[#1176]: https://github.com/cosmos/cosmjs/pull/1176
+
 ### Fixed
 
 - @cosmjs/stargate: Fix valid values of `BondStatusString` for `validators`
