@@ -82,7 +82,7 @@ export {
   createIbcAminoConverters,
   createStakingAminoConverters,
 } from "./modules";
-export { makeMultisignedTx } from "./multisignature";
+export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature";
 export {
   createPagination,
   createProtobufRpcClient,

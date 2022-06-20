@@ -22,6 +22,13 @@ export function makeCompactBitArray(bits: readonly boolean[]): CompactBitArray {
   return CompactBitArray.fromPartial({ elems: bytes, extraBitsStored: extraBits });
 }
 
+/**
+ * Creates a signed transaction from signer info, transaction body and signatures.
+ * The result can be broadcasted after serialization.
+ *
+ * Consider using `makeMultisignedTxBytes` instead if you want to broadcast the
+ * transaction immediately.
+ */
 export function makeMultisignedTx(
   multisigPubkey: MultisigThresholdPubkey,
   sequence: number,
@@ -69,4 +76,21 @@ export function makeMultisignedTx(
     signatures: [MultiSignature.encode(MultiSignature.fromPartial({ signatures: signaturesList })).finish()],
   });
   return signedTx;
+}
+
+/**
+ * Creates a signed transaction from signer info, transaction body and signatures.
+ * The result can be broadcasted.
+ *
+ * This is a wrapper around `makeMultisignedTx` that encodes the transaction for broadcasting.
+ */
+export function makeMultisignedTxBytes(
+  multisigPubkey: MultisigThresholdPubkey,
+  sequence: number,
+  fee: StdFee,
+  bodyBytes: Uint8Array,
+  signatures: Map<string, Uint8Array>,
+): Uint8Array {
+  const signedTx = makeMultisignedTx(multisigPubkey, sequence, fee, bodyBytes, signatures);
+  return Uint8Array.from(TxRaw.encode(signedTx).finish());
 }
