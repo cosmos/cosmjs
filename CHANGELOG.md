@@ -17,7 +17,8 @@ and this project adheres to
 
 - @cosmjs/stargate: Fix valid values of `BondStatusString` for `validators`
   query ([#1170]).
-- @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing ([#1177]).
+- @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
+  ([#1177]).
 
 [#1170]: https://github.com/cosmos/cosmjs/issues/1170
 [#1177]: https://github.com/cosmos/cosmjs/issues/1177
@@ -30,6 +31,13 @@ and this project adheres to
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
+
+## [0.28.8] - 2022-06-21
+
+- @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
+  ([#1177]).
+
+[#1177]: https://github.com/cosmos/cosmjs/issues/1177
 
 ## [0.28.7] - 2022-06-14
 
@@ -933,7 +941,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.7...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.8...HEAD
+[0.28.8]: https://github.com/cosmos/cosmjs/compare/v0.28.7...v0.28.8
 [0.28.7]: https://github.com/cosmos/cosmjs/compare/v0.28.6...v0.28.7
 [0.28.6]: https://github.com/cosmos/cosmjs/compare/v0.28.5...v0.28.6
 [0.28.5]: https://github.com/cosmos/cosmjs/compare/v0.28.4...v0.28.5
