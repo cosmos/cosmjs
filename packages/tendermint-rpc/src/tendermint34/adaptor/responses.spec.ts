@@ -49,6 +49,27 @@ describe("Adaptor Responses", () => {
         votingPower: 11418237,
       });
     });
+
+    it("works for block results format without voting power", () => {
+      // from https://rpc.cosmos.network/block_results?height=10883046
+      const update = decodeValidatorUpdate({
+        pub_key: {
+          Sum: {
+            type: "tendermint.crypto.PublicKey_Ed25519",
+            value: {
+              ed25519: "HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE=",
+            },
+          },
+        },
+      });
+      expect(update).toEqual({
+        pubkey: {
+          algorithm: "ed25519",
+          data: fromBase64("HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE="),
+        },
+        votingPower: 0,
+      });
+    });
   });
 
   describe("decodeValidatorInfo", () => {
