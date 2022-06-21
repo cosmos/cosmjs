@@ -32,6 +32,14 @@ and this project adheres to
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 
+## [0.28.9] - 2022-06-21
+
+This version replaces the 0.28.8 release which was erroneously tagged as 0.26.8
+and released to npm under that wrong version. In order to avoid further
+confusion we give up the .8 patch version. Users should install `^0.28.9` for
+all `@cosmjs/*` packages to be safe. Users of `^0.26` should upgrade to a more
+recent minor version if they run into trouble.
+
 ## [0.28.8] - 2022-06-21
 
 - @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
@@ -941,7 +949,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.8...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.9...HEAD
+[0.28.9]: https://github.com/cosmos/cosmjs/compare/v0.28.8...v0.28.9
 [0.28.8]: https://github.com/cosmos/cosmjs/compare/v0.28.7...v0.28.8
 [0.28.7]: https://github.com/cosmos/cosmjs/compare/v0.28.6...v0.28.7
 [0.28.6]: https://github.com/cosmos/cosmjs/compare/v0.28.5...v0.28.6

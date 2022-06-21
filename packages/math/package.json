@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/math",
-  "version": "0.26.8",
+  "version": "0.28.9",
   "description": "Math helpers for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>"
