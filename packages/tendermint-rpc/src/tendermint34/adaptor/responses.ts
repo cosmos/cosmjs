@@ -257,13 +257,14 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
 // for block results
 interface RpcValidatorUpdate {
   readonly pub_key: RpcPubkey;
-  readonly power: string;
+  // When omitted, this means zero (see https://github.com/cosmos/cosmjs/issues/1177#issuecomment-1160115080)
+  readonly power?: string;
 }
 
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.power)),
+    votingPower: Integer.parse(data.power ?? 0),
   };
 }
 

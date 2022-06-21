@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+- @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing ([#1177]).
+
+[#1177]: https://github.com/cosmos/cosmjs/issues/1177
+
 ## [0.28.7] - 2022-06-14
 
 ### Fixed
