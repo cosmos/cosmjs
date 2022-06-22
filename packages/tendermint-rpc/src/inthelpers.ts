@@ -1,5 +1,7 @@
 import { Int53 } from "@cosmjs/math";
 
+import { assertString } from "./tendermint34/encodings";
+
 /**
  * Takes an integer value from the Tendermint RPC API and
  * returns it as number.
@@ -9,6 +11,20 @@ import { Int53 } from "@cosmjs/math";
 export function apiToSmallInt(input: string | number): number {
   const asInt = typeof input === "number" ? new Int53(input) : Int53.fromString(input);
   return asInt.toNumber();
+}
+
+/**
+ * Takes an integer value from the Tendermint RPC API and
+ * returns it as BigInt.
+ *
+ * This supports the full uint64 and int64 ranges.
+ */
+export function apiToBigInt(input: string): bigint {
+  assertString(input); // Runtime check on top of TypeScript just to be safe for semi-trusted API types
+  if (!input.match(/^-?[0-9]+$/)) {
+    throw new Error("Invalid string format");
+  }
+  return BigInt(input);
 }
 
 /**
