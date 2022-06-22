@@ -31,6 +31,10 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("44", 3).toString()).toEqual("0.044");
       expect(Decimal.fromAtomics("44", 4).toString()).toEqual("0.0044");
     });
+
+    it("throws for atomics that are not non-negative", () => {
+      expect(() => Decimal.fromAtomics("-1", 0)).toThrowError(/atomics must not be negative/i);
+    });
   });
 
   describe("fromUserInput", () => {

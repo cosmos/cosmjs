@@ -107,8 +107,14 @@ export class Decimal {
   };
 
   private constructor(atomics: string, fractionalDigits: number) {
+    const _atomics = new BN(atomics);
+
+    if (_atomics.isNeg()) {
+      throw new Error("Atomics must not be negative");
+    }
+
     this.data = {
-      atomics: new BN(atomics),
+      atomics: _atomics,
       fractionalDigits: fractionalDigits,
     };
   }
