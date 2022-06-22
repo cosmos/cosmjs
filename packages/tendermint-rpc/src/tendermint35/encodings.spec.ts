@@ -1,6 +1,13 @@
 import { ReadonlyDate } from "readonly-date";
 
-import { encodeBlockId, encodeBytes, encodeInt, encodeString, encodeTime, encodeVersion } from "./encodings";
+import {
+  encodeBlockId,
+  encodeBytes,
+  encodeString,
+  encodeTime,
+  encodeUvarint,
+  encodeVersion,
+} from "./encodings";
 
 describe("encodings", () => {
   describe("encodeString", () => {
@@ -13,14 +20,14 @@ describe("encodings", () => {
     });
   });
 
-  describe("encodeInt", () => {
+  describe("encodeUvarint", () => {
     it("works", () => {
-      expect(encodeInt(0)).toEqual(Uint8Array.from([0]));
-      expect(encodeInt(1)).toEqual(Uint8Array.from([1]));
-      expect(encodeInt(127)).toEqual(Uint8Array.from([127]));
-      expect(encodeInt(128)).toEqual(Uint8Array.from([128, 1]));
-      expect(encodeInt(255)).toEqual(Uint8Array.from([255, 1]));
-      expect(encodeInt(256)).toEqual(Uint8Array.from([128, 2]));
+      expect(encodeUvarint(0)).toEqual(Uint8Array.from([0]));
+      expect(encodeUvarint(1)).toEqual(Uint8Array.from([1]));
+      expect(encodeUvarint(127)).toEqual(Uint8Array.from([127]));
+      expect(encodeUvarint(128)).toEqual(Uint8Array.from([128, 1]));
+      expect(encodeUvarint(255)).toEqual(Uint8Array.from([255, 1]));
+      expect(encodeUvarint(256)).toEqual(Uint8Array.from([128, 2]));
     });
   });
 
