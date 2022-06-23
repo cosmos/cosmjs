@@ -9,6 +9,7 @@ import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
 import {
   buildKvTx,
   ExpectedValues,
+  nonNegativeIntegerMatcher,
   pendingWithoutTendermint,
   randomString,
   tendermintEnabled,
@@ -107,23 +108,31 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     client.disconnect();
   });
 
-  it("can query the state", async () => {
-    pendingWithoutTendermint();
-    const client = await Tendermint34Client.create(rpcFactory());
+  describe("abciQuery", () => {
+    it("can query the state", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
 
-    const key = randomString();
-    const value = randomString();
-    await client.broadcastTxCommit({ tx: buildKvTx(key, value) });
+      const key = randomString();
+      const value = randomString();
+      await client.broadcastTxCommit({ tx: buildKvTx(key, value) });
 
-    const binKey = toAscii(key);
-    const binValue = toAscii(value);
-    const queryParams = { path: "/key", data: binKey, prove: true };
-    const response = await client.abciQuery(queryParams);
-    expect(response.key).toEqual(binKey);
-    expect(response.value).toEqual(binValue);
-    expect(response.code).toBeFalsy();
+      const binKey = toAscii(key);
+      const binValue = toAscii(value);
+      const queryParams = { path: "/key", data: binKey, prove: true };
+      const response = await client.abciQuery(queryParams);
+      expect(response.key).toEqual(binKey);
+      expect(response.value).toEqual(binValue);
+      expect(response.code).toEqual(0);
+      expect(response.codespace).toEqual("");
+      expect(response.index).toEqual(-1);
+      expect(response.proof).toBeUndefined();
+      expect(response.log).toEqual("exists");
+      expect(response.info).toEqual("");
+      expect(response.height).toMatch(nonNegativeIntegerMatcher);
 
-    client.disconnect();
+      client.disconnect();
+    });
   });
 
   it("can get a commit", async () => {
