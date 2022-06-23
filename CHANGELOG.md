@@ -10,6 +10,8 @@ and this project adheres to
 
 - @cosmjs/stargate: Add `makeMultisignedTxBytes` which is like
   `makeMultisignedTx` but returns bytes ready to broadcast ([#1176]).
+- @cosmjs/tendermint-rpc: Add fields `codespace` and `info` to
+  `AbciQueryResponse`.
 
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
 

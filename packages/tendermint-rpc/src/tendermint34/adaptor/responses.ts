@@ -72,11 +72,14 @@ interface RpcAbciQueryResponse {
   readonly key: string;
   /** base64 encoded */
   readonly value?: string;
-  readonly proofOps?: RpcQueryProof;
+  readonly proofOps?: RpcQueryProof | null;
   readonly height?: string;
+  /** An integer; can be negative */
   readonly index?: string;
-  readonly code?: string; // only for errors
+  readonly code?: number; // only for errors
+  readonly codespace?: string;
   readonly log?: string;
+  readonly info?: string;
 }
 
 function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryResponse {
@@ -86,8 +89,10 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
     proof: may(decodeQueryProof, data.proofOps),
     height: may(Integer.parse, data.height),
     code: may(Integer.parse, data.code),
+    codespace: assertString(data.codespace ?? ""),
     index: may(Integer.parse, data.index),
     log: data.log,
+    info: assertString(data.info ?? ""),
   };
 }
 

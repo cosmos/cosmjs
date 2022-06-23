@@ -45,7 +45,9 @@ export interface AbciQueryResponse {
   readonly height?: number;
   readonly index?: number;
   readonly code?: number; // non-falsy for errors
+  readonly codespace: string;
   readonly log?: string;
+  readonly info: string;
 }
 
 export interface BlockResponse {
