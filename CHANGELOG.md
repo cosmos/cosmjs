@@ -12,7 +12,10 @@ and this project adheres to
   `makeMultisignedTx` but returns bytes ready to broadcast ([#1176]).
 - @cosmjs/tendermint-rpc: Add fields `codespace` and `info` to
   `AbciQueryResponse`.
+- @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.executeMultiple`
+  ([#1072]).
 
+[#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
 
 ### Fixed
