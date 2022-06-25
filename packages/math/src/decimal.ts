@@ -109,7 +109,7 @@ export class Decimal {
   private constructor(atomics: string, fractionalDigits: number) {
     if (!atomics.match(/^[0-9]+$/)) {
       throw new Error(
-        "Invalid string format. Only non-negative integers in decimal representation suppored.",
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
       );
     }
 
