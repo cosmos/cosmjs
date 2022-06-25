@@ -32,7 +32,7 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("44", 4).toString()).toEqual("0.0044");
     });
 
-    it("throws for atomics that are not non-negative", () => {
+    it("throws for atomics that are not non-negative integers", () => {
       expect(() => Decimal.fromAtomics("-1", 0)).toThrowError(/atomics must not be negative/i);
     });
   });

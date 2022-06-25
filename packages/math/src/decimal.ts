@@ -107,14 +107,14 @@ export class Decimal {
   };
 
   private constructor(atomics: string, fractionalDigits: number) {
-    const _atomics = new BN(atomics);
-
-    if (_atomics.isNeg()) {
-      throw new Error("Atomics must not be negative");
+    if (!atomics.match(/^[0-9]+$/)) {
+      throw new Error(
+        "Invalid string format. Only non-negative integers in decimal representation suppored.",
+      );
     }
 
     this.data = {
-      atomics: _atomics,
+      atomics: new BN(atomics),
       fractionalDigits: fractionalDigits,
     };
   }
