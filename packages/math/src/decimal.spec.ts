@@ -33,6 +33,12 @@ describe("Decimal", () => {
     });
 
     it("throws for atomics that are not non-negative integers", () => {
+      expect(() => Decimal.fromAtomics("0xAA", 0)).toThrowError(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+      expect(() => Decimal.fromAtomics("", 0)).toThrowError(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
       expect(() => Decimal.fromAtomics("-1", 0)).toThrowError(
         "Invalid string format. Only non-negative integers in decimal representation supported.",
       );
