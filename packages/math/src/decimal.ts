@@ -24,7 +24,10 @@ export class Decimal {
     let whole: string;
     let fractional: string;
 
-    if (input.search(/\./) === -1) {
+    if (input === "") {
+      whole = "0";
+      fractional = "";
+    } else if (input.search(/\./) === -1) {
       // integer format, no separator
       whole = input;
       fractional = "";
@@ -107,6 +110,12 @@ export class Decimal {
   };
 
   private constructor(atomics: string, fractionalDigits: number) {
+    if (!atomics.match(/^[0-9]+$/)) {
+      throw new Error(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+    }
+
     this.data = {
       atomics: new BN(atomics),
       fractionalDigits: fractionalDigits,

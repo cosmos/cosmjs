@@ -31,6 +31,18 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("44", 3).toString()).toEqual("0.044");
       expect(Decimal.fromAtomics("44", 4).toString()).toEqual("0.0044");
     });
+
+    it("throws for atomics that are not non-negative integers", () => {
+      expect(() => Decimal.fromAtomics("0xAA", 0)).toThrowError(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+      expect(() => Decimal.fromAtomics("", 0)).toThrowError(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+      expect(() => Decimal.fromAtomics("-1", 0)).toThrowError(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+    });
   });
 
   describe("fromUserInput", () => {

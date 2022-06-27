@@ -21,9 +21,11 @@ and this project adheres to
   query ([#1170]).
 - @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
   ([#1177]).
+- @cosmjs/math: Check for negative values in `Decimal.fromAtomics` ([#1188]).
 
 [#1170]: https://github.com/cosmos/cosmjs/issues/1170
 [#1177]: https://github.com/cosmos/cosmjs/issues/1177
+[#1188]: https://github.com/cosmos/cosmjs/pull/1188
 
 ### Changed
 
