@@ -330,7 +330,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -378,7 +378,7 @@ __metadata:
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.5
+    typescript: ~4.6
     yargs: ^15.3.1
   bin:
     cosmjs-cli: bin/cosmjs-cli
@@ -434,7 +434,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -485,7 +485,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -529,7 +529,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -570,7 +570,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -611,7 +611,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   bin:
@@ -653,7 +653,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -700,7 +700,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -742,7 +742,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -791,7 +791,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -833,7 +833,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     ws: ^7
@@ -889,7 +889,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -930,7 +930,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -980,7 +980,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -1022,7 +1022,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.5
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -2926,7 +2926,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     eslint: ^7.5
     prettier: ^2.4.1
-    typescript: ~4.5
+    typescript: ~4.6
   languageName: unknown
   linkType: soft
 
@@ -7252,23 +7252,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.5":
-  version: 4.5.5
-  resolution: "typescript@npm:4.5.5"
+"typescript@npm:~4.6":
+  version: 4.6.4
+  resolution: "typescript@npm:4.6.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
+  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.5#~builtin<compat/typescript>":
-  version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=7ad353"
+"typescript@patch:typescript@~4.6#~builtin<compat/typescript>":
+  version: 4.6.4
+  resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 858c61fa63f7274ca4aaaffeced854d550bf416cff6e558c4884041b3311fb662f476f167cf5c9f8680c607239797e26a2ee0bcc6467fbc05bfcb218e1c6c671
+  checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
   languageName: node
   linkType: hard
 
