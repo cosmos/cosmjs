@@ -57,7 +57,7 @@ export class Webserver {
           }
 
           // context.request.body is set by the bodyParser() plugin
-          const requestBody = context.request.body;
+          const requestBody = (context.request as any).body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
           const { address, denom } = creditBody;
 

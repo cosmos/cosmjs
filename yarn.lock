@@ -587,12 +587,12 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
-    "@koa/cors": ^3.0.0
+    "@koa/cors": ^3.3
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
-    "@types/koa": ^2.11.0
-    "@types/koa-bodyparser": ^4.3.0
-    "@types/koa__cors": ^3.0.1
+    "@types/koa": ^2.13
+    "@types/koa-bodyparser": ^4.3
+    "@types/koa__cors": ^3.3
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
     eslint: ^7.5
@@ -604,8 +604,8 @@ __metadata:
     esm: ^3.2.25
     jasmine: ^4
     jasmine-spec-reporter: ^6
-    koa: ^2.11.0
-    koa-bodyparser: ^4.2.1
+    koa: ^2.13
+    koa-bodyparser: ^4.3
     nyc: ^15.1.0
     prettier: ^2.4.1
     ses: ^0.11.0
@@ -1085,12 +1085,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/cors@npm:^3.0.0":
-  version: 3.1.0
-  resolution: "@koa/cors@npm:3.1.0"
+"@koa/cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@koa/cors@npm:3.3.0"
   dependencies:
     vary: ^1.1.2
-  checksum: b6f18de404a967696fe19c9a8d35816e2a845be51f9aa49f1a8d31bbea095eaa20c35eceafe1b764a7e3a912052ca6eaf1965ac34b00020b1ec2823cb60a9b5d
+  checksum: bb49c680e0d151aec1b19c24c14d61b65f430eb379e63d83789602cc7d8e52706ebcd74867cdb60b1d50ddb6f3d59be04e1c46328fae5721aeaf50e0d4fc2d28
   languageName: node
   linkType: hard
 
@@ -1565,12 +1565,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa-bodyparser@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@types/koa-bodyparser@npm:4.3.0"
+"@types/koa-bodyparser@npm:^4.3":
+  version: 4.3.7
+  resolution: "@types/koa-bodyparser@npm:4.3.7"
   dependencies:
     "@types/koa": "*"
-  checksum: b124fc80f738462e5303737b00889be10bdddbfc47e15121b48a09653b1b512aed0ea99a38cd427c9b62decfc6bec0c4ffd8786568ca6cec6fba5a98c678801e
+  checksum: 3a2cac14cb4a720d017d7708fbe9e8a310b5ecebbe62703a2606bb48c775fbeaf9fd601ba9cb7add03c7059f90327d8bcad3d70443eaea383b117b5c020054ec
   languageName: node
   linkType: hard
 
@@ -1583,7 +1583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa@npm:*, @types/koa@npm:^2.11.0":
+"@types/koa@npm:*":
   version: 2.13.1
   resolution: "@types/koa@npm:2.13.1"
   dependencies:
@@ -1599,12 +1599,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa__cors@npm:^3.0.1":
-  version: 3.0.2
-  resolution: "@types/koa__cors@npm:3.0.2"
+"@types/koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "@types/koa@npm:2.13.4"
+  dependencies:
+    "@types/accepts": "*"
+    "@types/content-disposition": "*"
+    "@types/cookies": "*"
+    "@types/http-assert": "*"
+    "@types/http-errors": "*"
+    "@types/keygrip": "*"
+    "@types/koa-compose": "*"
+    "@types/node": "*"
+  checksum: 35a54e68944f74d6763537d55d01f8ed870d0ef816b5f27fce97a317b237540b7c249dc4a54abab44ad0afd0ce010b335122c9efb490b9589affe7929201d707
+  languageName: node
+  linkType: hard
+
+"@types/koa__cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@types/koa__cors@npm:3.3.0"
   dependencies:
     "@types/koa": "*"
-  checksum: 6286f04c7aa67e273136e111d2c01b6230b7aedf5d78916af1e0313df8da40e26a07b488f2838bd4c1e45001790e1e2098d40f5a1adcb8d74933602a7c608770
+  checksum: c1aeb10b070e72b6c01a2f6abb4b0a936017794ef4eab3469697a4e24ef2054bc371519afa90c8e6c5ea9dbeda58395a64400bd499c3fda207cb593b751b44ca
   languageName: node
   linkType: hard
 
@@ -2219,13 +2235,6 @@ __metadata:
   dependencies:
     color-convert: ^2.0.1
   checksum: 513b44c3b2105dd14cc42a19271e80f386466c4be574bccf60b627432f9198571ebf4ab1e4c3ba17347658f4ee1711c163d574248c0c1cdc2d5917a0ad582ec4
-  languageName: node
-  linkType: hard
-
-"any-promise@npm:^1.1.0":
-  version: 1.3.0
-  resolution: "any-promise@npm:1.3.0"
-  checksum: 0ee8a9bdbe882c90464d75d1f55cf027f5458650c4bd1f0467e65aec38ccccda07ca5844969ee77ed46d04e7dded3eaceb027e8d32f385688523fe305fa7e1de
   languageName: node
   linkType: hard
 
@@ -2983,15 +2992,6 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
-  languageName: node
-  linkType: hard
-
-"debug@npm:~3.1.0":
-  version: 3.1.0
-  resolution: "debug@npm:3.1.0"
-  dependencies:
-    ms: 2.0.0
-  checksum: 0b52718ab957254a5b3ca07fc34543bc778f358620c206a08452251eb7fc193c3ea3505072acbf4350219c14e2d71ceb7bdaa0d3370aa630b50da790458d08b3
   languageName: node
   linkType: hard
 
@@ -4956,22 +4956,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-bodyparser@npm:^4.2.1":
+"koa-bodyparser@npm:^4.3":
   version: 4.3.0
   resolution: "koa-bodyparser@npm:4.3.0"
   dependencies:
     co-body: ^6.0.0
     copy-to: ^2.0.1
   checksum: c227fe0fb5a55b98fc91d865e80229b60178d216d53b732b07833eb38f48a7ed6aa768a083bc06e359db33298547e9a65842fbe9d3f0fdaf5149fe0becafc88f
-  languageName: node
-  linkType: hard
-
-"koa-compose@npm:^3.0.0":
-  version: 3.2.1
-  resolution: "koa-compose@npm:3.2.1"
-  dependencies:
-    any-promise: ^1.1.0
-  checksum: ff8e5fc0348455acf751179c6c613eb030a5fac6406d3b49ae9e00460b7ee8770db3ef62633fd3db0306cd4a6d2a0b5152399ebd5bb5e684418f9eeeb251c2de
   languageName: node
   linkType: hard
 
@@ -4982,26 +4973,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-convert@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "koa-convert@npm:1.2.0"
+"koa-convert@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "koa-convert@npm:2.0.0"
   dependencies:
     co: ^4.6.0
-    koa-compose: ^3.0.0
-  checksum: a33944dbda4ed87565985f5b37ba1122a012db872724b216b6fd8f9176d4bba42c4a9bf3c129330e45f6474d28f50ca0ed28d41b9bccd2ab5d36d6436cf0d676
+    koa-compose: ^4.1.0
+  checksum: 7385b3391995f59c1312142e110d5dff677f9850dbfbcf387cd36a7b0af03b5d26e82b811eb9bb008b4f3e661cdab1f8817596e46b1929da2cf6e97a2f7456ed
   languageName: node
   linkType: hard
 
-"koa@npm:^2.11.0":
-  version: 2.13.1
-  resolution: "koa@npm:2.13.1"
+"koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "koa@npm:2.13.4"
   dependencies:
     accepts: ^1.3.5
     cache-content-type: ^1.0.0
     content-disposition: ~0.5.2
     content-type: ^1.0.4
     cookies: ~0.8.0
-    debug: ~3.1.0
+    debug: ^4.3.2
     delegates: ^1.0.0
     depd: ^2.0.0
     destroy: ^1.0.4
@@ -5012,14 +5003,14 @@ __metadata:
     http-errors: ^1.6.3
     is-generator-function: ^1.0.7
     koa-compose: ^4.1.0
-    koa-convert: ^1.2.0
+    koa-convert: ^2.0.0
     on-finished: ^2.3.0
     only: ~0.0.2
     parseurl: ^1.3.2
     statuses: ^1.5.0
     type-is: ^1.6.16
     vary: ^1.1.2
-  checksum: c09c64eb32c6ab887527d3677a1b945bb7432f50d88de8b03d1d091baf51c827dafe3055763dd605b57c193b696414b1d597f58c829fb7bc47b2c6c5509670b4
+  checksum: c9a6f9c803433b2d143a0788308048c1432a71c5febcfea2af7f2e8bd732b9bfd75c2c220d553752ee9ab9a3f52490f006cfd521db97cd01d8461d67cc1ccc1f
   languageName: node
   linkType: hard
 
