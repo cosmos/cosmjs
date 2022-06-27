@@ -21,6 +21,7 @@ export {
 } from "./modules";
 export {
   ChangeAdminResult,
+  ExecuteInstruction,
   ExecuteResult,
   InstantiateOptions,
   InstantiateResult,

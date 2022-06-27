@@ -530,6 +530,68 @@ describe("SigningCosmWasmClient", () => {
     });
   });
 
+  describe("executeMultiple", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      // instantiate
+      const funds = [coin(233444, "ucosm"), coin(5454, "ustake")];
+      const beneficiaryAddress1 = makeRandomAddress();
+      const beneficiaryAddress2 = makeRandomAddress();
+      const { contractAddress: contractAddress1 } = await client.instantiate(
+        alice.address0,
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress1,
+        },
+        "amazing random contract",
+        defaultInstantiateFee,
+        { funds: funds },
+      );
+      const { contractAddress: contractAddress2 } = await client.instantiate(
+        alice.address0,
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress2,
+        },
+        "amazing random contract",
+        defaultInstantiateFee,
+        { funds: funds },
+      );
+      // execute
+      const result = await client.executeMultiple(
+        alice.address0,
+        [
+          { contractAddress: contractAddress1, msg: { release: {} } },
+          { contractAddress: contractAddress2, msg: { release: {} } },
+        ],
+        "auto",
+      );
+      expect(result.logs.length).toEqual(2);
+      const wasmEvent1 = result.logs[0].events.find((e) => e.type === "wasm");
+      assert(wasmEvent1, "Event of type wasm expected");
+      expect(wasmEvent1.attributes).toContain({ key: "action", value: "release" });
+      expect(wasmEvent1.attributes).toContain({
+        key: "destination",
+        value: beneficiaryAddress1,
+      });
+      const wasmEvent2 = result.logs[1].events.find((e) => e.type === "wasm");
+      assert(wasmEvent2, "Event of type wasm expected");
+      expect(wasmEvent2.attributes).toContain({ key: "action", value: "release" });
+      expect(wasmEvent2.attributes).toContain({
+        key: "destination",
+        value: beneficiaryAddress2,
+      });
+
+      client.disconnect();
+    });
+  });
+
   describe("sendTokens", () => {
     it("works with direct signer", async () => {
       pendingWithoutWasmd();

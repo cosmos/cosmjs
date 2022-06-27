@@ -55,6 +55,7 @@ export const wasmd = {
 export const defaultSigningClientOptions: SigningCosmWasmClientOptions = {
   broadcastPollIntervalMs: 300,
   broadcastTimeoutMs: 8_000,
+  gasPrice: defaultGasPrice,
 };
 
 export function getHackatom(): ContractUploadInstructions {
