@@ -24,7 +24,10 @@ export class Decimal {
     let whole: string;
     let fractional: string;
 
-    if (input.search(/\./) === -1) {
+    if (input === "") {
+      whole = "0";
+      fractional = "";
+    } else if (input.search(/\./) === -1) {
       // integer format, no separator
       whole = input;
       fractional = "";
