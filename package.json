@@ -49,5 +49,6 @@
     "eslint": "^7.5",
     "prettier": "^2.4.1",
     "typescript": "~4.4"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }
