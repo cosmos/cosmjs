@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "@agoric/babel-standalone@npm:^7.9.5":
@@ -330,7 +330,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -378,7 +378,7 @@ __metadata:
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.4
+    typescript: ~4.6
     yargs: ^15.3.1
   bin:
     cosmjs-cli: bin/cosmjs-cli
@@ -434,7 +434,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -485,7 +485,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -529,7 +529,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -570,7 +570,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -587,12 +587,12 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     "@cosmjs/utils": "workspace:packages/utils"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
-    "@koa/cors": ^3.0.0
+    "@koa/cors": ^3.3
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
-    "@types/koa": ^2.11.0
-    "@types/koa-bodyparser": ^4.3.0
-    "@types/koa__cors": ^3.0.1
+    "@types/koa": ^2.13
+    "@types/koa-bodyparser": ^4.3
+    "@types/koa__cors": ^3.3
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
     eslint: ^7.5
@@ -604,14 +604,14 @@ __metadata:
     esm: ^3.2.25
     jasmine: ^4
     jasmine-spec-reporter: ^6
-    koa: ^2.11.0
-    koa-bodyparser: ^4.2.1
+    koa: ^2.13
+    koa-bodyparser: ^4.3
     nyc: ^15.1.0
     prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   bin:
@@ -653,7 +653,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -700,7 +700,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -742,7 +742,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -791,7 +791,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -833,7 +833,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     ws: ^7
@@ -889,7 +889,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -930,7 +930,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -980,7 +980,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -1022,7 +1022,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -1085,12 +1085,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/cors@npm:^3.0.0":
-  version: 3.1.0
-  resolution: "@koa/cors@npm:3.1.0"
+"@koa/cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@koa/cors@npm:3.3.0"
   dependencies:
     vary: ^1.1.2
-  checksum: b6f18de404a967696fe19c9a8d35816e2a845be51f9aa49f1a8d31bbea095eaa20c35eceafe1b764a7e3a912052ca6eaf1965ac34b00020b1ec2823cb60a9b5d
+  checksum: bb49c680e0d151aec1b19c24c14d61b65f430eb379e63d83789602cc7d8e52706ebcd74867cdb60b1d50ddb6f3d59be04e1c46328fae5721aeaf50e0d4fc2d28
   languageName: node
   linkType: hard
 
@@ -1565,12 +1565,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa-bodyparser@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@types/koa-bodyparser@npm:4.3.0"
+"@types/koa-bodyparser@npm:^4.3":
+  version: 4.3.7
+  resolution: "@types/koa-bodyparser@npm:4.3.7"
   dependencies:
     "@types/koa": "*"
-  checksum: b124fc80f738462e5303737b00889be10bdddbfc47e15121b48a09653b1b512aed0ea99a38cd427c9b62decfc6bec0c4ffd8786568ca6cec6fba5a98c678801e
+  checksum: 3a2cac14cb4a720d017d7708fbe9e8a310b5ecebbe62703a2606bb48c775fbeaf9fd601ba9cb7add03c7059f90327d8bcad3d70443eaea383b117b5c020054ec
   languageName: node
   linkType: hard
 
@@ -1583,7 +1583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa@npm:*, @types/koa@npm:^2.11.0":
+"@types/koa@npm:*":
   version: 2.13.1
   resolution: "@types/koa@npm:2.13.1"
   dependencies:
@@ -1599,12 +1599,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa__cors@npm:^3.0.1":
-  version: 3.0.2
-  resolution: "@types/koa__cors@npm:3.0.2"
+"@types/koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "@types/koa@npm:2.13.4"
+  dependencies:
+    "@types/accepts": "*"
+    "@types/content-disposition": "*"
+    "@types/cookies": "*"
+    "@types/http-assert": "*"
+    "@types/http-errors": "*"
+    "@types/keygrip": "*"
+    "@types/koa-compose": "*"
+    "@types/node": "*"
+  checksum: 35a54e68944f74d6763537d55d01f8ed870d0ef816b5f27fce97a317b237540b7c249dc4a54abab44ad0afd0ce010b335122c9efb490b9589affe7929201d707
+  languageName: node
+  linkType: hard
+
+"@types/koa__cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@types/koa__cors@npm:3.3.0"
   dependencies:
     "@types/koa": "*"
-  checksum: 6286f04c7aa67e273136e111d2c01b6230b7aedf5d78916af1e0313df8da40e26a07b488f2838bd4c1e45001790e1e2098d40f5a1adcb8d74933602a7c608770
+  checksum: c1aeb10b070e72b6c01a2f6abb4b0a936017794ef4eab3469697a4e24ef2054bc371519afa90c8e6c5ea9dbeda58395a64400bd499c3fda207cb593b751b44ca
   languageName: node
   linkType: hard
 
@@ -2104,6 +2120,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn@npm:^8.5.0":
+  version: 8.7.1
+  resolution: "acorn@npm:8.7.1"
+  bin:
+    acorn: bin/acorn
+  checksum: aca0aabf98826717920ac2583fdcad0a6fbe4e583fdb6e843af2594e907455aeafe30b1e14f1757cd83ce1776773cf8296ffc3a4acf13f0bd3dfebcf1db6ae80
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -2210,13 +2235,6 @@ __metadata:
   dependencies:
     color-convert: ^2.0.1
   checksum: 513b44c3b2105dd14cc42a19271e80f386466c4be574bccf60b627432f9198571ebf4ab1e4c3ba17347658f4ee1711c163d574248c0c1cdc2d5917a0ad582ec4
-  languageName: node
-  linkType: hard
-
-"any-promise@npm:^1.1.0":
-  version: 1.3.0
-  resolution: "any-promise@npm:1.3.0"
-  checksum: 0ee8a9bdbe882c90464d75d1f55cf027f5458650c4bd1f0467e65aec38ccccda07ca5844969ee77ed46d04e7dded3eaceb027e8d32f385688523fe305fa7e1de
   languageName: node
   linkType: hard
 
@@ -2438,6 +2456,15 @@ __metadata:
     balanced-match: ^1.0.0
     concat-map: 0.0.1
   checksum: faf34a7bb0c3fcf4b59c7808bc5d2a96a40988addf2e7e09dfbb67a2251800e0d14cd2bfc1aa79174f2f5095c54ff27f46fb1289fe2d77dac755b5eb3434cc07
+  languageName: node
+  linkType: hard
+
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
   languageName: node
   linkType: hard
 
@@ -2899,7 +2926,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:packages/stargate"
     eslint: ^7.5
     prettier: ^2.4.1
-    typescript: ~4.4
+    typescript: ~4.6
   languageName: unknown
   linkType: soft
 
@@ -2965,15 +2992,6 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
-  languageName: node
-  linkType: hard
-
-"debug@npm:~3.1.0":
-  version: 3.1.0
-  resolution: "debug@npm:3.1.0"
-  dependencies:
-    ms: 2.0.0
-  checksum: 0b52718ab957254a5b3ca07fc34543bc778f358620c206a08452251eb7fc193c3ea3505072acbf4350219c14e2d71ceb7bdaa0d3370aa630b50da790458d08b3
   languageName: node
   linkType: hard
 
@@ -3966,7 +3984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.7, glob@npm:^7.2.0":
+"glob@npm:^7.1.7":
   version: 7.2.0
   resolution: "glob@npm:7.2.0"
   dependencies:
@@ -3977,6 +3995,19 @@ __metadata:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: 78a8ea942331f08ed2e055cb5b9e40fe6f46f579d7fd3d694f3412fe5db23223d29b7fee1575440202e9a7ff9a72ab106a39fee39934c7bedafe5e5f8ae20134
+  languageName: node
+  linkType: hard
+
+"glob@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "glob@npm:8.0.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^5.0.1
+    once: ^1.3.0
+  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
   languageName: node
   linkType: hard
 
@@ -4925,22 +4956,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-bodyparser@npm:^4.2.1":
+"koa-bodyparser@npm:^4.3":
   version: 4.3.0
   resolution: "koa-bodyparser@npm:4.3.0"
   dependencies:
     co-body: ^6.0.0
     copy-to: ^2.0.1
   checksum: c227fe0fb5a55b98fc91d865e80229b60178d216d53b732b07833eb38f48a7ed6aa768a083bc06e359db33298547e9a65842fbe9d3f0fdaf5149fe0becafc88f
-  languageName: node
-  linkType: hard
-
-"koa-compose@npm:^3.0.0":
-  version: 3.2.1
-  resolution: "koa-compose@npm:3.2.1"
-  dependencies:
-    any-promise: ^1.1.0
-  checksum: ff8e5fc0348455acf751179c6c613eb030a5fac6406d3b49ae9e00460b7ee8770db3ef62633fd3db0306cd4a6d2a0b5152399ebd5bb5e684418f9eeeb251c2de
   languageName: node
   linkType: hard
 
@@ -4951,26 +4973,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-convert@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "koa-convert@npm:1.2.0"
+"koa-convert@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "koa-convert@npm:2.0.0"
   dependencies:
     co: ^4.6.0
-    koa-compose: ^3.0.0
-  checksum: a33944dbda4ed87565985f5b37ba1122a012db872724b216b6fd8f9176d4bba42c4a9bf3c129330e45f6474d28f50ca0ed28d41b9bccd2ab5d36d6436cf0d676
+    koa-compose: ^4.1.0
+  checksum: 7385b3391995f59c1312142e110d5dff677f9850dbfbcf387cd36a7b0af03b5d26e82b811eb9bb008b4f3e661cdab1f8817596e46b1929da2cf6e97a2f7456ed
   languageName: node
   linkType: hard
 
-"koa@npm:^2.11.0":
-  version: 2.13.1
-  resolution: "koa@npm:2.13.1"
+"koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "koa@npm:2.13.4"
   dependencies:
     accepts: ^1.3.5
     cache-content-type: ^1.0.0
     content-disposition: ~0.5.2
     content-type: ^1.0.4
     cookies: ~0.8.0
-    debug: ~3.1.0
+    debug: ^4.3.2
     delegates: ^1.0.0
     depd: ^2.0.0
     destroy: ^1.0.4
@@ -4981,14 +5003,14 @@ __metadata:
     http-errors: ^1.6.3
     is-generator-function: ^1.0.7
     koa-compose: ^4.1.0
-    koa-convert: ^1.2.0
+    koa-convert: ^2.0.0
     on-finished: ^2.3.0
     only: ~0.0.2
     parseurl: ^1.3.2
     statuses: ^1.5.0
     type-is: ^1.6.16
     vary: ^1.1.2
-  checksum: c09c64eb32c6ab887527d3677a1b945bb7432f50d88de8b03d1d091baf51c827dafe3055763dd605b57c193b696414b1d597f58c829fb7bc47b2c6c5509670b4
+  checksum: c9a6f9c803433b2d143a0788308048c1432a71c5febcfea2af7f2e8bd732b9bfd75c2c220d553752ee9ab9a3f52490f006cfd521db97cd01d8461d67cc1ccc1f
   languageName: node
   linkType: hard
 
@@ -5171,12 +5193,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "marked@npm:4.0.10"
+"marked@npm:^4.0.16":
+  version: 4.0.17
+  resolution: "marked@npm:4.0.17"
   bin:
     marked: bin/marked.js
-  checksum: 46cd8ef1a7cfcf5e461727c7f3e16dd4244369ef58f60485e75d3f5df9d53a8249b9609e96a336521eaa5c88d9531cbd296509a148718056e9375e69609f4442
+  checksum: 33a3c43a20b47bddaf045a59bfc7c3d41cc321931cc663ed231ca3b5b3b195fb2ac2973e687c2afd65b79539c14619baa07d19793f70130160f0af80c06d9b3a
   languageName: node
   linkType: hard
 
@@ -5270,6 +5292,15 @@ __metadata:
   dependencies:
     brace-expansion: ^1.1.7
   checksum: 66ac295f8a7b59788000ea3749938b0970344c841750abd96694f80269b926ebcafad3deeb3f1da2522978b119e6ae3a5869b63b13a7859a456b3408bd18a078
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "minimatch@npm:5.1.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
   languageName: node
   linkType: hard
 
@@ -6548,14 +6579,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "shiki@npm:0.10.0"
+"shiki@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "shiki@npm:0.10.1"
   dependencies:
     jsonc-parser: ^3.0.0
     vscode-oniguruma: ^1.6.1
     vscode-textmate: 5.2.0
-  checksum: b72630a56c5e4384128a57443fc188ca8f6cf239c16defb6624b2aa500c0c953d41fb53e49f9d583cf093ddc522ff07e1b19fab8f0ae40a03304805c4fd5894b
+  checksum: fb746f3cb3de7e545e3b10a6cb658d3938f840e4ccc9a3c90ceb7e69a8f89dbb432171faac1e9f02a03f103684dad88ee5e54b5c4964fa6b579fca6e8e26424d
   languageName: node
   linkType: hard
 
@@ -7205,39 +7236,39 @@ __metadata:
   linkType: hard
 
 "typedoc@npm:^0.22":
-  version: 0.22.11
-  resolution: "typedoc@npm:0.22.11"
+  version: 0.22.18
+  resolution: "typedoc@npm:0.22.18"
   dependencies:
-    glob: ^7.2.0
+    glob: ^8.0.3
     lunr: ^2.3.9
-    marked: ^4.0.10
-    minimatch: ^3.0.4
-    shiki: ^0.10.0
+    marked: ^4.0.16
+    minimatch: ^5.1.0
+    shiki: ^0.10.1
   peerDependencies:
-    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x || 4.5.x
+    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x || 4.5.x || 4.6.x || 4.7.x
   bin:
     typedoc: bin/typedoc
-  checksum: 7d29f4b771d3eadc612d0b35509ee88c153d7310b7adb57faf0740132765613d6ceceb94877148d674cfc8242ca3c2e22e3ae2060768b2d96842bf14659d1b1c
+  checksum: b813d8129682f6ed5a4e96bacaf019e4da1d2744ca89fef850d6bb4c034616567ce67e6a7f5cfc5f00aac573f0b45d44b1427aafa262ab88dce6b460cb9e744c
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.4":
-  version: 4.4.4
-  resolution: "typescript@npm:4.4.4"
+"typescript@npm:~4.6":
+  version: 4.6.4
+  resolution: "typescript@npm:4.6.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 89ecb8436bb48ef5594d49289f5f89103071716b6e4844278f4fb3362856e31203e187a9c76d205c3f0b674d221a058fd28310dbcbcf5d95e9a57229bb5203f1
+  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.4#~builtin<compat/typescript>":
-  version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"
+"typescript@patch:typescript@~4.6#~builtin<compat/typescript>":
+  version: 4.6.4
+  resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bd629ad0da4a15d79aaad56baf3ee7d96f6a181760d430ae77f8c5325df7bffd9edee57544a3970e3651e8b796fe03a5838a7eb39c6d46cc3866c0b23d36a0dd
+  checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
   languageName: node
   linkType: hard
 
