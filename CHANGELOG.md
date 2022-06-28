@@ -25,6 +25,8 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
   ([#1177]).
 - @cosmjs/math: Check for negative values in `Decimal.fromAtomics` ([#1188]).
+- @cosmjs/tendermint-rpc: Fix `key` and `value` type in `RpcAbciQueryResponse`
+  to also include the `null` option.
 
 [#1170]: https://github.com/cosmos/cosmjs/issues/1170
 [#1177]: https://github.com/cosmos/cosmjs/issues/1177

@@ -68,10 +68,20 @@ function decodeQueryProof(data: RpcQueryProof): responses.QueryProof {
 }
 
 interface RpcAbciQueryResponse {
-  /** base64 encoded */
-  readonly key: string;
-  /** base64 encoded */
-  readonly value?: string;
+  /**
+   * Base64 encoded
+   *
+   * This can be null since this is a byte slice and due to
+   * https://github.com/tendermint/tendermint/blob/v0.35.7/abci/types/result.go#L53
+   */
+  readonly key?: string | null;
+  /**
+   * Base64 encoded
+   *
+   * This can be null since this is a byte slice and due to
+   * https://github.com/tendermint/tendermint/blob/v0.35.7/abci/types/result.go#L53
+   */
+  readonly value?: string | null;
   readonly proofOps?: RpcQueryProof | null;
   readonly height?: string;
   readonly index?: string;
@@ -83,8 +93,8 @@ interface RpcAbciQueryResponse {
 
 function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryResponse {
   return {
-    key: fromBase64(optional(data.key, "")),
-    value: fromBase64(optional(data.value, "")),
+    key: fromBase64(assertString(data.key ?? "")),
+    value: fromBase64(assertString(data.value ?? "")),
     proof: may(decodeQueryProof, data.proofOps),
     height: may(Integer.parse, data.height),
     code: may(Integer.parse, data.code),
