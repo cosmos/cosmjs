@@ -111,7 +111,7 @@ function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
 }
 
 function decodeAttributes(attributes: readonly RpcAttribute[]): responses.Attribute[] {
-  return assertArray(attributes).map(decodeAttribute);
+  return assertArray(optional<readonly RpcAttribute[]>(attributes, [])).map(decodeAttribute);
 }
 
 interface RpcEvent {
