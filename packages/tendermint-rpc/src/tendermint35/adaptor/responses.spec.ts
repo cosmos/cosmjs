@@ -1,9 +1,35 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
+import { decodeEvent, decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
 
 describe("Adaptor Responses", () => {
+  describe("decodeEvent", () => {
+    it("works with attributes", () => {
+      // from https://rpc.mainnet-1.tgrade.confio.run/tx?hash=0x2C44715748022DB2FB5F40105383719BFCFCEE51DBC02FF4088BE3F5924CD7BF
+      const event = decodeEvent({
+        type: "coin_spent",
+        attributes: [
+          { key: "foo", value: "123" },
+          { key: "bar", value: "456" },
+        ],
+      });
+      expect(event.type).toEqual("coin_spent");
+      expect(event.attributes).toEqual([
+        { key: "foo", value: "123" },
+        { key: "bar", value: "456" },
+      ]);
+    });
+
+    it("works with no attribute", () => {
+      const event = decodeEvent({
+        type: "cosmos.module.EmittedEvent",
+      });
+      expect(event.type).toEqual("cosmos.module.EmittedEvent");
+      expect(event.attributes).toEqual([]);
+    });
+  });
+
   describe("decodeValidatorGenesis", () => {
     it("works for genesis format", () => {
       // from https://raw.githubusercontent.com/cosmos/mainnet/master/genesis.json

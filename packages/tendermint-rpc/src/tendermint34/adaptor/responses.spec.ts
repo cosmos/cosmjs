@@ -1,9 +1,35 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64, fromHex } from "@cosmjs/encoding";
+import { fromBase64, fromHex, toUtf8 } from "@cosmjs/encoding";
 
-import { decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
+import { decodeEvent, decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
 
 describe("Adaptor Responses", () => {
+  describe("decodeEvent", () => {
+    it("works with attributes", () => {
+      // from https://rpc.mainnet-1.tgrade.confio.run/tx?hash=0x2C44715748022DB2FB5F40105383719BFCFCEE51DBC02FF4088BE3F5924CD7BF
+      const event = decodeEvent({
+        type: "coin_spent",
+        attributes: [
+          { key: "c3BlbmRlcg==", value: "dGdyYWRlMWpzN2V6cm01NWZxZ3h1M3A2MmQ5eG42cGF0amt1Mno3bmU1ZHZn" },
+          { key: "YW1vdW50", value: "NjAwMDAwMDAwMHV0Z2Q=" },
+        ],
+      });
+      expect(event.type).toEqual("coin_spent");
+      expect(event.attributes).toEqual([
+        { key: toUtf8("spender"), value: toUtf8("tgrade1js7ezrm55fqgxu3p62d9xn6patjku2z7ne5dvg") },
+        { key: toUtf8("amount"), value: toUtf8("6000000000utgd") },
+      ]);
+    });
+
+    it("works with no attribute", () => {
+      const event = decodeEvent({
+        type: "cosmos.module.EmittedEvent",
+      });
+      expect(event.type).toEqual("cosmos.module.EmittedEvent");
+      expect(event.attributes).toEqual([]);
+    });
+  });
+
   describe("decodeValidatorGenesis", () => {
     it("works for genesis format", () => {
       // from https://raw.githubusercontent.com/cosmos/mainnet/master/genesis.json
