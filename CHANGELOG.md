@@ -27,10 +27,12 @@ and this project adheres to
 - @cosmjs/math: Check for negative values in `Decimal.fromAtomics` ([#1188]).
 - @cosmjs/tendermint-rpc: Fix `key` and `value` type in `RpcAbciQueryResponse`
   to also include the `null` option.
+- @cosmjs/tendermint-rpc: Fix decoding events without attributes ([#1198]).
 
 [#1170]: https://github.com/cosmos/cosmjs/issues/1170
 [#1177]: https://github.com/cosmos/cosmjs/issues/1177
 [#1188]: https://github.com/cosmos/cosmjs/pull/1188
+[#1198]: https://github.com/cosmos/cosmjs/pull/1198
 
 ### Changed
 
