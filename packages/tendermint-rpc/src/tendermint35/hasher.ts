@@ -1,6 +1,13 @@
 import { Sha256, sha256 } from "@cosmjs/crypto";
 
-import { encodeBlockId, encodeBytes, encodeInt, encodeString, encodeTime, encodeVersion } from "./encodings";
+import {
+  encodeBlockId,
+  encodeBytes,
+  encodeString,
+  encodeTime,
+  encodeUvarint,
+  encodeVersion,
+} from "./encodings";
 import { Header } from "./responses";
 
 // hash is sha256
@@ -55,7 +62,7 @@ export function hashBlock(header: Header): Uint8Array {
   const encodedFields: readonly Uint8Array[] = [
     encodeVersion(header.version),
     encodeString(header.chainId),
-    encodeInt(header.height),
+    encodeUvarint(header.height),
     encodeTime(header.time),
     encodeBlockId(header.lastBlockId),
 

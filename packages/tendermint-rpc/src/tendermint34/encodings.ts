@@ -1,5 +1,4 @@
 import { toUtf8 } from "@cosmjs/encoding";
-import { Int53 } from "@cosmjs/math";
 
 import { ReadonlyDateWithNanoseconds } from "../dates";
 import { BlockId, Version } from "./responses";
@@ -140,17 +139,6 @@ export function dictionaryToStringMap(obj: Record<string, unknown>): Map<string,
   return out;
 }
 
-export class Integer {
-  public static parse(input: string | number): number {
-    const asInt = typeof input === "number" ? new Int53(input) : Int53.fromString(input);
-    return asInt.toNumber();
-  }
-
-  public static encode(num: number): string {
-    return new Int53(num).toString();
-  }
-}
-
 // Encodings needed for hashing block headers
 // Several of these functions are inspired by https://github.com/nomic-io/js-tendermint/blob/tendermint-0.30/src/
 
@@ -161,18 +149,21 @@ export function encodeString(s: string): Uint8Array {
 }
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L79-L87
-export function encodeInt(n: number): Uint8Array {
-  // eslint-disable-next-line no-bitwise
-  return n >= 0x80 ? Uint8Array.from([(n & 0xff) | 0x80, ...encodeInt(n >> 7)]) : Uint8Array.from([n & 0xff]);
+export function encodeUvarint(n: number): Uint8Array {
+  return n >= 0x80
+    ? // eslint-disable-next-line no-bitwise
+      Uint8Array.from([(n & 0xff) | 0x80, ...encodeUvarint(n >> 7)])
+    : // eslint-disable-next-line no-bitwise
+      Uint8Array.from([n & 0xff]);
 }
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L134-L178
 export function encodeTime(time: ReadonlyDateWithNanoseconds): Uint8Array {
   const milliseconds = time.getTime();
   const seconds = Math.floor(milliseconds / 1000);
-  const secondsArray = seconds ? [0x08, ...encodeInt(seconds)] : new Uint8Array();
+  const secondsArray = seconds ? [0x08, ...encodeUvarint(seconds)] : new Uint8Array();
   const nanoseconds = (time.nanoseconds || 0) + (milliseconds % 1000) * 1e6;
-  const nanosecondsArray = nanoseconds ? [0x10, ...encodeInt(nanoseconds)] : new Uint8Array();
+  const nanosecondsArray = nanoseconds ? [0x10, ...encodeUvarint(nanoseconds)] : new Uint8Array();
   return Uint8Array.from([...secondsArray, ...nanosecondsArray]);
 }
 
@@ -184,8 +175,10 @@ export function encodeBytes(bytes: Uint8Array): Uint8Array {
 }
 
 export function encodeVersion(version: Version): Uint8Array {
-  const blockArray = version.block ? Uint8Array.from([0x08, ...encodeInt(version.block)]) : new Uint8Array();
-  const appArray = version.app ? Uint8Array.from([0x10, ...encodeInt(version.app)]) : new Uint8Array();
+  const blockArray = version.block
+    ? Uint8Array.from([0x08, ...encodeUvarint(version.block)])
+    : new Uint8Array();
+  const appArray = version.app ? Uint8Array.from([0x10, ...encodeUvarint(version.app)]) : new Uint8Array();
   return Uint8Array.from([...blockArray, ...appArray]);
 }
 
