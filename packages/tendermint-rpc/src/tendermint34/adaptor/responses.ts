@@ -17,7 +17,6 @@ import {
   dictionaryToStringMap,
   Integer,
   may,
-  optional,
 } from "../encodings";
 import { hashTx } from "../hasher";
 import * as responses from "../responses";
@@ -110,13 +109,13 @@ interface RpcAttribute {
   /** base64 encoded */
   readonly key: string;
   /** base64 encoded */
-  readonly value: string;
+  readonly value?: string | null;
 }
 
 function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
     key: fromBase64(assertNotEmpty(attribute.key)),
-    value: fromBase64(optional(attribute.value, "")),
+    value: fromBase64(assertString(attribute.value ?? "")),
   };
 }
 
@@ -154,13 +153,13 @@ interface RpcTxData {
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
+    code: Integer.parse(assertNumber(data.code ?? 0)),
     codeSpace: data.codespace,
     log: data.log,
     data: may(fromBase64, data.data),
     events: data.events ? decodeEvents(data.events) : [],
-    gasWanted: Integer.parse(optional<string>(data.gas_wanted, "0")),
-    gasUsed: Integer.parse(optional<string>(data.gas_used, "0")),
+    gasWanted: Integer.parse(data.gas_wanted ?? "0"),
+    gasUsed: Integer.parse(data.gas_used ?? "0"),
   };
 }
 
