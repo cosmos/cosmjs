@@ -120,6 +120,16 @@ describe("Integers", () => {
       expect(new Uint32(4294967295).toNumber()).toEqual(4294967295);
     });
 
+    it("can convert to BigInt", () => {
+      expect(new Uint32(0).toBigInt()).toEqual(BigInt(0));
+      expect(new Uint32(1).toBigInt()).toEqual(BigInt(1));
+      expect(new Uint32(42).toBigInt()).toEqual(BigInt(42));
+      expect(new Uint32(1000000000).toBigInt()).toEqual(BigInt(1000000000));
+      expect(new Uint32(2147483647).toBigInt()).toEqual(BigInt(2147483647));
+      expect(new Uint32(2147483648).toBigInt()).toEqual(BigInt(2147483648));
+      expect(new Uint32(4294967295).toBigInt()).toEqual(BigInt(4294967295));
+    });
+
     it("can convert to string", () => {
       expect(new Uint32(0).toString()).toEqual("0");
       expect(new Uint32(1).toString()).toEqual("1");
@@ -209,6 +219,20 @@ describe("Integers", () => {
       expect(new Int53(-9007199254740991).toNumber()).toEqual(-9007199254740991);
     });
 
+    it("can convert to BigInt", () => {
+      expect(new Int53(0).toBigInt()).toEqual(BigInt(0));
+      expect(new Int53(1).toBigInt()).toEqual(BigInt(1));
+      expect(new Int53(42).toBigInt()).toEqual(BigInt(42));
+      expect(new Int53(1000000000).toBigInt()).toEqual(BigInt(1000000000));
+      expect(new Int53(2147483647).toBigInt()).toEqual(BigInt(2147483647));
+      expect(new Int53(2147483648).toBigInt()).toEqual(BigInt(2147483648));
+      expect(new Int53(4294967295).toBigInt()).toEqual(BigInt(4294967295));
+      expect(new Int53(9007199254740991).toBigInt()).toEqual(BigInt(9007199254740991));
+
+      expect(new Int53(-1).toBigInt()).toEqual(BigInt(-1));
+      expect(new Int53(-9007199254740991).toBigInt()).toEqual(BigInt(-9007199254740991));
+    });
+
     it("can convert to string", () => {
       expect(new Int53(0).toString()).toEqual("0");
       expect(new Int53(1).toString()).toEqual("1");
@@ -285,6 +309,17 @@ describe("Integers", () => {
       expect(new Uint53(2147483648).toNumber()).toEqual(2147483648);
       expect(new Uint53(4294967295).toNumber()).toEqual(4294967295);
       expect(new Uint53(9007199254740991).toNumber()).toEqual(9007199254740991);
+    });
+
+    it("can convert to BigInt", () => {
+      expect(new Uint53(0).toBigInt()).toEqual(BigInt(0));
+      expect(new Uint53(1).toBigInt()).toEqual(BigInt(1));
+      expect(new Uint53(42).toBigInt()).toEqual(BigInt(42));
+      expect(new Uint53(1000000000).toBigInt()).toEqual(BigInt(1000000000));
+      expect(new Uint53(2147483647).toBigInt()).toEqual(BigInt(2147483647));
+      expect(new Uint53(2147483648).toBigInt()).toEqual(BigInt(2147483648));
+      expect(new Uint53(4294967295).toBigInt()).toEqual(BigInt(4294967295));
+      expect(new Uint53(9007199254740991).toBigInt()).toEqual(BigInt(9007199254740991));
     });
 
     it("can convert to string", () => {
@@ -504,6 +539,22 @@ describe("Integers", () => {
         const a = Uint64.fromBytes([0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
         expect(() => a.toNumber()).toThrowError(/number can only safely store up to 53 bits/i);
       }
+    });
+
+    it("can export to BigInt", () => {
+      const a = Uint64.fromBytes([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+      expect(a.toBigInt()).toEqual(BigInt(0));
+
+      const b = Uint64.fromBytes([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01]);
+      expect(b.toBigInt()).toEqual(BigInt(1));
+
+      // value too large for 53 bit integer
+      const c = Uint64.fromBytes([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]);
+      expect(c.toBigInt()).toEqual(BigInt("0xffffffffffffffff"));
+
+      // Number.MAX_SAFE_INTEGER + 1
+      const d = Uint64.fromBytes([0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+      expect(d.toBigInt()).toEqual(BigInt(Number.MAX_SAFE_INTEGER) + BigInt(1));
     });
   });
 });

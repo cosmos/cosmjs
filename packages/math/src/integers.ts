@@ -6,6 +6,7 @@ const uint64MaxValue = new BN("18446744073709551615", 10, "be");
 /** Internal interface to ensure all integer types can be used equally */
 interface Integer {
   readonly toNumber: () => number;
+  readonly toBigInt: () => bigint;
   readonly toString: () => string;
 }
 
@@ -103,6 +104,10 @@ export class Uint32 implements Integer, WithByteConverters {
     return this.data;
   }
 
+  public toBigInt(): bigint {
+    return BigInt(this.toNumber());
+  }
+
   public toString(): string {
     return this.data.toString();
   }
@@ -139,6 +144,10 @@ export class Int53 implements Integer {
     return this.data;
   }
 
+  public toBigInt(): bigint {
+    return BigInt(this.toNumber());
+  }
+
   public toString(): string {
     return this.data.toString();
   }
@@ -162,6 +171,10 @@ export class Uint53 implements Integer {
 
   public toNumber(): number {
     return this.data.toNumber();
+  }
+
+  public toBigInt(): bigint {
+    return BigInt(this.toNumber());
   }
 
   public toString(): string {
@@ -243,6 +256,10 @@ export class Uint64 implements Integer, WithByteConverters {
 
   public toString(): string {
     return this.data.toString(10);
+  }
+
+  public toBigInt(): bigint {
+    return BigInt(this.toString());
   }
 
   public toNumber(): number {

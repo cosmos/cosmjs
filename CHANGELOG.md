@@ -14,6 +14,7 @@ and this project adheres to
   `AbciQueryResponse`.
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.executeMultiple`
   ([#1072]).
+- @cosmjs/math: Add `{Uint32,Int53,Uint53,Uint64}.toBigInt` converter methods.
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
