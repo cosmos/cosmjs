@@ -1,5 +1,4 @@
 import { toUtf8 } from "@cosmjs/encoding";
-import { Int53 } from "@cosmjs/math";
 
 import { ReadonlyDateWithNanoseconds } from "../dates";
 import { BlockId, Version } from "./responses";
@@ -138,17 +137,6 @@ export function dictionaryToStringMap(obj: Record<string, unknown>): Map<string,
     out.set(key, value);
   }
   return out;
-}
-
-export class Integer {
-  public static parse(input: string | number): number {
-    const asInt = typeof input === "number" ? new Int53(input) : Int53.fromString(input);
-    return asInt.toNumber();
-  }
-
-  public static encode(num: number): string {
-    return new Int53(num).toString();
-  }
 }
 
 // Encodings needed for hashing block headers

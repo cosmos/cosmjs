@@ -2,8 +2,9 @@
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
+import { smallIntToApi } from "../../inthelpers";
 import { createJsonRpcRequest } from "../../jsonrpc";
-import { assertNotEmpty, Integer, may } from "../encodings";
+import { assertNotEmpty, may } from "../encodings";
 import * as requests from "../requests";
 
 interface HeightParam {
@@ -14,7 +15,7 @@ interface RpcHeightParam {
 }
 function encodeHeightParam(param: HeightParam): RpcHeightParam {
   return {
-    height: may(Integer.encode, param.height),
+    height: may(smallIntToApi, param.height),
   };
 }
 
@@ -25,8 +26,8 @@ interface RpcBlockchainRequestParams {
 
 function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams): RpcBlockchainRequestParams {
   return {
-    minHeight: may(Integer.encode, param.minHeight),
-    maxHeight: may(Integer.encode, param.maxHeight),
+    minHeight: may(smallIntToApi, param.minHeight),
+    maxHeight: may(smallIntToApi, param.maxHeight),
   };
 }
 
@@ -39,8 +40,8 @@ interface RpcBlockSearchParams {
 function encodeBlockSearchParams(params: requests.BlockSearchParams): RpcBlockSearchParams {
   return {
     query: params.query,
-    page: may(Integer.encode, params.page),
-    per_page: may(Integer.encode, params.per_page),
+    page: may(smallIntToApi, params.page),
+    per_page: may(smallIntToApi, params.per_page),
     order_by: params.order_by,
   };
 }
@@ -57,7 +58,7 @@ function encodeAbciQueryParams(params: requests.AbciQueryParams): RpcAbciQueryPa
   return {
     path: assertNotEmpty(params.path),
     data: toHex(params.data),
-    height: may(Integer.encode, params.height),
+    height: may(smallIntToApi, params.height),
     prove: params.prove,
   };
 }
@@ -95,8 +96,8 @@ function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParam
   return {
     query: params.query,
     prove: params.prove,
-    page: may(Integer.encode, params.page),
-    per_page: may(Integer.encode, params.per_page),
+    page: may(smallIntToApi, params.page),
+    per_page: may(smallIntToApi, params.per_page),
     order_by: params.order_by,
   };
 }
@@ -108,9 +109,9 @@ interface RpcValidatorsParams {
 }
 function encodeValidatorsParams(params: requests.ValidatorsParams): RpcValidatorsParams {
   return {
-    height: may(Integer.encode, params.height),
-    page: may(Integer.encode, params.page),
-    per_page: may(Integer.encode, params.per_page),
+    height: may(smallIntToApi, params.height),
+    page: may(smallIntToApi, params.page),
+    per_page: may(smallIntToApi, params.per_page),
   };
 }
 
