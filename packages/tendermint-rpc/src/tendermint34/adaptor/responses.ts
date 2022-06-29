@@ -111,13 +111,14 @@ function decodeAttributes(attributes: readonly RpcAttribute[]): responses.Attrib
 
 interface RpcEvent {
   readonly type: string;
-  readonly attributes: readonly RpcAttribute[];
+  /** Can be omitted (see https://github.com/cosmos/cosmjs/pull/1198) */
+  readonly attributes?: readonly RpcAttribute[];
 }
 
-function decodeEvent(event: RpcEvent): responses.Event {
+export function decodeEvent(event: RpcEvent): responses.Event {
   return {
     type: event.type,
-    attributes: decodeAttributes(event.attributes),
+    attributes: event.attributes ? decodeAttributes(event.attributes) : [],
   };
 }
 

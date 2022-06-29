@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: Fix decoding events without attributes ([#1198]).
+
+[#1198]: https://github.com/cosmos/cosmjs/pull/1198
+
 ## [0.28.9] - 2022-06-21
 
 This version replaces the 0.28.8 release which was erroneously tagged as 0.26.8
