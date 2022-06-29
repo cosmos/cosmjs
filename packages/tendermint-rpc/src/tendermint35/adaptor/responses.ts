@@ -4,7 +4,7 @@ import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
 import { DateWithNanoseconds, fromRfc3339WithNanoseconds } from "../../dates";
-import { apiToSmallInt } from "../../inthelpers";
+import { apiToBigInt, apiToSmallInt } from "../../inthelpers";
 import { SubscriptionEvent } from "../../rpcclients";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
 import {
@@ -280,7 +280,7 @@ interface RpcValidatorUpdate {
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToSmallInt(data.power ?? 0),
+    votingPower: apiToBigInt(data.power ?? "0"),
   };
 }
 
@@ -529,7 +529,7 @@ export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Val
   return {
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToSmallInt(assertNotEmpty(data.power)),
+    votingPower: apiToBigInt(assertNotEmpty(data.power)),
   };
 }
 
@@ -572,7 +572,7 @@ interface RpcValidatorInfo {
 export function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToSmallInt(assertNotEmpty(data.voting_power)),
+    votingPower: apiToBigInt(assertNotEmpty(data.voting_power)),
     address: fromHex(assertNotEmpty(data.address)),
     proposerPriority: data.proposer_priority ? apiToSmallInt(data.proposer_priority) : undefined,
   };

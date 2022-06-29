@@ -40,9 +40,13 @@ and this project adheres to
 - all: Upgrade cosmjs-types to 0.5 ([#1131]).
 - @cosmjs/stargate: Change `packetCommitment` parameter `sequence` type from
   `Long` to `number` ([#1168]).
+- @cosmjs/tendermint-rpc: The type of `votingPower` fields was changed from
+  `number` to `bigint` as those values can exceed the safe integer range
+  ([#1133]).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
+[#1133]: https://github.com/cosmos/cosmjs/issues/1133
 
 ## [0.28.9] - 2022-06-21
 

@@ -44,7 +44,7 @@ describe("Adaptor Responses", () => {
       });
       expect(validator).toEqual({
         address: fromHex("A03DC128D38DB0BC5F18AE1872F1CB2E1FD41157"),
-        votingPower: 169980,
+        votingPower: BigInt(169980),
         pubkey: {
           algorithm: "ed25519",
           data: fromBase64("2BX6Zuj8RmdJAkD1BAg6KB0v04liyM7jBdwOGIb9F9Q="),
@@ -72,7 +72,7 @@ describe("Adaptor Responses", () => {
           algorithm: "ed25519",
           data: fromBase64("0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI="),
         },
-        votingPower: 11418237,
+        votingPower: BigInt(11418237),
       });
     });
 
@@ -93,7 +93,7 @@ describe("Adaptor Responses", () => {
           algorithm: "ed25519",
           data: fromBase64("HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE="),
         },
-        votingPower: 0,
+        votingPower: BigInt(0),
       });
     });
   });
@@ -116,7 +116,7 @@ describe("Adaptor Responses", () => {
           algorithm: "ed25519",
           data: fromBase64("0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI="),
         },
-        votingPower: 11228980,
+        votingPower: BigInt(11228980),
         proposerPriority: 62870960,
       });
     });
