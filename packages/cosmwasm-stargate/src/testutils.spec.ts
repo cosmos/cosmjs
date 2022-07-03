@@ -224,8 +224,8 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     }));
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
-    const modifiedFeeGranter = "";
-    const modifiedFeePayer = "";
+    const modifiedFeeGranter = undefined;
+    const modifiedFeePayer = undefined;
     const modifiedSignDoc = {
       ...signDoc,
       bodyBytes: Uint8Array.from(TxBody.encode(modifiedTxBody).finish()),
