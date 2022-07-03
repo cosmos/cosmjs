@@ -203,8 +203,8 @@ describe("CosmWasmClient", () => {
       };
       const txBodyBytes = registry.encode(txBody);
       const gasLimit = Int53.fromString(fee.gas).toNumber();
-      const feeGranter = "";
-      const feePayer = "";
+      const feeGranter = undefined;
+      const feePayer = undefined;
       const authInfoBytes = makeAuthInfoBytes(
         [{ pubkey, sequence }],
         fee.amount,
