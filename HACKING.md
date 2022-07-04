@@ -46,15 +46,19 @@ yarn test
 ```
 
 To run the entire test suite, you need to run some local blockchain to test
-against. We use [wasmd](https://github.com/CosmWasm/wasmd) for both CosmWasm
-tests and as a generic Cosmos SDK 0.39 (Launchpad) blockchain. We also spawn
-multiple versions of raw Tendermint and a basic WebSocket server.
+against. We use [wasmd](https://github.com/CosmWasm/wasmd) for CosmWasm tests.
+For generis Cosmos SDK tests we use simapp. We also spawn multiple versions of
+raw Tendermint and a basic WebSocket server.
 
 ```sh
 # Start wasmd
-./scripts/launchpad/start.sh
-./scripts/launchpad/init.sh
-export LAUNCHPAD_ENABLED=1
+./scripts/wasmd/start.sh
+./scripts/wasmd/init.sh
+export WASMD_ENABLED=1
+
+# Start simapp
+./scripts/simapp44/start.sh
+export SIMAPP44_ENABLED=1
 
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
@@ -75,11 +79,13 @@ yarn test
 unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
-unset LAUNCHPAD_ENABLED
+unset SIMAPP44_ENABLED
+unset WASMD_ENABLED
 ./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh
-./scripts/launchpad/stop.sh
+./scripts/simapp/stop.sh
+./scripts/wasmd/stop.sh
 ```
 
 ## Sanity
@@ -99,15 +105,15 @@ In the `scripts/` folder, a bunch of blockchains and other backend systems are
 started for testing purposes. Some ports need to be changed from the default in
 order to avoid conflicts. Here is an overview of the ports used:
 
-| Port  | Application           | Usage                           |
-| ----- | --------------------- | ------------------------------- |
-| 1317  | wasmd LCD API         | @cosmjs/launchpad tests         |
-| 1318  | simapp LCD API        | Manual Stargate debugging       |
-| 1319  | wasmd LCD API         | Manual Stargate debugging       |
-| 4444  | socketserver          | @cosmjs/sockets tests           |
-| 4445  | socketserver slow     | @cosmjs/sockets tests           |
-| 5555  | httpserver            | @cosmjs/tendermint-rpc tests    |
-| 9090  | simapp gRPC           | Manual Stargate debugging       |
-| 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests    |
-| 26658 | simapp Tendermint RPC | Stargate client tests           |
-| 26659 | wasmd Tendermint RPC  | @cosmjs/cosmwasm-stargate tests |
+| Port  | Application                    | Usage                           |
+| ----- | ------------------------------ | ------------------------------- |
+| 1318  | simapp LCD API                 | Manual Stargate debugging       |
+| 1319  | wasmd LCD API                  | Manual Stargate debugging       |
+| 4444  | socketserver                   | @cosmjs/sockets tests           |
+| 4445  | socketserver slow              | @cosmjs/sockets tests           |
+| 5555  | httpserver                     | @cosmjs/tendermint-rpc tests    |
+| 9090  | simapp gRPC                    | Manual Stargate debugging       |
+| 11134 | Standalone Tendermint 0.34 RPC | @cosmjs/tendermint-rpc tests    |
+| 11135 | Standalone Tendermint 0.35 RPC | @cosmjs/tendermint-rpc tests    |
+| 26658 | simapp Tendermint RPC          | Stargate client tests           |
+| 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm-stargate tests |

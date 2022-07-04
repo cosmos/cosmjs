@@ -2,7 +2,7 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
-echo "Waiting for blockchain and REST server to be available ..."
+echo "Waiting for blockchain and LCD server to be available ..."
 timeout 60 bash -c "until curl -s http://localhost:1319/node_info > /dev/null; do sleep 0.5; done"
 # The chain is unreliable in the first second of its existence (https://gist.github.com/webmaster128/8175692d4af5e6c572fddda7a9ef437c)
 sleep 2
