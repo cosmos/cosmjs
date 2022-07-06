@@ -11,7 +11,7 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp44,
+  pendingWithoutSimapp44Or46,
   simapp,
   simapp44Enabled,
 } from "../../testutils.spec";
@@ -79,7 +79,7 @@ describe("AuthzExtension", () => {
 
   describe("grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp44();
+      pendingWithoutSimapp44Or46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);
