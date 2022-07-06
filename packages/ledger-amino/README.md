@@ -47,7 +47,7 @@ Then follow the instructions on that page.
 The tests in this package require a Ledger device
 [initialized with the mnemonic](https://support.ledger.com/hc/en-us/articles/360005434914)
 from
-[scripts/launchpad/README.md#preset-accounts](https://github.com/cosmos/cosmjs/blob/main/scripts/launchpad/README.md#preset-accounts)
+[scripts/wasmd/README.md#preset-accounts](https://github.com/cosmos/cosmjs/blob/main/scripts/wasmd/README.md#preset-accounts)
 (see "Ledger: accounts for Ledger based demos and tests") with an installed
 "Cosmos (ATOM)" app. The device must be connected via USB, unlocked and the
 Cosmos app must be opened. The tests require the user to manually approve
@@ -62,18 +62,6 @@ and execute:
 ```sh
 export LEDGER_ENABLED=1
 export SIMAPP42_ENABLED=1
-yarn test
-```
-
-### Launchpad tests
-
-Start a local Launchpad blockchain as described in
-[scripts/launchpad/README.md](https://github.com/cosmos/cosmjs/blob/main/scripts/launchpad/README.md)
-and execute:
-
-```sh
-export LEDGER_ENABLED=1
-export LAUNCHPAD_ENABLED=1
 yarn test
 ```
 
