@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Tendermint35Client } from "@cosmjs/tendermint-rpc";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
 
 import { pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 
-async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
+async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint35Client]> {
+  const tmClient = await Tendermint35Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient), tmClient];
 }
 

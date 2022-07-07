@@ -12,7 +12,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint35Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -120,7 +120,7 @@ export class SigningStargateClient extends StargateClient {
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    const tmClient = await Tendermint35Client.connect(endpoint);
     return new SigningStargateClient(tmClient, signer, options);
   }
 
@@ -141,7 +141,7 @@ export class SigningStargateClient extends StargateClient {
   }
 
   protected constructor(
-    tmClient: Tendermint34Client | undefined,
+    tmClient: Tendermint35Client | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {

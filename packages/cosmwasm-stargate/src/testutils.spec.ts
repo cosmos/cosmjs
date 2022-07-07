@@ -18,7 +18,7 @@ import {
   setupAuthExtension,
   setupBankExtension,
 } from "@cosmjs/stargate";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Tendermint35Client } from "@cosmjs/tendermint-rpc";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -169,7 +169,7 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
 export async function makeWasmClient(
   endpoint: string,
 ): Promise<QueryClient & AuthExtension & BankExtension & WasmExtension> {
-  const tmClient = await Tendermint34Client.connect(endpoint);
+  const tmClient = await Tendermint35Client.connect(endpoint);
   return QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
 }
 

@@ -23,7 +23,7 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint35Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   CodeInfoResponse,
@@ -75,14 +75,14 @@ export interface ContractCodeHistoryEntry {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: Tendermint35Client | undefined;
   readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: Tendermint35Client | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
@@ -90,11 +90,11 @@ export class CosmWasmClient {
   private chainId: string | undefined;
 
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    const tmClient = await Tendermint35Client.connect(endpoint);
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined) {
+  protected constructor(tmClient: Tendermint35Client | undefined) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -107,11 +107,11 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): Tendermint35Client | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): Tendermint35Client {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",

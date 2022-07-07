@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodePubkey } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Tendermint35Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
@@ -12,8 +12,8 @@ import { AuthExtension, setupAuthExtension } from "./queries";
 
 async function makeClientWithAuth(
   rpcUrl: string,
-): Promise<[QueryClient & AuthExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
+): Promise<[QueryClient & AuthExtension, Tendermint35Client]> {
+  const tmClient = await Tendermint35Client.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupAuthExtension), tmClient];
 }
 

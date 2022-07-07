@@ -30,7 +30,7 @@ import {
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint35Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -182,7 +182,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    const tmClient = await Tendermint35Client.connect(endpoint);
     return new SigningCosmWasmClient(tmClient, signer, options);
   }
 
@@ -203,7 +203,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   protected constructor(
-    tmClient: Tendermint34Client | undefined,
+    tmClient: Tendermint35Client | undefined,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {
