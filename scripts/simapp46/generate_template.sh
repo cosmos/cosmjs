@@ -55,14 +55,14 @@ function inline_jq() {
 
   # Custom settings in config.toml
   "$gnused" -i \
-    -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' \
-    -e 's/^timeout_propose =.*$/timeout_propose = "300ms"/' \
-    -e 's/^timeout_propose_delta =.*$/timeout_propose_delta = "100ms"/' \
-    -e 's/^timeout_prevote =.*$/timeout_prevote = "300ms"/' \
-    -e 's/^timeout_prevote_delta =.*$/timeout_prevote_delta = "100ms"/' \
-    -e 's/^timeout_precommit =.*$/timeout_precommit = "300ms"/' \
-    -e 's/^timeout_precommit_delta =.*$/timeout_precommit_delta = "100ms"/' \
-    -e 's/^timeout_commit =.*$/timeout_commit = "1s"/' \
+    -e 's/^cors-allowed-origins =.*$/cors-allowed-origins = ["*"]/' \
+    -e 's/^timeout-propose =.*$/timeout-propose = "300ms"/' \
+    -e 's/^timeout-propose-delta =.*$/timeout-propose-delta = "100ms"/' \
+    -e 's/^timeout-prevote =.*$/timeout-prevote = "300ms"/' \
+    -e 's/^timeout-prevote-delta =.*$/timeout-prevote-delta = "100ms"/' \
+    -e 's/^timeout-precommit =.*$/timeout-precommit = "300ms"/' \
+    -e 's/^timeout-precommit-delta =.*$/timeout-precommit-delta = "100ms"/' \
+    -e 's/^timeout-commit =.*$/timeout-commit = "1s"/' \
     "template/.simapp/config/config.toml"
 
   # Custom settings app.toml
