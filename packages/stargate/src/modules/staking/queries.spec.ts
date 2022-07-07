@@ -223,8 +223,17 @@ describe("StakingExtension", () => {
       const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
 
       const response = await client.staking.validatorDelegations(validator.validatorAddress);
-      expect(response.delegationResponses).toBeDefined();
-      expect(response.delegationResponses).not.toBeNull();
+      expect(response.delegationResponses.length).toBeGreaterThanOrEqual(2);
+      // Find the self-delegation
+      expect(response.delegationResponses).toContain({
+        delegation: {
+          delegatorAddress: validator.delegatorAddress,
+          validatorAddress: validator.validatorAddress,
+          shares: "3000000000000000000000000",
+        },
+        balance: { denom: "ustake", amount: "3000000" },
+      });
+      expect(response.pagination?.total.toNumber()).toBeGreaterThanOrEqual(2);
 
       tmClient.disconnect();
     });
