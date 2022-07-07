@@ -155,7 +155,7 @@ describe("SigningStargateClient", () => {
       const memo = "Cross-chain fun";
       const fee = {
         amount: coins(2000, "ucosm"),
-        gas: "180000", // 180k
+        gas: "222000", // 222k
       };
 
       // both timeouts set
@@ -204,7 +204,7 @@ describe("SigningStargateClient", () => {
       const memo = "Cross-chain fun";
       const fee = {
         amount: coins(2000, "ucosm"),
-        gas: "180000", // 180k
+        gas: "222000", // 222k
       };
 
       // both timeouts set
@@ -265,14 +265,14 @@ describe("SigningStargateClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
         assertIsDeliverTxSuccess(result);
         expect(result.code).toEqual(0);
-        expect(result.gasWanted).toEqual(180_000);
-        expect(result.gasUsed).toBeLessThanOrEqual(180_000);
+        expect(result.gasWanted).toEqual(222_000);
+        expect(result.gasUsed).toBeLessThanOrEqual(222_000);
         expect(result.gasUsed).toBeGreaterThan(100_000);
       });
 
@@ -347,7 +347,7 @@ describe("SigningStargateClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
@@ -599,7 +599,7 @@ describe("SigningStargateClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
@@ -629,7 +629,7 @@ describe("SigningStargateClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
