@@ -10,6 +10,10 @@ and this project adheres to
 
 - @cosmjs/stargate: Add `makeMultisignedTxBytes` which is like
   `makeMultisignedTx` but returns bytes ready to broadcast ([#1176]).
+- @cosmjs/tendermint-rpc: Add Tendermint 0.35 client. This is currently not used
+  by higher level clients as Cosmos SDK 0.42-0.46 use Tendermint 0.34. But it
+  can be used as a standalone client for a Tendermint 0.35 RPC endpoint.
+  ([[#1154]])
 - @cosmjs/tendermint-rpc: Add fields `codespace` and `info` to
   `AbciQueryResponse`.
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.executeMultiple`
@@ -17,6 +21,7 @@ and this project adheres to
 - @cosmjs/math: Add `{Uint32,Int53,Uint53,Uint64}.toBigInt` converter methods.
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
+[#1154]: https://github.com/cosmos/cosmjs/issues/1154
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
 
 ### Fixed
