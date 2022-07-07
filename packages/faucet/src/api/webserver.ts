@@ -67,7 +67,7 @@ export class Webserver {
 
           const entry = this.addressCounter.get(address);
           if (entry !== undefined) {
-            if (entry.getTime() + 24 * 3600 > Date.now()) {
+            if (entry.getTime() + 24 * 3600 * 1000 > Date.now()) {
               throw new HttpError(
                 405,
                 "Too many request from the same address. Blocked to prevent draining. Please wait 24h and try it again!",
