@@ -89,6 +89,8 @@ export {
 } from "./tendermint34";
 export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
+export * as tendermint35 from "./tendermint35";
+export { Tendermint35Client } from "./tendermint35";
 export {
   BlockIdFlag,
   CommitSignature,
