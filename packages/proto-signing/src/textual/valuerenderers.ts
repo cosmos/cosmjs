@@ -1,3 +1,4 @@
+import { toBase64 } from "@cosmjs/encoding";
 import { Decimal } from "@cosmjs/math";
 import { DenomUnit } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -34,4 +35,8 @@ export function formatCoins(input: Coin[], units: Record<string, DisplayUnit>): 
   });
   pairs.sort((a, b) => compareAscii(a[1], b[1]));
   return pairs.map((pair) => pair.join(" ")).join(", ");
+}
+
+export function formatBytes(data: Uint8Array): string {
+  return toBase64(data);
 }

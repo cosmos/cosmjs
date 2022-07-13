@@ -1,13 +1,24 @@
+import { toAscii } from "@cosmjs/encoding";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
+import bytesData from "../testdata/bytes.json";
 import coinData from "../testdata/coin.json";
 import coinsData from "../testdata/coins.json";
 import decimals from "../testdata/decimals.json";
 import integers from "../testdata/integers.json";
-import { DisplayUnit, formatCoin, formatCoins, formatDecimal, formatInteger } from "./valuerenderers";
+import {
+  DisplayUnit,
+  formatBytes,
+  formatCoin,
+  formatCoins,
+  formatDecimal,
+  formatInteger,
+} from "./valuerenderers";
 
 type TestDataCoin = Array<[Coin, DisplayUnit, string]>;
 type TestDataCoins = Array<[Coin[], Record<string, DisplayUnit>, string]>;
+/** First argument is an array of bytes (0-255), second argument is the expected string */
+type TestDataBytes = Array<[number[], string]>;
 
 describe("valuerenderers", () => {
   describe("formatInteger", () => {
@@ -63,6 +74,18 @@ describe("valuerenderers", () => {
       for (const [coins, units, expected] of coinsData as TestDataCoins) {
         expect(formatCoins(coins, units))
           .withContext(`Input '${JSON.stringify(coins)}'`)
+          .toEqual(expected);
+      }
+    });
+  });
+
+  describe("formatBytes", () => {
+    it("works", () => {
+      expect(formatBytes(toAscii("foo"))).toEqual("Zm9v");
+
+      for (const [data, expected] of bytesData as TestDataBytes) {
+        expect(formatBytes(Uint8Array.from(data)))
+          .withContext(`Input '${JSON.stringify(data)}'`)
           .toEqual(expected);
       }
     });
