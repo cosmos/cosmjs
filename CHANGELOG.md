@@ -53,6 +53,12 @@ and this project adheres to
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 [#1133]: https://github.com/cosmos/cosmjs/issues/1133
 
+## [0.28.11] - 2022-07-13
+
+### Fixed
+
+- @cosmjs/faucet: Fix cooldown value from 86 seconds to 24 hours.
+
 ## [0.28.10] - 2022-06-29
 
 ### Fixed
@@ -978,7 +984,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.10...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.11...HEAD
+[0.28.11]: https://github.com/cosmos/cosmjs/compare/v0.28.10...v0.28.11
 [0.28.10]: https://github.com/cosmos/cosmjs/compare/v0.28.9...v0.28.10
 [0.28.9]: https://github.com/cosmos/cosmjs/compare/v0.28.8...v0.28.9
 [0.28.8]: https://github.com/cosmos/cosmjs/compare/v0.28.7...v0.28.8
