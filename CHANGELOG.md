@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/faucet: Fix cooldown value from 86 seconds to 24 hours.
+
 ## [0.28.10] - 2022-06-29
 
 ### Fixed
