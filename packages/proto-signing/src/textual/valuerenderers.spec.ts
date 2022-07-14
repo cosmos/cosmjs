@@ -6,6 +6,7 @@ import coinData from "../testdata/coin.json";
 import coinsData from "../testdata/coins.json";
 import decimals from "../testdata/decimals.json";
 import integers from "../testdata/integers.json";
+import timestampData from "../testdata/timestamp.json";
 import {
   DisplayUnit,
   formatBytes,
@@ -13,12 +14,15 @@ import {
   formatCoins,
   formatDecimal,
   formatInteger,
+  formatTimestamp,
 } from "./valuerenderers";
 
 type TestDataCoin = Array<[Coin, DisplayUnit, string]>;
 type TestDataCoins = Array<[Coin[], Record<string, DisplayUnit>, string]>;
 /** First argument is an array of bytes (0-255), second argument is the expected string */
 type TestDataBytes = Array<[number[], string]>;
+/** First argument is seconds, second argument is nanor and third argument is the expected string or null on error */
+type TestDataTimestamp = Array<[number, number, string | null]>;
 
 describe("valuerenderers", () => {
   describe("formatInteger", () => {
@@ -87,6 +91,27 @@ describe("valuerenderers", () => {
         expect(formatBytes(Uint8Array.from(data)))
           .withContext(`Input '${JSON.stringify(data)}'`)
           .toEqual(expected);
+      }
+    });
+  });
+
+  describe("formatTimestamp", () => {
+    it("works", () => {
+      expect(formatTimestamp(0, 0)).toEqual("1970-01-01T00:00:00.000000000Z");
+      expect(formatTimestamp(0, 1)).toEqual("1970-01-01T00:00:00.000000001Z");
+      expect(formatTimestamp(1, 2)).toEqual("1970-01-01T00:00:01.000000002Z");
+      expect(formatTimestamp(5, 0)).toEqual("1970-01-01T00:00:05.000000000Z");
+
+      for (const [seconds, nanos, expected] of timestampData as TestDataTimestamp) {
+        if (expected === null) {
+          expect(() => formatTimestamp(seconds, nanos))
+            .withContext(`Input seconds=${seconds}, nanos=${nanos}`)
+            .toThrowError();
+        } else {
+          expect(formatTimestamp(seconds, nanos))
+            .withContext(`Input seconds=${seconds}, nanos=${nanos}`)
+            .toEqual(expected);
+        }
       }
     });
   });

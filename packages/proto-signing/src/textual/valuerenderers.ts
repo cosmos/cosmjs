@@ -1,5 +1,5 @@
 import { toBase64 } from "@cosmjs/encoding";
-import { Decimal } from "@cosmjs/math";
+import { Decimal, Uint32 } from "@cosmjs/math";
 import { DenomUnit } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
@@ -39,4 +39,29 @@ export function formatCoins(input: Coin[], units: Record<string, DisplayUnit>): 
 
 export function formatBytes(data: Uint8Array): string {
   return toBase64(data);
+}
+
+export interface DateWithNanoseconds extends Date {
+  /** Nanoseconds after the time stored in a vanilla Date (millisecond granularity) */
+  nanoseconds?: number;
+}
+
+function toRfc3339WithNanoseconds(dateTime: DateWithNanoseconds): string {
+  const millisecondIso = dateTime.toISOString();
+  const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
+  return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
+}
+
+function fromSeconds(seconds: number, nanos = 0): DateWithNanoseconds {
+  const checkedNanos = new Uint32(nanos).toNumber();
+  if (checkedNanos > 999_999_999) {
+    throw new Error("Nano seconds must not exceed 999999999");
+  }
+  const out: DateWithNanoseconds = new Date(seconds * 1000 + Math.floor(checkedNanos / 1000000));
+  out.nanoseconds = checkedNanos % 1000000;
+  return out;
+}
+
+export function formatTimestamp(seconds: number, nanos: number): string {
+  return toRfc3339WithNanoseconds(fromSeconds(seconds, nanos));
 }
