@@ -219,10 +219,10 @@ native messages to make this binding simpler, and also allow these to be
 triggered by internal contract logic (they cannot form opaque messages, but
 rather just relay opaque messages formed by the clients).
 
-## Transfering Owner
+## Transferring Owner
 
 Happy hacking using the mask contract. And to make this a bit more interesting,
-note that you can transfer control of this mask. By transfering ownership, we
+note that you can transfer control of this mask. By transferring ownership, we
 transfer control of our `ucosm` native , our `FOO` erc20 token, and our open
 staking position in one fell swoop, without the other modules/contracts being
 aware of the change.
