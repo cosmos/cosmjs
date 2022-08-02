@@ -43,19 +43,23 @@ export {
   AminoMsgDeposit,
   AminoMsgSubmitProposal,
   AminoMsgVote,
+  AminoMsgVoteWeighted,
   createGovAminoConverters,
   isAminoMsgDeposit,
   isAminoMsgSubmitProposal,
   isAminoMsgVote,
+  isAminoMsgVoteWeighted,
 } from "./gov/aminomessages";
 export {
   govTypes,
   isMsgDepositEncodeObject,
   isMsgSubmitProposalEncodeObject,
   isMsgVoteEncodeObject,
+  isMsgVoteWeightedEncodeObject,
   MsgDepositEncodeObject,
   MsgSubmitProposalEncodeObject,
   MsgVoteEncodeObject,
+  MsgVoteWeightedEncodeObject,
 } from "./gov/messages";
 export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from "./gov/queries";
 export { AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";

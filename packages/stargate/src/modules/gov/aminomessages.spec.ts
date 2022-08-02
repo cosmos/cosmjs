@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
+import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import Long from "long";
 
 import { AminoTypes } from "../../aminotypes";
@@ -8,6 +8,7 @@ import {
   AminoMsgDeposit,
   AminoMsgSubmitProposal,
   AminoMsgVote,
+  AminoMsgVoteWeighted,
   createGovAminoConverters,
 } from "./aminomessages";
 
@@ -90,6 +91,34 @@ describe("AminoTypes", () => {
       };
       expect(aminoMsg).toEqual(expected);
     });
+
+    it("works for MsgVoteWeighted", () => {
+      const msg: MsgVoteWeighted = {
+        proposalId: Long.fromNumber(5),
+        voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+        options: [
+          { option: VoteOption.VOTE_OPTION_NO_WITH_VETO, weight: "700000000000000000" /* 0.7 */ },
+          { option: VoteOption.VOTE_OPTION_NO, weight: "300000000000000000" /* 0.3 */ },
+        ],
+      };
+      const aminoTypes = new AminoTypes(createGovAminoConverters());
+      const aminoMsg = aminoTypes.toAmino({
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
+        value: msg,
+      });
+      const expected: AminoMsgVoteWeighted = {
+        type: "cosmos-sdk/MsgVoteWeighted",
+        value: {
+          proposal_id: "5",
+          voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+          options: [
+            { option: VoteOption.VOTE_OPTION_NO_WITH_VETO, weight: "0.700000000000000000" },
+            { option: VoteOption.VOTE_OPTION_NO, weight: "0.300000000000000000" },
+          ],
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
   });
 
   describe("fromAmino", () => {
@@ -164,6 +193,33 @@ describe("AminoTypes", () => {
       };
       expect(msg).toEqual({
         typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgVoteWeighted", () => {
+      const aminoMsg: AminoMsgVoteWeighted = {
+        type: "cosmos-sdk/MsgVoteWeighted",
+        value: {
+          proposal_id: "5",
+          voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+          options: [
+            { option: 4, weight: "0.750000000000000000" },
+            { option: 3, weight: "0.250000000000000000" },
+          ],
+        },
+      };
+      const msg = new AminoTypes(createGovAminoConverters()).fromAmino(aminoMsg);
+      const expectedValue: MsgVoteWeighted = {
+        proposalId: Long.fromNumber(5),
+        voter: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+        options: [
+          { option: VoteOption.VOTE_OPTION_NO_WITH_VETO, weight: "750000000000000000" },
+          { option: VoteOption.VOTE_OPTION_NO, weight: "250000000000000000" },
+        ],
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
         value: expectedValue,
       });
     });

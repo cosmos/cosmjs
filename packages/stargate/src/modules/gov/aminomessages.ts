@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin } from "@cosmjs/amino";
+import { Decimal } from "@cosmjs/math";
 import { assert, assertDefinedAndNotNull, isNonNullObject } from "@cosmjs/utils";
 import { TextProposal, voteOptionFromJSON } from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { MsgDeposit, MsgSubmitProposal, MsgVote } from "cosmjs-types/cosmos/gov/v1beta1/tx";
+import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
 import { AminoConverters } from "../../aminotypes";
+import { decodeCosmosSdkDecFromProto } from "../../queryclient";
 
 /** Supports submitting arbitrary proposal content. */
 export interface AminoMsgSubmitProposal extends AminoMsg {
@@ -59,6 +61,32 @@ export function isAminoMsgVote(msg: AminoMsg): msg is AminoMsgVote {
   return msg.type === "cosmos-sdk/MsgVote";
 }
 
+/**
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.44.5/x/gov/types/tx.pb.go#L196-L203
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.44.5/x/gov/types/gov.pb.go#L124-L130
+ */
+export interface AminoMsgVoteWeighted extends AminoMsg {
+  readonly type: "cosmos-sdk/MsgVoteWeighted";
+  readonly value: {
+    readonly proposal_id: string;
+    /** Bech32 account address */
+    readonly voter: string;
+    readonly options: Array<{
+      /**
+       * VoteOption as integer from 0 to 4 🤷‍
+       *
+       * @see https://github.com/cosmos/cosmos-sdk/blob/v0.44.5/x/gov/types/gov.pb.go#L35-L49
+       */
+      readonly option: number;
+      readonly weight: string;
+    }>;
+  };
+}
+
+export function isAminoMsgVoteWeighted(msg: AminoMsg): msg is AminoMsgVoteWeighted {
+  return (msg as AminoMsgVoteWeighted).type === "cosmos-sdk/MsgVoteWeighted";
+}
+
 /** Submits a deposit to an existing proposal */
 export interface AminoMsgDeposit extends AminoMsg {
   readonly type: "cosmos-sdk/MsgDeposit";
@@ -107,6 +135,31 @@ export function createGovAminoConverters(): AminoConverters {
           option: voteOptionFromJSON(option),
           proposalId: Long.fromString(proposal_id),
           voter: voter,
+        };
+      },
+    },
+    "/cosmos.gov.v1beta1.MsgVoteWeighted": {
+      aminoType: "cosmos-sdk/MsgVoteWeighted",
+      toAmino: ({ options, proposalId, voter }: MsgVoteWeighted): AminoMsgVoteWeighted["value"] => {
+        return {
+          options: options.map((o) => ({
+            option: o.option,
+            // Weight is between 0 and 1, so we always have 20 characters when printing all trailing
+            // zeros (e.g. "0.700000000000000000" or "1.000000000000000000")
+            weight: decodeCosmosSdkDecFromProto(o.weight).toString().padEnd(20, "0"),
+          })),
+          proposal_id: proposalId.toString(),
+          voter: voter,
+        };
+      },
+      fromAmino: ({ options, proposal_id, voter }: AminoMsgVoteWeighted["value"]): MsgVoteWeighted => {
+        return {
+          proposalId: Long.fromString(proposal_id),
+          voter: voter,
+          options: options.map((o) => ({
+            option: voteOptionFromJSON(o.option),
+            weight: Decimal.fromUserInput(o.weight, 18).atomics,
+          })),
         };
       },
     },
