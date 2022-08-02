@@ -4,7 +4,7 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
 
-import { pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
+import { pendingWithoutSimapp, simapp, simapp42Enabled, simapp44Enabled, unused } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
@@ -27,11 +27,16 @@ describe("QueryClient", () => {
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      const key = Uint8Array.from([
-        ...denomMetadataPrefix,
-        ...toAscii(simapp.denomFee),
-        ...toAscii(simapp.denomFee),
-      ]);
+      let key: Uint8Array;
+      if (simapp42Enabled() || simapp44Enabled()) {
+        key = Uint8Array.from([
+          ...denomMetadataPrefix,
+          ...toAscii(simapp.denomFee),
+          ...toAscii(simapp.denomFee),
+        ]);
+      } else {
+        key = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
+      }
       const data = await client.queryVerified("bank", key);
 
       const response = Metadata.decode(data);
@@ -47,11 +52,17 @@ describe("QueryClient", () => {
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      const key = Uint8Array.from([
-        ...denomMetadataPrefix,
-        ...toAscii(simapp.denomFee),
-        ...toAscii(simapp.denomFee),
-      ]);
+      let key: Uint8Array;
+      if (simapp42Enabled() || simapp44Enabled()) {
+        key = Uint8Array.from([
+          ...denomMetadataPrefix,
+          ...toAscii(simapp.denomFee),
+          ...toAscii(simapp.denomFee),
+        ]);
+      } else {
+        key = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
+      }
+
       const data = await client.queryVerified("bank", key);
 
       const response = Metadata.decode(data);
