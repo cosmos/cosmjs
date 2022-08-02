@@ -20,10 +20,13 @@ and this project adheres to
   ([#1072]).
 - @cosmjs/math: Add `{Uint32,Int53,Uint53,Uint64}.toBigInt` converter methods.
 - @cosmjs/stargate: Add missing exports `AminoMsgTransfer`/`isAminoMsgTransfer`.
+- @cosmjs/stargate: Add support for `MsgVoteWeighted` (register by default and
+  create Amino JSON converters) ([#1224]).
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1154]: https://github.com/cosmos/cosmjs/issues/1154
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
+[#1224]: https://github.com/cosmos/cosmjs/pull/1224
 
 ### Fixed
 

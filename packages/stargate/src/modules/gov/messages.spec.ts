@@ -1,4 +1,4 @@
-import { coin, coins, makeCosmoshubPath } from "@cosmjs/amino";
+import { coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
@@ -17,6 +17,7 @@ import {
   validator,
 } from "../../testutils.spec";
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
+import { MsgVoteWeightedEncodeObject } from "./messages";
 
 describe("gov messages", () => {
   const defaultFee = {
@@ -166,5 +167,72 @@ describe("gov messages", () => {
       client.disconnect();
     });
   });
+
+  describe("MsgVoteWeighted", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      assert(voterWallet);
+      assert(proposalId, "Missing proposal ID");
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, voterWallet);
+
+      const voteMsg: MsgVoteWeightedEncodeObject = {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
+        value: {
+          proposalId: longify(proposalId),
+          voter: voter1Address,
+          options: [
+            {
+              option: VoteOption.VOTE_OPTION_YES,
+              weight: "700000000000000000", // 0.7
+            },
+            {
+              option: VoteOption.VOTE_OPTION_NO,
+              weight: "200000000000000000", // 0.2
+            },
+            {
+              option: VoteOption.VOTE_OPTION_ABSTAIN,
+              weight: "100000000000000000", // 0.1
+            },
+          ],
+        },
+      };
+      const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
+      assertIsDeliverTxSuccess(voteResult);
+
+      client.disconnect();
+    });
+
+    it("works with Amino JSON sign mode", async () => {
+      pendingWithoutSimapp();
+      assert(voterWalletAmino);
+      assert(proposalId, "Missing proposal ID");
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, voterWalletAmino);
+
+      const voteMsg: MsgVoteWeightedEncodeObject = {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
+        value: {
+          proposalId: longify(proposalId),
+          voter: voter1Address,
+          options: [
+            {
+              option: VoteOption.VOTE_OPTION_YES,
+              weight: "700000000000000000", // 0.7
+            },
+            {
+              option: VoteOption.VOTE_OPTION_NO,
+              weight: "200000000000000000", // 0.2
+            },
+            {
+              option: VoteOption.VOTE_OPTION_ABSTAIN,
+              weight: "100000000000000000", // 0.1
+            },
+          ],
+        },
+      };
+      const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
+      assertIsDeliverTxSuccess(voteResult);
+
+      client.disconnect();
+    });
   });
 });
