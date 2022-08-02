@@ -19,6 +19,7 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.executeMultiple`
   ([#1072]).
 - @cosmjs/math: Add `{Uint32,Int53,Uint53,Uint64}.toBigInt` converter methods.
+- @cosmjs/stargate: Add missing exports `AminoMsgTransfer`/`isAminoMsgTransfer`.
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1154]: https://github.com/cosmos/cosmjs/issues/1154
