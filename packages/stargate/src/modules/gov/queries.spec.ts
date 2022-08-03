@@ -397,7 +397,7 @@ describe("GovExtension", () => {
           Vote.fromPartial({
             voter: voter1Address,
             proposalId: longify(proposalId),
-            option: VoteOption.VOTE_OPTION_YES,
+            option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
             options: [
               WeightedVoteOption.fromPartial({
                 option: VoteOption.VOTE_OPTION_YES,

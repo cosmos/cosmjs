@@ -4,7 +4,7 @@ import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import Long from "long";
 
-import { longify, QueryClient } from "../../queryclient";
+import { QueryClient } from "../../queryclient";
 import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
 import {
@@ -13,6 +13,8 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
+  simapp42Enabled,
+  simapp44Enabled,
   simappEnabled,
   validator,
 } from "../../testutils.spec";
@@ -94,8 +96,11 @@ describe("TxExtension", () => {
       const { sequence } = await sequenceClient.getSequence(faucet.address0);
       const response = await client.tx.simulate([msgAny], "foo", faucet.pubkey0, sequence);
       expect(response.gasInfo?.gasUsed.toNumber()).toBeGreaterThanOrEqual(101_000);
-      expect(response.gasInfo?.gasUsed.toNumber()).toBeLessThanOrEqual(150_000);
-      expect(response.gasInfo?.gasWanted).toEqual(longify(Long.UZERO));
+      expect(response.gasInfo?.gasUsed.toNumber()).toBeLessThanOrEqual(200_000);
+      expect(response.gasInfo?.gasWanted).toEqual(
+        // Some dummy value. Value does not matter for regular users.
+        simapp42Enabled() || simapp44Enabled() ? Long.UZERO : Long.MAX_UNSIGNED_VALUE,
+      );
 
       tmClient.disconnect();
     });
