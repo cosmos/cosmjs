@@ -27,7 +27,7 @@ const msg: MsgDelegateEncodeObject = {
   typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
   value: {
     delegatorAddress: signerAddress,
-    // To get the proper validator address, start the demo chain (./scripts/simapp42/start.sh), then run:
+    // To get the proper validator address, start the demo chain (./scripts/simapp44/start.sh), then run:
     //   curl http://localhost:1318/staking/validators | jq '.result[0].operator_address'
     validatorAddress: "cosmosvaloper1urk9gy7cfws0ak9x5nu7lx4un9n6gqkrp230jk",
     amount: coin(300000, "ustake"),

@@ -28,7 +28,6 @@ import {
   pendingWithoutSimapp,
   pendingWithoutSlowSimapp,
   simapp,
-  simapp42Enabled,
   simapp44Enabled,
   slowSimapp,
   tendermintIdMatcher,
@@ -434,9 +433,7 @@ describe("StargateClient", () => {
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
 
       await expectAsync(client.broadcastTx(txRawBytes)).toBeRejectedWithError(
-        simapp42Enabled() || simapp44Enabled()
-          ? /invalid recipient address/i
-          : /Broadcasting transaction failed with code 7/i,
+        simapp44Enabled() ? /invalid recipient address/i : /Broadcasting transaction failed with code 7/i,
       );
 
       client.disconnect();

@@ -52,10 +52,12 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: The type of `votingPower` fields was changed from
   `number` to `bigint` as those values can exceed the safe integer range
   ([#1133]).
+- @cosmjs/stargate: Remove Cosmos SDK 0.42 support ([#1094]).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 [#1133]: https://github.com/cosmos/cosmjs/issues/1133
+[#1094]: https://github.com/cosmos/cosmjs/issues/1094
 
 ## [0.28.11] - 2022-07-13
 
