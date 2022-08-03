@@ -56,12 +56,12 @@ transactions.
 ### Stargate tests
 
 Start a local Stargate blockchain as described in
-[scripts/simapp42/README.md](https://github.com/cosmos/cosmjs/blob/main/scripts/simapp42/README.md)
+[scripts/simapp44/README.md](https://github.com/cosmos/cosmjs/blob/main/scripts/simapp44/README.md)
 and execute:
 
 ```sh
 export LEDGER_ENABLED=1
-export SIMAPP42_ENABLED=1
+export SIMAPP44_ENABLED=1
 yarn test
 ```
 

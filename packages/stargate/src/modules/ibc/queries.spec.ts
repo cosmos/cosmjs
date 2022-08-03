@@ -2,7 +2,7 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
 import { QueryClient } from "../../queryclient";
-import { pendingWithoutSimapp42, simapp } from "../../testutils.spec";
+import { simapp } from "../../testutils.spec";
 import * as ibcTest from "./ibctestdata.spec";
 import { IbcExtension, setupIbcExtension } from "./queries";
 
@@ -15,7 +15,7 @@ describe("IbcExtension", () => {
   describe("channel", () => {
     describe("channel", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.channel(ibcTest.portId, ibcTest.channelId);
@@ -29,7 +29,7 @@ describe("IbcExtension", () => {
 
     describe("channels", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.channels();
@@ -43,7 +43,7 @@ describe("IbcExtension", () => {
 
     describe("allChannels", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allChannels();
@@ -55,7 +55,7 @@ describe("IbcExtension", () => {
 
     describe("connectionChannels", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.connectionChannels(ibcTest.connectionId);
@@ -69,7 +69,7 @@ describe("IbcExtension", () => {
 
     describe("allConnectionChannels", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allConnectionChannels(ibcTest.connectionId);
@@ -81,7 +81,7 @@ describe("IbcExtension", () => {
 
     describe("clientState", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.clientState(ibcTest.portId, ibcTest.channelId);
@@ -99,7 +99,7 @@ describe("IbcExtension", () => {
 
     describe("consensusState", () => {
       xit("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.consensusState(
@@ -121,7 +121,7 @@ describe("IbcExtension", () => {
 
     describe("packetCommitment", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetCommitment(
@@ -139,7 +139,7 @@ describe("IbcExtension", () => {
 
     describe("packetCommitments", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetCommitments(ibcTest.portId, ibcTest.channelId);
@@ -153,7 +153,7 @@ describe("IbcExtension", () => {
 
     describe("allPacketCommitments", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allPacketCommitments(ibcTest.portId, ibcTest.channelId);
@@ -165,7 +165,7 @@ describe("IbcExtension", () => {
 
     describe("packetReceipt", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetReceipt(ibcTest.portId, ibcTest.channelId, 1);
@@ -178,7 +178,7 @@ describe("IbcExtension", () => {
     describe("packetAcknowledgement", () => {
       it("works", async () => {
         pending("We don't have an acknowledgement for testing at the moment");
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetAcknowledgement(
@@ -196,7 +196,7 @@ describe("IbcExtension", () => {
 
     describe("packetAcknowledgements", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetAcknowledgements(ibcTest.portId, ibcTest.channelId);
@@ -210,7 +210,7 @@ describe("IbcExtension", () => {
 
     describe("allPacketAcknowledgements", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allPacketAcknowledgements(
@@ -225,7 +225,7 @@ describe("IbcExtension", () => {
 
     describe("unreceivedPackets", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.unreceivedPackets(
@@ -242,7 +242,7 @@ describe("IbcExtension", () => {
 
     describe("unreceivedAcks", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.unreceivedAcks(
@@ -259,7 +259,7 @@ describe("IbcExtension", () => {
 
     describe("nextSequenceReceive", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.nextSequenceReceive(ibcTest.portId, ibcTest.channelId);
@@ -275,7 +275,7 @@ describe("IbcExtension", () => {
   describe("client", () => {
     describe("state", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.state(ibcTest.clientId);
@@ -290,7 +290,7 @@ describe("IbcExtension", () => {
 
     describe("states", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.states();
@@ -311,7 +311,7 @@ describe("IbcExtension", () => {
 
     describe("allStates", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allStates();
@@ -331,7 +331,7 @@ describe("IbcExtension", () => {
 
     describe("consensusState", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusState(ibcTest.clientId);
@@ -346,7 +346,7 @@ describe("IbcExtension", () => {
 
     describe("consensusStates", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusStates(ibcTest.clientId);
@@ -368,7 +368,7 @@ describe("IbcExtension", () => {
 
     describe("allConsensusStates", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allConsensusStates(ibcTest.clientId);
@@ -390,7 +390,7 @@ describe("IbcExtension", () => {
 
     describe("params", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.params();
@@ -404,7 +404,7 @@ describe("IbcExtension", () => {
 
     describe("stateTm", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.stateTm(ibcTest.clientId);
@@ -417,7 +417,7 @@ describe("IbcExtension", () => {
 
     describe("statesTm", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.statesTm();
@@ -435,7 +435,7 @@ describe("IbcExtension", () => {
 
     describe("allStatesTm", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allStatesTm();
@@ -453,7 +453,7 @@ describe("IbcExtension", () => {
 
     describe("consensusStateTm", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusStateTm(ibcTest.clientId);
@@ -468,7 +468,7 @@ describe("IbcExtension", () => {
   describe("connection", () => {
     describe("connection", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.connection(ibcTest.connectionId);
@@ -482,7 +482,7 @@ describe("IbcExtension", () => {
 
     describe("connections", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.connections();
@@ -496,7 +496,7 @@ describe("IbcExtension", () => {
 
     describe("allConnections", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.allConnections();
@@ -508,7 +508,7 @@ describe("IbcExtension", () => {
 
     describe("clientConnections", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.clientConnections(ibcTest.clientId);
@@ -522,7 +522,7 @@ describe("IbcExtension", () => {
 
     describe("clientState", () => {
       it("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.clientState(ibcTest.connectionId);
@@ -540,7 +540,7 @@ describe("IbcExtension", () => {
 
     describe("consensusState", () => {
       xit("works", async () => {
-        pendingWithoutSimapp42();
+        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         // TODO: Find valid values

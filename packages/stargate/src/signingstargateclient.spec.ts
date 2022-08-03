@@ -22,7 +22,6 @@ import {
   ModifyingDirectSecp256k1HdWallet,
   ModifyingSecp256k1HdWallet,
   pendingWithoutSimapp,
-  pendingWithoutSimapp42,
   simapp,
   validator,
 } from "./testutils.spec";
@@ -145,7 +144,7 @@ describe("SigningStargateClient", () => {
 
   describe("sendIbcTokens", () => {
     it("works with direct signing", async () => {
-      pendingWithoutSimapp42();
+      pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrl,
@@ -194,7 +193,7 @@ describe("SigningStargateClient", () => {
     });
 
     it("works with Amino signing", async () => {
-      pendingWithoutSimapp42();
+      pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrl,

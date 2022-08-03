@@ -17,8 +17,6 @@ module.exports = [
     },
     plugins: [
       new webpack.EnvironmentPlugin({
-        SIMAPP42_ENABLED: "",
-        SLOW_SIMAPP42_ENABLED: "",
         SIMAPP44_ENABLED: "",
         SLOW_SIMAPP44_ENABLED: "",
         SIMAPP46_ENABLED: "",

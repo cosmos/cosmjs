@@ -22,7 +22,6 @@ import {
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
   simapp,
-  simapp42Enabled,
   simapp44Enabled,
   simappEnabled,
   validator,
@@ -329,49 +328,34 @@ describe("GovExtension", () => {
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.votes(proposalId);
-      if (simapp42Enabled()) {
-        expect(response.votes).toEqual([
-          // why is vote 2 first?
-          Vote.fromPartial({
-            proposalId: longify(proposalId),
-            voter: voter2Address,
-            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
-          }),
-          Vote.fromPartial({
-            proposalId: longify(proposalId),
-            voter: voter1Address,
-            option: VoteOption.VOTE_OPTION_YES,
-          }),
-        ]);
-      } else {
-        expect(response.votes).toEqual([
-          // why is vote 2 first?
-          Vote.fromPartial({
-            proposalId: longify(proposalId),
-            voter: voter2Address,
-            option: simapp44Enabled()
-              ? VoteOption.VOTE_OPTION_NO_WITH_VETO
-              : VoteOption.VOTE_OPTION_UNSPECIFIED,
-            options: [
-              WeightedVoteOption.fromPartial({
-                option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
-                weight: "1000000000000000000",
-              }),
-            ],
-          }),
-          Vote.fromPartial({
-            proposalId: longify(proposalId),
-            voter: voter1Address,
-            option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
-            options: [
-              WeightedVoteOption.fromPartial({
-                option: VoteOption.VOTE_OPTION_YES,
-                weight: "1000000000000000000",
-              }),
-            ],
-          }),
-        ]);
-      }
+
+      expect(response.votes).toEqual([
+        // why is vote 2 first?
+        Vote.fromPartial({
+          proposalId: longify(proposalId),
+          voter: voter2Address,
+          option: simapp44Enabled()
+            ? VoteOption.VOTE_OPTION_NO_WITH_VETO
+            : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          options: [
+            WeightedVoteOption.fromPartial({
+              option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+              weight: "1000000000000000000",
+            }),
+          ],
+        }),
+        Vote.fromPartial({
+          proposalId: longify(proposalId),
+          voter: voter1Address,
+          option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          options: [
+            WeightedVoteOption.fromPartial({
+              option: VoteOption.VOTE_OPTION_YES,
+              weight: "1000000000000000000",
+            }),
+          ],
+        }),
+      ]);
 
       tmClient.disconnect();
     });
@@ -384,29 +368,19 @@ describe("GovExtension", () => {
       const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.vote(proposalId, voter1Address);
-      if (simapp42Enabled()) {
-        expect(response.vote).toEqual(
-          Vote.fromPartial({
-            voter: voter1Address,
-            proposalId: longify(proposalId),
-            option: VoteOption.VOTE_OPTION_YES,
-          }),
-        );
-      } else {
-        expect(response.vote).toEqual(
-          Vote.fromPartial({
-            voter: voter1Address,
-            proposalId: longify(proposalId),
-            option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
-            options: [
-              WeightedVoteOption.fromPartial({
-                option: VoteOption.VOTE_OPTION_YES,
-                weight: "1000000000000000000",
-              }),
-            ],
-          }),
-        );
-      }
+      expect(response.vote).toEqual(
+        Vote.fromPartial({
+          voter: voter1Address,
+          proposalId: longify(proposalId),
+          option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          options: [
+            WeightedVoteOption.fromPartial({
+              option: VoteOption.VOTE_OPTION_YES,
+              weight: "1000000000000000000",
+            }),
+          ],
+        }),
+      );
 
       tmClient.disconnect();
     });

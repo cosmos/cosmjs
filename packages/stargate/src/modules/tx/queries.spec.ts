@@ -13,7 +13,6 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-  simapp42Enabled,
   simapp44Enabled,
   simappEnabled,
   validator,
@@ -99,7 +98,7 @@ describe("TxExtension", () => {
       expect(response.gasInfo?.gasUsed.toNumber()).toBeLessThanOrEqual(200_000);
       expect(response.gasInfo?.gasWanted).toEqual(
         // Some dummy value. Value does not matter for regular users.
-        simapp42Enabled() || simapp44Enabled() ? Long.UZERO : Long.MAX_UNSIGNED_VALUE,
+        simapp44Enabled() ? Long.UZERO : Long.MAX_UNSIGNED_VALUE,
       );
 
       tmClient.disconnect();
