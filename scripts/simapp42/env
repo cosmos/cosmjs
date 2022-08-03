@@ -1,5 +1,0 @@
-# Choose from https://hub.docker.com/r/interchainio/simapp/tags
-REPOSITORY="interchainio/simapp"
-VERSION="v0.42.1"
-CONTAINER_NAME="simapp"
-CONTAINER_NAME_SLOW="simapp-slow"
