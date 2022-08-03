@@ -50,27 +50,25 @@ export function setupTxExtension(base: QueryClient): TxExtension {
         signer: Pubkey,
         sequence: number,
       ) => {
-        const request = SimulateRequest.fromPartial({
-          tx: Tx.fromPartial({
-            authInfo: AuthInfo.fromPartial({
-              fee: Fee.fromPartial({}),
-              signerInfos: [
-                {
-                  publicKey: encodePubkey(signer),
-                  sequence: Long.fromNumber(sequence, true),
-                  modeInfo: { single: { mode: SignMode.SIGN_MODE_UNSPECIFIED } },
-                },
-              ],
-            }),
-            body: TxBody.fromPartial({
-              messages: Array.from(messages),
-              memo: memo,
-            }),
-            signatures: [new Uint8Array()],
+        const tx = Tx.fromPartial({
+          authInfo: AuthInfo.fromPartial({
+            fee: Fee.fromPartial({}),
+            signerInfos: [
+              {
+                publicKey: encodePubkey(signer),
+                sequence: Long.fromNumber(sequence, true),
+                modeInfo: { single: { mode: SignMode.SIGN_MODE_UNSPECIFIED } },
+              },
+            ],
           }),
-          // Sending serialized `txBytes` is the future. But
-          // this is not available in Comsos SDK 0.42.
-          txBytes: undefined,
+          body: TxBody.fromPartial({
+            messages: Array.from(messages),
+            memo: memo,
+          }),
+          signatures: [new Uint8Array()],
+        });
+        const request = SimulateRequest.fromPartial({
+          txBytes: Tx.encode(tx).finish(),
         });
         const response = await queryService.Simulate(request);
         return response;
