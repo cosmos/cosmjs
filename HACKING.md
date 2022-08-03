@@ -109,6 +109,7 @@ order to avoid conflicts. Here is an overview of the ports used:
 | ----- | ------------------------------ | ------------------------------- |
 | 1318  | simapp LCD API                 | Manual Stargate debugging       |
 | 1319  | wasmd LCD API                  | Manual Stargate debugging       |
+| 1320  | simapp slow LCD API            | Manual Stargate debugging       |
 | 4444  | socketserver                   | @cosmjs/sockets tests           |
 | 4445  | socketserver slow              | @cosmjs/sockets tests           |
 | 5555  | httpserver                     | @cosmjs/tendermint-rpc tests    |
@@ -117,3 +118,4 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 11135 | Standalone Tendermint 0.35 RPC | @cosmjs/tendermint-rpc tests    |
 | 26658 | simapp Tendermint RPC          | Stargate client tests           |
 | 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm-stargate tests |
+| 26660 | simapp slow Tendermint RPC     | Stargate client tests           |

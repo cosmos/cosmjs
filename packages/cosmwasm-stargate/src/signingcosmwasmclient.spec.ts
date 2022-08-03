@@ -92,7 +92,7 @@ describe("SigningCosmWasmClient", () => {
       const memo = "Go go go";
       const gasUsed = await client.simulate(alice.address0, [executeContractMsg], memo);
       expect(gasUsed).toBeGreaterThanOrEqual(101_000);
-      expect(gasUsed).toBeLessThanOrEqual(150_000);
+      expect(gasUsed).toBeLessThanOrEqual(200_000);
       client.disconnect();
     });
   });
@@ -688,7 +688,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
@@ -745,7 +745,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
@@ -1039,7 +1039,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const signed = await client.sign(alice.address0, [msgAny], fee, memo);
@@ -1072,7 +1072,7 @@ describe("SigningCosmWasmClient", () => {
         };
         const fee = {
           amount: coins(2000, "ucosm"),
-          gas: "180000", // 180k
+          gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
         const signed = await client.sign(alice.address0, [msgAny], fee, memo);

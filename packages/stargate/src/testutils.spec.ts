@@ -23,13 +23,17 @@ export function simapp44Enabled(): boolean {
   return !!process.env.SIMAPP44_ENABLED;
 }
 
-export function simappEnabled(): boolean {
-  return simapp42Enabled() || simapp44Enabled();
+export function simapp46Enabled(): boolean {
+  return !!process.env.SIMAPP46_ENABLED;
 }
 
-export function pendingWithoutSimapp44(): void {
-  if (!simapp44Enabled()) {
-    return pending("Set SIMAPP44_ENABLED to enable Simapp based tests");
+export function simappEnabled(): boolean {
+  return simapp42Enabled() || simapp44Enabled() || simapp46Enabled();
+}
+
+export function pendingWithoutSimapp44Or46(): void {
+  if (!simapp44Enabled() && !simapp46Enabled()) {
+    return pending("Set SIMAPP{44,46}_ENABLED to enable Simapp based tests");
   }
 }
 

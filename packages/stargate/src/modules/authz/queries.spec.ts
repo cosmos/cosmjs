@@ -11,9 +11,10 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp44,
+  pendingWithoutSimapp44Or46,
   simapp,
   simapp44Enabled,
+  simapp46Enabled,
 } from "../../testutils.spec";
 import { AuthzExtension, setupAuthzExtension } from "./queries";
 
@@ -35,7 +36,7 @@ describe("AuthzExtension", () => {
   const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 
   beforeAll(async () => {
-    if (simapp44Enabled()) {
+    if (simapp44Enabled() || simapp46Enabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
         // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
         // This must match `voterAddress` above.
@@ -79,7 +80,7 @@ describe("AuthzExtension", () => {
 
   describe("grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp44();
+      pendingWithoutSimapp44Or46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);

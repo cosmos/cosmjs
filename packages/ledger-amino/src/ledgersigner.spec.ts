@@ -47,7 +47,7 @@ async function createTransport(): Promise<Transport> {
 
 describe("LedgerSigner", () => {
   const defaultChainId = "testing";
-  const defaultFee = calculateFee(80_000, "0.025ucosm");
+  const defaultFee = calculateFee(100_000, "0.025ucosm");
   const defaultMemo = "Some memo";
   const defaultSequence = "0";
   const defaultAccountNumber = "42";

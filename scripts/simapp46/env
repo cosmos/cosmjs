@@ -1,0 +1,9 @@
+# Temporary workaround due to https://github.com/cosmos/cosmos-sdk/issues/12798
+REPOSITORY="confio/simapp"
+VERSION="v0.46.0-archfix"
+
+# Choose from https://hub.docker.com/r/interchainio/simapp/tags
+# REPOSITORY="interchainio/simapp"
+# VERSION="v0.46.0"
+CONTAINER_NAME="simapp"
+CONTAINER_NAME_SLOW="simapp-slow"

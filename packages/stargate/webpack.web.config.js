@@ -21,6 +21,8 @@ module.exports = [
         SLOW_SIMAPP42_ENABLED: "",
         SIMAPP44_ENABLED: "",
         SLOW_SIMAPP44_ENABLED: "",
+        SIMAPP46_ENABLED: "",
+        SLOW_SIMAPP46_ENABLED: "",
       }),
       new webpack.ProvidePlugin({
         Buffer: ["buffer", "Buffer"],

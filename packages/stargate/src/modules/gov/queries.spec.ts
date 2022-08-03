@@ -23,6 +23,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   simapp42Enabled,
+  simapp44Enabled,
   simappEnabled,
   validator,
 } from "../../testutils.spec";
@@ -348,7 +349,9 @@ describe("GovExtension", () => {
           Vote.fromPartial({
             proposalId: longify(proposalId),
             voter: voter2Address,
-            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+            option: simapp44Enabled()
+              ? VoteOption.VOTE_OPTION_NO_WITH_VETO
+              : VoteOption.VOTE_OPTION_UNSPECIFIED,
             options: [
               WeightedVoteOption.fromPartial({
                 option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
@@ -359,7 +362,7 @@ describe("GovExtension", () => {
           Vote.fromPartial({
             proposalId: longify(proposalId),
             voter: voter1Address,
-            option: VoteOption.VOTE_OPTION_YES,
+            option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
             options: [
               WeightedVoteOption.fromPartial({
                 option: VoteOption.VOTE_OPTION_YES,
@@ -394,7 +397,7 @@ describe("GovExtension", () => {
           Vote.fromPartial({
             voter: voter1Address,
             proposalId: longify(proposalId),
-            option: VoteOption.VOTE_OPTION_YES,
+            option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
             options: [
               WeightedVoteOption.fromPartial({
                 option: VoteOption.VOTE_OPTION_YES,
