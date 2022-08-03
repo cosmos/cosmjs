@@ -159,6 +159,9 @@
         "tx_size_cost_per_byte": "10"
       }
     },
+    "authz": {
+      "authorization": []
+    },
     "bank": {
       "balances": [
         {
@@ -501,6 +504,9 @@
     "evidence": {
       "evidence": []
     },
+    "feegrant": {
+      "allowances": []
+    },
     "genutil": {
       "gen_txs": [
         {
@@ -524,7 +530,8 @@
                 },
                 "sequence": "0"
               }
-            ]
+            ],
+            "tip": null
           },
           "body": {
             "extension_options": [],
@@ -589,6 +596,16 @@
         "voting_period": "172800s"
       }
     },
+    "group": {
+      "group_members": [],
+      "group_policies": [],
+      "group_policy_seq": "0",
+      "group_seq": "0",
+      "groups": [],
+      "proposal_seq": "0",
+      "proposals": [],
+      "votes": []
+    },
     "mint": {
       "minter": {
         "annual_provisions": "0.000000000000000000",
@@ -602,6 +619,10 @@
         "inflation_rate_change": "0.130000000000000000",
         "mint_denom": "ustake"
       }
+    },
+    "nft": {
+      "classes": [],
+      "entries": []
     },
     "params": null,
     "slashing": {
@@ -632,14 +653,6 @@
       "unbonding_delegations": [],
       "validators": []
     },
-    "transfer": {
-      "denom_traces": [],
-      "params": {
-        "receive_enabled": true,
-        "send_enabled": true
-      },
-      "port_id": "transfer"
-    },
     "upgrade": {},
     "vesting": {}
   },
@@ -662,6 +675,6 @@
     },
     "version": {}
   },
-  "genesis_time": "2021-07-27T15:14:14.2361126Z",
+  "genesis_time": "2022-08-03T15:03:38.08791355Z",
   "initial_height": "1"
 }

@@ -6,7 +6,7 @@ gnused="$(command -v gsed || echo sed)"
 
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 
-# Create template for slow simapp
+# Create template for slow simapp based on the regular simapp template
 (
   cd "$SCRIPT_DIR"
   rm -rf template_slow
