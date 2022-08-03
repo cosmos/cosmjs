@@ -45,17 +45,21 @@ export function pendingWithoutSimapp42(): void {
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP42_ENABLED or SIMAPP44_ENABLED to enable Simapp based tests");
+    return pending("Set SIMAPP{42,44,46}_ENABLED to enable Simapp based tests");
   }
 }
 
 export function slowSimappEnabled(): boolean {
-  return !!process.env.SLOW_SIMAPP42_ENABLED || !!process.env.SLOW_SIMAPP44_ENABLED;
+  return (
+    !!process.env.SLOW_SIMAPP42_ENABLED ||
+    !!process.env.SLOW_SIMAPP44_ENABLED ||
+    !!process.env.SLOW_SIMAPP46_ENABLED
+  );
 }
 
 export function pendingWithoutSlowSimapp(): void {
   if (!slowSimappEnabled()) {
-    return pending("Set SLOW_SIMAPP42_ENABLED or SLOW_SIMAPP44_ENABLED to enable slow Simapp based tests");
+    return pending("Set SLOW_SIMAPP{42,44,46}_ENABLED to enable slow Simapp based tests");
   }
 }
 
