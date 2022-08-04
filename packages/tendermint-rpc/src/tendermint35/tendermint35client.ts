@@ -14,6 +14,11 @@ import { adaptor35, Decoder, Encoder, Params, Responses } from "./adaptor";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
+/**
+ * Please note the Tendermint 0.35 client is currently not exported and may break or be removed at any point in time.
+ *
+ * @see https://github.com/cosmos/cosmjs/issues/1225
+ */
 export class Tendermint35Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
