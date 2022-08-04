@@ -89,8 +89,10 @@ export {
 } from "./tendermint34";
 export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
-export * as tendermint35 from "./tendermint35";
-export { Tendermint35Client } from "./tendermint35";
+// Tendermint 0.35 support is not public. The implementation may break or be removed at any point in time.
+// See https://github.com/cosmos/cosmjs/issues/1225 for more context.
+// export * as tendermint35 from "./tendermint35";
+// export { Tendermint35Client } from "./tendermint35";
 export {
   BlockIdFlag,
   CommitSignature,
