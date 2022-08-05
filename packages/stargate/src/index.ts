@@ -5,6 +5,7 @@ export * as logs from "./logs";
 export {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
+  AminoMsgCreateVestingAccount,
   AminoMsgDelegate,
   AminoMsgDeposit,
   AminoMsgEditValidator,
@@ -31,6 +32,7 @@ export {
   IbcExtension,
   isAminoMsgBeginRedelegate,
   isAminoMsgCreateValidator,
+  isAminoMsgCreateVestingAccount,
   isAminoMsgDelegate,
   isAminoMsgDeposit,
   isAminoMsgEditValidator,
