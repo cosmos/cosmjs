@@ -77,7 +77,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(response.hash.length).toEqual(32);
       // verify success
       expect(response.code).toBeFalsy();
-      expect(response.codeSpace).toBeFalsy();
+      expect(response.codespace).toBeFalsy();
 
       client.disconnect();
     });

@@ -154,7 +154,7 @@ interface RpcTxData {
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
     code: apiToSmallInt(assertNumber(data.code ?? 0)),
-    codeSpace: data.codespace,
+    codespace: data.codespace,
     log: data.log,
     data: may(fromBase64, data.data),
     events: data.events ? decodeEvents(data.events) : [],

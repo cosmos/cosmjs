@@ -59,11 +59,14 @@ and this project adheres to
   `number` to `bigint` as those values can exceed the safe integer range
   ([#1133]).
 - @cosmjs/stargate: Remove Cosmos SDK 0.42 support ([#1094]).
+- @cosmjs/tendermint-rpc: Change spelling of field `codeSpace` to `codespace` in
+  `TxData` and `BroadcastTxSyncResponse` ([#1234]).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 [#1133]: https://github.com/cosmos/cosmjs/issues/1133
 [#1094]: https://github.com/cosmos/cosmjs/issues/1094
+[#1234]: https://github.com/cosmos/cosmjs/issues/1234
 
 ## [0.28.11] - 2022-07-13
 
