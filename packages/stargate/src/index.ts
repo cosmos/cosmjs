@@ -119,6 +119,7 @@ export {
   assertIsDeliverTxSuccess,
   Block,
   BlockHeader,
+  BroadcastTxError,
   DeliverTxResponse,
   IndexedTx,
   isDeliverTxFailure,

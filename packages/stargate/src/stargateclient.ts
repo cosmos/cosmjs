@@ -134,6 +134,24 @@ export function assertIsDeliverTxFailure(result: DeliverTxResponse): void {
   }
 }
 
+/**
+ * An error when broadcasting the transaction. This contains the CheckTx errors
+ * from the blockchain. Once a transaction is included in a block no BroadcastTxError
+ * is thrown, even if the execution fails (DeliverTx errors).
+ */
+export class BroadcastTxError extends Error {
+  public readonly code: number;
+  public readonly codespace: string;
+  public readonly log: string | undefined;
+
+  public constructor(code: number, codespace: string, log: string | undefined) {
+    super(`Broadcasting transaction failed with code ${code} (codespace: ${codespace}). Log: ${log}`);
+    this.code = code;
+    this.codespace = codespace;
+    this.log = log;
+  }
+}
+
 /** Use for testing only */
 export interface PrivateStargateClient {
   readonly tmClient: Tendermint34Client | undefined;
@@ -410,9 +428,7 @@ export class StargateClient {
     const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
     if (broadcasted.code) {
       return Promise.reject(
-        new Error(
-          `Broadcasting transaction failed with code ${broadcasted.code} (codespace: ${broadcasted.codeSpace}). Log: ${broadcasted.log}`,
-        ),
+        new BroadcastTxError(broadcasted.code, broadcasted.codeSpace ?? "", broadcasted.log),
       );
     }
     const transactionId = toHex(broadcasted.hash).toUpperCase();

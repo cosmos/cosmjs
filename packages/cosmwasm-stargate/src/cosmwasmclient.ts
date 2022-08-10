@@ -7,6 +7,7 @@ import {
   AuthExtension,
   BankExtension,
   Block,
+  BroadcastTxError,
   Coin,
   DeliverTxResponse,
   IndexedTx,
@@ -290,8 +291,8 @@ export class CosmWasmClient {
 
     const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
     if (broadcasted.code) {
-      throw new Error(
-        `Broadcasting transaction failed with code ${broadcasted.code} (codespace: ${broadcasted.codeSpace}). Log: ${broadcasted.log}`,
+      return Promise.reject(
+        new BroadcastTxError(broadcasted.code, broadcasted.codeSpace ?? "", broadcasted.log),
       );
     }
     const transactionId = toHex(broadcasted.hash).toUpperCase();
