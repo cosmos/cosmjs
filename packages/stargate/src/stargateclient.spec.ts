@@ -15,6 +15,7 @@ import { ReadonlyDate } from "readonly-date";
 
 import {
   assertIsDeliverTxSuccess,
+  BroadcastTxError,
   isDeliverTxFailure,
   isDeliverTxSuccess,
   PrivateStargateClient,
@@ -432,9 +433,17 @@ describe("StargateClient", () => {
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
 
-      await expectAsync(client.broadcastTx(txRawBytes)).toBeRejectedWithError(
-        simapp44Enabled() ? /invalid recipient address/i : /Broadcasting transaction failed with code 7/i,
-      );
+      try {
+        await client.broadcastTx(txRawBytes);
+        assert(false, "Expected broadcastTx to throw");
+      } catch (error: any) {
+        expect(error).toMatch(
+          simapp44Enabled() ? /invalid recipient address/i : /Broadcasting transaction failed with code 7/i,
+        );
+        assert(error instanceof BroadcastTxError);
+        expect(error.code).toEqual(7);
+        expect(error.codespace).toEqual("sdk");
+      }
 
       client.disconnect();
     });

@@ -24,8 +24,11 @@ and this project adheres to
 - @cosmjs/stargate: Add support for `MsgVoteWeighted` (register by default and
   create Amino JSON converters) ([#1224]).
 - @cosmjs/stargate: Add Amino JSON support for `MsgCreateVestingAccount`.
+- @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Create and use
+  BroadcastTxError ([#1096]).
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
+[#1096]: https://github.com/cosmos/cosmjs/issues/1096
 [#1154]: https://github.com/cosmos/cosmjs/issues/1154
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
 [#1224]: https://github.com/cosmos/cosmjs/pull/1224
