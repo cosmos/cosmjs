@@ -259,8 +259,10 @@ play with contracts.
 
 ## Diving into Contracts
 
-Check out the [mask documentation](https://github.com/cosmos/cosmjs/blob/main/packages/cli/MASK.md) to view how to use some custom
-helpers to upload code and use non-trivial contracts with proper types.
+Check out the
+[mask documentation](https://github.com/cosmos/cosmjs/blob/main/packages/cli/MASK.md)
+to view how to use some custom helpers to upload code and use non-trivial
+contracts with proper types.
 
 ## License
 
