@@ -292,7 +292,7 @@ export class CosmWasmClient {
     const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
     if (broadcasted.code) {
       return Promise.reject(
-        new BroadcastTxError(broadcasted.code, broadcasted.codeSpace ?? "", broadcasted.log),
+        new BroadcastTxError(broadcasted.code, broadcasted.codespace ?? "", broadcasted.log),
       );
     }
     const transactionId = toHex(broadcasted.hash).toUpperCase();

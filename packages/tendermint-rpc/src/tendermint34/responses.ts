@@ -194,7 +194,7 @@ export interface Event {
 
 export interface TxData {
   readonly code: number;
-  readonly codeSpace?: string;
+  readonly codespace?: string;
   readonly log?: string;
   readonly data?: Uint8Array;
   readonly events: readonly Event[];
