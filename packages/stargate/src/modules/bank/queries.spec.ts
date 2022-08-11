@@ -100,8 +100,8 @@ describe("BankExtension", () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
-      const response = await client.bank.totalSupply();
-      expect(response).toEqual([
+      const { supply } = await client.bank.totalSupply();
+      expect(supply).toEqual([
         {
           amount: simapp.totalSupply.toString(),
           denom: simapp.denomFee,

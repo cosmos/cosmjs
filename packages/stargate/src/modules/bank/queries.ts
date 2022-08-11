@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
-import { QueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import { QueryClientImpl, QueryTotalSupplyResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
 export interface BankExtension {
   readonly bank: {
     readonly balance: (address: string, denom: string) => Promise<Coin>;
     readonly allBalances: (address: string) => Promise<Coin[]>;
-    readonly totalSupply: () => Promise<Coin[]>;
+    readonly totalSupply: (paginationKey?: Uint8Array) => Promise<QueryTotalSupplyResponse>;
     readonly supplyOf: (denom: string) => Promise<Coin>;
     readonly denomMetadata: (denom: string) => Promise<Metadata>;
     readonly denomsMetadata: () => Promise<Metadata[]>;
@@ -34,9 +34,11 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         const { balances } = await queryService.AllBalances({ address: address });
         return balances;
       },
-      totalSupply: async () => {
-        const { supply } = await queryService.TotalSupply({});
-        return supply;
+      totalSupply: async (paginationKey?: Uint8Array) => {
+        const response = await queryService.TotalSupply({
+          pagination: createPagination(paginationKey),
+        });
+        return response;
       },
       supplyOf: async (denom: string) => {
         const { amount } = await queryService.SupplyOf({ denom: denom });
