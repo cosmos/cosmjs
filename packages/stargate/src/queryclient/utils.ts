@@ -22,14 +22,7 @@ export function toAccAddress(address: string): Uint8Array {
  * request the next page.
  */
 export function createPagination(paginationKey?: Uint8Array): PageRequest | undefined {
-  return paginationKey
-    ? PageRequest.fromPartial({
-        key: paginationKey,
-        offset: Long.UZERO,
-        limit: Long.UZERO,
-        countTotal: false,
-      })
-    : undefined;
+  return paginationKey ? PageRequest.fromPartial({ key: paginationKey }) : undefined;
 }
 
 export interface ProtobufRpcClient {
