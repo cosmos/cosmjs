@@ -61,12 +61,16 @@ and this project adheres to
 - @cosmjs/stargate: Remove Cosmos SDK 0.42 support ([#1094]).
 - @cosmjs/tendermint-rpc: Change spelling of field `codeSpace` to `codespace` in
   `TxData` and `BroadcastTxSyncResponse` ([#1234]).
+- @cosmjs/stargate: `BankExtension.totalSupply` now takes a pagination key
+  argument and returns the full `QueryTotalSupplyResponse` including the next
+  pagination key ([#1095]).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
 [#1133]: https://github.com/cosmos/cosmjs/issues/1133
 [#1094]: https://github.com/cosmos/cosmjs/issues/1094
 [#1234]: https://github.com/cosmos/cosmjs/issues/1234
+[#1095]: https://github.com/cosmos/cosmjs/issues/1095
 
 ## [0.28.11] - 2022-07-13
 
