@@ -386,6 +386,68 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
+    it("broadcasts a transaction, and get a response data", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+      const pubkey = encodePubkey({
+        type: "tendermint/PubKeySecp256k1",
+        value: toBase64(pubkeyBytes),
+      });
+      const registry = new Registry();
+
+      const proposalContent: EncodeObject = {
+        typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+        value: {
+          title: "hello",
+          description: "world",
+        },
+      };
+      const txBodyFields: TxBodyEncodeObject = {
+        typeUrl: "/cosmos.tx.v1beta1.TxBody",
+        value: {
+          messages: [
+            {
+              typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+              value: {
+                content: registry.encodeAsAny(proposalContent),
+                initialDeposit: {
+                  denom: "ucosm",
+                  amount: "1",
+                },
+                proposer: address,
+              },
+            },
+          ],
+        },
+      };
+      const txBodyBytes = registry.encode(txBodyFields);
+      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const feeAmount = coins(2000, "ucosm");
+      const gasLimit = 200000;
+      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit);
+
+      const chainId = await client.getChainId();
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const { signature } = await wallet.signDirect(address, signDoc);
+      const txRaw = TxRaw.fromPartial({
+        bodyBytes: txBodyBytes,
+        authInfoBytes: authInfoBytes,
+        signatures: [fromBase64(signature.signature)],
+      });
+      const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+      const txResult = await client.broadcastTx(txRawBytes);
+      assertIsDeliverTxSuccess(txResult);
+
+      const { gasUsed, rawLog, transactionHash } = txResult;
+      expect(gasUsed).toBeGreaterThan(0);
+      expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
+      expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+      client.disconnect();
+    });
+
     it("errors immediately for a CheckTx failure", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);

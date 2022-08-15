@@ -8,6 +8,7 @@ import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
@@ -65,6 +66,7 @@ export interface IndexedTx {
   /** Transaction execution error code. 0 on success. */
   readonly code: number;
   readonly rawLog: string;
+  readonly data?: Uint8Array;
   /**
    * Raw transaction bytes stored in Tendermint.
    *
@@ -418,6 +420,7 @@ export class StargateClient {
             code: result.code,
             height: result.height,
             rawLog: result.rawLog,
+            data: TxMsgData.decode(result.data!).data ?? null,
             transactionHash: txId,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
@@ -454,6 +457,7 @@ export class StargateClient {
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
         rawLog: tx.result.log || "",
+        data: tx.result.data,
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
