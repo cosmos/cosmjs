@@ -6,7 +6,7 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Prerequisite
 
 - A UNIX-like development environment
-- Node.js 12+, Docker and yarn
+- Node.js 14+, Docker and yarn
 - `sha256sum`, which you
   [can get on macOS as well](https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos)
 - `gsed`, which you

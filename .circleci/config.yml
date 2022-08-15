@@ -34,7 +34,7 @@ workflows:
             - build
           matrix:
             parameters:
-              node-version: ["12", "14", "16"]
+              node-version: ["14", "16"]
       - test-chrome:
           requires:
             - build
@@ -120,7 +120,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -243,7 +243,6 @@ jobs:
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
             declare -A node_links=(
-              ["12"]="https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb"
               ["14"]="https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb"
               ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb"
             )
@@ -365,7 +364,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -463,7 +462,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn

@@ -53,6 +53,7 @@ and this project adheres to
 ### Changed
 
 - all: Upgrade cosmjs-types to 0.5 ([#1131]).
+- all: Drop support for Node.js < 14.
 - @cosmjs/stargate: Change `packetCommitment` parameter `sequence` type from
   `Long` to `number` ([#1168]).
 - @cosmjs/tendermint-rpc: The type of `votingPower` fields was changed from
