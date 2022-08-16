@@ -420,7 +420,7 @@ export class StargateClient {
             code: result.code,
             height: result.height,
             rawLog: result.rawLog,
-            data: TxMsgData.decode(result.data!).data ?? null,
+            data: result.data ? TxMsgData.decode(result.data).data : undefined,
             transactionHash: txId,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
