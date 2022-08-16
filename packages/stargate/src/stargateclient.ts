@@ -241,7 +241,7 @@ export class StargateClient {
   public async getAccount(searchAddress: string): Promise<Account | null> {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
-      return account ? this.accountParser(account) : null;
+      return account != null ? this.accountParser(account) : null;
     } catch (error: any) {
       if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;
