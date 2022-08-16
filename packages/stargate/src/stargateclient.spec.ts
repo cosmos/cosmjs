@@ -385,7 +385,7 @@ describe("StargateClient", () => {
       if (simapp44Enabled()) {
         expect(data).toEqual([{ msgType: "/cosmos.bank.v1beta1.MsgSend", data: new Uint8Array() }]);
       } else {
-        expect(data).toBeUndefined();
+        expect(data).toEqual([]);
       }
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
