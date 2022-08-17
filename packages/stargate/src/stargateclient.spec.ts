@@ -381,7 +381,7 @@ describe("StargateClient", () => {
       const { gasUsed, rawLog, data, transactionHash } = txResult;
       expect(gasUsed).toBeGreaterThan(0);
       expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
-      // MsgSendResponse is empty
+      // MsgSendResponse is empty.
       if (simapp44Enabled()) {
         expect(data).toEqual([{ msgType: "/cosmos.bank.v1beta1.MsgSend", data: new Uint8Array() }]);
       } else {
