@@ -17,4 +17,12 @@ export const pathPattern = process.env.FAUCET_PATH_PATTERN || "m/44'/118'/0'/0/a
 export const tokenConfig: TokenConfiguration = {
   bankTokens: parseBankTokens(process.env.FAUCET_TOKENS || "ucosm, ustake"),
 };
-export const cooldown = 24; // hours
+/**
+ * Cooldown time in seconds.
+ *
+ * Defaults to 24 hours if FAUCET_COOLDOWN_TIME unset or an empty string.
+ * FAUCET_COOLDOWN_TIME can be set to "0" to deactivate.
+ */
+export const cooldownTime = process.env.FAUCET_COOLDOWN_TIME
+  ? Number.parseInt(process.env.FAUCET_COOLDOWN_TIME, 10)
+  : 24 * 3600;

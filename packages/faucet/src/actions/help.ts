@@ -37,6 +37,9 @@ FAUCET_CREDIT_AMOUNT_TKN  Send this amount of TKN to a user requesting TKN. TKN 
 FAUCET_REFILL_FACTOR      Send factor times credit amount on refilling. Defauls to 8.
 FAUCET_REFILL_THRESHOLD   Refill when balance gets below factor times credit amount.
                           Defaults to 20.
+FAUCET_COOLDOWN_TIME      Time (in seconds) after which an address can request
+                          more tokens. Can be set to "0". Defaults to 24 hours
+                          if unset or an empty string.
 `.trim();
 
   process.stdout.write(`${out}\n`);
