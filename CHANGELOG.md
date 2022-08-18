@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.28.13] - 2022-08-18
+
+Fixes the accidental release of version 0.28.12-0.
+
 ## [0.28.11] - 2022-07-13
 
 ### Fixed
@@ -937,7 +941,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.11...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.13...HEAD
+[0.28.13]: https://github.com/cosmos/cosmjs/compare/v0.28.11...v0.28.13
 [0.28.11]: https://github.com/cosmos/cosmjs/compare/v0.28.10...v0.28.11
 [0.28.10]: https://github.com/cosmos/cosmjs/compare/v0.28.9...v0.28.10
 [0.28.9]: https://github.com/cosmos/cosmjs/compare/v0.28.8...v0.28.9
