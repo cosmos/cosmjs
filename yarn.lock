@@ -2983,12 +2983,12 @@ __metadata:
   linkType: soft
 
 "cosmjs-types@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "cosmjs-types@npm:0.5.0"
+  version: 0.5.1
+  resolution: "cosmjs-types@npm:0.5.1"
   dependencies:
     long: ^4.0.0
     protobufjs: ~6.11.2
-  checksum: caface3c6d1fa1d2a848b13629fc1e1fe9afbd231bbea09a2b81ab3a7585937e139101bda6f1e85bff55ad5f7136356eff08b897d484c7f875de0d5da5b23dc0
+  checksum: 418622ea552ddac1334f99ab2151609c70b54992b380cd4dcbd768c32b3070ea97ae3152b23d4b66993fa41051cfe274817773916a076e0d6a3732830b525372
   languageName: node
   linkType: hard
 
