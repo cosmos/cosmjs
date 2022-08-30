@@ -1,5 +1,5 @@
 import { fromBech32, fromUtf8, toAscii, toBech32, toHex, toUtf8 } from "@cosmjs/encoding";
-import { Random, Sha256, sha256 } from "@cosmjs/crypto";
+import { Sha256, sha256 } from "@cosmjs/crypto";
 import { Uint53, Uint64 } from "@cosmjs/math";
 
 /**
@@ -40,14 +40,22 @@ function deterministicContractAddress(codeId: number, creator: string, label: st
   return toBech32(prefix, addressData);
 }
 
-function makeRandomAddress(length: number): string {
-  return toBech32("purple", Random.getBytes(length));
+function makeTestingAddress(length: number): string {
+  let data = new Uint8Array(length);
+  data.fill(0x99, 0);
+  data.fill(0xAA, 5);
+  data.fill(0xBB, 10);
+  data.fill(0xCC, 15);
+  data.fill(0xDD, 20);
+  data.fill(0xEE, 25);
+  data.fill(0xFF, 30);
+  return toBech32("purple", data);
 }
 
 let out: Array<any> = [];
 
 for (let codeId of [1, Number.MAX_SAFE_INTEGER]) {
-  for (let creator of [makeRandomAddress(20), makeRandomAddress(32)]) {
+  for (let creator of [makeTestingAddress(20), makeTestingAddress(32)]) {
     for (let label of ["instance 1", "instance 2"]) {
       const contractAddress = deterministicContractAddress(codeId, creator, label, "purple");
 
