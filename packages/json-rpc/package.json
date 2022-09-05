@@ -42,7 +42,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/stream": "workspace:packages/stream",
+    "@cosmjs/stream": "workspace:^",
     "xstream": "^11.14.0"
   },
   "devDependencies": {

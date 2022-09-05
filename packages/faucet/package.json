@@ -40,12 +40,12 @@
     "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "workspace:packages/crypto",
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/math": "workspace:packages/math",
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
-    "@cosmjs/utils": "workspace:packages/utils",
+    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs/encoding": "workspace:^",
+    "@cosmjs/math": "workspace:^",
+    "@cosmjs/proto-signing": "workspace:^",
+    "@cosmjs/stargate": "workspace:^",
+    "@cosmjs/utils": "workspace:^",
     "@koa/cors": "^3.3",
     "koa": "^2.13",
     "koa-bodyparser": "^4.3"
