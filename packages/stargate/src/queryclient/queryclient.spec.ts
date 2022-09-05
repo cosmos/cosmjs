@@ -1,10 +1,27 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { coin } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
-import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import {
+  QueryAllBalancesRequest,
+  QueryAllBalancesResponse,
+  QueryBalanceRequest,
+  QueryBalanceResponse,
+} from "cosmjs-types/cosmos/bank/v1beta1/query";
 
-import { pendingWithoutSimapp, simapp, simapp44Enabled, unused } from "../testutils.spec";
+import { SigningStargateClient } from "../signingstargateclient";
+import {
+  defaultSigningClientOptions,
+  faucet,
+  makeRandomAddress,
+  pendingWithoutSimapp,
+  simapp,
+  simapp44Enabled,
+  unused,
+} from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
@@ -98,6 +115,53 @@ describe("QueryClient", () => {
       const data = await client.queryUnverified(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
       const response = QueryAllBalancesResponse.decode(data);
       expect(response.balances.length).toEqual(2);
+
+      tmClient.disconnect();
+    });
+
+    it("works for height", async () => {
+      pendingWithoutSimapp();
+      const [queryClient, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+
+      const joe = makeRandomAddress();
+      const h1 = (await tmClient.status()).syncInfo.latestBlockHeight;
+
+      // Send tokens to `recipient`
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(
+        simapp.tendermintUrlHttp,
+        wallet,
+        defaultSigningClientOptions,
+      );
+      const amount = coin(332211, simapp.denomFee);
+      await client.sendTokens(faucet.address0, joe, [amount], "auto");
+
+      const h2 = (await tmClient.status()).syncInfo.latestBlockHeight;
+      assert(h1 < h2);
+
+      // Query with no height
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const data = await queryClient.queryUnverified(`/cosmos.bank.v1beta1.Query/Balance`, requestData);
+        const response = QueryBalanceResponse.decode(data);
+        expect(response.balance).toEqual(amount);
+      }
+
+      // Query at h2 (after send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const data = await queryClient.queryUnverified(`/cosmos.bank.v1beta1.Query/Balance`, requestData, h2);
+        const response = QueryBalanceResponse.decode(data);
+        expect(response.balance).toEqual(amount);
+      }
+
+      // Query at h1 (before send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const data = await queryClient.queryUnverified(`/cosmos.bank.v1beta1.Query/Balance`, requestData, h1);
+        const response = QueryBalanceResponse.decode(data);
+        expect(response.balance).toEqual({ amount: "0", denom: simapp.denomFee });
+      }
 
       tmClient.disconnect();
     });

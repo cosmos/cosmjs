@@ -26,6 +26,8 @@ and this project adheres to
 - @cosmjs/stargate: Add Amino JSON support for `MsgCreateVestingAccount`.
 - @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Create and use
   BroadcastTxError ([#1096]).
+- @cosmjs/stargate: Add height parameter to `QueryClient.queryUnverified`
+  ([#1250]).
 - @cosmjs/faucet: Allow configuring the cooldown value via
   `FAUCET_COOLDOWN_TIME` environment variable.
 
@@ -35,6 +37,7 @@ and this project adheres to
 [#1176]: https://github.com/cosmos/cosmjs/pull/1176
 [#1224]: https://github.com/cosmos/cosmjs/pull/1224
 [#1225]: https://github.com/cosmos/cosmjs/issues/1225
+[#1250]: https://github.com/cosmos/cosmjs/issues/1250
 
 ### Fixed
 
