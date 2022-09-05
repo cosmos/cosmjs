@@ -1649,7 +1649,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "is-glob",\
-        "npm:4.0.1"\
+        "npm:4.0.3"\
       ],\
       [\
         "is-lambda",\
@@ -6655,7 +6655,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"],\
             ["glob-parent", "npm:5.1.2"],\
             ["is-binary-path", "npm:2.1.0"],\
-            ["is-glob", "npm:4.0.1"],\
+            ["is-glob", "npm:4.0.3"],\
             ["normalize-path", "npm:3.0.0"],\
             ["readdirp", "npm:3.6.0"]\
           ],\
@@ -7535,7 +7535,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ignore", "npm:4.0.6"],\
             ["import-fresh", "npm:3.3.0"],\
             ["imurmurhash", "npm:0.1.4"],\
-            ["is-glob", "npm:4.0.1"],\
+            ["is-glob", "npm:4.0.3"],\
             ["js-yaml", "npm:3.14.1"],\
             ["json-stable-stringify-without-jsonify", "npm:1.0.1"],\
             ["levn", "npm:0.4.1"],\
@@ -8316,7 +8316,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/glob-parent-npm-5.1.2-021ab32634-f4f2bfe242.zip/node_modules/glob-parent/",\
           "packageDependencies": [\
             ["glob-parent", "npm:5.1.2"],\
-            ["is-glob", "npm:4.0.1"]\
+            ["is-glob", "npm:4.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8891,14 +8891,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["is-glob", [\
-        ["npm:4.0.1", {\
-          "packageLocation": "./.yarn/cache/is-glob-npm-4.0.1-341760116f-84627cad11.zip/node_modules/is-glob/",\
-          "packageDependencies": [\
-            ["is-glob", "npm:4.0.1"],\
-            ["is-extglob", "npm:2.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:4.0.3", {\
           "packageLocation": "./.yarn/cache/is-glob-npm-4.0.3-cb87bf1bdb-d381c1319f.zip/node_modules/is-glob/",\
           "packageDependencies": [\
