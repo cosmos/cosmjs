@@ -6036,13 +6036,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:8.2.4", {\
-          "packageLocation": "./.yarn/cache/acorn-npm-8.2.4-4dfdb01127-cb4ffa2746.zip/node_modules/acorn/",\
-          "packageDependencies": [\
-            ["acorn", "npm:8.2.4"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:8.7.1", {\
           "packageLocation": "./.yarn/cache/acorn-npm-8.7.1-7c7a019990-aca0aabf98.zip/node_modules/acorn/",\
           "packageDependencies": [\
@@ -12465,7 +12458,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12501,7 +12494,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12537,7 +12530,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12573,7 +12566,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12609,7 +12602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12645,7 +12638,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12681,7 +12674,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12717,7 +12710,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12753,7 +12746,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12789,7 +12782,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12825,7 +12818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12861,7 +12854,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12897,7 +12890,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12933,7 +12926,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
@@ -12969,7 +12962,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-edit", "npm:1.11.0"],\
             ["@webassemblyjs/wasm-parser", "npm:1.11.0"],\
-            ["acorn", "npm:8.2.4"],\
+            ["acorn", "npm:8.7.1"],\
             ["browserslist", "npm:4.16.6"],\
             ["chrome-trace-event", "npm:1.0.3"],\
             ["enhanced-resolve", "npm:5.8.2"],\
