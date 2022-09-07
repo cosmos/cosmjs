@@ -30,6 +30,11 @@ and this project adheres to
   ([#1250]).
 - @cosmjs/faucet: Allow configuring the cooldown value via
   `FAUCET_COOLDOWN_TIME` environment variable.
+- @cosmjs/stargate: Add missing exports `setupAuthzExtension`,
+  `setupFeegrantExtension` and `setupSlashingExtension` ([#1261]).
+- @cosmjs/stargate: Add missing exports `createCrysisAminoConverters`,
+  `createEvidenceAminoConverters`, `createSlashingAminoConverters` and
+  `createVestingAminoConverters` ([#1261]).
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1096]: https://github.com/cosmos/cosmjs/issues/1096
@@ -38,6 +43,7 @@ and this project adheres to
 [#1224]: https://github.com/cosmos/cosmjs/pull/1224
 [#1225]: https://github.com/cosmos/cosmjs/issues/1225
 [#1250]: https://github.com/cosmos/cosmjs/issues/1250
+[#1261]: https://github.com/cosmos/cosmjs/pull/1261
 
 ### Fixed
 
@@ -73,6 +79,8 @@ and this project adheres to
   pagination key ([#1095]).
 - @cosmjs/proto-signing: `makeAuthInfoBytes` now expects a fee granter and fee
   payer argument in position 4 and 5.
+- @cosmjs/stargate: Rename exported function `createFreegrantAminoConverters` to
+  `createFeegrantAminoConverters` due to a typo ([#1261).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
@@ -81,6 +89,7 @@ and this project adheres to
 [#1234]: https://github.com/cosmos/cosmjs/issues/1234
 [#1095]: https://github.com/cosmos/cosmjs/issues/1095
 [#1254]: https://github.com/cosmos/cosmjs/issues/1254
+[#1261]: https://github.com/cosmos/cosmjs/pull/1261
 
 ## [0.28.11] - 2022-07-13
 

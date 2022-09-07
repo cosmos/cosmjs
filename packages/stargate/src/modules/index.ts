@@ -1,6 +1,7 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
 export { createAuthzAminoConverters } from "./authz/aminomessages";
 export { authzTypes } from "./authz/messages";
+export { setupAuthzExtension } from "./authz/queries";
 export {
   AminoMsgMultiSend,
   AminoMsgSend,
@@ -37,7 +38,7 @@ export {
   createEvidenceAminoConverters,
   isAminoMsgSubmitEvidence,
 } from "./evidence/aminomessages";
-export { createFreegrantAminoConverters } from "./feegrant/aminomessages";
+export { createFeegrantAminoConverters } from "./feegrant/aminomessages";
 export { feegrantTypes } from "./feegrant/messages";
 export { FeegrantExtension, setupFeegrantExtension } from "./feegrant/queries";
 export {
