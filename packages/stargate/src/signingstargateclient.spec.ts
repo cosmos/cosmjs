@@ -1,16 +1,33 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { coin, coins, decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
+import {
+  coin,
+  coins,
+  decodeTxRaw,
+  DirectSecp256k1HdWallet,
+  makeCosmoshubPath,
+  Registry,
+} from "@cosmjs/proto-signing";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant";
+import { MsgGrantAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import { DeepPartial, MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 import protobuf from "protobufjs/minimal";
 
 import { AminoTypes } from "./aminotypes";
-import { AminoMsgDelegate, MsgDelegateEncodeObject, MsgSendEncodeObject } from "./modules";
+import {
+  AminoMsgDelegate,
+  MsgDelegateEncodeObject,
+  MsgSendEncodeObject,
+  setupFeegrantExtension,
+} from "./modules";
+import { QueryClient } from "./queryclient";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
@@ -139,6 +156,78 @@ describe("SigningStargateClient", () => {
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       expect(after).toEqual(amount[0]);
+    });
+
+    it("works with feegrant granter", async () => {
+      pendingWithoutSimapp();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1)],
+      });
+      const [{ address: signer }, { address: payer }] = await wallet.getAccounts();
+      const client = await SigningStargateClient.connectWithSigner(
+        simapp.tendermintUrl,
+        wallet,
+        defaultSigningClientOptions,
+      );
+
+      const tmClient = await Tendermint34Client.connect(simapp.tendermintUrl);
+      const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
+      let allowanceExists: boolean;
+      try {
+        const _existingAllowance = await queryClient.feegrant.allowance(payer, signer);
+        allowanceExists = true;
+      } catch {
+        allowanceExists = false;
+      }
+
+      if (!allowanceExists) {
+        // Create feegrant allowance
+        const allowance: Any = {
+          typeUrl: "/cosmos.feegrant.v1beta1.BasicAllowance",
+          value: Uint8Array.from(
+            BasicAllowance.encode({
+              spendLimit: [
+                {
+                  denom: "ucosm",
+                  amount: "1234567",
+                },
+              ],
+            }).finish(),
+          ),
+        };
+        const grantMsg = {
+          typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
+          value: MsgGrantAllowance.fromPartial({
+            granter: payer,
+            grantee: signer,
+            allowance: allowance,
+          }),
+        };
+        const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance");
+        assertIsDeliverTxSuccess(grantResult);
+      }
+
+      const balanceSigner1 = await client.getBalance(signer, "ucosm");
+      const balancePayer1 = await client.getBalance(payer, "ucosm");
+
+      const sendAmount = coins(7890, "ucosm");
+      const feeAmount = coins(4444, "ucosm");
+
+      // send
+      const result = await client.sendTokens(signer, makeRandomAddress(), sendAmount, {
+        amount: feeAmount,
+        gas: "120000",
+        granter: payer,
+      });
+      assertIsDeliverTxSuccess(result);
+
+      const balanceSigner2 = await client.getBalance(signer, "ucosm");
+      const balancePayer2 = await client.getBalance(payer, "ucosm");
+
+      const diffSigner = Number(BigInt(balanceSigner1.amount) - BigInt(balanceSigner2.amount));
+      const diffPayer = Number(BigInt(balancePayer1.amount) - BigInt(balancePayer2.amount));
+      expect(diffSigner).toEqual(7890); // the send amount
+      expect(diffPayer).toEqual(4444); // the fee
     });
   });
 
