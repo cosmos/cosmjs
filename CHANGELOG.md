@@ -30,6 +30,8 @@ and this project adheres to
   ([#1250]).
 - @cosmjs/faucet: Allow configuring the cooldown value via
   `FAUCET_COOLDOWN_TIME` environment variable.
+- @cosmjs/stargate: Add missing exports `setupAuthzExtension`,
+  `setupFeegrantExtension` and `setupSlashingExtension` ([#1261]).
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1096]: https://github.com/cosmos/cosmjs/issues/1096
@@ -38,6 +40,7 @@ and this project adheres to
 [#1224]: https://github.com/cosmos/cosmjs/pull/1224
 [#1225]: https://github.com/cosmos/cosmjs/issues/1225
 [#1250]: https://github.com/cosmos/cosmjs/issues/1250
+[#1261]: https://github.com/cosmos/cosmjs/pull/1261
 
 ### Fixed
 
