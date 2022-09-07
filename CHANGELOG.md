@@ -32,6 +32,9 @@ and this project adheres to
   `FAUCET_COOLDOWN_TIME` environment variable.
 - @cosmjs/stargate: Add missing exports `setupAuthzExtension`,
   `setupFeegrantExtension` and `setupSlashingExtension` ([#1261]).
+- @cosmjs/stargate: Add missing exports `createCrysisAminoConverters`,
+  `createEvidenceAminoConverters`, `createSlashingAminoConverters` and
+  `createVestingAminoConverters` ([#1261]).
 
 [#1072]: https://github.com/cosmos/cosmjs/issues/1072
 [#1096]: https://github.com/cosmos/cosmjs/issues/1096
