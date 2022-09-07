@@ -71,6 +71,8 @@ and this project adheres to
 - @cosmjs/stargate: `BankExtension.totalSupply` now takes a pagination key
   argument and returns the full `QueryTotalSupplyResponse` including the next
   pagination key ([#1095]).
+- @cosmjs/proto-signing: `makeAuthInfoBytes` now expects a fee granter and fee
+  payer argument in position 4 and 5.
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168

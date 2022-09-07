@@ -499,8 +499,8 @@ describe("StargateClient", () => {
       const chainId = await client.getChainId();
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
-      const feeGranter = "";
-      const feePayer = "";
+      const feeGranter = undefined;
+      const feePayer = undefined;
 
       const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
       const authInfoBytes1 = makeAuthInfoBytes(
