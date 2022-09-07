@@ -28,7 +28,7 @@ export {
   createAuthzAminoConverters,
   createBankAminoConverters,
   createDistributionAminoConverters,
-  createFreegrantAminoConverters,
+  createFeegrantAminoConverters,
   createGovAminoConverters,
   createIbcAminoConverters,
   createStakingAminoConverters,
