@@ -39,11 +39,11 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "workspace:packages/amino",
-    "@cosmjs/crypto": "workspace:packages/crypto",
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/math": "workspace:packages/math",
-    "@cosmjs/utils": "workspace:packages/utils",
+    "@cosmjs/amino": "workspace:^",
+    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs/encoding": "workspace:^",
+    "@cosmjs/math": "workspace:^",
+    "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.5.0",
     "long": "^4.0.0"
   },

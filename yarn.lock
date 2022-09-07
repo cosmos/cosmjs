@@ -293,14 +293,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/amino@workspace:packages/amino":
+"@cosmjs/amino@workspace:^, @cosmjs/amino@workspace:packages/amino":
   version: 0.0.0-use.local
   resolution: "@cosmjs/amino@workspace:packages/amino"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -340,16 +340,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/cli@workspace:packages/cli"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/faucet-client": "workspace:packages/faucet-client"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/cosmwasm-stargate": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/faucet-client": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/babylon": ^6.16.3
     "@types/diff": ^4
@@ -385,18 +385,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
+"@cosmjs/cosmwasm-stargate@workspace:^, @cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
   version: 0.0.0-use.local
   resolution: "@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -440,13 +440,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/crypto@workspace:packages/crypto":
+"@cosmjs/crypto@workspace:^, @cosmjs/crypto@workspace:packages/crypto":
   version: 0.0.0-use.local
   resolution: "@cosmjs/crypto@workspace:packages/crypto"
   dependencies:
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@noble/hashes": ^1
     "@types/bn.js": ^5
@@ -491,7 +491,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/encoding@workspace:packages/encoding":
+"@cosmjs/encoding@workspace:^, @cosmjs/encoding@workspace:packages/encoding":
   version: 0.0.0-use.local
   resolution: "@cosmjs/encoding@workspace:packages/encoding"
   dependencies:
@@ -535,7 +535,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/faucet-client@workspace:packages/faucet-client":
+"@cosmjs/faucet-client@workspace:^, @cosmjs/faucet-client@workspace:packages/faucet-client":
   version: 0.0.0-use.local
   resolution: "@cosmjs/faucet-client@workspace:packages/faucet-client"
   dependencies:
@@ -580,12 +580,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/faucet@workspace:packages/faucet"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@koa/cors": ^3.3
     "@types/eslint-plugin-prettier": ^3
@@ -619,11 +619,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/json-rpc@workspace:packages/json-rpc":
+"@cosmjs/json-rpc@workspace:^, @cosmjs/json-rpc@workspace:packages/json-rpc":
   version: 0.0.0-use.local
   resolution: "@cosmjs/json-rpc@workspace:packages/json-rpc"
   dependencies:
-    "@cosmjs/stream": "workspace:packages/stream"
+    "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -664,12 +664,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/ledger-amino@workspace:packages/ledger-amino"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@ledgerhq/hw-transport": ^5.25.0
     "@ledgerhq/hw-transport-node-hid": ^5.25.0
@@ -706,7 +706,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/math@workspace:packages/math":
+"@cosmjs/math@workspace:^, @cosmjs/math@workspace:packages/math":
   version: 0.0.0-use.local
   resolution: "@cosmjs/math@workspace:packages/math"
   dependencies:
@@ -748,15 +748,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/proto-signing@workspace:packages/proto-signing":
+"@cosmjs/proto-signing@workspace:^, @cosmjs/proto-signing@workspace:packages/proto-signing":
   version: 0.0.0-use.local
   resolution: "@cosmjs/proto-signing@workspace:packages/proto-signing"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -797,11 +797,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/socket@workspace:packages/socket":
+"@cosmjs/socket@workspace:^, @cosmjs/socket@workspace:packages/socket":
   version: 0.0.0-use.local
   resolution: "@cosmjs/socket@workspace:packages/socket"
   dependencies:
-    "@cosmjs/stream": "workspace:packages/stream"
+    "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -841,19 +841,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/stargate@workspace:packages/stargate":
+"@cosmjs/stargate@workspace:^, @cosmjs/stargate@workspace:packages/stargate":
   version: 0.0.0-use.local
   resolution: "@cosmjs/stargate@workspace:packages/stargate"
   dependencies:
     "@confio/ics23": ^0.6.8
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stream": "workspace:packages/stream"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stream": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -896,7 +896,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/stream@workspace:packages/stream":
+"@cosmjs/stream@workspace:^, @cosmjs/stream@workspace:packages/stream":
   version: 0.0.0-use.local
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
@@ -937,17 +937,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc":
+"@cosmjs/tendermint-rpc@workspace:^, @cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc":
   version: 0.0.0-use.local
   resolution: "@cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/json-rpc": "workspace:packages/json-rpc"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/socket": "workspace:packages/socket"
-    "@cosmjs/stream": "workspace:packages/stream"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/json-rpc": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/socket": "workspace:^"
+    "@cosmjs/stream": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
@@ -987,7 +987,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/utils@workspace:packages/utils":
+"@cosmjs/utils@workspace:^, @cosmjs/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@cosmjs/utils@workspace:packages/utils"
   dependencies:
@@ -2931,12 +2931,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cosmjs-monorepo-root@workspace:."
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/cosmwasm-stargate": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
     eslint: ^7.5
     prettier: ^2.4.1
     typescript: ~4.6

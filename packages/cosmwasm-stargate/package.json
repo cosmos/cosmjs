@@ -38,14 +38,14 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "workspace:packages/amino",
-    "@cosmjs/crypto": "workspace:packages/crypto",
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/math": "workspace:packages/math",
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc",
-    "@cosmjs/utils": "workspace:packages/utils",
+    "@cosmjs/amino": "workspace:^",
+    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs/encoding": "workspace:^",
+    "@cosmjs/math": "workspace:^",
+    "@cosmjs/proto-signing": "workspace:^",
+    "@cosmjs/stargate": "workspace:^",
+    "@cosmjs/tendermint-rpc": "workspace:^",
+    "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.5.0",
     "long": "^4.0.0",
     "pako": "^2.0.2"

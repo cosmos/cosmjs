@@ -59,6 +59,7 @@ and this project adheres to
 
 - all: Upgrade cosmjs-types to 0.5 ([#1131]).
 - all: Drop support for Node.js < 14.
+- all: Use caret version for internal dependencies' version ranges ([#1254]).
 - @cosmjs/stargate: Change `packetCommitment` parameter `sequence` type from
   `Long` to `number` ([#1168]).
 - @cosmjs/tendermint-rpc: The type of `votingPower` fields was changed from
@@ -77,6 +78,7 @@ and this project adheres to
 [#1094]: https://github.com/cosmos/cosmjs/issues/1094
 [#1234]: https://github.com/cosmos/cosmjs/issues/1234
 [#1095]: https://github.com/cosmos/cosmjs/issues/1095
+[#1254]: https://github.com/cosmos/cosmjs/issues/1254
 
 ## [0.28.11] - 2022-07-13
 

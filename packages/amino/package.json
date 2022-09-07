@@ -40,10 +40,10 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "workspace:packages/crypto",
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/math": "workspace:packages/math",
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs/encoding": "workspace:^",
+    "@cosmjs/math": "workspace:^",
+    "@cosmjs/utils": "workspace:^"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
