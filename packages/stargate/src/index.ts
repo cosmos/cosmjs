@@ -25,6 +25,13 @@ export {
   AminoMsgWithdrawValidatorCommission,
   AuthExtension,
   BankExtension,
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createFreegrantAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
   DistributionExtension,
   GovExtension,
   GovParamsType,
@@ -80,15 +87,6 @@ export {
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./modules";
-export {
-  createAuthzAminoConverters,
-  createBankAminoConverters,
-  createDistributionAminoConverters,
-  createFreegrantAminoConverters,
-  createGovAminoConverters,
-  createIbcAminoConverters,
-  createStakingAminoConverters,
 } from "./modules";
 export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature";
 export {
