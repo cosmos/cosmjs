@@ -69,5 +69,21 @@ export function makeSignDoc(
 }
 
 export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
-  return toUtf8(sortedJsonStringify(signDoc));
+  const fixedMsgs = signDoc.msgs.map((aminoMsg) => {
+    if (aminoMsg.type.startsWith("regen")) {
+      // regen ledger incorrectly implements amino signing.
+      // this short term workaround makes cosmjs compatible with regen-ledger v4.0
+      // until regen ledger upgrades with the fix in v5.0
+      // ref: https://github.com/regen-network/regen-ledger/pull/1480
+      return aminoMsg.value
+    } else {
+      return aminoMsg
+    }
+  })
+
+  
+  var fixedSignDoc: any = signDoc;
+  fixedSignDoc.msgs = fixedMsgs;
+
+  return toUtf8(sortedJsonStringify(fixedSignDoc));
 }
