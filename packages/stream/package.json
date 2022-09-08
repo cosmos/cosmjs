@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/stream",
-  "version": "0.29.0-alpha.3",
+  "version": "0.29.0-rc.1",
   "description": "Utility functions for producing and consuming streams",
   "contributors": [
     "IOV SAS <admin@iov.one>",
