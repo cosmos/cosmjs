@@ -46,6 +46,33 @@ describe("coins", () => {
       ]);
     });
 
+    it("trims leading zeros", () => {
+      expect(parseCoins("07643ureef")).toEqual([
+        {
+          amount: "7643",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("007643ureef")).toEqual([
+        {
+          amount: "7643",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("0ureef")).toEqual([
+        {
+          amount: "0",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("0000ureef")).toEqual([
+        {
+          amount: "0",
+          denom: "ureef",
+        },
+      ]);
+    });
+
     it("works for two", () => {
       expect(parseCoins("819966000ucosm,700000000ustake")).toEqual([
         {
