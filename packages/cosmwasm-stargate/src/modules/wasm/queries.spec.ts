@@ -1,5 +1,5 @@
 import { sha256 } from "@cosmjs/crypto";
-import { fromAscii, fromHex, toAscii, toHex } from "@cosmjs/encoding";
+import { fromAscii, fromHex, toAscii, toHex, toUtf8 } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
 import {
   assertIsDeliverTxSuccess,
@@ -75,7 +75,7 @@ async function instantiateContract(
       sender: alice.address0,
       codeId: Long.fromNumber(codeId),
       label: "my escrow",
-      msg: toAscii(
+      msg: toUtf8(
         JSON.stringify({
           verifier: alice.address0,
           beneficiary: beneficiaryAddress,
@@ -108,7 +108,7 @@ async function executeContract(
     value: MsgExecuteContract.fromPartial({
       sender: alice.address0,
       contract: contractAddress,
-      msg: toAscii(JSON.stringify(msg)),
+      msg: toUtf8(JSON.stringify(msg)),
       funds: [],
     }),
   };
@@ -254,7 +254,7 @@ describe("WasmExtension", () => {
         jasmine.objectContaining({
           codeId: Long.fromNumber(hackatomCodeId, true),
           operation: ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
-          msg: toAscii(
+          msg: toUtf8(
             JSON.stringify({
               verifier: alice.address0,
               beneficiary: beneficiaryAddress,

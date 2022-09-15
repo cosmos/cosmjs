@@ -57,12 +57,15 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Fix decoding events without attributes ([#1198]).
 - @cosmjs/amino, @cosmjs/proto-signing: Support amounts larger than the uint64
   range in `parseCoins` ([#1268]).
+- @cosmjs/cosmwasm-stargate: Accept non-ASCII inputs in query requests of
+  `{CosmWasmClient,WasmExtension}.queryContractSmart` ([#1269]).
 
 [#1170]: https://github.com/cosmos/cosmjs/issues/1170
 [#1177]: https://github.com/cosmos/cosmjs/issues/1177
 [#1188]: https://github.com/cosmos/cosmjs/pull/1188
 [#1198]: https://github.com/cosmos/cosmjs/pull/1198
 [#1268]: https://github.com/cosmos/cosmjs/issues/1268
+[#1269]: https://github.com/cosmos/cosmjs/issues/1269
 
 ### Changed
 
