@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.29.0] - 2022-09-15
+
 ### Added
 
 - @cosmjs/stargate: Add `makeMultisignedTxBytes` which is like
@@ -1028,7 +1030,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.28.11...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.0...HEAD
+[0.29.0]: https://github.com/cosmos/cosmjs/compare/v0.28.11...v0.29.0
 [0.28.11]: https://github.com/cosmos/cosmjs/compare/v0.28.10...v0.28.11
 [0.28.10]: https://github.com/cosmos/cosmjs/compare/v0.28.9...v0.28.10
 [0.28.9]: https://github.com/cosmos/cosmjs/compare/v0.28.8...v0.28.9
