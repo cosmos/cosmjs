@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/amino";
-import { Uint64 } from "@cosmjs/math";
 
 /**
  * Takes a coins list like "819966000ucosm,700000000ustake" and parses it.
@@ -17,7 +16,7 @@ export function parseCoins(input: string): Coin[] {
       const match = part.match(/^([0-9]+)([a-zA-Z][a-zA-Z0-9/]{2,127})$/);
       if (!match) throw new Error("Got an invalid coin string");
       return {
-        amount: Uint64.fromString(match[1]).toString(),
+        amount: match[1].replace(/^0+/, "") || "0",
         denom: match[2],
       };
     });

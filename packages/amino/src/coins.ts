@@ -1,4 +1,5 @@
-import { Decimal, Uint53, Uint64 } from "@cosmjs/math";
+import { Decimal, Uint53 } from "@cosmjs/math";
+
 export interface Coin {
   readonly denom: string;
   readonly amount: string;
@@ -62,7 +63,7 @@ export function parseCoins(input: string): Coin[] {
       const match = part.match(/^([0-9]+)([a-zA-Z]+)/);
       if (!match) throw new Error("Got an invalid coin string");
       return {
-        amount: Uint64.fromString(match[1]).toString(),
+        amount: match[1].replace(/^0+/, "") || "0",
         denom: match[2],
       };
     });
