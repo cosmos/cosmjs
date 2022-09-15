@@ -1,4 +1,4 @@
-import { fromUtf8, toAscii } from "@cosmjs/encoding";
+import { fromUtf8, toUtf8 } from "@cosmjs/encoding";
 import { createPagination, createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import {
   QueryAllContractStateResponse,
@@ -117,7 +117,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
       },
 
       queryContractSmart: async (address: string, query: Record<string, unknown>) => {
-        const request = { address: address, queryData: toAscii(JSON.stringify(query)) };
+        const request = { address: address, queryData: toUtf8(JSON.stringify(query)) };
         const { data } = await queryService.SmartContractState(request);
         // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)
         let responseText: string;
