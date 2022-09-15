@@ -46,6 +46,56 @@ describe("coins", () => {
       ]);
     });
 
+    it("trims leading zeros", () => {
+      expect(parseCoins("07643ureef")).toEqual([
+        {
+          amount: "7643",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("007643ureef")).toEqual([
+        {
+          amount: "7643",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("0ureef")).toEqual([
+        {
+          amount: "0",
+          denom: "ureef",
+        },
+      ]);
+      expect(parseCoins("0000ureef")).toEqual([
+        {
+          amount: "0",
+          denom: "ureef",
+        },
+      ]);
+    });
+
+    it("works for large numbers", () => {
+      expect(parseCoins(`${Number.MAX_SAFE_INTEGER}ureef`)).toEqual([
+        {
+          amount: "9007199254740991",
+          denom: "ureef",
+        },
+      ]);
+      // 2**64-1
+      expect(parseCoins("18446744073709551615ureef")).toEqual([
+        {
+          amount: "18446744073709551615",
+          denom: "ureef",
+        },
+      ]);
+      // 2**128-1
+      expect(parseCoins("340282366920938463463374607431768211455ureef")).toEqual([
+        {
+          amount: "340282366920938463463374607431768211455",
+          denom: "ureef",
+        },
+      ]);
+    });
+
     it("works for two", () => {
       expect(parseCoins("819966000ucosm,700000000ustake")).toEqual([
         {
