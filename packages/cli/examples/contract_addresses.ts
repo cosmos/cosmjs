@@ -22,11 +22,19 @@ function toUint8(int: number): number {
   return checked;
 }
 
-/** See https://github.com/CosmWasm/wasmd/issues/942 */
-function deterministicContractAddress(checksum: Uint8Array, creator: string, label: string, prefix: string) {
+/** See https://github.com/CosmWasm/wasmd/pull/1014 */
+function deterministicContractAddress(
+  checksum: Uint8Array,
+  creator: string,
+  salt: Uint8Array,
+  msg: Uint8Array,
+  prefix: string,
+) {
   assert(checksum.length === 32);
   const creatorData = fromBech32(creator).data;
-  const labelData = toUtf8(label);
+
+  // Validate inputs
+  if (salt.length < 1 || salt.length > 64) throw new Error("Salt must be between 1 and 64 bytes");
 
   const key = new Uint8Array([
     ...toAscii("wasm"),
@@ -35,8 +43,10 @@ function deterministicContractAddress(checksum: Uint8Array, creator: string, lab
     ...checksum,
     toUint8(creatorData.length),
     ...creatorData,
-    toUint8(labelData.length),
-    ...labelData,
+    toUint8(salt.length),
+    ...salt,
+    toUint8(msg.length),
+    ...msg,
   ]);
   const addressData = hash("module", key);
   return toBech32(prefix, addressData);
@@ -60,24 +70,34 @@ const checksums = [
   fromHex("13a1fc994cc6d1c81b746ee0c0ff6f90043875e0bf1d9be6b7d779fc978dc2a5"),
   fromHex("1da6c16de2cbaf7ad8cbb66f0925ba33f5c278cb2491762d04658c1480ea229b"),
 ];
+const salts = [
+  toUtf8("a"),
+  fromHex(
+    "AABBCCDDEEFFFFEEDDBBCCDDAA66551155aaaaBBCC787878789900AABBCCDDEEFFFFEEDDBBCCDDAA66551155aaaaBBCC787878789900aabbbbcc221100acadae",
+  ),
+];
+const msgs = [null, JSON.stringify({}), JSON.stringify({ some: 123, structure: { nested: ["ok", true] } })];
 
 for (let checksum of checksums) {
   for (let creator of [makeTestingAddress(20), makeTestingAddress(32)]) {
-    for (let label of ["instance 1", "instance 2"]) {
-      const contractAddress = deterministicContractAddress(checksum, creator, label, "purple");
-
-      out.push({
-        in: {
-          checksum: toHex(checksum).toUpperCase(),
-          creator,
-          creatorData: toHex(fromBech32(creator).data).toUpperCase(),
-          label,
-        },
-        out: {
-          contractAddress,
-          contractAddressData: toHex(fromBech32(contractAddress).data).toUpperCase(),
-        },
-      });
+    for (let salt of salts) {
+      for (let msg of msgs) {
+        const encodedMsg = typeof msg === "string" ? toUtf8(msg) : new Uint8Array();
+        const contractAddress = deterministicContractAddress(checksum, creator, salt, encodedMsg, "purple");
+        out.push({
+          in: {
+            checksum: toHex(checksum),
+            creator,
+            creatorData: toHex(fromBech32(creator).data),
+            salt: toHex(checksum),
+            msg,
+          },
+          out: {
+            contractAddress,
+            contractAddressData: toHex(fromBech32(contractAddress).data),
+          },
+        });
+      }
     }
   }
 }
