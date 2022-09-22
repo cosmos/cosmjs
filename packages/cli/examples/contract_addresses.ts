@@ -45,7 +45,8 @@ function deterministicContractAddress(
     ...msg,
   ]);
   const addressData = hash("module", key);
-  return toBech32(prefix, addressData);
+  const address = toBech32(prefix, addressData);
+  return { key, addressData, address };
 }
 
 function makeTestingAddress(length: number): string {
@@ -79,7 +80,13 @@ for (let checksum of checksums) {
     for (let salt of salts) {
       for (let msg of msgs) {
         const encodedMsg = typeof msg === "string" ? toUtf8(msg) : new Uint8Array();
-        const contractAddress = deterministicContractAddress(checksum, creator, salt, encodedMsg, "purple");
+        const { key, addressData, address } = deterministicContractAddress(
+          checksum,
+          creator,
+          salt,
+          encodedMsg,
+          "purple",
+        );
         out.push({
           in: {
             checksum: toHex(checksum),
@@ -88,9 +95,12 @@ for (let checksum of checksums) {
             salt: toHex(salt),
             msg,
           },
+          intermediate: {
+            key: toHex(key),
+            addressData: toHex(addressData),
+          },
           out: {
-            contractAddress,
-            contractAddressData: toHex(fromBech32(contractAddress).data),
+            address: address,
           },
         });
       }
