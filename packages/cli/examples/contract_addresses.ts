@@ -85,7 +85,7 @@ for (let checksum of checksums) {
             checksum: toHex(checksum),
             creator,
             creatorData: toHex(fromBech32(creator).data),
-            salt: toHex(checksum),
+            salt: toHex(salt),
             msg,
           },
           out: {
