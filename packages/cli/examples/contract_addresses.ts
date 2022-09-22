@@ -1,6 +1,6 @@
 import { fromBech32, fromHex, fromUtf8, toAscii, toBech32, toHex, toUtf8 } from "@cosmjs/encoding";
 import { Sha256, sha256 } from "@cosmjs/crypto";
-import { Uint53 } from "@cosmjs/math";
+import { Uint64 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 
 /**
@@ -12,14 +12,10 @@ function hash(type: string, key: Uint8Array): Uint8Array {
 }
 
 /**
- * Takes an integer [0, 255] and returns a one-byte encoding of it.
+ * Takes an integer [0, 2**64-1] and returns a one-byte encoding of it.
  */
-function toUint8(int: number): number {
-  const checked = new Uint53(int).toNumber();
-  if (checked > 255) {
-    throw new Error("Integer exceeds uint8 range");
-  }
-  return checked;
+function toUint64(int: number): Uint8Array {
+  return Uint64.fromNumber(int).toBytesBigEndian();
 }
 
 /** See https://github.com/CosmWasm/wasmd/pull/1014 */
@@ -39,13 +35,13 @@ function deterministicContractAddress(
   const key = new Uint8Array([
     ...toAscii("wasm"),
     0x00,
-    toUint8(checksum.length),
+    ...toUint64(checksum.length),
     ...checksum,
-    toUint8(creatorData.length),
+    ...toUint64(creatorData.length),
     ...creatorData,
-    toUint8(salt.length),
+    ...toUint64(salt.length),
     ...salt,
-    toUint8(msg.length),
+    ...toUint64(msg.length),
     ...msg,
   ]);
   const addressData = hash("module", key);
