@@ -254,7 +254,7 @@ export class StargateClient {
     const account = await this.getAccount(address);
     if (!account) {
       throw new Error(
-        "Account does not exist on chain. Send some tokens there before trying to query sequence.",
+        `Account '${address}' does not exist on chain. Send some tokens there before trying to query sequence.`,
       );
     }
     return {

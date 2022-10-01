@@ -120,7 +120,7 @@ describe("CosmWasmClient", () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
       await expectAsync(client.getSequence(missing)).toBeRejectedWithError(
-        /account does not exist on chain/i,
+        /account '([a-z0-9]{10,90})' does not exist on chain/i,
       );
     });
   });
