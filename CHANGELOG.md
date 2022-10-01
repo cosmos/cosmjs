@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Add address to "Account does not
+  exist on chain." error message.
+
 ## [0.29.0] - 2022-09-15
 
 ### Added
