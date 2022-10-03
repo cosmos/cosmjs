@@ -2,7 +2,7 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { tendermint34, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { tendermint34, Tendermint34Client, AbciQueryResponse } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { ProofOps } from "cosmjs-types/tendermint/crypto/proof";
 import { Stream } from "xstream";
@@ -23,6 +23,12 @@ export interface ProvenQuery {
   readonly key: Uint8Array;
   readonly value: Uint8Array;
   readonly proof: ProofOps;
+  readonly height: number;
+}
+
+export interface UnprovenQuery {
+  readonly key: Uint8Array;
+  readonly value: Uint8Array;
   readonly height: number;
 }
 
@@ -496,7 +502,12 @@ export class QueryClient {
   }
 
   public async queryVerified(store: string, key: Uint8Array, desiredHeight?: number): Promise<Uint8Array> {
-    const { height, proof, value } = await this.queryRawProof(store, key, desiredHeight);
+    const { value } = await  this.queryVerifiedBlock(store, key, desiredHeight);
+    return value;
+  }
+
+  public async queryVerifiedBlock(store: string, key: Uint8Array, desiredHeight?: number): Promise<UnprovenQuery> {
+    const { key, height, proof, value } = await this.queryRawProof(store, key, desiredHeight);
 
     const subProof = checkAndParseOp(proof.ops[0], "ics23:iavl", key);
     const storeProof = checkAndParseOp(proof.ops[1], "ics23:simple", toAscii(store));
@@ -523,7 +534,7 @@ export class QueryClient {
     const header = await this.getNextHeader(height);
     verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
-    return value;
+    return { key, value, height };
   }
 
   public async queryRawProof(
@@ -575,6 +586,15 @@ export class QueryClient {
     request: Uint8Array,
     desiredHeight?: number,
   ): Promise<Uint8Array> {
+    const { value } = await this.queryUnverifiedBlock(path, request, desiredHeight);
+    return value;
+  }
+
+  public async queryUnverifiedBlock(
+    path: string,
+    request: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<AbciQueryResponse> {
     const response = await this.tmClient.abciQuery({
       path: path,
       data: request,
@@ -586,7 +606,7 @@ export class QueryClient {
       throw new Error(`Query failed with (${response.code}): ${response.log}`);
     }
 
-    return response.value;
+    return response;
   }
 
   // this must return the header for height+1
