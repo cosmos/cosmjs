@@ -3,8 +3,8 @@ import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
 import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
 
 /**
- * Returns the Node.js crypto module when available and `undefined`
- * otherwise.
+ * Returns the Node.js crypto module when available, the Expo crypto module after that,
+ * and `undefined` otherwise.
  *
  * Detects an unimplemented fallback module from Webpack 5 and returns
  * `undefined` in that case.
@@ -13,14 +13,22 @@ export async function getCryptoModule(): Promise<any | undefined> {
   try {
     const crypto = await import("crypto");
     // We get `Object{default: Object{}}` as a fallback when using
-    // `crypto: false` in Webpack 5, which we interprete as unavailable.
-    if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
-      return undefined;
+    // `crypto: false` in Webpack 5, which we interpret as unavailable.
+    if (!(typeof crypto === "object" && Object.keys(crypto).length <= 1)) {
+      return crypto;
     }
-    return crypto;
-  } catch {
-    return undefined;
-  }
+  } catch {}
+
+  try {
+    const crypto = await import("expo-crypto");
+    // We get `Object{default: Object{}}` as a fallback when using
+    // `crypto: false` in Webpack 5, which we interpret as unavailable.
+    if (!(typeof crypto === "object" && Object.keys(crypto).length <= 1)) {
+      return crypto;
+    }
+  } catch {}
+
+  return undefined
 }
 
 export async function getSubtle(): Promise<any | undefined> {
