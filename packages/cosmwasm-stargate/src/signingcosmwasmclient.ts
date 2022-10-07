@@ -369,7 +369,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     codeId: number,
-    migratemsg: JsonObject,
+    migrateMsg: JsonObject,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
