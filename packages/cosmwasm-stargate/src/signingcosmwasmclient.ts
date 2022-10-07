@@ -57,6 +57,7 @@ import {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   wasmTypes,
+  JsonObject,
 } from "./modules";
 
 export interface UploadResult {
@@ -137,7 +138,7 @@ export interface MigrateResult {
 
 export interface ExecuteInstruction {
   contractAddress: string;
-  msg: Object;
+  msg: JsonObject;
   funds?: readonly Coin[];
 }
 
@@ -278,7 +279,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate(
     senderAddress: string,
     codeId: number,
-    msg: Object,
+    msg: JsonObject,
     label: string,
     fee: StdFee | "auto" | number,
     options: InstantiateOptions = {},
@@ -368,7 +369,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     codeId: number,
-    migrateMsg: Object,
+    migratemsg: JsonObject,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
@@ -397,7 +398,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async execute(
     senderAddress: string,
     contractAddress: string,
-    msg: Object,
+    msg: JsonObject,
     fee: StdFee | "auto" | number,
     memo = "",
     funds?: readonly Coin[],
