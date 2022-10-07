@@ -28,7 +28,7 @@ export async function getCryptoModule(): Promise<any | undefined> {
     }
   } catch {}
 
-  return undefined
+  return undefined;
 }
 
 export async function getSubtle(): Promise<any | undefined> {
