@@ -50,6 +50,7 @@ import pako from "pako";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
   createWasmAminoConverters,
+  JsonObject,
   MsgClearAdminEncodeObject,
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
@@ -137,7 +138,7 @@ export interface MigrateResult {
 
 export interface ExecuteInstruction {
   contractAddress: string;
-  msg: Record<string, unknown>;
+  msg: JsonObject;
   funds?: readonly Coin[];
 }
 
@@ -278,7 +279,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate(
     senderAddress: string,
     codeId: number,
-    msg: Record<string, unknown>,
+    msg: JsonObject,
     label: string,
     fee: StdFee | "auto" | number,
     options: InstantiateOptions = {},
@@ -368,7 +369,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     codeId: number,
-    migrateMsg: Record<string, unknown>,
+    migrateMsg: JsonObject,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
@@ -397,7 +398,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async execute(
     senderAddress: string,
     contractAddress: string,
-    msg: Record<string, unknown>,
+    msg: JsonObject,
     fee: StdFee | "auto" | number,
     memo = "",
     funds?: readonly Coin[],
