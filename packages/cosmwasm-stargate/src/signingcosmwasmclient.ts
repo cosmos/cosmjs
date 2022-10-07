@@ -137,7 +137,7 @@ export interface MigrateResult {
 
 export interface ExecuteInstruction {
   contractAddress: string;
-  msg: Record<string, unknown>;
+  msg: Object;
   funds?: readonly Coin[];
 }
 
@@ -278,7 +278,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate(
     senderAddress: string,
     codeId: number,
-    msg: Record<string, unknown>,
+    msg: Object,
     label: string,
     fee: StdFee | "auto" | number,
     options: InstantiateOptions = {},
@@ -368,7 +368,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     contractAddress: string,
     codeId: number,
-    migrateMsg: Record<string, unknown>,
+    migrateMsg: Object,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<MigrateResult> {
@@ -397,7 +397,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async execute(
     senderAddress: string,
     contractAddress: string,
-    msg: Record<string, unknown>,
+    msg: Object,
     fee: StdFee | "auto" | number,
     memo = "",
     funds?: readonly Coin[],
