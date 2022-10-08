@@ -67,7 +67,7 @@ export interface AminoMsgInstantiateContract {
     readonly label: string;
     /** Instantiate message as JavaScript object */
     readonly msg: any;
-    readonly funds: readonly Coin[];
+    readonly funds?: readonly Coin[];
     /** Bech32-encoded admin address */
     readonly admin?: string;
   };
@@ -152,7 +152,7 @@ export function createWasmAminoConverters(): AminoConverters {
         code_id: codeId.toString(),
         label: label,
         msg: JSON.parse(fromUtf8(msg)),
-        funds: funds,
+        funds: funds || [],
         admin: admin || undefined,
       }),
       fromAmino: ({
@@ -160,7 +160,7 @@ export function createWasmAminoConverters(): AminoConverters {
         code_id,
         label,
         msg,
-        funds,
+        funds = [],
         admin,
       }: AminoMsgInstantiateContract["value"]): MsgInstantiateContract => ({
         sender: sender,
