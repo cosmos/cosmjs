@@ -1,4 +1,4 @@
-import { isNonNullObject, isUint8Array } from "./typechecks";
+import { isDefined, isNonNullObject, isUint8Array } from "./typechecks";
 
 describe("typechecks", () => {
   describe("isNonNullObject", () => {
@@ -53,6 +53,21 @@ describe("typechecks", () => {
       expect(isUint8Array([])).toEqual(false);
       expect(isUint8Array(new Int8Array())).toEqual(false);
       expect(isUint8Array(new Uint16Array())).toEqual(false);
+    });
+  });
+
+  describe("isDefined", () => {
+    it("works", () => {
+      expect(isDefined("a")).toEqual(true);
+      expect(isDefined(1234)).toEqual(true);
+      expect(isDefined(null)).toEqual(true);
+      expect(isDefined(undefined)).toEqual(false);
+    });
+
+    it("narrows type of list", () => {
+      const a = ["one", undefined, "two", "three", undefined];
+      const b: string[] = a.filter(isDefined);
+      expect(b).toEqual(["one", "two", "three"]);
     });
   });
 });
