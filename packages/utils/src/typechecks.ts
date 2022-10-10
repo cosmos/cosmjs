@@ -30,3 +30,13 @@ export function isUint8Array(data: unknown): data is Uint8Array {
 
   return true;
 }
+
+/**
+ * Checks if input is not undefined in a TypeScript-friendly way.
+ *
+ * This is convenient to use in e.g. `Array.filter` as it will convert
+ * the type of a `Array<Foo | undefined>` to `Array<Foo>`.
+ */
+export function isDefined<X>(value: X | undefined): value is X {
+  return value !== undefined;
+}

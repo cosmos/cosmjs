@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/utils: Add `isDefined` which checks for `undefined` in a
+  TypeScript-friendly way.
+
 ## [0.29.1] - 2022-10-09
 
 ### Changed

@@ -4,7 +4,7 @@ import {
   SigningStargateClient,
   StargateClient,
 } from "@cosmjs/stargate";
-import { sleep } from "@cosmjs/utils";
+import { isDefined, sleep } from "@cosmjs/utils";
 
 import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
@@ -12,10 +12,6 @@ import { PathBuilder } from "./pathbuilder";
 import { createClients, createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
 import { MinimalAccount, SendJob } from "./types";
-
-function isDefined<X>(value: X | undefined): value is X {
-  return value !== undefined;
-}
 
 export class Faucet {
   public static async make(
