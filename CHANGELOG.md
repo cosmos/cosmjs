@@ -11,6 +11,17 @@ and this project adheres to
 - @cosmjs/utils: Add `isDefined` which checks for `undefined` in a
   TypeScript-friendly way.
 
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Use type `JsonObject = any` for smart query
+  requests and messages (in `WasmExtension.wasm.queryContractSmart`,
+  `CosmWasmClient.queryContractSmart`, `SigningCosmWasmClient.instantiate`,
+  `SigningCosmWasmClient.migrate`, `SigningCosmWasmClient.execute`). This
+  reverts the type change done in CosmJS 0.23.0. ([#1281], [#1284])
+
+[#1281]: https://github.com/cosmos/cosmjs/pull/1281
+[#1284]: https://github.com/cosmos/cosmjs/pull/1284
+
 ## [0.29.1] - 2022-10-09
 
 ### Changed
