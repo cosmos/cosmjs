@@ -61,7 +61,7 @@ export interface WasmExtension {
      * Makes a smart query on the contract and parses the response as JSON.
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
-    readonly queryContractSmart: (address: string, query: Record<string, unknown>) => Promise<JsonObject>;
+    readonly queryContractSmart: (address: string, query: JsonObject) => Promise<JsonObject>;
   };
 }
 
@@ -116,7 +116,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
         return queryService.RawContractState(request);
       },
 
-      queryContractSmart: async (address: string, query: Record<string, unknown>) => {
+      queryContractSmart: async (address: string, query: JsonObject) => {
         const request = { address: address, queryData: toUtf8(JSON.stringify(query)) };
         const { data } = await queryService.SmartContractState(request);
         // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)

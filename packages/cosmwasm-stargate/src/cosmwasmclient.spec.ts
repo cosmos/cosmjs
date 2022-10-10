@@ -418,6 +418,14 @@ describe("CosmWasmClient", () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.queryContractSmart(contract.address, { verifier: {} });
       expect(result).toEqual({ verifier: contract.instantiateMsg.verifier });
+
+      // Typed request (https://github.com/cosmos/cosmjs/pull/1281)
+      interface VerifierQuery {
+        verifier: Record<string, never>;
+      }
+      const request: VerifierQuery = { verifier: {} };
+      const result2 = await client.queryContractSmart(contract.address, request);
+      expect(result2).toEqual({ verifier: contract.instantiateMsg.verifier });
     });
 
     it("errors for malformed query message", async () => {

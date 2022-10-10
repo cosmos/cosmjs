@@ -71,7 +71,7 @@ export interface ContractCodeHistoryEntry {
   /** The source of this history entry */
   readonly operation: "Genesis" | "Init" | "Migrate";
   readonly codeId: number;
-  readonly msg: Record<string, unknown>;
+  readonly msg: JsonObject;
 }
 
 /** Use for testing only */
@@ -439,7 +439,7 @@ export class CosmWasmClient {
    * Promise is rejected for invalid query format.
    * Promise is rejected for invalid response format.
    */
-  public async queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject> {
+  public async queryContractSmart(address: string, queryMsg: JsonObject): Promise<JsonObject> {
     try {
       return await this.forceGetQueryClient().wasm.queryContractSmart(address, queryMsg);
     } catch (error) {

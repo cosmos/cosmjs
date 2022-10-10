@@ -35,6 +35,7 @@ import {
   MsgStoreCodeEncodeObject,
   wasmTypes,
 } from "./messages";
+import { JsonObject } from "./queries";
 
 const registry = new Registry(wasmTypes);
 
@@ -100,7 +101,7 @@ async function instantiateContract(
 async function executeContract(
   signer: OfflineDirectSigner,
   contractAddress: string,
-  msg: Record<string, unknown>,
+  msg: JsonObject,
 ): Promise<DeliverTxResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContractEncodeObject = {
