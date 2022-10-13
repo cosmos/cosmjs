@@ -1,3 +1,4 @@
+import { Random } from "@cosmjs/crypto";
 import { fromBase64, fromBech32, fromHex } from "@cosmjs/encoding";
 
 import {
@@ -5,6 +6,7 @@ import {
   decodeBech32Pubkey,
   encodeAminoPubkey,
   encodeBech32Pubkey,
+  encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,
 } from "./encoding";
 import { Pubkey } from "./pubkeys";
@@ -34,6 +36,25 @@ describe("encoding", () => {
         "BE8EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQE7WHpoHoNswYeoFkuYpYSKK4mzFzMV/dB0DVAy4lnNU=",
       );
       expect(() => encodeSecp256k1Pubkey(pubkey)).toThrowError(/public key must be compressed secp256k1/i);
+    });
+  });
+
+  describe("encodeEd25519Pubkey", () => {
+    it("encodes a compressed pubkey", () => {
+      const pubkey = fromBase64("ICKLJPyWYIF35GpOclg0gu957WYJe4PHzyn2scCZoek=");
+      expect(encodeEd25519Pubkey(pubkey)).toEqual({
+        type: "tendermint/PubKeyEd25519",
+        value: "ICKLJPyWYIF35GpOclg0gu957WYJe4PHzyn2scCZoek=",
+      });
+    });
+
+    it("throws for wrong pubkey lengths", () => {
+      expect(() => encodeEd25519Pubkey(Random.getBytes(31))).toThrowError(
+        /ed25519 public key must be 32 bytes long/i,
+      );
+      expect(() => encodeEd25519Pubkey(Random.getBytes(64))).toThrowError(
+        /ed25519 public key must be 32 bytes long/i,
+      );
     });
   });
 
