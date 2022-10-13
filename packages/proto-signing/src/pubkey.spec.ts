@@ -23,6 +23,16 @@ describe("pubkey", () => {
       );
     });
 
+    it("works for ed25519", () => {
+      const pubkey = { type: "tendermint/PubKeyEd25519", value: ed25519PubkeyBase64 };
+      expect(encodePubkey(pubkey)).toEqual(
+        Any.fromPartial({
+          typeUrl: "/cosmos.crypto.ed25519.PubKey",
+          value: ed25519PubkeyProtoBytes,
+        }),
+      );
+    });
+
     it("throws for unsupported pubkey types", () => {
       const pubkey = {
         type: "tendermint/PubKeyUnknown",

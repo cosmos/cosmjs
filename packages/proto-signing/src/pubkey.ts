@@ -2,6 +2,7 @@
 import {
   encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,
+  isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
   MultisigThresholdPubkey,
@@ -15,6 +16,12 @@ import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys";
 import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
+/**
+ * Takes a pubkey in the Amino JSON object style (type/value wrapper)
+ * and convertes it into a protobuf `Any`.
+ *
+ * This is the reverse operation to `decodePubkey`.
+ */
 export function encodePubkey(pubkey: Pubkey): Any {
   if (isSecp256k1Pubkey(pubkey)) {
     const pubkeyProto = CosmosCryptoSecp256k1Pubkey.fromPartial({
@@ -23,6 +30,14 @@ export function encodePubkey(pubkey: Pubkey): Any {
     return Any.fromPartial({
       typeUrl: "/cosmos.crypto.secp256k1.PubKey",
       value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkeyProto).finish()),
+    });
+  } else if (isEd25519Pubkey(pubkey)) {
+    const pubkeyProto = CosmosCryptoEd25519Pubkey.fromPartial({
+      key: fromBase64(pubkey.value),
+    });
+    return Any.fromPartial({
+      typeUrl: "/cosmos.crypto.ed25519.PubKey",
+      value: Uint8Array.from(CosmosCryptoEd25519Pubkey.encode(pubkeyProto).finish()),
     });
   } else if (isMultisigThresholdPubkey(pubkey)) {
     const pubkeyProto = LegacyAminoPubKey.fromPartial({
