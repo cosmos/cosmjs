@@ -24,9 +24,14 @@ and this project adheres to
   `CosmWasmClient.queryContractSmart`, `SigningCosmWasmClient.instantiate`,
   `SigningCosmWasmClient.migrate`, `SigningCosmWasmClient.execute`). This
   reverts the type change done in CosmJS 0.23.0. ([#1281], [#1284])
+- @cosmjs/cosmwasm-stargate: `AminoMsgCreateValidator` and
+  `createStakingAminoConverters` were fixed after testing both
+  `MsgCreateValidator` and `MsgEditValidator` in sign mode direct and Amino JSON
+  ([#1290]).
 
 [#1281]: https://github.com/cosmos/cosmjs/pull/1281
 [#1284]: https://github.com/cosmos/cosmjs/pull/1284
+[#1290]: https://github.com/cosmos/cosmjs/pull/1290
 
 ## [0.29.1] - 2022-10-09
 
