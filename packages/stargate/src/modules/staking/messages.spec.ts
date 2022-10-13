@@ -12,30 +12,36 @@ function changePrefix(address: string, newPrefix: string): string {
   return toBech32(newPrefix, fromBech32(address).data);
 }
 
+async function sendFeeAndStakingTokens(address: string): Promise<void> {
+  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+  const [firstAccount] = await wallet.getAccounts();
+  const client = await SigningStargateClient.connectWithSigner(
+    simapp.tendermintUrl,
+    wallet,
+    defaultSigningClientOptions,
+  );
+
+  const res = await client.sendTokens(
+    firstAccount.address,
+    address,
+    [coin(5000, simapp.denomFee), coin(28, simapp.denomStaking)],
+    "auto",
+  );
+  assertIsDeliverTxSuccess(res);
+  client.disconnect();
+}
+
 describe("staking messages", () => {
   describe("MsgCreateValidator", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const [firstAccount] = await wallet.getAccounts();
-      const client1 = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
-        wallet,
-        defaultSigningClientOptions,
-      );
 
       const valWallet = await DirectSecp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 
-      const sendR = await client1.sendTokens(
-        firstAccount.address,
-        valAccount.address,
-        [coin(5000, simapp.denomFee), coin(28, simapp.denomStaking)],
-        "auto",
-      );
-      assertIsDeliverTxSuccess(sendR);
+      await sendFeeAndStakingTokens(valAccount.address);
 
-      const client2 = await SigningStargateClient.connectWithSigner(
+      const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrl,
         valWallet,
         defaultSigningClientOptions,
@@ -70,12 +76,11 @@ describe("staking messages", () => {
           },
         },
       };
-      const result = await client2.signAndBroadcast(valAccount.address, [createMsg], "auto");
+      const result = await client.signAndBroadcast(valAccount.address, [createMsg], "auto");
 
       assertIsDeliverTxSuccess(result);
 
-      client1.disconnect();
-      client2.disconnect();
+      client.disconnect();
     });
   });
 });
