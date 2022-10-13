@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
-import { fromBase64, toBase64 } from "@cosmjs/encoding";
+import { AminoMsg, Coin, Pubkey } from "@cosmjs/amino";
+import { Decimal } from "@cosmjs/math";
+import { anyToSinglePubkey, encodePubkey } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   MsgBeginRedelegate,
@@ -28,6 +29,17 @@ interface Description {
   readonly details: string;
 }
 
+function protoDecimalToJson(decimal: string): string {
+  const parsed = Decimal.fromAtomics(decimal, 18);
+  const [whole, fractional] = parsed.toString().split(".");
+  return `${whole}.${fractional.padEnd(18, "0")}`;
+}
+
+function jsonDecimalToProto(decimal: string): string {
+  const parsed = Decimal.fromUserInput(decimal, 18);
+  return parsed.atomics;
+}
+
 /** Creates a new validator. */
 export interface AminoMsgCreateValidator extends AminoMsg {
   readonly type: "cosmos-sdk/MsgCreateValidator";
@@ -39,8 +51,8 @@ export interface AminoMsgCreateValidator extends AminoMsg {
     readonly delegator_address: string;
     /** Bech32 encoded validator address */
     readonly validator_address: string;
-    /** Bech32 encoded public key */
-    readonly pubkey: string;
+    /** Public key */
+    readonly pubkey: Pubkey;
     readonly value: Coin;
   };
 }
@@ -120,7 +132,7 @@ export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
 }
 
 export function createStakingAminoConverters(
-  prefix: string,
+  _prefix: string,
 ): Record<string, AminoConverter | "not_supported_by_chain"> {
   return {
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
@@ -175,20 +187,14 @@ export function createStakingAminoConverters(
             details: description.details,
           },
           commission: {
-            rate: commission.rate,
-            max_rate: commission.maxRate,
-            max_change_rate: commission.maxChangeRate,
+            rate: protoDecimalToJson(commission.rate),
+            max_rate: protoDecimalToJson(commission.maxRate),
+            max_change_rate: protoDecimalToJson(commission.maxChangeRate),
           },
           min_self_delegation: minSelfDelegation,
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          pubkey: encodeBech32Pubkey(
-            {
-              type: "tendermint/PubKeySecp256k1",
-              value: toBase64(pubkey.value),
-            },
-            prefix,
-          ),
+          pubkey: anyToSinglePubkey(pubkey),
           value: value,
         };
       },
@@ -201,10 +207,6 @@ export function createStakingAminoConverters(
         pubkey,
         value,
       }: AminoMsgCreateValidator["value"]): MsgCreateValidator => {
-        const decodedPubkey = decodeBech32Pubkey(pubkey);
-        if (decodedPubkey.type !== "tendermint/PubKeySecp256k1") {
-          throw new Error("Only Secp256k1 public keys are supported");
-        }
         return {
           description: {
             moniker: description.moniker,
@@ -214,17 +216,14 @@ export function createStakingAminoConverters(
             details: description.details,
           },
           commission: {
-            rate: commission.rate,
-            maxRate: commission.max_rate,
-            maxChangeRate: commission.max_change_rate,
+            rate: jsonDecimalToProto(commission.rate),
+            maxRate: jsonDecimalToProto(commission.max_rate),
+            maxChangeRate: jsonDecimalToProto(commission.max_change_rate),
           },
           minSelfDelegation: min_self_delegation,
           delegatorAddress: delegator_address,
           validatorAddress: validator_address,
-          pubkey: {
-            typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-            value: fromBase64(decodedPubkey.value),
-          },
+          pubkey: encodePubkey(pubkey),
           value: value,
         };
       },
@@ -266,7 +265,7 @@ export function createStakingAminoConverters(
             security_contact: description.securityContact,
             details: description.details,
           },
-          commission_rate: commissionRate,
+          commission_rate: protoDecimalToJson(commissionRate),
           min_self_delegation: minSelfDelegation,
           validator_address: validatorAddress,
         };
@@ -284,7 +283,7 @@ export function createStakingAminoConverters(
           securityContact: description.security_contact,
           details: description.details,
         },
-        commissionRate: commission_rate,
+        commissionRate: jsonDecimalToProto(commission_rate),
         minSelfDelegation: min_self_delegation,
         validatorAddress: validator_address,
       }),

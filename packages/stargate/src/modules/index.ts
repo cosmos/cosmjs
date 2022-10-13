@@ -84,9 +84,15 @@ export {
   isAminoMsgUndelegate,
 } from "./staking/aminomessages";
 export {
+  isMsgBeginRedelegateEncodeObject,
+  isMsgCreateValidatorEncodeObject,
   isMsgDelegateEncodeObject,
+  isMsgEditValidatorEncodeObject,
   isMsgUndelegateEncodeObject,
+  MsgBeginRedelegateEncodeObject,
+  MsgCreateValidatorEncodeObject,
   MsgDelegateEncodeObject,
+  MsgEditValidatorEncodeObject,
   MsgUndelegateEncodeObject,
   stakingTypes,
 } from "./staking/messages";

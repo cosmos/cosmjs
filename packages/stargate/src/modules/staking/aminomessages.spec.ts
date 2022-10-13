@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { coin } from "@cosmjs/proto-signing";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,
@@ -56,16 +56,22 @@ describe("AminoTypes", () => {
           details: "...",
         },
         commission: {
-          rate: "0.2",
-          maxRate: "0.3",
-          maxChangeRate: "0.1",
+          rate: "200000000000000000", // 0.2
+          maxRate: "300000000000000000", // 0.3
+          maxChangeRate: "100000000000000000", // 0.1
         },
         minSelfDelegation: "123",
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         pubkey: {
           typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-          value: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          value: Uint8Array.from(
+            CosmosCryptoSecp256k1Pubkey.encode(
+              CosmosCryptoSecp256k1Pubkey.fromPartial({
+                key: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+              }),
+            ).finish(),
+          ),
         },
         value: coin(1234, "ucosm"),
       };
@@ -85,17 +91,17 @@ describe("AminoTypes", () => {
             details: "...",
           },
           commission: {
-            rate: "0.2",
-            max_rate: "0.3",
-            max_change_rate: "0.1",
+            rate: "0.200000000000000000",
+            max_rate: "0.300000000000000000",
+            max_change_rate: "0.100000000000000000",
           },
           min_self_delegation: "123",
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          pubkey: encodeBech32Pubkey(
-            { type: "tendermint/PubKeySecp256k1", value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ" },
-            "cosmos",
-          ),
+          pubkey: {
+            type: "tendermint/PubKeySecp256k1",
+            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+          },
           value: coin(1234, "ucosm"),
         },
       };
@@ -133,7 +139,7 @@ describe("AminoTypes", () => {
           securityContact: "Hamburglar",
           details: "...",
         },
-        commissionRate: "0.2",
+        commissionRate: "21000000000000000", // 0.021
         minSelfDelegation: "123",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
@@ -152,7 +158,7 @@ describe("AminoTypes", () => {
             security_contact: "Hamburglar",
             details: "...",
           },
-          commission_rate: "0.2",
+          commission_rate: "0.021000000000000000",
           min_self_delegation: "123",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
@@ -219,17 +225,17 @@ describe("AminoTypes", () => {
             details: "...",
           },
           commission: {
-            rate: "0.2",
-            max_rate: "0.3",
-            max_change_rate: "0.1",
+            rate: "0.200000000000000000",
+            max_rate: "0.300000000000000000",
+            max_change_rate: "0.100000000000000000",
           },
           min_self_delegation: "123",
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          pubkey: encodeBech32Pubkey(
-            { type: "tendermint/PubKeySecp256k1", value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ" },
-            "cosmos",
-          ),
+          pubkey: {
+            type: "tendermint/PubKeySecp256k1",
+            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+          },
           value: coin(1234, "ucosm"),
         },
       };
@@ -243,16 +249,22 @@ describe("AminoTypes", () => {
           details: "...",
         },
         commission: {
-          rate: "0.2",
-          maxRate: "0.3",
-          maxChangeRate: "0.1",
+          rate: "200000000000000000", // 0.2
+          maxRate: "300000000000000000", // 0.3
+          maxChangeRate: "100000000000000000", // 0.1
         },
         minSelfDelegation: "123",
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         pubkey: {
           typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-          value: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          value: Uint8Array.from(
+            CosmosCryptoSecp256k1Pubkey.encode(
+              CosmosCryptoSecp256k1Pubkey.fromPartial({
+                key: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+              }),
+            ).finish(),
+          ),
         },
         value: coin(1234, "ucosm"),
       };
@@ -294,7 +306,7 @@ describe("AminoTypes", () => {
             security_contact: "Hamburglar",
             details: "...",
           },
-          commission_rate: "0.2",
+          commission_rate: "0.050000000000000000", // 0.05
           min_self_delegation: "123",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
@@ -308,7 +320,7 @@ describe("AminoTypes", () => {
           securityContact: "Hamburglar",
           details: "...",
         },
-        commissionRate: "0.2",
+        commissionRate: "50000000000000000", // 0.05
         minSelfDelegation: "123",
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
