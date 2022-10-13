@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
+import { Decimal } from "@cosmjs/math";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   MsgBeginRedelegate,
@@ -26,6 +27,17 @@ interface Description {
   readonly website: string;
   readonly security_contact: string;
   readonly details: string;
+}
+
+function protoDecimalToJson(decimal: string): string {
+  const parsed = Decimal.fromAtomics(decimal, 18);
+  const [whole, fractional] = parsed.toString().split(".");
+  return `${whole}.${fractional.padEnd(18, "0")}`;
+}
+
+function jsonDecimalToProto(decimal: string): string {
+  const parsed = Decimal.fromUserInput(decimal, 18);
+  return parsed.atomics;
 }
 
 /** Creates a new validator. */
@@ -175,9 +187,9 @@ export function createStakingAminoConverters(
             details: description.details,
           },
           commission: {
-            rate: commission.rate,
-            max_rate: commission.maxRate,
-            max_change_rate: commission.maxChangeRate,
+            rate: protoDecimalToJson(commission.rate),
+            max_rate: protoDecimalToJson(commission.maxRate),
+            max_change_rate: protoDecimalToJson(commission.maxChangeRate),
           },
           min_self_delegation: minSelfDelegation,
           delegator_address: delegatorAddress,
@@ -214,9 +226,9 @@ export function createStakingAminoConverters(
             details: description.details,
           },
           commission: {
-            rate: commission.rate,
-            maxRate: commission.max_rate,
-            maxChangeRate: commission.max_change_rate,
+            rate: jsonDecimalToProto(commission.rate),
+            maxRate: jsonDecimalToProto(commission.max_rate),
+            maxChangeRate: jsonDecimalToProto(commission.max_change_rate),
           },
           minSelfDelegation: min_self_delegation,
           delegatorAddress: delegator_address,
@@ -266,7 +278,7 @@ export function createStakingAminoConverters(
             security_contact: description.securityContact,
             details: description.details,
           },
-          commission_rate: commissionRate,
+          commission_rate: protoDecimalToJson(commissionRate),
           min_self_delegation: minSelfDelegation,
           validator_address: validatorAddress,
         };
@@ -284,7 +296,7 @@ export function createStakingAminoConverters(
           securityContact: description.security_contact,
           details: description.details,
         },
-        commissionRate: commission_rate,
+        commissionRate: jsonDecimalToProto(commission_rate),
         minSelfDelegation: min_self_delegation,
         validatorAddress: validator_address,
       }),
