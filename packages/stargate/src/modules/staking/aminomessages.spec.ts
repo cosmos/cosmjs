@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeBech32Pubkey } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { coin } from "@cosmjs/proto-signing";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,
@@ -65,7 +65,13 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         pubkey: {
           typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-          value: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          value: Uint8Array.from(
+            CosmosCryptoSecp256k1Pubkey.encode(
+              CosmosCryptoSecp256k1Pubkey.fromPartial({
+                key: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+              }),
+            ).finish(),
+          ),
         },
         value: coin(1234, "ucosm"),
       };
@@ -92,10 +98,10 @@ describe("AminoTypes", () => {
           min_self_delegation: "123",
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          pubkey: encodeBech32Pubkey(
-            { type: "tendermint/PubKeySecp256k1", value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ" },
-            "cosmos",
-          ),
+          pubkey: {
+            type: "tendermint/PubKeySecp256k1",
+            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+          },
           value: coin(1234, "ucosm"),
         },
       };
@@ -226,10 +232,10 @@ describe("AminoTypes", () => {
           min_self_delegation: "123",
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          pubkey: encodeBech32Pubkey(
-            { type: "tendermint/PubKeySecp256k1", value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ" },
-            "cosmos",
-          ),
+          pubkey: {
+            type: "tendermint/PubKeySecp256k1",
+            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+          },
           value: coin(1234, "ucosm"),
         },
       };
@@ -252,7 +258,13 @@ describe("AminoTypes", () => {
         validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         pubkey: {
           typeUrl: "/cosmos.crypto.secp256k1.PubKey",
-          value: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+          value: Uint8Array.from(
+            CosmosCryptoSecp256k1Pubkey.encode(
+              CosmosCryptoSecp256k1Pubkey.fromPartial({
+                key: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+              }),
+            ).finish(),
+          ),
         },
         value: coin(1234, "ucosm"),
       };
