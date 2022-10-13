@@ -10,6 +10,7 @@ export {
   decodeBech32Pubkey,
   encodeAminoPubkey,
   encodeBech32Pubkey,
+  encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,
 } from "./encoding";
 export { createMultisigThresholdPubkey } from "./multisig";

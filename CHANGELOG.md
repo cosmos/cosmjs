@@ -8,6 +8,8 @@ and this project adheres to
 
 ### Added
 
+- @cosmjs/amino: Add `encodeEd25519Pubkey` analogue to the existing
+  `encodeSecp256k1Pubkey`.
 - @cosmjs/utils: Add `isDefined` which checks for `undefined` in a
   TypeScript-friendly way.
 
