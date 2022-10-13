@@ -14,6 +14,8 @@ and this project adheres to
   `anyToSinglePubkey`. Export `anyToSinglePubkey`.
 - @cosmjs/utils: Add `isDefined` which checks for `undefined` in a
   TypeScript-friendly way.
+- @cosmjs/stargate: Add missing `{is,}MsgBeginRedelegateEncodeObject`,
+  `{is,MsgCreateValidatorEncodeObject}` and `{is,MsgEditValidatorEncodeObject}`.
 
 ### Fixed
 
