@@ -8,7 +8,7 @@ export {
 } from "./directsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 export { makeCosmoshubPath } from "./paths";
-export { decodePubkey, encodePubkey } from "./pubkey";
+export { anyToSinglePubkey, decodePubkey, encodePubkey } from "./pubkey";
 export {
   DecodeObject,
   EncodeObject,
