@@ -33,7 +33,7 @@ for more example usage of the packages.
 
 The full API documentation is hosted at [cosmos.github.io/cosmjs]. This is a bit
 tricky to navigate and requires basic TypeScript understanding. It is helpful if
-you have want to look up details for advanced use cases. This documentation is
+you want to look up details for advanced use cases. This documentation is
 auto-generated based on the current main branch and can occasionally diverge
 from the latest release.
 
@@ -48,7 +48,7 @@ chains (Cosmos SDK v0.41) can be found
 ## Packages
 
 CosmJS is a library that consists of many smaller npm packages within the
-[@cosmjs namespace](https://www.npmjs.com/org/cosmjs), a so called monorepo.
+[@cosmjs namespace](https://www.npmjs.com/org/cosmjs), a so-called monorepo.
 Here are some of them to get an idea:
 
 | Package                                                 | Description                                                                                                                                                                                                                              | Latest                                                                                                                                |
