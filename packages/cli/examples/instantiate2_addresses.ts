@@ -31,12 +31,11 @@ for (let checksum of checksums) {
   for (let creator of [makeTestingAddress(20), makeTestingAddress(32)]) {
     for (let salt of salts) {
       for (let msg of msgs) {
-        const encodedMsg = typeof msg === "string" ? toUtf8(msg) : new Uint8Array();
         const { key, addressData, address } = _instantiate2AddressIntermediate(
           checksum,
           creator,
           salt,
-          encodedMsg,
+          msg,
           "purple",
         );
         out.push({
