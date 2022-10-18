@@ -1,53 +1,5 @@
-import { fromBech32, fromHex, fromUtf8, toAscii, toBech32, toHex, toUtf8 } from "@cosmjs/encoding";
-import { Sha256, sha256 } from "@cosmjs/crypto";
-import { Uint64 } from "@cosmjs/math";
-import { assert } from "@cosmjs/utils";
-
-/**
- * The "Basic Address" Hash from
- * https://github.com/cosmos/cosmos-sdk/blob/v0.45.8/docs/architecture/adr-028-public-key-addresses.md
- */
-function hash(type: string, key: Uint8Array): Uint8Array {
-  return new Sha256(sha256(toAscii(type))).update(key).digest();
-}
-
-/**
- * Takes an integer [0, 2**64-1] and returns a one-byte encoding of it.
- */
-function toUint64(int: number): Uint8Array {
-  return Uint64.fromNumber(int).toBytesBigEndian();
-}
-
-/** See https://github.com/CosmWasm/wasmd/pull/1014 */
-function deterministicContractAddress(
-  checksum: Uint8Array,
-  creator: string,
-  salt: Uint8Array,
-  msg: Uint8Array,
-  prefix: string,
-) {
-  assert(checksum.length === 32);
-  const creatorData = fromBech32(creator).data;
-
-  // Validate inputs
-  if (salt.length < 1 || salt.length > 64) throw new Error("Salt must be between 1 and 64 bytes");
-
-  const key = new Uint8Array([
-    ...toAscii("wasm"),
-    0x00,
-    ...toUint64(checksum.length),
-    ...checksum,
-    ...toUint64(creatorData.length),
-    ...creatorData,
-    ...toUint64(salt.length),
-    ...salt,
-    ...toUint64(msg.length),
-    ...msg,
-  ]);
-  const addressData = hash("module", key);
-  const address = toBech32(prefix, addressData);
-  return { key, addressData, address };
-}
+import { fromBech32, fromHex, toBech32, toHex, toUtf8 } from "@cosmjs/encoding";
+import { _instantiate2AddressIntermediate } from "@cosmjs/cosmwasm-stargate";
 
 function makeTestingAddress(length: number): string {
   let data = new Uint8Array(length);
@@ -80,7 +32,7 @@ for (let checksum of checksums) {
     for (let salt of salts) {
       for (let msg of msgs) {
         const encodedMsg = typeof msg === "string" ? toUtf8(msg) : new Uint8Array();
-        const { key, addressData, address } = deterministicContractAddress(
+        const { key, addressData, address } = _instantiate2AddressIntermediate(
           checksum,
           creator,
           salt,
