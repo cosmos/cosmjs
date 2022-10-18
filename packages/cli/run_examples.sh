@@ -10,6 +10,7 @@ if [ -n "${SIMAPP44_ENABLED:-}" ]; then
 fi
 yarn node ./bin/cosmjs-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
 yarn node ./bin/cosmjs-cli --init examples/generate_address.ts --code "process.exit(0)"
+yarn node ./bin/cosmjs-cli --init examples/instantiate2_addresses.ts  --code "process.exit(0)"
 yarn node ./bin/cosmjs-cli --init examples/local_faucet.ts --code "process.exit(0)"
 yarn node ./bin/cosmjs-cli --init examples/mask.ts --code "process.exit(0)"
 yarn node ./bin/cosmjs-cli --init examples/multisig_address.ts --code "process.exit(0)"
