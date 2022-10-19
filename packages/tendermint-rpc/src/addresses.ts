@@ -15,7 +15,15 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
   return ripemd160(sha256(pubkeyData));
 }
 
-// For secp256k1 this assumes we already have a compressed pubkey.
+/**
+ * Returns Tendermint address as bytes.
+ *
+ * This is for addresses that are derived by the Tendermint keypair (typically Ed25519).
+ * Sometimes those addresses are bech32-encoded and contain the term "cons" in the presix
+ * ("cosmosvalcons1...").
+ *
+ * For secp256k1 this assumes we already have a compressed pubkey, which is the default in Cosmos.
+ */
 export function pubkeyToRawAddress(type: "ed25519" | "secp256k1", data: Uint8Array): Uint8Array {
   switch (type) {
     case "ed25519":
@@ -28,6 +36,15 @@ export function pubkeyToRawAddress(type: "ed25519" | "secp256k1", data: Uint8Arr
   }
 }
 
+/**
+ * Returns Tendermint address in uppercase hex format.
+ *
+ * This is for addresses that are derived by the Tendermint keypair (typically Ed25519).
+ * Sometimes those addresses are bech32-encoded and contain the term "cons" in the presix
+ * ("cosmosvalcons1...").
+ *
+ * For secp256k1 this assumes we already have a compressed pubkey, which is the default in Cosmos.
+ */
 export function pubkeyToAddress(type: "ed25519" | "secp256k1", data: Uint8Array): string {
   return toHex(pubkeyToRawAddress(type, data)).toUpperCase();
 }
