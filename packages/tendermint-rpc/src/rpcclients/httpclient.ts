@@ -65,11 +65,25 @@ export interface HttpEndpoint {
   readonly headers: Record<string, string>;
 }
 
+export interface HttpClientOptions {
+  dispatchInterval: number;
+}
+
+export const defaultHttpClientOptions: HttpClientOptions = { dispatchInterval: 0 };
+
 export class HttpClient implements RpcClient {
   protected readonly url: string;
   protected readonly headers: Record<string, string> | undefined;
+  private stack: {
+    request: JsonRpcRequest;
+    resolve: (a: JsonRpcSuccessResponse) => void;
+    reject: (a: Error) => void;
+  }[] = [];
 
-  public constructor(endpoint: string | HttpEndpoint) {
+  public constructor(
+    endpoint: string | HttpEndpoint,
+    protected readonly options: HttpClientOptions = defaultHttpClientOptions,
+  ) {
     if (typeof endpoint === "string") {
       // accept host.name:port and assume http protocol
       this.url = hasProtocol(endpoint) ? endpoint : "http://" + endpoint;
@@ -77,6 +91,7 @@ export class HttpClient implements RpcClient {
       this.url = endpoint.url;
       this.headers = endpoint.headers;
     }
+    setInterval(() => this.tick(), options.dispatchInterval);
   }
 
   public disconnect(): void {
@@ -84,10 +99,31 @@ export class HttpClient implements RpcClient {
   }
 
   public async execute(request: JsonRpcRequest): Promise<JsonRpcSuccessResponse> {
-    const response = parseJsonRpcResponse(await http("POST", this.url, this.headers, request));
-    if (isJsonRpcErrorResponse(response)) {
-      throw new Error(JSON.stringify(response.error));
-    }
-    return response;
+    return new Promise((resolve, reject) => {
+      this.stack.push({ request, resolve, reject });
+    });
+  }
+
+  private async tick() {
+    // Avoid race conditions
+    const stack = this.stack;
+    this.stack = [];
+
+    if (!stack.length) return;
+
+    const request = stack.map((s) => s.request);
+    const raw = await http("POST", this.url, this.headers, request);
+    // Requests with a single entry return as an object
+    const arr = Array.isArray(raw) ? raw : [raw];
+
+    arr.forEach((el, idx) => {
+      const { reject, resolve } = stack[idx];
+      const response = parseJsonRpcResponse(el);
+      if (isJsonRpcErrorResponse(response)) {
+        reject(new Error(JSON.stringify(response.error)));
+        return;
+      }
+      resolve(response);
+    });
   }
 }
