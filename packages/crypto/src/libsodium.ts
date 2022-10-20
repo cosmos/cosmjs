@@ -3,7 +3,7 @@
 //
 // libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
 
-import { isNonNullObject } from "@cosmjs/utils";
+import { isNonNullObject } from "@cosmjs-expo/utils";
 import sodium from "libsodium-wrappers";
 
 export interface Argon2idOptions {

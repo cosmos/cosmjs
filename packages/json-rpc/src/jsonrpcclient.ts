@@ -1,4 +1,4 @@
-import { firstEvent } from "@cosmjs/stream";
+import { firstEvent } from "@cosmjs-expo/stream";
 import { Stream } from "xstream";
 
 import { isJsonRpcErrorResponse, JsonRpcRequest, JsonRpcResponse, JsonRpcSuccessResponse } from "./types";

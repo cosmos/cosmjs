@@ -1,4 +1,4 @@
-import { toUtf8 } from "@cosmjs/encoding";
+import { toUtf8 } from "@cosmjs-expo/encoding";
 
 import { pbkdf2Sha512 } from "./pbkdf2";
 import { sha256 } from "./sha";

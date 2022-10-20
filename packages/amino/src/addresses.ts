@@ -1,7 +1,7 @@
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 
-import { ripemd160, sha256 } from "@cosmjs/crypto";
-import { fromBase64, toBech32 } from "@cosmjs/encoding";
+import { ripemd160, sha256 } from "@cosmjs-expo/crypto";
+import { fromBase64, toBech32 } from "@cosmjs-expo/encoding";
 
 import { encodeAminoPubkey } from "./encoding";
 import { isEd25519Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";

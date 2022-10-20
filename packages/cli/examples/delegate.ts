@@ -1,4 +1,4 @@
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { DirectSecp256k1HdWallet } from "@cosmjs-expo/proto-signing";
 import {
   coin,
   MsgDelegateEncodeObject,
@@ -6,7 +6,7 @@ import {
   calculateFee,
   assertIsDeliverTxSuccess,
   GasPrice,
-} from "@cosmjs/stargate";
+} from "@cosmjs-expo/stargate";
 
 // Wallet
 const wallet = await DirectSecp256k1HdWallet.fromMnemonic(

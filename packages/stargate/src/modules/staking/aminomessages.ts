@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
-import { fromBase64, toBase64 } from "@cosmjs/encoding";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import { AminoMsg, Coin, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs-expo/amino";
+import { fromBase64, toBase64 } from "@cosmjs-expo/encoding";
+import { assertDefinedAndNotNull } from "@cosmjs-expo/utils";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,

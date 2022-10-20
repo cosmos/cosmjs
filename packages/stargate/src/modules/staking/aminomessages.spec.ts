@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeBech32Pubkey } from "@cosmjs/amino";
-import { fromBase64 } from "@cosmjs/encoding";
-import { coin } from "@cosmjs/proto-signing";
+import { encodeBech32Pubkey } from "@cosmjs-expo/amino";
+import { fromBase64 } from "@cosmjs-expo/encoding";
+import { coin } from "@cosmjs-expo/proto-signing";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,

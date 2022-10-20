@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs"
+    "url": "https://github.com/BurntFinance/cosmjs-expo"
   },
   "publishConfig": {
     "access": "public",
@@ -40,12 +40,12 @@
     "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish"
   },
   "devDependencies": {
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/cosmwasm-stargate": "workspace:^",
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stargate": "workspace:^",
+    "@cosmjs-expo/amino": "workspace:^",
+    "@cosmjs-expo/cosmwasm-stargate": "workspace:^",
+    "@cosmjs-expo/crypto": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/proto-signing": "workspace:^",
+    "@cosmjs-expo/stargate": "workspace:^",
     "eslint": "^7.5",
     "prettier": "^2.4.1",
     "typescript": "~4.6"

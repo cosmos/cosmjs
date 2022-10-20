@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/cosmwasm-stargate",
+  "name": "@cosmjs-expo/cosmwasm-stargate",
   "version": "0.29.0",
   "description": "CosmWasm SDK",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/cosmwasm-stargate"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/cosmwasm-stargate"
   },
   "publishConfig": {
     "access": "public",
@@ -38,14 +38,14 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stargate": "workspace:^",
-    "@cosmjs/tendermint-rpc": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@cosmjs-expo/amino": "workspace:^",
+    "@cosmjs-expo/crypto": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/math": "workspace:^",
+    "@cosmjs-expo/proto-signing": "workspace:^",
+    "@cosmjs-expo/stargate": "workspace:^",
+    "@cosmjs-expo/tendermint-rpc": "workspace:^",
+    "@cosmjs-expo/utils": "workspace:^",
     "cosmjs-types": "^0.5.0",
     "long": "^4.0.0",
     "pako": "^2.0.2"

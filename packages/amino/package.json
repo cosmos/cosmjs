@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/amino",
+  "name": "@cosmjs-expo/amino",
   "version": "0.29.0",
   "description": "Helpers for Amino based signing.",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/amino"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/amino"
   },
   "publishConfig": {
     "access": "public",
@@ -40,10 +40,10 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/utils": "workspace:^"
+    "@cosmjs-expo/crypto": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/math": "workspace:^",
+    "@cosmjs-expo/utils": "workspace:^"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

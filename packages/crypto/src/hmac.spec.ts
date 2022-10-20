@@ -1,4 +1,4 @@
-import { fromHex } from "@cosmjs/encoding";
+import { fromHex } from "@cosmjs-expo/encoding";
 
 import { Hmac } from "./hmac";
 import { Sha256, Sha512 } from "./sha";

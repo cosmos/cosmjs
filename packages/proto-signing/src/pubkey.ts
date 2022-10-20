@@ -6,9 +6,9 @@ import {
   MultisigThresholdPubkey,
   Pubkey,
   SinglePubkey,
-} from "@cosmjs/amino";
-import { fromBase64 } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
+} from "@cosmjs-expo/amino";
+import { fromBase64 } from "@cosmjs-expo/encoding";
+import { Uint53 } from "@cosmjs-expo/math";
 import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys";
 import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { Any } from "cosmjs-types/google/protobuf/any";

@@ -1,4 +1,4 @@
-import { fromBase64, fromBech32, fromHex } from "@cosmjs/encoding";
+import { fromBase64, fromBech32, fromHex } from "@cosmjs-expo/encoding";
 
 import {
   decodeAminoPubkey,

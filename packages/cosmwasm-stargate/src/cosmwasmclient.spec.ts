@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { sha256 } from "@cosmjs/crypto";
-import { fromAscii, fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
-import { Int53 } from "@cosmjs/math";
+import { sha256 } from "@cosmjs-expo/crypto";
+import { fromAscii, fromBase64, fromHex, toAscii } from "@cosmjs-expo/encoding";
+import { Int53 } from "@cosmjs-expo/math";
 import {
   DirectSecp256k1HdWallet,
   encodePubkey,
@@ -9,9 +9,9 @@ import {
   makeSignDoc,
   Registry,
   TxBodyEncodeObject,
-} from "@cosmjs/proto-signing";
-import { assertIsDeliverTxSuccess, coins, logs, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
-import { assert, sleep } from "@cosmjs/utils";
+} from "@cosmjs-expo/proto-signing";
+import { assertIsDeliverTxSuccess, coins, logs, MsgSendEncodeObject, StdFee } from "@cosmjs-expo/stargate";
+import { assert, sleep } from "@cosmjs-expo/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 

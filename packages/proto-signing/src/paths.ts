@@ -1,4 +1,4 @@
-import { HdPath, Slip10RawIndex } from "@cosmjs/crypto";
+import { HdPath, Slip10RawIndex } from "@cosmjs-expo/crypto";
 
 /**
  * The Cosmos Hub derivation path in the form `m/44'/118'/0'/0/a`

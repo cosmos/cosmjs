@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/math",
+  "name": "@cosmjs-expo/math",
   "version": "0.29.0",
   "description": "Math helpers for blockchain projects",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/math"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/math"
   },
   "publishConfig": {
     "access": "public",

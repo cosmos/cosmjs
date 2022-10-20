@@ -1,6 +1,6 @@
-import { StdFee } from "@cosmjs/amino";
-import { Decimal, Uint53 } from "@cosmjs/math";
-import { coins } from "@cosmjs/proto-signing";
+import { StdFee } from "@cosmjs-expo/amino";
+import { Decimal, Uint53 } from "@cosmjs-expo/math";
+import { coins } from "@cosmjs-expo/proto-signing";
 
 /**
  * Denom checker for the Cosmos SDK 0.42 denom pattern
@@ -31,7 +31,7 @@ export class GasPrice {
    * Parses a gas price formatted as `<amount><denom>`, e.g. `GasPrice.fromString("0.012utoken")`.
    *
    * The denom must match the Cosmos SDK 0.42 pattern (https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601).
-   * See `GasPrice` in @cosmjs/stargate for a more generic matcher.
+   * See `GasPrice` in @cosmjs-expo/stargate for a more generic matcher.
    *
    * Separators are not yet supported.
    */

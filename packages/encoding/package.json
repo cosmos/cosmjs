@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/encoding",
+  "name": "@cosmjs-expo/encoding",
   "version": "0.29.0",
   "description": "Encoding helpers for blockchain projects",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/encoding"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/encoding"
   },
   "publishConfig": {
     "access": "public",

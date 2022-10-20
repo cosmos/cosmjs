@@ -1,4 +1,4 @@
-import { Bech32 } from "@cosmjs/encoding";
+import { Bech32 } from "@cosmjs-expo/encoding";
 
 export function isValidAddress(input: string, requiredPrefix: string): boolean {
   try {

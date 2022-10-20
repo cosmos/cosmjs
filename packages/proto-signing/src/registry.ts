@@ -109,7 +109,7 @@ export class Registry {
    * If you need to work with the result type in TypeScript, you can use:
    *
    * ```
-   * import { assert } from "@cosmjs/utils";
+   * import { assert } from "@cosmjs-expo/utils";
    *
    * const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin");
    * assert(Coin); // Ensures not unset

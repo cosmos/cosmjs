@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/stargate",
+  "name": "@cosmjs-expo/stargate",
   "version": "0.29.0",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/stargate"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/stargate"
   },
   "publishConfig": {
     "access": "public",
@@ -39,20 +39,20 @@
   },
   "dependencies": {
     "@confio/ics23": "^0.6.8",
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stream": "workspace:^",
-    "@cosmjs/tendermint-rpc": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@cosmjs-expo/amino": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/math": "workspace:^",
+    "@cosmjs-expo/proto-signing": "workspace:^",
+    "@cosmjs-expo/stream": "workspace:^",
+    "@cosmjs-expo/tendermint-rpc": "workspace:^",
+    "@cosmjs-expo/utils": "workspace:^",
     "cosmjs-types": "^0.5.0",
     "long": "^4.0.0",
     "protobufjs": "~6.11.3",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs-expo/crypto": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",

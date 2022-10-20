@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/utils",
+  "name": "@cosmjs-expo/utils",
   "version": "0.29.0",
   "description": "Utility tools, primarily for testing code",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/utils"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/utils"
   },
   "publishConfig": {
     "access": "public",

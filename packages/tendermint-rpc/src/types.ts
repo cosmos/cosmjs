@@ -1,4 +1,4 @@
-// Types in this file are exported outside of the @cosmjs/tendermint-rpc package,
+// Types in this file are exported outside of the @cosmjs-expo/tendermint-rpc package,
 // e.g. as part of a request or response
 
 import { ReadonlyDateWithNanoseconds } from "./dates";

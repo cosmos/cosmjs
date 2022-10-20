@@ -1,5 +1,5 @@
 // Note: all exports in this module are publicly available via
-// `import { tendermint35 } from "@cosmjs/tendermint-rpc"`
+// `import { tendermint35 } from "@cosmjs-expo/tendermint-rpc"`
 
 export {
   AbciInfoRequest,

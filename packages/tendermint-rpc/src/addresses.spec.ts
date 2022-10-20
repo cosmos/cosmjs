@@ -1,4 +1,4 @@
-import { fromHex } from "@cosmjs/encoding";
+import { fromHex } from "@cosmjs-expo/encoding";
 
 import { pubkeyToAddress, pubkeyToRawAddress } from "./addresses";
 

@@ -81,7 +81,7 @@ export class TsRepl {
     //   '/home/me/.node_modules',
     //   '/home/me/.node_libraries',
     //   '/usr/lib/nodejs' ]
-    // However, this does not include the installation path of @cosmjs/cli because
+    // However, this does not include the installation path of @cosmjs-expo/cli because
     // REPL does not inherit module paths from the current process. Thus we override
     // the repl paths with the current process' paths
     unsafeReplContext.module.paths = module.paths;

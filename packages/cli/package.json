@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/cli",
+  "name": "@cosmjs-expo/cli",
   "version": "0.29.0",
   "description": "Command line interface",
   "contributors": [
@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/cli"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/cli"
   },
   "publishConfig": {
     "access": "public",
@@ -40,16 +40,16 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/cosmwasm-stargate": "workspace:^",
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/faucet-client": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stargate": "workspace:^",
-    "@cosmjs/tendermint-rpc": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@cosmjs-expo/amino": "workspace:^",
+    "@cosmjs-expo/cosmwasm-stargate": "workspace:^",
+    "@cosmjs-expo/crypto": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/faucet-client": "workspace:^",
+    "@cosmjs-expo/math": "workspace:^",
+    "@cosmjs-expo/proto-signing": "workspace:^",
+    "@cosmjs-expo/stargate": "workspace:^",
+    "@cosmjs-expo/tendermint-rpc": "workspace:^",
+    "@cosmjs-expo/utils": "workspace:^",
     "axios": "^0.21.2",
     "babylon": "^6.18.0",
     "chalk": "^4",

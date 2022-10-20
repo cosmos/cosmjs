@@ -1,5 +1,5 @@
-import { Decimal } from "@cosmjs/math";
-import { assert } from "@cosmjs/utils";
+import { Decimal } from "@cosmjs-expo/math";
+import { assert } from "@cosmjs-expo/utils";
 import { Params } from "cosmjs-types/cosmos/mint/v1beta1/mint";
 import { QueryClientImpl } from "cosmjs-types/cosmos/mint/v1beta1/query";
 

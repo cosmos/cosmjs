@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/faucet-client",
+  "name": "@cosmjs-expo/faucet-client",
   "version": "0.29.0",
   "description": "The faucet client",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/faucet-client"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/faucet-client"
   },
   "publishConfig": {
     "access": "public",

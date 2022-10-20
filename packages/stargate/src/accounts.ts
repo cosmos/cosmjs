@@ -1,7 +1,7 @@
-import { Pubkey } from "@cosmjs/amino";
-import { Uint64 } from "@cosmjs/math";
-import { decodePubkey } from "@cosmjs/proto-signing";
-import { assert } from "@cosmjs/utils";
+import { Pubkey } from "@cosmjs-expo/amino";
+import { Uint64 } from "@cosmjs-expo/math";
+import { decodePubkey } from "@cosmjs-expo/proto-signing";
+import { assert } from "@cosmjs-expo/utils";
 import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import {
   BaseVestingAccount,

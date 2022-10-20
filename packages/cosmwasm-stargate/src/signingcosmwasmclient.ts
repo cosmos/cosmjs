@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
-import { sha256 } from "@cosmjs/crypto";
-import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
-import { Int53, Uint53 } from "@cosmjs/math";
+import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs-expo/amino";
+import { sha256 } from "@cosmjs-expo/crypto";
+import { fromBase64, toHex, toUtf8 } from "@cosmjs-expo/encoding";
+import { Int53, Uint53 } from "@cosmjs-expo/math";
 import {
   EncodeObject,
   encodePubkey,
@@ -12,7 +12,7 @@ import {
   OfflineSigner,
   Registry,
   TxBodyEncodeObject,
-} from "@cosmjs/proto-signing";
+} from "@cosmjs-expo/proto-signing";
 import {
   AminoTypes,
   calculateFee,
@@ -29,9 +29,9 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
   SignerData,
   StdFee,
-} from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { assert, assertDefined } from "@cosmjs/utils";
+} from "@cosmjs-expo/stargate";
+import { HttpEndpoint, Tendermint34Client } from "@cosmjs-expo/tendermint-rpc";
+import { assert, assertDefined } from "@cosmjs-expo/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";

@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/faucet",
+  "name": "@cosmjs-expo/faucet",
   "version": "0.29.0",
   "description": "The faucet",
   "contributors": [
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/faucet"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/faucet"
   },
   "publishConfig": {
     "access": "public",
@@ -40,12 +40,12 @@
     "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stargate": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@cosmjs-expo/crypto": "workspace:^",
+    "@cosmjs-expo/encoding": "workspace:^",
+    "@cosmjs-expo/math": "workspace:^",
+    "@cosmjs-expo/proto-signing": "workspace:^",
+    "@cosmjs-expo/stargate": "workspace:^",
+    "@cosmjs-expo/utils": "workspace:^",
     "@koa/cors": "^3.3",
     "koa": "^2.13",
     "koa-bodyparser": "^4.3"

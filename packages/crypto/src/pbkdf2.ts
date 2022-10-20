@@ -1,4 +1,4 @@
-import { assert } from "@cosmjs/utils";
+import { assert } from "@cosmjs-expo/utils";
 import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
 import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
 
@@ -17,18 +17,19 @@ export async function getCryptoModule(): Promise<any | undefined> {
     if (!(typeof crypto === "object" && Object.keys(crypto).length <= 1)) {
       return crypto;
     }
-  } catch {}
-
-  try {
-    const crypto = await import("expo-crypto");
-    // We get `Object{default: Object{}}` as a fallback when using
-    // `crypto: false` in Webpack 5, which we interpret as unavailable.
-    if (!(typeof crypto === "object" && Object.keys(crypto).length <= 1)) {
-      return crypto;
+  } catch {
+    try {
+      // @ts-ignore
+      const crypto = await import("expo-crypto");
+      // We get `Object{default: Object{}}` as a fallback when using
+      // `crypto: false` in Webpack 5, which we interpret as unavailable.
+      if (!(typeof crypto === "object" && Object.keys(crypto).length <= 1)) {
+        return crypto;
+      }
+    } catch {
+      return undefined;
     }
-  } catch {}
-
-  return undefined;
+  }
 }
 
 export async function getSubtle(): Promise<any | undefined> {

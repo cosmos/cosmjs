@@ -1,8 +1,8 @@
-const { makeCosmoshubPath, makeSignDoc } = require("@cosmjs/amino");
-const { pathToString } = require("@cosmjs/crypto");
-const { toBase64 } = require("@cosmjs/encoding");
+const { makeCosmoshubPath, makeSignDoc } = require("@cosmjs-expo/amino");
+const { pathToString } = require("@cosmjs-expo/crypto");
+const { toBase64 } = require("@cosmjs-expo/encoding");
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const { LedgerSigner } = require("@cosmjs/ledger-amino");
+const { LedgerSigner } = require("@cosmjs-expo/ledger-amino");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const TransportNodeHid = require("@ledgerhq/hw-transport-node-hid").default;
 

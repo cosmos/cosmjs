@@ -1,6 +1,6 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { calculateFee, GasPrice } from "@cosmjs/stargate";
+import { SigningCosmWasmClient } from "@cosmjs-expo/cosmwasm-stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs-expo/proto-signing";
+import { calculateFee, GasPrice } from "@cosmjs-expo/stargate";
 import * as fs from "fs";
 
 const rpcEndpoint = "http://localhost:26659";

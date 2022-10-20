@@ -1,4 +1,4 @@
-import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
+import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs-expo/json-rpc";
 
 import { SubscriptionEvent } from "../../rpcclients";
 import * as requests from "../requests";

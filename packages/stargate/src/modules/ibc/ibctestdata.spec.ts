@@ -1,4 +1,4 @@
-import { fromBase64 } from "@cosmjs/encoding";
+import { fromBase64 } from "@cosmjs-expo/encoding";
 import {
   Channel,
   Counterparty as ChannelCounterparty,

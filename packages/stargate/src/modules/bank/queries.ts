@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { assert } from "@cosmjs/utils";
+import { assert } from "@cosmjs-expo/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { QueryClientImpl, QueryTotalSupplyResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";

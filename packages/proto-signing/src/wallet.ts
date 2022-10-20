@@ -4,8 +4,8 @@ import {
   Random,
   xchacha20NonceLength,
   Xchacha20poly1305Ietf,
-} from "@cosmjs/crypto";
-import { toAscii } from "@cosmjs/encoding";
+} from "@cosmjs-expo/crypto";
+import { toAscii } from "@cosmjs-expo/encoding";
 
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.

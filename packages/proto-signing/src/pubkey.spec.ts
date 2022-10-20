@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64 } from "@cosmjs/encoding";
+import { fromBase64 } from "@cosmjs-expo/encoding";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { decodePubkey, encodePubkey } from "./pubkey";

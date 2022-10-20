@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/stream",
+  "name": "@cosmjs-expo/stream",
   "version": "0.29.0",
   "description": "Utility functions for producing and consuming streams",
   "contributors": [
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/stream"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/stream"
   },
   "publishConfig": {
     "access": "public",

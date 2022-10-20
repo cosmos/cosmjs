@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/socket",
+  "name": "@cosmjs-expo/socket",
   "version": "0.29.0",
   "description": "Utility functions for working with WebSockets",
   "contributors": [
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/socket"
+    "url": "https://github.com/BurntFinance/cosmjs-expo/tree/main/packages/socket"
   },
   "publishConfig": {
     "access": "public",
@@ -42,7 +42,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/stream": "workspace:^",
+    "@cosmjs-expo/stream": "workspace:^",
     "isomorphic-ws": "^4.0.1",
     "ws": "^7",
     "xstream": "^11.14.0"

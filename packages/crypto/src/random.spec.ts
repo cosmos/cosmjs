@@ -1,4 +1,4 @@
-import { isUint8Array } from "@cosmjs/utils";
+import { isUint8Array } from "@cosmjs-expo/utils";
 
 import { Random } from "./random";
 

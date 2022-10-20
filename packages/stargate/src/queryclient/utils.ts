@@ -1,5 +1,5 @@
-import { fromAscii, fromBech32 } from "@cosmjs/encoding";
-import { Decimal, Uint64 } from "@cosmjs/math";
+import { fromAscii, fromBech32 } from "@cosmjs-expo/encoding";
+import { Decimal, Uint64 } from "@cosmjs-expo/math";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import Long from "long";
 

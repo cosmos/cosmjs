@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64, toBase64 } from "@cosmjs/encoding";
+import { fromBase64, toBase64 } from "@cosmjs-expo/encoding";
 
 import { encodeSecp256k1Pubkey } from "./encoding";
 import { Pubkey, pubkeyType } from "./pubkeys";
