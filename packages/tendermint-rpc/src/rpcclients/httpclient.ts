@@ -116,8 +116,10 @@ export class HttpClient implements RpcClient {
     // Requests with a single entry return as an object
     const arr = Array.isArray(raw) ? raw : [raw];
 
-    arr.forEach((el, idx) => {
-      const { reject, resolve } = stack[idx];
+    arr.forEach((el) => {
+      const req = stack.find((s) => s.request.id === el.id);
+      if (!req) return;
+      const { reject, resolve } = req;
       const response = parseJsonRpcResponse(el);
       if (isJsonRpcErrorResponse(response)) {
         reject(new Error(JSON.stringify(response.error)));
