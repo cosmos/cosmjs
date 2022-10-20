@@ -74,16 +74,16 @@ export const defaultHttpClientOptions: HttpClientOptions = { dispatchInterval: 0
 export class HttpClient implements RpcClient {
   protected readonly url: string;
   protected readonly headers: Record<string, string> | undefined;
-  private stack: {
+  protected readonly options: HttpClientOptions;
+
+  private stack: Array<{
     request: JsonRpcRequest;
     resolve: (a: JsonRpcSuccessResponse) => void;
     reject: (a: Error) => void;
-  }[] = [];
+  }> = [];
 
-  public constructor(
-    endpoint: string | HttpEndpoint,
-    protected readonly options: HttpClientOptions = defaultHttpClientOptions,
-  ) {
+  public constructor(endpoint: string | HttpEndpoint, options: HttpClientOptions = defaultHttpClientOptions) {
+    this.options = options;
     if (typeof endpoint === "string") {
       // accept host.name:port and assume http protocol
       this.url = hasProtocol(endpoint) ? endpoint : "http://" + endpoint;
@@ -104,7 +104,7 @@ export class HttpClient implements RpcClient {
     });
   }
 
-  private async tick() {
+  private async tick(): Promise<void> {
     // Avoid race conditions
     const stack = this.stack;
     this.stack = [];
@@ -121,9 +121,9 @@ export class HttpClient implements RpcClient {
       const response = parseJsonRpcResponse(el);
       if (isJsonRpcErrorResponse(response)) {
         reject(new Error(JSON.stringify(response.error)));
-        return;
+      } else {
+        resolve(response);
       }
-      resolve(response);
     });
   }
 }
