@@ -4,8 +4,8 @@ import {
   JsonRpcSuccessResponse,
   parseJsonRpcResponse,
 } from "@cosmjs/json-rpc";
-import { http, HttpEndpoint } from "./httpclient";
 
+import { http, HttpEndpoint } from "./httpclient";
 import { hasProtocol, RpcClient } from "./rpcclient";
 
 export interface HttpClientOptions {
@@ -20,7 +20,7 @@ export class HttpBatchClient implements RpcClient {
   protected readonly headers: Record<string, string> | undefined;
   protected readonly options: HttpClientOptions;
 
-  private queue: Array<{
+  private readonly queue: Array<{
     request: JsonRpcRequest;
     resolve: (a: JsonRpcSuccessResponse) => void;
     reject: (a: Error) => void;
