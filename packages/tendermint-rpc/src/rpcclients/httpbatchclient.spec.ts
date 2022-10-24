@@ -69,7 +69,7 @@ describe("http", () => {
   });
 });
 
-describe("HttpClient", () => {
+describe("HttpBatchClient", () => {
   it("can make a simple call", async () => {
     pendingWithoutTendermint();
     const client = new HttpBatchClient(tendermintUrl);
