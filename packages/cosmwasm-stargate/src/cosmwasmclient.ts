@@ -10,6 +10,7 @@ import {
   BroadcastTxError,
   Coin,
   DeliverTxResponse,
+  fromTendermint34Event,
   IndexedTx,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -283,6 +284,7 @@ export class CosmWasmClient {
             height: result.height,
             rawLog: result.rawLog,
             transactionHash: txId,
+            events: result.events,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
           }
@@ -462,6 +464,7 @@ export class CosmWasmClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
+        events: tx.result.events.map(fromTendermint34Event),
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,

@@ -12,6 +12,13 @@ export function toUtf8(str: string): Uint8Array {
   return new TextEncoder().encode(str);
 }
 
-export function fromUtf8(data: Uint8Array): string {
-  return new TextDecoder("utf-8", { fatal: true }).decode(data);
+/**
+ * Takes UTF-8 data and decodes it to a string.
+ *
+ * In lossy mode, the replacement character � is used to substitude invalid
+ * encodings. By default lossy mode is off and invalid data will lead to exceptions.
+ */
+export function fromUtf8(data: Uint8Array, lossy = false): string {
+  const fatal = !lossy;
+  return new TextDecoder("utf-8", { fatal }).decode(data);
 }

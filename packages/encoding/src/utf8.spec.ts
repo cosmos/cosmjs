@@ -1,3 +1,4 @@
+import { toAscii } from "./ascii";
 import { fromUtf8, toUtf8 } from "./utf8";
 
 describe("utf8", () => {
@@ -58,5 +59,16 @@ describe("utf8", () => {
   it("throws on invalid utf8 bytes", () => {
     // Broken UTF8 example from https://github.com/nodejs/node/issues/16894
     expect(() => fromUtf8(new Uint8Array([0xf0, 0x80, 0x80]))).toThrow();
+  });
+
+  describe("fromUtf8", () => {
+    it("replaces characters in lossy mode", () => {
+      expect(fromUtf8(new Uint8Array([]), true)).toEqual("");
+      expect(fromUtf8(new Uint8Array([0x61, 0x62, 0x63]), true)).toEqual("abc");
+      // Example from https://doc.rust-lang.org/stable/std/string/struct.String.html#method.from_utf8_lossy
+      expect(
+        fromUtf8(new Uint8Array([...toAscii("Hello "), 0xf0, 0x90, 0x80, ...toAscii("World")]), true),
+      ).toEqual("Hello �World");
+    });
   });
 });
