@@ -10,6 +10,8 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
   supporting batch RPC requests ([#1300]).
+- @cosmjs/encoding: Add `lossy` parameter to `fromUtf8` allowing the use of a
+  replacement charater instead of throwing.
 
 ## [0.29.2] - 2022-10-13
 
