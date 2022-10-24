@@ -17,7 +17,10 @@ and this project adheres to
 - @cosmjs/utils: Add `isDefined` which checks for `undefined` in a
   TypeScript-friendly way.
 - @cosmjs/stargate: Add missing `{is,}MsgBeginRedelegateEncodeObject`,
-  `{is,MsgCreateValidatorEncodeObject}` and `{is,MsgEditValidatorEncodeObject}`.
+  `{is,MsgCreateValidatorEncodeObject}` and
+  `{is,MsgEditValidatorEncodeObject}`.\
+- @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
+  supporting batch RPC requests
 
 ### Fixed
 
