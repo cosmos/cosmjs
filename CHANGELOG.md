@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
+  supporting batch RPC requests ([#1300]).
+
 ## [0.29.2] - 2022-10-13
 
 ### Added
@@ -18,6 +23,8 @@ and this project adheres to
   TypeScript-friendly way.
 - @cosmjs/stargate: Add missing `{is,}MsgBeginRedelegateEncodeObject`,
   `{is,MsgCreateValidatorEncodeObject}` and `{is,MsgEditValidatorEncodeObject}`.
+
+[#1300]: https://github.com/cosmos/cosmjs/pull/1300
 
 ### Fixed
 
