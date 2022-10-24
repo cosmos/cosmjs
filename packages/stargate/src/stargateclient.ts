@@ -10,6 +10,7 @@ import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
+import { Event, fromTendermint34Event } from "./events";
 import {
   AuthExtension,
   BankExtension,
@@ -64,6 +65,14 @@ export interface IndexedTx {
   readonly hash: string;
   /** Transaction execution error code. 0 on success. */
   readonly code: number;
+  readonly events: readonly Event[];
+  /**
+   * A string-based log document.
+   *
+   * This currently seems to merge attributes of multiple events into one event per type
+   * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
+   * field instead.
+   */
   readonly rawLog: string;
   /**
    * Raw transaction bytes stored in Tendermint.
@@ -453,6 +462,7 @@ export class StargateClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
+        events: tx.result.events.map(fromTendermint34Event),
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,

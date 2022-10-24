@@ -1,15 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { isNonNullObject } from "@cosmjs/utils";
 
-export interface Attribute {
-  readonly key: string;
-  readonly value: string;
-}
-
-export interface Event {
-  readonly type: string;
-  readonly attributes: readonly Attribute[];
-}
+import { Attribute, Event } from "./events";
 
 export interface Log {
   readonly msg_index: number;
