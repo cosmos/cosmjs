@@ -14,6 +14,8 @@ and this project adheres to
   replacement charater instead of throwing.
 - @cosmjs/stargate: Add structured `Events`s to `IndexTx.events` and
   `DeliverTxResponse.events`.
+- @cosmjs/cosmwasm-stargate: Add structured `Events`s field to
+  `SigningCosmWasmClient`s transaction execution methods.
 
 ## [0.29.2] - 2022-10-13
 

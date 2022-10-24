@@ -20,6 +20,7 @@ import {
   createBankAminoConverters,
   defaultRegistryTypes as defaultStargateTypes,
   DeliverTxResponse,
+  Event,
   GasPrice,
   isDeliverTxFailure,
   logs,
@@ -76,6 +77,7 @@ export interface UploadResult {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly events: readonly Event[];
   readonly gasWanted: number;
   readonly gasUsed: number;
 }
@@ -109,6 +111,7 @@ export interface InstantiateResult {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly events: readonly Event[];
   readonly gasWanted: number;
   readonly gasUsed: number;
 }
@@ -122,6 +125,7 @@ export interface ChangeAdminResult {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly events: readonly Event[];
   readonly gasWanted: number;
   readonly gasUsed: number;
 }
@@ -132,6 +136,7 @@ export interface MigrateResult {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly events: readonly Event[];
   readonly gasWanted: number;
   readonly gasUsed: number;
 }
@@ -148,6 +153,7 @@ export interface ExecuteResult {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly events: readonly Event[];
   readonly gasWanted: number;
   readonly gasUsed: number;
 }
@@ -271,6 +277,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: parsedLogs,
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
@@ -306,6 +313,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: parsedLogs,
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
@@ -334,6 +342,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
@@ -360,6 +369,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
@@ -390,6 +400,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
@@ -437,6 +448,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
+      events: result.events,
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
