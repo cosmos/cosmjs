@@ -13,12 +13,16 @@ export interface HttpBatchClientOptions {
   batchSizeLimit: number;
 }
 
-export const defaultHttpBatchClientOptions: HttpClientOptions = { dispatchInterval: 20, batchSizeLimit: 20 };
+export const defaultHttpBatchClientOptions: HttpBatchClientOptions = {
+  dispatchInterval: 20,
+  batchSizeLimit: 20,
+};
 
 export class HttpBatchClient implements RpcClient {
   protected readonly url: string;
   protected readonly headers: Record<string, string> | undefined;
-  protected readonly options: HttpClientOptions;
+  protected readonly options: HttpBatchClientOptions;
+  private timer?: NodeJS.Timer;
 
   private readonly queue: Array<{
     request: JsonRpcRequest;
@@ -26,7 +30,10 @@ export class HttpBatchClient implements RpcClient {
     reject: (a: Error) => void;
   }> = [];
 
-  public constructor(endpoint: string | HttpEndpoint, options: HttpClientOptions = defaultHttpClientOptions) {
+  public constructor(
+    endpoint: string | HttpEndpoint,
+    options: HttpBatchClientOptions = defaultHttpBatchClientOptions,
+  ) {
     this.options = options;
     if (typeof endpoint === "string") {
       // accept host.name:port and assume http protocol
@@ -35,17 +42,23 @@ export class HttpBatchClient implements RpcClient {
       this.url = endpoint.url;
       this.headers = endpoint.headers;
     }
-    setInterval(() => this.tick(), options.dispatchInterval);
+    this.timer = setInterval(() => this.tick(), options.dispatchInterval);
+    this.validate();
   }
 
   public disconnect(): void {
-    // nothing to be done
+    this.timer && clearInterval(this.timer);
+    this.timer = undefined;
   }
 
   public async execute(request: JsonRpcRequest): Promise<JsonRpcSuccessResponse> {
     return new Promise((resolve, reject) => {
       this.queue.push({ request, resolve, reject });
     });
+  }
+
+  private validate() {
+    if (this.options.batchSizeLimit < 1) throw new Error("batchSizeLimit < 1");
   }
 
   private async tick(): Promise<void> {
