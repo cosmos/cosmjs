@@ -58,7 +58,8 @@ export class HttpBatchClient implements RpcClient {
   }
 
   private validate(): void {
-    if (this.options.batchSizeLimit < 1) throw new Error("batchSizeLimit < 1");
+    if (!this.options.batchSizeLimit || this.options.batchSizeLimit < 1)
+      throw new Error("batchSizeLimit < 1");
   }
 
   private async tick(): Promise<void> {
