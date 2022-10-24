@@ -68,8 +68,20 @@ export interface AminoMsgEditValidator extends AminoMsg {
     readonly description: Description;
     /** Bech32 encoded validator address */
     readonly validator_address: string;
-    readonly commission_rate: string;
-    readonly min_self_delegation: string;
+    /**
+     * The new value for the comission rate.
+     *
+     * An empty string in the protobuf document means "do not change".
+     * In Amino JSON this empty string becomes undefined (omitempty)
+     */
+    readonly commission_rate: string | undefined;
+    /**
+     * The new value for the comission rate.
+     *
+     * An empty string in the protobuf document means "do not change".
+     * In Amino JSON this empty string becomes undefined (omitempty)
+     */
+    readonly min_self_delegation: string | undefined;
   };
 }
 
@@ -265,8 +277,10 @@ export function createStakingAminoConverters(
             security_contact: description.securityContact,
             details: description.details,
           },
-          commission_rate: protoDecimalToJson(commissionRate),
-          min_self_delegation: minSelfDelegation,
+          // empty string in the protobuf document means "do not change"
+          commission_rate: commissionRate ? protoDecimalToJson(commissionRate) : undefined,
+          // empty string in the protobuf document means "do not change"
+          min_self_delegation: minSelfDelegation ? minSelfDelegation : undefined,
           validator_address: validatorAddress,
         };
       },
@@ -283,8 +297,10 @@ export function createStakingAminoConverters(
           securityContact: description.security_contact,
           details: description.details,
         },
-        commissionRate: jsonDecimalToProto(commission_rate),
-        minSelfDelegation: min_self_delegation,
+        // empty string in the protobuf document means "do not change"
+        commissionRate: commission_rate ? jsonDecimalToProto(commission_rate) : "",
+        // empty string in the protobuf document means "do not change"
+        minSelfDelegation: min_self_delegation ?? "",
         validatorAddress: validator_address,
       }),
     },

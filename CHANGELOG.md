@@ -17,6 +17,12 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add structured `Events`s field to
   `SigningCosmWasmClient`s transaction execution methods.
 
+### Fixed
+
+- @cosmjs/stargate: Fix Amino JSON encoding of the unset case of
+  `commission_rate` and `min_self_delegation` in
+  `MsgEditValidator`/`AminoMsgEditValidator`.
+
 ## [0.29.2] - 2022-10-13
 
 ### Added
