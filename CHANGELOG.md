@@ -20,7 +20,9 @@ and this project adheres to
   `{is,MsgCreateValidatorEncodeObject}` and
   `{is,MsgEditValidatorEncodeObject}`.\
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
-  supporting batch RPC requests
+  supporting batch RPC requests ([#1300]).
+  
+[#1300]: https://github.com/cosmos/cosmjs/pull/1300
 
 ### Fixed
 
