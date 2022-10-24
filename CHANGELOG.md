@@ -18,7 +18,7 @@ and this project adheres to
   TypeScript-friendly way.
 - @cosmjs/stargate: Add missing `{is,}MsgBeginRedelegateEncodeObject`,
   `{is,MsgCreateValidatorEncodeObject}` and
-  `{is,MsgEditValidatorEncodeObject}`.\
+  `{is,MsgEditValidatorEncodeObject}`.
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
   supporting batch RPC requests ([#1300]).
   
