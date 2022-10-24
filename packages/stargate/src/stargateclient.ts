@@ -107,6 +107,14 @@ export interface DeliverTxResponse {
   /** Error code. The transaction suceeded iff code is 0. */
   readonly code: number;
   readonly transactionHash: string;
+  readonly events: readonly Event[];
+  /**
+   * A string-based log document.
+   *
+   * This currently seems to merge attributes of multiple events into one event per type
+   * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
+   * field instead.
+   */
   readonly rawLog?: string;
   readonly data?: readonly MsgData[];
   readonly gasUsed: number;
@@ -426,6 +434,7 @@ export class StargateClient {
         ? {
             code: result.code,
             height: result.height,
+            events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
             gasUsed: result.gasUsed,

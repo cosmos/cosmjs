@@ -12,7 +12,8 @@ and this project adheres to
   supporting batch RPC requests ([#1300]).
 - @cosmjs/encoding: Add `lossy` parameter to `fromUtf8` allowing the use of a
   replacement charater instead of throwing.
-- @cosmjs/stargate: Add structured `Events`s to `IndexTx.events`.
+- @cosmjs/stargate: Add structured `Events`s to `IndexTx.events` and
+  `DeliverTxResponse.events`.
 
 ## [0.29.2] - 2022-10-13
 
