@@ -13,7 +13,7 @@ export interface HttpBatchClientOptions {
   batchSizeLimit: number;
 }
 
-export const defaultHttpClientOptions: HttpClientOptions = { dispatchInterval: 20, batchSizeLimit: 20 };
+export const defaultHttpBatchClientOptions: HttpClientOptions = { dispatchInterval: 20, batchSizeLimit: 20 };
 
 export class HttpBatchClient implements RpcClient {
   protected readonly url: string;
