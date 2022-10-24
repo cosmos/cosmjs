@@ -8,7 +8,7 @@ import {
 import { http, HttpEndpoint } from "./httpclient";
 import { hasProtocol, RpcClient } from "./rpcclient";
 
-export interface HttpClientOptions {
+export interface HttpBatchClientOptions {
   dispatchInterval: number;
   batchSizeLimit: number;
 }
