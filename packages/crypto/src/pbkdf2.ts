@@ -11,9 +11,9 @@ import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
  */
 export async function getCryptoModule(): Promise<any | undefined> {
   try {
-    const crypto = await import("crypto");
+    const crypto = await require("crypto");
     // We get `Object{default: Object{}}` as a fallback when using
-    // `crypto: false` in Webpack 5, which we interprete as unavailable.
+    // `crypto: false` in Webpack 5, which we interpret as unavailable.
     if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
       return undefined;
     }
@@ -25,14 +25,17 @@ export async function getCryptoModule(): Promise<any | undefined> {
 
 export async function getSubtle(): Promise<any | undefined> {
   const g: any = globalThis;
-  let subtle = g.crypto && g.crypto.subtle;
-  if (!subtle) {
-    const crypto = await getCryptoModule();
-    if (crypto && crypto.webcrypto && crypto.webcrypto.subtle) {
-      subtle = crypto.webcrypto.subtle;
-    }
+  let crypto;
+  if (!g.crypto) {
+    crypto = await getCryptoModule();
+  } else {
+    crypto = g.crypto;
   }
-  return subtle;
+  if (crypto && crypto.subtle) {
+    return crypto.subtle;
+  } else if (crypto.webcrypto && crypto.webcrypto.subtle) {
+    return crypto.webcrypto.subtle;
+  }
 }
 
 export async function pbkdf2Sha512Subtle(
