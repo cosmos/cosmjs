@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.29.3] - 2022-10-25
+
 ### Added
 
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
@@ -1085,7 +1087,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.2...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.3...HEAD
+[0.29.3]: https://github.com/cosmos/cosmjs/compare/v0.29.2...v0.29.3
 [0.29.2]: https://github.com/cosmos/cosmjs/compare/v0.29.1...v0.29.2
 [0.29.1]: https://github.com/cosmos/cosmjs/compare/v0.29.0...v0.29.1
 [0.29.0]: https://github.com/cosmos/cosmjs/compare/v0.28.11...v0.29.0
