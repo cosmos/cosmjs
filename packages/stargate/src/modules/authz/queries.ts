@@ -10,8 +10,6 @@ export interface AuthzExtension {
       msgTypeUrl: string,
       paginationKey?: Uint8Array,
     ) => Promise<QueryGrantsResponse>;
-    readonly granteeGrants: (grantee: string, paginationKey?: Uint8Array) => Promise<QueryGrantsResponse>;
-    readonly granterGrants: (granter: string, paginationKey?: Uint8Array) => Promise<QueryGrantsResponse>;
   };
 }
 
@@ -24,24 +22,14 @@ export function setupAuthzExtension(base: QueryClient): AuthzExtension {
   return {
     authz: {
       grants: async (granter: string, grantee: string, msgTypeUrl: string, paginationKey?: Uint8Array) => {
-        return await queryService.Grants({
+        const response = await queryService.Grants({
           granter: granter,
           grantee: grantee,
           msgTypeUrl: msgTypeUrl,
           pagination: createPagination(paginationKey),
         });
-      },
-      granteeGrants: async (grantee: string, paginationKey?: Uint8Array) => {
-        return await queryService.GranteeGrants({
-          grantee: grantee,
-          pagination: createPagination(paginationKey),
-        });
-      },
-      granterGrants: async (granter: string, paginationKey?: Uint8Array) => {
-        return await queryService.GranterGrants({
-          granter: granter,
-          pagination: createPagination(paginationKey),
-        });
+
+        return response;
       },
     },
   };
