@@ -5,7 +5,7 @@ import { DirectSecp256k1HdWallet, encodePubkey } from "@cosmjs/proto-signing";
 
 import { calculateFee } from "../../fee";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess } from "../../stargateclient";
+import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultGasPrice,
   defaultSigningClientOptions,
@@ -31,7 +31,7 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
   const res = await client.sendTokens(
     firstAccount.address,
     address,
-    [coin(11000, simapp.denomFee), coin(28, simapp.denomStaking)],
+    [coin(15000, simapp.denomFee), coin(28, simapp.denomStaking)],
     "auto",
   );
   assertIsDeliverTxSuccess(res);
@@ -183,7 +183,7 @@ describe("staking messages", () => {
             value: toBase64(Random.getBytes(32)),
           }),
           value: {
-            amount: "1",
+            amount: "3",
             denom: simapp.denomStaking,
           },
         },
@@ -194,7 +194,6 @@ describe("staking messages", () => {
       const editMsg: MsgEditValidatorEncodeObject = {
         typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
         value: {
-          commissionRate: "100000000000000000", // we cannot change until 24h have passed
           description: {
             moniker: "new name",
             identity: "ZZZZ",
@@ -202,15 +201,34 @@ describe("staking messages", () => {
             details: "Still no idea",
             securityContact: "DM on Discord",
           },
-          minSelfDelegation: "1",
           validatorAddress: changePrefix(valAccount.address, "cosmosvaloper"), // unchanged
+          // Use empty strings to encode the "do not change" case for those two
+          minSelfDelegation: "",
+          commissionRate: "",
         },
       };
       const editResult = await client.signAndBroadcast(valAccount.address, [editMsg], editFee);
+      assertIsDeliverTxSuccess(editResult);
 
-      // Currently we have no way to unset commissionRate, so the DeliverTx is expected to fail
-      // with "commission cannot be changed more than once in 24h" :(
-      assertIsDeliverTxFailure(editResult);
+      // Increase min self delegation
+      const editMsg2: MsgEditValidatorEncodeObject = {
+        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
+        value: {
+          description: {
+            moniker: "new name",
+            identity: "ZZZZ",
+            website: "http://example.com/new-site",
+            details: "Still no idea",
+            securityContact: "DM on Discord",
+          },
+          validatorAddress: changePrefix(valAccount.address, "cosmosvaloper"), // unchanged
+          minSelfDelegation: "3",
+          // Use empty string to encode the "do not change"
+          commissionRate: "",
+        },
+      };
+      const editResult2 = await client.signAndBroadcast(valAccount.address, [editMsg2], editFee);
+      assertIsDeliverTxSuccess(editResult2);
 
       client.disconnect();
     });
@@ -253,7 +271,7 @@ describe("staking messages", () => {
             value: toBase64(Random.getBytes(32)),
           }),
           value: {
-            amount: "1",
+            amount: "3",
             denom: simapp.denomStaking,
           },
         },
@@ -264,7 +282,6 @@ describe("staking messages", () => {
       const editMsg: MsgEditValidatorEncodeObject = {
         typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
         value: {
-          commissionRate: "100000000000000000", // we cannot change until 24h have passed
           description: {
             moniker: "new name",
             identity: "ZZZZ",
@@ -272,16 +289,34 @@ describe("staking messages", () => {
             details: "Still no idea",
             securityContact: "DM on Discord",
           },
-          minSelfDelegation: "1",
           validatorAddress: changePrefix(valAccount.address, "cosmosvaloper"), // unchanged
+          // Use empty strings to encode the "do not change" case for those two
+          minSelfDelegation: "",
+          commissionRate: "",
         },
       };
       const editResult = await client.signAndBroadcast(valAccount.address, [editMsg], editFee);
+      assertIsDeliverTxSuccess(editResult);
 
-      // Currently we have no way to unset commissionRate, so the DeliverTx is expected to fail
-      // with "commission cannot be changed more than once in 24h" :(
-      // assertIsDeliverTxSuccess(editResult);
-      assertIsDeliverTxFailure(editResult);
+      // Increase min self delegation
+      const editMsg2: MsgEditValidatorEncodeObject = {
+        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
+        value: {
+          description: {
+            moniker: "new name",
+            identity: "ZZZZ",
+            website: "http://example.com/new-site",
+            details: "Still no idea",
+            securityContact: "DM on Discord",
+          },
+          validatorAddress: changePrefix(valAccount.address, "cosmosvaloper"), // unchanged
+          minSelfDelegation: "3",
+          // Use empty string to encode the "do not change"
+          commissionRate: "",
+        },
+      };
+      const editResult2 = await client.signAndBroadcast(valAccount.address, [editMsg2], editFee);
+      assertIsDeliverTxSuccess(editResult2);
 
       client.disconnect();
     });
