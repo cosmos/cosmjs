@@ -55,7 +55,7 @@ export class Uint32 implements Integer, WithByteConverters {
 
   public static fromString(str: string): Uint32 {
     if (!str.match(/^[0-9]+$/)) {
-      throw new Error("Invalid string format");
+      throw new Error("Invalid string format. Found: " + str);
     }
     return new Uint32(Number.parseInt(str, 10));
   }
@@ -64,11 +64,11 @@ export class Uint32 implements Integer, WithByteConverters {
 
   public constructor(input: number) {
     if (Number.isNaN(input)) {
-      throw new Error("Input is not a number");
+      throw new Error("Input is not a number. Found: " + input);
     }
 
     if (!Number.isInteger(input)) {
-      throw new Error("Input is not an integer");
+      throw new Error("Input is not an integer. Found: " + input);
     }
 
     if (input < 0 || input > 4294967295) {
@@ -116,7 +116,7 @@ export class Uint32 implements Integer, WithByteConverters {
 export class Int53 implements Integer {
   public static fromString(str: string): Int53 {
     if (!str.match(/^-?[0-9]+$/)) {
-      throw new Error("Invalid string format");
+      throw new Error("Invalid string format. Found: " + str);
     }
 
     return new Int53(Number.parseInt(str, 10));
@@ -126,7 +126,7 @@ export class Int53 implements Integer {
 
   public constructor(input: number) {
     if (Number.isNaN(input)) {
-      throw new Error("Input is not a number");
+      throw new Error("Input is not a number. Found: " + input);
     }
 
     if (!Number.isInteger(input)) {
@@ -164,7 +164,7 @@ export class Uint53 implements Integer {
   public constructor(input: number) {
     const signed = new Int53(input);
     if (signed.toNumber() < 0) {
-      throw new Error("Input is negative");
+      throw new Error("Input is negative. Found: " + signed);
     }
     this.data = signed;
   }
@@ -211,25 +211,25 @@ export class Uint64 implements Integer, WithByteConverters {
 
   public static fromString(str: string): Uint64 {
     if (!str.match(/^[0-9]+$/)) {
-      throw new Error("Invalid string format");
+      throw new Error("Invalid string format. Found: " + str);
     }
     return new Uint64(new BN(str, 10, "be"));
   }
 
   public static fromNumber(input: number): Uint64 {
     if (Number.isNaN(input)) {
-      throw new Error("Input is not a number");
+      throw new Error("Input is not a number. Found: " + input);
     }
 
     if (!Number.isInteger(input)) {
-      throw new Error("Input is not an integer");
+      throw new Error("Input is not an integer. Found: " + input);
     }
 
     let bigint: BN;
     try {
       bigint = new BN(input);
     } catch {
-      throw new Error("Input is not a safe integer");
+      throw new Error("Input is not a safe integer. Found: " + input);
     }
     return new Uint64(bigint);
   }
@@ -238,10 +238,10 @@ export class Uint64 implements Integer, WithByteConverters {
 
   private constructor(data: BN) {
     if (data.isNeg()) {
-      throw new Error("Input is negative");
+      throw new Error("Input is negative. Found: " + data);
     }
     if (data.gt(uint64MaxValue)) {
-      throw new Error("Input exceeds uint64 range");
+      throw new Error("Input exceeds uint64 range. Found: " + data);
     }
     this.data = data;
   }
