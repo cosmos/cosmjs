@@ -164,7 +164,7 @@ export class Uint53 implements Integer {
   public constructor(input: number) {
     const signed = new Int53(input);
     if (signed.toNumber() < 0) {
-      throw new Error("Input is negative. Found: " + signed);
+      throw new Error("Input is negative. Found: " + input);
     }
     this.data = signed;
   }
