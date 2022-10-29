@@ -134,7 +134,7 @@ export class Int53 implements Integer {
     }
 
     if (input < Number.MIN_SAFE_INTEGER || input > Number.MAX_SAFE_INTEGER) {
-      throw new Error(`Input not in int53 range. Found: '${input.toString()}`);
+      throw new Error(`Input not in int53 range. Found: '${input.toString()}'`);
     }
 
     this.data = input;
