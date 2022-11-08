@@ -5,7 +5,7 @@ import { Coin } from "@cosmjs/stargate";
 import { Decimal } from "../../math/build";
 import { MinimalAccount } from "./types";
 
-const defaultCreditAmount = 1;
+const defaultCreditAmount = 10;
 export const defaultDenom = "wei";
 
 /** Send `factor` times credit amount on refilling */
