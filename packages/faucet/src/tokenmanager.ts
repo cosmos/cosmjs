@@ -1,9 +1,12 @@
-import { Decimal, Uint53 } from "@cosmjs/math";
+// import { Decimal, Uint53 } from "@cosmjs/math";
+import { Uint53 } from "@cosmjs/math";
 import { Coin } from "@cosmjs/stargate";
 
+import { Decimal } from "../../math/build";
 import { MinimalAccount } from "./types";
 
-const defaultCreditAmount = 10_000_000;
+const defaultCreditAmount = 1;
+export const defaultDenom = "wei";
 
 /** Send `factor` times credit amount on refilling */
 const defaultRefillFactor = 20;
@@ -26,7 +29,12 @@ export class TokenManager {
   /** The amount of tokens that will be sent to the user */
   public creditAmount(denom: string, factor: Uint53 = new Uint53(1)): Coin {
     const amountFromEnv = process.env[`FAUCET_CREDIT_AMOUNT_${denom.toUpperCase()}`];
-    const amount = amountFromEnv ? Uint53.fromString(amountFromEnv).toNumber() : defaultCreditAmount;
+    const amountFromEnvStos = process.env[`FAUCET_CREDIT_AMOUNT_STOS`];
+
+    const amountStos = amountFromEnvStos
+      ? Uint53.fromString(amountFromEnvStos).toNumber()
+      : defaultCreditAmount;
+    const amount = amountFromEnv ? Uint53.fromString(amountFromEnv).toNumber() : amountStos;
     const value = new Uint53(amount * factor.toNumber());
     return {
       amount: value.toString(),
@@ -48,9 +56,18 @@ export class TokenManager {
 
   /** true iff the distributor account needs a refill */
   public needsRefill(account: MinimalAccount, denom: string): boolean {
-    const balanceAmount = account.balance.find((b) => b.denom === denom);
+    let aliaDenom = denom;
+    if (denom === "stos") {
+      aliaDenom = defaultDenom;
+    }
 
-    const balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", 0);
+    const balanceAmount = account.balance.find((b) => b.denom === aliaDenom);
+
+    let balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", 0);
+    if (denom === defaultDenom) {
+      if (balance.isLessThan(Decimal.fromAtomics("1000000000000000000", 0))) return true;
+      balance = Decimal.fromAtomics(balance.floor().toString().slice(0, -18), 0);
+    }
     const thresholdAmount = this.refillThreshold(denom);
     const threshold = Decimal.fromAtomics(thresholdAmount.amount, 0);
 

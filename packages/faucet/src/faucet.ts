@@ -4,13 +4,14 @@ import {
   SigningStargateClient,
   StargateClient,
 } from "@cosmjs/stargate";
+import { Coin } from "@cosmjs/stargate";
 import { isDefined, sleep } from "@cosmjs/utils";
 
 import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { PathBuilder } from "./pathbuilder";
 import { createClients, createWallets } from "./profile";
-import { TokenConfiguration, TokenManager } from "./tokenmanager";
+import { defaultDenom, TokenConfiguration, TokenManager } from "./tokenmanager";
 import { MinimalAccount, SendJob } from "./types";
 
 export class Faucet {
@@ -64,11 +65,16 @@ export class Faucet {
    * Returns a list of denoms of tokens owned by the the holder and configured in the faucet
    */
   public async availableTokens(): Promise<string[]> {
+    const aliasTokens = ["stos"];
     const { balance } = await this.loadAccount(this.holderAddress);
-    return balance
+    let res = balance
       .filter((b) => b.amount !== "0")
       .map((b) => this.tokenConfig.bankTokens.find((token) => token == b.denom))
       .filter(isDefined);
+    if (res.includes(defaultDenom)) {
+      res = res.concat(aliasTokens);
+    }
+    return res;
   }
 
   /**
@@ -86,10 +92,22 @@ export class Faucet {
   public async credit(recipient: string, denom: string): Promise<void> {
     if (this.distributorAddresses.length === 0) throw new Error("No distributor account available");
     const sender = this.distributorAddresses[this.getCreditCount() % this.distributorAddresses.length];
+
+    let amount: Coin = this.tokenManager.creditAmount(denom);
+
+    if (denom === "gwei") {
+      const f = "000000000";
+      amount = { denom: defaultDenom, amount: this.tokenManager.creditAmount(denom).amount + f };
+    }
+    if (denom === "stos") {
+      const f = "000000000000000000";
+      amount = { denom: defaultDenom, amount: this.tokenManager.creditAmount(denom).amount + f };
+    }
+
     const job: SendJob = {
       sender: sender,
       recipient: recipient,
-      amount: this.tokenManager.creditAmount(denom),
+      amount: amount,
     };
     if (this.logging) logSendJob(job);
     await this.send(job);
@@ -128,6 +146,11 @@ export class Faucet {
 
     const jobs: SendJob[] = [];
     for (const denom of availableTokenDenoms) {
+      // const aliasDenom = denom === "gwei" || denom === "stos" ? "wei" : denom;
+
+      // skip ["gwei, stos"] from availableTokenDenoms
+      if (denom === "stos") continue;
+
       const refillDistibutors = distributorAccounts.filter((account) =>
         this.tokenManager.needsRefill(account, denom),
       );
@@ -140,11 +163,24 @@ export class Faucet {
             : "  none",
         );
       }
+
       for (const refillDistibutor of refillDistibutors) {
+        // let refillAmount: Coin = { denom: denom, amount: this.tokenManager.refillAmount(denom).amount };
+        const f = "000000000000000000";
+        // refill with `stos`
+        const amount = { denom: defaultDenom, amount: this.tokenManager.refillAmount(denom).amount + f };
+        // if (denom === "gwei") {
+        //   const f = "000000000";
+        //   refillAmount = { denom: defaultDenom, amount: this.tokenManager.refillAmount(denom).amount + f };
+        // }
+        // if (denom === "stos") {
+        //   const f = "000000000000000000";
+        //   refillAmount = { denom: defaultDenom, amount: this.tokenManager.refillAmount(denom).amount + f };
+        // }
         jobs.push({
           sender: this.holderAddress,
           recipient: refillDistibutor.address,
-          amount: this.tokenManager.refillAmount(denom),
+          amount: amount,
         });
       }
     }
