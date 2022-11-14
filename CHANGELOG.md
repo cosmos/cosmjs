@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg contains non-printable ASCII ([#1320]).
+
+[#1320]: https://github.com/cosmos/cosmjs/pull/1320
+
 ## [0.29.3] - 2022-10-25
 
 ### Added
