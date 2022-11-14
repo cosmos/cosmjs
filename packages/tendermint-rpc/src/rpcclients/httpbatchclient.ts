@@ -5,7 +5,8 @@ import {
   parseJsonRpcResponse,
 } from "@cosmjs/json-rpc";
 
-import { http, HttpEndpoint } from "./httpclient";
+import { http } from "./http";
+import { HttpEndpoint } from "./httpclient";
 import { hasProtocol, RpcClient } from "./rpcclient";
 
 export interface HttpBatchClientOptions {
