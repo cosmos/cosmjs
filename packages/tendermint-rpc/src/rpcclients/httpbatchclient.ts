@@ -14,7 +14,10 @@ export interface HttpBatchClientOptions {
   batchSizeLimit: number;
 }
 
-export const defaultHttpBatchClientOptions: HttpBatchClientOptions = {
+// Those values are private and can change any time.
+// Does a user need to know them? I don't think so. You either set
+// a custom value or leave the option field unset.
+const defaultHttpBatchClientOptions: HttpBatchClientOptions = {
   dispatchInterval: 20,
   batchSizeLimit: 20,
 };
@@ -31,11 +34,11 @@ export class HttpBatchClient implements RpcClient {
     reject: (a: Error) => void;
   }> = [];
 
-  public constructor(
-    endpoint: string | HttpEndpoint,
-    options: HttpBatchClientOptions = defaultHttpBatchClientOptions,
-  ) {
-    this.options = options;
+  public constructor(endpoint: string | HttpEndpoint, options: Partial<HttpBatchClientOptions> = {}) {
+    this.options = {
+      batchSizeLimit: options.batchSizeLimit ?? defaultHttpBatchClientOptions.batchSizeLimit,
+      dispatchInterval: options.dispatchInterval ?? defaultHttpBatchClientOptions.dispatchInterval,
+    };
     if (typeof endpoint === "string") {
       // accept host.name:port and assume http protocol
       this.url = hasProtocol(endpoint) ? endpoint : "http://" + endpoint;

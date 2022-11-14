@@ -12,11 +12,17 @@ export {
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
+// The public Tendermint34Client.create constructor allows manually choosing an RpcClient.
+// This is currently the only way to switch to the HttpBatchClient (which may become default at some point).
+// Due to this API, we make RPC client implementations public.
 export {
-  // This type is part of the Tendermint34Client.connect API
-  HttpEndpoint,
+  HttpBatchClient,
+  HttpBatchClientOptions,
+  HttpClient,
+  HttpEndpoint, // This type is part of the Tendermint34Client.connect API
+  RpcClient, // Interface type in Tendermint34Client.create
+  WebsocketClient,
 } from "./rpcclients";
-export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export {
   AbciInfoRequest,
   AbciInfoResponse,
