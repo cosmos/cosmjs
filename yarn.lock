@@ -450,7 +450,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@noble/hashes": ^1
     "@types/bn.js": ^5
-    "@types/elliptic": ^6.4.12
+    "@types/elliptic": ^6.4.14
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
@@ -462,7 +462,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.13.0
     bn.js: ^5.2.0
     buffer: ^6.0.3
-    elliptic: ^6.5.3
+    elliptic: ^6.5.4
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -1455,12 +1455,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/elliptic@npm:^6.4.12":
-  version: 6.4.12
-  resolution: "@types/elliptic@npm:6.4.12"
+"@types/elliptic@npm:^6.4.14":
+  version: 6.4.14
+  resolution: "@types/elliptic@npm:6.4.14"
   dependencies:
     "@types/bn.js": "*"
-  checksum: 35dc3b6b4ba411b2e2ca2dfead45034d1411f5062183ec49270a693b7f2bdff27e3538aae8773a7fce2d04084018a28bacc8a442f578f594fad11431242d87aa
+  checksum: d5a64f540e0ed4b74a12dfa5cc88c0aa7b531eab3b7a9fab17948ffbfc6e01814230e63d7417ce1b607dbd8b5d70e1b64f5afac632deabf96e44875aaac0ae1b
   languageName: node
   linkType: hard
 
@@ -3153,7 +3153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elliptic@npm:^6.5.3":
+"elliptic@npm:^6.5.4":
   version: 6.5.4
   resolution: "elliptic@npm:6.5.4"
   dependencies:

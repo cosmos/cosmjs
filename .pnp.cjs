@@ -473,7 +473,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/elliptic",\
-        "npm:6.4.12"\
+        "npm:6.4.14"\
       ],\
       [\
         "@types/eslint",\
@@ -3327,7 +3327,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@noble/hashes", "npm:1.0.0"],\
             ["@types/bn.js", "npm:5.1.0"],\
-            ["@types/elliptic", "npm:6.4.12"],\
+            ["@types/elliptic", "npm:6.4.14"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
             ["@types/jasmine", "npm:4.0.3"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
@@ -4447,10 +4447,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/elliptic", [\
-        ["npm:6.4.12", {\
-          "packageLocation": "./.yarn/cache/@types-elliptic-npm-6.4.12-02ae0f4627-35dc3b6b4b.zip/node_modules/@types/elliptic/",\
+        ["npm:6.4.14", {\
+          "packageLocation": "./.yarn/cache/@types-elliptic-npm-6.4.14-77735f3256-d5a64f540e.zip/node_modules/@types/elliptic/",\
           "packageDependencies": [\
-            ["@types/elliptic", "npm:6.4.12"],\
+            ["@types/elliptic", "npm:6.4.14"],\
             ["@types/bn.js", "npm:5.1.0"]\
           ],\
           "linkType": "HARD"\

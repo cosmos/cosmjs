@@ -8,7 +8,10 @@ and this project adheres to
 
 ### Fixed
 
-- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg contains non-printable ASCII ([#1320]).
+- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg
+  contains non-printable ASCII ([#1320]).
+- @cosmjs/crypto: Bump elliptic version to ^6.5.4 due to
+  [CVE-2020-28498](https://github.com/advisories/GHSA-r9p9-mrjm-926w).
 
 [#1320]: https://github.com/cosmos/cosmjs/pull/1320
 
