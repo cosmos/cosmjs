@@ -52,7 +52,7 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/bn.js": "^5",
-    "@types/elliptic": "^6.4.12",
+    "@types/elliptic": "^6.4.14",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",
     "@types/karma-firefox-launcher": "^2",
