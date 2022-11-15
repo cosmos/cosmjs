@@ -46,7 +46,7 @@
     "@cosmjs/utils": "workspace:^",
     "@noble/hashes": "^1",
     "bn.js": "^5.2.0",
-    "elliptic": "^6.5.3",
+    "elliptic": "^6.5.4",
     "libsodium-wrappers": "^0.7.6"
   },
   "devDependencies": {

@@ -462,7 +462,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.13.0
     bn.js: ^5.2.0
     buffer: ^6.0.3
-    elliptic: ^6.5.3
+    elliptic: ^6.5.4
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -3153,7 +3153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elliptic@npm:^6.5.3":
+"elliptic@npm:^6.5.4":
   version: 6.5.4
   resolution: "elliptic@npm:6.5.4"
   dependencies:
