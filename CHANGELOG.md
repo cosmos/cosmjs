@@ -8,7 +8,8 @@ and this project adheres to
 
 ### Fixed
 
-- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg contains non-printable ASCII ([#1320]).
+- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg
+  contains non-printable ASCII ([#1320]).
 
 [#1320]: https://github.com/cosmos/cosmjs/pull/1320
 
