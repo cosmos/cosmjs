@@ -6,6 +6,20 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: The options in the `HttpBatchClient` constructor are
+  now of type `Partial<HttpBatchClientOptions>`, allowing you to set only the
+  fields you want to change ([#1309]).
+- @cosmjs/tendermint-rpc: Add missing exports `HttpBatchClient`,
+  `HttpBatchClientOptions`, `RpcClient` ([#1311]).
+- @cosmjs/tendermint-rpc: Send batch immediately when full in `HttpBatchClient`
+  ([#1310]).
+
+[#1309]: https://github.com/cosmos/cosmjs/issues/1309
+[#1310]: https://github.com/cosmos/cosmjs/issues/1310
+[#1311]: https://github.com/cosmos/cosmjs/issues/1311
+
 ### Fixed
 
 - @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg
