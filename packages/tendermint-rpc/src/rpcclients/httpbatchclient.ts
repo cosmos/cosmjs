@@ -10,7 +10,9 @@ import { HttpEndpoint } from "./httpclient";
 import { hasProtocol, RpcClient } from "./rpcclient";
 
 export interface HttpBatchClientOptions {
+  /** Interval for dispatching batches (in milliseconds) */
   dispatchInterval: number;
+  /** Max number of items sent in one request */
   batchSizeLimit: number;
 }
 
@@ -58,6 +60,11 @@ export class HttpBatchClient implements RpcClient {
   public async execute(request: JsonRpcRequest): Promise<JsonRpcSuccessResponse> {
     return new Promise((resolve, reject) => {
       this.queue.push({ request, resolve, reject });
+
+      if (this.queue.length >= this.options.batchSizeLimit) {
+        // this train is full, let's go
+        this.tick();
+      }
     });
   }
 
@@ -71,27 +78,43 @@ export class HttpBatchClient implements RpcClient {
     }
   }
 
-  private async tick(): Promise<void> {
+  /**
+   * This is called in an interval where promise rejections cannot be handled.
+   * So this is not async and HTTP errors need to be handled by the queued promises.
+   */
+  private tick(): void {
     // Avoid race conditions
-    const queue = this.queue.splice(0, this.options.batchSizeLimit);
+    const batch = this.queue.splice(0, this.options.batchSizeLimit);
 
-    if (!queue.length) return;
+    if (!batch.length) return;
 
-    const request = queue.map((s) => s.request);
-    const raw = await http("POST", this.url, this.headers, request);
-    // Requests with a single entry return as an object
-    const arr = Array.isArray(raw) ? raw : [raw];
+    const requests = batch.map((s) => s.request);
+    const requestIds = requests.map((request) => request.id);
 
-    arr.forEach((el) => {
-      const req = queue.find((s) => s.request.id === el.id);
-      if (!req) return;
-      const { reject, resolve } = req;
-      const response = parseJsonRpcResponse(el);
-      if (isJsonRpcErrorResponse(response)) {
-        reject(new Error(JSON.stringify(response.error)));
-      } else {
-        resolve(response);
-      }
-    });
+    http("POST", this.url, this.headers, requests).then(
+      (raw) => {
+        // Requests with a single entry return as an object
+        const arr = Array.isArray(raw) ? raw : [raw];
+
+        arr.forEach((el) => {
+          const req = batch.find((s) => s.request.id === el.id);
+          if (!req) return;
+          const { reject, resolve } = req;
+          const response = parseJsonRpcResponse(el);
+          if (isJsonRpcErrorResponse(response)) {
+            reject(new Error(JSON.stringify(response.error)));
+          } else {
+            resolve(response);
+          }
+        });
+      },
+      (error) => {
+        for (const requestId of requestIds) {
+          const req = batch.find((s) => s.request.id === requestId);
+          if (!req) return;
+          req.reject(error);
+        }
+      },
+    );
   }
 }

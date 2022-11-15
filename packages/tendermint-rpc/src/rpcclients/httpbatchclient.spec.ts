@@ -30,4 +30,23 @@ describe("HttpBatchClient", () => {
 
     client.disconnect();
   });
+
+  it("dispatches requests as soon as batch size limit is reached", async () => {
+    pendingWithoutTendermint();
+    const client = new HttpBatchClient(tendermintUrl, {
+      dispatchInterval: 3600_000 /* 1h to make test time out if this is not working */,
+      batchSizeLimit: 3,
+    });
+
+    const healthResponse = await Promise.all([
+      client.execute(createJsonRpcRequest("health")),
+      client.execute(createJsonRpcRequest("health")),
+      client.execute(createJsonRpcRequest("health")),
+    ]);
+    expect(healthResponse[0].result).toEqual({});
+    expect(healthResponse[1].result).toEqual({});
+    expect(healthResponse[2].result).toEqual({});
+
+    client.disconnect();
+  });
 });
