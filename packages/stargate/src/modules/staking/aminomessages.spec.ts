@@ -18,10 +18,43 @@ import {
   AminoMsgEditValidator,
   AminoMsgUndelegate,
   createStakingAminoConverters,
+  protoDecimalToJson,
 } from "./aminomessages";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {
+    it("works for protoDecimalToJson", () => {
+      const testSet = [
+        {
+          decimal: "0",
+          expected: "0.000000000000000000",
+        },
+        {
+          decimal: "1",
+          expected: "0.000000000000000001",
+        },
+        {
+          decimal: "2497",
+          expected: "0.000000000000002497",
+        },
+        {
+          decimal: "987000000000000000",
+          expected: "0.987000000000000000",
+        },
+        {
+          decimal: "123987000000000000000",
+          expected: "123.987000000000000000",
+        },
+        {
+          decimal: "4872000000000000000000",
+          expected: "4872.000000000000000000",
+        },
+      ];
+      for (let i = 0; i < testSet.length; i++) {
+        expect(protoDecimalToJson(testSet[i].decimal)).toEqual(testSet[i].expected);
+      }
+    });
+
     it("works for MsgBeginRedelegate", () => {
       const msg: MsgBeginRedelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",

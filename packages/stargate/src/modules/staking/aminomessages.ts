@@ -29,10 +29,10 @@ interface Description {
   readonly details: string;
 }
 
-function protoDecimalToJson(decimal: string): string {
+export function protoDecimalToJson(decimal: string): string {
   const parsed = Decimal.fromAtomics(decimal, 18);
   const [whole, fractional] = parsed.toString().split(".");
-  return `${whole}.${fractional.padEnd(18, "0")}`;
+  return `${whole}.${(typeof fractional !== "undefined" ? fractional : "").padEnd(18, "0")}`;
 }
 
 function jsonDecimalToProto(decimal: string): string {
