@@ -104,7 +104,7 @@ describe("AuthzExtension", () => {
     it("works querying by granter", async () => {
       pendingWithoutSimapp44Or46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
-      const response = await client.authz.granterGrants(granter1Address, "");
+      const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
 
@@ -126,7 +126,7 @@ describe("AuthzExtension", () => {
     it("works querying by grantee", async () => {
       pendingWithoutSimapp44Or46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
-      const response = await client.authz.granteeGrants(grantee1Address, "");
+      const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
 
