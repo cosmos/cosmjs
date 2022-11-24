@@ -166,4 +166,95 @@ describe("QueryClient", () => {
       tmClient.disconnect();
     });
   });
+
+  describe("queryAbci", () => {
+    it("works via WebSockets", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
+
+      const requestData = Uint8Array.from(
+        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+      );
+      const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
+      const response = QueryAllBalancesResponse.decode(value);
+      expect(response.balances.length).toEqual(2);
+
+      tmClient.disconnect();
+    });
+
+    it("works via http", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+
+      const requestData = Uint8Array.from(
+        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+      );
+      const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
+      const response = QueryAllBalancesResponse.decode(value);
+      expect(response.balances.length).toEqual(2);
+
+      tmClient.disconnect();
+    });
+
+    it("works for height", async () => {
+      pendingWithoutSimapp();
+      const [queryClient, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+
+      const joe = makeRandomAddress();
+      const h1 = (await tmClient.status()).syncInfo.latestBlockHeight;
+
+      // Send tokens to `recipient`
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(
+        simapp.tendermintUrlHttp,
+        wallet,
+        defaultSigningClientOptions,
+      );
+      const amount = coin(332211, simapp.denomFee);
+      await client.sendTokens(faucet.address0, joe, [amount], "auto");
+
+      const h2 = (await tmClient.status()).syncInfo.latestBlockHeight;
+      assert(h1 < h2);
+
+      // Query with no height
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual(amount);
+        expect(height).toEqual(h2);
+      }
+
+      // Query at h2 (after send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+          h2,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual(amount);
+        expect(height).toEqual(h2);
+      }
+
+      // Query at h1 (before send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: simapp.denomFee }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+          h1,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual({ amount: "0", denom: simapp.denomFee });
+        expect(height).toEqual(h1);
+      }
+
+      tmClient.disconnect();
+    });
+  });
 });
