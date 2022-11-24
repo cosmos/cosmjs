@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Deprecated
+
+- @cosmjs/stargate: Deprecate `QueryClient.queryUnverified` in favour of newly
+  added `QueryClient.queryAbci`.
+
 ## [0.29.4] - 2022-11-15
 
 ### Added

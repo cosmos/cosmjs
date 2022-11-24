@@ -26,6 +26,16 @@ export interface ProvenQuery {
   readonly height: number;
 }
 
+/**
+ * The response of an ABCI query to Tendermint.
+ * This is a subset of `tendermint34.AbciQueryResponse` in order
+ * to abstract away Tendermint versions.
+ */
+export interface QueryAbciResponse {
+  readonly value: Uint8Array;
+  readonly height: number;
+}
+
 export class QueryClient {
   /** Constructs a QueryClient with 0 extensions */
   public static withExtensions(tmClient: Tendermint34Client): QueryClient;
@@ -570,11 +580,32 @@ export class QueryClient {
     };
   }
 
+  /**
+   * Performs an ABCI query to Tendermint without requesting a proof.
+   *
+   * @deprecated use queryAbci instead
+   */
   public async queryUnverified(
     path: string,
     request: Uint8Array,
     desiredHeight?: number,
   ): Promise<Uint8Array> {
+    const response = await this.queryAbci(path, request, desiredHeight);
+    return response.value;
+  }
+
+  /**
+   * Performs an ABCI query to Tendermint without requesting a proof.
+   *
+   * If the `desiredHeight` is set, a particular height is requested. Otherwise
+   * the latest height is requested. The response contains the actual height of
+   * the query.
+   */
+  public async queryAbci(
+    path: string,
+    request: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<QueryAbciResponse> {
     const response = await this.tmClient.abciQuery({
       path: path,
       data: request,
@@ -586,7 +617,14 @@ export class QueryClient {
       throw new Error(`Query failed with (${response.code}): ${response.log}`);
     }
 
-    return response.value;
+    if (!response.height) {
+      throw new Error("No query height returned");
+    }
+
+    return {
+      value: response.value,
+      height: response.height,
+    };
   }
 
   // this must return the header for height+1
