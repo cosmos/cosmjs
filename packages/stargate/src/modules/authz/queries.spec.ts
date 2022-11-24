@@ -111,6 +111,10 @@ describe("AuthzExtension", () => {
       // Needs to respond with a grant
       assertDefined(grant.authorization);
 
+      // Needs to have the correct granter and grantee
+      expect(grant.granter).toEqual(granter1Address);
+      expect(grant.grantee).toEqual(grantee1Address);
+
       // Needs to be GenericAuthorization to decode it below
       expect(grant.authorization.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
 
@@ -132,6 +136,10 @@ describe("AuthzExtension", () => {
 
       // Needs to respond with a grant
       assertDefined(grant.authorization);
+
+      // Needs to have the correct granter and grantee
+      expect(grant.granter).toEqual(granter1Address);
+      expect(grant.grantee).toEqual(grantee1Address);
 
       // Needs to be GenericAuthorization to decode it below
       expect(grant.authorization.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
