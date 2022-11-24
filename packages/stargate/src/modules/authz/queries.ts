@@ -1,6 +1,11 @@
-import { QueryClientImpl, QueryGrantsResponse, QueryGranterGrantsResponse, QueryGranteeGrantsResponse } from "cosmjs-types/cosmos/authz/v1beta1/query";
+import {
+  QueryClientImpl,
+  QueryGrantsResponse,
+  QueryGranterGrantsResponse,
+  QueryGranteeGrantsResponse
+} from "cosmjs-types/cosmos/authz/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import {createPagination, createProtobufRpcClient, QueryClient} from "../../queryclient";
 
 export interface AuthzExtension {
   readonly authz: {
@@ -10,8 +15,14 @@ export interface AuthzExtension {
       msgTypeUrl: string,
       paginationKey?: Uint8Array,
     ) => Promise<QueryGrantsResponse>;
-    readonly granteeGrants: (grantee: string, paginationKey?: Uint8Array) => Promise<QueryGranteeGrantsResponse>;
-    readonly granterGrants: (granter: string, paginationKey?: Uint8Array) => Promise<QueryGranterGrantsResponse>;
+    readonly granteeGrants: (
+      grantee: string,
+      paginationKey?: Uint8Array,
+    ) => Promise<QueryGranteeGrantsResponse>;
+    readonly granterGrants: (
+      granter: string, 
+      paginationKey?: Uint8Array,
+      ) => Promise<QueryGranterGrantsResponse>;
   };
 }
 
