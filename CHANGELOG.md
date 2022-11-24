@@ -6,6 +6,36 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Deprecated
+
+- @cosmjs/stargate: Deprecate `QueryClient.queryUnverified` in favour of newly
+  added `QueryClient.queryAbci`.
+
+## [0.29.4] - 2022-11-15
+
+### Added
+
+- @cosmjs/tendermint-rpc: The options in the `HttpBatchClient` constructor are
+  now of type `Partial<HttpBatchClientOptions>`, allowing you to set only the
+  fields you want to change ([#1309]).
+- @cosmjs/tendermint-rpc: Add missing exports `HttpBatchClient`,
+  `HttpBatchClientOptions`, `RpcClient` ([#1311]).
+- @cosmjs/tendermint-rpc: Send batch immediately when full in `HttpBatchClient`
+  ([#1310]).
+
+[#1309]: https://github.com/cosmos/cosmjs/issues/1309
+[#1310]: https://github.com/cosmos/cosmjs/issues/1310
+[#1311]: https://github.com/cosmos/cosmjs/issues/1311
+
+### Fixed
+
+- @cosmjs/cosmwasm-stargate: Fix `ContractCodeHistory` decoding when msg
+  contains non-printable ASCII ([#1320]).
+- @cosmjs/crypto: Bump elliptic version to ^6.5.4 due to
+  [CVE-2020-28498](https://github.com/advisories/GHSA-r9p9-mrjm-926w).
+
+[#1320]: https://github.com/cosmos/cosmjs/pull/1320
+
 ## [0.29.3] - 2022-10-25
 
 ### Added
@@ -1087,7 +1117,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.3...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.4...HEAD
+[0.29.4]: https://github.com/cosmos/cosmjs/compare/v0.29.3...v0.29.4
 [0.29.3]: https://github.com/cosmos/cosmjs/compare/v0.29.2...v0.29.3
 [0.29.2]: https://github.com/cosmos/cosmjs/compare/v0.29.1...v0.29.2
 [0.29.1]: https://github.com/cosmos/cosmjs/compare/v0.29.0...v0.29.1

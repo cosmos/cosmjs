@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/amino",
-  "version": "0.29.3",
+  "version": "0.29.4",
   "description": "Helpers for Amino based signing.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"

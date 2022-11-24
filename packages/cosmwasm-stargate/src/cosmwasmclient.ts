@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromAscii, toHex } from "@cosmjs/encoding";
+import { fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
   Account,
@@ -415,7 +415,7 @@ export class CosmWasmClient {
       return {
         operation: operations[entry.operation],
         codeId: entry.codeId.toNumber(),
-        msg: JSON.parse(fromAscii(entry.msg)),
+        msg: JSON.parse(fromUtf8(entry.msg)),
       };
     });
   }

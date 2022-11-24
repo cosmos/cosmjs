@@ -31,9 +31,10 @@ export interface ProtobufRpcClient {
 
 export function createProtobufRpcClient(base: QueryClient): ProtobufRpcClient {
   return {
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
+    request: async (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
       const path = `/${service}/${method}`;
-      return base.queryUnverified(path, data);
+      const response = await base.queryAbci(path, data, undefined);
+      return response.value;
     },
   };
 }
