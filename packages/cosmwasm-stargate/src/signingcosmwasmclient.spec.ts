@@ -14,7 +14,8 @@ import {
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
-import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { DeepPartial } from "cosmjs-types";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";

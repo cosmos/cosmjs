@@ -44,7 +44,7 @@
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.5.2",
+    "cosmjs-types": "^0.6.0-alpha.3",
     "long": "^4.0.0"
   },
   "devDependencies": {
