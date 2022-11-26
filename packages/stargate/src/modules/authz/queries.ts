@@ -1,8 +1,8 @@
 import {
   QueryClientImpl,
-  QueryGrantsResponse,
-  QueryGranterGrantsResponse,
   QueryGranteeGrantsResponse,
+  QueryGranterGrantsResponse,
+  QueryGrantsResponse,
 } from "cosmjs-types/cosmos/authz/v1beta1/query";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
