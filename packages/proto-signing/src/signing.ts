@@ -46,7 +46,7 @@ export function makeAuthInfoBytes(
   );
   assert(feePayer === undefined || typeof feePayer === "string", "feePayer must be undefined or string");
 
-  const authInfo = {
+  const authInfo = AuthInfo.fromPartial({
     signerInfos: makeSignerInfos(signers, signMode),
     fee: {
       amount: [...feeAmount],
@@ -54,8 +54,8 @@ export function makeAuthInfoBytes(
       granter: feeGranter,
       payer: feePayer,
     },
-  };
-  return AuthInfo.encode(AuthInfo.fromPartial(authInfo)).finish();
+  });
+  return AuthInfo.encode(authInfo).finish();
 }
 
 export function makeSignDoc(
