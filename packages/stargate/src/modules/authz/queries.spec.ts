@@ -12,6 +12,7 @@ import {
   faucet,
   makeRandomAddress,
   pendingWithoutSimapp44Or46,
+  pendingWithoutSimapp46,
   simapp,
   simapp44Enabled,
   simapp46Enabled,
@@ -102,7 +103,7 @@ describe("AuthzExtension", () => {
     });
 
     it("works querying by granter", async () => {
-      pendingWithoutSimapp44Or46();
+      pendingWithoutSimapp46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toEqual(1);
@@ -128,7 +129,7 @@ describe("AuthzExtension", () => {
     });
 
     it("works querying by grantee", async () => {
-      pendingWithoutSimapp44Or46();
+      pendingWithoutSimapp46();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);
