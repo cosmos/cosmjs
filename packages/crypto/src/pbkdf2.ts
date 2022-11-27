@@ -11,7 +11,10 @@ import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
  */
 export async function getCryptoModule(): Promise<any | undefined> {
   try {
-    const crypto = await require("crypto");
+    // HACK: Use a variable to get webpack to ignore this and cause a
+    // runtime error instead of build system error or fallback implementation.
+    const nodeCryptoPackageName = "crypto";
+    const crypto = await import(nodeCryptoPackageName);
     // We get `Object{default: Object{}}` as a fallback when using
     // `crypto: false` in Webpack 5, which we interpret as unavailable.
     if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
