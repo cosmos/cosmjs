@@ -46,7 +46,7 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.6.0-alpha.3",
+    "cosmjs-types": "^0.6.0",
     "long": "^4.0.0",
     "pako": "^2.0.2"
   },
