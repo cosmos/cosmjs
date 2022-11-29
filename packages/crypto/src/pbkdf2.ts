@@ -10,11 +10,12 @@ import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
  * `undefined` in that case.
  */
 export async function getCryptoModule(): Promise<any | undefined> {
+  const g: any = globalThis;
+  if (g.crypto) {
+    return g.crypto;
+  }
   try {
-    // HACK: Use a variable to get webpack to ignore this and cause a
-    // runtime error instead of build system error or fallback implementation.
-    const nodeCryptoPackageName = "crypto";
-    const crypto = await import(nodeCryptoPackageName);
+    const crypto = await require("crypto");
     // We get `Object{default: Object{}}` as a fallback when using
     // `crypto: false` in Webpack 5, which we interpret as unavailable.
     if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
@@ -27,13 +28,7 @@ export async function getCryptoModule(): Promise<any | undefined> {
 }
 
 export async function getSubtle(): Promise<any | undefined> {
-  const g: any = globalThis;
-  let crypto;
-  if (!g.crypto) {
-    crypto = await getCryptoModule();
-  } else {
-    crypto = g.crypto;
-  }
+  const crypto = await getCryptoModule();
   if (crypto && crypto.subtle) {
     return crypto.subtle;
   } else if (crypto.webcrypto && crypto.webcrypto.subtle) {
@@ -114,12 +109,11 @@ export async function pbkdf2Sha512(
   const subtle = await getSubtle();
   if (subtle) {
     return pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
+  }
+  const crypto = await getCryptoModule();
+  if (crypto) {
+    return pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
   } else {
-    const crypto = await getCryptoModule();
-    if (crypto) {
-      return pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
-    } else {
-      return pbkdf2Sha512Noble(secret, salt, iterations, keylen);
-    }
+    return pbkdf2Sha512Noble(secret, salt, iterations, keylen);
   }
 }
