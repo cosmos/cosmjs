@@ -515,8 +515,12 @@ export class QueryClient {
   /**
    * @deprecated use queryStoreVerified instead
    */
-  public async queryVerified(store: string, key: Uint8Array, desiredHeight?: number): Promise<Uint8Array> {
-    const { value } = await this.queryStoreVerified(store, key, desiredHeight);
+  public async queryVerified(
+    store: string,
+    queryKey: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<Uint8Array> {
+    const { value } = await this.queryStoreVerified(store, queryKey, desiredHeight);
     return value;
   }
 
