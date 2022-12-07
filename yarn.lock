@@ -325,7 +325,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -374,7 +374,7 @@ __metadata:
     jasmine: ^4
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -427,7 +427,7 @@ __metadata:
     long: ^4.0.0
     nyc: ^15.1.0
     pako: ^2.0.2
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     protobufjs: ~6.11.3
     readonly-date: ^1.0.0
     ses: ^0.11.0
@@ -480,7 +480,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -523,7 +523,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -565,7 +565,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -607,7 +607,7 @@ __metadata:
     koa: ^2.13
     koa-bodyparser: ^4.3
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -648,7 +648,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -694,7 +694,7 @@ __metadata:
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     semver: ^7.3.2
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -737,7 +737,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -785,7 +785,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     protobufjs: ~6.11.3
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -828,7 +828,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -882,7 +882,7 @@ __metadata:
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     protobufjs: ~6.11.3
     readonly-date: ^1.0.0
     ses: ^0.11.0
@@ -925,7 +925,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -974,7 +974,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -1017,7 +1017,7 @@ __metadata:
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
@@ -2924,7 +2924,7 @@ __metadata:
     "@cosmjs/proto-signing": "workspace:^"
     "@cosmjs/stargate": "workspace:^"
     eslint: ^7.5
-    prettier: ^2.4.1
+    prettier: ^2.8.1
     typescript: ~4.6
   languageName: unknown
   linkType: soft
@@ -6000,12 +6000,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "prettier@npm:2.4.1"
+"prettier@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "prettier@npm:2.8.1"
   bin:
     prettier: bin-prettier.js
-  checksum: cc6830588b401b0d742862fe9c46bc9118204fb307c3abe0e49e95b35ed23629573807ffdf9cdd65289c252a0bb51fc0171437f6626ee36378dea80f0ee80b91
+  checksum: 4f21a0f1269f76fb36f54e9a8a1ea4c11e27478958bf860661fb4b6d7ac69aac1581f8724fa98ea3585e56d42a2ea317a17ff6e3324f40cb11ff9e20b73785cc
   languageName: node
   linkType: hard
 

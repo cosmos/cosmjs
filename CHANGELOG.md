@@ -12,7 +12,7 @@ and this project adheres to
   part, such as `0.000000000000000000`, `1.000000000000000000` or
   `42.000000000000000000` ([#1326]).
 
-[#1326] : https://github.com/cosmos/cosmjs/pull/1326
+[#1326]: https://github.com/cosmos/cosmjs/pull/1326
 
 ### Deprecated
 
