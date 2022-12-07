@@ -82,7 +82,6 @@ export {
   isAminoMsgDelegate,
   isAminoMsgEditValidator,
   isAminoMsgUndelegate,
-  protoDecimalToJson,
 } from "./staking/aminomessages";
 export {
   isMsgBeginRedelegateEncodeObject,
