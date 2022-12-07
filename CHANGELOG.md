@@ -11,8 +11,13 @@ and this project adheres to
 - all: The TypeScript compilation target is now ES2020 ([#1002]).
 - @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
   `TxEvent`. This is unset starting with Tendermint 0.34.
+- @cosmjs/crypto: The pbkdf2 implementation for old Node.js versions
+  `pbkdf2Sha512Crypto` was removed. Node.js has sufficient support for WebCrypto
+  these days and we still have a pure-JS fallback implementation. This avoids
+  unnecessary problems around importing Node.js modules. ([#1341])
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
+[#1341]: https://github.com/cosmos/cosmjs/issues/1341
 
 ## [0.29.5] - 2022-12-07
 
