@@ -733,8 +733,6 @@ interface RpcTxEvent {
   readonly tx: string;
   readonly result: RpcTxData;
   readonly height: string;
-  /** Not set since Tendermint 0.34 */
-  readonly index?: number;
 }
 
 function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
@@ -744,7 +742,6 @@ function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
     hash: hashTx(tx),
     result: decodeTxData(data.result),
     height: apiToSmallInt(assertNotEmpty(data.height)),
-    index: may(apiToSmallInt, data.index),
   };
 }
 

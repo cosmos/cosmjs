@@ -9,6 +9,8 @@ and this project adheres to
 ### Changed
 
 - all: The TypeScript compilation target is now ES2020 ([#1002]).
+- @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
+  `TxEvent`. This is unset starting with Tendermint 0.34.
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 
