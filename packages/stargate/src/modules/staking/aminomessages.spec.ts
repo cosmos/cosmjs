@@ -18,9 +18,21 @@ import {
   AminoMsgEditValidator,
   AminoMsgUndelegate,
   createStakingAminoConverters,
+  protoDecimalToJson,
 } from "./aminomessages";
 
 describe("AminoTypes", () => {
+  describe("protoDecimalToJson", () => {
+    it("works", () => {
+      expect(protoDecimalToJson("0")).toEqual("0.000000000000000000");
+      expect(protoDecimalToJson("1")).toEqual("0.000000000000000001");
+      expect(protoDecimalToJson("2497")).toEqual("0.000000000000002497");
+      expect(protoDecimalToJson("987000000000000000")).toEqual("0.987000000000000000");
+      expect(protoDecimalToJson("123987000000000000000")).toEqual("123.987000000000000000");
+      expect(protoDecimalToJson("4872000000000000000000")).toEqual("4872.000000000000000000");
+    });
+  });
+
   describe("toAmino", () => {
     it("works for MsgBeginRedelegate", () => {
       const msg: MsgBeginRedelegate = {
