@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.29.5] - 2022-12-07
+
 ### Fixed
 
 - @cosmjs/stargate: Fix `protoDecimalToJson` for values with a 0 fractional
@@ -1136,7 +1138,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.4...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.5...HEAD
+[0.29.5]: https://github.com/cosmos/cosmjs/compare/v0.29.4...v0.29.5
 [0.29.4]: https://github.com/cosmos/cosmjs/compare/v0.29.3...v0.29.4
 [0.29.3]: https://github.com/cosmos/cosmjs/compare/v0.29.2...v0.29.3
 [0.29.2]: https://github.com/cosmos/cosmjs/compare/v0.29.1...v0.29.2
