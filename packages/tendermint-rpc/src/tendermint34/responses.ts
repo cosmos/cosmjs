@@ -174,8 +174,6 @@ export interface TxEvent {
   readonly tx: Uint8Array;
   readonly hash: Uint8Array;
   readonly height: number;
-  /** @deprecated this value is not set in Tendermint 0.34+ */
-  readonly index?: number;
   readonly result: TxData;
 }
 
