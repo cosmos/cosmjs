@@ -2027,6 +2027,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:8.0.0"\
       ],\
       [\
+        "node-gyp-build",\
+        "npm:4.5.0"\
+      ],\
+      [\
         "node-hid",\
         "npm:2.1.1"\
       ],\
@@ -2676,7 +2680,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "usb",\
-        "npm:1.7.1"\
+        "npm:1.9.2"\
       ],\
       [\
         "util-deprecate",\
@@ -2745,10 +2749,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "which-module",\
         "npm:2.0.0"\
-      ],\
-      [\
-        "which-pm-runs",\
-        "npm:1.0.0"\
       ],\
       [\
         "wide-align",\
@@ -4121,7 +4121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@ledgerhq/logs", "npm:5.50.0"],\
             ["lodash", "npm:4.17.21"],\
             ["node-hid", "npm:2.1.1"],\
-            ["usb", "npm:1.7.1"]\
+            ["usb", "npm:1.9.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9918,18 +9918,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["node-addon-api", [\
-        ["npm:3.0.2", {\
-          "packageLocation": "./.yarn/unplugged/node-addon-api-npm-3.0.2-4c22ea0673/node_modules/node-addon-api/",\
-          "packageDependencies": [\
-            ["node-addon-api", "npm:3.0.2"],\
-            ["node-gyp", "npm:8.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:3.2.0", {\
           "packageLocation": "./.yarn/unplugged/node-addon-api-npm-3.2.0-061ff0dbab/node_modules/node-addon-api/",\
           "packageDependencies": [\
             ["node-addon-api", "npm:3.2.0"],\
+            ["node-gyp", "npm:8.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.3.0", {\
+          "packageLocation": "./.yarn/unplugged/node-addon-api-npm-4.3.0-a07a1232df/node_modules/node-addon-api/",\
+          "packageDependencies": [\
+            ["node-addon-api", "npm:4.3.0"],\
             ["node-gyp", "npm:8.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -9950,6 +9950,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver", "npm:7.3.5"],\
             ["tar", "npm:6.1.11"],\
             ["which", "npm:2.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["node-gyp-build", [\
+        ["npm:4.5.0", {\
+          "packageLocation": "./.yarn/cache/node-gyp-build-npm-4.5.0-2538da6152-d888bae0fb.zip/node_modules/node-gyp-build/",\
+          "packageDependencies": [\
+            ["node-gyp-build", "npm:4.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10457,28 +10466,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["prebuild-install", [\
-        ["npm:5.3.6", {\
-          "packageLocation": "./.yarn/cache/prebuild-install-npm-5.3.6-843a9baf36-9b99e5ea2c.zip/node_modules/prebuild-install/",\
-          "packageDependencies": [\
-            ["prebuild-install", "npm:5.3.6"],\
-            ["detect-libc", "npm:1.0.3"],\
-            ["expand-template", "npm:2.0.3"],\
-            ["github-from-package", "npm:0.0.0"],\
-            ["minimist", "npm:1.2.6"],\
-            ["mkdirp-classic", "npm:0.5.3"],\
-            ["napi-build-utils", "npm:1.0.2"],\
-            ["node-abi", "npm:2.26.0"],\
-            ["noop-logger", "npm:0.1.1"],\
-            ["npmlog", "npm:4.1.2"],\
-            ["pump", "npm:3.0.0"],\
-            ["rc", "npm:1.2.8"],\
-            ["simple-get", "npm:3.1.1"],\
-            ["tar-fs", "npm:2.1.1"],\
-            ["tunnel-agent", "npm:0.6.0"],\
-            ["which-pm-runs", "npm:1.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:6.1.2", {\
           "packageLocation": "./.yarn/cache/prebuild-install-npm-6.1.2-5d6abe684c-db205c9f40.zip/node_modules/prebuild-install/",\
           "packageDependencies": [\
@@ -12265,14 +12252,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["usb", [\
-        ["npm:1.7.1", {\
-          "packageLocation": "./.yarn/unplugged/usb-npm-1.7.1-d03d3a15f5/node_modules/usb/",\
+        ["npm:1.9.2", {\
+          "packageLocation": "./.yarn/unplugged/usb-npm-1.9.2-7362a49b80/node_modules/usb/",\
           "packageDependencies": [\
-            ["usb", "npm:1.7.1"],\
-            ["bindings", "npm:1.5.0"],\
-            ["node-addon-api", "npm:3.0.2"],\
+            ["usb", "npm:1.9.2"],\
+            ["node-addon-api", "npm:4.3.0"],\
             ["node-gyp", "npm:8.0.0"],\
-            ["prebuild-install", "npm:5.3.6"]\
+            ["node-gyp-build", "npm:4.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13618,15 +13604,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/which-module-npm-2.0.0-daf3daa08d-809f7fd3df.zip/node_modules/which-module/",\
           "packageDependencies": [\
             ["which-module", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["which-pm-runs", [\
-        ["npm:1.0.0", {\
-          "packageLocation": "./.yarn/cache/which-pm-runs-npm-1.0.0-c3252bc9d6-30cf7aee31.zip/node_modules/which-pm-runs/",\
-          "packageDependencies": [\
-            ["which-pm-runs", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
