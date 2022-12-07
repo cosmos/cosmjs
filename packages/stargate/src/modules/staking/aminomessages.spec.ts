@@ -22,39 +22,18 @@ import {
 } from "./aminomessages";
 
 describe("AminoTypes", () => {
-  describe("toAmino", () => {
-    it("works for protoDecimalToJson", () => {
-      const testSet = [
-        {
-          decimal: "0",
-          expected: "0.000000000000000000",
-        },
-        {
-          decimal: "1",
-          expected: "0.000000000000000001",
-        },
-        {
-          decimal: "2497",
-          expected: "0.000000000000002497",
-        },
-        {
-          decimal: "987000000000000000",
-          expected: "0.987000000000000000",
-        },
-        {
-          decimal: "123987000000000000000",
-          expected: "123.987000000000000000",
-        },
-        {
-          decimal: "4872000000000000000000",
-          expected: "4872.000000000000000000",
-        },
-      ];
-      for (let i = 0; i < testSet.length; i++) {
-        expect(protoDecimalToJson(testSet[i].decimal)).toEqual(testSet[i].expected);
-      }
+  describe("protoDecimalToJson", () => {
+    it("works", () => {
+      expect(protoDecimalToJson("0")).toEqual("0.000000000000000000");
+      expect(protoDecimalToJson("1")).toEqual("0.000000000000000001");
+      expect(protoDecimalToJson("2497")).toEqual("0.000000000000002497");
+      expect(protoDecimalToJson("987000000000000000")).toEqual("0.987000000000000000");
+      expect(protoDecimalToJson("123987000000000000000")).toEqual("123.987000000000000000");
+      expect(protoDecimalToJson("4872000000000000000000")).toEqual("4872.000000000000000000");
     });
+  });
 
+  describe("toAmino", () => {
     it("works for MsgBeginRedelegate", () => {
       const msg: MsgBeginRedelegate = {
         delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
