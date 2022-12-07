@@ -2196,7 +2196,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "prettier",\
-        "npm:2.4.1"\
+        "npm:2.8.1"\
       ],\
       [\
         "prettier-linter-helpers",\
@@ -2823,7 +2823,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
             ["@cosmjs/stargate", "workspace:packages/stargate"],\
             ["eslint", "npm:7.26.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -3193,7 +3193,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3244,7 +3244,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine", "npm:4.2.1"],\
             ["jasmine-spec-reporter", "npm:6.0.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["recast", "npm:0.20.4"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3297,7 +3297,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["long", "npm:4.0.0"],\
             ["nyc", "npm:15.1.0"],\
             ["pako", "npm:2.0.3"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["protobufjs", "npm:6.11.3"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
@@ -3352,7 +3352,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["libsodium-wrappers", "npm:0.7.9"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3397,7 +3397,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3442,7 +3442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["koa", "npm:2.13.4"],\
             ["koa-bodyparser", "npm:4.3.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3484,7 +3484,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3526,7 +3526,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3574,7 +3574,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jasmine-spec-reporter", "npm:6.0.0"],\
             ["ledger-cosmos-js", "npm:2.1.8"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["semver", "npm:7.3.5"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3619,7 +3619,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3669,7 +3669,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["long", "npm:4.0.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["protobufjs", "npm:6.11.3"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3714,7 +3714,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3770,7 +3770,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["long", "npm:4.0.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["protobufjs", "npm:6.11.3"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
@@ -3815,7 +3815,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3866,7 +3866,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3911,7 +3911,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -6912,7 +6912,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
             ["@cosmjs/stargate", "workspace:packages/stargate"],\
             ["eslint", "npm:7.26.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -7615,7 +7615,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/prettier", null],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
-            ["prettier", "npm:2.4.1"],\
+            ["prettier", "npm:2.8.1"],\
             ["prettier-linter-helpers", "npm:1.0.0"]\
           ],\
           "packagePeers": [\
@@ -10511,10 +10511,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["prettier", [\
-        ["npm:2.4.1", {\
-          "packageLocation": "./.yarn/cache/prettier-npm-2.4.1-623aac91ee-cc6830588b.zip/node_modules/prettier/",\
+        ["npm:2.8.1", {\
+          "packageLocation": "./.yarn/cache/prettier-npm-2.8.1-be60b51821-4f21a0f126.zip/node_modules/prettier/",\
           "packageDependencies": [\
-            ["prettier", "npm:2.4.1"]\
+            ["prettier", "npm:2.8.1"]\
           ],\
           "linkType": "HARD"\
         }]\
