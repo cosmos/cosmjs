@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "outDir": "build",
     "rootDir": "src",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2020", "dom"]
   },
   "include": ["src/**/*"]
 }
