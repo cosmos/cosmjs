@@ -37,26 +37,27 @@ async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Cli
 const denomMetadataPrefix = new Uint8Array([0x01]);
 
 describe("QueryClient", () => {
-  describe("queryVerified", () => {
+  describe("queryStoreVerified", () => {
     it("works via WebSockets", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      let key: Uint8Array;
+      let queryKey: Uint8Array;
       if (simapp44Enabled()) {
-        key = Uint8Array.from([
+        queryKey = Uint8Array.from([
           ...denomMetadataPrefix,
           ...toAscii(simapp.denomFee),
           ...toAscii(simapp.denomFee),
         ]);
       } else {
-        key = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
+        queryKey = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
       }
-      const data = await client.queryVerified("bank", key);
-
-      const response = Metadata.decode(data);
+      const { key, value, height } = await client.queryStoreVerified("bank", queryKey);
+      expect(height).toBeGreaterThanOrEqual(1);
+      expect(key).toEqual(queryKey);
+      const response = Metadata.decode(value);
       expect(response.base).toEqual(simapp.denomFee);
       expect(response.description).toEqual("The fee token of this test chain");
 
@@ -69,20 +70,21 @@ describe("QueryClient", () => {
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      let key: Uint8Array;
+      let queryKey: Uint8Array;
       if (simapp44Enabled()) {
-        key = Uint8Array.from([
+        queryKey = Uint8Array.from([
           ...denomMetadataPrefix,
           ...toAscii(simapp.denomFee),
           ...toAscii(simapp.denomFee),
         ]);
       } else {
-        key = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
+        queryKey = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
       }
 
-      const data = await client.queryVerified("bank", key);
-
-      const response = Metadata.decode(data);
+      const { key, value, height } = await client.queryStoreVerified("bank", queryKey);
+      expect(height).toBeGreaterThanOrEqual(1);
+      expect(key).toEqual(queryKey);
+      const response = Metadata.decode(value);
       expect(response.base).toEqual(simapp.denomFee);
       expect(response.description).toEqual("The fee token of this test chain");
 

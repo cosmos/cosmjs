@@ -26,6 +26,13 @@ export interface ProvenQuery {
   readonly height: number;
 }
 
+export interface QueryStoreResponse {
+  /** The response key from Tendermint. This is the same as the query key in the request. */
+  readonly key: Uint8Array;
+  readonly value: Uint8Array;
+  readonly height: number;
+}
+
 /**
  * The response of an ABCI query to Tendermint.
  * This is a subset of `tendermint34.AbciQueryResponse` in order
@@ -505,10 +512,31 @@ export class QueryClient {
     this.tmClient = tmClient;
   }
 
-  public async queryVerified(store: string, key: Uint8Array, desiredHeight?: number): Promise<Uint8Array> {
-    const { height, proof, value } = await this.queryRawProof(store, key, desiredHeight);
+  /**
+   * @deprecated use queryStoreVerified instead
+   */
+  public async queryVerified(
+    store: string,
+    queryKey: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<Uint8Array> {
+    const { value } = await this.queryStoreVerified(store, queryKey, desiredHeight);
+    return value;
+  }
 
-    const subProof = checkAndParseOp(proof.ops[0], "ics23:iavl", key);
+  /**
+   * Queries the database store with a proof, which is then verified.
+   *
+   * Please note: the current implementation trusts block headers it gets from the PRC endpoint.
+   */
+  public async queryStoreVerified(
+    store: string,
+    queryKey: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<QueryStoreResponse> {
+    const { height, proof, key, value } = await this.queryRawProof(store, queryKey, desiredHeight);
+
+    const subProof = checkAndParseOp(proof.ops[0], "ics23:iavl", queryKey);
     const storeProof = checkAndParseOp(proof.ops[1], "ics23:simple", toAscii(store));
 
     // this must always be existence, if the store is not a typo
@@ -520,20 +548,20 @@ export class QueryClient {
       // non-existence check
       assert(subProof.nonexist);
       // the subproof must map the desired key to the "value" of the storeProof
-      verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, key);
+      verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, queryKey);
     } else {
       // existence check
       assert(subProof.exist);
       assert(subProof.exist.value);
       // the subproof must map the desired key to the "value" of the storeProof
-      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, value);
+      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, queryKey, value);
     }
 
     // the store proof must map its declared value (root of subProof) to the appHash of the next block
     const header = await this.getNextHeader(height);
     verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
-    return value;
+    return { key, value, height };
   }
 
   public async queryRawProof(
