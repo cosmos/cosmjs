@@ -24,14 +24,18 @@ export async function getCryptoModule(): Promise<any | undefined> {
 }
 
 export async function getSubtle(): Promise<any | undefined> {
-  const g: any = globalThis;
-  let subtle = g.crypto && g.crypto.subtle;
-  if (!subtle) {
-    const crypto = await getCryptoModule();
-    if (crypto && crypto.webcrypto && crypto.webcrypto.subtle) {
-      subtle = crypto.webcrypto.subtle;
-    }
-  }
+  // From Node.js 15 onwards, webcrypto is available in globalThis.
+  // In version 15 and 16 this was stored under the webcrypto key.
+  // With Node.js 17 it was moved to the same locations where browsers
+  // make it available.
+  // Loading `require("crypto")` here seems unnecessary since it only
+  // causes issues with bundlers and does not increase compatibility.
+
+  // Browsers and Node.js 17+
+  let subtle: any | undefined = (globalThis as any)?.crypto?.subtle;
+  // Node.js 15+
+  if (!subtle) subtle = (globalThis as any)?.crypto?.webcrypto?.subtle;
+
   return subtle;
 }
 

@@ -14,6 +14,15 @@ and this project adheres to
 
 [#1326]: https://github.com/cosmos/cosmjs/pull/1326
 
+### Changed
+
+- @cosmjs/crypto: `getSubtle()` does not use `getCryptoModule()` anymore to find
+  a subtle implementation. Turns out all environments we support have subtle in
+  `globalThis` or do not have it at all ([#1307], [#1340]).
+
+[#1307]: https://github.com/cosmos/cosmjs/pull/1307
+[#1340]: https://github.com/cosmos/cosmjs/pull/1340
+
 ### Deprecated
 
 - @cosmjs/stargate: Deprecate `QueryClient.queryUnverified` in favour of newly
