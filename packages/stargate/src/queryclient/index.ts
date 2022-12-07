@@ -1,4 +1,4 @@
-export { QueryAbciResponse, QueryClient } from "./queryclient";
+export { QueryAbciResponse, QueryClient, QueryStoreResponse } from "./queryclient";
 export {
   createPagination,
   createProtobufRpcClient,

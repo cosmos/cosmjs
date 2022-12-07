@@ -18,6 +18,8 @@ and this project adheres to
 
 - @cosmjs/stargate: Deprecate `QueryClient.queryUnverified` in favour of newly
   added `QueryClient.queryAbci`.
+- @cosmjs/stargate: Deprecate `QueryClient.queryVerified` in favour of newly
+  added `QueryClient.queryStoreVerified`.
 
 ## [0.29.4] - 2022-11-15
 
