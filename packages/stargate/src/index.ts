@@ -108,6 +108,7 @@ export {
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
   ProtobufRpcClient,
+  QueryAbciResponse,
   QueryClient,
 } from "./queryclient";
 export {
