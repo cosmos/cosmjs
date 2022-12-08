@@ -16,10 +16,13 @@ and this project adheres to
   `pbkdf2Sha512Crypto` was removed. Node.js has sufficient support for WebCrypto
   these days and we still have a pure-JS fallback implementation. This avoids
   unnecessary problems around importing Node.js modules. ([#1341])
+- @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional
+  ([#1289]).
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1341]: https://github.com/cosmos/cosmjs/issues/1341
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
+[#1289]: https://github.com/cosmos/cosmjs/issues/1289
 
 ## [0.29.5] - 2022-12-07
 
