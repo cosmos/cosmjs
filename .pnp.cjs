@@ -355,6 +355,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.0"\
       ],\
       [\
+        "@noble/secp256k1",\
+        "npm:1.7.0"\
+      ],\
+      [\
         "@nodelib/fs.scandir",\
         "npm:2.1.4"\
       ],\
@@ -3321,6 +3325,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@noble/hashes", "npm:1.0.0"],\
+            ["@noble/secp256k1", "npm:1.7.0"],\
             ["@types/bn.js", "npm:5.1.0"],\
             ["@types/elliptic", "npm:6.4.14"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
@@ -4167,6 +4172,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@noble-hashes-npm-1.0.0-893cbd74b3-bdf1c28a4b.zip/node_modules/@noble/hashes/",\
           "packageDependencies": [\
             ["@noble/hashes", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@noble/secp256k1", [\
+        ["npm:1.7.0", {\
+          "packageLocation": "./.yarn/cache/@noble-secp256k1-npm-1.7.0-f0260161c3-540a2b8e52.zip/node_modules/@noble/secp256k1/",\
+          "packageDependencies": [\
+            ["@noble/secp256k1", "npm:1.7.0"]\
           ],\
           "linkType": "HARD"\
         }]\

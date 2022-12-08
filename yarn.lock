@@ -449,6 +449,7 @@ __metadata:
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@noble/hashes": ^1
+    "@noble/secp256k1": ^1.7.0
     "@types/bn.js": ^5
     "@types/elliptic": ^6.4.14
     "@types/eslint-plugin-prettier": ^3
@@ -1228,6 +1229,13 @@ __metadata:
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
   checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
+  languageName: node
+  linkType: hard
+
+"@noble/secp256k1@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@noble/secp256k1@npm:1.7.0"
+  checksum: 540a2b8e527ee1e5522af1c430e54945ad373883cac983b115136cd0950efa1f2c473ee6a36d8e69b6809b3ee586276de62f5fa705c77a9425721e81bada8116
   languageName: node
   linkType: hard
 
