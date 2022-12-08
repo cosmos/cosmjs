@@ -19,17 +19,11 @@ describe("http", () => {
     expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
   });
 
-  it("errors for non-open port", async () => {
-    await expectAsync(
-      http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
-    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch)/i);
-  });
-
-  it("can send custom headers", async () => {
+  it("can POST to echo server", async () => {
     pendingWithoutHttpServer();
-    // Without custom headers
-    const response1 = await http("POST", echoUrl, undefined, createJsonRpcRequest("health"));
-    expect(response1).toEqual({
+
+    const response = await http("POST", echoUrl, undefined, createJsonRpcRequest("health"));
+    expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
         Accept: jasmine.any(String),
@@ -39,15 +33,25 @@ describe("http", () => {
         "User-Agent": jasmine.any(String),
       }),
     });
+  });
+
+  it("errors for non-open port", async () => {
+    await expectAsync(
+      http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
+    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch)/i);
+  });
+
+  it("can POST to echo server with custom headers", async () => {
+    pendingWithoutHttpServer();
 
     // With custom headers
-    const response2 = await http(
+    const response = await http(
       "POST",
       echoUrl,
       { foo: "bar123", Authorization: "Basic Z3Vlc3Q6bm9QYXNzMTIz" },
       createJsonRpcRequest("health"),
     );
-    expect(response2).toEqual({
+    expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
         "Content-Length": jasmine.any(String),
