@@ -45,7 +45,7 @@ describe("AminoTypes", () => {
 
     it("can override type with Amino type collision", () => {
       const types = new AminoTypes({
-        ...createStakingAminoConverters("cosmos"),
+        ...createStakingAminoConverters(),
         "/cosmos.staking.otherVersion456.MsgDelegate": {
           aminoType: "cosmos-sdk/MsgDelegate",
           toAmino: (m: MsgDelegate): { readonly foo: string } => ({
