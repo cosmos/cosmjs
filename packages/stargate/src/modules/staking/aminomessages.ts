@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin, Pubkey } from "@cosmjs/amino";
 import { Decimal } from "@cosmjs/math";
-import { anyToSinglePubkey, encodePubkey } from "@cosmjs/proto-signing";
+import { decodePubkey, encodePubkey } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   MsgBeginRedelegate,
@@ -206,7 +206,7 @@ export function createStakingAminoConverters(
           min_self_delegation: minSelfDelegation,
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          pubkey: anyToSinglePubkey(pubkey),
+          pubkey: decodePubkey(pubkey),
           value: value,
         };
       },
