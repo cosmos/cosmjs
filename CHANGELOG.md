@@ -22,11 +22,15 @@ and this project adheres to
   `createStakingAminoConverters`. This made `prefix` in
   `SigningCosmWasmClientOptions` and `SigningStargateClientOptions` obsolete, so
   this was also deleted. ([#1291])
+- @cosmjs/proto-signing: Remove `fromJSON`/`toJSON` from `TsProtoGeneratedType`
+  such that generated types are not required to generate those anymore. The
+  methods were provided by ts-proto but we never needed them. ([#1329])
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
 [#1291]: https://github.com/cosmos/cosmjs/issues/1291
+[#1329]: https://github.com/cosmos/cosmjs/pull/1329
 [#1341]: https://github.com/cosmos/cosmjs/issues/1341
 
 ## [0.29.5] - 2022-12-07

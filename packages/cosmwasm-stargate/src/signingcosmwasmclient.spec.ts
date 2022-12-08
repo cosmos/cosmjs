@@ -14,7 +14,8 @@ import {
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
-import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { DeepPartial } from "cosmjs-types";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
@@ -878,10 +879,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -900,10 +897,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
@@ -1177,10 +1170,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -1199,10 +1188,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
