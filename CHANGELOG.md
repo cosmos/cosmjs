@@ -20,9 +20,9 @@ and this project adheres to
   ([#1289]).
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
-[#1341]: https://github.com/cosmos/cosmjs/issues/1341
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
+[#1341]: https://github.com/cosmos/cosmjs/issues/1341
 
 ## [0.29.5] - 2022-12-07
 
