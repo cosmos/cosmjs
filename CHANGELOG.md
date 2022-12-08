@@ -18,10 +18,15 @@ and this project adheres to
   unnecessary problems around importing Node.js modules. ([#1341])
 - @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional
   ([#1289]).
+- @cosmjs/stargate: Remove unnecessary address prefix argument from
+  `createStakingAminoConverters`. This made `prefix` in
+  `SigningCosmWasmClientOptions` and `SigningStargateClientOptions` obsolete, so
+  this was also deleted. ([#1291])
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
+[#1291]: https://github.com/cosmos/cosmjs/issues/1291
 [#1341]: https://github.com/cosmos/cosmjs/issues/1341
 
 ## [0.29.5] - 2022-12-07

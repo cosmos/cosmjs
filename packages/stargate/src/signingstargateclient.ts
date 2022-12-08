@@ -87,19 +87,18 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions extends StargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
-  readonly prefix?: string;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
   readonly gasPrice?: GasPrice;
 }
 
-function createDefaultTypes(prefix: string): AminoConverters {
+function createDefaultTypes(): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
     ...createDistributionAminoConverters(),
     ...createGovAminoConverters(),
-    ...createStakingAminoConverters(prefix),
+    ...createStakingAminoConverters(),
     ...createIbcAminoConverters(),
     ...createFeegrantAminoConverters(),
     ...createVestingAminoConverters(),
@@ -146,10 +145,7 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, options);
-    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
-    const prefix = options.prefix ?? "cosmos";
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes(prefix)) } =
-      options;
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes()) } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
