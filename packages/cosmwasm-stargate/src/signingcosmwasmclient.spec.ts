@@ -879,10 +879,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -901,10 +897,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
@@ -1178,10 +1170,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -1200,10 +1188,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
