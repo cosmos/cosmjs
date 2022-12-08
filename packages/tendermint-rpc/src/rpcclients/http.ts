@@ -12,6 +12,23 @@ function filterBadStatus(res: any): any {
 }
 
 /**
+ * Node.js 18 comes with exprimental fetch support (https://nodejs.org/de/blog/announcements/v18-release-announce/).
+ * This is nice, but the implementation does not yet work wekk for us. We
+ * can just stick with axios on those systems for now.
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+function isExperimental(nodeJsFunc: Function): boolean {
+  // This works because we get this info in node 18:
+  //
+  // > fetch.toString()
+  // 'async function fetch(input, init = undefined) {\n' +
+  // "    emitExperimentalWarning('The Fetch API');\n" +
+  // '    return lazyUndici().fetch(input, init);\n' +
+  // '  }'
+  return nodeJsFunc.toString().includes("emitExperimentalWarning");
+}
+
+/**
  * Helper to work around missing CORS support in Tendermint (https://github.com/tendermint/tendermint/pull/2800)
  *
  * For some reason, fetch does not complain about missing server-side CORS support.
@@ -23,7 +40,7 @@ export async function http(
   headers: Record<string, string> | undefined,
   request?: any,
 ): Promise<any> {
-  if (typeof fetch !== "undefined") {
+  if (typeof fetch === "function" && !isExperimental(fetch)) {
     const settings = {
       method: method,
       body: request ? JSON.stringify(request) : undefined,
