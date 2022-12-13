@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toAscii } from "@cosmjs/encoding";
+import { fromUtf8, toAscii } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import {
@@ -363,12 +363,18 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const clientStates = [];
           let response: QueryClientStatesResponse;
           let key: Uint8Array | undefined;
+          let page = 1;
           do {
             response = await clientQueryService.ClientStates({
               pagination: createPagination(key),
             });
             clientStates.push(...response.clientStates);
             key = response.pagination?.nextKey;
+            console.log(
+              `Page ${page++}, response count ${response.clientStates.length}, next key: ${
+                key ? fromUtf8(key, true) : undefined
+              }`,
+            );
           } while (key && key.length);
           return {
             clientStates: clientStates,

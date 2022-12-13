@@ -310,23 +310,14 @@ describe("IbcExtension", () => {
     });
 
     describe("allStates", () => {
-      it("works", async () => {
-        pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+      fit("works", async () => {
+        // pending("We cannot test this easily anymore since the IBC module was removed from simapp");
+        const [client, tmClient] = await makeClientWithIbc("https://nois.rpc.bccnodes.com/");
 
-        const response = await client.ibc.client.allStates();
-        expect(response.clientStates).toEqual([
-          {
-            clientId: ibcTest.clientId,
-            clientState: {
-              typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-              value: jasmine.any(Uint8Array),
-            },
-          },
-        ]);
+        const _response = await client.ibc.client.allStates();
 
         tmClient.disconnect();
-      });
+      }, 60_000);
     });
 
     describe("consensusState", () => {
