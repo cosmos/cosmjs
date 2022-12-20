@@ -1,11 +1,11 @@
 import { fromHex, toAscii, toUtf8 } from "@cosmjs/encoding";
 
 import {
-  getCryptoModule,
+  getNodeCrypto,
   getSubtle,
   pbkdf2Sha512,
-  pbkdf2Sha512Crypto,
   pbkdf2Sha512Noble,
+  pbkdf2Sha512NodeCrypto,
   pbkdf2Sha512Subtle,
 } from "./pbkdf2";
 
@@ -146,20 +146,20 @@ describe("pbkdf2", () => {
     });
   });
 
-  describe("pbkdf2Sha512Crypto", () => {
+  describe("pbkdf2Sha512NodeCrypto", () => {
     it("works", async () => {
-      const crypto = await getCryptoModule();
-      if (!crypto) pending("The crypto module is not available in this environment");
+      const nodeCrypto = await getNodeCrypto();
+      if (!nodeCrypto) pending("The crypto module is not available in this environment");
 
       {
         const { secret, salt, iterations, keylen, expected } = botanTest;
-        const hash = await pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
+        const hash = await pbkdf2Sha512NodeCrypto(nodeCrypto, secret, salt, iterations, keylen);
         expect(hash).toEqual(expected);
       }
 
       for (const [index, test] of brycxTests.entries()) {
         const { secret, salt, iterations, keylen, expected } = test;
-        const hash = await pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
+        const hash = await pbkdf2Sha512NodeCrypto(nodeCrypto, secret, salt, iterations, keylen);
         expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
       }
     });
