@@ -12,10 +12,6 @@ and this project adheres to
 - all: Add full support for Node.js 18 and run all CI tests with it ([#1240]).
 - @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
   `TxEvent`. This is unset starting with Tendermint 0.34.
-- @cosmjs/crypto: The pbkdf2 implementation for old Node.js versions
-  `pbkdf2Sha512Crypto` was removed. Node.js has sufficient support for WebCrypto
-  these days and we still have a pure-JS fallback implementation. This avoids
-  unnecessary problems around importing Node.js modules. ([#1341])
 - @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional
   ([#1289]).
 - @cosmjs/stargate: Remove unnecessary address prefix argument from
@@ -31,7 +27,6 @@ and this project adheres to
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
 [#1291]: https://github.com/cosmos/cosmjs/issues/1291
 [#1329]: https://github.com/cosmos/cosmjs/pull/1329
-[#1341]: https://github.com/cosmos/cosmjs/issues/1341
 
 ## [0.29.5] - 2022-12-07
 
