@@ -36,6 +36,21 @@ export class Tendermint35Client {
   }
 
   /**
+   * Synchronously Creates a new Tendermint client for the given endpoint.
+   *
+   * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   */
+  public static unsafeConnect(endpoint: string | HttpEndpoint): Tendermint35Client {
+    if (typeof endpoint === "object") {
+      return new Tendermint35Client(new HttpClient(endpoint));
+    } else {
+      const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
+      const rpcClient: RpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
+      return new Tendermint35Client(rpcClient);
+    }
+  }
+
+  /**
    * Creates a new Tendermint client given an RPC client.
    */
   public static async create(rpcClient: RpcClient): Promise<Tendermint35Client> {
