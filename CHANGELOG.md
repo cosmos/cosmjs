@@ -65,10 +65,13 @@ and this project adheres to
   `HttpBatchClientOptions`, `RpcClient` ([#1311]).
 - @cosmjs/tendermint-rpc: Send batch immediately when full in `HttpBatchClient`
   ([#1310]).
+- @cosmjs/stargate: Add `granteeGrants` and `granterGrants` queries to
+  `AuthzExtension` ([#1308]).
 
 [#1309]: https://github.com/cosmos/cosmjs/issues/1309
 [#1310]: https://github.com/cosmos/cosmjs/issues/1310
 [#1311]: https://github.com/cosmos/cosmjs/issues/1311
+[#1308]: https://github.com/cosmos/cosmjs/pull/1308
 
 ### Fixed
 
