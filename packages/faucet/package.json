@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.29.4",
+  "version": "0.29.5",
   "description": "The faucet",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -69,7 +69,7 @@
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
-    "prettier": "^2.4.1",
+    "prettier": "^2.8.1",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^8",

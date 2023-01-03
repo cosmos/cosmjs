@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin, Pubkey } from "@cosmjs/amino";
 import { Decimal } from "@cosmjs/math";
-import { anyToSinglePubkey, encodePubkey } from "@cosmjs/proto-signing";
+import { decodePubkey, encodePubkey } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   MsgBeginRedelegate,
@@ -29,10 +29,10 @@ interface Description {
   readonly details: string;
 }
 
-function protoDecimalToJson(decimal: string): string {
+export function protoDecimalToJson(decimal: string): string {
   const parsed = Decimal.fromAtomics(decimal, 18);
   const [whole, fractional] = parsed.toString().split(".");
-  return `${whole}.${fractional.padEnd(18, "0")}`;
+  return `${whole}.${(fractional ?? "").padEnd(18, "0")}`;
 }
 
 function jsonDecimalToProto(decimal: string): string {
@@ -143,9 +143,7 @@ export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
   return msg.type === "cosmos-sdk/MsgUndelegate";
 }
 
-export function createStakingAminoConverters(
-  _prefix: string,
-): Record<string, AminoConverter | "not_supported_by_chain"> {
+export function createStakingAminoConverters(): Record<string, AminoConverter | "not_supported_by_chain"> {
   return {
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
       aminoType: "cosmos-sdk/MsgBeginRedelegate",
@@ -206,7 +204,7 @@ export function createStakingAminoConverters(
           min_self_delegation: minSelfDelegation,
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          pubkey: anyToSinglePubkey(pubkey),
+          pubkey: decodePubkey(pubkey),
           value: value,
         };
       },

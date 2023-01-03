@@ -9,29 +9,33 @@ import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
  * Detects an unimplemented fallback module from Webpack 5 and returns
  * `undefined` in that case.
  */
-export async function getCryptoModule(): Promise<any | undefined> {
+export async function getNodeCrypto(): Promise<any | undefined> {
   try {
-    const crypto = await import("crypto");
+    const nodeCrypto = await import("crypto");
     // We get `Object{default: Object{}}` as a fallback when using
     // `crypto: false` in Webpack 5, which we interprete as unavailable.
-    if (typeof crypto === "object" && Object.keys(crypto).length <= 1) {
+    if (typeof nodeCrypto === "object" && Object.keys(nodeCrypto).length <= 1) {
       return undefined;
     }
-    return crypto;
+    return nodeCrypto;
   } catch {
     return undefined;
   }
 }
 
 export async function getSubtle(): Promise<any | undefined> {
-  const g: any = globalThis;
-  let subtle = g.crypto && g.crypto.subtle;
-  if (!subtle) {
-    const crypto = await getCryptoModule();
-    if (crypto && crypto.webcrypto && crypto.webcrypto.subtle) {
-      subtle = crypto.webcrypto.subtle;
-    }
-  }
+  // From Node.js 15 onwards, webcrypto is available in globalThis.
+  // In version 15 and 16 this was stored under the webcrypto key.
+  // With Node.js 17 it was moved to the same locations where browsers
+  // make it available.
+  // Loading `require("crypto")` here seems unnecessary since it only
+  // causes issues with bundlers and does not increase compatibility.
+
+  // Browsers and Node.js 17+
+  let subtle: any | undefined = (globalThis as any)?.crypto?.subtle;
+  // Node.js 15+
+  if (!subtle) subtle = (globalThis as any)?.crypto?.webcrypto?.subtle;
+
   return subtle;
 }
 
@@ -64,20 +68,24 @@ export async function pbkdf2Sha512Subtle(
   );
 }
 
-export async function pbkdf2Sha512Crypto(
+/**
+ * Implements pbkdf2-sha512 using the Node.js crypro module (`import "crypto"`).
+ * This does not use subtle from [Crypto](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
+ */
+export async function pbkdf2Sha512NodeCrypto(
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  crypto: any,
+  nodeCrypto: any,
   secret: Uint8Array,
   salt: Uint8Array,
   iterations: number,
   keylen: number,
 ): Promise<Uint8Array> {
-  assert(crypto, "Argument crypto is falsy");
-  assert(typeof crypto === "object", "Argument crypto is not of type object");
-  assert(typeof crypto.pbkdf2 === "function", "crypto.pbkdf2 is not a function");
+  assert(nodeCrypto, "Argument nodeCrypto is falsy");
+  assert(typeof nodeCrypto === "object", "Argument nodeCrypto is not of type object");
+  assert(typeof nodeCrypto.pbkdf2 === "function", "nodeCrypto.pbkdf2 is not a function");
 
   return new Promise((resolve, reject) => {
-    crypto.pbkdf2(secret, salt, iterations, keylen, "sha512", (error: any, result: any) => {
+    nodeCrypto.pbkdf2(secret, salt, iterations, keylen, "sha512", (error: any, result: any) => {
       if (error) {
         reject(error);
       } else {
@@ -109,9 +117,9 @@ export async function pbkdf2Sha512(
   if (subtle) {
     return pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
   } else {
-    const crypto = await getCryptoModule();
-    if (crypto) {
-      return pbkdf2Sha512Crypto(crypto, secret, salt, iterations, keylen);
+    const nodeCrypto = await getNodeCrypto();
+    if (nodeCrypto) {
+      return pbkdf2Sha512NodeCrypto(nodeCrypto, secret, salt, iterations, keylen);
     } else {
       return pbkdf2Sha512Noble(secret, salt, iterations, keylen);
     }

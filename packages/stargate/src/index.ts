@@ -108,7 +108,9 @@ export {
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
   ProtobufRpcClient,
+  QueryAbciResponse,
   QueryClient,
+  QueryStoreResponse,
 } from "./queryclient";
 export {
   isSearchByHeightQuery,

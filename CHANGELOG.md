@@ -6,10 +6,53 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- all: The TypeScript compilation target is now ES2020 ([#1002]).
+- all: Add full support for Node.js 18 and run all CI tests with it ([#1240]).
+- @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
+  `TxEvent`. This is unset starting with Tendermint 0.34.
+- @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional
+  ([#1289]).
+- @cosmjs/stargate: Remove unnecessary address prefix argument from
+  `createStakingAminoConverters`. This made `prefix` in
+  `SigningCosmWasmClientOptions` and `SigningStargateClientOptions` obsolete, so
+  this was also deleted. ([#1291])
+- @cosmjs/proto-signing: Remove `fromJSON`/`toJSON` from `TsProtoGeneratedType`
+  such that generated types are not required to generate those anymore. The
+  methods were provided by ts-proto but we never needed them. ([#1329])
+
+[#1002]: https://github.com/cosmos/cosmjs/issues/1002
+[#1240]: https://github.com/cosmos/cosmjs/pull/1240
+[#1289]: https://github.com/cosmos/cosmjs/issues/1289
+[#1291]: https://github.com/cosmos/cosmjs/issues/1291
+[#1329]: https://github.com/cosmos/cosmjs/pull/1329
+
+## [0.29.5] - 2022-12-07
+
+### Fixed
+
+- @cosmjs/stargate: Fix `protoDecimalToJson` for values with a 0 fractional
+  part, such as `0.000000000000000000`, `1.000000000000000000` or
+  `42.000000000000000000` ([#1326]).
+
+[#1326]: https://github.com/cosmos/cosmjs/pull/1326
+
+### Changed
+
+- @cosmjs/crypto: `getSubtle()` does not use `getCryptoModule()` anymore to find
+  a subtle implementation. Turns out all environments we support have subtle in
+  `globalThis` or do not have it at all ([#1307], [#1340]).
+
+[#1307]: https://github.com/cosmos/cosmjs/pull/1307
+[#1340]: https://github.com/cosmos/cosmjs/pull/1340
+
 ### Deprecated
 
 - @cosmjs/stargate: Deprecate `QueryClient.queryUnverified` in favour of newly
   added `QueryClient.queryAbci`.
+- @cosmjs/stargate: Deprecate `QueryClient.queryVerified` in favour of newly
+  added `QueryClient.queryStoreVerified`.
 
 ## [0.29.4] - 2022-11-15
 
@@ -1117,7 +1160,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.4...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.5...HEAD
+[0.29.5]: https://github.com/cosmos/cosmjs/compare/v0.29.4...v0.29.5
 [0.29.4]: https://github.com/cosmos/cosmjs/compare/v0.29.3...v0.29.4
 [0.29.3]: https://github.com/cosmos/cosmjs/compare/v0.29.2...v0.29.3
 [0.29.2]: https://github.com/cosmos/cosmjs/compare/v0.29.1...v0.29.2

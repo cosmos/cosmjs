@@ -26,7 +26,7 @@ function uint64FromProto(input: number | Long): Uint64 {
 
 function accountFromBaseAccount(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
-  const pubkey = decodePubkey(pubKey);
+  const pubkey = pubKey ? decodePubkey(pubKey) : null;
   return {
     address: address,
     pubkey: pubkey,

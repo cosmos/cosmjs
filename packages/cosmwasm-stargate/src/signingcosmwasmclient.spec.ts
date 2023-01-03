@@ -14,7 +14,8 @@ import {
   MsgSendEncodeObject,
 } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
-import { DeepPartial, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { DeepPartial } from "cosmjs-types";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
@@ -55,7 +56,6 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
         ...defaultSigningClientOptions,
-        prefix: wasmd.prefix,
       });
       expect(client).toBeTruthy();
       client.disconnect();
@@ -673,7 +673,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
         const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 
@@ -702,7 +701,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
           gasPrice: defaultGasPrice,
         });
         const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
@@ -730,7 +728,6 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
         const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 
@@ -771,7 +768,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
 
         const msgSend: MsgSend = {
@@ -799,8 +795,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
-          prefix: wasmd.prefix,
+          aminoTypes: new AminoTypes(createStakingAminoConverters()),
         });
 
         const msgDelegate: MsgDelegate = {
@@ -828,7 +823,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
         const { data } = getHackatom();
 
@@ -885,10 +879,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -907,10 +897,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
@@ -982,8 +968,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
-          prefix: wasmd.prefix,
+          aminoTypes: new AminoTypes(createStakingAminoConverters()),
         });
 
         const msg = {
@@ -1025,7 +1010,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
 
         const msg = MsgDelegate.fromPartial({
@@ -1058,7 +1042,6 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
 
         const msg = MsgDelegate.fromPartial({
@@ -1098,7 +1081,6 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          prefix: wasmd.prefix,
         });
 
         const msgSend: MsgSend = {
@@ -1129,8 +1111,7 @@ describe("SigningCosmWasmClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
-          prefix: wasmd.prefix,
+          aminoTypes: new AminoTypes(createStakingAminoConverters()),
         });
 
         const msgDelegate: MsgDelegate = {
@@ -1189,10 +1170,6 @@ describe("SigningCosmWasmClient", () => {
             throw new Error("decode method should not be required");
           },
 
-          fromJSON(): CustomMsgDelegate {
-            throw new Error("fromJSON method should not be required");
-          },
-
           fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
             const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
             if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
@@ -1211,10 +1188,6 @@ describe("SigningCosmWasmClient", () => {
               message.customAmount = undefined;
             }
             return message;
-          },
-
-          toJSON(): unknown {
-            throw new Error("toJSON method should not be required");
           },
         };
         customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
@@ -1286,8 +1259,7 @@ describe("SigningCosmWasmClient", () => {
         });
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
           ...defaultSigningClientOptions,
-          aminoTypes: new AminoTypes(createStakingAminoConverters(wasmd.prefix)),
-          prefix: wasmd.prefix,
+          aminoTypes: new AminoTypes(createStakingAminoConverters()),
         });
 
         const msg: MsgDelegate = {
