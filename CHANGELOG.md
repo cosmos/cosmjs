@@ -28,6 +28,12 @@ and this project adheres to
 [#1291]: https://github.com/cosmos/cosmjs/issues/1291
 [#1329]: https://github.com/cosmos/cosmjs/pull/1329
 
+### Added
+- @cosmjs/stargate: Add `granteeGrants` and `granterGrants` queries to
+  `AuthzExtension` ([#1308]).
+
+[#1308]: https://github.com/cosmos/cosmjs/pull/1308
+
 ## [0.29.5] - 2022-12-07
 
 ### Fixed

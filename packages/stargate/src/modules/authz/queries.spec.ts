@@ -12,6 +12,7 @@ import {
   faucet,
   makeRandomAddress,
   pendingWithoutSimapp44Or46,
+  pendingWithoutSimapp46,
   simapp,
   simapp44Enabled,
   simapp46Enabled,
@@ -95,7 +96,63 @@ describe("AuthzExtension", () => {
       // Decode the message
       const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
 
-      // Check if its the same one then we granted
+      // Check if it's the same one then we granted
+      expect(msgDecoded).toEqual(grantedMsg);
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("granter grants", () => {
+    it("works", async () => {
+      pendingWithoutSimapp46();
+      const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const response = await client.authz.granterGrants(granter1Address);
+      expect(response.grants.length).toEqual(1);
+      const grant = response.grants[0];
+
+      // Needs to respond with a grant
+      assertDefined(grant.authorization);
+
+      // Needs to have the correct granter and grantee
+      expect(grant.granter).toEqual(granter1Address);
+      expect(grant.grantee).toEqual(grantee1Address);
+
+      // Needs to be GenericAuthorization to decode it below
+      expect(grant.authorization.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
+
+      // Decode the message
+      const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
+
+      // Check if it's the same one then we granted
+      expect(msgDecoded).toEqual(grantedMsg);
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("grantee grants", () => {
+    it("works", async () => {
+      pendingWithoutSimapp46();
+      const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const response = await client.authz.granteeGrants(grantee1Address);
+      expect(response.grants.length).toEqual(1);
+      const grant = response.grants[0];
+
+      // Needs to respond with a grant
+      assertDefined(grant.authorization);
+
+      // Needs to have the correct granter and grantee
+      expect(grant.granter).toEqual(granter1Address);
+      expect(grant.grantee).toEqual(grantee1Address);
+
+      // Needs to be GenericAuthorization to decode it below
+      expect(grant.authorization.typeUrl).toEqual("/cosmos.authz.v1beta1.GenericAuthorization");
+
+      // Decode the message
+      const msgDecoded = GenericAuthorization.decode(grant.authorization.value).msg;
+
+      // Check if it's the same one then we granted
       expect(msgDecoded).toEqual(grantedMsg);
 
       tmClient.disconnect();
