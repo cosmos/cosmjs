@@ -5,8 +5,8 @@ const rpcEndpoint = {
   // Note: we removed the /status patch from the examples because we use the HTTP POST API
   url: "https://cosmoshub-4--rpc--full.datahub.figment.io/",
   headers: {
-    "Authorization": "5195ebb0bfb7f0fe5c43409240c8b2c4",
-  }
+    Authorization: "5195ebb0bfb7f0fe5c43409240c8b2c4",
+  },
 };
 
 // Setup client
