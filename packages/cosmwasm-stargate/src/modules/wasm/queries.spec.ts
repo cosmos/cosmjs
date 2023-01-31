@@ -11,7 +11,7 @@ import {
   SigningStargateClient,
   StdFee,
 } from "@cosmjs/stargate";
-import { assert } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
@@ -137,18 +137,19 @@ describe("WasmExtension", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const result = await uploadContract(wallet, hackatom);
       assertIsDeliverTxSuccess(result);
-      hackatomCodeId = Number.parseInt(
-        JSON.parse(result.rawLog!)[0]
-          .events.find((event: any) => event.type === "store_code")
-          .attributes.find((attribute: any) => attribute.key === "code_id").value,
-        10,
-      );
+      const codeIdFromEvents = result.events
+        .find((event) => event.type === "store_code")
+        ?.attributes.find((attribute) => attribute.key === "code_id")?.value;
+      assertDefined(codeIdFromEvents);
+      hackatomCodeId = Number.parseInt(codeIdFromEvents, 10);
 
       const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
       assertIsDeliverTxSuccess(instantiateResult);
-      hackatomContractAddress = JSON.parse(instantiateResult.rawLog!)[0]
-        .events.find((event: any) => event.type === "instantiate")
-        .attributes.find((attribute: any) => attribute.key === "_contract_address").value;
+      const addr = instantiateResult.events
+        .find((event) => event.type === "instantiate")
+        ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
+      assertDefined(addr);
+      hackatomContractAddress = addr;
     }
   });
 
@@ -199,9 +200,10 @@ describe("WasmExtension", () => {
       const funds = coins(707707, "ucosm");
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsDeliverTxSuccess(result);
-      const myAddress = JSON.parse(result.rawLog!)[0]
-        .events.find((event: any) => event.type === "instantiate")
-        .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
+      const myAddress = result.events
+        .find((event) => event.type === "instantiate")
+        ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
+      assertDefined(myAddress);
 
       const { contracts: newContracts } = await client.wasm.listContractsByCodeId(hackatomCodeId);
       assert(newContracts);
@@ -245,9 +247,10 @@ describe("WasmExtension", () => {
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
       assertIsDeliverTxSuccess(result);
 
-      const myAddress = JSON.parse(result.rawLog!)[0]
-        .events.find((event: any) => event.type === "instantiate")
-        .attributes!.find((attribute: any) => attribute.key === "_contract_address").value;
+      const myAddress = result.events
+        .find((event) => event.type === "instantiate")
+        ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
+      assertDefined(myAddress);
 
       const history = await client.wasm.getContractCodeHistory(myAddress);
       assert(history.entries);
