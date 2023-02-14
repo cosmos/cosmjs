@@ -76,6 +76,48 @@ describe("Secp256k1Signature", () => {
     ).toThrowError(/unsigned integer s must be encoded as unpadded big endian./i);
   });
 
+  describe("isLowS", () => {
+    it("works", () => {
+      // Signature 3045022100f25b86e1d8a11d72475b3ed273b0781c7d7f6f9e1dae0dd5d3ee9b84f3fab891022063d9c4e1391de077244583e9a6e3d8e8e1f236a3bf5963735353b93b1a3ba935
+      // decoded by http://asn1-playground.oss.com/
+      const signature = new Secp256k1Signature(
+        fromHex("F25B86E1D8A11D72475B3ED273B0781C7D7F6F9E1DAE0DD5D3EE9B84F3FAB891"),
+        fromHex("63D9C4E1391DE077244583E9A6E3D8E8E1F236A3BF5963735353B93B1A3BA935"),
+      );
+      expect(signature.isLowS()).toEqual(true);
+
+      const sig1 = Secp256k1Signature.fromDer(
+        fromHex(
+          "30440220207082eb2c3dfa0b454e0906051270ba4074ac93760ba9e7110cd94714751111022051eb0dbbc9920e72146fb564f99d039802bf6ef2561446eb126ef364d21ee9c4",
+        ),
+      );
+      expect(sig1.isLowS()).toEqual(true);
+
+      const sig2 = Secp256k1Signature.fromDer(
+        fromHex(
+          "30440220626d61b7be1488b563e8a85bfb623b2331903964b5c0476c9f9ad29144f076fe02202002a2c0ab5e48626bf761cf677dfeede9c7309d2436d4b8c2b89f21ee2ebc6a",
+        ),
+      );
+      expect(sig2.isLowS()).toEqual(true);
+
+      const sig3 = Secp256k1Signature.fromDer(
+        fromHex(
+          "304602210083de9be443bcf480892b8c8ca1d5ee65c79a315642c3f7b5305aff3065fda2780221009747932122b93cec42cad8ee4630a8f6cbe127578b8c495b4ab927275f657658",
+        ),
+      );
+      expect(sig3.isLowS()).toEqual(false);
+
+      // Test data from https://github.com/randombit/botan/blob/2.9.0/src/tests/data/pubkey/ecdsa_key_recovery.vec
+      // This is a high-s value (`0x81F1A4457589F30D76AB9F89E748A68C8A94C30FE0BAC8FB5C0B54EA70BF6D2F > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0` is true)
+      const sig4 = Secp256k1Signature.fromFixedLength(
+        fromHex(
+          "E30F2E6A0F705F4FB5F8501BA79C7C0D3FAC847F1AD70B873E9797B17B89B39081F1A4457589F30D76AB9F89E748A68C8A94C30FE0BAC8FB5C0B54EA70BF6D2F",
+        ),
+      );
+      expect(sig4.isLowS()).toEqual(false);
+    });
+  });
+
   it("can be encoded as fixed length", () => {
     const signature = new Secp256k1Signature(new Uint8Array([0x22, 0x33]), new Uint8Array([0xaa]));
     expect(signature.toFixedLength()).toEqual(

@@ -1,3 +1,5 @@
+import BN from "bn.js";
+
 function trimLeadingNullBytes(inData: Uint8Array): Uint8Array {
   let numberOfLeadingNullBytes = 0;
   for (const byte of inData) {
@@ -11,6 +13,9 @@ function trimLeadingNullBytes(inData: Uint8Array): Uint8Array {
 }
 
 const derTagInteger = 0x02;
+
+// See https://github.com/bitcoin-core/secp256k1/blob/d644dda5c9dbdecee52d1aa259235510fdc2d4ee/include/secp256k1.h#L499-L501
+const maxLowS = new BN("7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0", "hex");
 
 export class Secp256k1Signature {
   /**
@@ -117,6 +122,11 @@ export class Secp256k1Signature {
       const padding = new Uint8Array(paddingLength);
       return new Uint8Array([...padding, ...this.data.s]);
     }
+  }
+
+  public isLowS(): boolean {
+    const s = new BN(this.data.s, "be");
+    return s.lte(maxLowS);
   }
 
   public toFixedLength(): Uint8Array {
