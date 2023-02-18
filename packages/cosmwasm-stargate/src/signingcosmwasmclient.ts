@@ -45,6 +45,7 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 import pako from "pako";
 
@@ -251,6 +252,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     wasmCode: Uint8Array,
     fee: StdFee | "auto" | number,
     memo = "",
+    instantiatePermission?: AccessConfig,
   ): Promise<UploadResult> {
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCodeEncodeObject = {
@@ -258,6 +260,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: MsgStoreCode.fromPartial({
         sender: senderAddress,
         wasmByteCode: compressed,
+        instantiatePermission,
       }),
     };
 

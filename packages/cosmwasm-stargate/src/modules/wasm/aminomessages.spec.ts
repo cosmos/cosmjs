@@ -9,6 +9,7 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 
 import {
@@ -38,6 +39,34 @@ describe("AminoTypes", () => {
         value: {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           wasm_byte_code: "WUVMTE9XIFNVQk1BUklORQ==",
+          instantiate_permission: undefined,
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgStoreCode with access type", () => {
+      const msg: MsgStoreCode = {
+        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
+        instantiatePermission: {
+          permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
+          address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      };
+      const aminoMsg = new AminoTypes(createWasmAminoConverters()).toAmino({
+        typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
+        value: msg,
+      });
+      const expected: AminoMsgStoreCode = {
+        type: "wasm/MsgStoreCode",
+        value: {
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          wasm_byte_code: "WUVMTE9XIFNVQk1BUklORQ==",
+          instantiate_permission: {
+            permission: "OnlyAddress",
+            address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          },
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -202,6 +231,33 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
         instantiatePermission: undefined,
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgStoreCode with access type", () => {
+      const aminoMsg: AminoMsgStoreCode = {
+        type: "wasm/MsgStoreCode",
+        value: {
+          sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          wasm_byte_code: "WUVMTE9XIFNVQk1BUklORQ==",
+          instantiate_permission: {
+            permission: "OnlyAddress",
+            address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          },
+        },
+      };
+      const msg = new AminoTypes(createWasmAminoConverters()).fromAmino(aminoMsg);
+      const expectedValue: MsgStoreCode = {
+        sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
+        instantiatePermission: {
+          permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
+          address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
       };
       expect(msg).toEqual({
         typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",

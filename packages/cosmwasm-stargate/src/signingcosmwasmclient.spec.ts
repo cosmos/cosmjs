@@ -20,6 +20,7 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
@@ -106,6 +107,26 @@ describe("SigningCosmWasmClient", () => {
       const wasm = getHackatom().data;
       const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
         await client.upload(alice.address0, wasm, defaultUploadFee);
+      expect(originalChecksum).toEqual(toHex(sha256(wasm)));
+      expect(originalSize).toEqual(wasm.length);
+      expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
+      expect(compressedSize).toBeLessThan(wasm.length * 0.5);
+      expect(codeId).toBeGreaterThanOrEqual(1);
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer access type", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const wasm = getHackatom().data;
+      const accessConfig: AccessConfig = {
+        permission: AccessType.ACCESS_TYPE_EVERYBODY,
+        address: "",
+      };
+      const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
+        await client.upload(alice.address0, wasm, defaultUploadFee, "test memo", accessConfig);
       expect(originalChecksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
