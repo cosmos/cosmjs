@@ -455,6 +455,33 @@ describe("SigningStargateClient", () => {
     });
 
     describe("legacy Amino mode", () => {
+      it("works with special characters in memo", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "ampersand:&,lt:<,gt:>";
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsDeliverTxSuccess(result);
+      });
+
       it("works with bank MsgSend", async () => {
         pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
