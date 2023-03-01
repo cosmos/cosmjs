@@ -99,6 +99,8 @@ export { Tendermint34Client } from "./tendermint34";
 // See https://github.com/cosmos/cosmjs/issues/1225 for more context.
 // export * as tendermint35 from "./tendermint35";
 // export { Tendermint35Client } from "./tendermint35";
+export * as tendermint37 from "./tendermint37";
+export { Tendermint37Client } from "./tendermint37";
 export {
   BlockIdFlag,
   CommitSignature,
