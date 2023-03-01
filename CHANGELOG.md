@@ -32,9 +32,11 @@ and this project adheres to
 
 - @cosmjs/stargate: Add `granteeGrants` and `granterGrants` queries to
   `AuthzExtension` ([#1308]).
-- @cosmjs/tendermint-rpc: Add `Tendermint37Client`
+- @cosmjs/tendermint-rpc: Add new `Tendermint37Client` and remove unused
+  `Tendermint35Client` ([#1376]).
 
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
+[#1376]: https://github.com/cosmos/cosmjs/pull/1376
 
 ## [0.29.5] - 2022-12-07
 
