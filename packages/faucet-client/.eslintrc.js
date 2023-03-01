@@ -1,4 +1,12 @@
+// The master version of this file is in the repo root. Eslint seems to have
+// problems using symbolic links for the config file, so we copy it to the packages.
+// To update:
+//   1. Go to the repo root
+//   2. Make edits in .eslintrc.js
+//   3. Run `find ./packages -name ".eslintrc.js" -exec cp .eslintrc.js {} \;`
+
 module.exports = {
+  root: true,
   env: {
     es6: true,
     jasmine: true,
@@ -60,6 +68,12 @@ module.exports = {
         selector: "parameter",
         format: ["strictCamelCase"],
         leadingUnderscore: "allow",
+      },
+      {
+        // For object literal keys we want to allow things like numbers (e.g. 35),
+        // type URLs (e.g. "/cosmos.feegrant.v1beta1.MsgGrantAllowance") or test data (e.g. "0.14ucoin2")
+        selector: "objectLiteralProperty",
+        format: null,
       },
     ],
     "@typescript-eslint/no-dynamic-delete": "warn",
