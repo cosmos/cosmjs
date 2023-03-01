@@ -1,8 +1,11 @@
 import { encodeSecp256k1Pubkey, Secp256k1HdWallet } from "@cosmjs/amino";
-import { Bip39, Random } from "@cosmjs/crypto";
 
-const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic);
+// Configs
+const prefix = "osmo";
+const words = 12;
+
+const wallet = await Secp256k1HdWallet.generate(words, { prefix });
+const mnemonic = wallet.mnemonic;
 const [{ address, pubkey }] = await wallet.getAccounts();
 
 console.info("mnemonic:", mnemonic);
