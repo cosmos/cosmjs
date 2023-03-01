@@ -493,12 +493,14 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       }
     });
 
-    it("returns transactions in descending order by default", async () => {
+    it("returns transactions in ascending order by default", async () => {
       // NOTE: The Tendermint docs states the default ordering is "desc". Until
       // 0.35 it was actually "asc" but from 0.35 on it is "desc".
+      // Then it was changed back to "asc" in 0.37.
       // Docs: https://docs.tendermint.com/master/rpc/#/Info/tx_search
       // Code 0.34: https://github.com/tendermint/tendermint/blob/v0.34.10/rpc/core/tx.go#L89
       // Code 0.35: https://github.com/tendermint/tendermint/blob/v0.35.6/internal/rpc/core/tx.go#L93
+      // Code 0.37: https://github.com/cometbft/cometbft/blob/v0.37.0-rc3/rpc/core/tx.go#L87
       pendingWithoutTendermint();
       const client = await Tendermint37Client.create(rpcFactory());
 
@@ -508,7 +510,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       expect(result.totalCount).toEqual(3);
       result.txs.slice(1).reduce((lastHeight, { height }) => {
-        expect(height).toBeLessThanOrEqual(lastHeight);
+        expect(height).toBeGreaterThanOrEqual(lastHeight);
         return height;
       }, result.txs[0].height);
 
@@ -560,8 +562,8 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(sall.txs.length).toEqual(3);
       // make sure there are in order from highest to lowest height
       const [tx1, tx2, tx3] = sall.txs;
-      expect(tx2.height).toBeLessThan(tx1.height);
-      expect(tx3.height).toBeLessThan(tx2.height);
+      expect(tx2.height).toBeGreaterThan(tx1.height);
+      expect(tx3.height).toBeGreaterThan(tx2.height);
 
       client.disconnect();
     });

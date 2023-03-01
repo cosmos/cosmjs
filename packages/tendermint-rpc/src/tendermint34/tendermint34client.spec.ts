@@ -501,13 +501,13 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
 
-      const s = await client.txSearch({ query: query });
+      const result = await client.txSearch({ query: query });
 
-      expect(s.totalCount).toEqual(3);
-      s.txs.slice(1).reduce((lastHeight, { height }) => {
+      expect(result.totalCount).toEqual(3);
+      result.txs.slice(1).reduce((lastHeight, { height }) => {
         expect(height).toBeGreaterThanOrEqual(lastHeight);
         return height;
-      }, s.txs[0].height);
+      }, result.txs[0].height);
 
       client.disconnect();
     });
