@@ -183,12 +183,30 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly aminoTypes: AminoTypes;
   private readonly gasPrice: GasPrice | undefined;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
+   * support, see `createWithSigner`.
+   */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
+    return SigningCosmWasmClient.createWithSigner(tmClient, signer, options);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async createWithSigner(
+    tmClient: TendermintClient,
+    signer: OfflineSigner,
+    options: SigningCosmWasmClientOptions = {},
+  ): Promise<SigningCosmWasmClient> {
     return new SigningCosmWasmClient(tmClient, signer, options);
   }
 

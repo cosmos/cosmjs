@@ -191,11 +191,28 @@ export class StargateClient {
   private chainId: string | undefined;
   private readonly accountParser: AccountParser;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
+   * support, see `create`.
+   */
   public static async connect(
     endpoint: string | HttpEndpoint,
     options: StargateClientOptions = {},
   ): Promise<StargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
+    return StargateClient.create(tmClient, options);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async create(
+    tmClient: TendermintClient,
+    options: StargateClientOptions = {},
+  ): Promise<StargateClient> {
     return new StargateClient(tmClient, options);
   }
 

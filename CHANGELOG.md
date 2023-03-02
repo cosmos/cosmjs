@@ -39,6 +39,12 @@ and this project adheres to
   `Tendermint34Client` or `Tendermint37Client` and
   `isTendermint34Client`/`isTendermint37Client` to get the specific type
   ([#1376]).
+- @cosmjs/stargate: Add constructors `StargateClient.create` and
+  `SigningStargateClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
+- @cosmjs/cosmwasm-stargate: Add constructors `CosmWasmClient.create` and
+  `SigningCosmWasmClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
 
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
 [#1376]: https://github.com/cosmos/cosmjs/pull/1376
