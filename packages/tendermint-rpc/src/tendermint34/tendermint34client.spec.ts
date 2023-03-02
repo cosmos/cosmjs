@@ -505,6 +505,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const txRes = await client.broadcastTxCommit({ tx: tx });
       expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+      await tendermintSearchIndexUpdated();
 
       // txSearch - you must enable the indexer when running
       // tendermint, else you get empty results
