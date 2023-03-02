@@ -10,7 +10,7 @@ import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
-import { Event, fromTendermint34Event } from "./events";
+import { Event, fromTendermintEvent } from "./events";
 import {
   AuthExtension,
   BankExtension,
@@ -471,7 +471,7 @@ export class StargateClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
-        events: tx.result.events.map(fromTendermint34Event),
+        events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,
