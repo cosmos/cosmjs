@@ -74,13 +74,13 @@ function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadca
 }
 
 interface RpcTxParams {
-  /** hex encoded */
+  /** base64 encoded */
   readonly hash: string;
   readonly prove?: boolean;
 }
 function encodeTxParams(params: requests.TxParams): RpcTxParams {
   return {
-    hash: toHex(assertNotEmpty(params.hash)),
+    hash: toBase64(assertNotEmpty(params.hash)),
     prove: params.prove,
   };
 }
