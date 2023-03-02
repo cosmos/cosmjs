@@ -25,7 +25,12 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  TendermintClient,
+  toRfc3339WithNanoseconds,
+} from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   CodeInfoResponse,
@@ -77,14 +82,14 @@ export interface ContractCodeHistoryEntry {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: TendermintClient | undefined;
   readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: TendermintClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
@@ -96,7 +101,7 @@ export class CosmWasmClient {
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined) {
+  protected constructor(tmClient: TendermintClient | undefined) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -109,11 +114,11 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): TendermintClient | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): TendermintClient {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",

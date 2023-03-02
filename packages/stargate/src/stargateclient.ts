@@ -2,7 +2,12 @@
 import { addCoins } from "@cosmjs/amino";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  TendermintClient,
+  toRfc3339WithNanoseconds,
+} from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -171,7 +176,7 @@ export class BroadcastTxError extends Error {
 
 /** Use for testing only */
 export interface PrivateStargateClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: TendermintClient | undefined;
 }
 
 export interface StargateClientOptions {
@@ -179,7 +184,7 @@ export interface StargateClientOptions {
 }
 
 export class StargateClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: TendermintClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
     | undefined;
@@ -194,7 +199,7 @@ export class StargateClient {
     return new StargateClient(tmClient, options);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined, options: StargateClientOptions) {
+  protected constructor(tmClient: TendermintClient | undefined, options: StargateClientOptions) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -209,11 +214,11 @@ export class StargateClient {
     this.accountParser = accountParser;
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): TendermintClient | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): TendermintClient {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",
