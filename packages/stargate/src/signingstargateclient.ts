@@ -12,7 +12,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint34Client, TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -114,12 +114,30 @@ export class SigningStargateClient extends StargateClient {
   private readonly aminoTypes: AminoTypes;
   private readonly gasPrice: GasPrice | undefined;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
+   * support, see `createWithSigner`.
+   */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
+    return SigningStargateClient.createWithSigner(tmClient, signer, options);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async createWithSigner(
+    tmClient: TendermintClient,
+    signer: OfflineSigner,
+    options: SigningStargateClientOptions = {},
+  ): Promise<SigningStargateClient> {
     return new SigningStargateClient(tmClient, signer, options);
   }
 
@@ -140,7 +158,7 @@ export class SigningStargateClient extends StargateClient {
   }
 
   protected constructor(
-    tmClient: Tendermint34Client | undefined,
+    tmClient: TendermintClient | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {

@@ -10,41 +10,36 @@ import {
   SubscriptionEvent,
   WebsocketClient,
 } from "../rpcclients";
-import { adaptor35, Decoder, Encoder, Params, Responses } from "./adaptor";
+import { adaptor37, Decoder, Encoder, Params, Responses } from "./adaptor";
 import * as requests from "./requests";
 import * as responses from "./responses";
 
-/**
- * Please note the Tendermint 0.35 client is currently not exported and may break or be removed at any point in time.
- *
- * @see https://github.com/cosmos/cosmjs/issues/1225
- */
-export class Tendermint35Client {
+export class Tendermint37Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    */
-  public static async connect(endpoint: string | HttpEndpoint): Promise<Tendermint35Client> {
+  public static async connect(endpoint: string | HttpEndpoint): Promise<Tendermint37Client> {
     if (typeof endpoint === "object") {
-      return Tendermint35Client.create(new HttpClient(endpoint));
+      return Tendermint37Client.create(new HttpClient(endpoint));
     } else {
       const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
       const rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
-      return Tendermint35Client.create(rpcClient);
+      return Tendermint37Client.create(rpcClient);
     }
   }
 
   /**
    * Creates a new Tendermint client given an RPC client.
    */
-  public static async create(rpcClient: RpcClient): Promise<Tendermint35Client> {
+  public static async create(rpcClient: RpcClient): Promise<Tendermint37Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
     // (our CI) when skipping the status call before doing other queries. Sleeping a little
     // while did not help. Thus we query the version as a way to say "hi" to the backend,
     // even in cases where we don't use the result.
     const _version = await this.detectVersion(rpcClient);
-    return new Tendermint35Client(rpcClient);
+    return new Tendermint37Client(rpcClient);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
@@ -68,12 +63,12 @@ export class Tendermint35Client {
   private readonly r: Responses;
 
   /**
-   * Use `Tendermint34Client.connect` or `Tendermint34Client.create` to create an instance.
+   * Use `Tendermint37Client.connect` or `Tendermint37Client.create` to create an instance.
    */
   private constructor(client: RpcClient) {
     this.client = client;
-    this.p = adaptor35.params;
-    this.r = adaptor35.responses;
+    this.p = adaptor37.params;
+    this.r = adaptor37.responses;
   }
 
   public disconnect(): void {

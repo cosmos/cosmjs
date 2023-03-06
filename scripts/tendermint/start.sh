@@ -6,7 +6,7 @@ gnused="$(command -v gsed || echo sed)"
 
 # Tendermint settings must be specified
 # Choose version from https://hub.docker.com/r/tendermint/tendermint/tags/
-for SETTING in "TENDERMINT_VERSION" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
+for SETTING in "TENDERMINT_IMAGE" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
   if test -z "$(eval echo "\$$SETTING")"; then
     echo "\$$SETTING must be set when running this script"
     exit 1
@@ -20,8 +20,8 @@ LOGFILE="$TMP_DIR/tendermint.log"
 
 docker run --rm \
   --user="$UID" \
-  -v "${TMP_DIR}:/tendermint" \
-  "tendermint/tendermint:${TENDERMINT_VERSION}" \
+  -v "${TMP_DIR}:${TENDERMINT_ROOT}" \
+  "${TENDERMINT_IMAGE}" \
   init validator
 
 # make sure we allow cors origins, only possible by modifying the config file
@@ -36,11 +36,11 @@ docker run --rm \
 docker run --rm \
   --user="$UID" \
   --name "$TENDERMINT_NAME" \
-  -p "${TENDERMINT_PORT}:26657" -v "${TMP_DIR}:/tendermint" \
+  -p "${TENDERMINT_PORT}:26657" -v "${TMP_DIR}:${TENDERMINT_ROOT}" \
   -e "TM_TX_INDEX_INDEX_ALL_KEYS=true" \
   -e "PROXY_APP=kvstore" \
   -e "LOG_LEVEL=state:info,rpc:info,*:error" \
-  "tendermint/tendermint:${TENDERMINT_VERSION}" node \
+  "${TENDERMINT_IMAGE}" node \
   --rpc.laddr=tcp://0.0.0.0:26657 \
   >"$LOGFILE" 2>&1 &
 

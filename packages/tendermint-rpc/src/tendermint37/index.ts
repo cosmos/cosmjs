@@ -1,5 +1,5 @@
 // Note: all exports in this module are publicly available via
-// `import { tendermint35 } from "@cosmjs/tendermint-rpc"`
+// `import { tendermint37 } from "@cosmjs/tendermint-rpc"`
 
 export {
   AbciInfoRequest,
@@ -76,4 +76,4 @@ export {
   Vote,
   VoteType,
 } from "./responses";
-export { Tendermint35Client } from "./tendermint35client";
+export { Tendermint37Client } from "./tendermint37client";

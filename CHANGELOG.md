@@ -21,6 +21,8 @@ and this project adheres to
 - @cosmjs/proto-signing: Remove `fromJSON`/`toJSON` from `TsProtoGeneratedType`
   such that generated types are not required to generate those anymore. The
   methods were provided by ts-proto but we never needed them. ([#1329])
+- @cosmjs/stargate: Rename `fromTendermint34Event` to `fromTendermintEvent` and
+  let it support both Tendermint 0.34 and 0.37 events as input.
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
@@ -29,10 +31,23 @@ and this project adheres to
 [#1329]: https://github.com/cosmos/cosmjs/pull/1329
 
 ### Added
+
 - @cosmjs/stargate: Add `granteeGrants` and `granterGrants` queries to
   `AuthzExtension` ([#1308]).
+- @cosmjs/tendermint-rpc: Add new `Tendermint37Client` and remove unused
+  `Tendermint35Client`; Add `TendermintClient` as a union type for
+  `Tendermint34Client` or `Tendermint37Client` and
+  `isTendermint34Client`/`isTendermint37Client` to get the specific type
+  ([#1376]).
+- @cosmjs/stargate: Add constructors `StargateClient.create` and
+  `SigningStargateClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
+- @cosmjs/cosmwasm-stargate: Add constructors `CosmWasmClient.create` and
+  `SigningCosmWasmClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
 
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
+[#1376]: https://github.com/cosmos/cosmjs/pull/1376
 
 ## [0.29.5] - 2022-12-07
 

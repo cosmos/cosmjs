@@ -2,7 +2,12 @@
 import { addCoins } from "@cosmjs/amino";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  TendermintClient,
+  toRfc3339WithNanoseconds,
+} from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -10,7 +15,7 @@ import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
-import { Event, fromTendermint34Event } from "./events";
+import { Event, fromTendermintEvent } from "./events";
 import {
   AuthExtension,
   BankExtension,
@@ -171,7 +176,7 @@ export class BroadcastTxError extends Error {
 
 /** Use for testing only */
 export interface PrivateStargateClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: TendermintClient | undefined;
 }
 
 export interface StargateClientOptions {
@@ -179,22 +184,39 @@ export interface StargateClientOptions {
 }
 
 export class StargateClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: TendermintClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
     | undefined;
   private chainId: string | undefined;
   private readonly accountParser: AccountParser;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
+   * support, see `create`.
+   */
   public static async connect(
     endpoint: string | HttpEndpoint,
     options: StargateClientOptions = {},
   ): Promise<StargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
+    return StargateClient.create(tmClient, options);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async create(
+    tmClient: TendermintClient,
+    options: StargateClientOptions = {},
+  ): Promise<StargateClient> {
     return new StargateClient(tmClient, options);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined, options: StargateClientOptions) {
+  protected constructor(tmClient: TendermintClient | undefined, options: StargateClientOptions) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -209,11 +231,11 @@ export class StargateClient {
     this.accountParser = accountParser;
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): TendermintClient | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): TendermintClient {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",
@@ -471,7 +493,7 @@ export class StargateClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
-        events: tx.result.events.map(fromTendermint34Event),
+        events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,

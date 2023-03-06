@@ -10,7 +10,7 @@ import {
   BroadcastTxError,
   Coin,
   DeliverTxResponse,
-  fromTendermint34Event,
+  fromTendermintEvent,
   IndexedTx,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -25,7 +25,12 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  TendermintClient,
+  toRfc3339WithNanoseconds,
+} from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   CodeInfoResponse,
@@ -77,26 +82,40 @@ export interface ContractCodeHistoryEntry {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: TendermintClient | undefined;
   readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: TendermintClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
+   * support, see `create`.
+   */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
+    return CosmWasmClient.create(tmClient);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async create(tmClient: TendermintClient): Promise<CosmWasmClient> {
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined) {
+  protected constructor(tmClient: TendermintClient | undefined) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -109,11 +128,11 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): TendermintClient | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): TendermintClient {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",
@@ -464,7 +483,7 @@ export class CosmWasmClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
-        events: tx.result.events.map(fromTendermint34Event),
+        events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,
