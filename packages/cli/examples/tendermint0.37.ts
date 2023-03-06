@@ -17,6 +17,8 @@ console.log("Signer address:", account.address);
 // Setup client. In contrast to most other examples out there, we create the Tendermint client
 // explicitly. Otherwise the 0.34 client will be used.
 const tmClient = await Tendermint37Client.connect(rpcEndpoint);
+const version = (await tmClient.status()).nodeInfo.version;
+console.log("Tendermint version:", version);
 const client = await SigningStargateClient.createWithSigner(tmClient, wallet, { gasPrice: gasPrice });
 
 // Get my balance
