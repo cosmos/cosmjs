@@ -45,9 +45,12 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add constructors `CosmWasmClient.create` and
   `SigningCosmWasmClient.createWithSigner` to construct with a given Tendermint
   client ([#1376]).
+- @cosmjs/cosmwasm-stargate: Add `instantiate2Address` to pre-calculate
+  addresses for Instantiate2 ([#1253]).
 - @cosmjs/stargate: Add `txIndex` to `DeliverTxResponse` and `IndexedTx`
   ([#1361]).
 
+[#1253]: https://github.com/cosmos/cosmjs/pull/1253
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
 [#1361]: https://github.com/cosmos/cosmjs/issues/1361
 [#1376]: https://github.com/cosmos/cosmjs/pull/1376
