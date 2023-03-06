@@ -66,6 +66,8 @@ export interface Block {
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
+  /** The position of the transaction within the block. This is a 0-based index. */
+  readonly txIndex: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly hash: string;
   /** Transaction execution error code. 0 on success. */
@@ -109,6 +111,8 @@ export interface SequenceResponse {
  */
 export interface DeliverTxResponse {
   readonly height: number;
+  /** The position of the transaction within the block. This is a 0-based index. */
+  readonly txIndex: number;
   /** Error code. The transaction suceeded iff code is 0. */
   readonly code: number;
   readonly transactionHash: string;
@@ -456,6 +460,7 @@ export class StargateClient {
         ? {
             code: result.code,
             height: result.height,
+            txIndex: result.txIndex,
             events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
@@ -491,6 +496,7 @@ export class StargateClient {
     return results.txs.map((tx) => {
       return {
         height: tx.height,
+        txIndex: tx.index,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
         events: tx.result.events.map(fromTendermintEvent),
