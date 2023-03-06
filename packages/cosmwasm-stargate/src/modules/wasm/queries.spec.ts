@@ -13,7 +13,7 @@ import {
 } from "@cosmjs/stargate";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
-import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
+import { AbsoluteTxPosition, ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 
 import { SigningCosmWasmClient } from "../../signingcosmwasmclient";
@@ -198,9 +198,9 @@ describe("WasmExtension", () => {
 
       const beneficiaryAddress = makeRandomAddress();
       const funds = coins(707707, "ucosm");
-      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
-      assertIsDeliverTxSuccess(result);
-      const myAddress = result.events
+      const instantiateResult = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, funds);
+      assertIsDeliverTxSuccess(instantiateResult);
+      const myAddress = instantiateResult.events
         .find((event) => event.type === "instantiate")
         ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
       assertDefined(myAddress);
@@ -219,7 +219,10 @@ describe("WasmExtension", () => {
         label: "my escrow",
         admin: "",
         ibcPortId: "",
-        created: undefined,
+        created: AbsoluteTxPosition.fromPartial({
+          blockHeight: Long.fromNumber(instantiateResult.height, true),
+          txIndex: Long.UZERO,
+        }),
         extension: undefined,
       });
       expect(contractInfo.admin).toEqual("");
