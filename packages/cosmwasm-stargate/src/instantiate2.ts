@@ -63,8 +63,7 @@ export function instantiate2Address(
   checksum: Uint8Array,
   creator: string,
   salt: Uint8Array,
-  msg: string | null,
   prefix: string,
 ): string {
-  return _instantiate2AddressIntermediate(checksum, creator, salt, msg, prefix).address;
+  return _instantiate2AddressIntermediate(checksum, creator, salt, null, prefix).address;
 }
