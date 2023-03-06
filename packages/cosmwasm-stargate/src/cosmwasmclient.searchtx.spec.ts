@@ -35,6 +35,7 @@ interface TestTxSend {
   readonly recipient: string;
   readonly hash: string;
   readonly height: number;
+  readonly txIndex: number;
   readonly tx: Uint8Array;
 }
 
@@ -126,6 +127,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
           recipient: unsuccessfulRecipient,
           hash: unsuccessfulResult.broadcastResponse.transactionHash,
           height: unsuccessfulResult.broadcastResponse.height,
+          txIndex: unsuccessfulResult.broadcastResponse.txIndex,
           tx: unsuccessfulResult.tx,
         };
       }
@@ -143,6 +145,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
           recipient: successfulRecipient,
           hash: successfulResult.broadcastResponse.transactionHash,
           height: successfulResult.broadcastResponse.height,
+          txIndex: successfulResult.broadcastResponse.txIndex,
           tx: successfulResult.tx,
         };
       }
@@ -160,6 +163,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
+          txIndex: sendSuccessful.txIndex,
           hash: sendSuccessful.hash,
           code: 0,
           tx: sendSuccessful.tx,
@@ -175,6 +179,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
+          txIndex: sendUnsuccessful.txIndex,
           hash: sendUnsuccessful.hash,
           code: 5,
           tx: sendUnsuccessful.tx,
@@ -201,6 +206,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       expect(result).toContain(
         jasmine.objectContaining({
           height: sendSuccessful.height,
+          txIndex: sendSuccessful.txIndex,
           hash: sendSuccessful.hash,
           code: 0,
           tx: sendSuccessful.tx,
@@ -217,6 +223,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       expect(result).toContain(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
+          txIndex: sendUnsuccessful.txIndex,
           hash: sendUnsuccessful.hash,
           code: 5,
           tx: sendUnsuccessful.tx,
@@ -248,6 +255,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
+          txIndex: sendSuccessful.txIndex,
           hash: sendSuccessful.hash,
           tx: sendSuccessful.tx,
         }),

@@ -301,6 +301,7 @@ export class CosmWasmClient {
         ? {
             code: result.code,
             height: result.height,
+            txIndex: result.txIndex,
             rawLog: result.rawLog,
             transactionHash: txId,
             events: result.events,
@@ -481,6 +482,7 @@ export class CosmWasmClient {
     return results.txs.map((tx) => {
       return {
         height: tx.height,
+        txIndex: tx.index,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
         events: tx.result.events.map(fromTendermintEvent),
