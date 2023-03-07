@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";
@@ -21,24 +20,27 @@ export class Tendermint34Client {
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    */
   public static async connect(endpoint: string | HttpEndpoint): Promise<Tendermint34Client> {
+    let rpcClient: RpcClient;
     if (typeof endpoint === "object") {
-      return Tendermint34Client.create(new HttpClient(endpoint));
+      rpcClient = new HttpClient(endpoint);
     } else {
       const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
-      const rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
-      return Tendermint34Client.create(rpcClient);
+      rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
     }
+
+    // For some very strange reason I don't understand, tests start to fail on some systems
+    // (our CI) when skipping the status call before doing other queries. Sleeping a little
+    // while did not help. Thus we query the version as a way to say "hi" to the backend,
+    // even in cases where we don't use the result.
+    const _version = await this.detectVersion(rpcClient);
+
+    return Tendermint34Client.create(rpcClient);
   }
 
   /**
    * Creates a new Tendermint client given an RPC client.
    */
   public static async create(rpcClient: RpcClient): Promise<Tendermint34Client> {
-    // For some very strange reason I don't understand, tests start to fail on some systems
-    // (our CI) when skipping the status call before doing other queries. Sleeping a little
-    // while did not help. Thus we query the version as a way to say "hi" to the backend,
-    // even in cases where we don't use the result.
-    const _version = await this.detectVersion(rpcClient);
     return new Tendermint34Client(rpcClient);
   }
 
