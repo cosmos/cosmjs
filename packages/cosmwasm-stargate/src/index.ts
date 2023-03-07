@@ -2,7 +2,6 @@ export { Code, CodeDetails, Contract, ContractCodeHistoryEntry, CosmWasmClient }
 export { fromBinary, toBinary } from "./encoding";
 export { _instantiate2AddressIntermediate, instantiate2Address } from "./instantiate2";
 export {
-  cosmWasmTypes,
   createWasmAminoConverters,
   isMsgClearAdminEncodeObject,
   isMsgExecuteEncodeObject,

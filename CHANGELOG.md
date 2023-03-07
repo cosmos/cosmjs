@@ -23,6 +23,8 @@ and this project adheres to
   methods were provided by ts-proto but we never needed them. ([#1329])
 - @cosmjs/stargate: Rename `fromTendermint34Event` to `fromTendermintEvent` and
   let it support both Tendermint 0.34 and 0.37 events as input.
+- @cosmjs/cosmwasm-stargate: Remove `cosmWasmTypes`. Use
+  `createWasmAminoConverters()` instead.
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
