@@ -26,25 +26,3 @@ export function normalizeBech32(address: string): string {
   const { prefix, data } = fromBech32(address);
   return toBech32(prefix, data);
 }
-
-/**
- * @deprecated This class is deprecated and will be removed soon. Please use fromBech32() and toBech32() instead. For more details please refer to https://github.com/cosmos/cosmjs/issues/1053.
- */
-export class Bech32 {
-  /**
-   * @deprecated This class is deprecated and will be removed soon. Please use fromBech32() and toBech32() instead. For more details please refer to https://github.com/cosmos/cosmjs/issues/1053.
-   */
-  public static encode(prefix: string, data: Uint8Array, limit?: number): string {
-    return toBech32(prefix, data, limit);
-  }
-
-  /**
-   * @deprecated This class is deprecated and will be removed soon. Please use fromBech32() and toBech32() instead. For more details please refer to https://github.com/cosmos/cosmjs/issues/1053.
-   */
-  public static decode(
-    address: string,
-    limit = Infinity,
-  ): { readonly prefix: string; readonly data: Uint8Array } {
-    return fromBech32(address, limit);
-  }
-}
