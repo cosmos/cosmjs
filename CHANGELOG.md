@@ -26,6 +26,8 @@ and this project adheres to
   let it support both Tendermint 0.34 and 0.37 events as input.
 - @cosmjs/cosmwasm-stargate: Remove `cosmWasmTypes`. Use
   `createWasmAminoConverters()` instead.
+- @cosmjs/encoding: Remove previously deprecated `Bech32` class. Please replace
+  `Bech32.encode`/`.decode` with free the functions `toBech32`/`fromBech32`.
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240

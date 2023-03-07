@@ -48,7 +48,7 @@ $ cosmjs-cli
 const account = await client.getAccount(faucetAddress);
 
 // Craft a send transaction
-const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));
+const emptyAddress = toBech32("cosmos", Random.getBytes(20));
 const memo = "My very first tx!";
 const msgSend = {
   fromAddress: faucetAddress,

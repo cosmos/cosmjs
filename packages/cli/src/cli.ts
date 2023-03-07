@@ -71,7 +71,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         toBase64,
         toHex,
         toUtf8,
-        Bech32,
       } from "@cosmjs/encoding";
       import { sha512, Bip39, Random } from "@cosmjs/crypto";
       import {
