@@ -95,20 +95,21 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeout_height,
         timeout_timestamp,
-      }: AminoMsgTransfer["value"]): MsgTransfer => ({
-        sourcePort: source_port,
-        sourceChannel: source_channel,
-        token: token,
-        sender: sender,
-        receiver: receiver,
-        timeoutHeight: timeout_height
-          ? {
-              revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
-              revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
-            }
-          : undefined,
-        timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
-      }),
+      }: AminoMsgTransfer["value"]): MsgTransfer =>
+        MsgTransfer.fromPartial({
+          sourcePort: source_port,
+          sourceChannel: source_channel,
+          token: token,
+          sender: sender,
+          receiver: receiver,
+          timeoutHeight: timeout_height
+            ? {
+                revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
+                revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
+              }
+            : undefined,
+          timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
+        }),
     },
   };
 }
