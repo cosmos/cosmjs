@@ -92,7 +92,7 @@ export interface SigningStargateClientOptions extends StargateClientOptions {
   readonly gasPrice?: GasPrice;
 }
 
-function createDefaultTypes(): AminoConverters {
+export function createDefaultAminoConverters(): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
@@ -103,6 +103,10 @@ function createDefaultTypes(): AminoConverters {
     ...createFeegrantAminoConverters(),
     ...createVestingAminoConverters(),
   };
+}
+
+function createDefaultAminoTypes(): AminoTypes {
+  return new AminoTypes(createDefaultAminoConverters())
 }
 
 export class SigningStargateClient extends StargateClient {
@@ -163,7 +167,10 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, options);
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes()) } = options;
+    const {
+      registry = createDefaultRegistry(),
+      aminoTypes = createDefaultAminoTypes()
+    } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
