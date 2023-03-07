@@ -5,7 +5,6 @@ export {
   AminoMsgMigrateContract,
   AminoMsgStoreCode,
   AminoMsgUpdateAdmin,
-  cosmWasmTypes,
   createWasmAminoConverters,
 } from "./wasm/aminomessages";
 export {

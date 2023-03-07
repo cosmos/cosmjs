@@ -237,6 +237,3 @@ export function createWasmAminoConverters(): AminoConverters {
     },
   };
 }
-
-/** @deprecated use `createWasmAminoConverters()` */
-export const cosmWasmTypes: AminoConverters = createWasmAminoConverters();
