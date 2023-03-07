@@ -10,6 +10,7 @@ and this project adheres to
 
 - all: The TypeScript compilation target is now ES2020 ([#1002]).
 - all: Add full support for Node.js 18 and run all CI tests with it ([#1240]).
+- all: Upgrade cosmjs-types to 0.7.
 - @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
   `TxEvent`. This is unset starting with Tendermint 0.34.
 - @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional

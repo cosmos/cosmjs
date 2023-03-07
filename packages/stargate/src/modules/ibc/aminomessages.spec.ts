@@ -20,6 +20,7 @@ describe("AminoTypes", () => {
           revisionNumber: Long.fromString("456", true),
         },
         timeoutTimestamp: Long.fromString("789", true),
+        memo: "",
       };
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
@@ -56,6 +57,7 @@ describe("AminoTypes", () => {
           revisionNumber: Long.UZERO,
         },
         timeoutTimestamp: Long.UZERO,
+        memo: "",
       };
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
@@ -89,6 +91,7 @@ describe("AminoTypes", () => {
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: undefined,
         timeoutTimestamp: Long.UZERO,
+        memo: "",
       };
       const aminoMsg = new AminoTypes(createIbcAminoConverters()).toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -139,6 +142,7 @@ describe("AminoTypes", () => {
           revisionNumber: Long.fromString("456", true),
         },
         timeoutTimestamp: Long.fromString("789", true),
+        memo: "",
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -174,6 +178,7 @@ describe("AminoTypes", () => {
           revisionNumber: Long.UZERO,
         },
         timeoutTimestamp: Long.UZERO,
+        memo: "",
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
