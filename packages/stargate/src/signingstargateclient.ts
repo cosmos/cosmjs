@@ -161,7 +161,7 @@ export class SigningStargateClient extends StargateClient {
     super(tmClient, options);
     const {
       registry = new Registry(defaultRegistryTypes),
-      aminoTypes = new AminoTypes(createDefaultAminoConverters())
+      aminoTypes = new AminoTypes(createDefaultAminoConverters()),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;

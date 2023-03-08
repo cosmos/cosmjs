@@ -231,7 +231,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const {
       registry = new Registry([
         ...defaultStargateTypes,
-        ...wasmTypes
+        ...wasmTypes,
       ]),
       aminoTypes = new AminoTypes({
         ...createDefaultAminoConverters(),

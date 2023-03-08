@@ -28,12 +28,16 @@ and this project adheres to
   `createWasmAminoConverters()` instead.
 - @cosmjs/encoding: Remove previously deprecated `Bech32` class. Please replace
   `Bech32.encode`/`.decode` with free the functions `toBech32`/`fromBech32`.
+- @cosmjs/cosmwasm-stargate: Changed the `SigningCosmWasmClient` constructor to
+  include all Amino type converters that the `SigningStargateClient` uses by
+  default, to match the default registry types ([#1384]).
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
 [#1291]: https://github.com/cosmos/cosmjs/issues/1291
 [#1329]: https://github.com/cosmos/cosmjs/pull/1329
+[#1384]: https://github.com/cosmos/cosmjs/pull/1384
 
 ### Added
 
@@ -54,11 +58,15 @@ and this project adheres to
   addresses for Instantiate2 ([#1253]).
 - @cosmjs/stargate: Add `txIndex` to `DeliverTxResponse` and `IndexedTx`
   ([#1361]).
+- @cosmjs/stargate: Add `createDefaultAminoConverters` to access the
+  `SigningStargateClient`'s list of default Amino type converters to match the
+  default registry types in `defaultStargateTypes` ([#1384]).
 
 [#1253]: https://github.com/cosmos/cosmjs/pull/1253
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
 [#1361]: https://github.com/cosmos/cosmjs/issues/1361
 [#1376]: https://github.com/cosmos/cosmjs/pull/1376
+[#1384]: https://github.com/cosmos/cosmjs/pull/1384
 
 ## [0.29.5] - 2022-12-07
 
