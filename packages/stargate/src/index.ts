@@ -123,6 +123,7 @@ export {
   SearchTxQuery,
 } from "./search";
 export {
+  createDefaultAminoConverters,
   defaultRegistryTypes,
   SignerData,
   SigningStargateClient,

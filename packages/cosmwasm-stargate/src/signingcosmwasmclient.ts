@@ -162,17 +162,6 @@ function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string 
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
-function createDefaultRegistry(): Registry {
-  return new Registry([...defaultStargateTypes, ...wasmTypes]);
-}
-
-function createDefaultAminoTypes(): AminoTypes {
-  return new AminoTypes({
-    ...createDefaultAminoConverters(),
-    ...createWasmAminoConverters(),
-  })
-}
-
 export interface SigningCosmWasmClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
@@ -240,8 +229,14 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ) {
     super(tmClient);
     const {
-      registry = createDefaultRegistry(),
-      aminoTypes = createDefaultAminoTypes(),
+      registry = new Registry([
+        ...defaultStargateTypes,
+        ...wasmTypes
+      ]),
+      aminoTypes = new AminoTypes({
+        ...createDefaultAminoConverters(),
+        ...createWasmAminoConverters(),
+      }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
