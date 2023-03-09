@@ -72,35 +72,6 @@ export function makeSignDoc(
   };
 }
 
-export function escapeCharacters(encodedArray: Uint8Array): Uint8Array {
-  const AmpersandUnicode = new Uint8Array([92, 117, 48, 48, 50, 54]);
-  const LtSignUnicode = new Uint8Array([92, 117, 48, 48, 51, 99]);
-  const GtSignUnicode = new Uint8Array([92, 117, 48, 48, 51, 101]);
-
-  const AmpersandAscii = 38;
-  const LtSign = 60; // <
-  const GtSign = 62; // >
-
-  const filteredIndex: number[] = [];
-  encodedArray.forEach((value, index) => {
-    if (value === AmpersandAscii || value === LtSign || value === GtSign) filteredIndex.push(index);
-  });
-
-  let result = new Uint8Array([...encodedArray]);
-  const reversedFilteredIndex = filteredIndex.reverse();
-  reversedFilteredIndex.forEach((value) => {
-    let unicode = AmpersandUnicode;
-    if (result[value] === LtSign) {
-      unicode = LtSignUnicode;
-    } else if (result[value] === GtSign) {
-      unicode = GtSignUnicode;
-    }
-    result = new Uint8Array([...result.slice(0, value), ...unicode, ...result.slice(value + 1)]);
-  });
-
-  return result;
-}
-
 export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
-  return escapeCharacters(toUtf8(sortedJsonStringify(signDoc)));
+  return toUtf8(sortedJsonStringify(signDoc));
 }
