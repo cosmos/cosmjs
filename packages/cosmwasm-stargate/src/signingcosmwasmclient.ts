@@ -17,7 +17,7 @@ import {
   AminoTypes,
   calculateFee,
   Coin,
-  createBankAminoConverters,
+  createDefaultAminoConverters,
   defaultRegistryTypes as defaultStargateTypes,
   DeliverTxResponse,
   Event,
@@ -162,10 +162,6 @@ function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string 
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
-function createDefaultRegistry(): Registry {
-  return new Registry([...defaultStargateTypes, ...wasmTypes]);
-}
-
 export interface SigningCosmWasmClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
@@ -233,8 +229,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ) {
     super(tmClient);
     const {
-      registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ ...createWasmAminoConverters(), ...createBankAminoConverters() }),
+      registry = new Registry([...defaultStargateTypes, ...wasmTypes]),
+      aminoTypes = new AminoTypes({
+        ...createDefaultAminoConverters(),
+        ...createWasmAminoConverters(),
+      }),
     } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;

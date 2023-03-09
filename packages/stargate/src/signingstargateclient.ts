@@ -64,10 +64,6 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ...vestingTypes,
 ];
 
-function createDefaultRegistry(): Registry {
-  return new Registry(defaultRegistryTypes);
-}
-
 /**
  * Signing information for a single signer that is not included in the transaction.
  *
@@ -92,7 +88,7 @@ export interface SigningStargateClientOptions extends StargateClientOptions {
   readonly gasPrice?: GasPrice;
 }
 
-function createDefaultTypes(): AminoConverters {
+export function createDefaultAminoConverters(): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
@@ -163,7 +159,10 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, options);
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes()) } = options;
+    const {
+      registry = new Registry(defaultRegistryTypes),
+      aminoTypes = new AminoTypes(createDefaultAminoConverters()),
+    } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
