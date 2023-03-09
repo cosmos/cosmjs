@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Random } from "@cosmjs/crypto";
-import { fromUtf8, toBech32, toUtf8 } from "@cosmjs/encoding";
+import { toBech32 } from "@cosmjs/encoding";
 
 import { AminoMsg, escapeCharacters, makeSignDoc, sortedJsonStringify } from "./signdoc";
 
@@ -133,13 +133,42 @@ describe("encoding", () => {
     });
   });
 
-  describe("escape characters after utf8 encoding", () => {
+  describe("escapeCharacters", () => {
     it("works", () => {
-      const test = JSON.stringify({ memo: "ampersand:&,lt:<,gt:>" });
-      const utf8Encoding = toUtf8(test);
-      const escapedEncoding = escapeCharacters(utf8Encoding);
+      // Unchanged originals
+      expect(escapeCharacters(`""`)).toEqual(`""`);
+      expect(escapeCharacters(`{}`)).toEqual(`{}`);
+      expect(escapeCharacters(`[]`)).toEqual(`[]`);
+      expect(escapeCharacters(`[123,null,"foo",[{}]]`)).toEqual(`[123,null,"foo",[{}]]`);
+      expect(escapeCharacters(`{"num":123}`)).toEqual(`{"num":123}`);
+      expect(escapeCharacters(`{"memo":"123"}`)).toEqual(`{"memo":"123"}`);
+      expect(escapeCharacters(`{"memo":"\\u0026"}`)).toEqual(`{"memo":"\\u0026"}`);
 
-      expect(JSON.parse(fromUtf8(utf8Encoding))).toEqual(JSON.parse(fromUtf8(escapedEncoding)));
+      // Escapes one
+      expect(escapeCharacters(`{"m":"with amp: &"}`)).toEqual(`{"m":"with amp: \\u0026"}`);
+      expect(escapeCharacters(`{"m":"with lt: <"}`)).toEqual(`{"m":"with lt: \\u003c"}`);
+      expect(escapeCharacters(`{"m":"with gt: >"}`)).toEqual(`{"m":"with gt: \\u003e"}`);
+      // Escapes multiple
+      expect(escapeCharacters(`{"m":"with amp: &&"}`)).toEqual(`{"m":"with amp: \\u0026\\u0026"}`);
+      expect(escapeCharacters(`{"m":"with lt: <<"}`)).toEqual(`{"m":"with lt: \\u003c\\u003c"}`);
+      expect(escapeCharacters(`{"m":"with gt: >>"}`)).toEqual(`{"m":"with gt: \\u003e\\u003e"}`);
+      expect(escapeCharacters(`{"m":"with all: &<>"}`)).toEqual(`{"m":"with all: \\u0026\\u003c\\u003e"}`);
+    });
+
+    it("escaped encoding can be decoded to the same document", () => {
+      const docs = [
+        { memo: "ampersand:&,lt:<,gt:>", value: 123.421 },
+        "",
+        123,
+        ["foo", "ampersand:&,lt:<,gt:>"],
+      ];
+
+      for (const doc of docs) {
+        const normalEncoding = JSON.stringify(doc);
+        const escapedEncoding = escapeCharacters(normalEncoding);
+        expect(JSON.parse(escapedEncoding)).toEqual(JSON.parse(normalEncoding));
+        expect(JSON.parse(escapedEncoding)).toEqual(doc);
+      }
     });
   });
 });

@@ -72,35 +72,28 @@ export function makeSignDoc(
   };
 }
 
-export function escapeCharacters(encodedArray: Uint8Array): Uint8Array {
-  const AmpersandUnicode = new Uint8Array([92, 117, 48, 48, 50, 54]);
-  const LtSignUnicode = new Uint8Array([92, 117, 48, 48, 51, 99]);
-  const GtSignUnicode = new Uint8Array([92, 117, 48, 48, 51, 101]);
-
-  const AmpersandAscii = 38;
-  const LtSign = 60; // <
-  const GtSign = 62; // >
-
-  const filteredIndex: number[] = [];
-  encodedArray.forEach((value, index) => {
-    if (value === AmpersandAscii || value === LtSign || value === GtSign) filteredIndex.push(index);
-  });
-
-  let result = new Uint8Array([...encodedArray]);
-  const reversedFilteredIndex = filteredIndex.reverse();
-  reversedFilteredIndex.forEach((value) => {
-    let unicode = AmpersandUnicode;
-    if (result[value] === LtSign) {
-      unicode = LtSignUnicode;
-    } else if (result[value] === GtSign) {
-      unicode = GtSignUnicode;
-    }
-    result = new Uint8Array([...result.slice(0, value), ...unicode, ...result.slice(value + 1)]);
-  });
-
-  return result;
+/**
+ * Takes a valid JSON document and performs the following escapings in string values:
+ *
+ * `&` -> `\u0026`
+ * `<` -> `\u003c`
+ * `>` -> `\u003e`
+ *
+ * Since those characters do not occur in other places of the JSON document, only
+ * string values are affected.
+ *
+ * If the input is invalid JSON, the behaviour is undefined.
+ */
+export function escapeCharacters(input: string): string {
+  // When we migrate to target es2021 or above, we can use replaceAll instead of global patterns.
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll
+  const amp = /&/g;
+  const lt = /</g;
+  const gt = />/g;
+  return input.replace(amp, "\\u0026").replace(lt, "\\u003c").replace(gt, "\\u003e");
 }
 
 export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
-  return escapeCharacters(toUtf8(sortedJsonStringify(signDoc)));
+  const serialized = escapeCharacters(sortedJsonStringify(signDoc));
+  return toUtf8(serialized);
 }
