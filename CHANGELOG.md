@@ -6,6 +6,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/amino: Fix escaping of "&", "<" and ">" characters in Amino JSON
+  encoding to match the Go implementation ([#1373], [#1388]).
+
+[#1373]: https://github.com/cosmos/cosmjs/pull/1373
+[#1388]: https://github.com/cosmos/cosmjs/pull/1388
+
 ## [0.30.0] - 2023-03-09
 
 ### Changed
