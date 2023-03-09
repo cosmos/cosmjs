@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Random } from "@cosmjs/crypto";
-import { toBech32 } from "@cosmjs/encoding";
+import { fromUtf8, toBech32, toUtf8 } from "@cosmjs/encoding";
 
-import { AminoMsg, makeSignDoc, sortedJsonStringify } from "./signdoc";
+import { AminoMsg, escapeCharacters, makeSignDoc, sortedJsonStringify } from "./signdoc";
 
 function makeRandomAddress(): string {
   return toBech32("cosmos", Random.getBytes(20));
@@ -130,6 +130,16 @@ describe("encoding", () => {
         sequence: sequence.toString(),
         memo: "",
       });
+    });
+  });
+
+  describe("escape characters after utf8 encoding", () => {
+    it("works", () => {
+      const test = JSON.stringify({ memo: "ampersand:&,lt:<,gt:>" });
+      const utf8Encoding = toUtf8(test);
+      const escapedEncoding = escapeCharacters(utf8Encoding);
+
+      expect(JSON.parse(fromUtf8(utf8Encoding))).toEqual(JSON.parse(fromUtf8(escapedEncoding)));
     });
   });
 });
