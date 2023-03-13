@@ -72,6 +72,28 @@ export function makeSignDoc(
   };
 }
 
+/**
+ * Takes a valid JSON document and performs the following escapings in string values:
+ *
+ * `&` -> `\u0026`
+ * `<` -> `\u003c`
+ * `>` -> `\u003e`
+ *
+ * Since those characters do not occur in other places of the JSON document, only
+ * string values are affected.
+ *
+ * If the input is invalid JSON, the behaviour is undefined.
+ */
+export function escapeCharacters(input: string): string {
+  // When we migrate to target es2021 or above, we can use replaceAll instead of global patterns.
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll
+  const amp = /&/g;
+  const lt = /</g;
+  const gt = />/g;
+  return input.replace(amp, "\\u0026").replace(lt, "\\u003c").replace(gt, "\\u003e");
+}
+
 export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
-  return toUtf8(sortedJsonStringify(signDoc));
+  const serialized = escapeCharacters(sortedJsonStringify(signDoc));
+  return toUtf8(serialized);
 }
