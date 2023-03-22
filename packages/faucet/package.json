@@ -11,6 +11,7 @@
     "cosmos-faucet": "bin/cosmos-faucet"
   },
   "files": [
+    "bin/",
     "build/",
     "*.md",
     "!*.spec.*",

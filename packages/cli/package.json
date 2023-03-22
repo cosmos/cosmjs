@@ -33,6 +33,7 @@
     "cosmjs-cli": "bin/cosmjs-cli"
   },
   "files": [
+    "bin/",
     "build/",
     "tsconfig_repl.json",
     "*.md",
