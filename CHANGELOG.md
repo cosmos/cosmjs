@@ -13,6 +13,8 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Move version check from
   `Tendermint{34,37}Client.create` to `.connect` in order to allow creating
   clients without performing the extra network request ([#1358]).
+- @cosmjs/cli, @cosmjs/faucet: Add missing `bin/` directory to the
+  package.json's `files` list to ship it as part of the released package.
 
 [#1358]: https://github.com/cosmos/cosmjs/issues/1358
 [#1373]: https://github.com/cosmos/cosmjs/pull/1373
