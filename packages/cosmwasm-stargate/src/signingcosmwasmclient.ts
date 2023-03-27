@@ -559,7 +559,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   /**
    * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
-   * 
+   *
    * This method is useful if you want to send a transaction in broadcast,
    * without waiting for it to be placed inside a block, because for example
    * I would like to receive the hash to later track the transaction with another tool.
@@ -568,7 +568,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * @param messages
    * @param fee
    * @param memo
-   * 
+   *
    * @returns Returns the hash of the transaction
    */
   public async signAndBroadcastWithoutPolling(
