@@ -499,12 +499,10 @@ export class StargateClient {
    *
    * If the transaction is broadcasted, a `string` containing the hash of the transaction is returned. The caller then
    * usually needs to check if the transaction was included in a block and was successful.
-   * 
+   *
    * @returns Returns the hash of the transaction
    */
-  public async broadcastTxWithoutPolling(
-    tx: Uint8Array,
-  ): Promise<string> {
+  public async broadcastTxWithoutPolling(tx: Uint8Array): Promise<string> {
     const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
 
     if (broadcasted.code) {
