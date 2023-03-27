@@ -311,6 +311,32 @@ export class SigningStargateClient extends StargateClient {
   }
 
   /**
+   * This method is useful if you want to send a transaction in broadcast,
+   * without waiting for it to be placed inside a block, because for example
+   * I would like to receive the hash to later track the transaction with another tool.
+   * @returns Returns the hash of the transaction
+   */
+  public async signAndBroadcastWithoutPolling(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee | "auto" | number,
+    memo = "",
+  ): Promise<string> {
+    let usedFee: StdFee;
+    if (fee == "auto" || typeof fee === "number") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const multiplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txBytes = TxRaw.encode(txRaw).finish();
+    return this.broadcastTxWithoutPolling(txBytes);
+  }
+
+  /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature and assembles the signed transaction.
    *
