@@ -275,11 +275,7 @@ describe("multisignature", () => {
       // From here on, no private keys are required anymore. Any anonymous entity
       // can collect, assemble and broadcast.
       {
-        const multisigPubkey = createMultisigThresholdPubkey(
-          [pubkey0, pubkey1, pubkey2, pubkey3, pubkey4],
-          2,
-        );
-        expect(pubkeyToAddress(multisigPubkey, "cosmos")).toEqual(multisigAccountAddress);
+        const multisigPubkey = await multisig();
 
         const address0 = pubkeyToAddress(pubkey0, "cosmos");
         const address1 = pubkeyToAddress(pubkey1, "cosmos");
