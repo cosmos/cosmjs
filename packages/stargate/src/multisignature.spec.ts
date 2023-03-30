@@ -187,6 +187,25 @@ describe("multisignature", () => {
   describe("makeMultisignedTxBytes", () => {
     const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
 
+    async function multisig(): Promise<MultisigThresholdPubkey> {
+      // In practice we don't need this wallet. Only the pubkeys are needed.
+      const allPubkeysWallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+        hdPaths: [
+          makeCosmoshubPath(0),
+          makeCosmoshubPath(1),
+          makeCosmoshubPath(2),
+          makeCosmoshubPath(3),
+          makeCosmoshubPath(4),
+        ],
+      });
+      const multisigPubkey = createMultisigThresholdPubkey(
+        (await allPubkeysWallet.getAccounts()).map((a) => encodeSecp256k1Pubkey(a.pubkey)),
+        2,
+      );
+      expect(pubkeyToAddress(multisigPubkey, "cosmos")).toEqual(multisigAccountAddress);
+      return multisigPubkey;
+    }
+
     it("works for Amino JSON sign mode", async () => {
       pendingWithoutSimapp();
 
@@ -300,22 +319,6 @@ describe("multisignature", () => {
         const accountOnChain = await client.getAccount(multisigAccountAddress);
         assert(accountOnChain, "Account does not exist on chain");
 
-        // In practice we don't need this wallet. Only the pubkeys are needed.
-        const allPubkeysWallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
-          hdPaths: [
-            makeCosmoshubPath(0),
-            makeCosmoshubPath(1),
-            makeCosmoshubPath(2),
-            makeCosmoshubPath(3),
-            makeCosmoshubPath(4),
-          ],
-        });
-        const multisigPubkey = createMultisigThresholdPubkey(
-          (await allPubkeysWallet.getAccounts()).map((a) => encodeSecp256k1Pubkey(a.pubkey)),
-          2,
-        );
-        expect(pubkeyToAddress(multisigPubkey, "cosmos")).toEqual(multisigAccountAddress);
-
         const msgSend: MsgSend = {
           fromAddress: multisigAccountAddress,
           toAddress: "cosmos19rvl6ja9h0erq9dc2xxfdzypc739ej8k5esnhg",
@@ -334,7 +337,7 @@ describe("multisignature", () => {
         return {
           msgs: [msg],
           chainId: await client.getChainId(),
-          multisigPubkey,
+          multisigPubkey: await multisig(),
           accountNumber: accountOnChain.accountNumber,
           sequence: accountOnChain.sequence,
           signers: [true, true, true, true, true],
