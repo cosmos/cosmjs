@@ -5,8 +5,8 @@ import {
   pubkeyToAddress,
   Secp256k1HdWallet,
 } from "@cosmjs/amino";
-import { coins } from "@cosmjs/proto-signing";
-import { assert } from "@cosmjs/utils";
+import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { assert, sleep } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
 import { MsgSendEncodeObject } from "./modules";
@@ -169,9 +169,10 @@ describe("multisignature", () => {
   });
 
   describe("makeMultisignedTxBytes", () => {
-    it("works", async () => {
+    const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
+
+    it("works for Amino JSON sign mode", async () => {
       pendingWithoutSimapp();
-      const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
 
       // On the composer's machine signing instructions are created.
       // The composer does not need to be one of the signers.
@@ -213,7 +214,7 @@ describe("multisignature", () => {
         [pubkey4, signature4],
       ] = await Promise.all(
         [0, 1, 2, 3, 4].map(async (i) => {
-          // Signing environment
+          // Signing environment. Secp256k1HdWallet only supports Amino JSON signing.
           const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
             hdPaths: [makeCosmoshubPath(i)],
           });
@@ -264,6 +265,119 @@ describe("multisignature", () => {
             [address3, signature3],
             [address4, signature4],
           ]),
+        );
+        // ensure signature is valid
+        const result = await broadcaster.broadcastTx(signedTx);
+        assertIsDeliverTxSuccess(result);
+      }
+    });
+
+    it("works for Direct sign mode", async () => {
+      pendingWithoutSimapp();
+
+      await sleep(500);
+
+      // On the composer's machine signing instructions are created.
+      // The composer does not need to be one of the signers.
+      const signingInstruction = await (async () => {
+        const client = await StargateClient.connect(simapp.tendermintUrl);
+        const accountOnChain = await client.getAccount(multisigAccountAddress);
+        assert(accountOnChain, "Account does not exist on chain");
+
+        // In practice we don't need this wallet. Only the pubkeys are needed.
+        const allPubkeysWallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+          hdPaths: [
+            makeCosmoshubPath(0),
+            makeCosmoshubPath(1),
+            makeCosmoshubPath(2),
+            makeCosmoshubPath(3),
+            makeCosmoshubPath(4),
+          ],
+        });
+        const multisigPubkey = createMultisigThresholdPubkey(
+          (await allPubkeysWallet.getAccounts()).map((a) => encodeSecp256k1Pubkey(a.pubkey)),
+          2,
+        );
+        expect(pubkeyToAddress(multisigPubkey, "cosmos")).toEqual(multisigAccountAddress);
+
+        const msgSend: MsgSend = {
+          fromAddress: multisigAccountAddress,
+          toAddress: "cosmos19rvl6ja9h0erq9dc2xxfdzypc739ej8k5esnhg",
+          amount: coins(1234, "ucosm"),
+        };
+        const msg: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const gasLimit = 200000;
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: gasLimit.toString(),
+        };
+
+        return {
+          msgs: [msg],
+          chainId: await client.getChainId(),
+          multisigPubkey,
+          accountNumber: accountOnChain.accountNumber,
+          sequence: accountOnChain.sequence,
+          fee: fee,
+          memo: "Use your tokens wisely",
+        };
+      })();
+
+      const [
+        [pubkey0, signature0, bodyBytes],
+        [pubkey1, signature1],
+        [pubkey2, signature2],
+        [pubkey3, signature3],
+        [pubkey4, signature4],
+      ] = await Promise.all(
+        [0, 1, 2, 3, 4].map(async (i) => {
+          // Signing environment. DirectSecp256k1HdWallet only supports Direct signing.
+          const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+            hdPaths: [makeCosmoshubPath(i)],
+          });
+          const pubkey = encodeSecp256k1Pubkey((await wallet.getAccounts())[0].pubkey);
+          const address = (await wallet.getAccounts())[0].address;
+          const signingClient = await SigningStargateClient.offline(wallet);
+          const { bodyBytes: bb, signatures } = await signingClient.signDirectForMultisig(
+            address,
+            signingInstruction.msgs,
+            signingInstruction.chainId,
+            signingInstruction.multisigPubkey,
+            signingInstruction.sequence,
+            signingInstruction.accountNumber,
+            signingInstruction.fee,
+            signingInstruction.memo,
+          );
+          return [pubkey, signatures[0], bb] as const;
+        }),
+      );
+
+      // From here on, no private keys are required anymore. Any anonymous entity
+      // can collect, assemble and broadcast.
+      {
+        const address0 = pubkeyToAddress(pubkey0, "cosmos");
+        const address1 = pubkeyToAddress(pubkey1, "cosmos");
+        const address2 = pubkeyToAddress(pubkey2, "cosmos");
+        const address3 = pubkeyToAddress(pubkey3, "cosmos");
+        const address4 = pubkeyToAddress(pubkey4, "cosmos");
+
+        const broadcaster = await StargateClient.connect(simapp.tendermintUrl);
+        const signedTx = makeMultisignedTxBytes(
+          signingInstruction.multisigPubkey,
+          signingInstruction.sequence,
+          signingInstruction.fee,
+          bodyBytes,
+          new Map<string, Uint8Array>([
+            [address0, signature0],
+            [address1, signature1],
+            [address2, signature2],
+            [address3, signature3],
+            [address4, signature4],
+          ]),
+          "direct",
         );
         // ensure signature is valid
         const result = await broadcaster.broadcastTx(signedTx);
