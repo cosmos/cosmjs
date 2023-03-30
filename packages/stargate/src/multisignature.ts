@@ -27,18 +27,19 @@ export function makeAuthInfoBytesForMultisig(
   sequence: number,
   fee: StdFee,
   signers: boolean[],
-  signMode: "amino_json" | "direct",
+  signModes: Array<"amino_json" | "direct">,
 ): Uint8Array {
-  const mode: SignMode =
-    signMode == "direct" ? SignMode.SIGN_MODE_DIRECT : SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
   const signerInfo: SignerInfo = {
     publicKey: encodePubkey(multisigPubkey),
     modeInfo: {
       multi: {
         bitarray: makeCompactBitArray(signers),
-        modeInfos: signers.map((_) => ({
+        // This feels needs one entry per actual signature
+        modeInfos: signModes.map((signMode) => ({
           // here we assume the signers themselves are no multisigs
-          single: { mode },
+          single: {
+            mode: signMode === "direct" ? SignMode.SIGN_MODE_DIRECT : SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
+          },
         })),
       },
     },
@@ -87,7 +88,13 @@ export function makeMultisignedTx(
     }
   }
 
-  const authInfoBytes = makeAuthInfoBytesForMultisig(multisigPubkey, sequence, fee, signers, signMode);
+  const authInfoBytes = makeAuthInfoBytesForMultisig(
+    multisigPubkey,
+    sequence,
+    fee,
+    signers,
+    signaturesList.map((_sig) => signMode),
+  );
   const signedTx = TxRaw.fromPartial({
     bodyBytes: bodyBytes,
     authInfoBytes: authInfoBytes,

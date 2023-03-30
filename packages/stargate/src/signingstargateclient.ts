@@ -378,12 +378,14 @@ export class SigningStargateClient extends StargateClient {
       },
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);
+    // Make list of sign modes. One entry per signature.
+    const signModes = multisigSigners.filter((signed) => signed).map((_) => "direct" as const);
     const authInfoBytes = makeAuthInfoBytesForMultisig(
       multisigPubkey,
       multisigSequence,
       fee,
       multisigSigners,
-      "direct",
+      signModes,
     );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, multisigAccountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
