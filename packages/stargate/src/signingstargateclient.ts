@@ -358,6 +358,7 @@ export class SigningStargateClient extends StargateClient {
     multisigPubkey: MultisigThresholdPubkey,
     multisigSequence: number,
     multisigAccountNumber: number,
+    multisigSigners: boolean[],
     fee: StdFee,
     memo: string,
   ): Promise<TxRaw> {
@@ -377,12 +378,11 @@ export class SigningStargateClient extends StargateClient {
       },
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);
-    const signers = [true, true, true, true, true];
     const authInfoBytes = makeAuthInfoBytesForMultisig(
       multisigPubkey,
       multisigSequence,
       fee,
-      signers,
+      multisigSigners,
       "direct",
     );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, multisigAccountNumber);

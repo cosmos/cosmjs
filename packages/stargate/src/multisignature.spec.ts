@@ -2,10 +2,12 @@ import {
   createMultisigThresholdPubkey,
   encodeSecp256k1Pubkey,
   makeCosmoshubPath,
+  MultisigThresholdPubkey,
   pubkeyToAddress,
   Secp256k1HdWallet,
+  StdFee,
 } from "@cosmjs/amino";
-import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { coins, DirectSecp256k1HdWallet, EncodeObject } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
@@ -168,6 +170,20 @@ describe("multisignature", () => {
     });
   });
 
+  interface SigningInstructionsAminoJson {
+    msgs: readonly EncodeObject[];
+    chainId: string;
+    sequence: number;
+    accountNumber: number;
+    fee: StdFee;
+    memo: string;
+  }
+
+  interface SigningInstructionsDirect extends SigningInstructionsAminoJson {
+    multisigPubkey: MultisigThresholdPubkey;
+    signers: boolean[];
+  }
+
   describe("makeMultisignedTxBytes", () => {
     const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
 
@@ -176,7 +192,7 @@ describe("multisignature", () => {
 
       // On the composer's machine signing instructions are created.
       // The composer does not need to be one of the signers.
-      const signingInstruction = await (async () => {
+      const signingInstruction: SigningInstructionsAminoJson = await (async () => {
         const client = await StargateClient.connect(simapp.tendermintUrl);
         const accountOnChain = await client.getAccount(multisigAccountAddress);
         assert(accountOnChain, "Account does not exist on chain");
@@ -279,7 +295,7 @@ describe("multisignature", () => {
 
       // On the composer's machine signing instructions are created.
       // The composer does not need to be one of the signers.
-      const signingInstruction = await (async () => {
+      const signingInstruction: SigningInstructionsDirect = await (async () => {
         const client = await StargateClient.connect(simapp.tendermintUrl);
         const accountOnChain = await client.getAccount(multisigAccountAddress);
         assert(accountOnChain, "Account does not exist on chain");
@@ -321,6 +337,7 @@ describe("multisignature", () => {
           multisigPubkey,
           accountNumber: accountOnChain.accountNumber,
           sequence: accountOnChain.sequence,
+          signers: [true, true, true, true, true],
           fee: fee,
           memo: "Use your tokens wisely",
         };
@@ -348,6 +365,7 @@ describe("multisignature", () => {
             signingInstruction.multisigPubkey,
             signingInstruction.sequence,
             signingInstruction.accountNumber,
+            signingInstruction.signers,
             signingInstruction.fee,
             signingInstruction.memo,
           );
