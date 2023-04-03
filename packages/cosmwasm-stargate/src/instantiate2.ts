@@ -65,5 +65,8 @@ export function instantiate2Address(
   salt: Uint8Array,
   prefix: string,
 ): string {
-  return _instantiate2AddressIntermediate(checksum, creator, salt, null, prefix).address;
+  // Non-empty msg values are discouraged.
+  // See https://medium.com/cosmwasm/dev-note-3-limitations-of-instantiate2-and-how-to-deal-with-them-a3f946874230.
+  const msg = null;
+  return _instantiate2AddressIntermediate(checksum, creator, salt, msg, prefix).address;
 }
