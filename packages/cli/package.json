@@ -67,7 +67,7 @@
     "@types/diff": "^4",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",
-    "@types/node": "^15.0.1",
+    "@types/node": "^18",
     "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
