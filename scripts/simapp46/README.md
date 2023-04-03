@@ -5,7 +5,7 @@
 Run the following:
 
 ```
-cd scripts/simapp44
+cd scripts/simapp46
 ./start.sh
 ```
 
