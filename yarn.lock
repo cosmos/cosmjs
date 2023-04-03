@@ -329,8 +329,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -355,7 +355,7 @@ __metadata:
     "@types/diff": ^4
     "@types/eslint-plugin-prettier": ^3
     "@types/jasmine": ^4
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@types/yargs": ^15.0.4
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
@@ -378,7 +378,7 @@ __metadata:
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.6
+    typescript: ~4.9
     yargs: ^15.3.1
   bin:
     cosmjs-cli: bin/cosmjs-cli
@@ -404,7 +404,7 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/long": ^4.0.1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@types/pako": ^1.0.1
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
@@ -433,8 +433,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -457,7 +457,7 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/libsodium-wrappers": ^0.7.7
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     bn.js: ^5.2.0
@@ -484,8 +484,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -502,7 +502,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     base64-js: ^1.3.0
@@ -528,8 +528,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -545,7 +545,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     axios: ^0.21.2
@@ -569,8 +569,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -611,7 +611,7 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.6
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   bin:
@@ -652,8 +652,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -699,8 +699,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -741,8 +741,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -764,7 +764,7 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/long": ^4.0.1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     cosmjs-types: ^0.7.1
@@ -790,8 +790,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -832,8 +832,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
     ws: ^7
@@ -861,7 +861,7 @@ __metadata:
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
     "@types/long": ^4.0.1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     cosmjs-types: ^0.7.1
@@ -888,8 +888,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -906,7 +906,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     eslint: ^7.5
@@ -929,8 +929,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -954,7 +954,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     axios: ^0.21.2
@@ -979,8 +979,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -997,7 +997,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/node": ^15.0.1
+    "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
     buffer: ^6.0.3
@@ -1021,8 +1021,8 @@ __metadata:
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typedoc: ^0.22
-    typescript: ~4.6
+    typedoc: ^0.23
+    typescript: ~4.9
     webpack: ^5.76.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -1730,10 +1730,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:>=13.7.0, @types/node@npm:^15.0.1":
-  version: 15.9.0
-  resolution: "@types/node@npm:15.9.0"
-  checksum: 6ba9033ee00cf2fd260755d7aeeb65d6287f507473e54c1bce0dbd687c03245aff636580c8dc9215bea16cc32096d60344d00a9cb0a110c9baaca885573dc402
+"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:>=13.7.0, @types/node@npm:^18":
+  version: 18.15.11
+  resolution: "@types/node@npm:18.15.11"
+  checksum: 977b4ad04708897ff0eb049ecf82246d210939c82461922d20f7d2dcfd81bbc661582ba3af28869210f7e8b1934529dcd46bff7d448551400f9d48b9d3bddec3
   languageName: node
   linkType: hard
 
@@ -2269,6 +2269,13 @@ __metadata:
   version: 5.0.1
   resolution: "ansi-regex@npm:5.0.1"
   checksum: 2aa4bb54caf2d622f1afdad09441695af2a83aa3fe8b8afa581d205e57ed4261c183c4d3877cee25794443fde5876417d859c108078ab788d6af7e4fe52eb66b
+  languageName: node
+  linkType: hard
+
+"ansi-sequence-parser@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "ansi-sequence-parser@npm:1.1.0"
+  checksum: 75f4d3a4c555655a698aec05b5763cbddcd16ccccdbfd178fb0aa471ab74fdf98e031b875ef26e64be6a95cf970c89238744b26de6e34af97f316d5186b1df53
   languageName: node
   linkType: hard
 
@@ -2971,7 +2978,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:^"
     eslint: ^7.5
     prettier: ^2.8.1
-    typescript: ~4.6
+    typescript: ~4.9
   languageName: unknown
   linkType: soft
 
@@ -3926,7 +3933,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -4036,19 +4043,6 @@ __metadata:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: 78a8ea942331f08ed2e055cb5b9e40fe6f46f579d7fd3d694f3412fe5db23223d29b7fee1575440202e9a7ff9a72ab106a39fee39934c7bedafe5e5f8ae20134
-  languageName: node
-  linkType: hard
-
-"glob@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "glob@npm:8.0.3"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^5.0.1
-    once: ^1.3.0
-  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
   languageName: node
   linkType: hard
 
@@ -4898,10 +4892,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-parser@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "jsonc-parser@npm:3.0.0"
-  checksum: 1df2326f1f9688de30c70ff19c5b2a83ba3b89a1036160da79821d1361090775e9db502dc57a67c11b56e1186fc1ed70b887f25c5febf9a3ec4f91435836c99d
+"jsonc-parser@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jsonc-parser@npm:3.2.0"
+  checksum: 946dd9a5f326b745aa326d48a7257e3f4a4b62c5e98ec8e49fa2bdd8d96cef7e6febf1399f5c7016114fd1f68a1c62c6138826d5d90bc650448e3cf0951c53c7
   languageName: node
   linkType: hard
 
@@ -5246,12 +5240,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.16":
-  version: 4.0.17
-  resolution: "marked@npm:4.0.17"
+"marked@npm:^4.2.12":
+  version: 4.3.0
+  resolution: "marked@npm:4.3.0"
   bin:
     marked: bin/marked.js
-  checksum: 33a3c43a20b47bddaf045a59bfc7c3d41cc321931cc663ed231ca3b5b3b195fb2ac2973e687c2afd65b79539c14619baa07d19793f70130160f0af80c06d9b3a
+  checksum: 0db6817893952c3ec710eb9ceafb8468bf5ae38cb0f92b7b083baa13d70b19774674be04db5b817681fa7c5c6a088f61300815e4dd75a59696f4716ad69f6260
   languageName: node
   linkType: hard
 
@@ -5348,12 +5342,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "minimatch@npm:5.1.0"
+"minimatch@npm:^7.1.3":
+  version: 7.4.4
+  resolution: "minimatch@npm:7.4.4"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
+  checksum: a96494db558cda25cf2f75c25b136f6c91543d72871d92b8b251691dcf578b5e64b679d64427cee609a1bf6a63cf233e171cb9d04d04c3c9ec3b6100c3b72f8e
   languageName: node
   linkType: hard
 
@@ -6414,7 +6408,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#~builtin<compat/resolve>":
   version: 1.20.0
-  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=c3c19d"
   dependencies:
     is-core-module: ^2.2.0
     path-parse: ^1.0.6
@@ -6609,14 +6603,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^0.10.1":
-  version: 0.10.1
-  resolution: "shiki@npm:0.10.1"
+"shiki@npm:^0.14.1":
+  version: 0.14.1
+  resolution: "shiki@npm:0.14.1"
   dependencies:
-    jsonc-parser: ^3.0.0
-    vscode-oniguruma: ^1.6.1
-    vscode-textmate: 5.2.0
-  checksum: fb746f3cb3de7e545e3b10a6cb658d3938f840e4ccc9a3c90ceb7e69a8f89dbb432171faac1e9f02a03f103684dad88ee5e54b5c4964fa6b579fca6e8e26424d
+    ansi-sequence-parser: ^1.1.0
+    jsonc-parser: ^3.2.0
+    vscode-oniguruma: ^1.7.0
+    vscode-textmate: ^8.0.0
+  checksum: b19ea337cc84da69d99ca39d109f82946e0c56c11cc4c67b3b91cc14a9479203365fd0c9e0dd87e908f493ab409dc6f1849175384b6ca593ce7da884ae1edca2
   languageName: node
   linkType: hard
 
@@ -7266,40 +7261,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.22":
-  version: 0.22.18
-  resolution: "typedoc@npm:0.22.18"
+"typedoc@npm:^0.23":
+  version: 0.23.28
+  resolution: "typedoc@npm:0.23.28"
   dependencies:
-    glob: ^8.0.3
     lunr: ^2.3.9
-    marked: ^4.0.16
-    minimatch: ^5.1.0
-    shiki: ^0.10.1
+    marked: ^4.2.12
+    minimatch: ^7.1.3
+    shiki: ^0.14.1
   peerDependencies:
-    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x || 4.5.x || 4.6.x || 4.7.x
+    typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x
   bin:
     typedoc: bin/typedoc
-  checksum: b813d8129682f6ed5a4e96bacaf019e4da1d2744ca89fef850d6bb4c034616567ce67e6a7f5cfc5f00aac573f0b45d44b1427aafa262ab88dce6b460cb9e744c
+  checksum: 40eb4e207aac1b734e09400cf03f543642cc7b11000895198dd5a0d3166315759ccf4ac30a2915153597c5c186101c72bac2f1fc12b428184a9274d3a0e44c5e
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.6":
-  version: 4.6.4
-  resolution: "typescript@npm:4.6.4"
+"typescript@npm:~4.9":
+  version: 4.9.5
+  resolution: "typescript@npm:4.9.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
+  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.6#~builtin<compat/typescript>":
-  version: 4.6.4
-  resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=701156"
+"typescript@patch:typescript@~4.9#~builtin<compat/typescript>":
+  version: 4.9.5
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
+  checksum: ab417a2f398380c90a6cf5a5f74badd17866adf57f1165617d6a551f059c3ba0a3e4da0d147b3ac5681db9ac76a303c5876394b13b3de75fdd5b1eaa06181c9d
   languageName: node
   linkType: hard
 
@@ -7428,17 +7422,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-oniguruma@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "vscode-oniguruma@npm:1.6.1"
-  checksum: b019563a0d48b08c26b66c9f8729ed4ca2620b3b09c6957d5e622f0f104574bec48c7ba575bd157da40fb9a03c03495704894e3ed2d799d80a7180e3051b1f10
+"vscode-oniguruma@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "vscode-oniguruma@npm:1.7.0"
+  checksum: 53519d91d90593e6fb080260892e87d447e9b200c4964d766772b5053f5699066539d92100f77f1302c91e8fc5d9c772fbe40fe4c90f3d411a96d5a9b1e63f42
   languageName: node
   linkType: hard
 
-"vscode-textmate@npm:5.2.0":
-  version: 5.2.0
-  resolution: "vscode-textmate@npm:5.2.0"
-  checksum: 5449b42d451080f6f3649b66948f4b5ee4643c4e88cfe3558a3b31c84c78060cfdd288c4958c1690eaa5cd65d09992fa6b7c3bef9d4aa72b3651054a04624d20
+"vscode-textmate@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "vscode-textmate@npm:8.0.0"
+  checksum: 127780dfea89559d70b8326df6ec344cfd701312dd7f3f591a718693812b7852c30b6715e3cfc8b3200a4e2515b4c96f0843c0eacc0a3020969b5de262c2a4bb
   languageName: node
   linkType: hard
 
