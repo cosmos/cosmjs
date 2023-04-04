@@ -23,8 +23,8 @@ import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/
 import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
-import { instantiate2Address } from "./instantiate2";
 
+import { instantiate2Address } from "./instantiate2";
 import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
