@@ -18,6 +18,7 @@ export {
   MsgUpdateAdminEncodeObject,
   setupWasmExtension,
   WasmExtension,
+  wasmTypes,
 } from "./modules";
 export {
   ChangeAdminResult,
