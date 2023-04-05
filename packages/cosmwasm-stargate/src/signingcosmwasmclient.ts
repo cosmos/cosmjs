@@ -55,13 +55,13 @@ import {
   JsonObject,
   MsgClearAdminEncodeObject,
   MsgExecuteContractEncodeObject,
+  MsgInstantiateContract2EncodeObject,
   MsgInstantiateContractEncodeObject,
   MsgMigrateContractEncodeObject,
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   wasmTypes,
 } from "./modules";
-import { MsgInstantiateContract2EncodeObject } from "./modules/wasm/messages";
 
 export interface UploadResult {
   /** Size of the original wasm code in bytes */
@@ -85,7 +85,7 @@ export interface UploadResult {
 }
 
 /**
- * The options of an .instantiate() call.
+ * The options of .instantiate() and .instantiate2() call.
  * All properties are optional.
  */
 export interface InstantiateOptions {
@@ -103,38 +103,6 @@ export interface InstantiateOptions {
    * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
    */
   readonly admin?: string;
-}
-
-/**
- * The options of an .instantiate() call.
- * All properties are optional.
- */
-export interface Instantiate2Options {
-  readonly memo?: string;
-  /**
-   * The funds that are transferred from the sender to the newly created contract.
-   * The funds are transferred as part of the message execution after the contract address is
-   * created and before the instantiation message is executed by the contract.
-   *
-   * Only native tokens are supported.
-   */
-  readonly funds?: readonly Coin[];
-  /**
-   * A bech32 encoded address of an admin account.
-   * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
-   */
-  readonly admin?: string;
-
-  /**
-   * salt is an arbitrary value provided by the sender. Size can be 1 to 64.
-   */
-  readonly salt?: Uint8Array;
-
-  /**
-   * FixMsg include the msg value into the hash for the predictable address.
-   * Default is false
-   */
-  readonly fixMsg?: boolean;
 }
 
 export interface InstantiateResult {
@@ -372,10 +340,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate2(
     senderAddress: string,
     codeId: number,
-    msg: Record<string, unknown>,
+    salt: Uint8Array,
+    msg: JsonObject,
     label: string,
     fee: StdFee | "auto" | number,
-    options: Instantiate2Options = {},
+    options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateContract2Msg: MsgInstantiateContract2EncodeObject = {
       typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract2",
@@ -386,8 +355,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
         admin: options.admin,
-        salt: options.salt,
-        fixMsg: options.fixMsg,
+        salt: salt,
+        fixMsg: false,
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [instantiateContract2Msg], fee, options.memo);
