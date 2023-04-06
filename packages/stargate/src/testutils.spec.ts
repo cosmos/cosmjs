@@ -27,12 +27,6 @@ export function simappEnabled(): boolean {
   return simapp44Enabled() || simapp46Enabled();
 }
 
-export function pendingWithoutSimapp44Or46(): void {
-  if (!simapp44Enabled() && !simapp46Enabled()) {
-    return pending("Set SIMAPP{44,46}_ENABLED to enable Simapp based tests");
-  }
-}
-
 export function pendingWithoutSimapp46(): void {
   if (!simapp46Enabled()) {
     return pending("Set SIMAPP46_ENABLED to enable Simapp based tests");
