@@ -7,8 +7,8 @@ import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";
 
 function pendingWithoutSimapp(): void {
-  if (!process.env.SIMAPP44_ENABLED && !process.env.SIMAPP46_ENABLED) {
-    return pending("Set SIMAPP{44,46}_ENABLED to enabled Stargate node-based tests");
+  if (!process.env.SIMAPP44_ENABLED && !process.env.SIMAPP46_ENABLED && !process.env.SIMAPP47_ENABLED) {
+    return pending("Set SIMAPP{44,46,47}_ENABLED to enabled Stargate node-based tests");
   }
 }
 

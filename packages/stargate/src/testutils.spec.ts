@@ -23,8 +23,12 @@ export function simapp46Enabled(): boolean {
   return !!process.env.SIMAPP46_ENABLED;
 }
 
+export function simapp47Enabled(): boolean {
+  return !!process.env.SIMAPP47_ENABLED;
+}
+
 export function simappEnabled(): boolean {
-  return simapp44Enabled() || simapp46Enabled();
+  return simapp44Enabled() || simapp46Enabled() || simapp47Enabled();
 }
 
 export function pendingWithoutSimapp46(): void {
@@ -35,17 +39,21 @@ export function pendingWithoutSimapp46(): void {
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP{44,46}_ENABLED to enable Simapp based tests");
+    return pending("Set SIMAPP{44,46,47}_ENABLED to enable Simapp based tests");
   }
 }
 
 export function slowSimappEnabled(): boolean {
-  return !!process.env.SLOW_SIMAPP44_ENABLED || !!process.env.SLOW_SIMAPP46_ENABLED;
+  return (
+    !!process.env.SLOW_SIMAPP44_ENABLED ||
+    !!process.env.SLOW_SIMAPP46_ENABLED ||
+    !!process.env.SLOW_SIMAPP47_ENABLED
+  );
 }
 
 export function pendingWithoutSlowSimapp(): void {
   if (!slowSimappEnabled()) {
-    return pending("Set SLOW_SIMAPP{44,46}_ENABLED to enable slow Simapp based tests");
+    return pending("Set SLOW_SIMAPP{44,46,47}_ENABLED to enable slow Simapp based tests");
   }
 }
 
