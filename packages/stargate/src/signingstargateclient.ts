@@ -12,7 +12,12 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { HttpEndpoint, Tendermint34Client, TendermintClient } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  Tendermint37Client,
+  TendermintClient,
+} from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -121,7 +126,18 @@ export class SigningStargateClient extends StargateClient {
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+    // Using 0.34 as the fallback.
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
     return SigningStargateClient.createWithSigner(tmClient, signer, options);
   }
 
