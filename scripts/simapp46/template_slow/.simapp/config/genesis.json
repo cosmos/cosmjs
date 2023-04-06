@@ -6,7 +6,7 @@
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
           "account_number": "0",
-          "address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
+          "address": "cosmos12nt2hqjps8r065wc02qks88tvqzdeua0ld3jxy",
           "pub_key": null,
           "sequence": "0"
         },
@@ -217,6 +217,19 @@
           ]
         },
         {
+          "address": "cosmos12nt2hqjps8r065wc02qks88tvqzdeua0ld3jxy",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "2000000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
           "address": "cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh",
           "coins": [
             {
@@ -386,19 +399,6 @@
           ]
         },
         {
-          "address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
-          "coins": [
-            {
-              "amount": "1000000000",
-              "denom": "ucosm"
-            },
-            {
-              "amount": "2000000000",
-              "denom": "ustake"
-            }
-          ]
-        },
-        {
           "address": "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta",
           "coins": [
             {
@@ -526,7 +526,7 @@
                 },
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "AtDcuH4cX1eaxZrJ5shheLG3tXPAoV4awoIZmNQtQxmf"
+                  "key": "A0RZ3+xLf9xJiySHQxQsQtW8HJYEcniJKbFxG2R9ZEQv"
                 },
                 "sequence": "0"
               }
@@ -535,7 +535,7 @@
           },
           "body": {
             "extension_options": [],
-            "memo": "ad7cdbcfe545eaaaea99378bc70bf22eef3401a4@172.17.0.2:26656",
+            "memo": "fac0774ed201669bde408e825964bb7385dd480a@172.17.0.3:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
@@ -544,7 +544,7 @@
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1urk9gy7cfws0ak9x5nu7lx4un9n6gqkry79679",
+                "delegator_address": "cosmos12nt2hqjps8r065wc02qks88tvqzdeua0ld3jxy",
                 "description": {
                   "details": "",
                   "identity": "",
@@ -555,9 +555,9 @@
                 "min_self_delegation": "1",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "cUJRDwHyty8ZMO3ctSqPvezcOP2SYp1SDCHd1/SpAuU="
+                  "key": "SCFgErmHrgS2Bl21oa6DZu3Ir2nMm3uwxyuQ7VmlYqg="
                 },
-                "validator_address": "cosmosvaloper1urk9gy7cfws0ak9x5nu7lx4un9n6gqkrp230jk",
+                "validator_address": "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
                 "value": {
                   "amount": "3000000",
                   "denom": "ustake"
@@ -568,7 +568,7 @@
             "timeout_height": "0"
           },
           "signatures": [
-            "XCvdrkjv/gl819FCH0rnfDiBm6xIc3Kj1EiN3c3tI/MSekAEEBqNT4FuFFtjVOgs5WT6RZTY75h1JxvHmMfm4g=="
+            "sEz8JeEL11vaOQA2q/1eIj25yMMYpuZDp4e0b/jEnA4jCD/S1oGafkrswdidVFYg5pvhI9+Svr30s/g7uasLJw=="
           ]
         }
       ]
@@ -675,6 +675,6 @@
     },
     "version": {}
   },
-  "genesis_time": "2022-08-03T15:03:38.08791355Z",
+  "genesis_time": "2023-04-06T15:57:19.191373211Z",
   "initial_height": "1"
 }
