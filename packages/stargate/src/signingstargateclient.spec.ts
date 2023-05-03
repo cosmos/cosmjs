@@ -204,7 +204,8 @@ describe("SigningStargateClient", () => {
             allowance: allowance,
           }),
         };
-        const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance");
+        const fee = 1.5; // See https://github.com/cosmos/cosmos-sdk/issues/16020
+        const grantResult = await client.signAndBroadcast(payer, [grantMsg], fee, "Create allowance");
         assertIsDeliverTxSuccess(grantResult);
       }
 
