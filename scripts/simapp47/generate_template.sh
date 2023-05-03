@@ -50,6 +50,27 @@ function inline_jq() {
 (
   cd "$SCRIPT_DIR"
 
+  # Set denom_metadata
+  inline_jq "template/.simapp/config/genesis.json" '.app_state.bank.denom_metadata |= [
+      {
+        "description": "The fee token of this test chain",
+        "denom_units": [
+          {
+            "denom": "ucosm",
+            "exponent": 0,
+            "aliases": []
+          },
+          {
+            "denom": "COSM",
+            "exponent": 6,
+            "aliases": []
+          }
+        ],
+        "base": "ucosm",
+        "display": "COSM"
+      }
+    ]'
+
   # Sort genesis
   inline_jq "template/.simapp/config/genesis.json" -S
 
