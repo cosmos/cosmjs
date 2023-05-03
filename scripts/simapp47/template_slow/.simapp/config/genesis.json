@@ -438,7 +438,25 @@
           ]
         }
       ],
-      "denom_metadata": [],
+      "denom_metadata": [
+        {
+          "base": "ucosm",
+          "denom_units": [
+            {
+              "aliases": [],
+              "denom": "ucosm",
+              "exponent": 0
+            },
+            {
+              "aliases": [],
+              "denom": "COSM",
+              "exponent": 6
+            }
+          ],
+          "description": "The fee token of this test chain",
+          "display": "COSM"
+        }
+      ],
       "params": {
         "default_send_enabled": true,
         "send_enabled": []
@@ -519,7 +537,7 @@
           },
           "body": {
             "extension_options": [],
-            "memo": "8e5b014eec6510721cf34841c725c170fcaf3e57@172.17.0.3:26656",
+            "memo": "944e0bef084d538e4036cdb3a1d085c87fe59c33@172.17.0.3:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
@@ -539,7 +557,7 @@
                 "min_self_delegation": "1",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "Laj3X5Ef63Q14Q2pvurKO2nzNX9x8DGxp04/XlIpfZ4="
+                  "key": "sMoYIHCxs+kV3tEoG8MGwuV25Hyq98mzngaEC7ymVL8="
                 },
                 "validator_address": "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
                 "value": {
@@ -552,7 +570,7 @@
             "timeout_height": "0"
           },
           "signatures": [
-            "qUWnEK+ZqE3coN7Niz+Ya75deMCXeKTYMGEkipavX9hABmZoOUnjX7nGQhavMqzPTJUBC5Z4/DZmXvwTXuOQwg=="
+            "kEX5WygKPd6Rp93M8jzOeRZVfb8mZY9FY3z7vT4rXv0eeqYP5c0GlfUaCxu4u0DkG1aWUgwv4la/UiRBomzZbA=="
           ]
         }
       ]
@@ -663,6 +681,6 @@
       "app": "0"
     }
   },
-  "genesis_time": "2023-04-06T15:54:56.783753131Z",
+  "genesis_time": "2023-05-03T16:40:20.890217591Z",
   "initial_height": "1"
 }
