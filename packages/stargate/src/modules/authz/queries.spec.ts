@@ -107,8 +107,11 @@ describe("AuthzExtension", () => {
       pendingWithoutSimapp46OrHigher();
       const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.granterGrants(granter1Address);
-      expect(response.grants.length).toEqual(1);
-      const grant = response.grants[0];
+      expect(response.grants.length).toBeGreaterThanOrEqual(1);
+      const grant = response.grants.find(
+        (g) => g.granter == granter1Address && g.grantee === grantee1Address,
+      );
+      assertDefined(grant, "Grant not found");
 
       // Needs to respond with a grant
       assertDefined(grant.authorization);
