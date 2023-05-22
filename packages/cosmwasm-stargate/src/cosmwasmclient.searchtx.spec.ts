@@ -235,9 +235,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const results = await client.searchTx(
-        `message.module='bank' AND transfer.sender='${sendSuccessful.sender}'`,
-      );
+      const results = await client.searchTx(`transfer.sender='${sendSuccessful.sender}'`);
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
@@ -266,9 +264,7 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
       pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const results = await client.searchTx(
-        `message.module='bank' AND transfer.recipient='${sendSuccessful.recipient}'`,
-      );
+      const results = await client.searchTx(`transfer.recipient='${sendSuccessful.recipient}'`);
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
