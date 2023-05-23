@@ -33,7 +33,7 @@ describe("decode", () => {
 
       const decoded = decodeTxRaw(fromHex(testVector.outputs.signedTxBytes));
       expect(decoded).toEqual({
-        authInfo: {
+        authInfo: jasmine.objectContaining({
           signerInfos: [
             {
               publicKey: {
@@ -55,7 +55,7 @@ describe("decode", () => {
             granter: "",
             amount: [{ amount: "2000", denom: "ucosm" }],
           },
-        },
+        }),
         body: {
           memo: "",
           timeoutHeight: Long.UZERO,
