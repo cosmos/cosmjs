@@ -118,8 +118,8 @@ export class SigningStargateClient extends StargateClient {
   /**
    * Creates an instance by connecting to the given Tendermint RPC endpoint.
    *
-   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
-   * support, see `createWithSigner`.
+   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
+   * To set the Tendermint client explicitly, use `createWithSigner`.
    */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
