@@ -16,12 +16,16 @@ and this project adheres to
   query strings and key/value pairs are now supported. ([#1411])
 - @cosmjs/cosmwasm-stargate: Let `searchTx` return non-readonly array. The
   caller owns this array and can mutate it as they want. ([#1411])
+- @cosmjs/cosmwasm-stargate: In `UploadResult` (result from
+  `SigningCosmWasmClient.upload`), rename `originalChecksum` to `checksum` and
+  remove `compressedChecksum` ([#1409]).
 - @cosmjs/stargate: Implement auto-detection for Tendermint 0.34/37 ([#1411]).
 - @cosmjs/stargate: Remove structured `searchTx` queries. Only raw query strings
   and key/value pairs are now supported. ([#1411])
 - @cosmjs/stargate: Let `searchTx` return non-readonly array. The caller owns
   this array and can mutate it as they want. ([#1411])
 
+[#1409]: https://github.com/cosmos/cosmjs/issues/1409
 [#1411]: https://github.com/cosmos/cosmjs/pull/1411
 
 ## [0.30.1] - 2023-03-22
