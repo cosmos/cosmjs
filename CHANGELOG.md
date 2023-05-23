@@ -8,6 +8,8 @@ and this project adheres to
 
 ### Changed
 
+- all: upgrade cosmjs-types to 0.8.0 to include Cosmos SDK 0.46/0.47 and IBC v7
+  types.
 - @cosmjs/cosmwasm-stargate: Implement auto-detection for Tendermint 0.34/37
   ([#1411]).
 - @cosmjs/cosmwasm-stargate: Remove structured `searchTx` queries. Only raw
