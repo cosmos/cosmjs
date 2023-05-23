@@ -12,11 +12,7 @@ import {
   DeliverTxResponse,
   fromTendermintEvent,
   IndexedTx,
-  isSearchByHeightQuery,
-  isSearchBySentFromOrToQuery,
-  isSearchByTagsQuery,
   QueryClient,
-  SearchTxFilter,
   SearchTxQuery,
   SequenceResponse,
   setupAuthExtension,
@@ -28,6 +24,7 @@ import {
 import {
   HttpEndpoint,
   Tendermint34Client,
+  Tendermint37Client,
   TendermintClient,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
@@ -99,11 +96,22 @@ export class CosmWasmClient {
   /**
    * Creates an instance by connecting to the given Tendermint RPC endpoint.
    *
-   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
-   * support, see `create`.
+   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
+   * To set the Tendermint client explicitly, use `create`.
    */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+    // Using 0.34 as the fallback.
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
     return CosmWasmClient.create(tmClient);
   }
 
@@ -221,42 +229,16 @@ export class CosmWasmClient {
     return results[0] ?? null;
   }
 
-  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
-    const minHeight = filter.minHeight || 0;
-    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
-
-    if (maxHeight < minHeight) return []; // optional optimization
-
-    function withFilters(originalQuery: string): string {
-      return `${originalQuery} AND tx.height>=${minHeight} AND tx.height<=${maxHeight}`;
-    }
-
-    let txs: readonly IndexedTx[];
-
-    if (isSearchByHeightQuery(query)) {
-      txs =
-        query.height >= minHeight && query.height <= maxHeight
-          ? await this.txsQuery(`tx.height=${query.height}`)
-          : [];
-    } else if (isSearchBySentFromOrToQuery(query)) {
-      const sentQuery = withFilters(`message.module='bank' AND transfer.sender='${query.sentFromOrTo}'`);
-      const receivedQuery = withFilters(
-        `message.module='bank' AND transfer.recipient='${query.sentFromOrTo}'`,
-      );
-      const [sent, received] = await Promise.all(
-        [sentQuery, receivedQuery].map((rawQuery) => this.txsQuery(rawQuery)),
-      );
-      const sentHashes = sent.map((t) => t.hash);
-      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
-    } else if (isSearchByTagsQuery(query)) {
-      const rawQuery = withFilters(query.tags.map((t) => `${t.key}='${t.value}'`).join(" AND "));
-      txs = await this.txsQuery(rawQuery);
+  public async searchTx(query: SearchTxQuery): Promise<IndexedTx[]> {
+    let rawQuery: string;
+    if (typeof query === "string") {
+      rawQuery = query;
+    } else if (Array.isArray(query)) {
+      rawQuery = query.map((t) => `${t.key}='${t.value}'`).join(" AND ");
     } else {
-      throw new Error("Unknown query type");
+      throw new Error("Got unsupported query type. See CosmJS 0.31 CHANGELOG for API breaking changes here.");
     }
-
-    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
-    return filtered;
+    return this.txsQuery(rawQuery);
   }
 
   public disconnect(): void {
@@ -477,7 +459,7 @@ export class CosmWasmClient {
     }
   }
 
-  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
+  private async txsQuery(query: string): Promise<IndexedTx[]> {
     const results = await this.forceGetTmClient().txSearchAll({ query: query });
     return results.txs.map((tx) => {
       return {

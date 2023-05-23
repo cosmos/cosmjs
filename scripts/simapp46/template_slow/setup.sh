@@ -23,12 +23,14 @@ echo "Setting up validator ..."
 if ! simd keys show validator 2>/dev/null; then
   echo "Validator does not yet exist. Creating it ..."
   (
+    # Constant key to get the same validator operator address (cosmosvaloper1...) every time
+    echo "gather series sample skin gate mask gossip between equip knife total stereo"
     echo "$PASSWORD"
     echo "$PASSWORD"
-  ) | simd keys add validator
+  ) | simd keys add myvalidator --recover
 fi
 # hardcode the validator account for this instance
-echo "$PASSWORD" | simd add-genesis-account validator "$START_BALANCE"
+echo "$PASSWORD" | simd add-genesis-account myvalidator "$START_BALANCE"
 
 echo "Setting up accounts ..."
 # (optionally) add a few more genesis accounts
@@ -43,5 +45,5 @@ SELF_DELEGATION="3000000$STAKE" # 3 STAKE (leads to a voting power of 3)
   echo "$PASSWORD"
   echo "$PASSWORD"
   echo "$PASSWORD"
-) | simd gentx validator "$SELF_DELEGATION" --offline --chain-id "$CHAIN_ID" --moniker="$MONIKER"
+) | simd gentx myvalidator "$SELF_DELEGATION" --offline --chain-id "$CHAIN_ID" --moniker="$MONIKER"
 simd collect-gentxs
