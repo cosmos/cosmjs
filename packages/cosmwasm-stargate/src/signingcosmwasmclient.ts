@@ -67,14 +67,12 @@ import {
 } from "./modules";
 
 export interface UploadResult {
+  /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */
+  readonly checksum: string;
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
-  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
-  readonly originalChecksum: string;
   /** Size of the compressed wasm code in bytes */
   readonly compressedSize: number;
-  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
-  readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
   readonly logs: readonly logs.Log[];
@@ -301,10 +299,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const parsedLogs = logs.parseRawLog(result.rawLog);
     const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
     return {
+      checksum: toHex(sha256(wasmCode)),
       originalSize: wasmCode.length,
-      originalChecksum: toHex(sha256(wasmCode)),
       compressedSize: compressed.length,
-      compressedChecksum: toHex(sha256(compressed)),
       codeId: Number.parseInt(codeIdAttr.value, 10),
       logs: parsedLogs,
       height: result.height,
