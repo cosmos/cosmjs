@@ -513,18 +513,6 @@ export class QueryClient {
   }
 
   /**
-   * @deprecated use queryStoreVerified instead
-   */
-  public async queryVerified(
-    store: string,
-    queryKey: Uint8Array,
-    desiredHeight?: number,
-  ): Promise<Uint8Array> {
-    const { value } = await this.queryStoreVerified(store, queryKey, desiredHeight);
-    return value;
-  }
-
-  /**
    * Queries the database store with a proof, which is then verified.
    *
    * Please note: the current implementation trusts block headers it gets from the PRC endpoint.
@@ -606,20 +594,6 @@ export class QueryClient {
         ops: [...proof.ops],
       },
     };
-  }
-
-  /**
-   * Performs an ABCI query to Tendermint without requesting a proof.
-   *
-   * @deprecated use queryAbci instead
-   */
-  public async queryUnverified(
-    path: string,
-    request: Uint8Array,
-    desiredHeight?: number,
-  ): Promise<Uint8Array> {
-    const response = await this.queryAbci(path, request, desiredHeight);
-    return response.value;
   }
 
   /**

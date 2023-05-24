@@ -5,11 +5,12 @@ import { Uint53 } from "@cosmjs/math";
 import {
   HttpEndpoint,
   Tendermint34Client,
+  Tendermint37Client,
   TendermintClient,
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import { MsgData, TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
@@ -27,13 +28,7 @@ import {
   TxExtension,
 } from "./modules";
 import { QueryClient } from "./queryclient";
-import {
-  isSearchByHeightQuery,
-  isSearchBySentFromOrToQuery,
-  isSearchByTagsQuery,
-  SearchTxFilter,
-  SearchTxQuery,
-} from "./search";
+import { SearchTxQuery } from "./search";
 
 export class TimeoutError extends Error {
   public readonly txId: string;
@@ -96,6 +91,12 @@ export interface IndexedTx {
    * Use `decodeTxRaw` from @cosmjs/proto-signing to decode this.
    */
   readonly tx: Uint8Array;
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
   readonly gasUsed: number;
   readonly gasWanted: number;
 }
@@ -125,7 +126,14 @@ export interface DeliverTxResponse {
    * field instead.
    */
   readonly rawLog?: string;
+  /** @deprecated Use `msgResponses` instead. */
   readonly data?: readonly MsgData[];
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
   readonly gasUsed: number;
   readonly gasWanted: number;
 }
@@ -198,14 +206,25 @@ export class StargateClient {
   /**
    * Creates an instance by connecting to the given Tendermint RPC endpoint.
    *
-   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
-   * support, see `create`.
+   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
+   * To set the Tendermint client explicitly, use `create`.
    */
   public static async connect(
     endpoint: string | HttpEndpoint,
     options: StargateClientOptions = {},
   ): Promise<StargateClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+    // Using 0.34 as the fallback.
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
     return StargateClient.create(tmClient, options);
   }
 
@@ -382,42 +401,16 @@ export class StargateClient {
     return results[0] ?? null;
   }
 
-  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
-    const minHeight = filter.minHeight || 0;
-    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
-
-    if (maxHeight < minHeight) return []; // optional optimization
-
-    function withFilters(originalQuery: string): string {
-      return `${originalQuery} AND tx.height>=${minHeight} AND tx.height<=${maxHeight}`;
-    }
-
-    let txs: readonly IndexedTx[];
-
-    if (isSearchByHeightQuery(query)) {
-      txs =
-        query.height >= minHeight && query.height <= maxHeight
-          ? await this.txsQuery(`tx.height=${query.height}`)
-          : [];
-    } else if (isSearchBySentFromOrToQuery(query)) {
-      const sentQuery = withFilters(`message.module='bank' AND transfer.sender='${query.sentFromOrTo}'`);
-      const receivedQuery = withFilters(
-        `message.module='bank' AND transfer.recipient='${query.sentFromOrTo}'`,
-      );
-      const [sent, received] = await Promise.all(
-        [sentQuery, receivedQuery].map((rawQuery) => this.txsQuery(rawQuery)),
-      );
-      const sentHashes = sent.map((t) => t.hash);
-      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
-    } else if (isSearchByTagsQuery(query)) {
-      const rawQuery = withFilters(query.tags.map((t) => `${t.key}='${t.value}'`).join(" AND "));
-      txs = await this.txsQuery(rawQuery);
+  public async searchTx(query: SearchTxQuery): Promise<IndexedTx[]> {
+    let rawQuery: string;
+    if (typeof query === "string") {
+      rawQuery = query;
+    } else if (Array.isArray(query)) {
+      rawQuery = query.map((t) => `${t.key}='${t.value}'`).join(" AND ");
     } else {
-      throw new Error("Unknown query type");
+      throw new Error("Got unsupported query type. See CosmJS 0.31 CHANGELOG for API breaking changes here.");
     }
-
-    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
-    return filtered;
+    return this.txsQuery(rawQuery);
   }
 
   public disconnect(): void {
@@ -464,6 +457,7 @@ export class StargateClient {
             events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
+            msgResponses: result.msgResponses,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
           }
@@ -511,9 +505,10 @@ export class StargateClient {
     return transactionId;
   }
 
-  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
+  private async txsQuery(query: string): Promise<IndexedTx[]> {
     const results = await this.forceGetTmClient().txSearchAll({ query: query });
-    return results.txs.map((tx) => {
+    return results.txs.map((tx): IndexedTx => {
+      const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {
         height: tx.height,
         txIndex: tx.index,
@@ -522,6 +517,7 @@ export class StargateClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        msgResponses: txMsgData.msgResponses,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

@@ -31,7 +31,12 @@ import {
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client, TendermintClient } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  Tendermint37Client,
+  TendermintClient,
+} from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -41,6 +46,7 @@ import {
   MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgInstantiateContract2,
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
@@ -54,6 +60,7 @@ import {
   JsonObject,
   MsgClearAdminEncodeObject,
   MsgExecuteContractEncodeObject,
+  MsgInstantiateContract2EncodeObject,
   MsgInstantiateContractEncodeObject,
   MsgMigrateContractEncodeObject,
   MsgStoreCodeEncodeObject,
@@ -62,14 +69,12 @@ import {
 } from "./modules";
 
 export interface UploadResult {
+  /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */
+  readonly checksum: string;
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
-  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
-  readonly originalChecksum: string;
   /** Size of the compressed wasm code in bytes */
   readonly compressedSize: number;
-  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
-  readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
   readonly logs: readonly logs.Log[];
@@ -83,7 +88,7 @@ export interface UploadResult {
 }
 
 /**
- * The options of an .instantiate() call.
+ * The options of .instantiate() and .instantiate2() call.
  * All properties are optional.
  */
 export interface InstantiateOptions {
@@ -182,15 +187,26 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   /**
    * Creates an instance by connecting to the given Tendermint RPC endpoint.
    *
-   * For now this uses the Tendermint 0.34 client. If you need Tendermint 0.37
-   * support, see `createWithSigner`.
+   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
+   * To set the Tendermint client explicitly, use `createWithSigner`.
    */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+    // Using 0.34 as the fallback.
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
     return SigningCosmWasmClient.createWithSigner(tmClient, signer, options);
   }
 
@@ -285,10 +301,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const parsedLogs = logs.parseRawLog(result.rawLog);
     const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
     return {
+      checksum: toHex(sha256(wasmCode)),
       originalSize: wasmCode.length,
-      originalChecksum: toHex(sha256(wasmCode)),
       compressedSize: compressed.length,
-      compressedChecksum: toHex(sha256(compressed)),
       codeId: Number.parseInt(codeIdAttr.value, 10),
       logs: parsedLogs,
       height: result.height,
@@ -319,6 +334,45 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
     const result = await this.signAndBroadcast(senderAddress, [instantiateContractMsg], fee, options.memo);
+    if (isDeliverTxFailure(result)) {
+      throw new Error(createDeliverTxResponseErrorMessage(result));
+    }
+    const parsedLogs = logs.parseRawLog(result.rawLog);
+    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+    return {
+      contractAddress: contractAddressAttr.value,
+      logs: parsedLogs,
+      height: result.height,
+      transactionHash: result.transactionHash,
+      events: result.events,
+      gasWanted: result.gasWanted,
+      gasUsed: result.gasUsed,
+    };
+  }
+
+  public async instantiate2(
+    senderAddress: string,
+    codeId: number,
+    salt: Uint8Array,
+    msg: JsonObject,
+    label: string,
+    fee: StdFee | "auto" | number,
+    options: InstantiateOptions = {},
+  ): Promise<InstantiateResult> {
+    const instantiateContract2Msg: MsgInstantiateContract2EncodeObject = {
+      typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract2",
+      value: MsgInstantiateContract2.fromPartial({
+        sender: senderAddress,
+        codeId: Long.fromString(new Uint53(codeId).toString()),
+        label: label,
+        msg: toUtf8(JSON.stringify(msg)),
+        funds: [...(options.funds || [])],
+        admin: options.admin,
+        salt: salt,
+        fixMsg: false,
+      }),
+    };
+    const result = await this.signAndBroadcast(senderAddress, [instantiateContract2Msg], fee, options.memo);
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }

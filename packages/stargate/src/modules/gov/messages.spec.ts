@@ -12,7 +12,6 @@ import {
   faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
-  pendingWithoutSimapp44Or46,
   simapp,
   simappEnabled,
   validator,
@@ -171,7 +170,7 @@ describe("gov messages", () => {
 
   describe("MsgVoteWeighted", () => {
     it("works", async () => {
-      pendingWithoutSimapp44Or46(); // MsgVoteWeighted does not yet exist in Cosmos SDK 0.42
+      pendingWithoutSimapp();
       assert(voterWallet);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, voterWallet);
@@ -204,7 +203,7 @@ describe("gov messages", () => {
     });
 
     it("works with Amino JSON sign mode", async () => {
-      pendingWithoutSimapp44Or46(); // MsgVoteWeighted does not yet exist in Cosmos SDK 0.42
+      pendingWithoutSimapp();
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, voterWalletAmino);

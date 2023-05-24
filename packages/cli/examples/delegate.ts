@@ -29,7 +29,7 @@ const msg: MsgDelegateEncodeObject = {
     delegatorAddress: signerAddress,
     // To get the proper validator address, start the demo chain (./scripts/simapp44/start.sh), then run:
     //   curl http://localhost:1318/staking/validators | jq '.result[0].operator_address'
-    validatorAddress: "cosmosvaloper1urk9gy7cfws0ak9x5nu7lx4un9n6gqkrp230jk",
+    validatorAddress: "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
     amount: coin(300000, "ustake"),
   },
 };
