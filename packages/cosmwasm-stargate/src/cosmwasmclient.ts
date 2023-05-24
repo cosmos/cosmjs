@@ -311,13 +311,8 @@ export class CosmWasmClient {
         : pollForTx(txId);
     };
 
-    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
-    if (broadcasted.code) {
-      return Promise.reject(
-        new BroadcastTxError(broadcasted.code, broadcasted.codespace ?? "", broadcasted.log),
-      );
-    }
-    const transactionId = toHex(broadcasted.hash).toUpperCase();
+    const transactionId = await this.broadcastTxSync(tx);
+
     return new Promise((resolve, reject) =>
       pollForTx(transactionId).then(
         (value) => {
