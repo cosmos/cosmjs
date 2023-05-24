@@ -10,6 +10,7 @@ import {
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
+import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -22,6 +23,7 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
+  simapp44Enabled,
   simappEnabled,
 } from "./testutils.spec";
 
@@ -156,6 +158,7 @@ describe("StargateClient.getTx and .searchTx", () => {
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const result = await client.getTx(sendSuccessful.hash);
+      assert(result);
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
@@ -164,6 +167,14 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendSuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        expect(result.msgResponses.length).toEqual(1);
+        expect(result.msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+        const _response = MsgSendResponse.decode(result.msgResponses[0].value);
+        // MsgSendResponse has no fields to check 🤷‍♂️
+      }
     });
 
     it("can get unsuccessful tx by ID", async () => {
@@ -171,6 +182,7 @@ describe("StargateClient.getTx and .searchTx", () => {
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const result = await client.getTx(sendUnsuccessful.hash);
+      assert(result);
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
@@ -179,6 +191,12 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendUnsuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        // unsuccessful tx should not have responses
+        expect(result.msgResponses.length).toEqual(0);
+      }
     });
 
     it("can get by ID (non existent)", async () => {
@@ -205,6 +223,14 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendSuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        expect(result[0].msgResponses.length).toEqual(1);
+        expect(result[0].msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+        const _response = MsgSendResponse.decode(result[0].msgResponses[0].value);
+        // MsgSendResponse has no fields to check 🤷‍♂️
+      }
     });
 
     it("can search unsuccessful tx by height", async () => {
