@@ -316,7 +316,7 @@ export class SigningStargateClient extends StargateClient {
    * I would like to receive the hash to later track the transaction with another tool.
    * @returns Returns the hash of the transaction
    */
-  public async signAndBroadcastWithoutPolling(
+  public async signAndBroadcastSync(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
@@ -333,7 +333,7 @@ export class SigningStargateClient extends StargateClient {
     }
     const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
     const txBytes = TxRaw.encode(txRaw).finish();
-    return this.broadcastTxWithoutPolling(txBytes);
+    return this.broadcastTxSync(txBytes);
   }
 
   /**

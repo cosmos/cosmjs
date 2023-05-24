@@ -343,7 +343,7 @@ export class CosmWasmClient {
    *
    * @returns Returns the hash of the transaction
    */
-  public async broadcastTxWithoutPolling(tx: Uint8Array): Promise<string> {
+  public async broadcastTxSync(tx: Uint8Array): Promise<string> {
     const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
 
     if (broadcasted.code) {
