@@ -29,7 +29,11 @@ import {
   setupFeegrantExtension,
 } from "./modules";
 import { QueryClient } from "./queryclient";
-import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
+import {
+  PrivateSigningStargateClient,
+  SigningStargateClient,
+  SigningStargateClientOptions,
+} from "./signingstargateclient";
 import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
   defaultGasPrice,
@@ -51,7 +55,7 @@ describe("SigningStargateClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const registry = new Registry();
       registry.register("/custom.MsgCustom", MsgSend);
-      const options = { ...defaultSigningClientOptions, registry: registry };
+      const options: SigningStargateClientOptions = { ...defaultSigningClientOptions, registry: registry };
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = client as unknown as PrivateSigningStargateClient;
       expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
@@ -622,7 +626,7 @@ describe("SigningStargateClient", () => {
             }),
           },
         });
-        const options = {
+        const options: SigningStargateClientOptions = {
           ...defaultSigningClientOptions,
           registry: customRegistry,
           aminoTypes: customAminoTypes,
@@ -902,7 +906,7 @@ describe("SigningStargateClient", () => {
             }),
           },
         });
-        const options = {
+        const options: SigningStargateClientOptions = {
           ...defaultSigningClientOptions,
           registry: customRegistry,
           aminoTypes: customAminoTypes,
