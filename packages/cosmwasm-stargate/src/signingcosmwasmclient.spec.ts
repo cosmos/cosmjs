@@ -24,6 +24,7 @@ import Long from "long";
 import pako from "pako";
 import protobuf from "protobufjs/minimal";
 
+import { instantiate2Address } from "./instantiate2";
 import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
@@ -248,6 +249,50 @@ describe("SigningCosmWasmClient", () => {
         defaultInstantiateFee,
       );
 
+      client.disconnect();
+    });
+  });
+
+  describe("instantiate2", () => {
+    it("can instantiate with predictable address", async () => {
+      pendingWithoutWasmd();
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+        prefix: wasmd.prefix,
+      });
+      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
+
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const beneficiaryAddress = makeRandomAddress();
+      const salt = Uint8Array.from([0x01]);
+      const wasm = getHackatom().data;
+      const msg = {
+        verifier: alice.address0,
+        beneficiary: beneficiaryAddress,
+      };
+      const expectedAddress = instantiate2Address(sha256(wasm), alice.address0, salt, wasmd.prefix);
+
+      const { contractAddress } = await client.instantiate2(
+        alice.address0,
+        codeId,
+        salt,
+        msg,
+        "My cool label--",
+        defaultInstantiateFee,
+        {
+          memo: "Let's see if the memo is used",
+          funds: funds,
+        },
+      );
+
+      const wasmClient = await makeWasmClient(wasmd.endpoint);
+      const ucosmBalance = await wasmClient.bank.balance(contractAddress, "ucosm");
+      const ustakeBalance = await wasmClient.bank.balance(contractAddress, "ustake");
+      expect(ucosmBalance).toEqual(funds[0]);
+      expect(ustakeBalance).toEqual(funds[1]);
+
+      expect(contractAddress).toEqual(expectedAddress);
       client.disconnect();
     });
   });

@@ -3,6 +3,7 @@ import {
   MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgInstantiateContract2,
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
@@ -14,6 +15,7 @@ export const wasmTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmwasm.wasm.v1.MsgMigrateContract", MsgMigrateContract],
   ["/cosmwasm.wasm.v1.MsgStoreCode", MsgStoreCode],
   ["/cosmwasm.wasm.v1.MsgInstantiateContract", MsgInstantiateContract],
+  ["/cosmwasm.wasm.v1.MsgInstantiateContract2", MsgInstantiateContract2],
   ["/cosmwasm.wasm.v1.MsgUpdateAdmin", MsgUpdateAdmin],
 ];
 
@@ -36,6 +38,19 @@ export function isMsgInstantiateContractEncodeObject(
 ): object is MsgInstantiateContractEncodeObject {
   return (
     (object as MsgInstantiateContractEncodeObject).typeUrl === "/cosmwasm.wasm.v1.MsgInstantiateContract"
+  );
+}
+
+export interface MsgInstantiateContract2EncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract2";
+  readonly value: Partial<MsgInstantiateContract2>;
+}
+
+export function isMsgInstantiateContract2EncodeObject(
+  object: EncodeObject,
+): object is MsgInstantiateContract2EncodeObject {
+  return (
+    (object as MsgInstantiateContract2EncodeObject).typeUrl === "/cosmwasm.wasm.v1.MsgInstantiateContract2"
   );
 }
 
