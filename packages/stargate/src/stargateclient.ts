@@ -10,7 +10,7 @@ import {
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import { MsgData, TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
@@ -91,6 +91,12 @@ export interface IndexedTx {
    * Use `decodeTxRaw` from @cosmjs/proto-signing to decode this.
    */
   readonly tx: Uint8Array;
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
   readonly gasUsed: number;
   readonly gasWanted: number;
 }
@@ -120,7 +126,14 @@ export interface DeliverTxResponse {
    * field instead.
    */
   readonly rawLog?: string;
+  /** @deprecated Use `msgResponses` instead. */
   readonly data?: readonly MsgData[];
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
   readonly gasUsed: number;
   readonly gasWanted: number;
 }
@@ -444,6 +457,7 @@ export class StargateClient {
             events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
+            msgResponses: result.msgResponses,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
           }
@@ -473,7 +487,8 @@ export class StargateClient {
 
   private async txsQuery(query: string): Promise<IndexedTx[]> {
     const results = await this.forceGetTmClient().txSearchAll({ query: query });
-    return results.txs.map((tx) => {
+    return results.txs.map((tx): IndexedTx => {
+      const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {
         height: tx.height,
         txIndex: tx.index,
@@ -482,6 +497,7 @@ export class StargateClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        msgResponses: txMsgData.msgResponses,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

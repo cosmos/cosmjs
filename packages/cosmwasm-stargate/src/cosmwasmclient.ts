@@ -29,6 +29,7 @@ import {
   toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
+import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import {
   CodeInfoResponse,
   QueryCodesResponse,
@@ -287,6 +288,7 @@ export class CosmWasmClient {
             rawLog: result.rawLog,
             transactionHash: txId,
             events: result.events,
+            msgResponses: result.msgResponses,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
           }
@@ -461,7 +463,8 @@ export class CosmWasmClient {
 
   private async txsQuery(query: string): Promise<IndexedTx[]> {
     const results = await this.forceGetTmClient().txSearchAll({ query: query });
-    return results.txs.map((tx) => {
+    return results.txs.map((tx): IndexedTx => {
+      const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {
         height: tx.height,
         txIndex: tx.index,
@@ -470,6 +473,7 @@ export class CosmWasmClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        msgResponses: txMsgData.msgResponses,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };
