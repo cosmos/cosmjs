@@ -34,6 +34,7 @@ import {
   CodeInfoResponse,
   QueryCodesResponse,
   QueryContractsByCodeResponse,
+  QueryContractsByCreatorResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
@@ -375,8 +376,24 @@ export class CosmWasmClient {
     do {
       const { contracts, pagination }: QueryContractsByCodeResponse =
         await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
-      const loadedContracts = contracts || [];
-      allContracts.push(...loadedContracts);
+      allContracts.push(...contracts);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0 && startAtKey !== undefined);
+
+    return allContracts;
+  }
+
+  /**
+   * Returns a list of contract addresses created by the given creator.
+   * This just loops through all pagination pages.
+   */
+  public async getContractsByCreator(creator: string): Promise<string[]> {
+    const allContracts = [];
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { contractAddresses, pagination }: QueryContractsByCreatorResponse =
+        await this.forceGetQueryClient().wasm.listContractsByCreator(creator, startAtKey);
+      allContracts.push(...contractAddresses);
       startAtKey = pagination?.nextKey;
     } while (startAtKey?.length !== 0 && startAtKey !== undefined);
 
