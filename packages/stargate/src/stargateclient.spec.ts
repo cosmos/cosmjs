@@ -554,4 +554,66 @@ describe("StargateClient", () => {
       client.disconnect();
     }, 30_000);
   });
+
+  describe("broadcastTxSync", () => {
+    it("broadcasts sync a transaction, to get transaction hash", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+      const pubkey = encodePubkey({
+        type: "tendermint/PubKeySecp256k1",
+        value: toBase64(pubkeyBytes),
+      });
+      const registry = new Registry();
+      const txBodyFields: TxBodyEncodeObject = {
+        typeUrl: "/cosmos.tx.v1beta1.TxBody",
+        value: {
+          messages: [
+            {
+              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+              value: {
+                fromAddress: address,
+                toAddress: makeRandomAddress(),
+                amount: [
+                  {
+                    denom: "ucosm",
+                    amount: "1234567",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      };
+      const txBodyBytes = registry.encode(txBodyFields);
+      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const feeAmount = coins(2000, "ucosm");
+      const gasLimit = 200000;
+      const feeGranter = undefined;
+      const feePayer = undefined;
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
+
+      const chainId = await client.getChainId();
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const { signature } = await wallet.signDirect(address, signDoc);
+      const txRaw = TxRaw.fromPartial({
+        bodyBytes: txBodyBytes,
+        authInfoBytes: authInfoBytes,
+        signatures: [fromBase64(signature.signature)],
+      });
+      const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+      const transactionHash = await client.broadcastTxSync(txRawBytes);
+      
+      expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+      client.disconnect();
+    });
+  });
 });
