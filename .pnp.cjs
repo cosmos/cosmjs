@@ -564,7 +564,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/libsodium-wrappers",\
-        "npm:0.7.9"\
+        "npm:0.7.10"\
+      ],\
+      [\
+        "@types/libsodium-wrappers-sumo",\
+        "npm:0.7.5"\
       ],\
       [\
         "@types/long",\
@@ -1851,12 +1855,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:0.4.1"\
       ],\
       [\
-        "libsodium",\
-        "npm:0.7.9"\
+        "libsodium-sumo",\
+        "npm:0.7.11"\
       ],\
       [\
-        "libsodium-wrappers",\
-        "npm:0.7.9"\
+        "libsodium-wrappers-sumo",\
+        "npm:0.7.11"\
       ],\
       [\
         "load-json-file",\
@@ -3336,7 +3340,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-            ["@types/libsodium-wrappers", "npm:0.7.9"],\
+            ["@types/libsodium-wrappers-sumo", "npm:0.7.5"],\
             ["@types/node", "npm:18.15.11"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
@@ -3358,7 +3362,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-firefox-launcher", "npm:2.1.0"],\
             ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
-            ["libsodium-wrappers", "npm:0.7.9"],\
+            ["libsodium-wrappers-sumo", "npm:0.7.11"],\
             ["nyc", "npm:15.1.0"],\
             ["prettier", "npm:2.8.1"],\
             ["ses", "npm:0.11.1"],\
@@ -4725,10 +4729,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/libsodium-wrappers", [\
-        ["npm:0.7.9", {\
-          "packageLocation": "./.yarn/cache/@types-libsodium-wrappers-npm-0.7.9-4b14af299f-5ddf61b804.zip/node_modules/@types/libsodium-wrappers/",\
+        ["npm:0.7.10", {\
+          "packageLocation": "./.yarn/cache/@types-libsodium-wrappers-npm-0.7.10-1977488a6a-717054ebcb.zip/node_modules/@types/libsodium-wrappers/",\
           "packageDependencies": [\
-            ["@types/libsodium-wrappers", "npm:0.7.9"]\
+            ["@types/libsodium-wrappers", "npm:0.7.10"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/libsodium-wrappers-sumo", [\
+        ["npm:0.7.5", {\
+          "packageLocation": "./.yarn/cache/@types-libsodium-wrappers-sumo-npm-0.7.5-b503484acd-27846e49cd.zip/node_modules/@types/libsodium-wrappers-sumo/",\
+          "packageDependencies": [\
+            ["@types/libsodium-wrappers-sumo", "npm:0.7.5"],\
+            ["@types/libsodium-wrappers", "npm:0.7.10"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9536,21 +9550,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["libsodium", [\
-        ["npm:0.7.9", {\
-          "packageLocation": "./.yarn/cache/libsodium-npm-0.7.9-98a3b621b1-1c922c9972.zip/node_modules/libsodium/",\
+      ["libsodium-sumo", [\
+        ["npm:0.7.11", {\
+          "packageLocation": "./.yarn/cache/libsodium-sumo-npm-0.7.11-aaac6bcc6c-9efac902a0.zip/node_modules/libsodium-sumo/",\
           "packageDependencies": [\
-            ["libsodium", "npm:0.7.9"]\
+            ["libsodium-sumo", "npm:0.7.11"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
-      ["libsodium-wrappers", [\
-        ["npm:0.7.9", {\
-          "packageLocation": "./.yarn/cache/libsodium-wrappers-npm-0.7.9-be74b30f7d-b5b1b9e1b4.zip/node_modules/libsodium-wrappers/",\
+      ["libsodium-wrappers-sumo", [\
+        ["npm:0.7.11", {\
+          "packageLocation": "./.yarn/cache/libsodium-wrappers-sumo-npm-0.7.11-08fe1b2cf4-26c7aaf8c4.zip/node_modules/libsodium-wrappers-sumo/",\
           "packageDependencies": [\
-            ["libsodium-wrappers", "npm:0.7.9"],\
-            ["libsodium", "npm:0.7.9"]\
+            ["libsodium-wrappers-sumo", "npm:0.7.11"],\
+            ["libsodium-sumo", "npm:0.7.11"]\
           ],\
           "linkType": "HARD"\
         }]\
