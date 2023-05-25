@@ -718,6 +718,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
        
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with auto gas", async () => {
@@ -740,6 +742,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], "auto");
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with a modifying signer", async () => {
@@ -768,6 +772,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
     });
 
@@ -798,6 +804,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with bank MsgSend", async () => {
@@ -826,6 +834,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with staking MsgDelegate", async () => {
@@ -854,6 +864,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with a custom registry and custom message", async () => {
@@ -965,6 +977,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
 
       it("works with a modifying signer", async () => {
@@ -993,6 +1007,8 @@ describe("SigningStargateClient", () => {
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
         
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5); 
       });
     });
   });

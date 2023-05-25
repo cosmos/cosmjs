@@ -613,6 +613,8 @@ describe("StargateClient", () => {
       
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
+      await sleep(simapp.blockTime * 1.5); 
+
       client.disconnect();
     });
   });
