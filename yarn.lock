@@ -456,7 +456,7 @@ __metadata:
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
-    "@types/libsodium-wrappers": ^0.7.7
+    "@types/libsodium-wrappers-sumo": ^0.7.5
     "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
@@ -478,7 +478,7 @@ __metadata:
     karma-firefox-launcher: ^2.1.0
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
-    libsodium-wrappers: ^0.7.6
+    libsodium-wrappers-sumo: ^0.7.11
     nyc: ^15.1.0
     prettier: ^2.8.1
     ses: ^0.11.0
@@ -1700,10 +1700,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/libsodium-wrappers@npm:^0.7.7":
-  version: 0.7.9
-  resolution: "@types/libsodium-wrappers@npm:0.7.9"
-  checksum: 5ddf61b8047e38f00c1509369ad868a724235a67940971cc671b070ab9d6b2e6872407253be1163b174f742ecbb0986fda7b91aa0b7069437359b4671bfc529b
+"@types/libsodium-wrappers-sumo@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@types/libsodium-wrappers-sumo@npm:0.7.5"
+  dependencies:
+    "@types/libsodium-wrappers": "*"
+  checksum: 27846e49cd54556c05011ff475cc6564ce8dde8f9a02a542740e3ebaab7de21ed2dfb4afdc182510d7058d3475f748bab0aa4a41178cd105b9f8618a00f8ef3f
+  languageName: node
+  linkType: hard
+
+"@types/libsodium-wrappers@npm:*":
+  version: 0.7.10
+  resolution: "@types/libsodium-wrappers@npm:0.7.10"
+  checksum: 717054ebcb5fa553e378144b8d564bed8b691905c0d4e90b95c64d77ba24ec9fe798cb2c58cd61dad545ceacb1f05ab69b5597217f9829f2da7a23f0688d11d0
   languageName: node
   linkType: hard
 
@@ -5083,19 +5092,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libsodium-wrappers@npm:^0.7.6":
-  version: 0.7.9
-  resolution: "libsodium-wrappers@npm:0.7.9"
-  dependencies:
-    libsodium: ^0.7.0
-  checksum: b5b1b9e1b4aa5662e07df244934125f9e3cd2ba7fe0ec45191a5ffc822d22f4d2f6e09e42d91c30c4f48ca0c7f810a176fdf5e32eed6722d7d82a2a719459f56
+"libsodium-sumo@npm:^0.7.11":
+  version: 0.7.11
+  resolution: "libsodium-sumo@npm:0.7.11"
+  checksum: 9efac902a05002e1caca1c1df3a7cd838ac370588cfa31107d6e787cb5a181f4ca46c7961e3136943c8b07b1d543c0283b91e08a141f9b55a74f10808c3017ef
   languageName: node
   linkType: hard
 
-"libsodium@npm:^0.7.0":
-  version: 0.7.9
-  resolution: "libsodium@npm:0.7.9"
-  checksum: 1c922c9972cf97ddb7207ee4f810dd291e0610dd57ea0e47f2343968392546aaa629945a2fb39ae5f19d067f6ed0bb7330f32cc9a680a847a662e9a210ce7bfb
+"libsodium-wrappers-sumo@npm:^0.7.11":
+  version: 0.7.11
+  resolution: "libsodium-wrappers-sumo@npm:0.7.11"
+  dependencies:
+    libsodium-sumo: ^0.7.11
+  checksum: 26c7aaf8c4b6da6b06ef17637e5541e16c796be9611b194d795501f021ac04abfeda09cadae66b3b515308993cd57361a571eefabdf9d9b3377b070a17535440
   languageName: node
   linkType: hard
 

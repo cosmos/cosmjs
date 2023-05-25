@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/crypto: Migrate to `libsodium-wrappers-sumo` to be able to use the
+  `crypto_pwhash` functions ([#1429]).
+
+[#1429]: https://github.com/cosmos/cosmjs/issues/1429
+
 ### Added
 
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.instantiate2` ([#1407]).
