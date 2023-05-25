@@ -690,6 +690,313 @@ describe("SigningStargateClient", () => {
     });
   });
 
+  describe("signAndBroadcastSync", () => {
+    describe("direct mode", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+       
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with auto gas", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, {
+          ...defaultSigningClientOptions,
+          gasPrice: defaultGasPrice,
+        });
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], "auto");
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with a modifying signer", async () => {
+        pendingWithoutSimapp();
+        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+    });
+
+    describe("legacy Amino mode", () => {
+      it("works with special characters in memo", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "ampersand:&,lt:<,gt:>";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with bank MsgSend", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your tokens wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with staking MsgDelegate", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msgDelegate: MsgDelegate = {
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        };
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msgDelegate,
+        };
+        const fee = {
+          amount: coins(2000, "ustake"),
+          gas: "200000",
+        };
+        const memo = "Use your tokens wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with a custom registry and custom message", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+
+        const customRegistry = new Registry();
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+        interface CustomMsgDelegate {
+          customDelegatorAddress?: string;
+          customValidatorAddress?: string;
+          customAmount?: Coin;
+        }
+        const baseCustomMsgDelegate: CustomMsgDelegate = {
+          customDelegatorAddress: "",
+          customValidatorAddress: "",
+        };
+        const CustomMsgDelegate = {
+          // Adapted from autogenerated MsgDelegate implementation
+          encode(
+            message: CustomMsgDelegate,
+            writer: protobuf.Writer = protobuf.Writer.create(),
+          ): protobuf.Writer {
+            writer.uint32(10).string(message.customDelegatorAddress ?? "");
+            writer.uint32(18).string(message.customValidatorAddress ?? "");
+            if (message.customAmount !== undefined && message.customAmount !== undefined) {
+              Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
+            }
+            return writer;
+          },
+
+          decode(): CustomMsgDelegate {
+            throw new Error("decode method should not be required");
+          },
+
+          fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
+            const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
+            if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
+              message.customDelegatorAddress = object.customDelegatorAddress;
+            } else {
+              message.customDelegatorAddress = "";
+            }
+            if (object.customValidatorAddress !== undefined && object.customValidatorAddress !== null) {
+              message.customValidatorAddress = object.customValidatorAddress;
+            } else {
+              message.customValidatorAddress = "";
+            }
+            if (object.customAmount !== undefined && object.customAmount !== null) {
+              message.customAmount = Coin.fromPartial(object.customAmount);
+            } else {
+              message.customAmount = undefined;
+            }
+            return message;
+          },
+        };
+        customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
+        const customAminoTypes = new AminoTypes({
+          "/cosmos.staking.v1beta1.MsgDelegate": {
+            aminoType: "cosmos-sdk/MsgDelegate",
+            toAmino: ({
+              customDelegatorAddress,
+              customValidatorAddress,
+              customAmount,
+            }: CustomMsgDelegate): AminoMsgDelegate["value"] => {
+              assert(customDelegatorAddress, "missing customDelegatorAddress");
+              assert(customValidatorAddress, "missing validatorAddress");
+              assert(customAmount, "missing amount");
+              return {
+                delegator_address: customDelegatorAddress,
+                validator_address: customValidatorAddress,
+                amount: {
+                  amount: customAmount.amount,
+                  denom: customAmount.denom,
+                },
+              };
+            },
+            fromAmino: ({
+              delegator_address,
+              validator_address,
+              amount,
+            }: AminoMsgDelegate["value"]): CustomMsgDelegate => ({
+              customDelegatorAddress: delegator_address,
+              customValidatorAddress: validator_address,
+              customAmount: Coin.fromPartial(amount),
+            }),
+          },
+        });
+        const options: SigningStargateClientOptions = {
+          ...defaultSigningClientOptions,
+          registry: customRegistry,
+          aminoTypes: customAminoTypes,
+        };
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
+
+        const msg: CustomMsgDelegate = {
+          customDelegatorAddress: faucet.address0,
+          customValidatorAddress: validator.validatorAddress,
+          customAmount: coin(1234, "ustake"),
+        };
+        const msgAny = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your power wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+
+      it("works with a modifying signer", async () => {
+        pendingWithoutSimapp();
+        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg: MsgDelegate = {
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        };
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your power wisely";
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
+        
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      });
+    });
+  });
+
   describe("sign", () => {
     describe("direct mode", () => {
       it("works", async () => {
