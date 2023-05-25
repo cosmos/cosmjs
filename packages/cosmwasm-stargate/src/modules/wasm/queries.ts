@@ -8,6 +8,7 @@ import {
   QueryContractHistoryResponse,
   QueryContractInfoResponse,
   QueryContractsByCodeResponse,
+  QueryContractsByCreatorResponse,
   QueryRawContractStateResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import Long from "long";
@@ -33,6 +34,13 @@ export interface WasmExtension {
       id: number,
       paginationKey?: Uint8Array,
     ) => Promise<QueryContractsByCodeResponse>;
+    /**
+     * Returns a list of contract addresses created by the given creator.
+     */
+    readonly listContractsByCreator: (
+      creator: string,
+      paginationKey?: Uint8Array,
+    ) => Promise<QueryContractsByCreatorResponse>;
     /**
      * Returns null when contract was not found at this address.
      */
@@ -89,6 +97,13 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
           pagination: createPagination(paginationKey),
         };
         return queryService.ContractsByCode(request);
+      },
+      listContractsByCreator: async (creator: string, paginationKey?: Uint8Array) => {
+        const request = {
+          creatorAddress: creator,
+          pagination: createPagination(paginationKey),
+        };
+        return queryService.ContractsByCreator(request);
       },
       getContractInfo: async (address: string) => {
         const request = { address: address };

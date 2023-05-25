@@ -16,9 +16,12 @@ and this project adheres to
 ### Added
 
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.instantiate2` ([#1407]).
+- @cosmjs/cosmwasm-stargate: Add `CosmWasmClient.getContractsByCreator`
+  ([#1266]).
 - @cosmjs/stargate: `IndexedTx` and `DeliverTxResponse` now have a
   `msgResponses` field ([#1305]).
 
+[#1266]: https://github.com/cosmos/cosmjs/issues/1266
 [#1305]: https://github.com/cosmos/cosmjs/issues/1305
 [#1407]: https://github.com/cosmos/cosmjs/pull/1407
 
