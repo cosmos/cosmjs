@@ -375,8 +375,7 @@ export class CosmWasmClient {
     do {
       const { contracts, pagination }: QueryContractsByCodeResponse =
         await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
-      const loadedContracts = contracts || [];
-      allContracts.push(...loadedContracts);
+      allContracts.push(...contracts);
       startAtKey = pagination?.nextKey;
     } while (startAtKey?.length !== 0 && startAtKey !== undefined);
 
