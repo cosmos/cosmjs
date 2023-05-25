@@ -701,14 +701,15 @@ describe("SigningStargateClient", () => {
           defaultSigningClientOptions,
         );
 
-        const msg = MsgDelegate.fromPartial({
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          amount: coin(1234, "ustake"),
-        });
-        const msgAny: MsgDelegateEncodeObject = {
-          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-          value: msg,
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+        
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
         };
         const fee = {
           amount: coins(2000, "ucosm"),
@@ -730,14 +731,15 @@ describe("SigningStargateClient", () => {
           gasPrice: defaultGasPrice,
         });
 
-        const msg = MsgDelegate.fromPartial({
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          amount: coin(1234, "ustake"),
-        });
-        const msgAny: MsgDelegateEncodeObject = {
-          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-          value: msg,
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+        
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
         };
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], "auto");
         
@@ -755,15 +757,17 @@ describe("SigningStargateClient", () => {
           defaultSigningClientOptions,
         );
 
-        const msg = MsgDelegate.fromPartial({
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          amount: coin(1234, "ustake"),
-        });
-        const msgAny: MsgDelegateEncodeObject = {
-          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-          value: msg,
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
         };
+        
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+
         const fee = {
           amount: coins(2000, "ucosm"),
           gas: "222000", // 222k
