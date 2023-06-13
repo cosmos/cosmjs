@@ -143,7 +143,7 @@ export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
   return msg.type === "cosmos-sdk/MsgUndelegate";
 }
 
-export function createStakingAminoConverters(): Record<string, AminoConverter | "not_supported_by_chain"> {
+export function createStakingAminoConverters(): Record<string, AminoConverter> {
   return {
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
       aminoType: "cosmos-sdk/MsgBeginRedelegate",

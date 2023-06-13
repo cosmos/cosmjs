@@ -46,7 +46,10 @@ and this project adheres to
 - @cosmjs/stargate: Remove `QueryClient.queryUnverified` and
   `QueryClient.queryVerified`. Please use `QueryClient.queryAbci` and
   `QueryClient.queryStoreVerified` instead.
+- @cosmjs/stargate: Remove "not_supported_by_chain" option for Amino converter
+  types since this is not needed anymore. ([#1403])
 
+[#1403]: https://github.com/cosmos/cosmjs/issues/1403
 [#1409]: https://github.com/cosmos/cosmjs/issues/1409
 [#1411]: https://github.com/cosmos/cosmjs/pull/1411
 
