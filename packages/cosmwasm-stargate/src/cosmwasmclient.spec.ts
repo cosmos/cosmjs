@@ -400,7 +400,7 @@ describe("CosmWasmClient", () => {
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(client.queryContractRaw(nonExistentAddress, configKey)).toBeRejectedWithError(
-        /not found/i,
+        /no such contract/i,
       );
     });
   });
@@ -460,7 +460,7 @@ describe("CosmWasmClient", () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(
         client.queryContractSmart(nonExistentAddress, { verifier: {} }),
-      ).toBeRejectedWithError(/not found/i);
+      ).toBeRejectedWithError(/no such contract/i);
     });
   });
 });

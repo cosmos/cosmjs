@@ -233,7 +233,9 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(client.wasm.getContractInfo(nonExistentAddress)).toBeRejectedWithError(/not found/i);
+      await expectAsync(client.wasm.getContractInfo(nonExistentAddress)).toBeRejectedWithError(
+        /no such contract/i,
+      );
     });
   });
 
@@ -301,7 +303,7 @@ describe("WasmExtension", () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
       await expectAsync(client.wasm.getAllContractState(nonExistentAddress)).toBeRejectedWithError(
-        /not found/i,
+        /no such contract/i,
       );
     });
   });
@@ -332,7 +334,7 @@ describe("WasmExtension", () => {
       const nonExistentAddress = makeRandomAddress();
       await expectAsync(
         client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey),
-      ).toBeRejectedWithError(/not found/i);
+      ).toBeRejectedWithError(/no such contract/i);
     });
   });
 
@@ -362,7 +364,7 @@ describe("WasmExtension", () => {
       const nonExistentAddress = makeRandomAddress();
       const request = { verifier: {} };
       await expectAsync(client.wasm.queryContractSmart(nonExistentAddress, request)).toBeRejectedWithError(
-        /not found/i,
+        /no such contract/i,
       );
     });
   });
