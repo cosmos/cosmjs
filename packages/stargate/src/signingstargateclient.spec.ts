@@ -706,7 +706,7 @@ describe("SigningStargateClient", () => {
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
         };
-        
+
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msgSend,
@@ -717,10 +717,10 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
-       
+
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-        await sleep(simapp.blockTime * 1.5); 
+        await sleep(simapp.blockTime * 1.5);
       });
 
       it("works with auto gas", async () => {
@@ -736,16 +736,16 @@ describe("SigningStargateClient", () => {
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
         };
-        
+
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msgSend,
         };
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], "auto");
-        
+
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-        await sleep(simapp.blockTime * 1.5); 
+        await sleep(simapp.blockTime * 1.5);
       });
 
       it("works with a modifying signer", async () => {
@@ -762,7 +762,7 @@ describe("SigningStargateClient", () => {
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
         };
-        
+
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msgSend,
@@ -774,10 +774,10 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your power wisely";
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
-        
+
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-        await sleep(simapp.blockTime * 1.5); 
+        await sleep(simapp.blockTime * 1.5);
       });
     });
 
@@ -806,10 +806,10 @@ describe("SigningStargateClient", () => {
         };
         const memo = "ampersand:&,lt:<,gt:>";
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
-        
+
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-        await sleep(simapp.blockTime * 1.5); 
+        await sleep(simapp.blockTime * 1.5);
       });
 
       it("works with bank MsgSend", async () => {
@@ -836,10 +836,10 @@ describe("SigningStargateClient", () => {
         };
         const memo = "Use your tokens wisely";
         const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo);
-        
+
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-        await sleep(simapp.blockTime * 1.5); 
+        await sleep(simapp.blockTime * 1.5);
       });
     });
   });

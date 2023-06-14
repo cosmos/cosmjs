@@ -610,10 +610,10 @@ describe("StargateClient", () => {
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const transactionHash = await client.broadcastTxSync(txRawBytes);
-      
+
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
-      await sleep(simapp.blockTime * 1.5); 
+      await sleep(simapp.blockTime * 1.5);
 
       client.disconnect();
     });
