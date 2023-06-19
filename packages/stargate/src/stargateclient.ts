@@ -464,13 +464,8 @@ export class StargateClient {
         : pollForTx(txId);
     };
 
-    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
-    if (broadcasted.code) {
-      return Promise.reject(
-        new BroadcastTxError(broadcasted.code, broadcasted.codespace ?? "", broadcasted.log),
-      );
-    }
-    const transactionId = toHex(broadcasted.hash).toUpperCase();
+    const transactionId = await this.broadcastTxSync(tx);
+
     return new Promise((resolve, reject) =>
       pollForTx(transactionId).then(
         (value) => {
@@ -483,6 +478,31 @@ export class StargateClient {
         },
       ),
     );
+  }
+
+  /**
+   * Broadcasts a signed transaction to the network without monitoring it.
+   *
+   * If broadcasting is rejected by the node for some reason (e.g. because of a CheckTx failure),
+   * an error is thrown.
+   *
+   * If the transaction is broadcasted, a `string` containing the hash of the transaction is returned. The caller then
+   * usually needs to check if the transaction was included in a block and was successful.
+   *
+   * @returns Returns the hash of the transaction
+   */
+  public async broadcastTxSync(tx: Uint8Array): Promise<string> {
+    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+
+    if (broadcasted.code) {
+      return Promise.reject(
+        new BroadcastTxError(broadcasted.code, broadcasted.codespace ?? "", broadcasted.log),
+      );
+    }
+
+    const transactionId = toHex(broadcasted.hash).toUpperCase();
+
+    return transactionId;
   }
 
   private async txsQuery(query: string): Promise<IndexedTx[]> {
