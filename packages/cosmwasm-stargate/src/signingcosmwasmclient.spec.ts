@@ -136,12 +136,17 @@ describe("SigningCosmWasmClient", () => {
       const accessConfig: AccessConfig = {
         permission: AccessType.ACCESS_TYPE_EVERYBODY,
         address: "",
+        addresses: [],
       };
-      const { codeId, originalChecksum, originalSize, compressedChecksum, compressedSize } =
-        await client.upload(alice.address0, wasm, defaultUploadFee, "test memo", accessConfig);
-      expect(originalChecksum).toEqual(toHex(sha256(wasm)));
+      const { codeId, checksum, originalSize, compressedSize } = await client.upload(
+        alice.address0,
+        wasm,
+        defaultUploadFee,
+        "test memo",
+        accessConfig,
+      );
+      expect(checksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
-      expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
       expect(compressedSize).toBeLessThan(wasm.length * 0.5);
       expect(codeId).toBeGreaterThanOrEqual(1);
       client.disconnect();
