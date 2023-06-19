@@ -54,6 +54,7 @@ describe("AminoTypes", () => {
         instantiatePermission: {
           permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
           address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          addresses: [],
         },
       };
       const aminoMsg = new AminoTypes(createWasmAminoConverters()).toAmino({
@@ -68,6 +69,7 @@ describe("AminoTypes", () => {
           instantiate_permission: {
             permission: "OnlyAddress",
             address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            addresses: undefined,
           },
         },
       };
@@ -315,6 +317,7 @@ describe("AminoTypes", () => {
           instantiate_permission: {
             permission: "OnlyAddress",
             address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            addresses: undefined,
           },
         },
       };
@@ -325,6 +328,7 @@ describe("AminoTypes", () => {
         instantiatePermission: {
           permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
           address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          addresses: [],
         },
       };
       expect(msg).toEqual({

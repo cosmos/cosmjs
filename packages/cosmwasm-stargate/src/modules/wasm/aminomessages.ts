@@ -23,6 +23,8 @@ export function accessTypeFromString(str: string): AccessType {
       return AccessType.ACCESS_TYPE_ONLY_ADDRESS;
     case "Everybody":
       return AccessType.ACCESS_TYPE_EVERYBODY;
+    case "AnyOfAddresses":
+      return AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES;
     default:
       return AccessType.UNRECOGNIZED;
   }
@@ -38,6 +40,8 @@ export function accessTypeToString(object: any): string {
       return "OnlyAddress";
     case AccessType.ACCESS_TYPE_EVERYBODY:
       return "Everybody";
+    case AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES:
+      return "AnyOfAddresses";
     case AccessType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -49,11 +53,16 @@ export function accessTypeToString(object: any): string {
  */
 export interface AccessConfig {
   /**
-   * Permission should be one kind of string 'Nobody', 'OnlyAddress', 'Everybody', 'Unspecified'
-   * @see https://github.com/CosmWasm/wasmd/blob/v0.28.0/x/wasm/types/params.go#L54
+   * Permission should be one kind of string 'Nobody', 'OnlyAddress', 'Everybody', 'AnyOfAddresses', 'Unspecified'
+   * @see https://github.com/CosmWasm/wasmd/blob/v0.31.0/x/wasm/types/params.go#L54
    */
   readonly permission: string;
+  /**
+   * Address
+   * Deprecated: replaced by addresses
+   */
   readonly address?: string;
+  readonly addresses?: string[];
 }
 
 /**
@@ -204,6 +213,8 @@ export function createWasmAminoConverters(): AminoConverters {
           ? {
               permission: accessTypeToString(instantiatePermission.permission),
               address: instantiatePermission.address || undefined,
+              addresses:
+                instantiatePermission.addresses.length !== 0 ? instantiatePermission.addresses : undefined,
             }
           : undefined,
       }),
@@ -218,6 +229,7 @@ export function createWasmAminoConverters(): AminoConverters {
           ? {
               permission: accessTypeFromString(instantiate_permission.permission),
               address: instantiate_permission.address ?? "",
+              addresses: instantiate_permission.addresses ?? [],
             }
           : undefined,
       }),
