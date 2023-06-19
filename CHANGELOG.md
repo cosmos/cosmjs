@@ -26,7 +26,10 @@ and this project adheres to
 - @cosmjs/stargateAdd `StargateClient.broadcastTxSync` and
   `SigningStargateClient.signAndBroadcastSync` to allow broadcasting without
   waiting for block inclusion. ([#1396])
+- @cosmjs/cosmwasm-stargate: Add Amino JSON support for
+  `MsgStoreCode.instantiate_permission`. ([#334])
 
+[#334]: https://github.com/cosmos/cosmjs/issues/334
 [#1266]: https://github.com/cosmos/cosmjs/issues/1266
 [#1305]: https://github.com/cosmos/cosmjs/issues/1305
 [#1396]: https://github.com/cosmos/cosmjs/pull/1396

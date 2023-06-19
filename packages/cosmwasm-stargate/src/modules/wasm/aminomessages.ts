@@ -10,13 +10,60 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 import Long from "long";
 
-// TODO: implement
+export function accessTypeFromString(str: string): AccessType {
+  switch (str) {
+    case "Unspecified":
+      return AccessType.ACCESS_TYPE_UNSPECIFIED;
+    case "Nobody":
+      return AccessType.ACCESS_TYPE_NOBODY;
+    case "OnlyAddress":
+      return AccessType.ACCESS_TYPE_ONLY_ADDRESS;
+    case "Everybody":
+      return AccessType.ACCESS_TYPE_EVERYBODY;
+    case "AnyOfAddresses":
+      return AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES;
+    default:
+      return AccessType.UNRECOGNIZED;
+  }
+}
+
+export function accessTypeToString(object: any): string {
+  switch (object) {
+    case AccessType.ACCESS_TYPE_UNSPECIFIED:
+      return "Unspecified";
+    case AccessType.ACCESS_TYPE_NOBODY:
+      return "Nobody";
+    case AccessType.ACCESS_TYPE_ONLY_ADDRESS:
+      return "OnlyAddress";
+    case AccessType.ACCESS_TYPE_EVERYBODY:
+      return "Everybody";
+    case AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES:
+      return "AnyOfAddresses";
+    case AccessType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 /**
  * @see https://github.com/CosmWasm/wasmd/blob/v0.18.0-rc1/proto/cosmwasm/wasm/v1/types.proto#L36-L41
  */
-type AccessConfig = never;
+export interface AccessConfig {
+  /**
+   * Permission should be one kind of string 'Nobody', 'OnlyAddress', 'Everybody', 'AnyOfAddresses', 'Unspecified'
+   * @see https://github.com/CosmWasm/wasmd/blob/v0.31.0/x/wasm/types/params.go#L54
+   */
+  readonly permission: string;
+  /**
+   * Address
+   * Deprecated: replaced by addresses
+   */
+  readonly address?: string;
+  readonly addresses?: string[];
+}
 
 /**
  * The Amino JSON representation of [MsgStoreCode].
@@ -155,14 +202,36 @@ export function createWasmAminoConverters(): AminoConverters {
   return {
     "/cosmwasm.wasm.v1.MsgStoreCode": {
       aminoType: "wasm/MsgStoreCode",
-      toAmino: ({ sender, wasmByteCode }: MsgStoreCode): AminoMsgStoreCode["value"] => ({
+      toAmino: ({
+        sender,
+        wasmByteCode,
+        instantiatePermission,
+      }: MsgStoreCode): AminoMsgStoreCode["value"] => ({
         sender: sender,
         wasm_byte_code: toBase64(wasmByteCode),
+        instantiate_permission: instantiatePermission
+          ? {
+              permission: accessTypeToString(instantiatePermission.permission),
+              address: instantiatePermission.address || undefined,
+              addresses:
+                instantiatePermission.addresses.length !== 0 ? instantiatePermission.addresses : undefined,
+            }
+          : undefined,
       }),
-      fromAmino: ({ sender, wasm_byte_code }: AminoMsgStoreCode["value"]): MsgStoreCode => ({
+      fromAmino: ({
+        sender,
+        wasm_byte_code,
+        instantiate_permission,
+      }: AminoMsgStoreCode["value"]): MsgStoreCode => ({
         sender: sender,
         wasmByteCode: fromBase64(wasm_byte_code),
-        instantiatePermission: undefined,
+        instantiatePermission: instantiate_permission
+          ? {
+              permission: accessTypeFromString(instantiate_permission.permission),
+              address: instantiate_permission.address ?? "",
+              addresses: instantiate_permission.addresses ?? [],
+            }
+          : undefined,
       }),
     },
     "/cosmwasm.wasm.v1.MsgInstantiateContract": {
