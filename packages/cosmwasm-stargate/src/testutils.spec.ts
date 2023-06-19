@@ -105,13 +105,13 @@ export const validator = {
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
-  delegatorAddress: "wasm1tjgue6r5kqj5dets24pwaa9u7wuzucpwuva0rv",
+  delegatorAddress: "wasm1g6kvj7w4c8g0vhl35kjgpe3jmuauet0e5tnevj",
   /**
    * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
-  validatorAddress: "wasmvaloper1tjgue6r5kqj5dets24pwaa9u7wuzucpwfsgndk",
+  validatorAddress: "wasmvaloper1g6kvj7w4c8g0vhl35kjgpe3jmuauet0ephx9zg",
   accountNumber: 0,
   sequence: 1,
 };

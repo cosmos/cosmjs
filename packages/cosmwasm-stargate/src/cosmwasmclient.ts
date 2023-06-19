@@ -10,13 +10,9 @@ import {
   BroadcastTxError,
   Coin,
   DeliverTxResponse,
-  fromTendermint34Event,
+  fromTendermintEvent,
   IndexedTx,
-  isSearchByHeightQuery,
-  isSearchBySentFromOrToQuery,
-  isSearchByTagsQuery,
   QueryClient,
-  SearchTxFilter,
   SearchTxQuery,
   SequenceResponse,
   setupAuthExtension,
@@ -25,12 +21,20 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import { HttpEndpoint, Tendermint34Client, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  Tendermint37Client,
+  TendermintClient,
+  toRfc3339WithNanoseconds,
+} from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
+import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import {
   CodeInfoResponse,
   QueryCodesResponse,
   QueryContractsByCodeResponse,
+  QueryContractsByCreatorResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
@@ -77,26 +81,51 @@ export interface ContractCodeHistoryEntry {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: Tendermint34Client | undefined;
+  readonly tmClient: TendermintClient | undefined;
   readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: Tendermint34Client | undefined;
+  private readonly tmClient: TendermintClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
+  /**
+   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   *
+   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
+   * To set the Tendermint client explicitly, use `create`.
+   */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+    // Using 0.34 as the fallback.
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
+    return CosmWasmClient.create(tmClient);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async create(tmClient: TendermintClient): Promise<CosmWasmClient> {
     return new CosmWasmClient(tmClient);
   }
 
-  protected constructor(tmClient: Tendermint34Client | undefined) {
+  protected constructor(tmClient: TendermintClient | undefined) {
     if (tmClient) {
       this.tmClient = tmClient;
       this.queryClient = QueryClient.withExtensions(
@@ -109,11 +138,11 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): Tendermint34Client | undefined {
+  protected getTmClient(): TendermintClient | undefined {
     return this.tmClient;
   }
 
-  protected forceGetTmClient(): Tendermint34Client {
+  protected forceGetTmClient(): TendermintClient {
     if (!this.tmClient) {
       throw new Error(
         "Tendermint client not available. You cannot use online functionality in offline mode.",
@@ -202,42 +231,16 @@ export class CosmWasmClient {
     return results[0] ?? null;
   }
 
-  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
-    const minHeight = filter.minHeight || 0;
-    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
-
-    if (maxHeight < minHeight) return []; // optional optimization
-
-    function withFilters(originalQuery: string): string {
-      return `${originalQuery} AND tx.height>=${minHeight} AND tx.height<=${maxHeight}`;
-    }
-
-    let txs: readonly IndexedTx[];
-
-    if (isSearchByHeightQuery(query)) {
-      txs =
-        query.height >= minHeight && query.height <= maxHeight
-          ? await this.txsQuery(`tx.height=${query.height}`)
-          : [];
-    } else if (isSearchBySentFromOrToQuery(query)) {
-      const sentQuery = withFilters(`message.module='bank' AND transfer.sender='${query.sentFromOrTo}'`);
-      const receivedQuery = withFilters(
-        `message.module='bank' AND transfer.recipient='${query.sentFromOrTo}'`,
-      );
-      const [sent, received] = await Promise.all(
-        [sentQuery, receivedQuery].map((rawQuery) => this.txsQuery(rawQuery)),
-      );
-      const sentHashes = sent.map((t) => t.hash);
-      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
-    } else if (isSearchByTagsQuery(query)) {
-      const rawQuery = withFilters(query.tags.map((t) => `${t.key}='${t.value}'`).join(" AND "));
-      txs = await this.txsQuery(rawQuery);
+  public async searchTx(query: SearchTxQuery): Promise<IndexedTx[]> {
+    let rawQuery: string;
+    if (typeof query === "string") {
+      rawQuery = query;
+    } else if (Array.isArray(query)) {
+      rawQuery = query.map((t) => `${t.key}='${t.value}'`).join(" AND ");
     } else {
-      throw new Error("Unknown query type");
+      throw new Error("Got unsupported query type. See CosmJS 0.31 CHANGELOG for API breaking changes here.");
     }
-
-    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
-    return filtered;
+    return this.txsQuery(rawQuery);
   }
 
   public disconnect(): void {
@@ -282,9 +285,11 @@ export class CosmWasmClient {
         ? {
             code: result.code,
             height: result.height,
+            txIndex: result.txIndex,
             rawLog: result.rawLog,
             transactionHash: txId,
             events: result.events,
+            msgResponses: result.msgResponses,
             gasUsed: result.gasUsed,
             gasWanted: result.gasWanted,
           }
@@ -371,8 +376,24 @@ export class CosmWasmClient {
     do {
       const { contracts, pagination }: QueryContractsByCodeResponse =
         await this.forceGetQueryClient().wasm.listContractsByCodeId(codeId, startAtKey);
-      const loadedContracts = contracts || [];
-      allContracts.push(...loadedContracts);
+      allContracts.push(...contracts);
+      startAtKey = pagination?.nextKey;
+    } while (startAtKey?.length !== 0 && startAtKey !== undefined);
+
+    return allContracts;
+  }
+
+  /**
+   * Returns a list of contract addresses created by the given creator.
+   * This just loops through all pagination pages.
+   */
+  public async getContractsByCreator(creator: string): Promise<string[]> {
+    const allContracts = [];
+    let startAtKey: Uint8Array | undefined = undefined;
+    do {
+      const { contractAddresses, pagination }: QueryContractsByCreatorResponse =
+        await this.forceGetQueryClient().wasm.listContractsByCreator(creator, startAtKey);
+      allContracts.push(...contractAddresses);
       startAtKey = pagination?.nextKey;
     } while (startAtKey?.length !== 0 && startAtKey !== undefined);
 
@@ -457,16 +478,19 @@ export class CosmWasmClient {
     }
   }
 
-  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
+  private async txsQuery(query: string): Promise<IndexedTx[]> {
     const results = await this.forceGetTmClient().txSearchAll({ query: query });
-    return results.txs.map((tx) => {
+    return results.txs.map((tx): IndexedTx => {
+      const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {
         height: tx.height,
+        txIndex: tx.index,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
-        events: tx.result.events.map(fromTendermint34Event),
+        events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
+        msgResponses: txMsgData.msgResponses,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

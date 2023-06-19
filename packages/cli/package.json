@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.29.5",
+  "version": "0.31.0-alpha.2",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -33,6 +33,7 @@
     "cosmjs-cli": "bin/cosmjs-cli"
   },
   "files": [
+    "bin/",
     "build/",
     "tsconfig_repl.json",
     "*.md",
@@ -53,11 +54,11 @@
     "axios": "^0.21.2",
     "babylon": "^6.18.0",
     "chalk": "^4",
-    "cosmjs-types": "^0.6.0",
+    "cosmjs-types": "^0.8.0",
     "diff": "^4",
     "recast": "^0.20",
     "ts-node": "^8",
-    "typescript": "~4.6",
+    "typescript": "~4.9",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
@@ -66,10 +67,10 @@
     "@types/diff": "^4",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",
-    "@types/node": "^15.0.1",
+    "@types/node": "^18",
     "@types/yargs": "^15.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^7.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",
@@ -82,5 +83,6 @@
     "nyc": "^15.1.0",
     "prettier": "^2.8.1",
     "source-map-support": "^0.5.19"
-  }
+  },
+  "stableVersion": "0.30.1"
 }

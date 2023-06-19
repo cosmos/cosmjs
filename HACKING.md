@@ -116,6 +116,7 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 9090  | simapp gRPC                    | Manual Stargate debugging       |
 | 11134 | Standalone Tendermint 0.34 RPC | @cosmjs/tendermint-rpc tests    |
 | 11135 | Standalone Tendermint 0.35 RPC | @cosmjs/tendermint-rpc tests    |
+| 11137 | Standalone Tendermint 0.37 RPC | @cosmjs/tendermint-rpc tests    |
 | 26658 | simapp Tendermint RPC          | Stargate client tests           |
 | 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm-stargate tests |
 | 26660 | simapp slow Tendermint RPC     | Stargate client tests           |

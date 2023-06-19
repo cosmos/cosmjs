@@ -1,8 +1,8 @@
-import { Bech32 } from "@cosmjs/encoding";
+import { fromBech32 } from "@cosmjs/encoding";
 
 export function isValidAddress(input: string, requiredPrefix: string): boolean {
   try {
-    const { prefix, data } = Bech32.decode(input);
+    const { prefix, data } = fromBech32(input);
     if (prefix !== requiredPrefix) {
       return false;
     }

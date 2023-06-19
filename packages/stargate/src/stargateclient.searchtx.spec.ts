@@ -10,6 +10,7 @@ import {
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
+import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -22,6 +23,7 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
+  simapp44Enabled,
   simappEnabled,
 } from "./testutils.spec";
 
@@ -156,6 +158,7 @@ describe("StargateClient.getTx and .searchTx", () => {
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const result = await client.getTx(sendSuccessful.hash);
+      assert(result);
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
@@ -164,6 +167,14 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendSuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        expect(result.msgResponses.length).toEqual(1);
+        expect(result.msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+        const _response = MsgSendResponse.decode(result.msgResponses[0].value);
+        // MsgSendResponse has no fields to check 🤷‍♂️
+      }
     });
 
     it("can get unsuccessful tx by ID", async () => {
@@ -171,6 +182,7 @@ describe("StargateClient.getTx and .searchTx", () => {
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const result = await client.getTx(sendUnsuccessful.hash);
+      assert(result);
       expect(result).toEqual(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
@@ -179,6 +191,12 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendUnsuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        // unsuccessful tx should not have responses
+        expect(result.msgResponses.length).toEqual(0);
+      }
     });
 
     it("can get by ID (non existent)", async () => {
@@ -190,12 +208,12 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
   });
 
-  describe("with SearchByHeightQuery", () => {
+  describe("searchTx", () => {
     it("can search successful tx by height", async () => {
       pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const result = await client.searchTx({ height: sendSuccessful.height });
+      const result = await client.searchTx(`tx.height=${sendSuccessful.height}`);
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result).toContain(
         jasmine.objectContaining({
@@ -205,13 +223,21 @@ describe("StargateClient.getTx and .searchTx", () => {
           tx: sendSuccessful.tx,
         }),
       );
+
+      // works on SDK 0.46+
+      if (!simapp44Enabled()) {
+        expect(result[0].msgResponses.length).toEqual(1);
+        expect(result[0].msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+        const _response = MsgSendResponse.decode(result[0].msgResponses[0].value);
+        // MsgSendResponse has no fields to check 🤷‍♂️
+      }
     });
 
     it("can search unsuccessful tx by height", async () => {
       pendingWithoutSimapp();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const result = await client.searchTx({ height: sendUnsuccessful.height });
+      const result = await client.searchTx(`tx.height=${sendUnsuccessful.height}`);
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result).toContain(
         jasmine.objectContaining({
@@ -222,14 +248,14 @@ describe("StargateClient.getTx and .searchTx", () => {
         }),
       );
     });
-  });
 
-  describe("with SearchBySentFromOrToQuery", () => {
     it("can search by sender", async () => {
       pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.sender });
+      // Since Cosmos SDK 0.47 we can only combine attributes of a single event
+      const query = `message.action = '/cosmos.bank.v1beta1.MsgSend' AND message.sender = '${sendSuccessful.sender}'`;
+      const results = await client.searchTx(query);
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
@@ -257,7 +283,7 @@ describe("StargateClient.getTx and .searchTx", () => {
       pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.recipient });
+      const results = await client.searchTx(`transfer.recipient='${sendSuccessful.recipient}'`);
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
@@ -281,69 +307,11 @@ describe("StargateClient.getTx and .searchTx", () => {
       );
     });
 
-    it("can search by recipient and filter by minHeight", async () => {
-      pendingWithoutSimapp();
-      assert(sendSuccessful);
-      const client = await StargateClient.connect(simapp.tendermintUrl);
-      const query = { sentFromOrTo: sendSuccessful.recipient };
-
-      {
-        const result = await client.searchTx(query, { minHeight: 0 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
-        expect(result.length).toEqual(0);
-      }
-    });
-
-    it("can search by recipient and filter by maxHeight", async () => {
-      pendingWithoutSimapp();
-      assert(sendSuccessful);
-      const client = await StargateClient.connect(simapp.tendermintUrl);
-      const query = { sentFromOrTo: sendSuccessful.recipient };
-
-      {
-        const result = await client.searchTx(query, { maxHeight: 9999999999999 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height + 1 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height - 1 });
-        expect(result.length).toEqual(0);
-      }
-    });
-  });
-
-  describe("with SearchByTagsQuery", () => {
-    it("can search by transfer.recipient", async () => {
+    it("works with tags", async () => {
       pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const results = await client.searchTx({
-        tags: [{ key: "transfer.recipient", value: sendSuccessful.recipient }],
-      });
+      const results = await client.searchTx([{ key: "transfer.recipient", value: sendSuccessful.recipient }]);
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results

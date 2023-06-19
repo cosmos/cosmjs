@@ -6,10 +6,76 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/crypto: Migrate to `libsodium-wrappers-sumo` to be able to use the
+  `crypto_pwhash` functions ([#1429]).
+
+[#1429]: https://github.com/cosmos/cosmjs/issues/1429
+
+### Added
+
+- @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.instantiate2` ([#1407]).
+- @cosmjs/cosmwasm-stargate: Add `CosmWasmClient.getContractsByCreator`
+  ([#1266]).
+- @cosmjs/stargate: `IndexedTx` and `DeliverTxResponse` now have a
+  `msgResponses` field ([#1305]).
+
+[#1266]: https://github.com/cosmos/cosmjs/issues/1266
+[#1305]: https://github.com/cosmos/cosmjs/issues/1305
+[#1407]: https://github.com/cosmos/cosmjs/pull/1407
+
+### Changed
+
+- all: upgrade cosmjs-types to 0.8.0 to include Cosmos SDK 0.46/0.47 and IBC v7
+  types.
+- @cosmjs/cosmwasm-stargate: Implement auto-detection for Tendermint 0.34/37
+  ([#1411]).
+- @cosmjs/cosmwasm-stargate: Remove structured `searchTx` queries. Only raw
+  query strings and key/value pairs are now supported. ([#1411])
+- @cosmjs/cosmwasm-stargate: Let `searchTx` return non-readonly array. The
+  caller owns this array and can mutate it as they want. ([#1411])
+- @cosmjs/cosmwasm-stargate: In `UploadResult` (result from
+  `SigningCosmWasmClient.upload`), rename `originalChecksum` to `checksum` and
+  remove `compressedChecksum` ([#1409]).
+- @cosmjs/stargate: Implement auto-detection for Tendermint 0.34/37 ([#1411]).
+- @cosmjs/stargate: Remove structured `searchTx` queries. Only raw query strings
+  and key/value pairs are now supported. ([#1411])
+- @cosmjs/stargate: Let `searchTx` return non-readonly array. The caller owns
+  this array and can mutate it as they want. ([#1411])
+- @cosmjs/stargate: Remove `QueryClient.queryUnverified` and
+  `QueryClient.queryVerified`. Please use `QueryClient.queryAbci` and
+  `QueryClient.queryStoreVerified` instead.
+- @cosmjs/stargate: Remove "not_supported_by_chain" option for Amino converter
+  types since this is not needed anymore. ([#1403])
+
+[#1403]: https://github.com/cosmos/cosmjs/issues/1403
+[#1409]: https://github.com/cosmos/cosmjs/issues/1409
+[#1411]: https://github.com/cosmos/cosmjs/pull/1411
+
+## [0.30.1] - 2023-03-22
+
+### Fixed
+
+- @cosmjs/amino: Fix escaping of "&", "<" and ">" characters in Amino JSON
+  encoding to match the Go implementation ([#1373], [#1388]).
+- @cosmjs/tendermint-rpc: Move version check from
+  `Tendermint{34,37}Client.create` to `.connect` in order to allow creating
+  clients without performing the extra network request ([#1358]).
+- @cosmjs/cli, @cosmjs/faucet: Add missing `bin/` directory to the
+  package.json's `files` list to ship it as part of the released package.
+
+[#1358]: https://github.com/cosmos/cosmjs/issues/1358
+[#1373]: https://github.com/cosmos/cosmjs/pull/1373
+[#1388]: https://github.com/cosmos/cosmjs/pull/1388
+
+## [0.30.0] - 2023-03-09
+
 ### Changed
 
 - all: The TypeScript compilation target is now ES2020 ([#1002]).
 - all: Add full support for Node.js 18 and run all CI tests with it ([#1240]).
+- all: Upgrade cosmjs-types to 0.7.
 - @cosmjs/tendermint-rpc: Remove unused `index` field from `RpcTxEvent` and
   `TxEvent`. This is unset starting with Tendermint 0.34.
 - @cosmjs/proto-signing: Make input and output of `decodePubkey` non-optional
@@ -21,18 +87,51 @@ and this project adheres to
 - @cosmjs/proto-signing: Remove `fromJSON`/`toJSON` from `TsProtoGeneratedType`
   such that generated types are not required to generate those anymore. The
   methods were provided by ts-proto but we never needed them. ([#1329])
+- @cosmjs/stargate: Rename `fromTendermint34Event` to `fromTendermintEvent` and
+  let it support both Tendermint 0.34 and 0.37 events as input.
+- @cosmjs/cosmwasm-stargate: Remove `cosmWasmTypes`. Use
+  `createWasmAminoConverters()` instead.
+- @cosmjs/encoding: Remove previously deprecated `Bech32` class. Please replace
+  `Bech32.encode`/`.decode` with free the functions `toBech32`/`fromBech32`.
+- @cosmjs/cosmwasm-stargate: Changed the `SigningCosmWasmClient` constructor to
+  include all Amino type converters that the `SigningStargateClient` uses by
+  default, to match the default registry types ([#1384]).
 
 [#1002]: https://github.com/cosmos/cosmjs/issues/1002
 [#1240]: https://github.com/cosmos/cosmjs/pull/1240
 [#1289]: https://github.com/cosmos/cosmjs/issues/1289
 [#1291]: https://github.com/cosmos/cosmjs/issues/1291
 [#1329]: https://github.com/cosmos/cosmjs/pull/1329
+[#1384]: https://github.com/cosmos/cosmjs/pull/1384
 
 ### Added
+
 - @cosmjs/stargate: Add `granteeGrants` and `granterGrants` queries to
   `AuthzExtension` ([#1308]).
+- @cosmjs/tendermint-rpc: Add new `Tendermint37Client` and remove unused
+  `Tendermint35Client`; Add `TendermintClient` as a union type for
+  `Tendermint34Client` or `Tendermint37Client` and
+  `isTendermint34Client`/`isTendermint37Client` to get the specific type
+  ([#1376]).
+- @cosmjs/stargate: Add constructors `StargateClient.create` and
+  `SigningStargateClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
+- @cosmjs/cosmwasm-stargate: Add constructors `CosmWasmClient.create` and
+  `SigningCosmWasmClient.createWithSigner` to construct with a given Tendermint
+  client ([#1376]).
+- @cosmjs/cosmwasm-stargate: Add `instantiate2Address` to pre-calculate
+  addresses for Instantiate2 ([#1253]).
+- @cosmjs/stargate: Add `txIndex` to `DeliverTxResponse` and `IndexedTx`
+  ([#1361]).
+- @cosmjs/stargate: Add `createDefaultAminoConverters` to access the
+  `SigningStargateClient`'s list of default Amino type converters to match the
+  default registry types in `defaultStargateTypes` ([#1384]).
 
+[#1253]: https://github.com/cosmos/cosmjs/pull/1253
 [#1308]: https://github.com/cosmos/cosmjs/pull/1308
+[#1361]: https://github.com/cosmos/cosmjs/issues/1361
+[#1376]: https://github.com/cosmos/cosmjs/pull/1376
+[#1384]: https://github.com/cosmos/cosmjs/pull/1384
 
 ## [0.29.5] - 2022-12-07
 
@@ -1166,7 +1265,9 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.29.5...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.30.1...HEAD
+[0.30.1]: https://github.com/cosmos/cosmjs/compare/v0.30.0...v0.30.1
+[0.30.0]: https://github.com/cosmos/cosmjs/compare/v0.29.5...v0.30.0
 [0.29.5]: https://github.com/cosmos/cosmjs/compare/v0.29.4...v0.29.5
 [0.29.4]: https://github.com/cosmos/cosmjs/compare/v0.29.3...v0.29.4
 [0.29.3]: https://github.com/cosmos/cosmjs/compare/v0.29.2...v0.29.3

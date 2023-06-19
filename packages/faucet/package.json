@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.29.5",
+  "version": "0.31.0-alpha.2",
   "description": "The faucet",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -11,6 +11,7 @@
     "cosmos-faucet": "bin/cosmos-faucet"
   },
   "files": [
+    "bin/",
     "build/",
     "*.md",
     "!*.spec.*",
@@ -57,8 +58,8 @@
     "@types/koa": "^2.13",
     "@types/koa-bodyparser": "^4.3",
     "@types/koa__cors": "^3.3",
-    "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^7.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",
@@ -73,8 +74,9 @@
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^8",
-    "typescript": "~4.6",
-    "webpack": "^5.32.0",
+    "typescript": "~4.9",
+    "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
-  }
+  },
+  "stableVersion": "0.30.1"
 }

@@ -9,13 +9,7 @@ export interface AminoConverter {
 }
 
 /** A map from protobuf type URL to the AminoConverter implementation if supported on chain */
-export type AminoConverters = Record<string, AminoConverter | "not_supported_by_chain">;
-
-function isAminoConverter(
-  converter: [string, AminoConverter | "not_supported_by_chain"],
-): converter is [string, AminoConverter] {
-  return typeof converter[1] !== "string";
-}
+export type AminoConverters = Record<string, AminoConverter>;
 
 /**
  * A map from Stargate message types as used in the messages's `Any` type
@@ -26,7 +20,7 @@ export class AminoTypes {
   // There is no uniqueness guarantee of the Amino type identifier in the type
   // system or constructor. Instead it's the user's responsibility to ensure
   // there is no overlap when fromAmino is called.
-  private readonly register: Record<string, AminoConverter | "not_supported_by_chain">;
+  private readonly register: Record<string, AminoConverter>;
 
   public constructor(types: AminoConverters) {
     this.register = types;
@@ -34,11 +28,6 @@ export class AminoTypes {
 
   public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
     const converter = this.register[typeUrl];
-    if (converter === "not_supported_by_chain") {
-      throw new Error(
-        `The message type '${typeUrl}' cannot be signed using the Amino JSON sign mode because this is not supported by chain.`,
-      );
-    }
     if (!converter) {
       throw new Error(
         `Type URL '${typeUrl}' does not exist in the Amino message type register. ` +
@@ -53,9 +42,7 @@ export class AminoTypes {
   }
 
   public fromAmino({ type, value }: AminoMsg): EncodeObject {
-    const matches = Object.entries(this.register)
-      .filter(isAminoConverter)
-      .filter(([_typeUrl, { aminoType }]) => aminoType === type);
+    const matches = Object.entries(this.register).filter(([_typeUrl, { aminoType }]) => aminoType === type);
 
     switch (matches.length) {
       case 0: {

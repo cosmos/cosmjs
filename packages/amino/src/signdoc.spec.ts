@@ -2,7 +2,7 @@
 import { Random } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 
-import { AminoMsg, makeSignDoc, sortedJsonStringify } from "./signdoc";
+import { AminoMsg, escapeCharacters, makeSignDoc, sortedJsonStringify } from "./signdoc";
 
 function makeRandomAddress(): string {
   return toBech32("cosmos", Random.getBytes(20));
@@ -130,6 +130,45 @@ describe("encoding", () => {
         sequence: sequence.toString(),
         memo: "",
       });
+    });
+  });
+
+  describe("escapeCharacters", () => {
+    it("works", () => {
+      // Unchanged originals
+      expect(escapeCharacters(`""`)).toEqual(`""`);
+      expect(escapeCharacters(`{}`)).toEqual(`{}`);
+      expect(escapeCharacters(`[]`)).toEqual(`[]`);
+      expect(escapeCharacters(`[123,null,"foo",[{}]]`)).toEqual(`[123,null,"foo",[{}]]`);
+      expect(escapeCharacters(`{"num":123}`)).toEqual(`{"num":123}`);
+      expect(escapeCharacters(`{"memo":"123"}`)).toEqual(`{"memo":"123"}`);
+      expect(escapeCharacters(`{"memo":"\\u0026"}`)).toEqual(`{"memo":"\\u0026"}`);
+
+      // Escapes one
+      expect(escapeCharacters(`{"m":"with amp: &"}`)).toEqual(`{"m":"with amp: \\u0026"}`);
+      expect(escapeCharacters(`{"m":"with lt: <"}`)).toEqual(`{"m":"with lt: \\u003c"}`);
+      expect(escapeCharacters(`{"m":"with gt: >"}`)).toEqual(`{"m":"with gt: \\u003e"}`);
+      // Escapes multiple
+      expect(escapeCharacters(`{"m":"with amp: &&"}`)).toEqual(`{"m":"with amp: \\u0026\\u0026"}`);
+      expect(escapeCharacters(`{"m":"with lt: <<"}`)).toEqual(`{"m":"with lt: \\u003c\\u003c"}`);
+      expect(escapeCharacters(`{"m":"with gt: >>"}`)).toEqual(`{"m":"with gt: \\u003e\\u003e"}`);
+      expect(escapeCharacters(`{"m":"with all: &<>"}`)).toEqual(`{"m":"with all: \\u0026\\u003c\\u003e"}`);
+    });
+
+    it("escaped encoding can be decoded to the same document", () => {
+      const docs = [
+        { memo: "ampersand:&,lt:<,gt:>", value: 123.421 },
+        "",
+        123,
+        ["foo", "ampersand:&,lt:<,gt:>"],
+      ];
+
+      for (const doc of docs) {
+        const normalEncoding = JSON.stringify(doc);
+        const escapedEncoding = escapeCharacters(normalEncoding);
+        expect(JSON.parse(escapedEncoding)).toEqual(JSON.parse(normalEncoding));
+        expect(JSON.parse(escapedEncoding)).toEqual(doc);
+      }
     });
   });
 });

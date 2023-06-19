@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toAscii } from "@cosmjs/encoding";
+import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
@@ -344,7 +344,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height - 1);
-      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.lastHeight).toBeGreaterThanOrEqual(height);
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
       expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
       expect(blockchain.blockMetas[1].header.height).toEqual(height - 2);
@@ -435,25 +435,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(r.height).toEqual(height);
       expect(r.proof).toBeTruthy();
 
-      // txSearch - you must enable the indexer when running
-      // tendermint, else you get empty results
-      const query = buildQuery({ tags: [{ key: "app.key", value: find }] });
-
-      const s = await client.txSearch({ query: query, page: 1, per_page: 30 });
-      // should find the tx
-      expect(s.totalCount).toEqual(1);
-      // should return same info as querying directly,
-      // except without the proof
-      expect(s.txs[0]).toEqual({ ...r, proof: undefined });
-
-      // ensure txSearchAll works as well
-      const sall = await client.txSearchAll({ query: query });
-      // should find the tx
-      expect(sall.totalCount).toEqual(1);
-      // should return same info as querying directly,
-      // except without the proof
-      expect(sall.txs[0]).toEqual({ ...r, proof: undefined });
-
       // and let's query the block itself to see this transaction
       const block = await client.block(height);
       expect(block.block.txs.length).toEqual(1);
@@ -464,25 +445,28 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   describe("txSearch", () => {
-    const key = randomString();
+    const txKey = randomString(); // a key used for multiple transactions
+    let tx1: Uint8Array | undefined;
+    let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
       if (tendermintEnabled()) {
         const client = await Tendermint34Client.create(rpcFactory());
 
         // eslint-disable-next-line no-inner-declarations
-        async function sendTx(): Promise<void> {
+        async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
           const me = randomString();
-          const tx = buildKvTx(key, me);
+          const tx = buildKvTx(txKey, me);
 
           const txRes = await client.broadcastTxCommit({ tx: tx });
           expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
           expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).not.toEqual(0);
+          expect(txRes.hash.length).toEqual(32);
+          return [tx, txRes];
         }
 
         // send 3 txs
-        await sendTx();
+        [tx1, broadcast1] = await sendTx();
         await sendTx();
         await sendTx();
 
@@ -492,6 +476,68 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       }
     });
 
+    it("finds a single tx by hash", async () => {
+      pendingWithoutTendermint();
+      assert(tx1 && broadcast1);
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      const result = await client.txSearch({ query: `tx.hash='${toHex(broadcast1.hash)}'` });
+      expect(result.totalCount).toEqual(1);
+      expect(result.txs[0]).toEqual({
+        hash: broadcast1.hash,
+        height: broadcast1.height,
+        index: 0,
+        tx: tx1,
+        result: broadcast1.deliverTx!,
+        proof: undefined,
+      });
+
+      client.disconnect();
+    });
+
+    it("finds a single tx by tags", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
+
+      const txKey2 = randomString();
+      const txValue2 = randomString();
+      const tx = buildKvTx(txKey2, txValue2);
+
+      const txRes = await client.broadcastTxCommit({ tx: tx });
+      expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+      await tendermintSearchIndexUpdated();
+
+      // txSearch - you must enable the indexer when running
+      // tendermint, else you get empty results
+      const query = buildQuery({ tags: [{ key: "app.key", value: txKey2 }] });
+
+      const search = await client.txSearch({ query: query, page: 1, per_page: 30 });
+      // should find the tx
+      expect(search.totalCount).toEqual(1);
+      // should return same info as querying directly,
+      // except without the proof
+      expect(search.txs[0]).toEqual({
+        hash: txRes.hash,
+        height: txRes.height,
+        index: 0,
+        tx: tx,
+        result: txRes.deliverTx!,
+        proof: undefined,
+      });
+
+      // Ensure txSearchAll works as well. This should be moved in a dedicated "txSearchAll" test block.
+      const searchAll = await client.txSearchAll({ query: query });
+      expect(searchAll.totalCount).toEqual(1);
+      expect(searchAll.txs[0]).toEqual({
+        hash: txRes.hash,
+        height: txRes.height,
+        index: 0,
+        tx: tx,
+        result: txRes.deliverTx!,
+        proof: undefined,
+      });
+    });
+
     it("returns transactions in ascending order by default", async () => {
       // NOTE: The Tendermint docs claim the default ordering is "desc" but it is actually "asc"
       // Docs: https://docs.tendermint.com/master/rpc/#/Info/tx_search
@@ -499,15 +545,15 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+      const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
-      const s = await client.txSearch({ query: query });
+      const result = await client.txSearch({ query: query });
 
-      expect(s.totalCount).toEqual(3);
-      s.txs.slice(1).reduce((lastHeight, { height }) => {
+      expect(result.totalCount).toEqual(3);
+      result.txs.slice(1).reduce((lastHeight, { height }) => {
         expect(height).toBeGreaterThanOrEqual(lastHeight);
         return height;
-      }, s.txs[0].height);
+      }, result.txs[0].height);
 
       client.disconnect();
     });
@@ -516,7 +562,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+      const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
       const s1 = await client.txSearch({ query: query, order_by: "desc" });
       const s2 = await client.txSearch({ query: query, order_by: "asc" });
@@ -531,7 +577,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+      const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
       // expect one page of results
       const s1 = await client.txSearch({ query: query, page: 1, per_page: 2 });
@@ -550,15 +596,14 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       pendingWithoutTendermint();
       const client = await Tendermint34Client.create(rpcFactory());
 
-      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+      const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
       const sall = await client.txSearchAll({ query: query, per_page: 2 });
       expect(sall.totalCount).toEqual(3);
       expect(sall.txs.length).toEqual(3);
       // make sure there are in order from lowest to highest height
-      const [tx1, tx2, tx3] = sall.txs;
-      expect(tx2.height).toEqual(tx1.height + 1);
-      expect(tx3.height).toEqual(tx2.height + 1);
+      expect(sall.txs[1].height).toEqual(sall.txs[0].height + 1);
+      expect(sall.txs[2].height).toEqual(sall.txs[1].height + 1);
 
       client.disconnect();
     });

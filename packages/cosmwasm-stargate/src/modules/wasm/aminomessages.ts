@@ -5,6 +5,7 @@ import {
   MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgInstantiateContract2,
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
@@ -108,6 +109,32 @@ export interface AminoMsgInstantiateContract {
     readonly funds: readonly Coin[];
     /** Bech32-encoded admin address */
     readonly admin?: string;
+  };
+}
+
+/**
+ * The Amino JSON representation of [MsgInstantiateContract2].
+ *
+ * [MsgInstantiateContract2]: https://github.com/CosmWasm/wasmd/blob/v0.31.0/proto/cosmwasm/wasm/v1/tx.proto#L76-L99
+ */
+export interface AminoMsgInstantiateContract2 {
+  type: "wasm/MsgInstantiateContract2";
+  value: {
+    /** Bech32 account address */
+    readonly sender: string;
+    /** ID of the Wasm code that was uploaded before */
+    readonly code_id: string;
+    /** Human-readable label for this contract */
+    readonly label: string;
+    /** Instantiate message as JavaScript object */
+    readonly msg: any;
+    readonly funds: readonly Coin[];
+    /** Bech32-encoded admin address */
+    readonly admin?: string;
+    /** Arbitrary Base64-encoded value provided by the sender */
+    readonly salt: string;
+    /** Whether or not to include the msg value into the hash for the address */
+    readonly fix_msg: boolean;
   };
 }
 
@@ -228,6 +255,47 @@ export function createWasmAminoConverters(): AminoConverters {
         admin: admin ?? "",
       }),
     },
+    "/cosmwasm.wasm.v1.MsgInstantiateContract2": {
+      aminoType: "wasm/MsgInstantiateContract2",
+      toAmino: ({
+        sender,
+        codeId,
+        label,
+        msg,
+        funds,
+        admin,
+        salt,
+        fixMsg,
+      }: MsgInstantiateContract2): AminoMsgInstantiateContract2["value"] => ({
+        sender: sender,
+        code_id: codeId.toString(),
+        label: label,
+        msg: JSON.parse(fromUtf8(msg)),
+        funds: funds,
+        admin: admin || undefined,
+        salt: toBase64(salt),
+        fix_msg: fixMsg,
+      }),
+      fromAmino: ({
+        sender,
+        code_id,
+        label,
+        msg,
+        funds,
+        admin,
+        salt,
+        fix_msg,
+      }: AminoMsgInstantiateContract2["value"]): MsgInstantiateContract2 => ({
+        sender: sender,
+        codeId: Long.fromString(code_id),
+        label: label,
+        msg: toUtf8(JSON.stringify(msg)),
+        funds: [...funds],
+        admin: admin ?? "",
+        salt: fromBase64(salt),
+        fixMsg: fix_msg,
+      }),
+    },
     "/cosmwasm.wasm.v1.MsgUpdateAdmin": {
       aminoType: "wasm/MsgUpdateAdmin",
       toAmino: ({ sender, newAdmin, contract }: MsgUpdateAdmin): AminoMsgUpdateAdmin["value"] => ({
@@ -294,6 +362,3 @@ export function createWasmAminoConverters(): AminoConverters {
     },
   };
 }
-
-/** @deprecated use `createWasmAminoConverters()` */
-export const cosmWasmTypes: AminoConverters = createWasmAminoConverters();

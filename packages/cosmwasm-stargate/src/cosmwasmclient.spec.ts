@@ -289,6 +289,21 @@ describe("CosmWasmClient", () => {
     });
   });
 
+  describe("getContractsByCreator", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const client = await CosmWasmClient.connect(wasmd.endpoint);
+      const result = await client.getContractsByCreator(alice.address0);
+      const expectedAddresses = deployedHackatom.instances.map((info) => info.address);
+
+      // Test first 3 instances we get from scripts/wasmd/init.sh. There may me more than that in the result.
+      expect(result.length).toBeGreaterThanOrEqual(3);
+      expect(result[0]).toEqual(expectedAddresses[0]);
+      expect(result[1]).toEqual(expectedAddresses[1]);
+      expect(result[2]).toEqual(expectedAddresses[2]);
+    });
+  });
+
   describe("getContract", () => {
     it("works for instance without admin", async () => {
       pendingWithoutWasmd();
@@ -385,7 +400,7 @@ describe("CosmWasmClient", () => {
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(client.queryContractRaw(nonExistentAddress, configKey)).toBeRejectedWithError(
-        /not found/i,
+        /no such contract/i,
       );
     });
   });
@@ -445,7 +460,7 @@ describe("CosmWasmClient", () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(
         client.queryContractSmart(nonExistentAddress, { verifier: {} }),
-      ).toBeRejectedWithError(/not found/i);
+      ).toBeRejectedWithError(/no such contract/i);
     });
   });
 });
