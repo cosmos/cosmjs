@@ -11,8 +11,15 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.instantiate2` ([#1407]).
 - @cosmjs/stargate: `IndexedTx` and `DeliverTxResponse` now have a
   `msgResponses` field ([#1305]).
+- @cosmjs/cosmwasm-stargate: Add `CosmWasmClient.broadcastTxSync` and
+  `SigningCosmWasmClient.signAndBroadcastSync` to allow broadcasting without
+  waiting for block inclusion. ([#1396])
+- @cosmjs/stargateAdd `StargateClient.broadcastTxSync` and
+  `SigningStargateClient.signAndBroadcastSync` to allow broadcasting without
+  waiting for block inclusion. ([#1396])
 
 [#1305]: https://github.com/cosmos/cosmjs/issues/1305
+[#1396]: https://github.com/cosmos/cosmjs/pull/1396
 [#1407]: https://github.com/cosmos/cosmjs/pull/1407
 
 ### Changed
