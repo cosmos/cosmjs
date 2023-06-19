@@ -614,6 +614,40 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
+  /**
+   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   *
+   * This method is useful if you want to send a transaction in broadcast,
+   * without waiting for it to be placed inside a block, because for example
+   * I would like to receive the hash to later track the transaction with another tool.
+   *
+   * @param signerAddress The address that will sign transactions using this instance. The signer must be able to sign with this address.
+   * @param messages
+   * @param fee
+   * @param memo
+   *
+   * @returns Returns the hash of the transaction
+   */
+  public async signAndBroadcastSync(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee | "auto" | number,
+    memo = "",
+  ): Promise<string> {
+    let usedFee: StdFee;
+    if (fee == "auto" || typeof fee === "number") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const multiplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txBytes = TxRaw.encode(txRaw).finish();
+    return this.broadcastTxSync(txBytes);
+  }
+
   public async sign(
     signerAddress: string,
     messages: readonly EncodeObject[],
