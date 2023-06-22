@@ -64,6 +64,8 @@ export {
   MsgVoteWeightedEncodeObject,
 } from "./gov/messages";
 export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from "./gov/queries";
+export { createGroupAminoConverters } from "./group/aminomessages";
+export { groupTypes } from "./group/messages";
 export { AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";
 export { ibcTypes, isMsgTransferEncodeObject, MsgTransferEncodeObject } from "./ibc/messages";
 export { IbcExtension, setupIbcExtension } from "./ibc/queries";

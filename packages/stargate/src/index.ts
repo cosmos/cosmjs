@@ -33,6 +33,7 @@ export {
   createEvidenceAminoConverters,
   createFeegrantAminoConverters,
   createGovAminoConverters,
+  createGroupAminoConverters,
   createIbcAminoConverters,
   createSlashingAminoConverters,
   createStakingAminoConverters,

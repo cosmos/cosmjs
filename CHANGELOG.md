@@ -28,6 +28,7 @@ and this project adheres to
   waiting for block inclusion. ([#1396])
 - @cosmjs/cosmwasm-stargate: Add Amino JSON support for
   `MsgStoreCode.instantiate_permission`. ([#334])
+- @cosmjs/stargate: Add group and gov v1 message types
 
 [#334]: https://github.com/cosmos/cosmjs/issues/334
 [#1266]: https://github.com/cosmos/cosmjs/issues/1266

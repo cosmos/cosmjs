@@ -103,6 +103,9 @@ export function isAminoMsgDeposit(msg: AminoMsg): msg is AminoMsgDeposit {
 }
 
 export function createGovAminoConverters(): AminoConverters {
+  // Gov v1 types missing, see
+  // https://github.com/cosmos/cosmjs/issues/1442
+
   return {
     "/cosmos.gov.v1beta1.MsgDeposit": {
       aminoType: "cosmos-sdk/MsgDeposit",
