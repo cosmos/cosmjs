@@ -23,7 +23,7 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add `CosmWasmClient.broadcastTxSync` and
   `SigningCosmWasmClient.signAndBroadcastSync` to allow broadcasting without
   waiting for block inclusion. ([#1396])
-- @cosmjs/stargateAdd `StargateClient.broadcastTxSync` and
+- @cosmjs/stargate: Add `StargateClient.broadcastTxSync` and
   `SigningStargateClient.signAndBroadcastSync` to allow broadcasting without
   waiting for block inclusion. ([#1396])
 - @cosmjs/cosmwasm-stargate: Add Amino JSON support for
