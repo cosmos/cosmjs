@@ -43,7 +43,7 @@
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "ledger-cosmos-js": "^2.1.8",
-    "semver": "^7.3.2"
+    "semver": "^7.5.2"
   },
   "devDependencies": {
     "@cosmjs/stargate": "workspace:^",
