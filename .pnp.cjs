@@ -600,7 +600,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/semver",\
-        "npm:7.3.13"\
+        "npm:7.5.0"\
       ],\
       [\
         "@types/serve-static",\
@@ -2400,7 +2400,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "semver",\
-        "npm:7.3.8"\
+        "npm:7.5.3"\
       ],\
       [\
         "serialize-javascript",\
@@ -3571,7 +3571,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/ledgerhq__hw-transport", "npm:4.21.3"],\
             ["@types/ledgerhq__hw-transport-node-hid", "npm:4.22.2"],\
             ["@types/ledgerhq__hw-transport-webusb", "npm:4.70.1"],\
-            ["@types/semver", "npm:7.3.13"],\
+            ["@types/semver", "npm:7.5.0"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["eslint", "npm:7.26.0"],\
@@ -3587,7 +3587,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ledger-cosmos-js", "npm:2.1.8"],\
             ["nyc", "npm:15.1.0"],\
             ["prettier", "npm:2.8.8"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -4104,7 +4104,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@ledgerhq/errors", "npm:5.50.0"],\
             ["@ledgerhq/logs", "npm:5.50.0"],\
             ["rxjs", "npm:6.6.7"],\
-            ["semver", "npm:7.3.8"]\
+            ["semver", "npm:7.5.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4812,10 +4812,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/semver", [\
-        ["npm:7.3.13", {\
-          "packageLocation": "./.yarn/cache/@types-semver-npm-7.3.13-56212b60da-00c0724d54.zip/node_modules/@types/semver/",\
+        ["npm:7.5.0", {\
+          "packageLocation": "./.yarn/cache/@types-semver-npm-7.5.0-4823ff34be-0a64b9b9c7.zip/node_modules/@types/semver/",\
           "packageDependencies": [\
-            ["@types/semver", "npm:7.3.13"]\
+            ["@types/semver", "npm:7.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4885,7 +4885,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ignore", "npm:5.2.0"],\
             ["natural-compare-lite", "npm:1.4.0"],\
             ["regexpp", "npm:3.2.0"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["tsutils", "virtual:2e8b63b9512ee302c1e69bb1e3512d620971815ee605065d20bed52f3459d2253d5150a129382f41fb46f2eed830a5b8af9f8e7a56e0fbdf246de03604209ab2#npm:3.21.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"]\
           ],\
@@ -4998,7 +4998,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:2e8b63b9512ee302c1e69bb1e3512d620971815ee605065d20bed52f3459d2253d5150a129382f41fb46f2eed830a5b8af9f8e7a56e0fbdf246de03604209ab2#npm:4.3.4"],\
             ["globby", "npm:11.1.0"],\
             ["is-glob", "npm:4.0.3"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["tsutils", "virtual:838a9315d444a54db96788d2b28a822ef21789df47f5a41ed7f7f2dd34e0a447899fa272d1407402ef6a6b310136ed11ec578f26931b2b84031cd2ba37dba0a0#npm:3.21.0"],\
             ["typescript", null]\
           ],\
@@ -5018,7 +5018,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:2e8b63b9512ee302c1e69bb1e3512d620971815ee605065d20bed52f3459d2253d5150a129382f41fb46f2eed830a5b8af9f8e7a56e0fbdf246de03604209ab2#npm:4.3.4"],\
             ["globby", "npm:11.1.0"],\
             ["is-glob", "npm:4.0.3"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["tsutils", "virtual:2e8b63b9512ee302c1e69bb1e3512d620971815ee605065d20bed52f3459d2253d5150a129382f41fb46f2eed830a5b8af9f8e7a56e0fbdf246de03604209ab2#npm:3.21.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"]\
           ],\
@@ -5043,14 +5043,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/utils", "virtual:2e8b63b9512ee302c1e69bb1e3512d620971815ee605065d20bed52f3459d2253d5150a129382f41fb46f2eed830a5b8af9f8e7a56e0fbdf246de03604209ab2#npm:5.54.0"],\
             ["@types/eslint", null],\
             ["@types/json-schema", "npm:7.0.9"],\
-            ["@types/semver", "npm:7.3.13"],\
+            ["@types/semver", "npm:7.5.0"],\
             ["@typescript-eslint/scope-manager", "npm:5.54.0"],\
             ["@typescript-eslint/types", "npm:5.54.0"],\
             ["@typescript-eslint/typescript-estree", "virtual:b72deb79e2ec592967c5308e4bf1e792d5b5ca0d14e9c1ab085f52dd2b14c18062e243ec00f9ee082ef907e2293f1a70ff799a6253f4f2f8605e8d778a51ba89#npm:5.54.0"],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-scope", "npm:5.1.1"],\
             ["eslint-utils", "virtual:b72deb79e2ec592967c5308e4bf1e792d5b5ca0d14e9c1ab085f52dd2b14c18062e243ec00f9ee082ef907e2293f1a70ff799a6253f4f2f8605e8d778a51ba89#npm:3.0.0"],\
-            ["semver", "npm:7.3.8"]\
+            ["semver", "npm:7.5.3"]\
           ],\
           "packagePeers": [\
             "@types/eslint",\
@@ -7585,7 +7585,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["optionator", "npm:0.9.1"],\
             ["progress", "npm:2.0.3"],\
             ["regexpp", "npm:3.2.0"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["strip-ansi", "npm:6.0.0"],\
             ["strip-json-comments", "npm:3.1.1"],\
             ["table", "npm:6.7.1"],\
@@ -10077,7 +10077,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nopt", "npm:5.0.0"],\
             ["npmlog", "npm:4.1.2"],\
             ["rimraf", "npm:3.0.2"],\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["tar", "npm:6.1.11"],\
             ["which", "npm:2.0.2"]\
           ],\
@@ -11153,10 +11153,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:7.3.8", {\
-          "packageLocation": "./.yarn/cache/semver-npm-7.3.8-25a996cb4f-ba9c7cbbf2.zip/node_modules/semver/",\
+        ["npm:7.5.3", {\
+          "packageLocation": "./.yarn/cache/semver-npm-7.5.3-275095dbf3-9d58db1652.zip/node_modules/semver/",\
           "packageDependencies": [\
-            ["semver", "npm:7.3.8"],\
+            ["semver", "npm:7.5.3"],\
             ["lru-cache", "npm:6.0.0"]\
           ],\
           "linkType": "HARD"\
