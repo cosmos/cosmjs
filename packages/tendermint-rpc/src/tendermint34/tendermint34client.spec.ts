@@ -218,6 +218,17 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       // sync info
       expect(status.syncInfo.catchingUp).toEqual(false);
       expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
+      expect(status.syncInfo.latestBlockTime).toBeInstanceOf(Date);
+      if (status.syncInfo.earliestBlockHeight) {
+        expect(status.syncInfo.earliestBlockHeight).toBeGreaterThanOrEqual(1);
+        expect(status.syncInfo.earliestBlockHeight).toBeLessThanOrEqual(status.syncInfo.latestBlockHeight);
+      }
+      if (status.syncInfo.earliestBlockTime) {
+        expect(status.syncInfo.earliestBlockTime).toBeInstanceOf(Date);
+        expect(status.syncInfo.earliestBlockTime.getTime()).toBeLessThanOrEqual(
+          status.syncInfo.latestBlockTime.getTime(),
+        );
+      }
 
       // validator info
       expect(status.validatorInfo.pubkey).toBeTruthy();

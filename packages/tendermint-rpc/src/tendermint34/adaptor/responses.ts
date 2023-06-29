@@ -620,6 +620,12 @@ function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
 
 interface RpcSyncInfo {
   /** hex encoded */
+  readonly earliest_app_hash: string;
+  /** hex encoded */
+  readonly earliest_block_hash: string;
+  readonly earliest_block_height: string;
+  readonly earliest_block_time: string;
+  /** hex encoded */
   readonly latest_block_hash: string;
   /** hex encoded */
   readonly latest_app_hash: string;
@@ -629,7 +635,18 @@ interface RpcSyncInfo {
 }
 
 function decodeSyncInfo(data: RpcSyncInfo): responses.SyncInfo {
+  const earliestBlockHeight = data.earliest_block_height
+    ? apiToSmallInt(data.earliest_block_height)
+    : undefined;
+  const earliestBlockTime = data.earliest_block_time
+    ? fromRfc3339WithNanoseconds(data.earliest_block_time)
+    : undefined;
+
   return {
+    earliestAppHash: data.earliest_app_hash ? fromHex(data.earliest_app_hash) : undefined,
+    earliestBlockHash: data.earliest_block_hash ? fromHex(data.earliest_block_hash) : undefined,
+    earliestBlockHeight: earliestBlockHeight || undefined,
+    earliestBlockTime: earliestBlockTime?.getTime() ? earliestBlockTime : undefined,
     latestBlockHash: fromHex(assertNotEmpty(data.latest_block_hash)),
     latestAppHash: fromHex(assertNotEmpty(data.latest_app_hash)),
     latestBlockTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.latest_block_time)),
