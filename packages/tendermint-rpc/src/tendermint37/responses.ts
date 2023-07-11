@@ -345,6 +345,10 @@ export interface NodeInfo {
 }
 
 export interface SyncInfo {
+  readonly earliestAppHash?: Uint8Array;
+  readonly earliestBlockHash?: Uint8Array;
+  readonly earliestBlockHeight?: number;
+  readonly earliestBlockTime?: ReadonlyDate;
   readonly latestBlockHash: Uint8Array;
   readonly latestAppHash: Uint8Array;
   readonly latestBlockHeight: number;

@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: Add missing `earliest_*` fields to `SyncInfo` record
+  returned from the `/status` RPC endpoint ([#1448]).
+
 ## [0.31.0] - 2023-06-22
 
 ### Fixed
