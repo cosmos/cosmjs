@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: Add missing memo field to Amino JSON representation of
+  `MsgTransfer` and adapt converters. ([#1456])
+
+[#1456]: https://github.com/cosmos/cosmjs/pull/1456
+
 ## [0.31.1] - 2023-08-21
 
 ### Fixed
