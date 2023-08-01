@@ -13,7 +13,7 @@ interface AminoHeight {
   readonly revision_height?: string;
 }
 
-// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/apps/transfer/types/tx.pb.go#L33-L53
+// https://github.com/cosmos/ibc-go/blob/a4ca39c59f770a0b6948947d5178d5f0914c3a17/modules/apps/transfer/types/tx.pb.go#L37-L56
 /** Transfers fungible tokens (i.e Coins) between ICS20 enabled chains */
 export interface AminoMsgTransfer extends AminoMsg {
   readonly type: "cosmos-sdk/MsgTransfer";
@@ -38,6 +38,7 @@ export interface AminoMsgTransfer extends AminoMsg {
      * 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52).
      */
     readonly timeout_timestamp?: string;
+    readonly memo?: string;
   };
 }
 
@@ -73,6 +74,7 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeoutHeight,
         timeoutTimestamp,
+        memo,
       }: MsgTransfer): AminoMsgTransfer["value"] => ({
         source_port: sourcePort,
         source_channel: sourceChannel,
@@ -86,6 +88,7 @@ export function createIbcAminoConverters(): AminoConverters {
             }
           : {},
         timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
+        memo: omitDefault(memo)?.toString(),
       }),
       fromAmino: ({
         source_port,

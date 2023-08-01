@@ -40,6 +40,7 @@ describe("AminoTypes", () => {
             revision_number: "456",
           },
           timeout_timestamp: "789",
+          memo: undefined,
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -77,6 +78,7 @@ describe("AminoTypes", () => {
             revision_number: undefined,
           },
           timeout_timestamp: undefined,
+          memo: undefined,
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -107,6 +109,7 @@ describe("AminoTypes", () => {
           receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           timeout_height: {},
           timeout_timestamp: undefined,
+          memo: undefined,
         },
       };
       expect(aminoMsg).toEqual(expected);
