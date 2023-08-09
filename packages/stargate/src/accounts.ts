@@ -26,7 +26,7 @@ function uint64FromProto(input: number | Long): Uint64 {
 
 function accountFromBaseAccount(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
-  const pubkey = pubKey ? decodePubkey(pubKey) : null;
+  const pubkey = decodePubkey(pubKey);
   return {
     address: address,
     pubkey: pubkey,
@@ -55,6 +55,11 @@ export function accountFromAny(input: Any): Account {
     case "/cosmos.auth.v1beta1.BaseAccount":
       return accountFromBaseAccount(BaseAccount.decode(value));
     case "/cosmos.auth.v1beta1.ModuleAccount": {
+      const baseAccount = ModuleAccount.decode(value).baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
+    case "/ethermint.types.v1.EthAccount": {
       const baseAccount = ModuleAccount.decode(value).baseAccount;
       assert(baseAccount);
       return accountFromBaseAccount(baseAccount);

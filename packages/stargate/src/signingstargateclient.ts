@@ -1,4 +1,9 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
+import {
+  encodeEthSecp256k1Pubkey,
+  encodeSecp256k1Pubkey,
+  makeSignDoc as makeSignDocAmino,
+  StdFee,
+} from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
@@ -12,12 +17,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  Tendermint37Client,
-  TendermintClient,
-} from "@cosmjs/tendermint-rpc";
+import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -36,7 +36,6 @@ import {
   distributionTypes,
   feegrantTypes,
   govTypes,
-  groupTypes,
   ibcTypes,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
@@ -65,11 +64,14 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ...distributionTypes,
   ...feegrantTypes,
   ...govTypes,
-  ...groupTypes,
   ...stakingTypes,
   ...ibcTypes,
   ...vestingTypes,
 ];
+
+function createDefaultRegistry(): Registry {
+  return new Registry(defaultRegistryTypes);
+}
 
 /**
  * Signing information for a single signer that is not included in the transaction.
@@ -90,18 +92,19 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions extends StargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
   readonly gasPrice?: GasPrice;
 }
 
-export function createDefaultAminoConverters(): AminoConverters {
+function createDefaultTypes(prefix: string): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
     ...createDistributionAminoConverters(),
     ...createGovAminoConverters(),
-    ...createStakingAminoConverters(),
+    ...createStakingAminoConverters(prefix),
     ...createIbcAminoConverters(),
     ...createFeegrantAminoConverters(),
     ...createVestingAminoConverters(),
@@ -117,41 +120,12 @@ export class SigningStargateClient extends StargateClient {
   private readonly aminoTypes: AminoTypes;
   private readonly gasPrice: GasPrice | undefined;
 
-  /**
-   * Creates an instance by connecting to the given Tendermint RPC endpoint.
-   *
-   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
-   * To set the Tendermint client explicitly, use `createWithSigner`.
-   */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
-    // Using 0.34 as the fallback.
-    let tmClient: TendermintClient;
-    const tm37Client = await Tendermint37Client.connect(endpoint);
-    const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
-      tmClient = tm37Client;
-    } else {
-      tm37Client.disconnect();
-      tmClient = await Tendermint34Client.connect(endpoint);
-    }
-
-    return SigningStargateClient.createWithSigner(tmClient, signer, options);
-  }
-
-  /**
-   * Creates an instance from a manually created Tendermint client.
-   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
-   */
-  public static async createWithSigner(
-    tmClient: TendermintClient,
-    signer: OfflineSigner,
-    options: SigningStargateClientOptions = {},
-  ): Promise<SigningStargateClient> {
+    const tmClient = await Tendermint34Client.connect(endpoint);
     return new SigningStargateClient(tmClient, signer, options);
   }
 
@@ -172,15 +146,15 @@ export class SigningStargateClient extends StargateClient {
   }
 
   protected constructor(
-    tmClient: TendermintClient | undefined,
+    tmClient: Tendermint34Client | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, options);
-    const {
-      registry = new Registry(defaultRegistryTypes),
-      aminoTypes = new AminoTypes(createDefaultAminoConverters()),
-    } = options;
+    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
+    const prefix = options.prefix ?? "cosmos";
+    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes(prefix)) } =
+      options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
@@ -329,32 +303,6 @@ export class SigningStargateClient extends StargateClient {
   }
 
   /**
-   * This method is useful if you want to send a transaction in broadcast,
-   * without waiting for it to be placed inside a block, because for example
-   * I would like to receive the hash to later track the transaction with another tool.
-   * @returns Returns the hash of the transaction
-   */
-  public async signAndBroadcastSync(
-    signerAddress: string,
-    messages: readonly EncodeObject[],
-    fee: StdFee | "auto" | number,
-    memo = "",
-  ): Promise<string> {
-    let usedFee: StdFee;
-    if (fee == "auto" || typeof fee === "number") {
-      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
-      const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : 1.3;
-      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
-    } else {
-      usedFee = fee;
-    }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
-    const txBytes = TxRaw.encode(txRaw).finish();
-    return this.broadcastTxSync(txBytes);
-  }
-
-  /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature and assembles the signed transaction.
    *
@@ -403,7 +351,11 @@ export class SigningStargateClient extends StargateClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const pubkey = encodePubkey(
+      chainId.startsWith("evmos_9001-")
+        ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey)
+        : encodeSecp256k1Pubkey(accountFromSigner.pubkey),
+    );
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -448,7 +400,11 @@ export class SigningStargateClient extends StargateClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const pubkey = encodePubkey(
+      chainId.startsWith("cronostestnet_338-")
+        ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey)
+        : encodeSecp256k1Pubkey(accountFromSigner.pubkey),
+    );
     const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {
