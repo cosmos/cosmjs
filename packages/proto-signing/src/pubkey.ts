@@ -85,11 +85,7 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
   }
 }
 
-export function decodePubkey(pubkey?: Any | null): Pubkey | null {
-  if (!pubkey || !pubkey.value) {
-    return null;
-  }
-
+export function decodePubkey(pubkey: Any): Pubkey {
   switch (pubkey.typeUrl) {
     case "/ethermint.crypto.v1.ethsecp256k1.PubKey":
     case "/cosmos.crypto.secp256k1.PubKey":
