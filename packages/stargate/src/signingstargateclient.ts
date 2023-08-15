@@ -19,6 +19,7 @@ import {
   TendermintClient,
 } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
+import { pathToString } from "@cosmjs/crypto";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -404,8 +405,7 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
 
-   
-    const pubkey = encodePubkey (chainId.startsWith("evmos_9001-")  ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    const pubkey = encodePubkey (accountFromSigner.coinType === "60'"  ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -450,7 +450,8 @@ export class SigningStargateClient extends StargateClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodePubkey (chainId.startsWith("evmos_9001-")  ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+
+    const pubkey = encodePubkey (accountFromSigner.coinType == "60'" ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {

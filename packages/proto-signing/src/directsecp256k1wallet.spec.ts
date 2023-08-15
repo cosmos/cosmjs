@@ -27,6 +27,7 @@ describe("DirectSecp256k1Wallet", () => {
       expect(accounts[0]).toEqual({
         address: defaultAddress,
         algo: "secp256k1",
+        coinType: "118",
         pubkey: defaultPubkey,
       });
     });

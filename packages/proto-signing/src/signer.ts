@@ -6,6 +6,7 @@ export interface AccountData {
   /** A printable address (typically bech32 encoded) */
   readonly address: string;
   readonly algo: Algo;
+  readonly coinType: string;
   readonly pubkey: Uint8Array;
 }
 
