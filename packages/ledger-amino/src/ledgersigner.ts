@@ -7,7 +7,7 @@ import {
   serializeSignDoc,
   StdSignDoc,
 } from "@cosmjs/amino";
-import { HdPath } from "@cosmjs/crypto";
+import { HdPath, pathToString } from "@cosmjs/crypto";
 import Transport from "@ledgerhq/hw-transport";
 
 import { AddressAndPubkey, LedgerConnector, LedgerConnectorOptions } from "./ledgerconnector";
@@ -26,9 +26,10 @@ export class LedgerSigner implements OfflineAminoSigner {
     if (!this.accounts) {
       const pubkeys = await this.connector.getPubkeys();
       this.accounts = await Promise.all(
-        pubkeys.map(async (pubkey) => ({
+        pubkeys.map(async (pubkey, index) => ({
           algo: "secp256k1" as const,
           address: await this.connector.getCosmosAddress(pubkey),
+          coinType: pathToString(this.hdPaths[index]).split('/')[2], 
           pubkey: pubkey,
         })),
       );

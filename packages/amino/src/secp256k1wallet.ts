@@ -42,6 +42,7 @@ export class Secp256k1Wallet implements OfflineAminoSigner {
       {
         algo: "secp256k1",
         address: this.address,
+        coinType: "1",
         pubkey: this.pubkey,
       },
     ];

@@ -97,16 +97,19 @@ describe("LedgerSigner", () => {
         {
           address: "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea",
           algo: "secp256k1",
+          coinType: "1",
           pubkey: fromBase64("A66JoCNaNSXDsyj4qW7JgqXPTz5rOnfE6EKEArf4jJEK"),
         },
         {
           address: "cosmos1meeu3jl268txxytwmmrsljk8rawh6n2majstn2",
           algo: "secp256k1",
+          coinType: "1",
           pubkey: fromBase64("AtvmGuZvEN3NwL05BQdxl3XygUf+Vl/930fhFMt1HTyU"),
         },
         {
           address: "cosmos1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkqmlrus4",
           algo: "secp256k1",
+          coinType: "1",
           pubkey: fromBase64("A2ZnLEcbpyjS30H5UF1vezq29aBcT9oo5EARATIW9Cpj"),
         },
       ]);

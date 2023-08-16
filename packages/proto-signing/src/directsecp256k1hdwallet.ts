@@ -278,8 +278,6 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey, pubkey } = account;
     const signBytes = makeSignBytes(signDoc);
 
-    
-
     if (account.coinType === "60'") {
       // eth signing 
       const hashedMessage = new Keccak256(signBytes).digest()
@@ -383,14 +381,14 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
             const hash = new Keccak256(pubkey.slice(1)).digest()
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address
-            const address = DirectSecp256k1HdWallet.toChecksummedAddress('0x' + lastTwentyBytes)
+            const address = this.toChecksummedAddress('0x' + lastTwentyBytes)
 
             return {
               algo: "secp256k1" as const,
               coinType: coinType,
               privkey: privkey,
               pubkey: Secp256k1.compressPubkey(pubkey),
-              address: await DirectSecp256k1HdWallet.getBech32AddressFromEVMAddress(address, prefix)
+              address: await this.getBech32AddressFromEVMAddress(address, prefix)
             };
           default: 
             return {
@@ -404,8 +402,8 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
       }),
     );
   }
-  private static async getBech32AddressFromEVMAddress(evmAddress: string, bech32Prefix: string): Promise<string> {
-    if (!DirectSecp256k1HdWallet.isAddress(evmAddress.toLowerCase())) {
+  private async getBech32AddressFromEVMAddress(evmAddress: string, bech32Prefix: string): Promise<string> {
+    if (!this.isAddress(evmAddress.toLowerCase())) {
         throw new TypeError('Please provide a valid EVM compatible address.');
     }
 
@@ -414,17 +412,17 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     var evmToBech32Address = toBech32(bech32Prefix, evmAddressBytes);
     return evmToBech32Address;
   };
-  private static isValidAddress(address: string): boolean {
+  private isValidAddress(address: string): boolean {
     if (!address.match(/^0x[a-fA-F0-9]{40}$/)) {
       return false;
     }
     return true
   }
-  private static toChecksummedAddress(address: string): string {
+  private toChecksummedAddress(address: string): string {
       // 40 low hex characters
       let addressLower;
       if (typeof address === "string") {
-        if (!DirectSecp256k1HdWallet.isValidAddress(address)) {
+        if (!this.isValidAddress(address)) {
           throw new Error("Input is not a valid Ethereum address");
         }
         addressLower = address.toLowerCase().replace("0x", "");
@@ -439,7 +437,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
       }
       return checksumAddress;
     }
-  private static isAddress (address: string): boolean {
+  private isAddress (address: string): boolean {
       // check if it has the basic requirements of an address
       if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
           return false;
