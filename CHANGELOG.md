@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: Add missing memo field to Amino JSON representation of
+  `MsgTransfer` and adapt converters. ([#1456])
+
+[#1456]: https://github.com/cosmos/cosmjs/issues/1429
+
 ### Changed
 
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
