@@ -2,7 +2,7 @@
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { makeCosmoshubPath } from "./paths";
+import { makeCosmoshubPath, makeEthermintPath } from "./paths";
 import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { serializeSignDoc, StdSignDoc } from "./signdoc";
 import { base64Matcher } from "./testutils.spec";
@@ -14,6 +14,7 @@ describe("Secp256k1HdWallet", () => {
   const defaultMnemonic = "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling";
   const defaultPubkey = fromHex("02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6");
   const defaultAddress = "cosmos1jhg0e7s6gn44tfc5k37kr04sznyhedtc9rzys5";
+  const ethermintAddress = "yolo1udqykafpnar6ujyherwfj062s8y2vafu2aya4p";
 
   describe("fromMnemonic", () => {
     it("works", async () => {
@@ -44,6 +45,19 @@ describe("Secp256k1HdWallet", () => {
       const [account] = await wallet.getAccounts();
       expect(account.pubkey).toEqual(defaultPubkey);
       expect(account.address).toEqual(defaultAddress);
+    });
+
+    it("works with ethermint", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(defaultMnemonic, {
+        bip39Password: "password123",
+        hdPaths: [makeEthermintPath(123)],
+        prefix: "yolo",
+      });
+
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+      const [{ pubkey, address }] = await wallet.getAccounts();
+      expect(pubkey).not.toEqual(defaultPubkey);
+      expect(address).toEqual(ethermintAddress);
     });
   });
 
@@ -253,6 +267,19 @@ describe("Secp256k1HdWallet", () => {
       );
       const [{ address }] = await wallet.getAccounts();
       expect(address).toEqual("cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u");
+    });
+
+    it("returns ethermint account", async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(
+        "oyster design unusual machine spread century engine gravity focus cave carry slot",
+        {
+          bip39Password: "password123",
+          hdPaths: [makeEthermintPath(123)],
+          prefix: "yolo",
+        },
+      );
+      const [{ address }] = await wallet.getAccounts();
+      expect(address).toEqual("yolo1u6d0tuews07c0d6s5055g0tjvm997grat6q0sr");
     });
   });
 

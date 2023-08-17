@@ -33,6 +33,16 @@ describe("pubkey", () => {
       );
     });
 
+    it("works for ethsecp256k1", () => {
+      const pubkey = { type: "tendermint/PubKeyEthSecp256k1", value: defaultPubkeyBase64 };
+      expect(encodePubkey(pubkey)).toEqual(
+        Any.fromPartial({
+          typeUrl: "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+          value: defaultPubkeyProtoBytes,
+        }),
+      );
+    });
+
     it("throws for unsupported pubkey types", () => {
       const pubkey = {
         type: "tendermint/PubKeyUnknown",
@@ -64,6 +74,19 @@ describe("pubkey", () => {
         value: ed25519PubkeyBase64,
       });
     });
+
+    // @todo: decode ethsecp256k1, need to add cosmjs-types/cosmos/crypto/ethsecp256k1/keys
+    // in @proto-signing/pubkey:anyToSinglePubkey
+    // it("works for ethsecp256k1", () => {
+    //   const pubkey = {
+    //     typeUrl: "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+    //     value: defaultPubkeyProtoBytes,
+    //   };
+    //   expect(decodePubkey(pubkey)).toEqual({
+    //     type: "tendermint/PubKeySecp256k1",
+    //     value: defaultPubkeyBase64,
+    //   });
+    // });
 
     it("throws for unsupported pubkey types", () => {
       const pubkey = {
