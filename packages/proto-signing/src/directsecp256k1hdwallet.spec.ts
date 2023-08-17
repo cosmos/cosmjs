@@ -1,5 +1,5 @@
-import { coins, makeCosmoshubPath } from "@cosmjs/amino";
-import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
+import { coins, makeCosmoshubPath, makeEthermintPath } from "@cosmjs/amino";
+import { Secp256k1, Secp256k1Signature, sha256, Keccak256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet";
@@ -13,6 +13,7 @@ describe("DirectSecp256k1HdWallet", () => {
   const defaultMnemonic = "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling";
   const defaultPubkey = fromHex("02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6");
   const defaultAddress = "cosmos1jhg0e7s6gn44tfc5k37kr04sznyhedtc9rzys5";
+  const ethermintAddress = "yolo1udqykafpnar6ujyherwfj062s8y2vafu2aya4p";
 
   describe("fromMnemonic", () => {
     it("works", async () => {
@@ -44,6 +45,19 @@ describe("DirectSecp256k1HdWallet", () => {
       expect(pubkey).toEqual(defaultPubkey);
       expect(address).toEqual(defaultAddress);
     });
+
+    it("works with ethermint", async () => {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(defaultMnemonic, {
+        bip39Password: "password123",
+        hdPaths: [makeEthermintPath(123)],
+        prefix: "yolo",
+      });
+      
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+      const [{ pubkey, address }] = await wallet.getAccounts();
+      expect(pubkey).not.toEqual(defaultPubkey);
+      expect(address).toEqual(ethermintAddress);
+    });
   });
 
   describe("generate", () => {
@@ -74,7 +88,7 @@ describe("DirectSecp256k1HdWallet", () => {
         {
           algo: "secp256k1",
           address: defaultAddress,
-          coinType: "1",
+          coinType: "118'",
           pubkey: defaultPubkey,
         },
       ]);
@@ -100,31 +114,31 @@ describe("DirectSecp256k1HdWallet", () => {
       expect(accounts).toEqual([
         {
           algo: "secp256k1",
-          coinType: "1",
+          coinType: "118'",
           pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
           address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
         },
         {
           algo: "secp256k1",
-          coinType: "1",
+          coinType: "118'",
           pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
           address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
         },
         {
           algo: "secp256k1",
-          coinType: "1",
+          coinType: "118'",
           pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
           address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
         },
         {
           algo: "secp256k1",
-          coinType: "1",
+          coinType: "118'",
           pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
           address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
         },
         {
           algo: "secp256k1",
-          coinType: "1",
+          coinType: "118'",
           pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
           address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
         },
@@ -162,7 +176,7 @@ describe("DirectSecp256k1HdWallet", () => {
           {
             algo: "secp256k1",
             address: defaultAddress,
-            coinType: "1",
+            coinType: "118'",
             pubkey: defaultPubkey,
           },
         ]);
@@ -209,31 +223,31 @@ describe("DirectSecp256k1HdWallet", () => {
         expect(accounts).toEqual([
           {
             algo: "secp256k1",
-            coinType: "1",
+            coinType: "118'",
             pubkey: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
             address: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
           },
           {
             algo: "secp256k1",
-            coinType: "1",
+            coinType: "118'",
             pubkey: fromBase64("AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7"),
             address: "wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l",
           },
           {
             algo: "secp256k1",
-            coinType: "1",
+            coinType: "118'",
             pubkey: fromBase64("AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7"),
             address: "wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa",
           },
           {
             algo: "secp256k1",
-            coinType: "1",
+            coinType: "118'",
             pubkey: fromBase64("A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2"),
             address: "wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd",
           },
           {
             algo: "secp256k1",
-            coinType: "1",
+            coinType: "118'",
             pubkey: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu"),
             address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
           },
@@ -250,7 +264,7 @@ describe("DirectSecp256k1HdWallet", () => {
       expect(accounts[0]).toEqual({
         address: defaultAddress,
         algo: "secp256k1",
-        coinType: "1",
+        coinType: "118'",
         pubkey: defaultPubkey,
       });
     });

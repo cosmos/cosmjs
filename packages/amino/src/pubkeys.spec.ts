@@ -9,6 +9,10 @@ describe("pubkeys", () => {
     type: "tendermint/PubKeySecp256k1",
     value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
   };
+  const pubkeyEthSecp256k1 = {
+    type: "tendermint/PubKeyEthSecp256k1",
+    value: "Ay+1uNze+glFQM+T05EfzL8fQ1Y/wqO8K7q6tUM3BGin",
+  };
   const pubkeyMultisigThreshold = {
     type: "tendermint/PubKeyMultisigThreshold",
     value: {
@@ -38,6 +42,7 @@ describe("pubkeys", () => {
     it("works", () => {
       expect(isSinglePubkey(pubkeyEd25519)).toEqual(true);
       expect(isSinglePubkey(pubkeySecp256k1)).toEqual(true);
+      expect(isSinglePubkey(pubkeyEthSecp256k1)).toEqual(true);
       expect(isSinglePubkey(pubkeyMultisigThreshold)).toEqual(false);
     });
   });
@@ -46,6 +51,7 @@ describe("pubkeys", () => {
     it("works", () => {
       expect(isMultisigThresholdPubkey(pubkeyEd25519)).toEqual(false);
       expect(isMultisigThresholdPubkey(pubkeySecp256k1)).toEqual(false);
+      expect(isMultisigThresholdPubkey(pubkeyEthSecp256k1)).toEqual(false);
       expect(isMultisigThresholdPubkey(pubkeyMultisigThreshold)).toEqual(true);
     });
   });

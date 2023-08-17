@@ -7,7 +7,7 @@ export {
   extractKdfConfiguration,
 } from "./directsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
-export { makeCosmoshubPath } from "./paths";
+export { makeCosmoshubPath, makeEthermintPath } from "./paths";
 export { anyToSinglePubkey, decodePubkey, encodePubkey } from "./pubkey";
 export {
   DecodeObject,
