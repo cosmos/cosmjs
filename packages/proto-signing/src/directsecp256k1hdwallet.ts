@@ -39,6 +39,8 @@ interface AccountDataWithPrivkey extends AccountData {
 
 const serializationTypeV1 = "directsecp256k1hdwallet-v1";
 
+const ethermintCoinType = "60"
+
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
  * It takes about 1 second in Node.js 16.0.0 and should have similar runtimes in other modern Wasm hosts.
@@ -284,7 +286,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const signBytes = makeSignBytes(signDoc);
 
     switch (true) {
-      case account.coinType === "60'" || account.coinType === "60": {
+      case account.coinType === `${ethermintCoinType}'` || account.coinType === ethermintCoinType: {
         // eth signing
         const hashedMessage = new Keccak256(signBytes).digest();
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);
@@ -369,7 +371,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
 
     const coinType = components[2];
     switch (true) {
-      case coinType === "60'" || coinType === "60": {
+      case coinType === `${ethermintCoinType}'` || coinType === ethermintCoinType: {
         return {
           privkey: privkey,
           pubkey: pubkey,
@@ -395,7 +397,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
 
         const coinType = components[2];
         switch (true) {
-          case coinType === "60'" || coinType === "60": {
+          case coinType === `${ethermintCoinType}'` || coinType === ethermintCoinType: {
             const hash = new Keccak256(pubkey.slice(1)).digest();
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address

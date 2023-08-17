@@ -63,6 +63,8 @@ import {
 } from "./modules";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
+const ethermintCoinType = "60"
+
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
   ...authzTypes,
@@ -411,7 +413,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
+      case accountFromSigner.coinType === `${ethermintCoinType}'` || accountFromSigner.coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
@@ -468,7 +470,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
+      case accountFromSigner.coinType === `${ethermintCoinType}'` || accountFromSigner.coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
