@@ -279,8 +279,8 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const signBytes = makeSignBytes(signDoc);
 
 
-    switch (account.coinType) {
-      case "60'" || "60": {
+    switch (true) {
+      case account.coinType === "60'" || account.coinType === "60": {
         // eth signing 
         const hashedMessage = new Keccak256(signBytes).digest()
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);
@@ -364,8 +364,8 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     }
 
     const coinType = components[2]
-    switch (coinType) {
-      case "60'": {
+    switch (true) {
+      case coinType === "60'" || coinType === "60": {
         return {
           privkey: privkey,
           pubkey: pubkey,
@@ -390,8 +390,8 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
         }
     
         const coinType = components[2]
-        switch (coinType) {
-          case "60'" || "60": {
+        switch (true) {
+          case coinType === "60'" || coinType === "60": {
             const hash = new Keccak256(pubkey.slice(1)).digest()
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address

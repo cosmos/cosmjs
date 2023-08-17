@@ -405,8 +405,8 @@ export class SigningStargateClient extends StargateClient {
     }
 
     let pubkey
-    switch (accountFromSigner.coinType) {
-      case "60'" || "60": {
+    switch (true) {
+      case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
         break;
       }
@@ -462,8 +462,8 @@ export class SigningStargateClient extends StargateClient {
     }
 
     let pubkey
-    switch (accountFromSigner.coinType) {
-      case "60'" || "60": {
+    switch (true) {
+      case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
         break;
       }
