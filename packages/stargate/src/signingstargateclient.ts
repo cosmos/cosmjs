@@ -404,7 +404,18 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
 
-    const pubkey = encodePubkey (accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60" ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    let pubkey
+    switch (accountFromSigner.coinType) {
+      case "60'" || "60": {
+        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
+        break;
+      }
+      default: {
+        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey))
+        break;
+      }
+    }
+
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -450,7 +461,18 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
 
-    const pubkey = encodePubkey (accountFromSigner.coinType == "60'"|| accountFromSigner.coinType == "60" ? encodeEthSecp256k1Pubkey(accountFromSigner.pubkey): encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    let pubkey
+    switch (accountFromSigner.coinType) {
+      case "60'" || "60": {
+        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
+        break;
+      }
+      default: {
+        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey))
+        break;
+      }
+    }
+
     const txBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {

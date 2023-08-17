@@ -356,7 +356,12 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
     const { pubkey } = await Secp256k1.makeKeypair(privkey);
-    const coinType = pathToString(hdPath).split('/')[2]
+    const components = pathToString(hdPath).split('/')
+    if (components.length < 2) {
+      throw new Error("Invalid hdPath. Coin type is missing");
+    }
+
+    const coinType = components[2]
     switch (coinType) {
       case "60'" || "60":{
         return {
@@ -377,7 +382,12 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     return Promise.all(
       this.accounts.map(async ({ hdPath, prefix }) => {
         const { privkey, pubkey } = await this.getKeyPair(hdPath);
-        const coinType = pathToString(hdPath).split('/')[2]
+        const components = pathToString(hdPath).split('/')
+        if (components.length < 2) {
+          throw new Error("Invalid hdPath. Coin type is missing");
+        }
+    
+        const coinType = components[2]
         switch (coinType) {
           case "60'" || "60": {
             const hash = new Keccak256(pubkey.slice(1)).digest()
