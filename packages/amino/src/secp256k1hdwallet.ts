@@ -279,25 +279,29 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     }
     const { privkey, pubkey } = account;
     
-    if (account.coinType === "60'") {
-      // eth signing 
-      const hashedMessage = new Keccak256(serializeSignDoc(signDoc)).digest()
-      const signature = await Secp256k1.createSignature(hashedMessage, privkey);
-      const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-      const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
 
-      return {
-        signed: signDoc,
-        signature: stdSignature
-      };
-    } else { 
-      const message = sha256(serializeSignDoc(signDoc));
-      const signature = await Secp256k1.createSignature(message, privkey);
-      const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-      return {
-        signed: signDoc,
-        signature: encodeSecp256k1Signature(pubkey, signatureBytes),
-      };
+    switch (account.coinType) {
+      case "60'" || "60": {
+        // eth signing 
+        const hashedMessage = new Keccak256(serializeSignDoc(signDoc)).digest()
+        const signature = await Secp256k1.createSignature(hashedMessage, privkey);
+        const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+        const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
+
+        return {
+          signed: signDoc,
+          signature: stdSignature
+        };
+      }
+      default: {
+        const message = sha256(serializeSignDoc(signDoc));
+        const signature = await Secp256k1.createSignature(message, privkey);
+        const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+        return {
+          signed: signDoc,
+          signature: encodeSecp256k1Signature(pubkey, signatureBytes),
+        };
+      }
     }
   }
 
@@ -354,16 +358,18 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     const { pubkey } = await Secp256k1.makeKeypair(privkey);
     const coinType = pathToString(hdPath).split('/')[2]
     switch (coinType) {
-      case "60'":
+      case "60'" || "60":{
         return {
           privkey: privkey,
           pubkey: pubkey,
         };
-      default: 
+      }
+      default: {
         return {
           privkey: privkey,
           pubkey: Secp256k1.compressPubkey(pubkey),
         };
+      }
     }
   }
 
@@ -373,7 +379,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
         const { privkey, pubkey } = await this.getKeyPair(hdPath);
         const coinType = pathToString(hdPath).split('/')[2]
         switch (coinType) {
-          case "60'":
+          case "60'" || "60": {
             const hash = new Keccak256(pubkey.slice(1)).digest()
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address
@@ -386,7 +392,8 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
               pubkey: Secp256k1.compressPubkey(pubkey),
               address: await this.getBech32AddressFromEVMAddress(address, prefix)
             };
-          default: 
+          }
+          default: {
             return {
               algo: "secp256k1" as const,
               coinType: coinType,
@@ -394,6 +401,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
               pubkey: pubkey,
               address: toBech32(prefix, rawSecp256k1PubkeyToRawAddress(pubkey)),
             };
+          }
         }
       }),
     );

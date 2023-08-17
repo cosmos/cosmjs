@@ -278,28 +278,32 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey, pubkey } = account;
     const signBytes = makeSignBytes(signDoc);
 
-    if (account.coinType === "60'") {
-      // eth signing 
-      const hashedMessage = new Keccak256(signBytes).digest()
-      const signature = await Secp256k1.createSignature(hashedMessage, privkey);
-      const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-      const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
 
-      return {
-        signed: signDoc,
-        signature: stdSignature
-      };
-    } else {
-      // cosmos sigining
-      const hashedMessage = sha256(signBytes);
-      const signature = await Secp256k1.createSignature(hashedMessage, privkey);
-      const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-      const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes);
+    switch (account.coinType) {
+      case "60'" || "60": {
+        // eth signing 
+        const hashedMessage = new Keccak256(signBytes).digest()
+        const signature = await Secp256k1.createSignature(hashedMessage, privkey);
+        const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+        const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
 
-      return {
-        signed: signDoc,
-        signature: stdSignature,
-      };
+        return {
+          signed: signDoc,
+          signature: stdSignature
+        };
+      }
+      default: {
+         // cosmos sigining
+        const hashedMessage = sha256(signBytes);
+        const signature = await Secp256k1.createSignature(hashedMessage, privkey);
+        const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+        const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes);
+
+        return {
+          signed: signDoc,
+          signature: stdSignature,
+        };
+      }
     }
   }
 
@@ -357,16 +361,18 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
 
     const coinType = pathToString(hdPath).split('/')[2]
     switch (coinType) {
-      case "60'":
+      case "60'": {
         return {
           privkey: privkey,
           pubkey: pubkey,
         };
-      default: 
+      }
+      default: {
         return {
           privkey: privkey,
           pubkey: Secp256k1.compressPubkey(pubkey),
         };
+      }
     }
   }
 
@@ -377,7 +383,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
 
         const coinType = pathToString(hdPath).split('/')[2]
         switch (coinType) {
-          case "60'":
+          case "60'" || "60": {
             const hash = new Keccak256(pubkey.slice(1)).digest()
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address
@@ -390,6 +396,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
               pubkey: Secp256k1.compressPubkey(pubkey),
               address: await this.getBech32AddressFromEVMAddress(address, prefix)
             };
+          }
           default: 
             return {
               algo: "secp256k1" as const,
