@@ -27,19 +27,19 @@ export class LedgerSigner implements OfflineAminoSigner {
       const pubkeys = await this.connector.getPubkeys();
       this.accounts = await Promise.all(
         pubkeys.map(async (pubkey, index) => {
-          const components = pathToString(this.hdPaths[index]).split('/')
+          const components = pathToString(this.hdPaths[index]).split("/");
           if (components.length < 2) {
             throw new Error("Invalid hdPath. Coin type is missing");
           }
-      
-          const coinType = components[2]
+
+          const coinType = components[2];
           return {
             algo: "secp256k1" as const,
             address: await this.connector.getCosmosAddress(pubkey),
-            coinType: coinType, 
+            coinType: coinType,
             pubkey: pubkey,
-          }
-      }),
+          };
+        }),
       );
     }
 

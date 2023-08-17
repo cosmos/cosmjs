@@ -1,4 +1,9 @@
-import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
+import {
+  encodeEthSecp256k1Pubkey,
+  encodeSecp256k1Pubkey,
+  makeSignDoc as makeSignDocAmino,
+  StdFee,
+} from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
@@ -404,14 +409,14 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
 
-    let pubkey
+    let pubkey;
     switch (true) {
       case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
-        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
+        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
       default: {
-        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey))
+        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
     }
@@ -461,14 +466,14 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
 
-    let pubkey
+    let pubkey;
     switch (true) {
       case accountFromSigner.coinType === "60'" || accountFromSigner.coinType === "60": {
-        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey))
+        pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
       default: {
-        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey))
+        pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
     }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 
-import { encodeSecp256k1Pubkey, encodeEthSecp256k1Pubkey } from "./encoding";
+import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding";
 import { Pubkey, pubkeyType } from "./pubkeys";
 
 export interface StdSignature {

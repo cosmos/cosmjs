@@ -52,7 +52,7 @@ describe("DirectSecp256k1HdWallet", () => {
         hdPaths: [makeEthermintPath(123)],
         prefix: "yolo",
       });
-      
+
       expect(wallet.mnemonic).toEqual(defaultMnemonic);
       const [{ pubkey, address }] = await wallet.getAccounts();
       expect(pubkey).not.toEqual(defaultPubkey);

@@ -1,4 +1,9 @@
-import { encodeSecp256k1Signature, encodeEthSecp256k1Signature, makeCosmoshubPath, rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
+import {
+  encodeSecp256k1Signature,
+  encodeEthSecp256k1Signature,
+  makeCosmoshubPath,
+  rawSecp256k1PubkeyToRawAddress,
+} from "@cosmjs/amino";
 import {
   Bip39,
   EnglishMnemonic,
@@ -278,22 +283,21 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey, pubkey } = account;
     const signBytes = makeSignBytes(signDoc);
 
-
     switch (true) {
       case account.coinType === "60'" || account.coinType === "60": {
-        // eth signing 
-        const hashedMessage = new Keccak256(signBytes).digest()
+        // eth signing
+        const hashedMessage = new Keccak256(signBytes).digest();
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);
         const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
         const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
 
         return {
           signed: signDoc,
-          signature: stdSignature
+          signature: stdSignature,
         };
       }
       default: {
-         // cosmos sigining
+        // cosmos sigining
         const hashedMessage = sha256(signBytes);
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);
         const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
@@ -358,12 +362,12 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
     const { pubkey } = await Secp256k1.makeKeypair(privkey);
-    const components = pathToString(hdPath).split('/')
+    const components = pathToString(hdPath).split("/");
     if (components.length < 2) {
       throw new Error("Invalid hdPath. Coin type is missing");
     }
 
-    const coinType = components[2]
+    const coinType = components[2];
     switch (true) {
       case coinType === "60'" || coinType === "60": {
         return {
@@ -384,28 +388,28 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     return Promise.all(
       this.accounts.map(async ({ hdPath, prefix }) => {
         const { privkey, pubkey } = await this.getKeyPair(hdPath);
-        const components = pathToString(hdPath).split('/')
+        const components = pathToString(hdPath).split("/");
         if (components.length < 2) {
           throw new Error("Invalid hdPath. Coin type is missing");
         }
-    
-        const coinType = components[2]
+
+        const coinType = components[2];
         switch (true) {
           case coinType === "60'" || coinType === "60": {
-            const hash = new Keccak256(pubkey.slice(1)).digest()
+            const hash = new Keccak256(pubkey.slice(1)).digest();
             const lastTwentyBytes = toHex(hash.slice(-20));
             // EVM address
-            const address = this.toChecksummedAddress('0x' + lastTwentyBytes)
+            const address = this.toChecksummedAddress("0x" + lastTwentyBytes);
 
             return {
               algo: "secp256k1" as const,
               coinType: coinType,
               privkey: privkey,
               pubkey: Secp256k1.compressPubkey(pubkey),
-              address: await this.getBech32AddressFromEVMAddress(address, prefix)
+              address: await this.getBech32AddressFromEVMAddress(address, prefix),
             };
           }
-          default: 
+          default:
             return {
               algo: "secp256k1" as const,
               coinType: coinType,
@@ -419,48 +423,48 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   }
   private async getBech32AddressFromEVMAddress(evmAddress: string, bech32Prefix: string): Promise<string> {
     if (!this.isAddress(evmAddress.toLowerCase())) {
-        throw new TypeError('Please provide a valid EVM compatible address.');
+      throw new TypeError("Please provide a valid EVM compatible address.");
     }
 
-    var evmAddrWithoutHexPrefix = evmAddress.replace(/^(-)?0x/i, '$1');
+    var evmAddrWithoutHexPrefix = evmAddress.replace(/^(-)?0x/i, "$1");
     var evmAddressBytes = fromHex(evmAddrWithoutHexPrefix);
     var evmToBech32Address = toBech32(bech32Prefix, evmAddressBytes);
     return evmToBech32Address;
-  };
+  }
   private isValidAddress(address: string): boolean {
     if (!address.match(/^0x[a-fA-F0-9]{40}$/)) {
       return false;
     }
-    return true
+    return true;
   }
   private toChecksummedAddress(address: string): string {
-      // 40 low hex characters
-      let addressLower;
-      if (typeof address === "string") {
-        if (!this.isValidAddress(address)) {
-          throw new Error("Input is not a valid Ethereum address");
-        }
-        addressLower = address.toLowerCase().replace("0x", "");
-      } else {
-        addressLower = toHex(address);
+    // 40 low hex characters
+    let addressLower;
+    if (typeof address === "string") {
+      if (!this.isValidAddress(address)) {
+        throw new Error("Input is not a valid Ethereum address");
       }
-    
-      const addressHash = toHex(new Keccak256(toAscii(addressLower)).digest());
-      let checksumAddress = "0x";
-      for (let i = 0; i < 40; i++) {
-        checksumAddress += parseInt(addressHash[i], 16) > 7 ? addressLower[i].toUpperCase() : addressLower[i];
-      }
-      return checksumAddress;
+      addressLower = address.toLowerCase().replace("0x", "");
+    } else {
+      addressLower = toHex(address);
     }
-  private isAddress (address: string): boolean {
-      // check if it has the basic requirements of an address
-      if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
-          return false;
-          // If it's ALL lowercase or ALL upppercase
-      } else if (/^(0x|0X)?[0-9a-f]{40}$/.test(address) || /^(0x|0X)?[0-9A-F]{40}$/.test(address)) {
-          return true;
-          // Otherwise check each case
-      }
-      return false
-  };
+
+    const addressHash = toHex(new Keccak256(toAscii(addressLower)).digest());
+    let checksumAddress = "0x";
+    for (let i = 0; i < 40; i++) {
+      checksumAddress += parseInt(addressHash[i], 16) > 7 ? addressLower[i].toUpperCase() : addressLower[i];
+    }
+    return checksumAddress;
+  }
+  private isAddress(address: string): boolean {
+    // check if it has the basic requirements of an address
+    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+      return false;
+      // If it's ALL lowercase or ALL upppercase
+    } else if (/^(0x|0X)?[0-9a-f]{40}$/.test(address) || /^(0x|0X)?[0-9A-F]{40}$/.test(address)) {
+      return true;
+      // Otherwise check each case
+    }
+    return false;
+  }
 }

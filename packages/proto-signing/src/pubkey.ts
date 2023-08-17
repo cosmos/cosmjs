@@ -77,7 +77,7 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
     }
     case "/ethermint.crypto.v1.ethsecp256k1.PubKey":
     case "/cosmos.crypto.secp256k1.PubKey": {
-      const {key} = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
+      const { key } = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
       return encodeSecp256k1Pubkey(key);
     }
     default:
