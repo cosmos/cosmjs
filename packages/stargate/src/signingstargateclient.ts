@@ -64,6 +64,7 @@ import {
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 const ethermintCoinType = "60"
+const hardenedEthermintCoinType = "60'"
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -413,7 +414,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === `${ethermintCoinType}'` || accountFromSigner.coinType === ethermintCoinType: {
+      case accountFromSigner.coinType === hardenedEthermintCoinType || accountFromSigner.coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
@@ -470,7 +471,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === `${ethermintCoinType}'` || accountFromSigner.coinType === ethermintCoinType: {
+      case accountFromSigner.coinType === hardenedEthermintCoinType || accountFromSigner.coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
