@@ -28,7 +28,7 @@ export class LedgerSigner implements OfflineAminoSigner {
       this.accounts = await Promise.all(
         pubkeys.map(async (pubkey, index) => {
           const components = pathToString(this.hdPaths[index]).split("/");
-          if (components.length < 2) {
+          if (components.length < 3) {
             throw new Error("Invalid hdPath. Coin type is missing");
           }
 

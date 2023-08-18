@@ -366,7 +366,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
     const { pubkey } = await Secp256k1.makeKeypair(privkey);
     const components = pathToString(hdPath).split("/");
-    if (components.length < 2) {
+    if (components.length < 3) {
       throw new Error("Invalid hdPath. Coin type is missing");
     }
 
@@ -392,7 +392,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
       this.accounts.map(async ({ hdPath, prefix }) => {
         const { privkey, pubkey } = await this.getKeyPair(hdPath);
         const components = pathToString(hdPath).split("/");
-        if (components.length < 2) {
+        if (components.length < 3) {
           throw new Error("Invalid hdPath. Coin type is missing");
         }
 
