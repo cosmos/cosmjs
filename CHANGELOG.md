@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.31.1] - 2023-08-21
+
 ### Fixed
 
 - @cosmjs/tendermint-rpc: Add missing `earliest_*` fields to `SyncInfo` record
@@ -1293,7 +1295,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.31.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.31.1...HEAD
+[0.31.1]: https://github.com/cosmos/cosmjs/compare/v0.31.0...v0.31.1
 [0.31.0]: https://github.com/cosmos/cosmjs/compare/v0.30.1...v0.31.0
 [0.30.1]: https://github.com/cosmos/cosmjs/compare/v0.30.0...v0.30.1
 [0.30.0]: https://github.com/cosmos/cosmjs/compare/v0.29.5...v0.30.0
