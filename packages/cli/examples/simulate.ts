@@ -95,7 +95,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
     },
   };
   const memo = "With simulate";
-  const result = await client.signAndBroadcast(account.address, [sendMsg], 1.4, memo);
+  const result = await client.signAndBroadcast(account.address, [sendMsg], 1.55, memo);
   assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
