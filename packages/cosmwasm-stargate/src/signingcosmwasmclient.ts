@@ -297,7 +297,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
 
-    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], fee, memo);
+    // When uploading a contract, the simulation is only 1-2% away from the actual gas usage.
+    // So we have a smaller default gas multiplier than signAndBroadcast.
+    const usedFee = fee == "auto" ? 1.1 : fee;
+
+    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], usedFee, memo);
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
@@ -604,7 +608,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : 1.3;
+      // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
+      // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
+      const multiplier = typeof fee === "number" ? fee : 1.4;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;

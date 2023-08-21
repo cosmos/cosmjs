@@ -11,6 +11,16 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Add missing `earliest_*` fields to `SyncInfo` record
   returned from the `/status` RPC endpoint ([#1448]).
 
+### Changed
+
+- @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Change default multiplier for gas
+  simulation from 1.3 to 1.4 to avoid out of case cases starting with Cosmos SDK
+  0.47.
+- @cosmjs/cosmwasm-stargate: Reduce default gas multiplier for
+  `SigningCosmWasmClient.upload` to 1.1. ([#1360])
+
+[#1360]: https://github.com/cosmos/cosmjs/issues/1360
+
 ## [0.31.0] - 2023-06-22
 
 ### Fixed
