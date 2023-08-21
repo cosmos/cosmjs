@@ -297,7 +297,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
 
-    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], fee, memo);
+    // When uploading a contract, the simulation is only 1-2% away from the actual gas usage.
+    // So we have a smaller default gas multiplier than signAndBroadcast.
+    const usedFee = fee == "auto" ? 1.1 : fee;
+
+    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], usedFee, memo);
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
