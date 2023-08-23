@@ -63,8 +63,8 @@ import {
 } from "./modules";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
-const ethermintCoinType = "60"
-const hardenedEthermintCoinType = "60'"
+const ethermintCoinType = "60";
+const hardenedEthermintCoinType = "60'";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -297,6 +297,7 @@ export class SigningStargateClient extends StargateClient {
     timeoutTimestamp: number | undefined,
     fee: StdFee | "auto" | number,
     memo = "",
+    coinType = "",
   ): Promise<DeliverTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
       ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
@@ -313,7 +314,7 @@ export class SigningStargateClient extends StargateClient {
         timeoutTimestamp: timeoutTimestampNanoseconds,
       }),
     };
-    return this.signAndBroadcast(senderAddress, [transferMsg], fee, memo);
+    return this.signAndBroadcast(senderAddress, [transferMsg], fee, memo, coinType);
   }
 
   public async signAndBroadcast(
@@ -321,6 +322,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    coinType = "",
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -331,7 +333,7 @@ export class SigningStargateClient extends StargateClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
@@ -347,6 +349,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    coinType = "",
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -357,7 +360,7 @@ export class SigningStargateClient extends StargateClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }
@@ -377,6 +380,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    coinType: string,
     explicitSignerData?: SignerData,
   ): Promise<TxRaw> {
     let signerData: SignerData;
@@ -393,8 +397,8 @@ export class SigningStargateClient extends StargateClient {
     }
 
     return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
-      : this.signAmino(signerAddress, messages, fee, memo, signerData);
+      ? this.signDirect(signerAddress, messages, fee, memo, coinType, signerData)
+      : this.signAmino(signerAddress, messages, fee, memo, coinType, signerData);
   }
 
   private async signAmino(
@@ -402,6 +406,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    coinType: string,
     { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
@@ -414,7 +419,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === hardenedEthermintCoinType || accountFromSigner.coinType === ethermintCoinType: {
+      case coinType === hardenedEthermintCoinType || coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }
@@ -459,6 +464,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
+    coinType: string,
     { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
@@ -471,7 +477,7 @@ export class SigningStargateClient extends StargateClient {
 
     let pubkey;
     switch (true) {
-      case accountFromSigner.coinType === hardenedEthermintCoinType || accountFromSigner.coinType === ethermintCoinType: {
+      case coinType === hardenedEthermintCoinType || coinType === ethermintCoinType: {
         pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
         break;
       }

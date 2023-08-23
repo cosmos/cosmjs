@@ -869,7 +869,7 @@ describe("SigningStargateClient", () => {
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -899,7 +899,7 @@ describe("SigningStargateClient", () => {
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         const body = TxBody.decode(signed.bodyBytes);
         const authInfo = AuthInfo.decode(signed.authInfoBytes);
@@ -938,7 +938,7 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your tokens wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -968,7 +968,7 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your tokens wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -1081,7 +1081,7 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -1111,7 +1111,7 @@ describe("SigningStargateClient", () => {
           gas: "200000",
         };
         const memo = "Use your power wisely";
-        const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, "");
 
         const body = TxBody.decode(signed.bodyBytes);
         const authInfo = AuthInfo.decode(signed.authInfoBytes);

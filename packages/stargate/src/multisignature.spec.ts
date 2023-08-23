@@ -230,6 +230,7 @@ describe("multisignature", () => {
             signingInstruction.msgs,
             signingInstruction.fee,
             signingInstruction.memo,
+            "",
             signerData,
           );
           return [pubkey, signatures[0], bb] as const;

@@ -1,7 +1,7 @@
 import { StdSignature } from "./signature";
 import { StdSignDoc } from "./signdoc";
 
-export type Algo = "secp256k1" | "ed25519" | "sr25519";
+export type Algo = "ethsecp256k1" | "secp256k1" | "ed25519" | "sr25519";
 
 export interface AccountData {
   /** A printable address (typically bech32 encoded) */

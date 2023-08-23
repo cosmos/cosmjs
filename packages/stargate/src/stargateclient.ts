@@ -449,6 +449,7 @@ export class StargateClient {
       }
       await sleep(pollIntervalMs);
       const result = await this.getTx(txId);
+
       return result
         ? {
             code: result.code,

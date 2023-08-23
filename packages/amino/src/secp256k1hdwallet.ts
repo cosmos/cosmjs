@@ -35,8 +35,8 @@ interface AccountDataWithPrivkey extends AccountData {
 
 const serializationTypeV1 = "secp256k1wallet-v1";
 
-const ethermintCoinType = "60"
-const hardenedEthermintCoinType = "60'"
+const ethermintCoinType = "60";
+const hardenedEthermintCoinType = "60'";
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
@@ -274,7 +274,11 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     }));
   }
 
-  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
+  public async signAmino(
+    signerAddress: string,
+    signDoc: StdSignDoc,
+    coinType = "",
+  ): Promise<AminoSignResponse> {
     const accounts = await this.getAccountsWithPrivkeys();
     const account = accounts.find(({ address }) => address === signerAddress);
     if (account === undefined) {
@@ -283,7 +287,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     const { privkey, pubkey } = account;
 
     switch (true) {
-      case account.coinType === hardenedEthermintCoinType || account.coinType === ethermintCoinType: {
+      case coinType === hardenedEthermintCoinType || coinType === ethermintCoinType: {
         // eth signing
         const hashedMessage = new Keccak256(serializeSignDoc(signDoc)).digest();
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);

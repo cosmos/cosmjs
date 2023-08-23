@@ -39,8 +39,8 @@ interface AccountDataWithPrivkey extends AccountData {
 
 const serializationTypeV1 = "directsecp256k1hdwallet-v1";
 
-const ethermintCoinType = "60"
-const hardenedEthermintCoinType = "60'"
+const ethermintCoinType = "60";
+const hardenedEthermintCoinType = "60'";
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
@@ -277,7 +277,11 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     }));
   }
 
-  public async signDirect(signerAddress: string, signDoc: SignDoc): Promise<DirectSignResponse> {
+  public async signDirect(
+    signerAddress: string,
+    signDoc: SignDoc,
+    coinType = "",
+  ): Promise<DirectSignResponse> {
     const accounts = await this.getAccountsWithPrivkeys();
     const account = accounts.find(({ address }) => address === signerAddress);
     if (account === undefined) {
@@ -287,7 +291,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const signBytes = makeSignBytes(signDoc);
 
     switch (true) {
-      case account.coinType === hardenedEthermintCoinType || account.coinType === ethermintCoinType: {
+      case coinType === hardenedEthermintCoinType || coinType === ethermintCoinType: {
         // eth signing
         const hashedMessage = new Keccak256(signBytes).digest();
         const signature = await Secp256k1.createSignature(hashedMessage, privkey);
@@ -395,7 +399,6 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
         if (components.length < 3) {
           throw new Error("Invalid hdPath. Coin type is missing");
         }
-
         const coinType = components[2];
         switch (true) {
           case coinType === hardenedEthermintCoinType || coinType === ethermintCoinType: {
