@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
+  anymore by haing a dedicated client for each backend.
+
 ## [0.31.1] - 2023-08-21
 
 ### Fixed
