@@ -21,13 +21,7 @@ import {
   TimeoutError,
   TxExtension,
 } from "@cosmjs/stargate";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  Tendermint37Client,
-  TendermintClient,
-  toRfc3339WithNanoseconds,
-} from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import {
@@ -81,14 +75,14 @@ export interface ContractCodeHistoryEntry {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly tmClient: TendermintClient | undefined;
+  readonly cometClient: CometClient | undefined;
   readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
 }
 
 export class CosmWasmClient {
-  private readonly tmClient: TendermintClient | undefined;
+  private readonly cometClient: CometClient | undefined;
   private readonly queryClient:
     | (QueryClient & AuthExtension & BankExtension & TxExtension & WasmExtension)
     | undefined;
@@ -102,34 +96,23 @@ export class CosmWasmClient {
    * To set the Tendermint client explicitly, use `create`.
    */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
-    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
-    // Using 0.34 as the fallback.
-    let tmClient: TendermintClient;
-    const tm37Client = await Tendermint37Client.connect(endpoint);
-    const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
-      tmClient = tm37Client;
-    } else {
-      tm37Client.disconnect();
-      tmClient = await Tendermint34Client.connect(endpoint);
-    }
-
-    return CosmWasmClient.create(tmClient);
+    const cometClient = await connectComet(endpoint);
+    return CosmWasmClient.create(cometClient);
   }
 
   /**
    * Creates an instance from a manually created Tendermint client.
    * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
    */
-  public static async create(tmClient: TendermintClient): Promise<CosmWasmClient> {
-    return new CosmWasmClient(tmClient);
+  public static async create(cometClient: CometClient): Promise<CosmWasmClient> {
+    return new CosmWasmClient(cometClient);
   }
 
-  protected constructor(tmClient: TendermintClient | undefined) {
-    if (tmClient) {
-      this.tmClient = tmClient;
+  protected constructor(cometClient: CometClient | undefined) {
+    if (cometClient) {
+      this.cometClient = cometClient;
       this.queryClient = QueryClient.withExtensions(
-        tmClient,
+        cometClient,
         setupAuthExtension,
         setupBankExtension,
         setupWasmExtension,
@@ -138,17 +121,15 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): TendermintClient | undefined {
-    return this.tmClient;
+  protected getTmClient(): CometClient | undefined {
+    return this.cometClient;
   }
 
-  protected forceGetTmClient(): TendermintClient {
-    if (!this.tmClient) {
-      throw new Error(
-        "Tendermint client not available. You cannot use online functionality in offline mode.",
-      );
+  protected forceGetTmClient(): CometClient {
+    if (!this.cometClient) {
+      throw new Error("Comet client not available. You cannot use online functionality in offline mode.");
     }
-    return this.tmClient;
+    return this.cometClient;
   }
 
   protected getQueryClient():
@@ -244,7 +225,7 @@ export class CosmWasmClient {
   }
 
   public disconnect(): void {
-    if (this.tmClient) this.tmClient.disconnect();
+    if (this.cometClient) this.cometClient.disconnect();
   }
 
   /**
