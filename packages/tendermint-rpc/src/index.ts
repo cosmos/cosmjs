@@ -15,6 +15,8 @@ export {
 // The public Tendermint34Client.create constructor allows manually choosing an RpcClient.
 // This is currently the only way to switch to the HttpBatchClient (which may become default at some point).
 // Due to this API, we make RPC client implementations public.
+export * as comet38 from "./comet38";
+export { Comet38Client } from "./comet38";
 export {
   HttpBatchClient,
   HttpBatchClientOptions,
