@@ -7,8 +7,6 @@ import * as responses from "../responses";
 export interface Adaptor {
   readonly params: Params;
   readonly responses: Responses;
-  readonly hashTx: (tx: Uint8Array) => Uint8Array;
-  readonly hashBlock: (header: responses.Header) => Uint8Array;
 }
 
 // Encoder is a generic that matches all methods of Params
