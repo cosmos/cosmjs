@@ -10,6 +10,14 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
   anymore by haing a dedicated client for each backend.
+- @cosmjs/tendermint-rpc: Add
+  `CometClient = Tendermint34Client | Tendermint37Client | Comet38Client` and
+  `connectComet` for auto-detecting the right client for a provided endpoint.
+
+### Deprecated
+
+- @cosmjs/tendermint-rpc: `CometClient` should be used instead of
+  `TendermintClient`.
 
 ## [0.31.1] - 2023-08-21
 

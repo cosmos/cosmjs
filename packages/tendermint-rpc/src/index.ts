@@ -99,7 +99,14 @@ export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
 export * as tendermint37 from "./tendermint37";
 export { Tendermint37Client } from "./tendermint37";
-export { isTendermint34Client, isTendermint37Client, TendermintClient } from "./tendermintclient";
+export {
+  CometClient,
+  connectComet,
+  isComet38Client,
+  isTendermint34Client,
+  isTendermint37Client,
+  TendermintClient,
+} from "./tendermintclient";
 export {
   BlockIdFlag,
   CommitSignature,
