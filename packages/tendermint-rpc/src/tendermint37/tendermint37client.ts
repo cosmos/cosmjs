@@ -1,3 +1,4 @@
+import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";
@@ -9,9 +10,15 @@ import {
   SubscriptionEvent,
   WebsocketClient,
 } from "../rpcclients";
-import { Decoder, Encoder, Params, Responses } from "./adaptor";
+import { Params, Responses } from "./adaptor";
 import * as requests from "./requests";
 import * as responses from "./responses";
+
+// Encoder is a generic that matches all methods of Params
+type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;
+
+// Decoder is a generic that matches all methods of Responses
+type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
 export class Tendermint37Client {
   /**
