@@ -37,7 +37,7 @@
     "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web",
     "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --tag next",
     "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish",
-    "release": "yarn build && release-it"
+    "release": "yarn build && release-it --no-git.tag --npm.publish --git.push"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:^",
