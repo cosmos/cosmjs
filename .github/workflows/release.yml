@@ -1,0 +1,47 @@
+name: Publish package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Publish and release package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.17.1
+          registry-url: https://npm.pkg.github.com/
+          scope: '@cronos-labs'
+
+      - name: Setup git config
+        run: |
+          git config user.name "CronosLabsDev"
+          git config user.email "dev@cronoslabs.org"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn build && npx release-it --npm.skipChecks --ci -i ${{ github.event.release.tag_name }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

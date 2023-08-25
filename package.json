@@ -37,7 +37,8 @@
     "docs": "yarn workspaces foreach --topological-dev --parallel --verbose run docs",
     "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web",
     "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --tag next",
-    "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish"
+    "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish",
+    "release": "yarn build && release-it"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:^",
@@ -48,6 +49,7 @@
     "@cosmjs/stargate": "workspace:^",
     "eslint": "^7.5",
     "prettier": "^2.8.8",
+    "release-it": "^16.1.5",
     "typescript": "~4.9"
   },
   "packageManager": "yarn@3.6.0"
