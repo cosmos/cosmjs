@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.17.1
+          node-version: 16.20.0
           registry-url: https://npm.pkg.github.com/
           scope: '@cronos-labs'
 
