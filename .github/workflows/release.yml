@@ -44,6 +44,10 @@ jobs:
 
       - run: YARN_CHECKSUM_BEHAVIOR=update yarn install --frozen-lockfile
 
-      - run: yarn build && npx release-it --npm.skipChecks --ci -i ${{ github.event.release.tag_name }}
+      - run: yarn build
+
+      - run: git checkout .yarn
+
+      - run: npx release-it --npm.skipChecks --ci -i ${{ github.event.release.tag_name }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
