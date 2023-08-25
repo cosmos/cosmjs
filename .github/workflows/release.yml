@@ -48,6 +48,6 @@ jobs:
 
       - run: git checkout .yarn
 
-      - run: npx release-it --npm.skipChecks --ci -i ${{ github.event.release.tag_name }}
+      - run: yarn publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
