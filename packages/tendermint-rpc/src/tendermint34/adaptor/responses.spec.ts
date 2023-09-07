@@ -3,7 +3,7 @@ import { fromBase64, fromHex, toUtf8 } from "@cosmjs/encoding";
 
 import { decodeEvent, decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
 
-describe("Adaptor Responses", () => {
+describe("Responses", () => {
   describe("decodeEvent", () => {
     it("works with attributes", () => {
       // from https://rpc.mainnet-1.tgrade.confio.run/tx?hash=0x2C44715748022DB2FB5F40105383719BFCFCEE51DBC02FF4088BE3F5924CD7BF

@@ -16,7 +16,7 @@ import {
   tendermintInstances,
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
-import { adaptor34 } from "./adaptor";
+import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { Tendermint34Client } from "./tendermint34client";
@@ -100,7 +100,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     pendingWithoutTendermint();
     const client = await Tendermint34Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
-    const calculatedTxHash = adaptor34.hashTx(tx);
+    const calculatedTxHash = hashTx(tx);
 
     const response = await client.broadcastTxCommit({ tx: tx });
     expect(response.hash).toEqual(calculatedTxHash);

@@ -20,13 +20,13 @@ type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;
 // Decoder is a generic that matches all methods of Responses
 type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
-export class Tendermint37Client {
+export class Comet38Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    */
-  public static async connect(endpoint: string | HttpEndpoint): Promise<Tendermint37Client> {
+  public static async connect(endpoint: string | HttpEndpoint): Promise<Comet38Client> {
     let rpcClient: RpcClient;
     if (typeof endpoint === "object") {
       rpcClient = new HttpClient(endpoint);
@@ -41,14 +41,14 @@ export class Tendermint37Client {
     // even in cases where we don't use the result.
     const _version = await this.detectVersion(rpcClient);
 
-    return Tendermint37Client.create(rpcClient);
+    return Comet38Client.create(rpcClient);
   }
 
   /**
    * Creates a new Tendermint client given an RPC client.
    */
-  public static async create(rpcClient: RpcClient): Promise<Tendermint37Client> {
-    return new Tendermint37Client(rpcClient);
+  public static async create(rpcClient: RpcClient): Promise<Comet38Client> {
+    return new Comet38Client(rpcClient);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {

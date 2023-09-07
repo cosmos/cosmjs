@@ -31,12 +31,7 @@ import {
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  Tendermint37Client,
-  TendermintClient,
-} from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -196,19 +191,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
-    // Using 0.34 as the fallback.
-    let tmClient: TendermintClient;
-    const tm37Client = await Tendermint37Client.connect(endpoint);
-    const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
-      tmClient = tm37Client;
-    } else {
-      tm37Client.disconnect();
-      tmClient = await Tendermint34Client.connect(endpoint);
-    }
-
-    return SigningCosmWasmClient.createWithSigner(tmClient, signer, options);
+    const cometClient = await connectComet(endpoint);
+    return SigningCosmWasmClient.createWithSigner(cometClient, signer, options);
   }
 
   /**
@@ -216,11 +200,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async createWithSigner(
-    tmClient: TendermintClient,
+    cometClient: CometClient,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    return new SigningCosmWasmClient(tmClient, signer, options);
+    return new SigningCosmWasmClient(cometClient, signer, options);
   }
 
   /**
@@ -240,11 +224,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   protected constructor(
-    tmClient: TendermintClient | undefined,
+    cometClient: CometClient | undefined,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {
-    super(tmClient);
+    super(cometClient);
     const {
       registry = new Registry([...defaultStargateTypes, ...wasmTypes]),
       aminoTypes = new AminoTypes({
