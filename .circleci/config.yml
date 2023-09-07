@@ -118,9 +118,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -242,12 +244,14 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
             declare -A node_links=(
-              ["14"]="https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb"
-              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb"
-              ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.7.0-deb-1nodesource1_amd64.deb"
+              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.20.2-1nodesource1_amd64.deb"
+              ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb"
+              ["20"]="https://deb.nodesource.com/node_20.x/pool/main/n/nodejs/nodejs_20.6.0-1nodesource1_amd64.deb"
             )
             wget -O "$HOME/nodejs.deb" "${node_links[<< parameters.node-version >>]}"
             sudo dpkg -i "$HOME/nodejs.deb"
@@ -365,9 +369,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -463,9 +469,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
