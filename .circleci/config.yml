@@ -139,6 +139,14 @@ jobs:
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
+      - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
@@ -270,6 +278,14 @@ jobs:
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
+      - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
@@ -390,6 +406,14 @@ jobs:
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
+      - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
       - run:
@@ -489,6 +513,14 @@ jobs:
           command: |
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
