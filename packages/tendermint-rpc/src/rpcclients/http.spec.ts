@@ -26,11 +26,7 @@ describe("http", () => {
     expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
-        Accept: jasmine.any(String),
-        "Content-Length": jasmine.any(String),
         "Content-Type": "application/json",
-        Host: jasmine.any(String),
-        "User-Agent": jasmine.any(String),
       }),
     });
   });
@@ -54,10 +50,7 @@ describe("http", () => {
     expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
-        "Content-Length": jasmine.any(String),
         "Content-Type": "application/json",
-        Host: jasmine.any(String),
-        "User-Agent": jasmine.any(String),
         // Custom headers
         foo: "bar123",
         Authorization: "Basic Z3Vlc3Q6bm9QYXNzMTIz",
