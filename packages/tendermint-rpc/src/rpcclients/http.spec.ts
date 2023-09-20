@@ -26,11 +26,7 @@ describe("http", () => {
     expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
-        Accept: jasmine.any(String),
-        "Content-Length": jasmine.any(String),
         "Content-Type": "application/json",
-        Host: jasmine.any(String),
-        "User-Agent": jasmine.any(String),
       }),
     });
   });
@@ -38,7 +34,7 @@ describe("http", () => {
   it("errors for non-open port", async () => {
     await expectAsync(
       http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
-    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch)/i);
+    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed)/i);
   });
 
   it("can POST to echo server with custom headers", async () => {
@@ -54,10 +50,7 @@ describe("http", () => {
     expect(response).toEqual({
       request_headers: jasmine.objectContaining({
         // Basic headers from http client
-        "Content-Length": jasmine.any(String),
         "Content-Type": "application/json",
-        Host: jasmine.any(String),
-        "User-Agent": jasmine.any(String),
         // Custom headers
         foo: "bar123",
         Authorization: "Basic Z3Vlc3Q6bm9QYXNzMTIz",
