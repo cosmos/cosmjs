@@ -2268,7 +2268,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "protobufjs",\
-        "npm:6.11.3"\
+        "npm:6.11.4"\
       ],\
       [\
         "pump",\
@@ -3351,7 +3351,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.1.0"],\
             ["pako", "npm:2.0.3"],\
             ["prettier", "npm:2.8.8"],\
-            ["protobufjs", "npm:6.11.3"],\
+            ["protobufjs", "npm:6.11.4"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3723,7 +3723,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["long", "npm:4.0.0"],\
             ["nyc", "npm:15.1.0"],\
             ["prettier", "npm:2.8.8"],\
-            ["protobufjs", "npm:6.11.3"],\
+            ["protobufjs", "npm:6.11.4"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3824,7 +3824,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["long", "npm:4.0.0"],\
             ["nyc", "npm:15.1.0"],\
             ["prettier", "npm:2.8.8"],\
-            ["protobufjs", "npm:6.11.3"],\
+            ["protobufjs", "npm:6.11.4"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -10924,6 +10924,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.3-566fb31188/node_modules/protobufjs/",\
           "packageDependencies": [\
             ["protobufjs", "npm:6.11.3"],\
+            ["@protobufjs/aspromise", "npm:1.1.2"],\
+            ["@protobufjs/base64", "npm:1.1.2"],\
+            ["@protobufjs/codegen", "npm:2.0.4"],\
+            ["@protobufjs/eventemitter", "npm:1.1.0"],\
+            ["@protobufjs/fetch", "npm:1.1.0"],\
+            ["@protobufjs/float", "npm:1.0.2"],\
+            ["@protobufjs/inquire", "npm:1.1.0"],\
+            ["@protobufjs/path", "npm:1.1.2"],\
+            ["@protobufjs/pool", "npm:1.1.0"],\
+            ["@protobufjs/utf8", "npm:1.1.0"],\
+            ["@types/long", "npm:4.0.1"],\
+            ["@types/node", "npm:18.15.11"],\
+            ["long", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.11.4", {\
+          "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.4-af11968b80/node_modules/protobufjs/",\
+          "packageDependencies": [\
+            ["protobufjs", "npm:6.11.4"],\
             ["@protobufjs/aspromise", "npm:1.1.2"],\
             ["@protobufjs/base64", "npm:1.1.2"],\
             ["@protobufjs/codegen", "npm:2.0.4"],\

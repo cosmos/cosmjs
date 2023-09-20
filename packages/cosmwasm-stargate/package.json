@@ -79,7 +79,7 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^2.8.1",
-    "protobufjs": "~6.11.3",
+    "protobufjs": "~6.11.4",
     "readonly-date": "^1.0.0",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
