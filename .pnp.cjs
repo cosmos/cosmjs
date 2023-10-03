@@ -1056,7 +1056,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "cosmjs-types",\
-        "npm:0.8.0"\
+        "npm:0.9.0"\
       ],\
       [\
         "cross-spawn",\
@@ -3291,7 +3291,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.21.4"],\
             ["babylon", "npm:6.18.0"],\
             ["chalk", "npm:4.1.2"],\
-            ["cosmjs-types", "npm:0.8.0"],\
+            ["cosmjs-types", "npm:0.9.0"],\
             ["diff", "npm:4.0.2"],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
@@ -3337,7 +3337,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/pako", "npm:1.0.1"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
-            ["cosmjs-types", "npm:0.8.0"],\
+            ["cosmjs-types", "npm:0.9.0"],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
             ["eslint-import-resolver-node", "npm:0.3.4"],\
@@ -3710,7 +3710,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.15.11"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
-            ["cosmjs-types", "npm:0.8.0"],\
+            ["cosmjs-types", "npm:0.9.0"],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
             ["eslint-import-resolver-node", "npm:0.3.4"],\
@@ -3811,7 +3811,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.15.11"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
             ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
-            ["cosmjs-types", "npm:0.8.0"],\
+            ["cosmjs-types", "npm:0.9.0"],\
             ["eslint", "npm:7.26.0"],\
             ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
             ["eslint-import-resolver-node", "npm:0.3.4"],\
@@ -7152,12 +7152,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["cosmjs-types", [\
-        ["npm:0.8.0", {\
-          "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.8.0-4c175fd383-99714ec956.zip/node_modules/cosmjs-types/",\
+        ["npm:0.9.0", {\
+          "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.9.0-e5d36a4ae5-9b00d169ec.zip/node_modules/cosmjs-types/",\
           "packageDependencies": [\
-            ["cosmjs-types", "npm:0.8.0"],\
-            ["long", "npm:4.0.0"],\
-            ["protobufjs", "npm:6.11.4"]\
+            ["cosmjs-types", "npm:0.9.0"]\
           ],\
           "linkType": "HARD"\
         }]\
