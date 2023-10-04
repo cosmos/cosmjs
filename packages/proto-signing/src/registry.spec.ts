@@ -4,7 +4,6 @@ import { assert } from "@cosmjs/utils";
 import { MsgSend as IMsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 import { Field, Type } from "protobufjs";
 
 import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry";
@@ -36,7 +35,7 @@ describe("registry demo", () => {
     const txBody = TxBody.fromPartial({
       messages: [msgSendWrapped],
       memo: "Some memo",
-      timeoutHeight: Long.fromNumber(9999),
+      timeoutHeight: BigInt(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
@@ -84,7 +83,7 @@ describe("registry demo", () => {
     const txBody = TxBody.fromPartial({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: Long.fromNumber(9999),
+      timeoutHeight: BigInt(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();

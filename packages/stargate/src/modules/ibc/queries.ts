@@ -49,9 +49,8 @@ import {
   ClientState as TendermintClientState,
   ConsensusState as TendermintConsensusState,
 } from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
-import Long from "long";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient";
 
 function decodeTendermintClientStateAny(clientState: Any | undefined): TendermintClientState {
   if (clientState?.typeUrl !== "/ibc.lightclients.tendermint.v1.ClientState") {
@@ -218,10 +217,10 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channels.push(...response.channels);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryChannelsResponse.fromPartial({
             channels: channels,
             height: response.height,
-          };
+          });
         },
         connectionChannels: async (connection: string, paginationKey?: Uint8Array) =>
           channelQueryService.ConnectionChannels({
@@ -240,10 +239,10 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channels.push(...response.channels);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryConnectionChannelsResponse.fromPartial({
             channels: channels,
             height: response.height,
-          };
+          });
         },
         clientState: async (portId: string, channelId: string) =>
           channelQueryService.ChannelClientState({
@@ -259,14 +258,14 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           channelQueryService.ChannelConsensusState({
             portId: portId,
             channelId: channelId,
-            revisionNumber: Long.fromNumber(revisionNumber, true),
-            revisionHeight: Long.fromNumber(revisionHeight, true),
+            revisionNumber: BigInt(revisionNumber),
+            revisionHeight: BigInt(revisionHeight),
           }),
         packetCommitment: async (portId: string, channelId: string, sequence: number) =>
           channelQueryService.PacketCommitment({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence, true),
+            sequence: longify(sequence),
           }),
         packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
           channelQueryService.PacketCommitments({
@@ -287,22 +286,22 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             commitments.push(...response.commitments);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryPacketCommitmentsResponse.fromPartial({
             commitments: commitments,
             height: response.height,
-          };
+          });
         },
         packetReceipt: async (portId: string, channelId: string, sequence: number) =>
           channelQueryService.PacketReceipt({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence, true),
+            sequence: longify(sequence),
           }),
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) =>
           channelQueryService.PacketAcknowledgement({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence, true),
+            sequence: longify(sequence),
           }),
         packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
           const request = QueryPacketAcknowledgementsRequest.fromPartial({
@@ -326,10 +325,10 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             acknowledgements.push(...response.acknowledgements);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryPacketAcknowledgementsResponse.fromPartial({
             acknowledgements: acknowledgements,
             height: response.height,
-          };
+          });
         },
         unreceivedPackets: async (
           portId: string,
@@ -339,13 +338,13 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           channelQueryService.UnreceivedPackets({
             portId: portId,
             channelId: channelId,
-            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s, true)),
+            packetCommitmentSequences: packetCommitmentSequences.map((s) => BigInt(s)),
           }),
         unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) =>
           channelQueryService.UnreceivedAcks({
             portId: portId,
             channelId: channelId,
-            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s, true)),
+            packetAckSequences: packetAckSequences.map((s) => BigInt(s)),
           }),
         nextSequenceReceive: async (portId: string, channelId: string) =>
           channelQueryService.NextSequenceReceive({
@@ -370,16 +369,15 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             clientStates.push(...response.clientStates);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryClientStatesResponse.fromPartial({
             clientStates: clientStates,
-          };
+          });
         },
         consensusState: async (clientId: string, consensusHeight?: number) =>
           clientQueryService.ConsensusState(
             QueryConsensusStateRequest.fromPartial({
               clientId: clientId,
-              revisionHeight:
-                consensusHeight !== undefined ? Long.fromNumber(consensusHeight, true) : undefined,
+              revisionHeight: consensusHeight !== undefined ? BigInt(consensusHeight) : undefined,
               latestHeight: consensusHeight === undefined,
             }),
           ),
@@ -400,9 +398,9 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             consensusStates.push(...response.consensusStates);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryConsensusStatesResponse.fromPartial({
             consensusStates: consensusStates,
-          };
+          });
         },
         params: async () => clientQueryService.ClientParams({}),
         stateTm: async (clientId: string) => {
@@ -460,10 +458,10 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             connections.push(...response.connections);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryConnectionsResponse.fromPartial({
             connections: connections,
             height: response.height,
-          };
+          });
         },
         clientConnections: async (clientId: string) =>
           connectionQueryService.ClientConnections({
@@ -477,7 +475,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           connectionQueryService.ConnectionConsensusState(
             QueryConnectionConsensusStateRequest.fromPartial({
               connectionId: connectionId,
-              revisionHeight: Long.fromNumber(revisionHeight, true),
+              revisionHeight: BigInt(revisionHeight),
             }),
           ),
       },
@@ -498,9 +496,9 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             denomTraces.push(...response.denomTraces);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return {
+          return QueryDenomTracesResponse.fromPartial({
             denomTraces: denomTraces,
-          };
+          });
         },
         params: async () => transferQueryService.Params({}),
       },

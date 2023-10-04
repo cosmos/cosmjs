@@ -3,15 +3,16 @@ import { createPagination, createProtobufRpcClient, QueryClient } from "@cosmjs/
 import {
   QueryAllContractStateResponse,
   QueryClientImpl,
+  QueryCodeRequest,
   QueryCodeResponse,
   QueryCodesResponse,
   QueryContractHistoryResponse,
   QueryContractInfoResponse,
+  QueryContractsByCodeRequest,
   QueryContractsByCodeResponse,
   QueryContractsByCreatorResponse,
   QueryRawContractStateResponse,
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
-import Long from "long";
 
 /**
  * An object containing a parsed JSON document. The result of JSON.parse().
@@ -88,14 +89,14 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
         return queryService.Codes(request);
       },
       getCode: async (id: number) => {
-        const request = { codeId: Long.fromNumber(id) };
+        const request = QueryCodeRequest.fromPartial({ codeId: BigInt(id) });
         return queryService.Code(request);
       },
       listContractsByCodeId: async (id: number, paginationKey?: Uint8Array) => {
-        const request = {
-          codeId: Long.fromNumber(id),
+        const request = QueryContractsByCodeRequest.fromPartial({
+          codeId: BigInt(id),
           pagination: createPagination(paginationKey),
-        };
+        });
         return queryService.ContractsByCode(request);
       },
       listContractsByCreator: async (creator: string, paginationKey?: Uint8Array) => {

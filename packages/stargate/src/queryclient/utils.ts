@@ -1,7 +1,6 @@
 import { fromAscii, fromBech32 } from "@cosmjs/encoding";
 import { Decimal, Uint64 } from "@cosmjs/math";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
-import Long from "long";
 
 import { QueryClient } from "./queryclient";
 
@@ -21,8 +20,8 @@ export function toAccAddress(address: string): Uint8Array {
  * Use this with a query response's pagination next key to
  * request the next page.
  */
-export function createPagination(paginationKey?: Uint8Array): PageRequest | undefined {
-  return paginationKey ? PageRequest.fromPartial({ key: paginationKey }) : undefined;
+export function createPagination(paginationKey?: Uint8Array): PageRequest {
+  return paginationKey ? PageRequest.fromPartial({ key: paginationKey }) : PageRequest.fromPartial({});
 }
 
 export interface ProtobufRpcClient {
@@ -40,12 +39,12 @@ export function createProtobufRpcClient(base: QueryClient): ProtobufRpcClient {
 }
 
 /**
- * Takes a uint64 value as string, number, Long or Uint64 and returns an unsigned Long instance
+ * Takes a uint64 value as string, number, BigInt or Uint64 and returns a BigInt
  * of it.
  */
-export function longify(value: string | number | Long | Uint64): Long {
+export function longify(value: string | number | Uint64): bigint {
   const checkedValue = Uint64.fromString(value.toString());
-  return Long.fromBytesBE([...checkedValue.toBytesBigEndian()], true);
+  return BigInt(checkedValue.toString());
 }
 
 /**

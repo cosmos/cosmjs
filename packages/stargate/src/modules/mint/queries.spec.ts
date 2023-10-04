@@ -18,8 +18,8 @@ describe("MintExtension", () => {
       const [client, tmClient] = await makeClientWithMint(simapp.tendermintUrl);
 
       const params = await client.mint.params();
-      expect(params.blocksPerYear.toNumber()).toBeGreaterThan(100_000);
-      expect(params.blocksPerYear.toNumber()).toBeLessThan(100_000_000);
+      expect(Number(params.blocksPerYear)).toBeGreaterThan(100_000);
+      expect(Number(params.blocksPerYear)).toBeLessThan(100_000_000);
       expect(params.goalBonded.toString()).toEqual("0.67");
       expect(params.inflationMin.toString()).toEqual("0.07");
       expect(params.inflationMax.toString()).toEqual("0.2");

@@ -10,7 +10,6 @@ import {
   PeriodicVestingAccount,
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 export interface Account {
   /** Bech32 account address */
@@ -20,7 +19,7 @@ export interface Account {
   readonly sequence: number;
 }
 
-function uint64FromProto(input: number | Long): Uint64 {
+function uint64FromProto(input: number | bigint): Uint64 {
   return Uint64.fromString(input.toString());
 }
 

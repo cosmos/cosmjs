@@ -26,7 +26,6 @@ import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
-import Long from "long";
 
 import { AminoConverters, AminoTypes } from "./aminotypes";
 import { calculateFee, GasPrice } from "./fee";
@@ -291,7 +290,7 @@ export class SigningStargateClient extends StargateClient {
     memo = "",
   ): Promise<DeliverTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
-      ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
+      ? BigInt(timeoutTimestamp) * BigInt(1_000_000_000)
       : undefined;
     const transferMsg: MsgTransferEncodeObject = {
       typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
