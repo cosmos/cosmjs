@@ -1,6 +1,6 @@
 import { Pubkey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
-import { decodePubkey } from "@cosmjs/proto-signing";
+import { decodeOptionalPubkey } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import {
@@ -25,7 +25,7 @@ function uint64FromProto(input: number | bigint): Uint64 {
 
 function accountFromBaseAccount(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
-  const pubkey = pubKey ? decodePubkey(pubKey) : null;
+  const pubkey = decodeOptionalPubkey(pubKey);
   return {
     address: address,
     pubkey: pubkey,
