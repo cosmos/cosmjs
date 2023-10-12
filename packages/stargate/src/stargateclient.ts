@@ -23,7 +23,9 @@ import { SearchTxQuery } from "./search";
 
 /** Use for testing only */
 export interface PrivateStargateClient {
-  readonly cometClient: CometClient | undefined;
+  readonly client: {
+    readonly cometClient: CometClient | undefined;
+  };
 }
 
 export interface StargateClientOptions {
