@@ -4,9 +4,9 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

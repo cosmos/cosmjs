@@ -3,8 +3,8 @@ import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 import Long from "long";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

@@ -14,8 +14,9 @@ import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
+import { DeliverTxResponse, isDeliverTxFailure, isDeliverTxSuccess } from "./client";
 import { isMsgSendEncodeObject } from "./modules";
-import { DeliverTxResponse, isDeliverTxFailure, isDeliverTxSuccess, StargateClient } from "./stargateclient";
+import { StargateClient } from "./stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

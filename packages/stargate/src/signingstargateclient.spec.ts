@@ -22,6 +22,7 @@ import Long from "long";
 import protobuf from "protobufjs/minimal";
 
 import { AminoTypes } from "./aminotypes";
+import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./client";
 import {
   AminoMsgDelegate,
   MsgDelegateEncodeObject,
@@ -34,7 +35,6 @@ import {
   SigningStargateClient,
   SigningStargateClientOptions,
 } from "./signingstargateclient";
-import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
   defaultGasPrice,
   defaultSendFee,

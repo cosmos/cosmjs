@@ -11,26 +11,175 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined, sleep } from "@cosmjs/utils";
-import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import { MsgData, TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { Account, accountFromAny, AccountParser } from "./accounts";
 import { AminoTypes } from "./aminotypes";
-import { fromTendermintEvent } from "./events";
+import { Event, fromTendermintEvent } from "./events";
 import { calculateFee, GasPrice } from "./fee";
 import { AuthExtension, setupAuthExtension, setupTxExtension, TxExtension } from "./modules";
 import { QueryClient } from "./queryclient";
 import { SearchTxQuery } from "./search";
-import {
-  BroadcastTxError,
-  DeliverTxResponse,
-  IndexedTx,
-  SequenceResponse,
-  TimeoutError,
-} from "./stargateclient";
+
+export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly height: number;
+  readonly chainId: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+
+export interface Block {
+  /** The ID is a hash of the block header (uppercase hex) */
+  readonly id: string;
+  readonly header: BlockHeader;
+  /** Array of raw transactions */
+  readonly txs: readonly Uint8Array[];
+}
+
+export interface SequenceResponse {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+
+/**
+ * The response after successfully broadcasting a transaction.
+ * Success or failure refer to the execution result.
+ */
+export interface DeliverTxResponse {
+  readonly height: number;
+  /** The position of the transaction within the block. This is a 0-based index. */
+  readonly txIndex: number;
+  /** Error code. The transaction suceeded iff code is 0. */
+  readonly code: number;
+  readonly transactionHash: string;
+  readonly events: readonly Event[];
+  /**
+   * A string-based log document.
+   *
+   * This currently seems to merge attributes of multiple events into one event per type
+   * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
+   * field instead.
+   */
+  readonly rawLog?: string;
+  /** @deprecated Use `msgResponses` instead. */
+  readonly data?: readonly MsgData[];
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly gasUsed: number;
+  readonly gasWanted: number;
+}
+
+export function isDeliverTxFailure(result: DeliverTxResponse): boolean {
+  return !!result.code;
+}
+
+export function isDeliverTxSuccess(result: DeliverTxResponse): boolean {
+  return !isDeliverTxFailure(result);
+}
+
+/**
+ * Ensures the given result is a success. Throws a detailed error message otherwise.
+ */
+export function assertIsDeliverTxSuccess(result: DeliverTxResponse): void {
+  if (isDeliverTxFailure(result)) {
+    throw new Error(
+      `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+    );
+  }
+}
+
+/**
+ * Ensures the given result is a failure. Throws a detailed error message otherwise.
+ */
+export function assertIsDeliverTxFailure(result: DeliverTxResponse): void {
+  if (isDeliverTxSuccess(result)) {
+    throw new Error(
+      `Transaction ${result.transactionHash} did not fail at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+    );
+  }
+}
+
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  /** The position of the transaction within the block. This is a 0-based index. */
+  readonly txIndex: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
+  readonly events: readonly Event[];
+  /**
+   * A string-based log document.
+   *
+   * This currently seems to merge attributes of multiple events into one event per type
+   * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
+   * field instead.
+   */
+  readonly rawLog: string;
+  /**
+   * Raw transaction bytes stored in Tendermint.
+   *
+   * If you hash this, you get the transaction hash (= transaction ID):
+   *
+   * ```js
+   * import { sha256 } from "@cosmjs/crypto";
+   * import { toHex } from "@cosmjs/encoding";
+   *
+   * const transactionId = toHex(sha256(indexTx.tx)).toUpperCase();
+   * ```
+   *
+   * Use `decodeTxRaw` from @cosmjs/proto-signing to decode this.
+   */
+  readonly tx: Uint8Array;
+  /**
+   * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
+   * as `Any`s.
+   * This field is an empty list for chains running Cosmos SDK < 0.46.
+   */
+  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly gasUsed: number;
+  readonly gasWanted: number;
+}
+
+/**
+ * An error when broadcasting the transaction. This contains the CheckTx errors
+ * from the blockchain. Once a transaction is included in a block no BroadcastTxError
+ * is thrown, even if the execution fails (DeliverTx errors).
+ */
+export class BroadcastTxError extends Error {
+  public readonly code: number;
+  public readonly codespace: string;
+  public readonly log: string | undefined;
+
+  public constructor(code: number, codespace: string, log: string | undefined) {
+    super(`Broadcasting transaction failed with code ${code} (codespace: ${codespace}). Log: ${log}`);
+    this.code = code;
+    this.codespace = codespace;
+    this.log = log;
+  }
+}
+
+export class TimeoutError extends Error {
+  public readonly txId: string;
+
+  public constructor(message: string, txId: string) {
+    super(message);
+    this.txId = txId;
+  }
+}
 
 /**
  * Signing information for a single signer that is not included in the transaction.
@@ -67,7 +216,7 @@ export class Client {
   /** Chain ID cache */
   private chainId: string | undefined;
   private readonly accountParser: AccountParser;
-  private readonly signer: OfflineSigner;
+  private readonly signer: OfflineSigner | undefined;
   private readonly aminoTypes: AminoTypes;
   private readonly gasPrice: GasPrice | undefined;
 
@@ -87,7 +236,7 @@ export class Client {
   }
 
   /**
-   * Creates an instance from a manually created Tendermint client.
+   * Creates an instance from a manually created Comet client.
    * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async createWithSigner(
@@ -96,6 +245,13 @@ export class Client {
     options: ClientOptions = {},
   ): Promise<Client> {
     return new Client(cometClient, signer, options);
+  }
+
+  /**
+   * Creates an instance without signer from a manually created Comet client.
+   */
+  public static async create(cometClient: CometClient, options: ClientOptions = {}): Promise<Client> {
+    return new Client(cometClient, undefined, options);
   }
 
   /**
@@ -111,14 +267,21 @@ export class Client {
     return new Client(undefined, signer, options);
   }
 
-  protected constructor(cometClient: CometClient | undefined, signer: OfflineSigner, options: ClientOptions) {
+  public constructor(
+    cometClient: CometClient | undefined,
+    signer: OfflineSigner | undefined,
+    options: ClientOptions,
+  ) {
     if (cometClient) {
       this.cometClient = cometClient;
       this.queryClient = QueryClient.withExtensions(cometClient, setupAuthExtension, setupTxExtension);
     }
-    const { accountParser = accountFromAny } = options;
+    const {
+      registry = new Registry(),
+      aminoTypes = new AminoTypes({}),
+      accountParser = accountFromAny,
+    } = options;
     this.accountParser = accountParser;
-    const { registry = new Registry(), aminoTypes = new AminoTypes({}) } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
@@ -127,11 +290,11 @@ export class Client {
     this.gasPrice = options.gasPrice;
   }
 
-  protected getTmClient(): CometClient | undefined {
+  public getCometClient(): CometClient | undefined {
     return this.cometClient;
   }
 
-  protected forceGetTmClient(): CometClient {
+  public forceGetCometClient(): CometClient {
     if (!this.cometClient) {
       throw new Error("Comet client not available. You cannot use online functionality in offline mode.");
     }
@@ -174,12 +337,33 @@ export class Client {
     };
   }
 
+  public async getBlock(height?: number): Promise<Block> {
+    const response = await this.forceGetCometClient().block(height);
+    return {
+      id: toHex(response.blockId.hash).toUpperCase(),
+      header: {
+        version: {
+          block: new Uint53(response.block.header.version.block).toString(),
+          app: new Uint53(response.block.header.version.app).toString(),
+        },
+        height: response.block.header.height,
+        chainId: response.block.header.chainId,
+        time: toRfc3339WithNanoseconds(response.block.header.time),
+      },
+      txs: response.block.txs,
+    };
+  }
+
   public async simulate(
     signerAddress: string,
     messages: readonly EncodeObject[],
     memo: string | undefined,
   ): Promise<number> {
     const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
+    assert(
+      this.signer,
+      "Simulation requires a signer. FIXME: create workaround for this limitation (https://github.com/cosmos/cosmjs/issues/1213).",
+    );
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
     );
@@ -195,7 +379,7 @@ export class Client {
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.forceGetTmClient().status();
+      const response = await this.forceGetCometClient().status();
       const chainId = response.nodeInfo.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -269,6 +453,7 @@ export class Client {
     memo: string,
     explicitSignerData?: SignerData,
   ): Promise<TxRaw> {
+    assert(this.signer, "No signer set for this client instance");
     let signerData: SignerData;
     if (explicitSignerData) {
       signerData = explicitSignerData;
@@ -281,7 +466,6 @@ export class Client {
         chainId: chainId,
       };
     }
-
     return isOfflineDirectSigner(this.signer)
       ? this.signDirect(signerAddress, messages, fee, memo, signerData)
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
@@ -294,6 +478,7 @@ export class Client {
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
+    assert(this.signer, "No signer set for this client instance");
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
@@ -339,6 +524,7 @@ export class Client {
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
   ): Promise<TxRaw> {
+    assert(this.signer, "No signer set for this client instance");
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
       (account) => account.address === signerAddress,
@@ -468,7 +654,7 @@ export class Client {
    * @returns Returns the hash of the transaction
    */
   public async broadcastTxSync(tx: Uint8Array): Promise<string> {
-    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+    const broadcasted = await this.forceGetCometClient().broadcastTxSync({ tx });
 
     if (broadcasted.code) {
       return Promise.reject(
@@ -481,8 +667,8 @@ export class Client {
     return transactionId;
   }
 
-  private async txsQuery(query: string): Promise<IndexedTx[]> {
-    const results = await this.forceGetTmClient().txSearchAll({ query: query });
+  public async txsQuery(query: string): Promise<IndexedTx[]> {
+    const results = await this.forceGetCometClient().txSearchAll({ query: query });
     return results.txs.map((tx): IndexedTx => {
       const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {

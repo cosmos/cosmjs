@@ -13,9 +13,9 @@ import {
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { longify, QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

@@ -19,10 +19,9 @@ import {
   DeliverTxResponse,
   isDeliverTxFailure,
   isDeliverTxSuccess,
-  PrivateStargateClient,
-  StargateClient,
   TimeoutError,
-} from "./stargateclient";
+} from "./client";
+import { PrivateStargateClient, StargateClient } from "./stargateclient";
 import {
   faucet,
   makeRandomAddress,

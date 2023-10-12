@@ -4,9 +4,10 @@ import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import Long from "long";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { QueryClient } from "../../queryclient";
 import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
+import { StargateClient } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,
