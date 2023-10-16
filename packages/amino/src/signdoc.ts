@@ -30,6 +30,7 @@ export interface StdSignDoc {
   readonly fee: StdFee;
   readonly msgs: readonly AminoMsg[];
   readonly memo: string;
+  readonly timeout_height?: string;
 }
 
 function sortedObject(obj: any): any {
@@ -61,6 +62,7 @@ export function makeSignDoc(
   memo: string | undefined,
   accountNumber: number | string,
   sequence: number | string,
+  timeout_height?: string,
 ): StdSignDoc {
   return {
     chain_id: chainId,
@@ -69,6 +71,7 @@ export function makeSignDoc(
     fee: fee,
     msgs: msgs,
     memo: memo || "",
+    ...(timeout_height && { timeout_height }),
   };
 }
 
