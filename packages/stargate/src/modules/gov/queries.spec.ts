@@ -229,11 +229,11 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
+        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
@@ -255,11 +255,12 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
+        // Note: jasmine.any(Bigint) does not seem to work as expected in Jasmine 4.6
+        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.any(BigInt), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
