@@ -512,7 +512,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/jasmine",\
-        "npm:4.0.3"\
+        "npm:4.6.1"\
       ],\
       [\
         "@types/json-schema",\
@@ -3224,7 +3224,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3277,7 +3277,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/babylon", "npm:6.16.5"],\
             ["@types/diff", "npm:4.0.2"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/node", "npm:18.15.11"],\
             ["@types/yargs", "npm:15.0.13"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
@@ -3322,7 +3322,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3377,7 +3377,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/bn.js", "npm:5.1.0"],\
             ["@types/elliptic", "npm:6.4.14"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3425,7 +3425,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/base64-js", "npm:1.3.0"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3477,7 +3477,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@koa/cors", "npm:3.3.0"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/koa", "npm:2.13.4"],\
             ["@types/koa-bodyparser", "npm:4.3.7"],\
             ["@types/koa__cors", "npm:3.3.0"],\
@@ -3513,7 +3513,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/faucet-client", "workspace:packages/faucet-client"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3557,7 +3557,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/stream", "workspace:packages/stream"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3608,7 +3608,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@ledgerhq/hw-transport-node-hid", "npm:5.51.1"],\
             ["@ledgerhq/hw-transport-webusb", "npm:5.51.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/ledgerhq__hw-transport", "npm:4.21.3"],\
             ["@types/ledgerhq__hw-transport-node-hid", "npm:4.22.2"],\
             ["@types/ledgerhq__hw-transport-webusb", "npm:4.70.1"],\
@@ -3648,7 +3648,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/bn.js", "npm:5.1.0"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3696,7 +3696,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3743,7 +3743,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/stream", "workspace:packages/stream"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3797,7 +3797,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3845,7 +3845,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/stream", "workspace:packages/stream"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3895,7 +3895,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -3940,7 +3940,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/utils", "workspace:packages/utils"],\
             ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma-firefox-launcher", "npm:2.1.0"],\
             ["@types/karma-jasmine", "npm:4.0.2"],\
             ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -4637,10 +4637,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/jasmine", [\
-        ["npm:4.0.3", {\
-          "packageLocation": "./.yarn/cache/@types-jasmine-npm-4.0.3-569abf6439-9d2af9ddb5.zip/node_modules/@types/jasmine/",\
+        ["npm:4.6.1", {\
+          "packageLocation": "./.yarn/cache/@types-jasmine-npm-4.6.1-55b5288466-1c34321d0b.zip/node_modules/@types/jasmine/",\
           "packageDependencies": [\
-            ["@types/jasmine", "npm:4.0.3"]\
+            ["@types/jasmine", "npm:4.6.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4696,7 +4696,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-karma-jasmine-npm-4.0.2-3aedb99021-42b3221d68.zip/node_modules/@types/karma-jasmine/",\
           "packageDependencies": [\
             ["@types/karma-jasmine", "npm:4.0.2"],\
-            ["@types/jasmine", "npm:4.0.3"],\
+            ["@types/jasmine", "npm:4.6.1"],\
             ["@types/karma", "npm:6.3.0"]\
           ],\
           "linkType": "HARD"\

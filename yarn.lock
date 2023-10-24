@@ -1575,9 +1575,9 @@ __metadata:
   linkType: hard
 
 "@types/jasmine@npm:*, @types/jasmine@npm:^4":
-  version: 4.0.3
-  resolution: "@types/jasmine@npm:4.0.3"
-  checksum: 9d2af9ddb5750667bc9a3b439542fc9457c6eac2ab2c74801f598b03b9bc5cee1338fa8e75e6804dff1856e64539e8b0e3962ed8664a702f362d3db62eb9cd3a
+  version: 4.6.1
+  resolution: "@types/jasmine@npm:4.6.1"
+  checksum: 1c34321d0bc99339c015f6a25c148753e5f16cf7dd2ec76cbe93f66500a8647efdaeaadb918918dd624198ef5574d0ce582f3b93220a8235b48bf1915d528c8a
   languageName: node
   linkType: hard
 
