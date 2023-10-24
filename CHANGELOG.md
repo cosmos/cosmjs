@@ -6,13 +6,6 @@ and this project adheres to
 
 ## [Unreleased]
 
-### Fixed
-
-- @cosmjs/stargate: Add missing memo field to Amino JSON representation of
-  `MsgTransfer` and adapt converters. ([#1456])
-
-[#1456]: https://github.com/cosmos/cosmjs/issues/1429
-
 ### Changed
 
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
@@ -28,6 +21,15 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: `CometClient` should be used instead of
   `TendermintClient`.
+
+## [0.31.2] - 2023-10-24
+
+### Fixed
+
+- @cosmjs/stargate: Add missing memo field to Amino JSON representation of
+  `MsgTransfer` and adapt converters. ([#1456])
+
+[#1456]: https://github.com/cosmos/cosmjs/pull/1456
 
 ## [0.31.1] - 2023-08-21
 
@@ -1318,7 +1320,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.31.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.31.2...HEAD
+[0.31.2]: https://github.com/cosmos/cosmjs/compare/v0.31.1...v0.31.2
 [0.31.1]: https://github.com/cosmos/cosmjs/compare/v0.31.0...v0.31.1
 [0.31.0]: https://github.com/cosmos/cosmjs/compare/v0.30.1...v0.31.0
 [0.30.1]: https://github.com/cosmos/cosmjs/compare/v0.30.0...v0.30.1
