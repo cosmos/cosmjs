@@ -106,7 +106,10 @@ describe("AminoTypes", () => {
           token: coin(1234, "utest"),
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          timeout_height: {},
+          timeout_height: {
+            revision_number: undefined,
+            revision_height: undefined,
+          },
           timeout_timestamp: undefined,
           memo: undefined,
         },
