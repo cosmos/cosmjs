@@ -3356,7 +3356,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.1.0"],\
             ["pako", "npm:2.0.3"],\
             ["prettier", "npm:2.8.8"],\
-            ["protobufjs", "npm:6.11.4"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
@@ -3827,7 +3826,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
             ["nyc", "npm:15.1.0"],\
             ["prettier", "npm:2.8.8"],\
-            ["protobufjs", "npm:6.11.4"],\
             ["readonly-date", "npm:1.0.0"],\
             ["ses", "npm:0.11.1"],\
             ["source-map-support", "npm:0.5.21"],\
