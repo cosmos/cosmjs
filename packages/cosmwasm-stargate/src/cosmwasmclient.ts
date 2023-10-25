@@ -90,10 +90,10 @@ export class CosmWasmClient {
   private chainId: string | undefined;
 
   /**
-   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
-   * To set the Tendermint client explicitly, use `create`.
+   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * To set the Comet client explicitly, use `create`.
    */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
     const cometClient = await connectComet(endpoint);
@@ -101,8 +101,8 @@ export class CosmWasmClient {
   }
 
   /**
-   * Creates an instance from a manually created Tendermint client.
-   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   * Creates an instance from a manually created Comet client.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async create(cometClient: CometClient): Promise<CosmWasmClient> {
     return new CosmWasmClient(cometClient);

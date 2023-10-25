@@ -18,6 +18,16 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Add
   `CometClient = Tendermint34Client | Tendermint37Client | Comet38Client` and
   `connectComet` for auto-detecting the right client for a provided endpoint.
+- @cosmjs/stargate: Let `SigningStargateClient.createWithSigner` and
+  `StargateClient.create` take a `CometClient` argument, adding support for
+  `Comet38Client`. The auto-detection in
+  `SigningStargateClient.connectWithSigner` and `StargateClient.connect` now
+  supports CometBFT 0.38.
+- @cosmjs/cosmwasm-stargate: Let `SigningCosmWasmClient.createWithSigner` and
+  `CosmWasmClient.create` take a `CometClient` argument, adding support for
+  `Comet38Client`. The auto-detection in
+  `SigningCosmWasmClient.connectWithSigner` and `CosmWasmClient.connect` now
+  supports CometBFT 0.38.
 
 [#1421]: https://github.com/cosmos/cosmjs/issues/1421
 [#1484]: https://github.com/cosmos/cosmjs/pull/1484
