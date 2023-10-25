@@ -47,7 +47,6 @@
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.9.0",
-    "long": "^4.0.0",
     "pako": "^2.0.2"
   },
   "devDependencies": {
