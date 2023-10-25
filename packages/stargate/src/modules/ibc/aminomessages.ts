@@ -98,6 +98,7 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeout_height,
         timeout_timestamp,
+        memo,
       }: AminoMsgTransfer["value"]): MsgTransfer =>
         MsgTransfer.fromPartial({
           sourcePort: source_port,
@@ -112,6 +113,7 @@ export function createIbcAminoConverters(): AminoConverters {
               }
             : undefined,
           timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
+          memo: memo ?? "",
         }),
     },
   };

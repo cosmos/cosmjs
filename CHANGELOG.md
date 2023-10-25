@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: Add missing memo field to `fromAmino` implementation for
+  `MsgTransfer`. ([#1493])
+
+[#1493]: https://github.com/cosmos/cosmjs/issues/1493
+
 ## [0.31.2] - 2023-10-24
 
 ### Fixed
