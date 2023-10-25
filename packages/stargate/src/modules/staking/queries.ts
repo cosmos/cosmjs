@@ -17,7 +17,6 @@ import {
   QueryValidatorUnbondingDelegationsResponse,
 } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking";
-import Long from "long";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 
@@ -118,9 +117,9 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
         });
         return response;
       },
-      historicalInfo: async (height: number) => {
+      historicalInfo: async (height: number | bigint) => {
         const response = await queryService.HistoricalInfo({
-          height: Long.fromNumber(height, true),
+          height: BigInt(height),
         });
         return response;
       },

@@ -2,7 +2,6 @@ import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-si
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
-import Long from "long";
 
 import { QueryClient } from "../../queryclient";
 import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
@@ -94,11 +93,11 @@ describe("TxExtension", () => {
 
       const { sequence } = await sequenceClient.getSequence(faucet.address0);
       const response = await client.tx.simulate([msgAny], "foo", faucet.pubkey0, sequence);
-      expect(response.gasInfo?.gasUsed.toNumber()).toBeGreaterThanOrEqual(101_000);
-      expect(response.gasInfo?.gasUsed.toNumber()).toBeLessThanOrEqual(200_000);
+      expect(response.gasInfo?.gasUsed).toBeGreaterThanOrEqual(101_000);
+      expect(response.gasInfo?.gasUsed).toBeLessThanOrEqual(200_000);
       expect(response.gasInfo?.gasWanted).toEqual(
         // Some dummy value. Value does not matter for regular users.
-        simapp44Enabled() ? Long.UZERO : Long.MAX_UNSIGNED_VALUE,
+        simapp44Enabled() ? BigInt(0) : BigInt("0xffffffffffffffff"),
       );
 
       tmClient.disconnect();

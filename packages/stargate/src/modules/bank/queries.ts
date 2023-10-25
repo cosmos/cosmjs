@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
-import { QueryClientImpl, QueryTotalSupplyResponse } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import {
+  QueryAllBalancesRequest,
+  QueryClientImpl,
+  QueryDenomsMetadataRequest,
+  QueryTotalSupplyResponse,
+} from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
@@ -31,7 +36,9 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         return balance;
       },
       allBalances: async (address: string) => {
-        const { balances } = await queryService.AllBalances({ address: address });
+        const { balances } = await queryService.AllBalances(
+          QueryAllBalancesRequest.fromPartial({ address: address }),
+        );
         return balances;
       },
       totalSupply: async (paginationKey?: Uint8Array) => {
@@ -51,9 +58,11 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         return metadata;
       },
       denomsMetadata: async () => {
-        const { metadatas } = await queryService.DenomsMetadata({
-          pagination: undefined, // Not implemented
-        });
+        const { metadatas } = await queryService.DenomsMetadata(
+          QueryDenomsMetadataRequest.fromPartial({
+            pagination: undefined, // Not implemented
+          }),
+        );
         return metadatas;
       },
     },

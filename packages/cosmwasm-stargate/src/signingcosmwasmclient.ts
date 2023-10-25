@@ -47,7 +47,6 @@ import {
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import Long from "long";
 import pako from "pako";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -317,7 +316,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
       value: MsgInstantiateContract.fromPartial({
         sender: senderAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         label: label,
         msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
@@ -354,7 +353,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract2",
       value: MsgInstantiateContract2.fromPartial({
         sender: senderAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         label: label,
         msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
@@ -449,7 +448,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: MsgMigrateContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         msg: toUtf8(JSON.stringify(migrateMsg)),
       }),
     };

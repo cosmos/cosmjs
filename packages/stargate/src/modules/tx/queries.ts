@@ -10,7 +10,6 @@ import {
 } from "cosmjs-types/cosmos/tx/v1beta1/service";
 import { AuthInfo, Fee, Tx, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 import { createProtobufRpcClient, QueryClient } from "../../queryclient";
 
@@ -56,7 +55,7 @@ export function setupTxExtension(base: QueryClient): TxExtension {
             signerInfos: [
               {
                 publicKey: encodePubkey(signer),
-                sequence: Long.fromNumber(sequence, true),
+                sequence: BigInt(sequence),
                 modeInfo: { single: { mode: SignMode.SIGN_MODE_UNSPECIFIED } },
               },
             ],

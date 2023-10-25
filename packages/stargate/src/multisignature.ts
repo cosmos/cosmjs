@@ -5,7 +5,6 @@ import { CompactBitArray, MultiSignature } from "cosmjs-types/cosmos/crypto/mult
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import Long from "long";
 
 export function makeCompactBitArray(bits: readonly boolean[]): CompactBitArray {
   const byteCount = Math.ceil(bits.length / 8);
@@ -58,14 +57,14 @@ export function makeMultisignedTx(
         modeInfos: signaturesList.map((_) => ({ single: { mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON } })),
       },
     },
-    sequence: Long.fromNumber(sequence),
+    sequence: BigInt(sequence),
   };
 
   const authInfo = AuthInfo.fromPartial({
     signerInfos: [signerInfo],
     fee: {
       amount: [...fee.amount],
-      gasLimit: Long.fromString(fee.gas),
+      gasLimit: BigInt(fee.gas),
     },
   });
 

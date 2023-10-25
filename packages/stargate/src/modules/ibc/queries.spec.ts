@@ -1,5 +1,4 @@
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import Long from "long";
 
 import { QueryClient } from "../../queryclient";
 import { simapp } from "../../testutils.spec";
@@ -233,7 +232,7 @@ describe("IbcExtension", () => {
           ibcTest.channelId,
           [1, 2, 3],
         );
-        expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
+        expect(response.sequences).toEqual([1, 2, 3].map((n) => BigInt(n)));
         expect(response.height).toBeDefined();
 
         tmClient.disconnect();
@@ -250,7 +249,7 @@ describe("IbcExtension", () => {
           ibcTest.channelId,
           [1, 2, 3, 4, 5, 6, 7],
         );
-        expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
+        expect(response.sequences).toEqual([BigInt(ibcTest.commitment.sequence)]);
         expect(response.height).toBeDefined();
 
         tmClient.disconnect();
@@ -263,7 +262,7 @@ describe("IbcExtension", () => {
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.nextSequenceReceive(ibcTest.portId, ibcTest.channelId);
-        expect(response.nextSequenceReceive).toEqual(Long.fromInt(1, true));
+        expect(response.nextSequenceReceive).toEqual(BigInt(1));
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 

@@ -9,6 +9,7 @@ import {
   DirectSignResponse,
   makeAuthInfoBytes,
 } from "@cosmjs/proto-signing";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -230,10 +231,13 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
       memo: "This was modified",
     });
     const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
-    const signers = authInfo.signerInfos.map((signerInfo) => ({
-      pubkey: signerInfo.publicKey!,
-      sequence: signerInfo.sequence.toNumber(),
-    }));
+    const signers = authInfo.signerInfos.map((signerInfo) => {
+      assertDefinedAndNotNull(signerInfo.publicKey);
+      return {
+        pubkey: signerInfo.publicKey,
+        sequence: signerInfo.sequence,
+      };
+    });
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
     const modifiedFeeGranter = undefined;

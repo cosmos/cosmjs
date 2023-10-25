@@ -98,7 +98,9 @@ describe("QueryClient", () => {
       const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
 
       const requestData = Uint8Array.from(
-        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: unused.address }),
+        ).finish(),
       );
       const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
       const response = QueryAllBalancesResponse.decode(value);
@@ -112,7 +114,9 @@ describe("QueryClient", () => {
       const [client, tmClient] = await makeClient(simapp.tendermintUrlHttp);
 
       const requestData = Uint8Array.from(
-        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: unused.address }),
+        ).finish(),
       );
       const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
       const response = QueryAllBalancesResponse.decode(value);

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import Long from "long";
 
 import { AminoConverters } from "../../aminotypes";
 
@@ -46,7 +45,7 @@ export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
   return msg.type === "cosmos-sdk/MsgTransfer";
 }
 
-function omitDefault<T extends string | number | Long>(input: T): T | undefined {
+function omitDefault<T extends string | number | bigint>(input: T): T | undefined {
   if (typeof input === "string") {
     return input === "" ? undefined : input;
   }
@@ -55,8 +54,8 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
     return input === 0 ? undefined : input;
   }
 
-  if (Long.isLong(input)) {
-    return input.isZero() ? undefined : input;
+  if (typeof input === "bigint") {
+    return input === BigInt(0) ? undefined : input;
   }
 
   throw new Error(`Got unsupported type '${typeof input}'`);
@@ -98,6 +97,7 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeout_height,
         timeout_timestamp,
+        memo,
       }: AminoMsgTransfer["value"]): MsgTransfer =>
         MsgTransfer.fromPartial({
           sourcePort: source_port,
@@ -107,11 +107,12 @@ export function createIbcAminoConverters(): AminoConverters {
           receiver: receiver,
           timeoutHeight: timeout_height
             ? {
-                revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
-                revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
+                revisionHeight: BigInt(timeout_height.revision_height || "0"),
+                revisionNumber: BigInt(timeout_height.revision_number || "0"),
               }
             : undefined,
-          timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
+          timeoutTimestamp: BigInt(timeout_timestamp || "0"),
+          memo: memo ?? "",
         }),
     },
   };
