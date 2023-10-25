@@ -1,5 +1,5 @@
 import { fromUtf8 } from "@cosmjs/encoding";
-import { tendermint34, tendermint37 } from "@cosmjs/tendermint-rpc";
+import { comet38, tendermint34, tendermint37 } from "@cosmjs/tendermint-rpc";
 
 /**
  * An event attribute.
@@ -33,7 +33,7 @@ export interface Event {
  * Takes a Tendermint 0.34 or 0.37 event with binary encoded key and value
  * and converts it into an `Event` with string attributes.
  */
-export function fromTendermintEvent(event: tendermint34.Event | tendermint37.Event): Event {
+export function fromTendermintEvent(event: tendermint34.Event | tendermint37.Event | comet38.Event): Event {
   return {
     type: event.type,
     attributes: event.attributes.map(

@@ -3,9 +3,9 @@ import { Random } from "@cosmjs/crypto";
 import { fromBech32, toBase64, toBech32 } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet, encodePubkey } from "@cosmjs/proto-signing";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { calculateFee } from "../../fee";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultGasPrice,
   defaultSigningClientOptions,

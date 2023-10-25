@@ -12,9 +12,9 @@ import {
 } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { longify, QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

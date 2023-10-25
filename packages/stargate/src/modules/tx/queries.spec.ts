@@ -3,9 +3,10 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
+import { assertIsDeliverTxSuccess } from "../../client";
 import { QueryClient } from "../../queryclient";
 import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
+import { StargateClient } from "../../stargateclient";
 import {
   defaultSigningClientOptions,
   faucet,

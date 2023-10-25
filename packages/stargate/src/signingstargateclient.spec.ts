@@ -21,6 +21,7 @@ import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { AminoTypes } from "./aminotypes";
+import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./client";
 import {
   AminoMsgDelegate,
   MsgDelegateEncodeObject,
@@ -33,7 +34,6 @@ import {
   SigningStargateClient,
   SigningStargateClientOptions,
 } from "./signingstargateclient";
-import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
   defaultGasPrice,
   defaultSendFee,

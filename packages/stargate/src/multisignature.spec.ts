@@ -9,10 +9,11 @@ import { coins } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
+import { assertIsDeliverTxSuccess } from "./client";
 import { MsgSendEncodeObject } from "./modules";
 import { makeCompactBitArray, makeMultisignedTxBytes } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
-import { assertIsDeliverTxSuccess, StargateClient } from "./stargateclient";
+import { StargateClient } from "./stargateclient";
 import { faucet, pendingWithoutSimapp, simapp } from "./testutils.spec";
 
 describe("multisignature", () => {

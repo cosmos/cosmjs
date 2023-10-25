@@ -1,5 +1,20 @@
 export { Account, accountFromAny, AccountParser } from "./accounts";
 export { AminoConverter, AminoConverters, AminoTypes } from "./aminotypes";
+export {
+  assertIsDeliverTxFailure,
+  assertIsDeliverTxSuccess,
+  Block,
+  BlockHeader,
+  BroadcastTxError,
+  Client,
+  ClientOptions,
+  DeliverTxResponse,
+  IndexedTx,
+  isDeliverTxFailure,
+  isDeliverTxSuccess,
+  SequenceResponse,
+  TimeoutError,
+} from "./client";
 export { Attribute, Event, fromTendermintEvent } from "./events";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
@@ -121,21 +136,7 @@ export {
   SigningStargateClient,
   SigningStargateClientOptions,
 } from "./signingstargateclient";
-export {
-  assertIsDeliverTxFailure,
-  assertIsDeliverTxSuccess,
-  Block,
-  BlockHeader,
-  BroadcastTxError,
-  DeliverTxResponse,
-  IndexedTx,
-  isDeliverTxFailure,
-  isDeliverTxSuccess,
-  SequenceResponse,
-  StargateClient,
-  StargateClientOptions,
-  TimeoutError,
-} from "./stargateclient";
+export { StargateClient, StargateClientOptions } from "./stargateclient";
 export { StdFee } from "@cosmjs/amino";
 export { Coin, coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
 

@@ -28,6 +28,7 @@ import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 
 import { AminoConverters, AminoTypes } from "./aminotypes";
+import { DeliverTxResponse } from "./client";
 import { calculateFee, GasPrice } from "./fee";
 import {
   authzTypes,
@@ -55,7 +56,7 @@ import {
   createStakingAminoConverters,
   createVestingAminoConverters,
 } from "./modules";
-import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
+import { StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],

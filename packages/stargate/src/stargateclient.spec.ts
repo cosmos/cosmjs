@@ -19,10 +19,9 @@ import {
   DeliverTxResponse,
   isDeliverTxFailure,
   isDeliverTxSuccess,
-  PrivateStargateClient,
-  StargateClient,
   TimeoutError,
-} from "./stargateclient";
+} from "./client";
+import { PrivateStargateClient, StargateClient } from "./stargateclient";
 import {
   faucet,
   makeRandomAddress,
@@ -98,7 +97,7 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const openedClient = client as unknown as PrivateStargateClient;
-      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.client.cometClient!, "status").and.callThrough();
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache
