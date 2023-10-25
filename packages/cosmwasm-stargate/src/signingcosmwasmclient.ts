@@ -643,7 +643,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     explicitSignerData?: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     let signerData: SignerData;
     if (explicitSignerData) {
@@ -669,7 +669,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -681,15 +681,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
-    const signDoc = makeSignDocAmino(
-      msgs,
-      fee,
-      chainId,
-      memo,
-      accountNumber,
-      sequence,
-      timeoutHeight?.toString(),
-    );
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence, timeoutHeight);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
@@ -723,7 +715,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(

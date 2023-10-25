@@ -371,7 +371,7 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo: string,
     explicitSignerData?: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     let signerData: SignerData;
     if (explicitSignerData) {
@@ -397,7 +397,7 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -409,15 +409,7 @@ export class SigningStargateClient extends StargateClient {
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
-    const signDoc = makeSignDocAmino(
-      msgs,
-      fee,
-      chainId,
-      memo,
-      accountNumber,
-      sequence,
-      timeoutHeight?.toString(),
-    );
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence, timeoutHeight);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody = {
       messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
@@ -452,7 +444,7 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
-    timeoutHeight?: Long,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
