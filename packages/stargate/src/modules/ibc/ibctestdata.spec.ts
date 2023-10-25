@@ -15,7 +15,6 @@ import {
   State as ConnectionState,
   Version,
 } from "cosmjs-types/ibc/core/connection/v1/connection";
-import Long from "long";
 
 // From scripts/simapp42/genesis-ibc.json
 
@@ -61,7 +60,7 @@ export const commitment = {
 export const packetState = PacketState.fromPartial({
   portId: portId,
   channelId: channelId,
-  sequence: Long.fromInt(commitment.sequence, true),
+  sequence: BigInt(commitment.sequence),
   data: commitment.data,
 });
 

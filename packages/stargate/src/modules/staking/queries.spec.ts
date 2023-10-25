@@ -233,7 +233,7 @@ describe("StakingExtension", () => {
         },
         balance: { denom: "ustake", amount: "3000000" },
       });
-      expect(response.pagination?.total.toNumber()).toBeGreaterThanOrEqual(2);
+      expect(Number(response.pagination!.total)).toBeGreaterThanOrEqual(2);
 
       tmClient.disconnect();
     });

@@ -358,7 +358,7 @@ __metadata:
     axios: ^0.21.2
     babylon: ^6.18.0
     chalk: ^4
-    cosmjs-types: ^0.8.0
+    cosmjs-types: ^0.9.0
     diff: ^4
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -404,7 +404,7 @@ __metadata:
     "@types/pako": ^1.0.1
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
-    cosmjs-types: ^0.8.0
+    cosmjs-types: ^0.9.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -420,11 +420,9 @@ __metadata:
     karma-firefox-launcher: ^2.1.0
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
-    long: ^4.0.0
     nyc: ^15.1.0
     pako: ^2.0.2
     prettier: ^2.8.1
-    protobufjs: ~6.11.4
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -763,7 +761,7 @@ __metadata:
     "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
-    cosmjs-types: ^0.8.0
+    cosmjs-types: ^0.9.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -779,7 +777,6 @@ __metadata:
     karma-firefox-launcher: ^2.1.0
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
-    long: ^4.0.0
     nyc: ^15.1.0
     prettier: ^2.8.1
     protobufjs: ~6.11.4
@@ -860,7 +857,7 @@ __metadata:
     "@types/node": ^18
     "@typescript-eslint/eslint-plugin": ^5.54.0
     "@typescript-eslint/parser": ^5.54.0
-    cosmjs-types: ^0.8.0
+    cosmjs-types: ^0.9.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -876,10 +873,8 @@ __metadata:
     karma-firefox-launcher: ^2.1.0
     karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
-    long: ^4.0.0
     nyc: ^15.1.0
     prettier: ^2.8.1
-    protobufjs: ~6.11.4
     readonly-date: ^1.0.0
     ses: ^0.11.0
     source-map-support: ^0.5.19
@@ -3079,13 +3074,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"cosmjs-types@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "cosmjs-types@npm:0.8.0"
-  dependencies:
-    long: ^4.0.0
-    protobufjs: ~6.11.2
-  checksum: 99714ec956d2cb2e521d39896c9c9a24cf9df0d370265c203646ea015b51e86472efc0cb11f67a80f0649d178b0bcff77ac659e67fdfc8b2437cd7a42018577f
+"cosmjs-types@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "cosmjs-types@npm:0.9.0"
+  checksum: 9b00d169eca334f27418bb80b39e0cff0196af40b0079e1f85536246059279207b853bdb6ec224ead0a02d15d4b7f6bf16bc096d41c436426aa5f8976ed2b430
   languageName: node
   linkType: hard
 
@@ -6368,7 +6360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.2, protobufjs@npm:~6.11.4":
+"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.4":
   version: 6.11.4
   resolution: "protobufjs@npm:6.11.4"
   dependencies:

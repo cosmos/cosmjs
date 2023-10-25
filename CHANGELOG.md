@@ -8,6 +8,10 @@ and this project adheres to
 
 ### Changed
 
+- all: Upgrade cosmjs-types to 0.9.0. This makes a few fields non-optional. It
+  changes all 64 bit int fields from type `long` to `bigint`. As part of the
+  upgrade, the types do not require the `long` and `protobufjs` anymore.
+  ([#1484])
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
 - @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
   anymore by haing a dedicated client for each backend.
@@ -16,6 +20,7 @@ and this project adheres to
   `connectComet` for auto-detecting the right client for a provided endpoint.
 
 [#1421]: https://github.com/cosmos/cosmjs/issues/1421
+[#1484]: https://github.com/cosmos/cosmjs/pull/1484
 
 ### Deprecated
 

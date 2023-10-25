@@ -4,7 +4,6 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 import { QueryClient } from "../../queryclient";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils.spec";
@@ -26,12 +25,13 @@ describe("AuthExtension", () => {
       assert(account);
 
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
-      expect(BaseAccount.decode(account.value)).toEqual({
-        address: unused.address,
-        pubKey: undefined,
-        accountNumber: Long.fromNumber(unused.accountNumber, true),
-        sequence: Long.UZERO,
-      });
+      expect(BaseAccount.decode(account.value)).toEqual(
+        jasmine.objectContaining({
+          address: unused.address,
+          accountNumber: BigInt(unused.accountNumber),
+          sequence: BigInt(0),
+        }),
+      );
 
       tmClient.disconnect();
     });
@@ -46,8 +46,8 @@ describe("AuthExtension", () => {
       expect(BaseAccount.decode(account.value)).toEqual({
         address: validator.delegatorAddress,
         pubKey: Any.fromPartial(encodePubkey(validator.pubkey)),
-        accountNumber: Long.UZERO,
-        sequence: Long.fromNumber(validator.sequence, true),
+        accountNumber: BigInt(0),
+        sequence: BigInt(validator.sequence),
       });
 
       tmClient.disconnect();

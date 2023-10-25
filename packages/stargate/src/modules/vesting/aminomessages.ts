@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
-import Long from "long";
 
 import { AminoConverters } from "../../aminotypes";
 
@@ -49,7 +48,7 @@ export function createVestingAminoConverters(): AminoConverters {
         fromAddress: from_address,
         toAddress: to_address,
         amount: [...amount],
-        endTime: Long.fromString(end_time),
+        endTime: BigInt(end_time),
         delayed: delayed,
       }),
     },

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { coin } from "@cosmjs/proto-signing";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import Long from "long";
 
 import { AminoTypes } from "../../aminotypes";
 import { AminoMsgTransfer, createIbcAminoConverters } from "./aminomessages";
@@ -16,10 +15,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.fromString("123", true),
-          revisionNumber: Long.fromString("456", true),
+          revisionHeight: BigInt("123"),
+          revisionNumber: BigInt("456"),
         },
-        timeoutTimestamp: Long.fromString("789", true),
+        timeoutTimestamp: BigInt("789"),
         memo: "",
       };
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
@@ -54,10 +53,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.UZERO,
-          revisionNumber: Long.UZERO,
+          revisionHeight: BigInt(0),
+          revisionNumber: BigInt(0),
         },
-        timeoutTimestamp: Long.UZERO,
+        timeoutTimestamp: BigInt(0),
         memo: "",
       };
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
@@ -85,16 +84,16 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgTransfer with no height timeout", () => {
-      const msg: MsgTransfer = {
+      const msg = MsgTransfer.fromPartial({
         sourcePort: "testport",
         sourceChannel: "testchannel",
         token: coin(1234, "utest"),
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: undefined,
-        timeoutTimestamp: Long.UZERO,
+        timeoutTimestamp: BigInt(0),
         memo: "",
-      };
+      });
       const aminoMsg = new AminoTypes(createIbcAminoConverters()).toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msg,
@@ -107,7 +106,10 @@ describe("AminoTypes", () => {
           token: coin(1234, "utest"),
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          timeout_height: {},
+          timeout_height: {
+            revision_number: undefined,
+            revision_height: undefined,
+          },
           timeout_timestamp: undefined,
           memo: undefined,
         },
@@ -141,10 +143,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.fromString("123", true),
-          revisionNumber: Long.fromString("456", true),
+          revisionHeight: BigInt("123"),
+          revisionNumber: BigInt("456"),
         },
-        timeoutTimestamp: Long.fromString("789", true),
+        timeoutTimestamp: BigInt("789"),
         memo: "",
       };
       expect(msg).toEqual({
@@ -177,10 +179,10 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         receiver: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         timeoutHeight: {
-          revisionHeight: Long.UZERO,
-          revisionNumber: Long.UZERO,
+          revisionHeight: BigInt(0),
+          revisionNumber: BigInt(0),
         },
-        timeoutTimestamp: Long.UZERO,
+        timeoutTimestamp: BigInt(0),
         memo: "",
       };
       expect(msg).toEqual({

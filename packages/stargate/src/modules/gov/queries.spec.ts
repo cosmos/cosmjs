@@ -11,7 +11,6 @@ import {
   WeightedVoteOption,
 } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 import { longify, QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
@@ -161,7 +160,7 @@ describe("GovExtension", () => {
           depositParams: {
             minDeposit: simapp.govMinDeposit,
             maxDepositPeriod: {
-              seconds: Long.fromNumber(172800, false),
+              seconds: BigInt(172800),
               nanos: 0,
             },
           },
@@ -199,7 +198,7 @@ describe("GovExtension", () => {
         jasmine.objectContaining({
           votingParams: {
             votingPeriod: {
-              seconds: Long.fromNumber(172800, false),
+              seconds: BigInt(172800),
               nanos: 0,
             },
           },
@@ -230,11 +229,11 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
@@ -256,11 +255,12 @@ describe("GovExtension", () => {
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        // Note: jasmine.any(Bigint) does not seem to work as expected in Jasmine 4.6
+        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.any(Long), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
       tmClient.disconnect();
