@@ -230,7 +230,7 @@ export function createWasmAminoConverters(): AminoConverters {
               address: instantiate_permission.address ?? "",
               addresses: instantiate_permission.addresses ?? [],
             })
-          : AccessConfig.fromPartial({}),
+          : undefined,
       }),
     },
     "/cosmwasm.wasm.v1.MsgInstantiateContract": {
