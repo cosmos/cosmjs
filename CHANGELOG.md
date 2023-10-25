@@ -22,12 +22,16 @@ and this project adheres to
   `StargateClient.create` take a `CometClient` argument, adding support for
   `Comet38Client`. The auto-detection in
   `SigningStargateClient.connectWithSigner` and `StargateClient.connect` now
-  supports CometBFT 0.38.
+  supports CometBFT 0.38. Rename
+  `StargateClient.getTmClient`/`.forceGetTmClient` to
+  `.getCometClient`/`.forceGetCometClient`.
 - @cosmjs/cosmwasm-stargate: Let `SigningCosmWasmClient.createWithSigner` and
   `CosmWasmClient.create` take a `CometClient` argument, adding support for
   `Comet38Client`. The auto-detection in
   `SigningCosmWasmClient.connectWithSigner` and `CosmWasmClient.connect` now
-  supports CometBFT 0.38.
+  supports CometBFT 0.38. Rename
+  `CosmWasmClient.getTmClient`/`.forceGetTmClient` to
+  `.getCometClient`/`.forceGetCometClient`.
 
 [#1421]: https://github.com/cosmos/cosmjs/issues/1421
 [#1484]: https://github.com/cosmos/cosmjs/pull/1484
