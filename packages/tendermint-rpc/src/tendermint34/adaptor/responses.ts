@@ -158,8 +158,8 @@ function decodeTxData(data: RpcTxData): responses.TxData {
     log: data.log,
     data: may(fromBase64, data.data),
     events: data.events ? decodeEvents(data.events) : [],
-    gasWanted: apiToSmallInt(data.gas_wanted ?? "0"),
-    gasUsed: apiToSmallInt(data.gas_used ?? "0"),
+    gasWanted: apiToBigInt(data.gas_wanted ?? "0"),
+    gasUsed: apiToBigInt(data.gas_used ?? "0"),
   };
 }
 

@@ -39,7 +39,7 @@ async function main() {
     uploadFee,
     "Upload IBC reflect contract",
   );
-  console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
+  console.info(`Upload succeeded. Receipt:`, uploadReceipt);
 
   const instantiateFee = calculateFee(900_000, gasPrice);
   for (const { label, msg, admin } of inits) {

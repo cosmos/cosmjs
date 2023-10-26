@@ -366,9 +366,9 @@ describe("SigningStargateClient", () => {
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
         assertIsDeliverTxSuccess(result);
         expect(result.code).toEqual(0);
-        expect(result.gasWanted).toEqual(222_000);
-        expect(result.gasUsed).toBeLessThanOrEqual(222_000);
-        expect(result.gasUsed).toBeGreaterThan(100_000);
+        expect(result.gasWanted).toEqual(222_000n);
+        expect(Number(result.gasUsed)).toBeLessThanOrEqual(222_000);
+        expect(Number(result.gasUsed)).toBeGreaterThan(100_000);
       });
 
       it("returns DeliverTxFailure on DeliverTx failure", async () => {
@@ -396,9 +396,9 @@ describe("SigningStargateClient", () => {
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee);
         assertIsDeliverTxFailure(result);
         expect(result.code).toBeGreaterThan(0);
-        expect(result.gasWanted).toEqual(99_000);
-        expect(result.gasUsed).toBeLessThanOrEqual(99_000);
-        expect(result.gasUsed).toBeGreaterThan(40_000);
+        expect(result.gasWanted).toEqual(99_000n);
+        expect(Number(result.gasUsed)).toBeLessThanOrEqual(99_000);
+        expect(Number(result.gasUsed)).toBeGreaterThan(40_000);
       });
 
       it("works with auto gas", async () => {
