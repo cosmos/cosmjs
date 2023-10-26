@@ -46,8 +46,8 @@ const resultFailure: DeliverTxResponse = {
   transactionHash: "FDC4FB701AABD465935F7D04AE490D1EF5F2BD4B227601C4E98B57EB077D9B7D",
   events: [],
   msgResponses: [],
-  gasUsed: 54396,
-  gasWanted: 200000,
+  gasUsed: 54396n,
+  gasWanted: 200000n,
 };
 const resultSuccess: DeliverTxResponse = {
   code: 0,
@@ -58,8 +58,8 @@ const resultSuccess: DeliverTxResponse = {
   transactionHash: "C0B416CA868C55C2B8C1BBB8F3CFA233854F13A5CB15D3E9599F50CAF7B3D161",
   events: [],
   msgResponses: [],
-  gasUsed: 61556,
-  gasWanted: 200000,
+  gasUsed: 61556n,
+  gasWanted: 200000n,
 };
 
 describe("isDeliverTxFailure", () => {

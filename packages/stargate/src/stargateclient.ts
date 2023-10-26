@@ -91,8 +91,8 @@ export interface IndexedTx {
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
   readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
-  readonly gasUsed: number;
-  readonly gasWanted: number;
+  readonly gasUsed: bigint;
+  readonly gasWanted: bigint;
 }
 
 export interface SequenceResponse {
@@ -128,8 +128,8 @@ export interface DeliverTxResponse {
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
   readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
-  readonly gasUsed: number;
-  readonly gasWanted: number;
+  readonly gasUsed: bigint;
+  readonly gasWanted: bigint;
 }
 
 export function isDeliverTxFailure(result: DeliverTxResponse): boolean {

@@ -12,6 +12,8 @@ and this project adheres to
   changes all 64 bit int fields from type `long` to `bigint`. As part of the
   upgrade, the types do not require the `long` and `protobufjs` anymore.
   ([#1484])
+- all: `gasWanted`/`gasUsed` fields were changed from type `number` to `bigint`
+  to supported cases where users put very high gas values in there ([#1465]).
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
 - @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
   anymore by haing a dedicated client for each backend.
@@ -34,6 +36,7 @@ and this project adheres to
   `.getCometClient`/`.forceGetCometClient`.
 
 [#1421]: https://github.com/cosmos/cosmjs/issues/1421
+[#1465]: https://github.com/cosmos/cosmjs/issues/1465
 [#1484]: https://github.com/cosmos/cosmjs/pull/1484
 
 ### Deprecated

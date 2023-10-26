@@ -78,8 +78,8 @@ export interface UploadResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 /**
@@ -112,8 +112,8 @@ export interface InstantiateResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 /**
@@ -126,8 +126,8 @@ export interface ChangeAdminResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 export interface MigrateResult {
@@ -137,8 +137,8 @@ export interface MigrateResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 export interface ExecuteInstruction {
@@ -154,8 +154,8 @@ export interface ExecuteResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
