@@ -56,7 +56,7 @@ async function main() {
     uploadFee,
     "Upload hackatom contract",
   );
-  console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
+  console.info(`Upload succeeded. Receipt:`, uploadReceipt);
 
   const instantiateFee = calculateFee(500_000, gasPrice);
   for (const { label, msg, admin } of inits) {
