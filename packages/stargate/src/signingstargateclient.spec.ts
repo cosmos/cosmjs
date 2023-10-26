@@ -969,16 +969,15 @@ describe("SigningStargateClient", () => {
         const height = await client.getHeight();
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        try {
-          await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        } catch (e: any) {
-          assert(e.code === 30);
-          return;
-        } finally {
-          client.disconnect();
-        }
+        await expectAsync(
+          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
+        ).toBeRejectedWith(
+          jasmine.objectContaining({
+            code: 30,
+          }),
+        );
 
-        throw new Error("tx should have failed because of past timeoutHeight");
+        client.disconnect();
       });
     });
 
@@ -1248,16 +1247,15 @@ describe("SigningStargateClient", () => {
         const height = await client.getHeight();
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        try {
-          await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        } catch (e: any) {
-          assert(e.code === 30);
-          return;
-        } finally {
-          client.disconnect();
-        }
+        await expectAsync(
+          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
+        ).toBeRejectedWith(
+          jasmine.objectContaining({
+            code: 30,
+          }),
+        );
 
-        throw new Error("tx should have failed because of past timeoutHeight");
+        client.disconnect();
       });
     });
   });
