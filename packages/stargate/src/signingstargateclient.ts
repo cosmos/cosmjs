@@ -312,6 +312,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -324,7 +325,7 @@ export class SigningStargateClient extends StargateClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
@@ -340,6 +341,7 @@ export class SigningStargateClient extends StargateClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -350,7 +352,7 @@ export class SigningStargateClient extends StargateClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }

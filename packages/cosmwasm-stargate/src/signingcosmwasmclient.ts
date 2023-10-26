@@ -574,18 +574,20 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   /**
-   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   * Creates a transaction with the given messages, fee, memo and timeout height. Then signs and broadcasts the transaction.
    *
    * @param signerAddress The address that will sign transactions using this instance. The signer must be able to sign with this address.
    * @param messages
    * @param fee
    * @param memo
+   * @param timeoutHeight (optional) timeout height to prevent the tx from being committed past a certain height
    */
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -598,13 +600,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
   /**
-   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   * Creates a transaction with the given messages, fee, memo and timeout height. Then signs and broadcasts the transaction.
    *
    * This method is useful if you want to send a transaction in broadcast,
    * without waiting for it to be placed inside a block, because for example
@@ -614,6 +616,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * @param messages
    * @param fee
    * @param memo
+   * @param timeoutHeight (optional) timeout height to prevent the tx from being committed past a certain height
    *
    * @returns Returns the hash of the transaction
    */
@@ -622,6 +625,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -632,7 +636,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }
