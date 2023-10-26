@@ -90,10 +90,10 @@ export class CosmWasmClient {
   private chainId: string | undefined;
 
   /**
-   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
-   * To set the Tendermint client explicitly, use `create`.
+   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * To set the Comet client explicitly, use `create`.
    */
   public static async connect(endpoint: string | HttpEndpoint): Promise<CosmWasmClient> {
     const cometClient = await connectComet(endpoint);
@@ -101,8 +101,8 @@ export class CosmWasmClient {
   }
 
   /**
-   * Creates an instance from a manually created Tendermint client.
-   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   * Creates an instance from a manually created Comet client.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async create(cometClient: CometClient): Promise<CosmWasmClient> {
     return new CosmWasmClient(cometClient);
@@ -121,11 +121,11 @@ export class CosmWasmClient {
     }
   }
 
-  protected getTmClient(): CometClient | undefined {
+  protected getCometClient(): CometClient | undefined {
     return this.cometClient;
   }
 
-  protected forceGetTmClient(): CometClient {
+  protected forceGetCometClient(): CometClient {
     if (!this.cometClient) {
       throw new Error("Comet client not available. You cannot use online functionality in offline mode.");
     }
@@ -147,7 +147,7 @@ export class CosmWasmClient {
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.forceGetTmClient().status();
+      const response = await this.forceGetCometClient().status();
       const chainId = response.nodeInfo.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -157,7 +157,7 @@ export class CosmWasmClient {
   }
 
   public async getHeight(): Promise<number> {
-    const status = await this.forceGetTmClient().status();
+    const status = await this.forceGetCometClient().status();
     return status.syncInfo.latestBlockHeight;
   }
 
@@ -187,7 +187,7 @@ export class CosmWasmClient {
   }
 
   public async getBlock(height?: number): Promise<Block> {
-    const response = await this.forceGetTmClient().block(height);
+    const response = await this.forceGetCometClient().block(height);
     return {
       id: toHex(response.blockId.hash).toUpperCase(),
       header: {
@@ -305,7 +305,7 @@ export class CosmWasmClient {
    * @returns Returns the hash of the transaction
    */
   public async broadcastTxSync(tx: Uint8Array): Promise<string> {
-    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+    const broadcasted = await this.forceGetCometClient().broadcastTxSync({ tx });
 
     if (broadcasted.code) {
       return Promise.reject(
@@ -480,7 +480,7 @@ export class CosmWasmClient {
   }
 
   private async txsQuery(query: string): Promise<IndexedTx[]> {
-    const results = await this.forceGetTmClient().txSearchAll({ query: query });
+    const results = await this.forceGetCometClient().txSearchAll({ query: query });
     return results.txs.map((tx): IndexedTx => {
       const txMsgData = TxMsgData.decode(tx.result.data ?? new Uint8Array());
       return {

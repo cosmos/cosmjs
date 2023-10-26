@@ -68,7 +68,7 @@ export const tendermintInstances = {
     blockTime: 500,
     expected: {
       chainId: /^dockerchain$/,
-      version: /^0\.38\.0-rc3$/,
+      version: /^0\.38\.0$/,
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 8,
       blockVersion: 11,
