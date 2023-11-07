@@ -21,8 +21,8 @@ import { AuthzExtension, setupAuthzExtension } from "./queries";
 async function makeClientWithAuthz(
   rpcUrl: string,
 ): Promise<[QueryClient & AuthzExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupAuthzExtension), tmClient];
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupAuthzExtension), cometClient];
 }
 
 describe("AuthzExtension", () => {
@@ -81,7 +81,7 @@ describe("AuthzExtension", () => {
   describe("grants", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
@@ -98,14 +98,14 @@ describe("AuthzExtension", () => {
       // Check if it's the same one then we granted
       expect(msgDecoded).toEqual(grantedMsg);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("granter grants", () => {
     it("works", async () => {
       pendingWithoutSimapp46OrHigher();
-      const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
       const grant = response.grants.find(
@@ -129,14 +129,14 @@ describe("AuthzExtension", () => {
       // Check if it's the same one then we granted
       expect(msgDecoded).toEqual(grantedMsg);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("grantee grants", () => {
     it("works", async () => {
       pendingWithoutSimapp46OrHigher();
-      const [client, tmClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
@@ -157,7 +157,7 @@ describe("AuthzExtension", () => {
       // Check if it's the same one then we granted
       expect(msgDecoded).toEqual(grantedMsg);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });

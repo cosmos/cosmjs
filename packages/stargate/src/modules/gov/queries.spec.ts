@@ -29,8 +29,8 @@ import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeOb
 import { GovExtension, setupGovExtension } from "./queries";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupGovExtension), tmClient];
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }
 
 describe("GovExtension", () => {
@@ -152,7 +152,7 @@ describe("GovExtension", () => {
   describe("params", () => {
     it("works for deposit", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.params("deposit");
       expect(response).toEqual(
@@ -167,12 +167,12 @@ describe("GovExtension", () => {
         }),
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works for tallying", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.params("tallying");
       expect(response).toEqual(
@@ -186,12 +186,12 @@ describe("GovExtension", () => {
         }),
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works for voting", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.params("voting");
       expect(response).toEqual(
@@ -205,7 +205,7 @@ describe("GovExtension", () => {
         }),
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -213,7 +213,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.proposals(
         ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
@@ -236,7 +236,7 @@ describe("GovExtension", () => {
         votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -244,7 +244,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.proposal(proposalId);
       expect(response.proposal).toEqual({
@@ -263,7 +263,7 @@ describe("GovExtension", () => {
         votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
       });
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -271,7 +271,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.deposits(proposalId);
       expect(response.deposits).toEqual([
@@ -282,7 +282,7 @@ describe("GovExtension", () => {
         },
       ]);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -290,7 +290,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.deposit(proposalId, voter1Address);
       expect(response.deposit).toEqual({
@@ -299,7 +299,7 @@ describe("GovExtension", () => {
         amount: initialDeposit,
       });
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -307,7 +307,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.tally(proposalId);
       expect(response.tally).toEqual({
@@ -317,7 +317,7 @@ describe("GovExtension", () => {
         noWithVeto: delegationVoter2.amount,
       });
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -325,7 +325,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.votes(proposalId);
 
@@ -357,7 +357,7 @@ describe("GovExtension", () => {
         }),
       ]);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -365,7 +365,7 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
-      const [client, tmClient] = await makeClientWithGov(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrl);
 
       const response = await client.gov.vote(proposalId, voter1Address);
       expect(response.vote).toEqual(
@@ -382,7 +382,7 @@ describe("GovExtension", () => {
         }),
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });

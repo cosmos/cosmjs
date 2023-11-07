@@ -19,8 +19,8 @@ import {
 import { setupTxExtension, TxExtension } from "./queries";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupTxExtension), tmClient];
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }
 
 describe("TxExtension", () => {
@@ -63,12 +63,12 @@ describe("TxExtension", () => {
       pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
-      const [client, tmClient] = await makeClientWithTx(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrl);
 
       const response = await client.tx.getTx(txHash);
       expect(response.tx?.body?.memo).toEqual(memo);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
@@ -77,7 +77,7 @@ describe("TxExtension", () => {
       pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
-      const [client, tmClient] = await makeClientWithTx(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrl);
       const sequenceClient = await StargateClient.connect(simapp.tendermintUrl);
 
       const registry = new Registry(defaultRegistryTypes);
@@ -100,7 +100,7 @@ describe("TxExtension", () => {
         simapp44Enabled() ? BigInt(0) : BigInt("0xffffffffffffffff"),
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });

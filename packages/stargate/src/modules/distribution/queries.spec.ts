@@ -21,8 +21,8 @@ import { DistributionExtension, setupDistributionExtension } from "./queries";
 async function makeClientWithDistribution(
   rpcUrl: string,
 ): Promise<[QueryClient & DistributionExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupDistributionExtension), tmClient];
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupDistributionExtension), cometClient];
 }
 
 describe("DistributionExtension", () => {
@@ -60,20 +60,20 @@ describe("DistributionExtension", () => {
   describe("communityPool", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.communityPool();
       expect(response.pool).toBeDefined();
       expect(response.pool).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("delegationRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.delegationRewards(
         faucet.address0,
@@ -82,98 +82,98 @@ describe("DistributionExtension", () => {
       expect(response.rewards).toBeDefined();
       expect(response.rewards).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("delegationTotalRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.delegationTotalRewards(faucet.address0);
       expect(response.rewards).toBeDefined();
       expect(response.rewards).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("delegatorValidators", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.delegatorValidators(faucet.address0);
       expect(response.validators).toBeDefined();
       expect(response.validators).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("delegatorWithdrawAddress", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.delegatorWithdrawAddress(faucet.address0);
       expect(response.withdrawAddress).toBeDefined();
       expect(response.withdrawAddress).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("params", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.params();
       expect(response.params).toBeDefined();
       expect(response.params).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("validatorCommission", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.validatorCommission(validator.validatorAddress);
       expect(response.commission).toBeDefined();
       expect(response.commission).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("validatorOutstandingRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.validatorOutstandingRewards(validator.validatorAddress);
       expect(response.rewards).toBeDefined();
       expect(response.rewards).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("validatorSlashes", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
       const response = await client.distribution.validatorSlashes(validator.validatorAddress, 1, 5);
       expect(response.slashes).toBeDefined();
       expect(response.slashes).not.toBeNull();
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });
