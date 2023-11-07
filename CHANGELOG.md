@@ -43,6 +43,9 @@ and this project adheres to
   supports CometBFT 0.38. Rename
   `CosmWasmClient.getTmClient`/`.forceGetTmClient` to
   `.getCometClient`/`.forceGetCometClient`.
+- @cosmjs/stargate: Remove interfaces `SearchBySentFromOrToQuery` and
+  `SearchByHeightQuery` which became obsolete with the `searchTx` change in
+  0.31.0.
 
 [#1421]: https://github.com/cosmos/cosmjs/issues/1421
 [#1465]: https://github.com/cosmos/cosmjs/issues/1465
