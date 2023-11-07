@@ -1,4 +1,4 @@
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
 import {
@@ -10,9 +10,7 @@ import {
 } from "../../testutils.spec";
 import { BankExtension, setupBankExtension } from "./queries";
 
-async function makeClientWithBank(
-  rpcUrl: string,
-): Promise<[QueryClient & BankExtension, Tendermint34Client]> {
+async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupBankExtension), cometClient];
 }

@@ -1,7 +1,7 @@
 import { coin, coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   ProposalStatus,
@@ -28,7 +28,7 @@ import {
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { GovExtension, setupGovExtension } from "./queries";
 
-async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, Tendermint34Client]> {
+async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }

@@ -1,6 +1,6 @@
 import { makeCosmoshubPath } from "@cosmjs/amino";
 import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 
@@ -18,9 +18,7 @@ import {
 } from "../../testutils.spec";
 import { AuthzExtension, setupAuthzExtension } from "./queries";
 
-async function makeClientWithAuthz(
-  rpcUrl: string,
-): Promise<[QueryClient & AuthzExtension, Tendermint34Client]> {
+async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & AuthzExtension, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupAuthzExtension), cometClient];
 }

@@ -2,7 +2,7 @@
 import { coin } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import {
@@ -24,7 +24,7 @@ import {
 } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 
-async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
+async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient), cometClient];
 }

@@ -1,5 +1,5 @@
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
@@ -18,7 +18,7 @@ import {
 } from "../../testutils.spec";
 import { setupTxExtension, TxExtension } from "./queries";
 
-async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, Tendermint34Client]> {
+async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }

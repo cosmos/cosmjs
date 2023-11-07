@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
 import { pendingWithoutSimapp, simapp } from "../../testutils.spec";
@@ -7,7 +7,7 @@ import { setupSlashingExtension, SlashingExtension } from "./queries";
 
 async function makeClientWithSlashing(
   rpcUrl: string,
-): Promise<[QueryClient & SlashingExtension, Tendermint34Client]> {
+): Promise<[QueryClient & SlashingExtension, CometClient]> {
   const cometClient = await Tendermint34Client.connect(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupSlashingExtension), cometClient];
 }
