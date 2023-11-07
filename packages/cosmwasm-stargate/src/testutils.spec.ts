@@ -170,8 +170,8 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
 export async function makeWasmClient(
   endpoint: string,
 ): Promise<QueryClient & AuthExtension & BankExtension & WasmExtension> {
-  const tmClient = await Tendermint34Client.connect(endpoint);
-  return QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
+  const cometClient = await Tendermint34Client.connect(endpoint);
+  return QueryClient.withExtensions(cometClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
 }
 
 /**

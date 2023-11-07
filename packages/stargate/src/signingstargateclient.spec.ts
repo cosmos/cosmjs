@@ -174,8 +174,8 @@ describe("SigningStargateClient", () => {
         defaultSigningClientOptions,
       );
 
-      const tmClient = await Tendermint34Client.connect(simapp.tendermintUrl);
-      const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
+      const cometClient = await Tendermint34Client.connect(simapp.tendermintUrl);
+      const queryClient = QueryClient.withExtensions(cometClient, setupFeegrantExtension);
       let allowanceExists: boolean;
       try {
         const _existingAllowance = await queryClient.feegrant.allowance(payer, signer);
