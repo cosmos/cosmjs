@@ -15,6 +15,13 @@ and this project adheres to
 
 [#1489]: https://github.com/cosmos/cosmjs/pull/1489
 
+### Fixed
+
+- @cosmjs/stargate: Handle key value pairs in tx search correctly if the value
+  is a numeric value. ([#1462])
+
+[#1462] : https://github.com/cosmos/cosmjs/issues/1462
+
 ### Changed
 
 - all: Upgrade cosmjs-types to 0.9.0. This makes a few fields non-optional. It
