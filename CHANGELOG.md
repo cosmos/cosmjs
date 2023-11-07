@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate and @cosmjs/cosmwasm-stargate:
+  `sign`/`signAndBroadcast`/`signAndBroadcastSync` and related functions now
+  have an additional parameter to specify the timeout height. After this height,
+  a signed transaction will be considered invalid by the chain. ([#1489])
+
+[#1489]: https://github.com/cosmos/cosmjs/pull/1489
+
 ### Changed
 
 - all: Upgrade cosmjs-types to 0.9.0. This makes a few fields non-optional. It
