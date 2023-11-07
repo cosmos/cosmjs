@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.31.3",
+  "version": "0.32.0-rc.1",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -83,5 +83,6 @@
     "nyc": "^15.1.0",
     "prettier": "^2.8.1",
     "source-map-support": "^0.5.19"
-  }
+  },
+  "stableVersion": "0.31.3"
 }
