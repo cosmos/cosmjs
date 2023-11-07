@@ -911,6 +911,74 @@ describe("SigningStargateClient", () => {
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsDeliverTxSuccess(result);
       });
+
+      it("works with custom timeoutHeight", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: faucet.address0,
+          toAddress: faucet.address0,
+          amount: [coin(1, "ucosm")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height + 3));
+
+        // ensure signature is valid
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        assertIsDeliverTxSuccess(result);
+      });
+
+      it("fails with past timeoutHeight", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: faucet.address0,
+          toAddress: faucet.address0,
+          amount: [coin(1, "ucosm")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
+
+        await expectAsync(
+          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
+        ).toBeRejectedWith(
+          jasmine.objectContaining({
+            code: 30,
+          }),
+        );
+
+        client.disconnect();
+      });
     });
 
     describe("legacy Amino mode", () => {
@@ -1120,6 +1188,74 @@ describe("SigningStargateClient", () => {
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
         assertIsDeliverTxSuccess(result);
+      });
+
+      it("works with custom timeoutHeight", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: faucet.address0,
+          toAddress: faucet.address0,
+          amount: [coin(1, "ucosm")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your tokens wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height + 3));
+
+        // ensure signature is valid
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        assertIsDeliverTxSuccess(result);
+      });
+
+      it("fails with past timeoutHeight", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrl,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: faucet.address0,
+          toAddress: faucet.address0,
+          amount: [coin(1, "ucosm")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your tokens wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
+
+        await expectAsync(
+          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
+        ).toBeRejectedWith(
+          jasmine.objectContaining({
+            code: 30,
+          }),
+        );
+
+        client.disconnect();
       });
     });
   });
