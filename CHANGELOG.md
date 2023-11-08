@@ -62,6 +62,10 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: `CometClient` should be used instead of
   `TendermintClient`.
+- @cosmjs/stargate: Deprecate `SigningStargateClient.sendIbcTokens`. Please use
+  `signAndBroadcast` + `MsgTransferEncodeObject` instead. ([#1493])
+
+[#1493]: https://github.com/cosmos/cosmjs/issues/1493
 
 ## [0.31.3] - 2023-10-25
 
