@@ -261,6 +261,12 @@ export class SigningStargateClient extends StargateClient {
     return this.signAndBroadcast(delegatorAddress, [withdrawMsg], fee, memo);
   }
 
+  /**
+   * @deprecated This API does not support setting the memo field of `MsgTransfer` (only the transaction memo).
+   * We'll remove this method at some point because trying to wrap the various message types is a losing strategy.
+   * Please migrate to `signAndBroadcast` with an `MsgTransferEncodeObject` created in the caller code instead.
+   * @see https://github.com/cosmos/cosmjs/issues/1493
+   */
   public async sendIbcTokens(
     senderAddress: string,
     recipientAddress: string,
