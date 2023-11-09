@@ -95,7 +95,7 @@ export function extractKdfConfiguration(serialization: string): KdfConfiguration
   const root = JSON.parse(serialization);
   if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
 
-  switch ((root as any).type) {
+  switch (root.type) {
     case serializationTypeV1:
       return extractKdfConfigurationV1(root);
     default:
@@ -175,7 +175,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   public static async deserialize(serialization: string, password: string): Promise<Secp256k1HdWallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
-    switch ((root as any).type) {
+    switch (root.type) {
       case serializationTypeV1:
         return Secp256k1HdWallet.deserializeTypeV1(serialization, password);
       default:
@@ -234,7 +234,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   ): Promise<Secp256k1HdWallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
-    const encryptionKey = await executeKdf(password, (root as any).kdf);
+    const encryptionKey = await executeKdf(password, root.kdf);
     return Secp256k1HdWallet.deserializeWithEncryptionKey(serialization, encryptionKey);
   }
 
