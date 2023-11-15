@@ -49,7 +49,7 @@
     "@cosmjs/socket": "workspace:^",
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "axios": "^0.21.2",
+    "axios": "^1.6.0",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
