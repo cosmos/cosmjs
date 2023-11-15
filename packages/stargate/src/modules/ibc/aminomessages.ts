@@ -71,7 +71,7 @@ export function createIbcAminoConverters(): AminoConverters {
             }
           : {},
         timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
-        memo: omitDefault(memo)?.toString(),
+        memo: omitDefault(memo),
       }),
       fromAmino: ({
         source_port,
