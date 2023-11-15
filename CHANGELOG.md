@@ -20,8 +20,12 @@ and this project adheres to
 
 - @cosmjs/stargate: Handle key value pairs in tx search correctly if the value
   is a numeric value. ([#1462])
+- @cosmjs/cosmwasm-stargate: Make `fix_msg` optional in
+  `AminoMsgInstantiateContract2` and omit default in the Amino JSON converter to
+  fix Amino JSON signing for MsgInstantiateContract2. ([#1509])
 
 [#1462]: https://github.com/cosmos/cosmjs/issues/1462
+[#1509]: https://github.com/cosmos/cosmjs/pull/1509
 
 ### Changed
 
