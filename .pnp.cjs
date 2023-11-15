@@ -1400,7 +1400,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "follow-redirects",\
-        "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.9"\
+        "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"\
       ],\
       [\
         "foreground-child",\
@@ -1980,11 +1980,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "mime-db",\
-        "npm:1.47.0"\
+        "npm:1.52.0"\
       ],\
       [\
         "mime-types",\
-        "npm:2.1.30"\
+        "npm:2.1.35"\
       ],\
       [\
         "mimic-fn",\
@@ -6124,7 +6124,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/accepts-npm-1.3.7-0dc9de65aa-27fc8060ff.zip/node_modules/accepts/",\
           "packageDependencies": [\
             ["accepts", "npm:1.3.7"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["negotiator", "npm:0.6.2"]\
           ],\
           "linkType": "HARD"\
@@ -6500,7 +6500,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/axios-npm-1.6.2-2334cb6eee-4a7429e2b7.zip/node_modules/axios/",\
           "packageDependencies": [\
             ["axios", "npm:1.6.2"],\
-            ["follow-redirects", "virtual:2334cb6eeeb6b3dfd608966f28539c2de97a7f40c2b9762074181b72a63a8cdcab5646db63b491e1572f204e304748e40aff79a28dbdc8ee85d2dd16cd3803c7#npm:1.15.3"],\
+            ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"],\
             ["form-data", "npm:4.0.0"],\
             ["proxy-from-env", "npm:1.1.0"]\
           ],\
@@ -6745,7 +6745,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cache-content-type-npm-1.0.1-f709f8c309-18db4d5945.zip/node_modules/cache-content-type/",\
           "packageDependencies": [\
             ["cache-content-type", "npm:1.0.1"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["ylru", "npm:1.2.1"]\
           ],\
           "linkType": "HARD"\
@@ -8340,13 +8340,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["follow-redirects", [\
-        ["npm:1.14.9", {\
-          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.14.9-522f191631-f5982e0eb4.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "npm:1.14.9"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
         ["npm:1.15.3", {\
           "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
           "packageDependencies": [\
@@ -8354,23 +8347,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:2334cb6eeeb6b3dfd608966f28539c2de97a7f40c2b9762074181b72a63a8cdcab5646db63b491e1572f204e304748e40aff79a28dbdc8ee85d2dd16cd3803c7#npm:1.15.3", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-be1f4daa7b/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
+        ["virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3", {\
+          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-ff48ff82c1/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
           "packageDependencies": [\
-            ["follow-redirects", "virtual:2334cb6eeeb6b3dfd608966f28539c2de97a7f40c2b9762074181b72a63a8cdcab5646db63b491e1572f204e304748e40aff79a28dbdc8ee85d2dd16cd3803c7#npm:1.15.3"],\
-            ["@types/debug", null],\
-            ["debug", null]\
-          ],\
-          "packagePeers": [\
-            "@types/debug",\
-            "debug"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.9", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-0b008d299e/0/cache/follow-redirects-npm-1.14.9-522f191631-f5982e0eb4.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.9"],\
+            ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"],\
             ["@types/debug", null],\
             ["debug", null]\
           ],\
@@ -8898,7 +8878,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["http-proxy", "npm:1.18.1"],\
             ["eventemitter3", "npm:4.0.7"],\
-            ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.9"],\
+            ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"],\
             ["requires-port", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -10108,13 +10088,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mime-db", [\
-        ["npm:1.47.0", {\
-          "packageLocation": "./.yarn/cache/mime-db-npm-1.47.0-a85d74ef62-6808235243.zip/node_modules/mime-db/",\
-          "packageDependencies": [\
-            ["mime-db", "npm:1.47.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:1.52.0", {\
           "packageLocation": "./.yarn/cache/mime-db-npm-1.52.0-b5371d6fd2-0d99a03585.zip/node_modules/mime-db/",\
           "packageDependencies": [\
@@ -10124,14 +10097,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mime-types", [\
-        ["npm:2.1.30", {\
-          "packageLocation": "./.yarn/cache/mime-types-npm-2.1.30-500b101efd-53c36729b1.zip/node_modules/mime-types/",\
-          "packageDependencies": [\
-            ["mime-types", "npm:2.1.30"],\
-            ["mime-db", "npm:1.47.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.1.35", {\
           "packageLocation": "./.yarn/cache/mime-types-npm-2.1.35-dd9ea9f3e2-89a5b7f1de.zip/node_modules/mime-types/",\
           "packageDependencies": [\
@@ -12857,7 +12822,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["type-is", "npm:1.6.18"],\
             ["media-typer", "npm:0.3.0"],\
-            ["mime-types", "npm:2.1.30"]\
+            ["mime-types", "npm:2.1.35"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13137,7 +13102,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13174,7 +13139,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13211,7 +13176,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13248,7 +13213,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13285,7 +13250,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13322,7 +13287,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13359,7 +13324,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13396,7 +13361,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13433,7 +13398,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13470,7 +13435,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13507,7 +13472,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13544,7 +13509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13581,7 +13546,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13618,7 +13583,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
@@ -13655,7 +13620,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graceful-fs", "npm:4.2.10"],\
             ["json-parse-even-better-errors", "npm:2.3.1"],\
             ["loader-runner", "npm:4.2.0"],\
-            ["mime-types", "npm:2.1.30"],\
+            ["mime-types", "npm:2.1.35"],\
             ["neo-async", "npm:2.6.2"],\
             ["schema-utils", "npm:3.1.1"],\
             ["tapable", "npm:2.2.0"],\
