@@ -19,7 +19,7 @@ describe("AminoTypes", () => {
           revisionNumber: BigInt("456"),
         },
         timeoutTimestamp: BigInt("789"),
-        memo: "",
+        memo: "something something",
       };
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
@@ -39,7 +39,7 @@ describe("AminoTypes", () => {
             revision_number: "456",
           },
           timeout_timestamp: "789",
-          memo: undefined,
+          memo: "something something",
         },
       };
       expect(aminoMsg).toEqual(expected);
