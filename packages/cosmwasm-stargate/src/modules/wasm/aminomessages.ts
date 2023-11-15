@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { omitDefault } from "@cosmjs/amino";
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoConverters, Coin } from "@cosmjs/stargate";
 import {
@@ -141,8 +142,11 @@ export interface AminoMsgInstantiateContract2 {
     readonly admin?: string;
     /** Arbitrary Base64-encoded value provided by the sender */
     readonly salt: string;
-    /** Whether or not to include the msg value into the hash for the address */
-    readonly fix_msg: boolean;
+    /**
+     * Whether or not to include the msg value into the hash for the address.
+     * Unset means false. This should always be unset/false (https://medium.com/cosmwasm/dev-note-3-limitations-of-instantiate2-and-how-to-deal-with-them-a3f946874230).
+     */
+    readonly fix_msg?: boolean;
   };
 }
 
@@ -248,7 +252,7 @@ export function createWasmAminoConverters(): AminoConverters {
         label: label,
         msg: JSON.parse(fromUtf8(msg)),
         funds: funds,
-        admin: admin || undefined,
+        admin: omitDefault(admin),
       }),
       fromAmino: ({
         sender,
@@ -283,9 +287,9 @@ export function createWasmAminoConverters(): AminoConverters {
         label: label,
         msg: JSON.parse(fromUtf8(msg)),
         funds: funds,
-        admin: admin || undefined,
+        admin: omitDefault(admin),
         salt: toBase64(salt),
-        fix_msg: fixMsg,
+        fix_msg: omitDefault(fixMsg),
       }),
       fromAmino: ({
         sender,
@@ -304,7 +308,7 @@ export function createWasmAminoConverters(): AminoConverters {
         funds: [...funds],
         admin: admin ?? "",
         salt: fromBase64(salt),
-        fixMsg: fix_msg,
+        fixMsg: fix_msg ?? false,
       }),
     },
     "/cosmwasm.wasm.v1.MsgUpdateAdmin": {

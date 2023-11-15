@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin } from "@cosmjs/amino";
+import { AminoMsg, Coin, omitDefault } from "@cosmjs/amino";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
 import { AminoConverters } from "../../aminotypes";
@@ -43,22 +43,6 @@ export interface AminoMsgTransfer extends AminoMsg {
 
 export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
   return msg.type === "cosmos-sdk/MsgTransfer";
-}
-
-function omitDefault<T extends string | number | bigint>(input: T): T | undefined {
-  if (typeof input === "string") {
-    return input === "" ? undefined : input;
-  }
-
-  if (typeof input === "number") {
-    return input === 0 ? undefined : input;
-  }
-
-  if (typeof input === "bigint") {
-    return input === BigInt(0) ? undefined : input;
-  }
-
-  throw new Error(`Got unsupported type '${typeof input}'`);
 }
 
 export function createIbcAminoConverters(): AminoConverters {

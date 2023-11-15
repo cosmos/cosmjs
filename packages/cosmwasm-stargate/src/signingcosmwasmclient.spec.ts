@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
-import { sha256 } from "@cosmjs/crypto";
+import { Random, sha256 } from "@cosmjs/crypto";
 import { toHex, toUtf8 } from "@cosmjs/encoding";
 import { decodeTxRaw, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import {
@@ -341,6 +341,45 @@ describe("SigningCosmWasmClient", () => {
       expect(ustakeBalance).toEqual(funds[1]);
 
       expect(contractAddress).toEqual(expectedAddress);
+      client.disconnect();
+    });
+
+    it("works with Amino JSON signing", async () => {
+      pendingWithoutWasmd();
+      const aminoJsonWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
+        prefix: wasmd.prefix,
+      });
+      const client = await SigningCosmWasmClient.connectWithSigner(
+        wasmd.endpoint,
+        aminoJsonWallet,
+        defaultSigningClientOptions,
+      );
+      const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
+      const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const salt = Random.getBytes(64);
+      const msg = {
+        verifier: alice.address0,
+        beneficiary: makeRandomAddress(),
+      };
+
+      const { contractAddress } = await client.instantiate2(
+        alice.address0,
+        codeId,
+        salt,
+        msg,
+        "My cool label--",
+        defaultInstantiateFee,
+        {
+          memo: "Let's see if the memo is used",
+          funds: funds,
+        },
+      );
+
+      const ucosmBalance = await client.getBalance(contractAddress, "ucosm");
+      const ustakeBalance = await client.getBalance(contractAddress, "ustake");
+      expect(ucosmBalance).toEqual(funds[0]);
+      expect(ustakeBalance).toEqual(funds[1]);
+
       client.disconnect();
     });
   });
