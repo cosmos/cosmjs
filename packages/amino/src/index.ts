@@ -14,6 +14,7 @@ export {
   encodeSecp256k1Pubkey,
 } from "./encoding";
 export { createMultisigThresholdPubkey } from "./multisig";
+export { omitDefault } from "./omitdefault";
 export { makeCosmoshubPath } from "./paths";
 export {
   Ed25519Pubkey,

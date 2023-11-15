@@ -12,6 +12,7 @@ and this project adheres to
   `sign`/`signAndBroadcast`/`signAndBroadcastSync` and related functions now
   have an additional parameter to specify the timeout height. After this height,
   a signed transaction will be considered invalid by the chain. ([#1489])
+- @cosmjs/amino: Export `omitDefault` to help build Amino JSON converters.
 
 [#1489]: https://github.com/cosmos/cosmjs/pull/1489
 
