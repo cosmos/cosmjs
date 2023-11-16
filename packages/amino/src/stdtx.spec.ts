@@ -2,7 +2,7 @@
 import { coins } from "./coins";
 import { StdSignature } from "./signature";
 import { makeSignDoc, StdFee } from "./signdoc";
-import { makeStdTx } from "./stdtx";
+import { isStdTx, makeStdTx, StdTx } from "./stdtx";
 
 describe("makeStdTx", () => {
   it("can make an StdTx from a SignDoc and one signature", () => {
@@ -48,5 +48,31 @@ describe("makeStdTx", () => {
       fee: fee,
       signatures: [signature1, signature2],
     });
+  });
+});
+
+describe("isStdTx", () => {
+  const validTx: StdTx = {
+    memo: "memoe",
+    msg: [{ type: "test", value: "Test Value" }],
+    fee: { amount: [{ denom: "ATOM", amount: "10" }], gas: "100000" },
+    signatures: [{ signature: "signature", pub_key: { type: "type", value: "value" } }],
+  };
+
+  it("should return true for a valid StdTx", () => {
+    expect(isStdTx(validTx)).toBeTruthy();
+  });
+
+  it("should return false for an invalid StdTx with missing properties", () => {
+    const { msg, ...invalidTx } = validTx;
+    expect(isStdTx(invalidTx)).toBeFalsy();
+  });
+
+  it("should return false for an invalid StdTx with incorrect types", () => {
+    const invalidTx = {
+      ...validTx,
+      msg: "Invalid Message",
+    };
+    expect(isStdTx(invalidTx)).toBeFalsy();
   });
 });
