@@ -80,10 +80,10 @@ describe("GovExtension", () => {
         "Test proposal for simd",
       );
       assertIsDeliverTxSuccess(proposalResult);
-      const logs = JSON.parse(proposalResult.rawLog || "");
-      proposalId = logs[0].events
-        .find(({ type }: any) => type === "submit_proposal")
-        .attributes.find(({ key }: any) => key === "proposal_id").value;
+
+      proposalId = proposalResult.events
+        .find(({ type }) => type === "submit_proposal")
+        ?.attributes.find(({ key }: any) => key === "proposal_id")?.value;
       assert(proposalId, "Proposal ID not found in events");
       assert(proposalId.match(nonNegativeIntegerMatcher));
 
