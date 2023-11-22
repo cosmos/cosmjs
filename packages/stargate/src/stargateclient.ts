@@ -68,6 +68,9 @@ export interface IndexedTx {
    * This currently seems to merge attributes of multiple events into one event per type
    * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
    * field instead.
+   *
+   * @deprecated This field is not filled anymore in Cosmos SDK 0.50+ (https://github.com/cosmos/cosmos-sdk/pull/15845).
+   * Please consider using `events` instead.
    */
   readonly rawLog: string;
   /**
@@ -118,6 +121,9 @@ export interface DeliverTxResponse {
    * This currently seems to merge attributes of multiple events into one event per type
    * (https://github.com/tendermint/tendermint/issues/9595). You might want to use the `events`
    * field instead.
+   *
+   * @deprecated This field is not filled anymore in Cosmos SDK 0.50+ (https://github.com/cosmos/cosmos-sdk/pull/15845).
+   * Please consider using `events` instead.
    */
   readonly rawLog?: string;
   /** @deprecated Use `msgResponses` instead. */
