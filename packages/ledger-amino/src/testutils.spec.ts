@@ -19,12 +19,17 @@ export function pendingWithoutLedger(): void {
 }
 
 export function simappEnabled(): boolean {
-  return !!process.env.SIMAPP44_ENABLED || !!process.env.SIMAPP46_ENABLED || !!process.env.SIMAPP47_ENABLED;
+  return (
+    !!process.env.SIMAPP44_ENABLED ||
+    !!process.env.SIMAPP46_ENABLED ||
+    !!process.env.SIMAPP47_ENABLED ||
+    !!process.env.SIMAPP50_ENABLED
+  );
 }
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP{44,46,47}_ENABLED to enable Simapp-based tests");
+    return pending("Set SIMAPP{44,46,47,50}_ENABLED to enable Simapp-based tests");
   }
 }
 
