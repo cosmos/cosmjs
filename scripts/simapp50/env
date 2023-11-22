@@ -1,0 +1,5 @@
+# Choose from https://github.com/cosmos/cosmos-sdk/pkgs/container/simapp
+REPOSITORY="ghcr.io/cosmos/simapp"
+VERSION="0.50.1"
+CONTAINER_NAME="simapp"
+CONTAINER_NAME_SLOW="simapp-slow"

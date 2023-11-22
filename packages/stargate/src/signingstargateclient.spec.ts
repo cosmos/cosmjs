@@ -44,6 +44,7 @@ import {
   ModifyingSecp256k1HdWallet,
   pendingWithoutSimapp,
   simapp,
+  simapp50Enabled,
   validator,
 } from "./testutils.spec";
 
@@ -119,7 +120,12 @@ describe("SigningStargateClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+
+      if (simapp50Enabled()) {
+        expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      } else {
+        expect(result.rawLog).toBeTruthy();
+      }
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
@@ -155,7 +161,12 @@ describe("SigningStargateClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+
+      if (simapp50Enabled()) {
+        expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      } else {
+        expect(result.rawLog).toBeTruthy();
+      }
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
