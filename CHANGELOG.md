@@ -69,6 +69,9 @@ and this project adheres to
   `TendermintClient`.
 - @cosmjs/stargate: Deprecate `SigningStargateClient.sendIbcTokens`. Please use
   `signAndBroadcast` + `MsgTransferEncodeObject` instead. ([#1493])
+- @cosmjs/stargate: Deprecate `IndexedTx.rawLog` and `DeliverTxResponse.rawLog`
+  because those fields are unset from Cosmos SDK 0.50 onwards (see
+  [here](https://github.com/cosmos/cosmos-sdk/pull/15845)).
 
 [#1493]: https://github.com/cosmos/cosmjs/issues/1493
 
