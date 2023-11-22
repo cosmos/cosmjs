@@ -64,7 +64,7 @@ describe("isStdTx", () => {
   });
 
   it("should return false for an invalid StdTx with missing properties", () => {
-    const { msg, ...invalidTx } = validTx;
+    const { msg: _msg, ...invalidTx } = validTx;
     expect(isStdTx(invalidTx)).toBeFalsy();
   });
 
