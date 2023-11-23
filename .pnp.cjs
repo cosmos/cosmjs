@@ -2726,7 +2726,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "ua-parser-js",\
-        "npm:0.7.31"\
+        "npm:0.7.37"\
       ],\
       [\
         "unbox-primitive",\
@@ -9642,7 +9642,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io", "npm:4.7.2"],\
             ["source-map", "npm:0.6.1"],\
             ["tmp", "npm:0.2.1"],\
-            ["ua-parser-js", "npm:0.7.31"],\
+            ["ua-parser-js", "npm:0.7.37"],\
             ["yargs", "npm:16.2.0"]\
           ],\
           "linkType": "HARD"\
@@ -12875,10 +12875,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["ua-parser-js", [\
-        ["npm:0.7.31", {\
-          "packageLocation": "./.yarn/cache/ua-parser-js-npm-0.7.31-aeb4c9aae9-e2f8324a83.zip/node_modules/ua-parser-js/",\
+        ["npm:0.7.37", {\
+          "packageLocation": "./.yarn/cache/ua-parser-js-npm-0.7.37-caddca0606-9e91a66171.zip/node_modules/ua-parser-js/",\
           "packageDependencies": [\
-            ["ua-parser-js", "npm:0.7.31"]\
+            ["ua-parser-js", "npm:0.7.37"]\
           ],\
           "linkType": "HARD"\
         }]\
