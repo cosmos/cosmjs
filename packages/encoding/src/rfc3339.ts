@@ -41,9 +41,7 @@ export function fromRfc3339(str: string): Date {
   const tzOffset = tzOffsetSign * (tzOffsetHours * 60 + tzOffsetMinutes) * 60; // seconds
 
   const date = new Date();
-  date.setUTCFullYear(year);
-  date.setUTCMonth(month - 1);
-  date.setUTCDate(day);
+  date.setUTCFullYear(year, month - 1, day);
   date.setUTCHours(hour, minute, second, milliSeconds);
 
   return new Date(date.getTime() - tzOffset * 1000);
