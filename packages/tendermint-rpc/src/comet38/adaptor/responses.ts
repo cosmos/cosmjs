@@ -467,22 +467,11 @@ type RpcSignature = {
   readonly signature: string | null;
 };
 
-/**
- * In some cases a timestamp is optional and set to the value 0 in Go.
- * This can lead to strings like "0001-01-01T00:00:00Z" (see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415).
- * This decoder tries to clean up such encoding from the API and turn them
- * into undefined values.
- */
-function decodeOptionalTime(timestamp: string): DateWithNanoseconds | undefined {
-  const nonZeroTime = timestamp && !timestamp.startsWith("0001-01-01");
-  return nonZeroTime ? fromRfc3339WithNanoseconds(timestamp) : undefined;
-}
-
 function decodeCommitSignature(data: RpcSignature): CommitSignature {
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
     validatorAddress: data.validator_address ? fromHex(data.validator_address) : undefined,
-    timestamp: decodeOptionalTime(data.timestamp),
+    timestamp: data.timestamp ? fromRfc3339WithNanoseconds(data.timestamp) : undefined,
     signature: data.signature ? fromBase64(data.signature) : undefined,
   };
 }
