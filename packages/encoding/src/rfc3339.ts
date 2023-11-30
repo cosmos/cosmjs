@@ -40,13 +40,13 @@ export function fromRfc3339(str: string): Date {
 
   const tzOffset = tzOffsetSign * (tzOffsetHours * 60 + tzOffsetMinutes) * 60; // seconds
 
-  let timestamp = Date.UTC(year, month - 1, day, hour, minute, second, milliSeconds);
+  const date = new Date();
+  date.setUTCFullYear(year);
+  date.setUTCMonth(month - 1);
+  date.setUTCDate(day);
+  date.setUTCHours(hour, minute, second, milliSeconds);
 
-  // Date.UTC maps year 0-99 to 1900-1999. Ensure the correct year is set and THEN apply the offset
-  const date = new Date(timestamp);
-  timestamp = date.setUTCFullYear(year) - tzOffset * 1000;
-
-  return new Date(timestamp);
+  return new Date(date.getTime() - tzOffset * 1000);
 }
 
 export function toRfc3339(date: Date | ReadonlyDate): string {
