@@ -8,8 +8,10 @@ and this project adheres to
 
 ### Fixed
 
-- @cosmjs/encoding: Ensure RFC dates between years 0001 and 0099 are parsed correctly. ([#1516])
-- @cosmjs/tendermint-rpc: Remove hacky dewcodeOptionalTime() from adaptros now that `time.Time` dates are parsed correctly. ([#1516])
+- @cosmjs/encoding: Ensure RFC dates between years 0001 and 0099 are parsed
+  correctly. ([#1516])
+- @cosmjs/tendermint-rpc: Remove hacky `decodeOptionalTime()` from adaptors now
+  that `time.Time` dates are parsed correctly. ([#1516])
 
 [#1516]: https://github.com/cosmos/cosmjs/pull/1516
 
