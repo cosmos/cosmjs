@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/encoding: Ensure RFC dates between years 0001 and 0099 are parsed
+  correctly. ([#1516])
+- @cosmjs/tendermint-rpc: Remove hacky `decodeOptionalTime()` from adaptors now
+  that `time.Time` dates are parsed correctly. ([#1516])
+
+[#1516]: https://github.com/cosmos/cosmjs/pull/1516
+
 ## [0.32.0] - 2023-11-23
 
 ### Added
