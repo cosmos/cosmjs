@@ -1,6 +1,21 @@
-import { assertDefined, assertDefinedAndNotNull } from "./assert";
+import { assert, assertDefined, assertDefinedAndNotNull } from "./assert";
 
 describe("assert", () => {
+  describe("assert", () => {
+    it("assert should not throw an error when condition is truthy", () => {
+      expect(() => assert(true)).not.toThrow();
+    });
+
+    it("assert should throw an error with default message when condition is falsy", () => {
+      expect(() => assert(false)).toThrowError("condition is not truthy");
+    });
+
+    it("assert should throw an error with custom message when condition is falsy", () => {
+      const errorMessage = "Custom error message";
+      expect(() => assert(false, errorMessage)).toThrowError(errorMessage);
+    });
+  });
+
   describe("assertDefined", () => {
     it("passes for simple values", () => {
       {
