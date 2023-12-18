@@ -51,16 +51,16 @@ describe("GasPrice", () => {
       expect(() => GasPrice.fromString("234")).toThrowError(/Invalid gas price string/i);
       expect(() => GasPrice.fromString("-234tkn")).toThrowError(/Invalid gas price string/i);
       // Checks details of <denom>
-      expect(() => GasPrice.fromString("234t")).toThrowError(/Invalid gas price string/i);
-      expect(() => GasPrice.fromString("234tt")).toThrowError(/Invalid gas price string/i);
+      expect(() => GasPrice.fromString("234t")).toThrowError(/denom must be between 3 and 128 characters/i);
+      expect(() => GasPrice.fromString("234tt")).toThrowError(/denom must be between 3 and 128 characters/i);
       expect(() =>
         GasPrice.fromString(
           "234ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
         ),
-      ).toThrowError(/Invalid gas price string/i);
+      ).toThrowError(/denom must be between 3 and 128 characters/i);
       // Checks details of <amount>
-      expect(() => GasPrice.fromString("3.utkn")).toThrowError(/Invalid gas price string/i);
-      expect(() => GasPrice.fromString("..utkn")).toThrowError(/Invalid gas price string/i);
+      expect(() => GasPrice.fromString("3.utkn")).toThrowError(/Fractional part missing/i);
+      expect(() => GasPrice.fromString("..utkn")).toThrowError(/More than one separator found/i);
     });
   });
 
