@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/stargate: Update validation of GasPrice.fromString to allow using ibc denoms as gas denom ([#1522])
+
+[#1522]: https://github.com/cosmos/cosmjs/pull/1522
+
 ## [0.32.1] - 2023-12-04
 
 ### Fixed

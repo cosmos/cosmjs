@@ -37,7 +37,7 @@ export class GasPrice {
    */
   public static fromString(gasPrice: string): GasPrice {
     // Use Decimal.fromUserInput and checkDenom for detailed checks and helpful error messages
-    const matchResult = gasPrice.match(/^([0-9.]+)([a-z][a-z0-9]*)$/i);
+    const matchResult = gasPrice.match(/^([0-9.]+)([a-zA-Z][a-zA-Z0-9/:._-]*)$/);
     if (!matchResult) {
       throw new Error("Invalid gas price string");
     }
