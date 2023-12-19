@@ -19,7 +19,7 @@ describe("vesting messages", () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         wallet,
         defaultSigningClientOptions,
       );
@@ -49,7 +49,7 @@ describe("vesting messages", () => {
       pendingWithoutSimapp46OrHigher(); // Amino JSON broken on chain before Cosmos SDK 0.46
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         wallet,
         defaultSigningClientOptions,
       );

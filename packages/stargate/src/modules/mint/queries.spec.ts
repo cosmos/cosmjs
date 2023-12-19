@@ -13,7 +13,7 @@ describe("MintExtension", () => {
   describe("params", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const params = await client.mint.params();
       expect(Number(params.blocksPerYear)).toBeGreaterThan(100_000);
@@ -31,7 +31,7 @@ describe("MintExtension", () => {
   describe("inflation", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const inflation = await client.mint.inflation();
       expect(inflation.toFloatApproximation()).toBeGreaterThan(0.13);
@@ -44,7 +44,7 @@ describe("MintExtension", () => {
   describe("annualProvisions", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const annualProvisions = await client.mint.annualProvisions();
       expect(annualProvisions.toFloatApproximation()).toBeGreaterThan(5_400_000_000);

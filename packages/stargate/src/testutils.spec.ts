@@ -81,7 +81,6 @@ export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 export const defaultSendFee = calculateFee(100_000, defaultGasPrice);
 
 export const simapp = {
-  tendermintUrl: "localhost:26658",
   tendermintUrlWs: "ws://localhost:26658",
   tendermintUrlHttp: "http://localhost:26658",
   chainId: "simd-testing",
@@ -93,7 +92,6 @@ export const simapp = {
 };
 
 export const slowSimapp = {
-  tendermintUrl: "localhost:26660",
   tendermintUrlWs: "ws://localhost:26660",
   tendermintUrlHttp: "http://localhost:26660",
   chainId: "simd-testing",

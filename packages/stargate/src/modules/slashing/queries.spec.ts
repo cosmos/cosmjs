@@ -16,7 +16,7 @@ describe("SlashingExtension", () => {
   describe("signingInfos", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrlHttp);
 
       const response = await client.slashing.signingInfos();
       expect(response.info).toBeDefined();
@@ -29,7 +29,7 @@ describe("SlashingExtension", () => {
   describe("params", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrlHttp);
 
       const response = await client.slashing.params();
       expect(response.params).toBeDefined();
