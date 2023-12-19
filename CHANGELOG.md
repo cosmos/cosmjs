@@ -13,6 +13,14 @@ and this project adheres to
 
 [#1522]: https://github.com/cosmos/cosmjs/pull/1522
 
+### Changed
+
+- @cosmjs/tendermint-rpc: Require protocol to be set in endpoint URLs (https://,
+  http://, wss:// or ws://). Otherwise an error is raised instead of falling
+  back to ws://. ([#1527])
+
+[#1527]: https://github.com/cosmos/cosmjs/pull/1527
+
 ## [0.32.1] - 2023-12-04
 
 ### Fixed

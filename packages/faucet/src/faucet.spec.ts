@@ -32,7 +32,7 @@ const faucetMnemonic =
 describe("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
-  const apiUrl = "localhost:26658";
+  const apiUrl = "http://localhost:26658";
   const stargate = true;
   let originalEnvVariable: string | undefined;
 

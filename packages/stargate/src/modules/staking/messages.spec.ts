@@ -24,7 +24,7 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
   const [firstAccount] = await wallet.getAccounts();
   const client = await SigningStargateClient.connectWithSigner(
-    simapp.tendermintUrl,
+    simapp.tendermintUrlHttp,
     wallet,
     defaultSigningClientOptions,
   );
@@ -53,7 +53,7 @@ describe("staking messages", () => {
       await sendFeeAndStakingTokens(valAccount.address);
 
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         valWallet,
         defaultSigningClientOptions,
       );
@@ -104,7 +104,7 @@ describe("staking messages", () => {
       await sendFeeAndStakingTokens(valAccount.address);
 
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         valWallet,
         defaultSigningClientOptions,
       );
@@ -156,7 +156,7 @@ describe("staking messages", () => {
       await sendFeeAndStakingTokens(valAccount.address);
 
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         valWallet,
         defaultSigningClientOptions,
       );
@@ -245,7 +245,7 @@ describe("staking messages", () => {
       await sendFeeAndStakingTokens(valAccount.address);
 
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         valWallet,
         defaultSigningClientOptions,
       );

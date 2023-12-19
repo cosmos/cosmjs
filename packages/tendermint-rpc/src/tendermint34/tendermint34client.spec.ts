@@ -876,14 +876,6 @@ describe("Tendermint34Client", () => {
   it("can connect to a given url", async () => {
     pendingWithoutTendermint();
 
-    // default connection
-    {
-      const client = await Tendermint34Client.connect(url);
-      const info = await client.abciInfo();
-      expect(info).toBeTruthy();
-      client.disconnect();
-    }
-
     // http connection
     {
       const client = await Tendermint34Client.connect("http://" + url);
@@ -902,13 +894,13 @@ describe("Tendermint34Client", () => {
   });
 
   describe("With HttpClient", () => {
-    defaultTestSuite(() => new HttpClient(url), expected);
+    defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
   describe("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
     const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
-    const factory = (): WebsocketClient => new WebsocketClient(url, onError);
+    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);
   });

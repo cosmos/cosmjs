@@ -15,6 +15,7 @@ export interface ExpectedValues {
 }
 
 export interface TendermintInstance {
+  /** URL without protocol. Protocol will be added in tests. */
   readonly url: string;
   readonly version: string;
   /** rough block time in ms */

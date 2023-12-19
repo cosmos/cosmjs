@@ -19,7 +19,7 @@ describe("BankExtension", () => {
   describe("balance", () => {
     it("works for different existing balances", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response1 = await client.bank.balance(unused.address, simapp.denomFee);
       expect(response1).toEqual({
@@ -37,7 +37,7 @@ describe("BankExtension", () => {
 
     it("returns zero for non-existent balance", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.balance(unused.address, "gintonic");
       expect(response).toEqual({
@@ -50,7 +50,7 @@ describe("BankExtension", () => {
 
     it("returns zero for non-existent address", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.balance(nonExistentAddress, simapp.denomFee);
       expect(response).toEqual({
@@ -65,7 +65,7 @@ describe("BankExtension", () => {
   describe("allBalances", () => {
     it("returns all balances for unused account", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const balances = await client.bank.allBalances(unused.address);
       expect(balances).toEqual([
@@ -84,7 +84,7 @@ describe("BankExtension", () => {
 
     it("returns an empty list for non-existent account", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const balances = await client.bank.allBalances(nonExistentAddress);
       expect(balances).toEqual([]);
@@ -96,7 +96,7 @@ describe("BankExtension", () => {
   describe("totalSupply", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const { supply } = await client.bank.totalSupply();
       expect(supply).toEqual([
@@ -117,7 +117,7 @@ describe("BankExtension", () => {
   describe("supplyOf", () => {
     it("works for existing denom", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.supplyOf(simapp.denomFee);
       expect(response).toEqual({
@@ -130,7 +130,7 @@ describe("BankExtension", () => {
 
     it("returns zero for non-existent denom", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.supplyOf("gintonic");
       expect(response).toEqual({
@@ -145,7 +145,7 @@ describe("BankExtension", () => {
   describe("denomMetadata", () => {
     it("works for existent denom", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const metadata = await client.bank.denomMetadata("ucosm");
       expect(metadata).toEqual(
@@ -175,7 +175,7 @@ describe("BankExtension", () => {
 
     it("works for non-existent denom", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       await expectAsync(client.bank.denomMetadata("nothere")).toBeRejectedWithError(/code = NotFound/i);
 
@@ -186,7 +186,7 @@ describe("BankExtension", () => {
   describe("denomsMetadata", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const metadatas = await client.bank.denomsMetadata();
       expect(metadatas.length).toEqual(1);

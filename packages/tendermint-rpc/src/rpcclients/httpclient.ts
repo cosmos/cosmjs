@@ -28,8 +28,10 @@ export class HttpClient implements RpcClient {
 
   public constructor(endpoint: string | HttpEndpoint) {
     if (typeof endpoint === "string") {
-      // accept host.name:port and assume http protocol
-      this.url = hasProtocol(endpoint) ? endpoint : "http://" + endpoint;
+      if (!hasProtocol(endpoint)) {
+        throw new Error("Endpoint URL is missing a protocol. Expected 'https://' or 'http://'.");
+      }
+      this.url = endpoint;
     } else {
       this.url = endpoint.url;
       this.headers = endpoint.headers;

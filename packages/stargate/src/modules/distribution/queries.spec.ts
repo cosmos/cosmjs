@@ -35,7 +35,7 @@ describe("DistributionExtension", () => {
     if (simappEnabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         wallet,
         defaultSigningClientOptions,
       );
@@ -60,7 +60,7 @@ describe("DistributionExtension", () => {
   describe("communityPool", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.communityPool();
       expect(response.pool).toBeDefined();
@@ -73,7 +73,7 @@ describe("DistributionExtension", () => {
   describe("delegationRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegationRewards(
         faucet.address0,
@@ -89,7 +89,7 @@ describe("DistributionExtension", () => {
   describe("delegationTotalRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegationTotalRewards(faucet.address0);
       expect(response.rewards).toBeDefined();
@@ -102,7 +102,7 @@ describe("DistributionExtension", () => {
   describe("delegatorValidators", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegatorValidators(faucet.address0);
       expect(response.validators).toBeDefined();
@@ -115,7 +115,7 @@ describe("DistributionExtension", () => {
   describe("delegatorWithdrawAddress", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegatorWithdrawAddress(faucet.address0);
       expect(response.withdrawAddress).toBeDefined();
@@ -128,7 +128,7 @@ describe("DistributionExtension", () => {
   describe("params", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.params();
       expect(response.params).toBeDefined();
@@ -141,7 +141,7 @@ describe("DistributionExtension", () => {
   describe("validatorCommission", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorCommission(validator.validatorAddress);
       expect(response.commission).toBeDefined();
@@ -154,7 +154,7 @@ describe("DistributionExtension", () => {
   describe("validatorOutstandingRewards", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorOutstandingRewards(validator.validatorAddress);
       expect(response.rewards).toBeDefined();
@@ -167,7 +167,7 @@ describe("DistributionExtension", () => {
   describe("validatorSlashes", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorSlashes(validator.validatorAddress, 1, 5);
       expect(response.slashes).toBeDefined();

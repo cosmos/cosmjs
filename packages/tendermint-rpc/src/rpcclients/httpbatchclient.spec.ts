@@ -9,9 +9,9 @@ function pendingWithoutTendermint(): void {
   }
 }
 
-const tendermintUrl = defaultInstance.url;
-
 describe("HttpBatchClient", () => {
+  const tendermintUrl = "http://" + defaultInstance.url;
+
   it("can make a simple call", async () => {
     pendingWithoutTendermint();
     const client = new HttpBatchClient(tendermintUrl);
