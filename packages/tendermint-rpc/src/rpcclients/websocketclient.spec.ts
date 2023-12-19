@@ -14,7 +14,8 @@ function pendingWithoutTendermint(): void {
 }
 
 describe("WebsocketClient", () => {
-  const { blockTime, url: tendermintUrl } = defaultInstance;
+  const { blockTime, url } = defaultInstance;
+  const tendermintUrl = "ws://" + url;
 
   it("can make a simple call", async () => {
     pendingWithoutTendermint();

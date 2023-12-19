@@ -8,9 +8,9 @@ function pendingWithoutTendermint(): void {
   }
 }
 
-const tendermintUrl = defaultInstance.url;
-
 describe("HttpClient", () => {
+  const tendermintUrl = "http://" + defaultInstance.url;
+
   it("can make a simple call", async () => {
     pendingWithoutTendermint();
     const client = new HttpClient(tendermintUrl);
