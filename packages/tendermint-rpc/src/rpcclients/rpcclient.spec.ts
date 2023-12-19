@@ -41,3 +41,30 @@ describe("RpcClient", () => {
     wsClient.disconnect();
   });
 });
+
+describe("hasProtocol", () => {
+  it("works", () => {
+    expect(hasProtocol("https://my.rpc.net")).toEqual(true);
+    expect(hasProtocol("https://my.rpc.net:443")).toEqual(true);
+    expect(hasProtocol("https://my.rpc.net:443/somewhere")).toEqual(true);
+    expect(hasProtocol("http://my.rpc.net")).toEqual(true);
+    expect(hasProtocol("http://my.rpc.net:443")).toEqual(true);
+    expect(hasProtocol("http://my.rpc.net:443/somewhere")).toEqual(true);
+    expect(hasProtocol("wss://my.rpc.net")).toEqual(true);
+    expect(hasProtocol("wss://my.rpc.net:443")).toEqual(true);
+    expect(hasProtocol("wss://my.rpc.net:443/somewhere")).toEqual(true);
+    expect(hasProtocol("ws://my.rpc.net")).toEqual(true);
+    expect(hasProtocol("ws://my.rpc.net:443")).toEqual(true);
+    expect(hasProtocol("ws://my.rpc.net:443/somewhere")).toEqual(true);
+    expect(hasProtocol("ws://my.rpc.net:443/somewhere")).toEqual(true);
+    expect(hasProtocol("file:///Users/joe/Library/CloudStorage/Notes.pdf")).toEqual(true);
+
+    // Protocols without double slash is not what we want to see here
+    expect(hasProtocol("tel:+1-201-555-0123")).toEqual(false);
+
+    // No protocols
+    expect(hasProtocol("")).toEqual(false);
+    expect(hasProtocol(" ")).toEqual(false);
+    expect(hasProtocol("/")).toEqual(false);
+  });
+});
