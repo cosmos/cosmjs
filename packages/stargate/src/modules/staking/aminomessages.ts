@@ -5,6 +5,7 @@ import { decodePubkey, encodePubkey } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   MsgBeginRedelegate,
+  MsgCancelUnbondingDelegation,
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
@@ -141,6 +142,20 @@ export interface AminoMsgUndelegate extends AminoMsg {
 
 export function isAminoMsgUndelegate(msg: AminoMsg): msg is AminoMsgUndelegate {
   return msg.type === "cosmos-sdk/MsgUndelegate";
+}
+
+export interface AminoMsgCancelUnbondingDelegation extends AminoMsg {
+  readonly type: "cosmos-sdk/MsgCancelUnbondingDelegation";
+  readonly value: {
+    readonly delegator_address: string;
+    readonly validator_address: string;
+    readonly amount: Coin;
+    readonly creation_height: string;
+  };
+}
+
+export function isAminoMsgCancelUnbondingDelegation(msg: AminoMsg): msg is AminoMsgCancelUnbondingDelegation {
+  return msg.type === "cosmos-sdk/MsgCancelUnbondingDelegation";
 }
 
 export function createStakingAminoConverters(): Record<string, AminoConverter> {
@@ -324,6 +339,34 @@ export function createStakingAminoConverters(): Record<string, AminoConverter> {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         amount: amount,
+      }),
+    },
+    "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation": {
+      aminoType: "cosmos-sdk/MsgCancelUnbondingDelegation",
+      toAmino: ({
+        delegatorAddress,
+        validatorAddress,
+        amount,
+        creationHeight,
+      }: MsgCancelUnbondingDelegation): AminoMsgCancelUnbondingDelegation["value"] => {
+        assertDefinedAndNotNull(amount, "missing amount");
+        return {
+          delegator_address: delegatorAddress,
+          validator_address: validatorAddress,
+          amount: amount,
+          creation_height: creationHeight,
+        };
+      },
+      fromAmino: ({
+        delegator_address,
+        validator_address,
+        amount,
+        creation_height,
+      }: AminoMsgCancelUnbondingDelegation["value"]): MsgCancelUnbondingDelegation => ({
+        delegator_address: delegator_address,
+        validator_address: validator_address,
+        amount: amount,
+        creation_height: creation_height,
       }),
     },
   };

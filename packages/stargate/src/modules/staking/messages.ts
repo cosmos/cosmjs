@@ -1,6 +1,7 @@
 import { EncodeObject, GeneratedType } from "@cosmjs/proto-signing";
 import {
   MsgBeginRedelegate,
+  MsgCancelUnbondingDelegation,
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
@@ -13,6 +14,7 @@ export const stakingTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
   ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
   ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+  ["/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation", MsgCancelUnbondingDelegation],
 ];
 
 export interface MsgBeginRedelegateEncodeObject extends EncodeObject {
@@ -58,4 +60,18 @@ export interface MsgUndelegateEncodeObject extends EncodeObject {
 
 export function isMsgUndelegateEncodeObject(object: EncodeObject): object is MsgUndelegateEncodeObject {
   return (object as MsgUndelegateEncodeObject).typeUrl === "/cosmos.staking.v1beta1.MsgUndelegate";
+}
+
+export interface MsgCancelUnbondingDelegationEncodeObject extends EncodeObject {
+  readonly typeUrl: "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation";
+  readonly value: Partial<MsgCancelUnbondingDelegation>;
+}
+
+export function isMsgCancelUnbondingDelegationEncodeObject(
+  object: EncodeObject,
+): object is MsgCancelUnbondingDelegationEncodeObject {
+  return (
+    (object as MsgCancelUnbondingDelegationEncodeObject).typeUrl ===
+    "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation"
+  );
 }
