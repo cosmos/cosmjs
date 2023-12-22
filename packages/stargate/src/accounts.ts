@@ -40,7 +40,7 @@ function accountFromBaseAccount(input: BaseAccount): Account {
  */
 export type AccountParser = (any: Any) => Account;
 
-export type AccountParserRegistry = Map<string, AccountParser>;
+export type AccountParserRegistry = Map<Any["typeUrl"], AccountParser>;
 
 export class AccountParserManager {
   private readonly registry = new Map<string, AccountParser>();
@@ -62,49 +62,57 @@ export class AccountParserManager {
   }
 }
 
-export function createDefaultAccountParser(): AccountParserManager {
-  const registry = new AccountParserManager();
-  // Register default parsers
-  // auth
-  registry.register("/cosmos.auth.v1beta1.BaseAccount", ({ value }: Any): Account => {
+export function createAccountParserRegistry(): AccountParserRegistry {
+  const parseBaseAccount: AccountParser = ({ value }: Any): Account => {
     return accountFromBaseAccount(BaseAccount.decode(value));
-  });
-  registry.register("/cosmos.auth.v1beta1.ModuleAccount", ({ value }: Any): Account => {
+  };
+
+  const parseModuleAccount: AccountParser = ({ value }: Any): Account => {
     const baseAccount = ModuleAccount.decode(value).baseAccount;
     assert(baseAccount);
     return accountFromBaseAccount(baseAccount);
-  });
-  // vesting
-  registry.register("/cosmos.vesting.v1beta1.BaseVestingAccount", ({ value }: Any): Account => {
+  };
+
+  const parseBaseVestingAccount: AccountParser = ({ value }: Any): Account => {
     const baseAccount = BaseVestingAccount.decode(value)?.baseAccount;
     assert(baseAccount);
     return accountFromBaseAccount(baseAccount);
-  });
-  registry.register("/cosmos.vesting.v1beta1.ContinuousVestingAccount", ({ value }: Any): Account => {
+  };
+
+  const parseContinuousVestingAccount: AccountParser = ({ value }: Any): Account => {
     const baseAccount = ContinuousVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
     assert(baseAccount);
     return accountFromBaseAccount(baseAccount);
-  });
-  registry.register("/cosmos.vesting.v1beta1.DelayedVestingAccount", ({ value }: Any): Account => {
+  };
+
+  const parseDelayedVestingAccount: AccountParser = ({ value }: Any): Account => {
     const baseAccount = DelayedVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
     assert(baseAccount);
     return accountFromBaseAccount(baseAccount);
-  });
-  registry.register("/cosmos.vesting.v1beta1.PeriodicVestingAccount", ({ value }: Any): Account => {
+  };
+
+  const parsePeriodicVestingAccount: AccountParser = ({ value }: Any): Account => {
     const baseAccount = PeriodicVestingAccount.decode(value)?.baseVestingAccount?.baseAccount;
     assert(baseAccount);
     return accountFromBaseAccount(baseAccount);
-  });
+  };
 
-  return registry;
+  return new Map<Any["typeUrl"], AccountParser>([
+    ["/cosmos.auth.v1beta1.BaseAccount", parseBaseAccount],
+    ["/cosmos.auth.v1beta1.ModuleAccount", parseModuleAccount],
+    ["/cosmos.vesting.v1beta1.BaseVestingAccount", parseBaseVestingAccount],
+    ["/cosmos.vesting.v1beta1.ContinuousVestingAccount", parseContinuousVestingAccount],
+    ["/cosmos.vesting.v1beta1.DelayedVestingAccount", parseDelayedVestingAccount],
+    ["/cosmos.vesting.v1beta1.PeriodicVestingAccount", parsePeriodicVestingAccount],
+  ]);
 }
 
 /**
  * Basic implementation of AccountParser. This is supposed to support the most relevant
  * common Cosmos SDK account types. If you need support for exotic account types,
- * you'll need to use `AccountParserManager` or `createDefaultAccountParser` directly.
+ * you'll need to use `AccountParserManager` and `createAccountParserRegistry` directly.
  */
 export function accountFromAny(input: Any): Account {
-  const accountParser = createDefaultAccountParser();
+  const accountParser = new AccountParserManager(createAccountParserRegistry());
   return accountParser.parseAccount(input);
 }
