@@ -1,6 +1,6 @@
 import { createContext } from "vm";
-
-import { executeJavaScript, executeJavaScriptAsync } from "./helpers";
+import { TSError } from "ts-node";
+import { executeJavaScript, executeJavaScriptAsync, isRecoverable } from "./helpers";
 
 describe("Helpers", () => {
   describe("executeJavaScript", () => {
@@ -144,4 +144,23 @@ describe("Helpers", () => {
       expect(await executeJavaScriptAsync(code, "myfile.js", context)).toEqual("job done");
     });
   });
+
+  describe("isRecoverable",()=>{
+    it('should return true for recoverable errors', () => {
+      const recoverableError = {
+        diagnosticCodes: [1003, 1160, 2355],
+      } as TSError;
+
+      expect(isRecoverable(recoverableError)).toBe(true);
+    });
+
+    it('should return false for non-recoverable errors', () => {
+      const nonRecoverableError = {
+        diagnosticCodes: [1234, 5678],
+      } as TSError;
+
+      expect(isRecoverable(nonRecoverableError)).toBe(false);
+    });
+  })
+
 });
