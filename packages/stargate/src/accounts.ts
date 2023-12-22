@@ -42,17 +42,28 @@ export type AccountParser = (any: Any) => Account;
 
 export type AccountParserRegistry = Map<Any["typeUrl"], AccountParser>;
 
+/**
+ * AccountParserManager is a class responsible for managing a registry of account parsers.
+ * It allows registering new parsers and parsing account data using registered parsers.
+ * Once initialized, `AccountParserManager.parseAccount` can be provided for the `accountParser`
+ * option when initializing the StargateSigningCleint.
+ */
 export class AccountParserManager {
-  private readonly registry = new Map<string, AccountParser>();
+  private readonly registry = new Map<Any["typeUrl"], AccountParser>();
 
   public constructor(initialRegistry: AccountParserRegistry = new Map()) {
     this.registry = initialRegistry;
   }
 
-  public register(typeUrl: string, parser: AccountParser): void {
+  /** Registers a new account parser for a specific typeUrl. */
+  public register(typeUrl: Any["typeUrl"], parser: AccountParser): void {
     this.registry.set(typeUrl, parser);
   }
 
+  /**
+   * Parses an account from an `Any` encoded format using a registered parser based on the typeUrl.
+   * @throws Will throw an error if no parser is registered for the account's typeUrl.
+   */
   public parseAccount(input: Any): Account {
     const parser = this.registry.get(input.typeUrl);
     if (!parser) {
@@ -62,6 +73,12 @@ export class AccountParserManager {
   }
 }
 
+/**
+ * Creates and returns a default registry of account parsers.
+ * Each parser is a function responsible for converting an `Any` encoded account
+ * from the chain into a common `Account` format. The registry maps `typeUrl`
+ * strings to corresponding `AccountParser` functions.
+ */
 export function createAccountParserRegistry(): AccountParserRegistry {
   const parseBaseAccount: AccountParser = ({ value }: Any): Account => {
     return accountFromBaseAccount(BaseAccount.decode(value));
@@ -109,8 +126,15 @@ export function createAccountParserRegistry(): AccountParserRegistry {
 
 /**
  * Basic implementation of AccountParser. This is supposed to support the most relevant
- * common Cosmos SDK account types. If you need support for exotic account types,
+ * common Cosmos SDK account types. If you need support for additional account types,
  * you'll need to use `AccountParserManager` and `createAccountParserRegistry` directly.
+ *
+ * @example
+ * ```
+ * const myAccountParserManager = new AccountParserManager(createAccountParserRegistry());
+ * myAccountParserManager.register('/custom.type.v1.CustomAccount', customAccountParser);
+ * const account = customParserManager.parseAccount(someInput);
+ * ```
  */
 export function accountFromAny(input: Any): Account {
   const accountParser = new AccountParserManager(createAccountParserRegistry());

@@ -44,7 +44,9 @@ describe("accounts", () => {
   describe("AccountParserManager", () => {
     it("registers new account parsers", () => {
       const defaultRegistry = createAccountParserRegistry();
-      const parsePeriodicVestingAccount = defaultRegistry.get("/cosmos.vesting.v1beta1.PeriodicVestingAccount");
+      const parsePeriodicVestingAccount = defaultRegistry.get(
+        "/cosmos.vesting.v1beta1.PeriodicVestingAccount",
+      );
 
       const accountParser = new AccountParserManager();
       accountParser.register(
