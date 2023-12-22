@@ -330,7 +330,7 @@ describe("Secp256k1HdWallet", () => {
     });
 
     it('returns false for non-object input', () => {
-      expect(isDerivationJson(42)).toBe(false); // Replace with your desired non-object value
+      expect(isDerivationJson(42)).toBe(false);
     });
 
     it('returns false for missing hdPath property', () => {
