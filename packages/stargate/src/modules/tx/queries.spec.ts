@@ -35,7 +35,7 @@ describe("TxExtension", () => {
     if (simappEnabled()) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         wallet,
         defaultSigningClientOptions,
       );
@@ -63,7 +63,7 @@ describe("TxExtension", () => {
       pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
-      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);
 
       const response = await client.tx.getTx(txHash);
       expect(response.tx?.body?.memo).toEqual(memo);
@@ -77,8 +77,8 @@ describe("TxExtension", () => {
       pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
-      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrl);
-      const sequenceClient = await StargateClient.connect(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);
+      const sequenceClient = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const registry = new Registry(defaultRegistryTypes);
       const msg: MsgDelegate = {

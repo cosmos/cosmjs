@@ -176,7 +176,7 @@ describe("multisignature", () => {
       // On the composer's machine signing instructions are created.
       // The composer does not need to be one of the signers.
       const signingInstruction = await (async () => {
-        const client = await StargateClient.connect(simapp.tendermintUrl);
+        const client = await StargateClient.connect(simapp.tendermintUrlHttp);
         const accountOnChain = await client.getAccount(multisigAccountAddress);
         assert(accountOnChain, "Account does not exist on chain");
 
@@ -251,7 +251,7 @@ describe("multisignature", () => {
         const address3 = pubkeyToAddress(pubkey3, "cosmos");
         const address4 = pubkeyToAddress(pubkey4, "cosmos");
 
-        const broadcaster = await StargateClient.connect(simapp.tendermintUrl);
+        const broadcaster = await StargateClient.connect(simapp.tendermintUrlHttp);
         const signedTx = makeMultisignedTxBytes(
           multisigPubkey,
           signingInstruction.sequence,

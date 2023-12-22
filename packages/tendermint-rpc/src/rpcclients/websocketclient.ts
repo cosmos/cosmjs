@@ -143,11 +143,13 @@ export class WebsocketClient implements RpcStreamingClient {
   private readonly subscriptionStreams = new Map<string, Stream<SubscriptionEvent>>();
 
   public constructor(baseUrl: string, onError: (err: any) => void = defaultErrorHandler) {
-    // accept host.name:port and assume ws protocol
+    if (!hasProtocol(baseUrl)) {
+      throw new Error("Base URL is missing a protocol. Expected 'ws://' or 'wss://'.");
+    }
+
     // make sure we don't end up with ...//websocket
     const path = baseUrl.endsWith("/") ? "websocket" : "/websocket";
-    const cleanBaseUrl = hasProtocol(baseUrl) ? baseUrl : "ws://" + baseUrl;
-    this.url = cleanBaseUrl + path;
+    this.url = baseUrl + path;
 
     this.socket = new ReconnectingSocket(this.url);
 

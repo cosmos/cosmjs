@@ -18,7 +18,7 @@ describe("AuthExtension", () => {
   describe("account", () => {
     it("works for unused account", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
       const account = await client.auth.account(unused.address);
       assert(account);
 
@@ -36,7 +36,7 @@ describe("AuthExtension", () => {
 
     it("works for account with pubkey and non-zero sequence", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
       const account = await client.auth.account(validator.delegatorAddress);
       assert(account);
 
@@ -53,7 +53,7 @@ describe("AuthExtension", () => {
 
     it("rejects for non-existent address", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
 
       await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(
         /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,

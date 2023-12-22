@@ -41,7 +41,7 @@ describe("AuthzExtension", () => {
         hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
       });
       const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrl,
+        simapp.tendermintUrlHttp,
         wallet,
         defaultSigningClientOptions,
       );
@@ -79,7 +79,7 @@ describe("AuthzExtension", () => {
   describe("grants", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];
@@ -103,7 +103,7 @@ describe("AuthzExtension", () => {
   describe("granter grants", () => {
     it("works", async () => {
       pendingWithoutSimapp46OrHigher();
-      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
       const grant = response.grants.find(
@@ -134,7 +134,7 @@ describe("AuthzExtension", () => {
   describe("grantee grants", () => {
     it("works", async () => {
       pendingWithoutSimapp46OrHigher();
-      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);
       const grant = response.grants[0];

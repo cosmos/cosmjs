@@ -6,6 +6,25 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.32.2] - 2023-12-19
+
+### Fixed
+
+- @cosmjs/stargate: Update validation of `GasPrice.fromString` to allow using
+  IBC denoms as gas denom. ([#1522])
+
+[#1522]: https://github.com/cosmos/cosmjs/pull/1522
+
+### Changed
+
+- @cosmjs/tendermint-rpc: Require protocol to be set in endpoint URLs (https://,
+  http://, wss:// or ws://). Otherwise an error is raised instead of falling
+  back to ws://. ([#1527])
+
+[#1527]: https://github.com/cosmos/cosmjs/pull/1527
+
+## [0.32.1] - 2023-12-04
+
 ### Fixed
 
 - @cosmjs/encoding: Ensure RFC dates between years 0001 and 0099 are parsed
@@ -1393,7 +1412,9 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.2...HEAD
+[0.32.2]: https://github.com/cosmos/cosmjs/compare/v0.32.1...v0.32.2
+[0.32.1]: https://github.com/cosmos/cosmjs/compare/v0.32.0...v0.32.1
 [0.32.0]: https://github.com/cosmos/cosmjs/compare/v0.31.3...v0.32.0
 [0.31.3]: https://github.com/cosmos/cosmjs/compare/v0.31.2...v0.31.3
 [0.31.2]: https://github.com/cosmos/cosmjs/compare/v0.31.1...v0.31.2

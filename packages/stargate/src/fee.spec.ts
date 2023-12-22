@@ -30,6 +30,10 @@ describe("GasPrice", () => {
         "0.14ucoin2": { amount: "0.14", denom: "ucoin2" },
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "0.14FOOBAR": { amount: "0.14", denom: "FOOBAR" },
+        "0.01ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2": {
+          amount: "0.01",
+          denom: "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
+        },
       };
       for (const [input, expected] of Object.entries(inputs)) {
         const gasPrice = GasPrice.fromString(input);
