@@ -1,5 +1,6 @@
 import { Random } from "@cosmjs/crypto";
 import { fromBase64, fromBech32, fromHex } from "@cosmjs/encoding";
+import { TSError } from "ts-node";
 
 import {
   decodeAminoPubkey,
@@ -20,7 +21,6 @@ import {
   testgroup4,
   testgroup4PubkeyBech32,
 } from "./testutils.spec";
-import { TSError } from "ts-node";
 
 describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {
@@ -69,7 +69,6 @@ describe("encoding", () => {
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       });
     });
-
 
     it("works for ed25519", () => {
       // Encoded from `corald tendermint show-validator`
@@ -134,12 +133,14 @@ describe("encoding", () => {
       expect(() => decodeAminoPubkey(fromHex("22C1F7E20705"))).toThrowError(/expecting 0x08 prefix/i);
     });
 
-    it('throws error for invalid secp256k1 pubkey length',  () => {
+    it("throws error for invalid secp256k1 pubkey length", () => {
       const data = new Uint8Array([0, 1, 2, 3, 4]);
       try {
-        decodeAminoPubkey(data)
+        decodeAminoPubkey(data);
       } catch (error) {
-        expect((error as TSError).message).toBe('Unsupported public key type. Amino data starts with: 0001020304');
+        expect((error as TSError).message).toBe(
+          "Unsupported public key type. Amino data starts with: 0001020304",
+        );
       }
     });
   });

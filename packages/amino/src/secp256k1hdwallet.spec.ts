@@ -312,47 +312,45 @@ describe("Secp256k1HdWallet", () => {
     });
   });
 
-  describe('isDerivationJson function', () => {
-    it('returns true for valid DerivationInfoJson', () => {
+  describe("isDerivationJson function", () => {
+    it("returns true for valid DerivationInfoJson", () => {
       const validInput: unknown = {
-        hdPath: 'validHdPath',
-        prefix: 'validPrefix'
+        hdPath: "validHdPath",
+        prefix: "validPrefix",
       };
       expect(isDerivationJson(validInput)).toBe(true);
     });
 
-    it('returns false for undefined input', () => {
+    it("returns false for undefined input", () => {
       expect(isDerivationJson(undefined)).toBe(false);
     });
 
-    it('returns false for null input', () => {
+    it("returns false for null input", () => {
       expect(isDerivationJson(null)).toBe(false);
     });
 
-    it('returns false for non-object input', () => {
+    it("returns false for non-object input", () => {
       expect(isDerivationJson(42)).toBe(false);
     });
 
-    it('returns false for missing hdPath property', () => {
-      const missingHdPath: unknown = {
-      };
+    it("returns false for missing hdPath property", () => {
+      const missingHdPath: unknown = {};
       expect(isDerivationJson(missingHdPath)).toBe(false);
     });
 
-    it('returns false for missing prefix property', () => {
+    it("returns false for missing prefix property", () => {
       const missingPrefix: unknown = {
-        hdPath: 'validHdPath'
+        hdPath: "validHdPath",
       };
       expect(isDerivationJson(missingPrefix)).toBe(false);
     });
 
-    it('returns false for incorrect hdPath type', () => {
+    it("returns false for incorrect hdPath type", () => {
       const incorrectHdPathType: unknown = {
         hdPath: 123,
-        prefix: 'validPrefix'
+        prefix: "validPrefix",
       };
       expect(isDerivationJson(incorrectHdPathType)).toBe(false);
     });
   });
-
 });
