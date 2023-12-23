@@ -1,5 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
-import { executeKdf, encrypt, decrypt, KdfConfiguration } from "./wallet"
+
+import { decrypt, encrypt, executeKdf, KdfConfiguration } from "./wallet";
 
 describe("wallet", () => {
   describe("executeKdf", () => {
@@ -14,8 +15,8 @@ describe("wallet", () => {
             memLimitKib: 3 * 1024,
           },
         };
-        await expectAsync(executeKdf(password, kdfConfiguration)).not.toBeRejected()
-      })
+        await expectAsync(executeKdf(password, kdfConfiguration)).not.toBeRejected();
+      });
 
       describe("with invalid params", () => {
         it("throws", async () => {
@@ -28,10 +29,12 @@ describe("wallet", () => {
               memLimitKib: "invalid",
             },
           };
-          await expectAsync(executeKdf(password, kdfConfiguration)).toBeRejectedWith(new Error("Invalid format of argon2id params"))
-        })
-      })
-    })
+          await expectAsync(executeKdf(password, kdfConfiguration)).toBeRejectedWith(
+            new Error("Invalid format of argon2id params"),
+          );
+        });
+      });
+    });
 
     describe("with unsupported algorithm", () => {
       it("throws", async () => {
@@ -40,10 +43,12 @@ describe("wallet", () => {
           algorithm: "unsupported",
           params: {},
         };
-        await expectAsync(executeKdf(password, kdfConfiguration)).toBeRejectedWith(new Error("Unsupported KDF algorithm"))
-      })
-    })
-  })
+        await expectAsync(executeKdf(password, kdfConfiguration)).toBeRejectedWith(
+          new Error("Unsupported KDF algorithm"),
+        );
+      });
+    });
+  });
 
   describe("encrypt", () => {
     describe("with supported algorithm", () => {
@@ -54,9 +59,9 @@ describe("wallet", () => {
           algorithm: "xchacha20poly1305-ietf",
           params: {},
         };
-        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).not.toBeRejected()
-      })
-    })
+        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).not.toBeRejected();
+      });
+    });
 
     describe("with unsupported algorithm", () => {
       it("throws", async () => {
@@ -66,10 +71,12 @@ describe("wallet", () => {
           algorithm: "unsupported",
           params: {},
         };
-        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).toBeRejectedWith(new Error("Unsupported encryption algorithm: 'unsupported'"))
-      })
-    })
-  })
+        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).toBeRejectedWith(
+          new Error("Unsupported encryption algorithm: 'unsupported'"),
+        );
+      });
+    });
+  });
 
   describe("decrypt", () => {
     const plaintext = new Uint8Array([0x11, 0x22, 0x33, 0x44]);
@@ -81,20 +88,22 @@ describe("wallet", () => {
 
     describe("with supported algorithm", () => {
       it("can decrypt without throw", async () => {
-        const ciphertext = await encrypt(plaintext, encryptionKey, encryptionConfiguration)
-        await decrypt(ciphertext, encryptionKey, encryptionConfiguration)
-        await expectAsync(decrypt(ciphertext, encryptionKey, encryptionConfiguration)).not.toBeRejected()
-      })
-    })
+        const ciphertext = await encrypt(plaintext, encryptionKey, encryptionConfiguration);
+        await decrypt(ciphertext, encryptionKey, encryptionConfiguration);
+        await expectAsync(decrypt(ciphertext, encryptionKey, encryptionConfiguration)).not.toBeRejected();
+      });
+    });
 
     describe("with unsupported algorithm", () => {
       it("throws", async () => {
-        const ciphertext = await encrypt(plaintext, encryptionKey, encryptionConfiguration)
-        await expectAsync(decrypt(ciphertext, encryptionKey, {
-          algorithm: "unsupported",
-          params: {},
-        })).toBeRejectedWith(new Error("Unsupported encryption algorithm: 'unsupported'"))
-      })
-    })
-  })
-})
+        const ciphertext = await encrypt(plaintext, encryptionKey, encryptionConfiguration);
+        await expectAsync(
+          decrypt(ciphertext, encryptionKey, {
+            algorithm: "unsupported",
+            params: {},
+          }),
+        ).toBeRejectedWith(new Error("Unsupported encryption algorithm: 'unsupported'"));
+      });
+    });
+  });
+});
