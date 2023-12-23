@@ -1,4 +1,5 @@
-import { executeKdf, KdfConfiguration } from "./wallet"
+import { fromHex } from "@cosmjs/encoding";
+import { executeKdf, encrypt, KdfConfiguration } from "./wallet"
 
 describe("wallet", () => {
   describe("executeKdf", () => {
@@ -40,6 +41,32 @@ describe("wallet", () => {
           params: {},
         };
         await expectAsync(executeKdf(password, kdfConfiguration)).toBeRejectedWith(new Error("Unsupported KDF algorithm"))
+      })
+    })
+  })
+
+  describe("encrypt", () => {
+    describe("with supported algorithm", () => {
+      it("can encrypt without throw", async () => {
+        const plaintext = new Uint8Array([0x11, 0x22, 0x33, 0x44]);
+        const encryptionKey = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8");
+        const encryptionConfiguration = {
+          algorithm: "xchacha20poly1305-ietf",
+          params: {},
+        };
+        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).not.toBeRejected()
+      })
+    })
+
+    describe("with unsupported algorithm", () => {
+      it("throws", async () => {
+        const plaintext = new Uint8Array([0x11, 0x22, 0x33, 0x44]);
+        const encryptionKey = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8");
+        const encryptionConfiguration = {
+          algorithm: "unsupported",
+          params: {},
+        };
+        await expectAsync(encrypt(plaintext, encryptionKey, encryptionConfiguration)).toBeRejectedWith(new Error("Unsupported encryption algorithm: 'unsupported'"))
       })
     })
   })
