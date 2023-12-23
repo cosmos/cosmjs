@@ -86,5 +86,15 @@ describe("wallet", () => {
         await expectAsync(decrypt(ciphertext, encryptionKey, encryptionConfiguration)).not.toBeRejected()
       })
     })
+
+    describe("with unsupported algorithm", () => {
+      it("throws", async () => {
+        const ciphertext = await encrypt(plaintext, encryptionKey, encryptionConfiguration)
+        await expectAsync(decrypt(ciphertext, encryptionKey, {
+          algorithm: "unsupported",
+          params: {},
+        })).toBeRejectedWith(new Error("Unsupported encryption algorithm: 'unsupported'"))
+      })
+    })
   })
 })
