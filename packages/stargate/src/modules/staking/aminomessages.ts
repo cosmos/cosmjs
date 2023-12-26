@@ -150,7 +150,7 @@ export interface AminoMsgCancelUnbondingDelegation extends AminoMsg {
     readonly delegator_address: string;
     readonly validator_address: string;
     readonly amount: Coin;
-    readonly creation_height: string;
+    readonly creation_height: bigint;
   };
 }
 
@@ -363,10 +363,10 @@ export function createStakingAminoConverters(): Record<string, AminoConverter> {
         amount,
         creation_height,
       }: AminoMsgCancelUnbondingDelegation["value"]): MsgCancelUnbondingDelegation => ({
-        delegator_address: delegator_address,
-        validator_address: validator_address,
+        delegatorAddress: delegator_address,
+        validatorAddress: validator_address,
         amount: amount,
-        creation_height: creation_height,
+        creationHeight: creation_height,
       }),
     },
   };

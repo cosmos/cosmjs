@@ -4,6 +4,7 @@ import { coin } from "@cosmjs/proto-signing";
 import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import {
   MsgBeginRedelegate,
+  MsgCancelUnbondingDelegation,
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
@@ -13,6 +14,7 @@ import {
 import { AminoTypes } from "../../aminotypes";
 import {
   AminoMsgBeginRedelegate,
+  AminoMsgCancelUnbondingDelegation,
   AminoMsgCreateValidator,
   AminoMsgDelegate,
   AminoMsgEditValidator,
@@ -199,6 +201,30 @@ describe("AminoTypes", () => {
       };
       expect(aminoMsg).toEqual(expected);
     });
+
+    it("works for MsgCancelUnbondingDelegation", () => {
+      const msg: MsgCancelUnbondingDelegation = {
+        delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        amount: coin(1234, "ucosm"),
+        creationHeight: BigInt("1"),
+      };
+      const aminoTypes = new AminoTypes(createStakingAminoConverters());
+      const aminoMsg = aminoTypes.toAmino({
+        typeUrl: "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation",
+        value: msg,
+      });
+      const expected: AminoMsgCancelUnbondingDelegation = {
+        type: "cosmos-sdk/MsgCancelUnbondingDelegation",
+        value: {
+          delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          amount: coin(1234, "ucosm"),
+          creation_height: BigInt("1"),
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
   });
 
   describe("fromAmino", () => {
@@ -359,6 +385,29 @@ describe("AminoTypes", () => {
       };
       expect(msg).toEqual({
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+        value: expectedValue,
+      });
+    });
+
+    it("works for MsgCancelUnbondingDelegation", () => {
+      const aminoMsg: AminoMsgCancelUnbondingDelegation = {
+        type: "cosmos-sdk/MsgCancelUnbondingDelegation",
+        value: {
+          delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+          amount: coin(1234, "ucosm"),
+          creation_height: BigInt("1"),
+        },
+      };
+      const msg = new AminoTypes(createStakingAminoConverters()).fromAmino(aminoMsg);
+      const expectedValue: MsgCancelUnbondingDelegation = {
+        delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        amount: coin(1234, "ucosm"),
+        creationHeight: BigInt("1"),
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation",
         value: expectedValue,
       });
     });
