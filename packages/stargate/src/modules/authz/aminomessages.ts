@@ -153,7 +153,7 @@ export function createAuthzAminoConverters(): AminoConverters {
           case 'cosmos-sdk/StakeAuthorization': {
             authorizationValue = {
               typeUrl: '/cosmos.staking.v1beta1.StakeAuthorization',
-              value: SendAuthorization
+              value: StakeAuthorization
                 .encode(StakeAuthorization
                   .fromPartial({
                     maxTokens: grant.authorization.value.max_token,
