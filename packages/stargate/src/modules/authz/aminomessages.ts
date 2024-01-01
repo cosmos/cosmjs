@@ -2,9 +2,11 @@ import { AminoConverters } from "../../aminotypes";
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgGrant, MsgExec, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { Any } from "../../../google/protobuf/any";
+import { Timestamp } from "../../../google/protobuf/timestamp";
 import { GenericAuthorization, AuthorizationType } from 'cosmjs-types/cosmos/authz/v1beta1/authz';
 import { SendAuthorization } from 'cosmjs-types/cosmos/bank/v1beta1/authz';
 import { StakeAuthorization } from 'cosmjs-types/cosmos/staking/v1beta1/authz';
+
 
 interface Grant {
   authorization?: any;
