@@ -74,6 +74,7 @@ export function createAuthzAminoConverters(): AminoConverters {
               type: "cosmos-sdk/SendAuthorization",
               value: {
                 spend_limit: spend.spendLimit,
+                allow_list: spend.allowList,
               },
             };
             break;
@@ -141,7 +142,10 @@ export function createAuthzAminoConverters(): AminoConverters {
             authorizationValue = {
               typeUrl: "/cosmos.bank.v1beta1.SendAuthorization",
               value: SendAuthorization.encode(
-                SendAuthorization.fromPartial({ spendLimit: grant.authorization.value.spend_limit }),
+                SendAuthorization.fromPartial({
+                  spendLimit: grant.authorization.value.spend_limit,
+                  allowList: grant.authorization.value.allow_list,
+                }),
               ).finish(),
             };
             break;
