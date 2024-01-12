@@ -7,9 +7,9 @@ import { Any } from "cosmjs-types/google/protobuf/any";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import { AminoConverters } from "src/aminotypes";
 
-interface Grant {
+interface AminoGrant {
   authorization?: any;
-  expiration?: Timestamp;
+  expiration?: string;
 }
 
 export interface AminoMsgGrant extends AminoMsg {
@@ -19,7 +19,7 @@ export interface AminoMsgGrant extends AminoMsg {
     readonly granter: string;
     /** Bech32 account address */
     readonly grantee: string;
-    readonly grant: Grant;
+    readonly grant: AminoGrant;
   };
 }
 

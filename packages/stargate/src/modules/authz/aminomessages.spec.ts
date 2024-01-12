@@ -19,14 +19,11 @@ describe("Authz Amino Converters", () => {
             authorization: {
               type: "cosmos-sdk/SendAuthorization",
               value: {
-                spendLimit: [{ denom: "ustake", amount: "1000000" }],
-                allowList: [],
+                spend_limit: [{ denom: "ustake", amount: "1000000" }],
+                allow_list: ["cosmos147auavf4tvghskslq2w65de0nh5dqdmljxc7kh"],
               },
             },
-            // expiration: Timestamp.fromPartial({
-            //   seconds: BigInt(1596300000),
-            //   nanos: 0,
-            // }),
+            expiration: "Mon Jan 19 1970 19:25:00 GMT+0800 (Indochina Time)",
           },
         },
       };
@@ -40,18 +37,15 @@ describe("Authz Amino Converters", () => {
             typeUrl: "/cosmos.bank.v1beta1.SendAuthorization",
             value: SendAuthorization.encode({
               spendLimit: [{ denom: "ustake", amount: "1000000" }],
-              allowList: [],
+              allowList: ["cosmos147auavf4tvghskslq2w65de0nh5dqdmljxc7kh"],
             }).finish(),
           },
-          // expiration: {
-          //   seconds: BigInt(1596300000),
-          //   nanos: 0,
-          // },
+          expiration: {
+            seconds: BigInt(1596300),
+            nanos: 0,
+          },
         },
       };
-      console.log(msgGrant.value.grant.authorization);
-
-      // console.log(expectedValue.grant.authorization?.value);
 
       expect(msgGrant).toEqual({
         typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
