@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
@@ -5,6 +6,8 @@ import { SendAuthorization } from "cosmjs-types/cosmos/bank/v1beta1/authz";
 import { StakeAuthorization } from "cosmjs-types/cosmos/staking/v1beta1/authz";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
+
+// eslint-disable-next-line import/no-cycle
 import { AminoConverters } from "../../aminotypes";
 
 interface AminoGrant {
