@@ -5,7 +5,7 @@ import { SendAuthorization } from "cosmjs-types/cosmos/bank/v1beta1/authz";
 import { StakeAuthorization } from "cosmjs-types/cosmos/staking/v1beta1/authz";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
-import { AminoConverters } from "src/aminotypes";
+import { AminoConverters } from "../../aminotypes";
 
 interface AminoGrant {
   authorization?: any;
