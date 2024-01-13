@@ -46,7 +46,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:18-bullseye
+      - image: circleci/node:18.19-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -560,7 +560,7 @@ jobs:
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:
-      - image: circleci/node:18-bullseye
+      - image: circleci/node:18.19-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -591,7 +591,7 @@ jobs:
           paths: docs_deployment
   docs-deploy:
     docker:
-      - image: circleci/node:18-bullseye
+      - image: circleci/node:18.19-bullseye
     steps:
       - attach_workspace:
           at: .
@@ -609,7 +609,7 @@ jobs:
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
   lint:
     docker:
-      - image: circleci/node:18-bullseye
+      - image: circleci/node:18.19-bullseye
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
