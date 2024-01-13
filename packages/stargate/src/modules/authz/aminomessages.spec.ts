@@ -1,10 +1,9 @@
 import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { SendAuthorization } from "cosmjs-types/cosmos/bank/v1beta1/authz";
-
-import { AminoMsgExec, AminoMsgGrant, AminoMsgRevoke, createAuthzAminoConverters } from "./aminomessages";
-import { AminoTypes } from "../../aminotypes";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { ExpectedValues } from "../../../../tendermint-rpc/build/testutil.spec";
+
+import { AminoTypes } from "../../aminotypes";
+import { AminoMsgExec, AminoMsgGrant, AminoMsgRevoke, createAuthzAminoConverters } from "./aminomessages";
 
 describe("Authz Amino Converters", () => {
   describe("fromAmino", () => {
