@@ -34,7 +34,7 @@ workflows:
             - build
           matrix:
             parameters:
-              node-version: ["18", "20"]
+              node-version: ["16", "18", "20"]
       - test-chrome:
           requires:
             - build
