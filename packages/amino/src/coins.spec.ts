@@ -110,6 +110,14 @@ describe("coins", () => {
           denom: "ibc/7F1D3FCF4AE79E1554D670D1AD949A9BA4E4A3C76C63093E17E446A46061A7A2",
         },
       ]);
+
+      // Token factory denom (https://docs.osmosis.zone/osmosis-core/modules/tokenfactory/)
+      expect(parseCoins("100000000000factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo")).toEqual([
+        {
+          amount: "100000000000",
+          denom: "factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo",
+        },
+      ]);
     });
 
     it("trims leading zeros", () => {
