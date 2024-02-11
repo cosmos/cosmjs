@@ -81,15 +81,41 @@ describe("coins", () => {
       ]);
     });
 
-    it("works for two", () => {
-      expect(parseCoins("819966000ucosm,700000000ustake")).toEqual([
+    it("works for various denoms", () => {
+      // very short (3)
+      expect(parseCoins("7643bar")).toEqual([
         {
-          amount: "819966000",
-          denom: "ucosm",
+          amount: "7643",
+          denom: "bar",
         },
+      ]);
+
+      // very long (128)
+      expect(
+        parseCoins(
+          "7643abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh",
+        ),
+      ).toEqual([
         {
-          amount: "700000000",
-          denom: "ustake",
+          amount: "7643",
+          denom:
+            "abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh",
+        },
+      ]);
+
+      // IBC denom (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/types/coin_test.go#L512-L519)
+      expect(parseCoins("7643ibc/7F1D3FCF4AE79E1554D670D1AD949A9BA4E4A3C76C63093E17E446A46061A7A2")).toEqual([
+        {
+          amount: "7643",
+          denom: "ibc/7F1D3FCF4AE79E1554D670D1AD949A9BA4E4A3C76C63093E17E446A46061A7A2",
+        },
+      ]);
+
+      // Token factory denom (https://docs.osmosis.zone/osmosis-core/modules/tokenfactory/)
+      expect(parseCoins("100000000000factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo")).toEqual([
+        {
+          amount: "100000000000",
+          denom: "factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo",
         },
       ]);
     });
@@ -144,6 +170,19 @@ describe("coins", () => {
       ]);
     });
 
+    it("works for two", () => {
+      expect(parseCoins("819966000ucosm,700000000ustake")).toEqual([
+        {
+          amount: "819966000",
+          denom: "ucosm",
+        },
+        {
+          amount: "700000000",
+          denom: "ustake",
+        },
+      ]);
+    });
+
     it("ignores empty elements", () => {
       // start
       expect(parseCoins(",819966000ucosm,700000000ustake")).toEqual([
@@ -186,6 +225,20 @@ describe("coins", () => {
 
       // amount missing
       expect(() => parseCoins("ucosm")).toThrowError(/invalid coin string/i);
+
+      // denom starting with slash
+      expect(() => parseCoins("3456/ibc")).toThrowError(/invalid coin string/i);
+
+      // denom too short
+      expect(() => parseCoins("3456a")).toThrowError(/invalid coin string/i);
+      expect(() => parseCoins("3456aa")).toThrowError(/invalid coin string/i);
+
+      // denom too long
+      expect(() =>
+        parseCoins(
+          "3456abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha",
+        ),
+      ).toThrowError(/invalid coin string/i);
     });
   });
 

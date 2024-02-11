@@ -6,6 +6,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/amino: Add IBC denom support to `parseCoins` and use the same
+  implementation in all those imports:
+
+  ```ts
+  import { parseCoins } from "@cosmjs/proto-signing";
+  // equals
+  import { parseCoins } from "@cosmjs/stargate";
+  // equals
+  import { parseCoins } from "@cosmjs/amino";
+  ```
+
 ## [0.32.2] - 2023-12-19
 
 ### Fixed
