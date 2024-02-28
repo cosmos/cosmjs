@@ -73,6 +73,7 @@ export interface UploadResult {
   readonly compressedSize: number;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -107,6 +108,7 @@ export interface InstantiateOptions {
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -121,6 +123,7 @@ export interface InstantiateResult {
  * Result type of updateAdmin and clearAdmin
  */
 export interface ChangeAdminResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -132,6 +135,7 @@ export interface ChangeAdminResult {
 }
 
 export interface MigrateResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -149,6 +153,7 @@ export interface ExecuteInstruction {
 }
 
 export interface ExecuteResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -313,7 +318,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       originalSize: wasmCode.length,
       compressedSize: compressed.length,
       codeId: Number.parseInt(codeIdAttr.value, 10),
-      logs: [],
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -348,7 +353,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: [],
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -386,7 +391,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: [],
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
