@@ -385,12 +385,11 @@ describe("WasmExtension", () => {
       {
         const result = await uploadContract(wallet, getHackatom());
         assertIsDeliverTxSuccess(result);
-        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
+        const codeIdAttr = logs.findAttribute(result.events, "store_code", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-        const actionAttr = logs.findAttribute(parsedLogs, "message", "module");
+        const actionAttr = logs.findAttribute(result.events, "message", "module");
         expect(actionAttr.value).toEqual("wasm");
       }
 
@@ -400,12 +399,11 @@ describe("WasmExtension", () => {
       {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsDeliverTxSuccess(result);
-        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+        const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
         contractAddress = contractAddressAttr.value;
-        const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
+        const amountAttr = logs.findAttribute(result.events, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-        const actionAttr = logs.findAttribute(parsedLogs, "message", "module");
+        const actionAttr = logs.findAttribute(result.events, "message", "module");
         expect(actionAttr.value).toEqual("wasm");
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
@@ -418,8 +416,7 @@ describe("WasmExtension", () => {
       {
         const result = await executeContract(wallet, contractAddress, { release: {} });
         assertIsDeliverTxSuccess(result);
-        const parsedLogs = logs.parseLogs(logs.parseRawLog(result.rawLog));
-        const wasmEvent = parsedLogs.find(() => true)?.events.find((e) => e.type === "wasm");
+        const wasmEvent = result.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");
         expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
         expect(wasmEvent.attributes).toContain({

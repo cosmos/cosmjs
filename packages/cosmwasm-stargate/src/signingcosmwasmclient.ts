@@ -63,6 +63,7 @@ import {
   wasmTypes,
 } from "./modules";
 
+
 export interface UploadResult {
   /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */
   readonly checksum: string;
@@ -288,14 +289,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
+    const codeIdAttr = logs.findAttribute(result.events, "store_code", "code_id");
     return {
       checksum: toHex(sha256(wasmCode)),
       originalSize: wasmCode.length,
       compressedSize: compressed.length,
       codeId: Number.parseInt(codeIdAttr.value, 10),
-      logs: parsedLogs,
+      logs: [],
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -327,11 +327,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+    const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: parsedLogs,
+      logs: [],
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -366,11 +365,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+    const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: parsedLogs,
+      logs: [],
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,

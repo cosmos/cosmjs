@@ -222,7 +222,7 @@ describe("CosmWasmClient", () => {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const result = await client.broadcastTx(signedTx);
       assertIsDeliverTxSuccess(result);
-      const amountAttr = logs.findAttribute(logs.parseRawLog(result.rawLog), "transfer", "amount");
+      const amountAttr = logs.findAttribute(result.events, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
