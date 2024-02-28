@@ -16,7 +16,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
-import { findAttribute, SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   defaultInstantiateFee,
@@ -188,7 +188,6 @@ describe("CosmWasmClient", () => {
         amount: coins(5000, "ucosm"),
         gas: "890000",
       };
-
       const chainId = await client.getChainId();
       const sequenceResponse = await client.getSequence(alice.address0);
       assert(sequenceResponse);
@@ -222,8 +221,11 @@ describe("CosmWasmClient", () => {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const result = await client.broadcastTx(signedTx);
       assertIsDeliverTxSuccess(result);
-      const amountAttr = findAttribute(result.events, "transfer", "amount");
-      expect(amountAttr.value).toEqual("1234567ucosm");
+      const amountAttrs = result.events
+        .filter((e) => e.type == "transfer")
+        .flatMap((e) => e.attributes.filter((a) => a.key == "amount"));
+      expect(amountAttrs[0].value).toEqual("5000ucosm"); // fee
+      expect(amountAttrs[1].value).toEqual("1234567ucosm"); // MsgSend amount
       expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
   });

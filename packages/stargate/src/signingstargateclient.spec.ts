@@ -126,6 +126,7 @@ describe("SigningStargateClient", () => {
       } else {
         expect(result.rawLog).toBeTruthy();
       }
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
@@ -167,6 +168,7 @@ describe("SigningStargateClient", () => {
       } else {
         expect(result.rawLog).toBeTruthy();
       }
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
