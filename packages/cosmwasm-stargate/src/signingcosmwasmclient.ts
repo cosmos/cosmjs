@@ -15,6 +15,7 @@ import {
 } from "@cosmjs/proto-signing";
 import {
   AminoTypes,
+  Attribute,
   calculateFee,
   Coin,
   createDefaultAminoConverters,
@@ -158,6 +159,24 @@ export interface ExecuteResult {
   readonly gasUsed: bigint;
 }
 
+/**
+ * Searches in events for the first event of the given event type and in that event
+ * for the first first attribute with the given attribute key.
+ *
+ * Throws if the attribute was not found.
+ */
+export function findAttribute(events: readonly Event[], eventType: string, attrKey: string): Attribute {
+  const out = events
+    .find((event) => event.type === eventType)
+    ?.attributes.find((attr) => attr.key === attrKey);
+  if (!out) {
+    throw new Error(
+      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
+    );
+  }
+  return out;
+}
+
 function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
@@ -288,7 +307,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const codeIdAttr = logs.findAttribute(result.events, "store_code", "code_id");
+    const codeIdAttr = findAttribute(result.events, "store_code", "code_id");
     return {
       checksum: toHex(sha256(wasmCode)),
       originalSize: wasmCode.length,
@@ -326,7 +345,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
+    const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
       logs: [],
@@ -364,7 +383,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
+    const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
       logs: [],

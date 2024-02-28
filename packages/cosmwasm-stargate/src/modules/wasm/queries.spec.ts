@@ -7,7 +7,6 @@ import {
   coin,
   coins,
   DeliverTxResponse,
-  logs,
   SigningStargateClient,
   StdFee,
 } from "@cosmjs/stargate";
@@ -15,7 +14,7 @@ import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AbsoluteTxPosition, ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { SigningCosmWasmClient } from "../../signingcosmwasmclient";
+import { findAttribute, SigningCosmWasmClient } from "../../signingcosmwasmclient";
 import {
   alice,
   bech32AddressMatcher,
@@ -385,11 +384,11 @@ describe("WasmExtension", () => {
       {
         const result = await uploadContract(wallet, getHackatom());
         assertIsDeliverTxSuccess(result);
-        const codeIdAttr = logs.findAttribute(result.events, "store_code", "code_id");
+        const codeIdAttr = findAttribute(result.events, "store_code", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-        const actionAttr = logs.findAttribute(result.events, "message", "module");
+        const actionAttr = findAttribute(result.events, "message", "module");
         expect(actionAttr.value).toEqual("wasm");
       }
 
@@ -399,11 +398,11 @@ describe("WasmExtension", () => {
       {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, funds);
         assertIsDeliverTxSuccess(result);
-        const contractAddressAttr = logs.findAttribute(result.events, "instantiate", "_contract_address");
+        const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
         contractAddress = contractAddressAttr.value;
-        const amountAttr = logs.findAttribute(result.events, "transfer", "amount");
+        const amountAttr = findAttribute(result.events, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-        const actionAttr = logs.findAttribute(result.events, "message", "module");
+        const actionAttr = findAttribute(result.events, "message", "module");
         expect(actionAttr.value).toEqual("wasm");
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
