@@ -15,14 +15,14 @@ const rpcUrl = "http://localhost:26659";
 const prefix = "wasm";
 const faucet = {
   mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address0: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
+    "flat ski gap size ankle rifle congress month nice state follow mechanic produce cube moment boss enlist disorder during logic brother ride erosion member",
+  address0: "wasm100xecaptkwqaq6e53s8zxf2vkzz47n6swseykt",
 };
 
 async function main() {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, { prefix: prefix });
   const client = await SigningStargateClient.connectWithSigner(rpcUrl, wallet, { prefix: prefix });
-  const recipient = toBech32(prefix, Random.getBytes(20));
+  const recipient = "wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk";
   const amount = coins(226644, "ucosm");
   const fee = calculateFee(100_000, "0.025ucosm");
   const memo = "Ensure chain has my pubkey";
