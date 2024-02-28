@@ -607,7 +607,7 @@ describe("SigningCosmWasmClient", () => {
       expect(result.height).toBeGreaterThan(0);
       expect(result.gasWanted).toBeGreaterThan(0);
       expect(result.gasUsed).toBeGreaterThan(0);
-      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      const wasmEvent = result.events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent.attributes).toContain({
@@ -660,7 +660,7 @@ describe("SigningCosmWasmClient", () => {
         { release: {} },
         defaultExecuteFee,
       );
-      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      const wasmEvent = result.events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent.attributes).toContain({
@@ -727,16 +727,16 @@ describe("SigningCosmWasmClient", () => {
         ],
         "auto",
       );
-      expect(result.logs.length).toEqual(2);
-      const wasmEvent1 = result.logs[0].events.find((e) => e.type === "wasm");
-      assert(wasmEvent1, "Event of type wasm expected");
+      const { events } = result;
+      expect(events.length).toEqual(2);
+      const [wasmEvent1, wasmEvent2] = events.filter((e) => e.type == "wasm");
+      expect(wasmEvent1.type).toEqual("wasm");
       expect(wasmEvent1.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent1.attributes).toContain({
         key: "destination",
         value: beneficiaryAddress1,
       });
-      const wasmEvent2 = result.logs[1].events.find((e) => e.type === "wasm");
-      assert(wasmEvent2, "Event of type wasm expected");
+      expect(wasmEvent2.type).toEqual("wasm");
       expect(wasmEvent2.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent2.attributes).toContain({
         key: "destination",
@@ -777,7 +777,8 @@ describe("SigningCosmWasmClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+      expect(result.rawLog).toEqual(""); // empty for wasmd >= 0.50.0 (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
@@ -816,7 +817,8 @@ describe("SigningCosmWasmClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+      expect(result.rawLog).toEqual(""); // empty for wasmd >= 0.50.0 (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
