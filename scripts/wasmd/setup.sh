@@ -6,6 +6,6 @@ source "$SCRIPT_DIR"/env
 
 
 docker run --rm \
-  --mount type=bind,source="$SCRIPT_DIR/template_v50",target=/root \
+  --mount type=bind,source="$SCRIPT_DIR/template",target=/root \
   "$REPOSITORY:$VERSION" \
   ./setup_wasmd.sh

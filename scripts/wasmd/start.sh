@@ -26,7 +26,7 @@ docker run --rm \
   --name "$CONTAINER_NAME" \
   -p "$TENDERMINT_PORT_HOST":"$TENDERMINT_PORT_GUEST" \
   -p "$LCD_API_PORT_HOST":"$LCD_API_PORT_GUEST" \
-  --mount type=bind,source="$SCRIPT_DIR/template_v50",target=/template \
+  --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
   --mount type=volume,source=wasmd_data,target=/root \
   "$REPOSITORY:$VERSION" \
   ./run_wasmd.sh /template \
