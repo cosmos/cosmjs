@@ -63,7 +63,6 @@ import {
   wasmTypes,
 } from "./modules";
 
-
 export interface UploadResult {
   /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */
   readonly checksum: string;
