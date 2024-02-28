@@ -69,8 +69,9 @@ export function parseRawLog(input = "[]"): readonly Log[] {
  *
  * Throws if the attribute was not found.
  */
-export function findAttribute(events: readonly Event[], eventType: string, attrKey: string): Attribute {
-  const out = events
+export function findAttribute(logs: readonly Log[], eventType: string, attrKey: string): Attribute {
+  const firstLogs = logs.find(() => true);
+  const out = firstLogs?.events
     .find((event) => event.type === eventType)
     ?.attributes.find((attr) => attr.key === attrKey);
   if (!out) {

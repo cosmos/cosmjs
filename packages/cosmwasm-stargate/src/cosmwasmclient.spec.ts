@@ -10,13 +10,13 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { assertIsDeliverTxSuccess, coins, logs, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
+import { assertIsDeliverTxSuccess, coins, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
-import { SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { findAttribute, SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   defaultInstantiateFee,
@@ -222,7 +222,7 @@ describe("CosmWasmClient", () => {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const result = await client.broadcastTx(signedTx);
       assertIsDeliverTxSuccess(result);
-      const amountAttr = logs.findAttribute(result.events, "transfer", "amount");
+      const amountAttr = findAttribute(result.events, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
