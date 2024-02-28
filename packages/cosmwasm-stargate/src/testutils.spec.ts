@@ -102,17 +102,11 @@ export const unused = {
 
 export const validator = {
   /**
-   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
-   *
-   * `jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
-   */
-  delegatorAddress: "wasm1g6kvj7w4c8g0vhl35kjgpe3jmuauet0e5tnevj",
-  /**
    * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/wasmd/template/.wasmd/config/genesis.json
    *
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
-  validatorAddress: "wasmvaloper1g6kvj7w4c8g0vhl35kjgpe3jmuauet0ephx9zg",
+  validatorAddress: "wasmvaloper1k2vfqeu2upskfv7awn29g5kvxxnmugkzy6rch0",
   accountNumber: 0,
   sequence: 1,
 };
