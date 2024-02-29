@@ -128,6 +128,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer access type", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
@@ -263,6 +264,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -313,7 +315,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
-      const salt = Uint8Array.from([0x01]);
+      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision erors
       const wasm = getHackatom().data;
       const msg = {
         verifier: alice.address0,
@@ -346,6 +348,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with Amino JSON signing", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const aminoJsonWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
         prefix: wasmd.prefix,
       });
@@ -527,6 +530,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -630,6 +634,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,

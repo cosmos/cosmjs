@@ -400,8 +400,11 @@ describe("WasmExtension", () => {
         assertIsDeliverTxSuccess(result);
         const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
         contractAddress = contractAddressAttr.value;
-        const amountAttr = findAttribute(result.events, "transfer", "amount");
-        expect(amountAttr.value).toEqual("1234ucosm,321ustake");
+        const amountAttrs = result.events
+          .filter((e) => e.type == "transfer")
+          .flatMap((e) => e.attributes.filter((a) => a.key == "amount"));
+        expect(amountAttrs[0].value).toEqual("5000000ucosm"); // fee
+        expect(amountAttrs[1].value).toEqual("1234ucosm,321ustake"); // instantiate funds
         const actionAttr = findAttribute(result.events, "message", "module");
         expect(actionAttr.value).toEqual("wasm");
 
