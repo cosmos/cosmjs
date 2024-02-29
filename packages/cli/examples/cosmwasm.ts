@@ -46,7 +46,7 @@ async function main(hackatomWasmPath: string) {
   // Execute contract
   const executeFee = calculateFee(300_000, gasPrice);
   const result = await client.execute(alice.address0, contractAddress, { release: {} }, executeFee);
-  const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+  const wasmEvent = result.events.find((e) => e.type === "wasm");
   console.info("The `wasm` event emitted by the contract execution:", wasmEvent);
 }
 
