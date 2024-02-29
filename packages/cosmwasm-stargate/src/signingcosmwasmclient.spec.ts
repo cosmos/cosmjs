@@ -728,8 +728,9 @@ describe("SigningCosmWasmClient", () => {
         "auto",
       );
       const { events } = result;
-      expect(events.length).toEqual(2);
-      const [wasmEvent1, wasmEvent2] = events.filter((e) => e.type == "wasm");
+      const wasmEvents = events.filter((e) => e.type == "wasm");
+      expect(wasmEvents.length).toEqual(2);
+      const [wasmEvent1, wasmEvent2] = wasmEvents;
       expect(wasmEvent1.type).toEqual("wasm");
       expect(wasmEvent1.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent1.attributes).toContain({
