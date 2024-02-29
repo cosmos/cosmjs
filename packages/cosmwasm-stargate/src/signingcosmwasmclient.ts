@@ -165,15 +165,15 @@ export interface ExecuteResult {
 }
 
 /**
- * Searches in events for the first event of the given event type and in that event
- * for the first first attribute with the given attribute key.
+ * Searches in events for an event of the given event type which contains an
+ * attribute for with the given key.
  *
  * Throws if the attribute was not found.
  */
 export function findAttribute(events: readonly Event[], eventType: string, attrKey: string): Attribute {
-  const out = events
-    .find((event) => event.type === eventType)
-    ?.attributes.find((attr) => attr.key === attrKey);
+  // all attributes from events with the right event type
+  const attributes = events.filter((event) => event.type === eventType).flatMap((e) => e.attributes);
+  const out = attributes.find((attr) => attr.key === attrKey);
   if (!out) {
     throw new Error(
       `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
