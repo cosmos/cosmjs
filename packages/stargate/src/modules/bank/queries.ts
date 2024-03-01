@@ -31,13 +31,13 @@ export function setupBankExtension(base: QueryClient): BankExtension {
   return {
     bank: {
       balance: async (address: string, denom: string) => {
-        const { balance } = await queryService.Balance({ address: address, denom: denom });
+        const { balance } = await queryService.Balance({ address, denom });
         assert(balance);
         return balance;
       },
       allBalances: async (address: string) => {
         const { balances } = await queryService.AllBalances(
-          QueryAllBalancesRequest.fromPartial({ address: address }),
+          QueryAllBalancesRequest.fromPartial({ address }),
         );
         return balances;
       },
@@ -48,7 +48,7 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         return response;
       },
       supplyOf: async (denom: string) => {
-        const { amount } = await queryService.SupplyOf({ denom: denom });
+        const { amount } = await queryService.SupplyOf({ denom });
         assert(amount);
         return amount;
       },

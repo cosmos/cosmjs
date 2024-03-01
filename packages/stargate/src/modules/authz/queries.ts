@@ -36,21 +36,21 @@ export function setupAuthzExtension(base: QueryClient): AuthzExtension {
     authz: {
       grants: async (granter: string, grantee: string, msgTypeUrl: string, paginationKey?: Uint8Array) => {
         return await queryService.Grants({
-          granter: granter,
-          grantee: grantee,
-          msgTypeUrl: msgTypeUrl,
+          granter,
+          grantee,
+          msgTypeUrl,
           pagination: createPagination(paginationKey),
         });
       },
       granteeGrants: async (grantee: string, paginationKey?: Uint8Array) => {
         return await queryService.GranteeGrants({
-          grantee: grantee,
+          grantee,
           pagination: createPagination(paginationKey),
         });
       },
       granterGrants: async (granter: string, paginationKey?: Uint8Array) => {
         return await queryService.GranterGrants({
-          granter: granter,
+          granter,
           pagination: createPagination(paginationKey),
         });
       },

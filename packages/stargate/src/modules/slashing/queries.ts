@@ -24,7 +24,7 @@ export function setupSlashingExtension(base: QueryClient): SlashingExtension {
     slashing: {
       signingInfo: async (consAddress: string) => {
         const response = await queryService.SigningInfo({
-          consAddress: consAddress,
+          consAddress,
         });
         return response;
       },
