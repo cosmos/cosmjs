@@ -37,13 +37,13 @@ export function setupBankExtension(base: QueryClient): BankExtension {
       },
       allBalances: async (address: string) => {
         const { balances } = await queryService.AllBalances(
-          QueryAllBalancesRequest.fromPartial({ address }),
+          QueryAllBalancesRequest.fromPartial({ address })
         );
         return balances;
       },
       totalSupply: async (paginationKey?: Uint8Array) => {
         const response = await queryService.TotalSupply({
-          pagination: createPagination(paginationKey),
+          pagination: createPagination(paginationKey)
         });
         return response;
       },
