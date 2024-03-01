@@ -25,7 +25,7 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
   return {
     auth: {
       account: async (address: string) => {
-        const { account } = await queryService.Account({ address: address });
+        const { account } = await queryService.Account({ address });
         return account ?? null;
       },
     },

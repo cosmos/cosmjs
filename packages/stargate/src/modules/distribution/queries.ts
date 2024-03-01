@@ -52,26 +52,26 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
       },
       delegationRewards: async (delegatorAddress: string, validatorAddress: string) => {
         const response = await queryService.DelegationRewards({
-          delegatorAddress: delegatorAddress,
-          validatorAddress: validatorAddress,
+          delegatorAddress,
+          validatorAddress,
         });
         return response;
       },
       delegationTotalRewards: async (delegatorAddress: string) => {
         const response = await queryService.DelegationTotalRewards({
-          delegatorAddress: delegatorAddress,
+          delegatorAddress,
         });
         return response;
       },
       delegatorValidators: async (delegatorAddress: string) => {
         const response = await queryService.DelegatorValidators({
-          delegatorAddress: delegatorAddress,
+          delegatorAddress,
         });
         return response;
       },
       delegatorWithdrawAddress: async (delegatorAddress: string) => {
         const response = await queryService.DelegatorWithdrawAddress({
-          delegatorAddress: delegatorAddress,
+          delegatorAddress,
         });
         return response;
       },
@@ -81,13 +81,13 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
       },
       validatorCommission: async (validatorAddress: string) => {
         const response = await queryService.ValidatorCommission({
-          validatorAddress: validatorAddress,
+          validatorAddress,
         });
         return response;
       },
       validatorOutstandingRewards: async (validatorAddress: string) => {
         const response = await queryService.ValidatorOutstandingRewards({
-          validatorAddress: validatorAddress,
+          validatorAddress,
         });
         return response;
       },
@@ -98,7 +98,7 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
         paginationKey?: Uint8Array,
       ) => {
         const response = await queryService.ValidatorSlashes({
-          validatorAddress: validatorAddress,
+          validatorAddress,
           startingHeight: BigInt(startingHeight),
           endingHeight: BigInt(endingHeight),
           pagination: createPagination(paginationKey),

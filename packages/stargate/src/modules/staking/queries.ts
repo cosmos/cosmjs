@@ -165,7 +165,7 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
       },
       validators: async (status: BondStatusString, paginationKey?: Uint8Array) => {
         const response = await queryService.Validators({
-          status: status,
+          status,
           pagination: createPagination(paginationKey),
         });
         return response;

@@ -23,14 +23,14 @@ export function setupFeegrantExtension(base: QueryClient): FeegrantExtension {
     feegrant: {
       allowance: async (granter: string, grantee: string) => {
         const response = await queryService.Allowance({
-          granter: granter,
-          grantee: grantee,
+          granter,
+          grantee,
         });
         return response;
       },
       allowances: async (grantee: string, paginationKey?: Uint8Array) => {
         const response = await queryService.Allowances({
-          grantee: grantee,
+          grantee,
           pagination: createPagination(paginationKey),
         });
         return response;
