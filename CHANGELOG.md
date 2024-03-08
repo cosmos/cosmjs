@@ -19,6 +19,13 @@ and this project adheres to
   import { parseCoins } from "@cosmjs/amino";
   ```
 
+### Fixed
+
+- @cosmjs/encoding: Avoid using replacement character in doc comment to make
+  external tools happy. ([#1570])
+
+[#1570]: https://github.com/cosmos/cosmjs/pull/1570
+
 ## [0.32.2] - 2023-12-19
 
 ### Fixed
