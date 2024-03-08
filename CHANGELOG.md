@@ -28,7 +28,11 @@ and this project adheres to
 
 - @cosmjs/encoding: Avoid using replacement character in doc comment to make
   external tools happy. ([#1570])
+- @cosmjs/cosmwasm-stargate: Use events instead of log parsing to receive
+  information in SigningCosmWasmClient. This is required to support Cosmos SDK
+  0.50+ where the `rawLog` field is empty. ([#1564])
 
+[#1564]: https://github.com/cosmos/cosmjs/pull/1564
 [#1570]: https://github.com/cosmos/cosmjs/pull/1570
 
 ## [0.32.2] - 2023-12-19
