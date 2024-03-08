@@ -15,6 +15,7 @@ import {
 } from "@cosmjs/proto-signing";
 import {
   AminoTypes,
+  Attribute,
   calculateFee,
   Coin,
   createDefaultAminoConverters,
@@ -72,6 +73,7 @@ export interface UploadResult {
   readonly compressedSize: number;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -106,6 +108,7 @@ export interface InstantiateOptions {
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -120,6 +123,7 @@ export interface InstantiateResult {
  * Result type of updateAdmin and clearAdmin
  */
 export interface ChangeAdminResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -131,6 +135,7 @@ export interface ChangeAdminResult {
 }
 
 export interface MigrateResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -148,6 +153,7 @@ export interface ExecuteInstruction {
 }
 
 export interface ExecuteResult {
+  /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
   readonly height: number;
@@ -156,6 +162,24 @@ export interface ExecuteResult {
   readonly events: readonly Event[];
   readonly gasWanted: bigint;
   readonly gasUsed: bigint;
+}
+
+/**
+ * Searches in events for an event of the given event type which contains an
+ * attribute for with the given key.
+ *
+ * Throws if the attribute was not found.
+ */
+export function findAttribute(events: readonly Event[], eventType: string, attrKey: string): Attribute {
+  // all attributes from events with the right event type
+  const attributes = events.filter((event) => event.type === eventType).flatMap((e) => e.attributes);
+  const out = attributes.find((attr) => attr.key === attrKey);
+  if (!out) {
+    throw new Error(
+      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
+    );
+  }
+  return out;
 }
 
 function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
@@ -288,14 +312,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
+    const codeIdAttr = findAttribute(result.events, "store_code", "code_id");
     return {
       checksum: toHex(sha256(wasmCode)),
       originalSize: wasmCode.length,
       compressedSize: compressed.length,
       codeId: Number.parseInt(codeIdAttr.value, 10),
-      logs: parsedLogs,
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -327,11 +350,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+    const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: parsedLogs,
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
@@ -366,11 +388,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
-    const parsedLogs = logs.parseRawLog(result.rawLog);
-    const contractAddressAttr = logs.findAttribute(parsedLogs, "instantiate", "_contract_address");
+    const contractAddressAttr = findAttribute(result.events, "instantiate", "_contract_address");
     return {
       contractAddress: contractAddressAttr.value,
-      logs: parsedLogs,
+      logs: logs.parseRawLog(result.rawLog),
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,

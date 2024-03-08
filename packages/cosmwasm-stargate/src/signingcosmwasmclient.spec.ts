@@ -128,6 +128,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer access type", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
@@ -263,6 +264,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -313,7 +315,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
-      const salt = Uint8Array.from([0x01]);
+      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision erors
       const wasm = getHackatom().data;
       const msg = {
         verifier: alice.address0,
@@ -346,6 +348,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with Amino JSON signing", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const aminoJsonWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
         prefix: wasmd.prefix,
       });
@@ -527,6 +530,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -607,7 +611,7 @@ describe("SigningCosmWasmClient", () => {
       expect(result.height).toBeGreaterThan(0);
       expect(result.gasWanted).toBeGreaterThan(0);
       expect(result.gasUsed).toBeGreaterThan(0);
-      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      const wasmEvent = result.events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent.attributes).toContain({
@@ -630,6 +634,7 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
+      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -660,7 +665,7 @@ describe("SigningCosmWasmClient", () => {
         { release: {} },
         defaultExecuteFee,
       );
-      const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
+      const wasmEvent = result.events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent.attributes).toContain({
@@ -727,16 +732,17 @@ describe("SigningCosmWasmClient", () => {
         ],
         "auto",
       );
-      expect(result.logs.length).toEqual(2);
-      const wasmEvent1 = result.logs[0].events.find((e) => e.type === "wasm");
-      assert(wasmEvent1, "Event of type wasm expected");
+      const { events } = result;
+      const wasmEvents = events.filter((e) => e.type == "wasm");
+      expect(wasmEvents.length).toEqual(2);
+      const [wasmEvent1, wasmEvent2] = wasmEvents;
+      expect(wasmEvent1.type).toEqual("wasm");
       expect(wasmEvent1.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent1.attributes).toContain({
         key: "destination",
         value: beneficiaryAddress1,
       });
-      const wasmEvent2 = result.logs[1].events.find((e) => e.type === "wasm");
-      assert(wasmEvent2, "Event of type wasm expected");
+      expect(wasmEvent2.type).toEqual("wasm");
       expect(wasmEvent2.attributes).toContain({ key: "action", value: "release" });
       expect(wasmEvent2.attributes).toContain({
         key: "destination",
@@ -777,7 +783,8 @@ describe("SigningCosmWasmClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+      expect(result.rawLog).toEqual(""); // empty for wasmd >= 0.50.0 (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
@@ -816,7 +823,8 @@ describe("SigningCosmWasmClient", () => {
         memo,
       );
       assertIsDeliverTxSuccess(result);
-      expect(result.rawLog).toBeTruthy();
+      expect(result.rawLog).toEqual(""); // empty for wasmd >= 0.50.0 (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");

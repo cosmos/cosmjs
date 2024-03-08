@@ -10,6 +10,10 @@
 # specified in this config (e.g. 0.25token1;0.0001token2).
 minimum-gas-prices = "0stake"
 
+# The maximum gas a query coming over rest/grpc may consume.
+# If this is set to zero, the query can consume an unbounded amount of gas.
+query-gas-limit = "0"
+
 # default: the last 362880 states are kept, pruning at 10 block intervals
 # nothing: all historic states will be saved, nothing will be deleted (i.e. archiving node)
 # everything: 2 latest states will be kept; pruning at 10 block intervals.
@@ -35,15 +39,15 @@ halt-time = 0
 
 # MinRetainBlocks defines the minimum block height offset from the current
 # block being committed, such that all blocks past this offset are pruned
-# from Tendermint. It is used as part of the process of determining the
+# from CometBFT. It is used as part of the process of determining the
 # ResponseCommit.RetainHeight value during ABCI Commit. A value of 0 indicates
 # that no blocks should be pruned.
 #
-# This configuration value is only responsible for pruning Tendermint blocks.
+# This configuration value is only responsible for pruning CometBFT blocks.
 # It has no bearing on application state pruning which is determined by the
 # "pruning-*" configurations.
 #
-# Note: Tendermint block pruning is dependant on this parameter in conunction
+# Note: CometBFT block pruning is dependant on this parameter in conjunction
 # with the unbonding (safety threshold) period, state pruning and state sync
 # snapshot parameters to determine the correct minimum value of
 # ResponseCommit.RetainHeight.
@@ -53,7 +57,7 @@ min-retain-blocks = 0
 inter-block-cache = true
 
 # IndexEvents defines the set of events in the form {eventType}.{attributeKey},
-# which informs Tendermint what to index. If empty, all events will be indexed.
+# which informs CometBFT what to index. If empty, all events will be indexed.
 #
 # Example:
 # ["message.sender", "message.recipient"]
@@ -66,14 +70,9 @@ iavl-cache-size = 781250
 # Default is false.
 iavl-disable-fastnode = false
 
-# IAVLLazyLoading enable/disable the lazy loading of iavl store.
-# Default is false.
-iavl-lazy-loading = false
-
 # AppDBBackend defines the database backend type to use for the application and snapshots DBs.
 # An empty string indicates that a fallback will be used.
-# First fallback is the deprecated compile-time types.DBBackend value.
-# Second fallback (if the types.DBBackend also isn't set), is the db-backend value set in Tendermint's config.toml.
+# The fallback is the db_backend value set in CometBFT's config.toml.
 app-db-backend = ""
 
 ###############################################################################
@@ -123,58 +122,22 @@ enable = true
 swagger = false
 
 # Address defines the API server to listen on.
-address = "tcp://0.0.0.0:1317"
+address = "tcp://localhost:1317"
 
 # MaxOpenConnections defines the number of maximum open connections.
 max-open-connections = 1000
 
-# RPCReadTimeout defines the Tendermint RPC read timeout (in seconds).
+# RPCReadTimeout defines the CometBFT RPC read timeout (in seconds).
 rpc-read-timeout = 10
 
-# RPCWriteTimeout defines the Tendermint RPC write timeout (in seconds).
+# RPCWriteTimeout defines the CometBFT RPC write timeout (in seconds).
 rpc-write-timeout = 0
 
-# RPCMaxBodyBytes defines the Tendermint maximum request body (in bytes).
+# RPCMaxBodyBytes defines the CometBFT maximum request body (in bytes).
 rpc-max-body-bytes = 1000000
 
 # EnableUnsafeCORS defines if CORS should be enabled (unsafe - use it at your own risk).
 enabled-unsafe-cors = true
-
-###############################################################################
-###                           Rosetta Configuration                         ###
-###############################################################################
-
-[rosetta]
-
-# Enable defines if the Rosetta API server should be enabled.
-enable = true
-
-# Address defines the Rosetta API server to listen on.
-address = ":8080"
-
-# Network defines the name of the blockchain that will be returned by Rosetta.
-blockchain = "app"
-
-# Network defines the name of the network that will be returned by Rosetta.
-network = "network"
-
-# Retries defines the number of retries when connecting to the node before failing.
-retries = 3
-
-# Offline defines if Rosetta server should run in offline mode.
-offline = false
-
-# EnableDefaultSuggestedFee defines if the server should suggest fee by default.
-# If 'construction/medata' is called without gas limit and gas price,
-# suggested fee based on gas-to-suggest and denom-to-suggest will be given.
-enable-fee-suggestion = false
-
-# GasToSuggest defines gas limit when calculating the fee
-gas-to-suggest = 200000
-
-# DenomToSuggest defines the defult denom for fee suggestion.
-# Price must be in minimum-gas-prices.
-denom-to-suggest = "uatom"
 
 ###############################################################################
 ###                           gRPC Configuration                            ###
@@ -204,13 +167,8 @@ max-send-msg-size = "2147483647"
 
 # GRPCWebEnable defines if the gRPC-web should be enabled.
 # NOTE: gRPC must also be enabled, otherwise, this configuration is a no-op.
+# NOTE: gRPC-Web uses the same address as the API server.
 enable = true
-
-# Address defines the gRPC-web server address to bind to.
-address = "localhost:9091"
-
-# EnableUnsafeCORS defines if CORS should be enabled (unsafe - use it at your own risk).
-enable-unsafe-cors = false
 
 ###############################################################################
 ###                        State Sync Configuration                         ###
@@ -228,27 +186,30 @@ snapshot-interval = 0
 snapshot-keep-recent = 2
 
 ###############################################################################
-###                         Store / State Streaming                         ###
+###                              State Streaming                            ###
 ###############################################################################
 
-[store]
-streamers = []
+# Streaming allows nodes to stream state to external systems.
+[streaming]
 
-[streamers]
-[streamers.file]
-keys = ["*", ]
-write_dir = ""
-prefix = ""
+# streaming.abci specifies the configuration for the ABCI Listener streaming service.
+[streaming.abci]
 
-# output-metadata specifies if output the metadata file which includes the abci request/responses 
-# during processing the block.
-output-metadata = "true"
+# List of kv store keys to stream out via gRPC.
+# The store key names MUST match the module's StoreKey name.
+#
+# Example:
+# ["acc", "bank", "gov", "staking", "mint"[,...]]
+# ["*"] to expose all keys.
+keys = []
 
-# stop-node-on-error specifies if propagate the file streamer errors to consensus state machine.
-stop-node-on-error = "true"
+# The plugin name used for streaming via gRPC.
+# Streaming is only enabled if this is set.
+# Supported plugins: abci
+plugin = ""
 
-# fsync specifies if call fsync after writing the files.
-fsync = "false"
+# stop-node-on-err specifies whether to stop the node on message delivery error.
+stop-node-on-err = true
 
 ###############################################################################
 ###                         Mempool                                         ###
@@ -261,7 +222,7 @@ fsync = "false"
 #
 # Note, this configuration only applies to SDK built-in app-side mempool
 # implementations.
-max-txs = "5000"
+max-txs = 5000
 
 [wasm]
 # Smart query gas limit is the max gas to be used in a smart query contract call
