@@ -19,6 +19,11 @@ and this project adheres to
   import { parseCoins } from "@cosmjs/amino";
   ```
 
+- @cosmjs/stargate: Let `parseRawLog` gracefully handle empty strings to better
+  support Cosmos SDK 0.50 inputs. ([#1564])
+
+[#1564]: https://github.com/cosmos/cosmjs/pull/1564
+
 ### Fixed
 
 - @cosmjs/encoding: Avoid using replacement character in doc comment to make
