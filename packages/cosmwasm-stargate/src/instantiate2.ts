@@ -58,15 +58,19 @@ export function _instantiate2AddressIntermediate(
 /**
  * Predictable address generation for the MsgInstantiateContract2
  * introduced with wasmd 0.29.
+ *
+ * With `checksum`, `creator` and `salt`, the instantiate 2 address is
+ * generated in binary form. The `bech32Prefix` is then used for the bech32 representation.
+ * Chains using address formats other than bech32 are not supported by this API.
  */
 export function instantiate2Address(
   checksum: Uint8Array,
   creator: string,
   salt: Uint8Array,
-  prefix: string,
+  bech32Prefix: string,
 ): string {
   // Non-empty msg values are discouraged.
   // See https://medium.com/cosmwasm/dev-note-3-limitations-of-instantiate2-and-how-to-deal-with-them-a3f946874230.
   const msg = null;
-  return _instantiate2AddressIntermediate(checksum, creator, salt, msg, prefix).address;
+  return _instantiate2AddressIntermediate(checksum, creator, salt, msg, bech32Prefix).address;
 }
