@@ -541,7 +541,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    creationHeight: number,
+    creationHeight: bigint | undefined,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<DeliverTxResponse> {

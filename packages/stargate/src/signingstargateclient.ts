@@ -218,7 +218,7 @@ export class SigningStargateClient extends StargateClient {
     delegatorAddress: string,
     validatorAddress: string,
     amount: Coin,
-    creationHeight: number,
+    creationHeight: bigint | undefined,
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<DeliverTxResponse> {
