@@ -24,6 +24,7 @@ import {
   GasPrice,
   isDeliverTxFailure,
   logs,
+  MsgCancelUnbondingDelegationEncodeObject,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
   MsgUndelegateEncodeObject,
@@ -34,7 +35,11 @@ import {
 import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
-import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import {
+  MsgCancelUnbondingDelegation,
+  MsgDelegate,
+  MsgUndelegate,
+} from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {
@@ -530,6 +535,26 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     return this.signAndBroadcast(senderAddress, [sendMsg], fee, memo);
+  }
+
+  public async cancelUnbondingDelegation(
+    delegatorAddress: string,
+    validatorAddress: string,
+    amount: Coin,
+    creationHeight: number,
+    fee: StdFee | "auto" | number,
+    memo = "",
+  ): Promise<DeliverTxResponse> {
+    const cancelUnbondingDelegationMsg: MsgCancelUnbondingDelegationEncodeObject = {
+      typeUrl: "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation",
+      value: MsgCancelUnbondingDelegation.fromPartial({
+        delegatorAddress: delegatorAddress,
+        validatorAddress: validatorAddress,
+        amount: amount,
+        creationHeight: creationHeight,
+      }),
+    };
+    return this.signAndBroadcast(delegatorAddress, [cancelUnbondingDelegationMsg], fee, memo);
   }
 
   public async delegateTokens(

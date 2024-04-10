@@ -87,11 +87,13 @@ export {
 } from "./staking/aminomessages";
 export {
   isMsgBeginRedelegateEncodeObject,
+  isMsgCancelUnbondingDelegationEncodeObject,
   isMsgCreateValidatorEncodeObject,
   isMsgDelegateEncodeObject,
   isMsgEditValidatorEncodeObject,
   isMsgUndelegateEncodeObject,
   MsgBeginRedelegateEncodeObject,
+  MsgCancelUnbondingDelegationEncodeObject,
   MsgCreateValidatorEncodeObject,
   MsgDelegateEncodeObject,
   MsgEditValidatorEncodeObject,
