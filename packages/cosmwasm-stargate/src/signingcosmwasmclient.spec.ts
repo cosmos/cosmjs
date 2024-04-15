@@ -128,7 +128,6 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer access type", async () => {
       pendingWithoutWasmd();
-      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
@@ -264,7 +263,6 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
-      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -348,7 +346,6 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with Amino JSON signing", async () => {
       pendingWithoutWasmd();
-      pending("wasmd 0.50 does not work with Amino JSON signing");
       const aminoJsonWallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, {
         prefix: wasmd.prefix,
       });
@@ -530,7 +527,6 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
-      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -634,7 +630,6 @@ describe("SigningCosmWasmClient", () => {
 
     it("works with legacy Amino signer", async () => {
       pendingWithoutWasmd();
-      pending("wasmd 0.50 does not work with Amino JSON signing");
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
