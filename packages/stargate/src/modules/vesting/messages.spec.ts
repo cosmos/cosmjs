@@ -45,7 +45,7 @@ describe("vesting messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON sign mode", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp46OrHigher(); // Amino JSON broken on chain before Cosmos SDK 0.46
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
