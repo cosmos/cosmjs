@@ -150,8 +150,11 @@ describe("SigningCosmWasmClient", () => {
     it("works with legacy Amino signer (instantiatePermission set)", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
-      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
+      const client = await SigningCosmWasmClient.connectWithSigner(
+        wasmd.endpoint,
+        wallet,
+        defaultSigningClientOptions,
+      );
       const wasm = getHackatom().data;
       const instantiatePermission: AccessConfig = {
         permission: AccessType.ACCESS_TYPE_EVERYBODY,
