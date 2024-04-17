@@ -126,13 +126,34 @@ describe("SigningCosmWasmClient", () => {
       client.disconnect();
     });
 
-    it("works with legacy Amino signer access type", async () => {
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const client = await SigningCosmWasmClient.connectWithSigner(
+        wasmd.endpoint,
+        wallet,
+        defaultSigningClientOptions,
+      );
+      const wasm = getHackatom().data;
+      const { codeId, checksum, originalSize, compressedSize } = await client.upload(
+        alice.address0,
+        wasm,
+        defaultUploadFee,
+      );
+      expect(checksum).toEqual(toHex(sha256(wasm)));
+      expect(originalSize).toEqual(wasm.length);
+      expect(compressedSize).toBeLessThan(wasm.length * 0.5);
+      expect(codeId).toBeGreaterThanOrEqual(1);
+      client.disconnect();
+    });
+
+    it("works with legacy Amino signer (instantiatePermission set)", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const options = { ...defaultSigningClientOptions, prefix: wasmd.prefix };
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
       const wasm = getHackatom().data;
-      const accessConfig: AccessConfig = {
+      const instantiatePermission: AccessConfig = {
         permission: AccessType.ACCESS_TYPE_EVERYBODY,
         address: "",
         addresses: [],
@@ -142,7 +163,7 @@ describe("SigningCosmWasmClient", () => {
         wasm,
         defaultUploadFee,
         "test memo",
-        accessConfig,
+        instantiatePermission,
       );
       expect(checksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
