@@ -148,6 +148,7 @@ describe("SigningCosmWasmClient", () => {
     });
 
     it("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
+      pending("Known issue: https://github.com/CosmWasm/wasmd/issues/1863");
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
@@ -175,6 +176,7 @@ describe("SigningCosmWasmClient", () => {
     });
 
     it("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
+      pending("Known issue: https://github.com/CosmWasm/wasmd/issues/1863");
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
