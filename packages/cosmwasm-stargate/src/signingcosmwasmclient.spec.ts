@@ -147,7 +147,7 @@ describe("SigningCosmWasmClient", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON signer (instantiatePermission set)", async () => {
+    it("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
@@ -156,11 +156,37 @@ describe("SigningCosmWasmClient", () => {
         defaultSigningClientOptions,
       );
       const wasm = getHackatom().data;
-      const instantiatePermission: AccessConfig = {
+      const instantiatePermission = AccessConfig.fromPartial({
+        permission: AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES,
+        addresses: [makeRandomAddress()],
+      });
+      const { codeId, checksum, originalSize, compressedSize } = await client.upload(
+        alice.address0,
+        wasm,
+        defaultUploadFee,
+        "test memo",
+        instantiatePermission,
+      );
+      expect(checksum).toEqual(toHex(sha256(wasm)));
+      expect(originalSize).toEqual(wasm.length);
+      expect(compressedSize).toBeLessThan(wasm.length * 0.5);
+      expect(codeId).toBeGreaterThanOrEqual(1);
+      client.disconnect();
+    });
+
+    it("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+      const client = await SigningCosmWasmClient.connectWithSigner(
+        wasmd.endpoint,
+        wallet,
+        defaultSigningClientOptions,
+      );
+      const wasm = getHackatom().data;
+      const instantiatePermission = AccessConfig.fromPartial({
         permission: AccessType.ACCESS_TYPE_EVERYBODY,
-        address: "",
         addresses: [],
-      };
+      });
       const { codeId, checksum, originalSize, compressedSize } = await client.upload(
         alice.address0,
         wasm,
