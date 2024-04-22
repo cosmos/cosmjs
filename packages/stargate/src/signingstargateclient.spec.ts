@@ -133,7 +133,7 @@ describe("SigningStargateClient", () => {
       expect(after).toEqual(amount[0]);
     });
 
-    it("works with legacy Amino signer", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
@@ -301,7 +301,7 @@ describe("SigningStargateClient", () => {
       }
     });
 
-    it("works with Amino signing", async () => {
+    it("works with Amino JSON signer", async () => {
       pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
