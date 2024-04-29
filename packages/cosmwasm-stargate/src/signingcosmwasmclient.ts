@@ -202,6 +202,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
   private readonly gasPrice: GasPrice | undefined;
+  // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
+  // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
+  private readonly gasMultiplier = 1.4;
 
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
@@ -614,9 +617,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
-      // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
-      const multiplier = typeof fee === "number" ? fee : 1.4;
+      const multiplier = typeof fee === "number" ? fee : this.gasMultiplier;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
@@ -652,7 +653,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : 1.3;
+      const multiplier = typeof fee === "number" ? fee : this.gasMultiplier;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
