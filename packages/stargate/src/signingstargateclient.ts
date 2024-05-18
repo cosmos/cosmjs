@@ -214,26 +214,6 @@ export class SigningStargateClient extends StargateClient {
     return this.signAndBroadcast(senderAddress, [sendMsg], fee, memo);
   }
 
-  public async cancelUnbondingDelegation(
-    delegatorAddress: string,
-    validatorAddress: string,
-    amount: Coin,
-    creationHeight: bigint | undefined,
-    fee: StdFee | "auto" | number,
-    memo = "",
-  ): Promise<DeliverTxResponse> {
-    const cancelUnbondingDelegationMsg: MsgCancelUnbondingDelegationEncodeObject = {
-      typeUrl: "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation",
-      value: MsgCancelUnbondingDelegation.fromPartial({
-        delegatorAddress: delegatorAddress,
-        validatorAddress: validatorAddress,
-        amount: amount,
-        creationHeight: creationHeight,
-      }),
-    };
-    return this.signAndBroadcast(delegatorAddress, [cancelUnbondingDelegationMsg], fee, memo);
-  }
-
   public async delegateTokens(
     delegatorAddress: string,
     validatorAddress: string,
