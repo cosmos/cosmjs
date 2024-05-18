@@ -354,7 +354,7 @@ export function createStakingAminoConverters(): Record<string, AminoConverter> {
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
           amount: amount,
-          creation_height: creationHeight,
+          creation_height: creationHeight.toString(),
         };
       },
       fromAmino: ({
@@ -366,7 +366,7 @@ export function createStakingAminoConverters(): Record<string, AminoConverter> {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         amount: amount,
-        creationHeight: creation_height,
+        creationHeight: BigInt(creation_height),
       }),
     },
   };
