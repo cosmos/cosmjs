@@ -150,7 +150,7 @@ export interface AminoMsgCancelUnbondingDelegation extends AminoMsg {
     readonly delegator_address: string;
     readonly validator_address: string;
     readonly amount: Coin;
-    readonly creation_height: bigint;
+    readonly creation_height: string;
   };
 }
 

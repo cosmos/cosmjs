@@ -220,7 +220,7 @@ describe("AminoTypes", () => {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           amount: coin(1234, "ucosm"),
-          creation_height: BigInt("1"),
+          creation_height: "1",
         },
       };
       expect(aminoMsg).toEqual(expected);
@@ -396,7 +396,7 @@ describe("AminoTypes", () => {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
           amount: coin(1234, "ucosm"),
-          creation_height: BigInt("1"),
+          creation_height: "1",
         },
       };
       const msg = new AminoTypes(createStakingAminoConverters()).fromAmino(aminoMsg);
