@@ -6,6 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: fix node info check to accept empty string on channels
+  field ([#1591])
+
 ## [0.32.3] - 2024-03-08
 
 ### Changed
