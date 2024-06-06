@@ -2733,6 +2733,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.1"\
       ],\
       [\
+        "undici",\
+        "npm:6.18.2"\
+      ],\
+      [\
         "unique-filename",\
         "npm:3.0.0"\
       ],\
@@ -3524,6 +3528,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["source-map-support", "npm:0.5.21"],\
             ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"],\
+            ["undici", "npm:6.18.2"],\
             ["webpack", "virtual:45dc8d177c5463b02ae2b62c45461f6704449bac45b0b4bf10ceca81013a617a6fa5aaf2547e43076d50ac57cad5c9979a6da6e8adf35b42d844e73e8c014613#npm:5.76.1"],\
             ["webpack-cli", "virtual:45dc8d177c5463b02ae2b62c45461f6704449bac45b0b4bf10ceca81013a617a6fa5aaf2547e43076d50ac57cad5c9979a6da6e8adf35b42d844e73e8c014613#npm:4.7.0"]\
           ],\
@@ -12917,6 +12922,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["has-bigints", "npm:1.0.1"],\
             ["has-symbols", "npm:1.0.2"],\
             ["which-boxed-primitive", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["undici", [\
+        ["npm:6.18.2", {\
+          "packageLocation": "./.yarn/cache/undici-npm-6.18.2-c1115b72ab-c20e47bd4f.zip/node_modules/undici/",\
+          "packageDependencies": [\
+            ["undici", "npm:6.18.2"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,6 +1,8 @@
 import Koa from "koa";
 import cors = require("@koa/cors");
 import bodyParser from "koa-bodyparser";
+import { request } from "undici";
+import qs from "node:querystring";
 
 import { isValidAddress } from "../addresses";
 import * as constants from "../constants";
@@ -59,7 +61,7 @@ export class Webserver {
           // context.request.body is set by the bodyParser() plugin
           const requestBody = (context.request as any).body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
-          const { address, denom } = creditBody;
+          const { address, denom, recaptcha } = creditBody;
 
           if (!isValidAddress(address, constants.addressPrefix)) {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
@@ -80,6 +82,25 @@ export class Webserver {
           const matchingDenom = availableTokens.find((availableDenom) => availableDenom === denom);
           if (matchingDenom === undefined) {
             throw new HttpError(422, `Token is not available. Available tokens are: ${availableTokens}`);
+          }
+
+          // if enabled, require recaptcha validation
+          if (process.env.GOOGLE_RECAPTCHA_SECRET_KEY !== undefined) {
+            const { body } = await request("https://www.google.com/recaptcha/api/siteverify", {
+              method: "POST",
+              headers: {
+                "content-type": "application/x-www-form-urlencoded",
+              },
+              body: qs.stringify({
+                secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
+                response: recaptcha,
+              }),
+            });
+            const verify_data = (await body.json()) as { success: boolean };
+            if (!verify_data.success) {
+              console.error(`recaptcha validation FAILED ${JSON.stringify(verify_data, null, 4)}`);
+              throw new HttpError(423, `Recaptcha failed to verify`);
+            }
           }
 
           try {
