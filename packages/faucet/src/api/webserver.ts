@@ -1,8 +1,8 @@
 import Koa from "koa";
 import cors = require("@koa/cors");
 import bodyParser from "koa-bodyparser";
-import { request } from "undici";
 import qs from "node:querystring";
+import { request } from "undici";
 
 import { isValidAddress } from "../addresses";
 import * as constants from "../constants";
@@ -96,9 +96,9 @@ export class Webserver {
                 response: recaptcha,
               }),
             });
-            const verify_data = (await body.json()) as { success: boolean };
-            if (!verify_data.success) {
-              console.error(`recaptcha validation FAILED ${JSON.stringify(verify_data, null, 4)}`);
+            const verifyData = (await body.json()) as { success: boolean };
+            if (!verifyData.success) {
+              console.error(`recaptcha validation FAILED ${JSON.stringify(verifyData, null, 4)}`);
               throw new HttpError(423, `Recaptcha failed to verify`);
             }
           }
