@@ -18,8 +18,10 @@ export interface ChainConstants {
 
 interface RecaptchaResponse {
   success: boolean;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   challenge_ts?: string;
   hostname?: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   "error-codes"?: string[];
 }
 
