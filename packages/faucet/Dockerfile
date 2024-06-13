@@ -16,7 +16,8 @@ WORKDIR /app
 RUN apk add --update --no-cache alpine-sdk linux-headers build-base gcc libusb-dev python3 py3-pip eudev-dev
 RUN ln -sf python3 /usr/bin/python
 
-RUN yarn cache clear && yarn install && yarn run build
+ENV YARN_CHECKSUM_BEHAVIOR=reset
+RUN yarn install && yarn run build
 RUN (cd packages/faucet && SKIP_BUILD=1 yarn pack-node)
 
 # Use Alpine and install Node.js which is 50% smaller than the -alpine version of the node
