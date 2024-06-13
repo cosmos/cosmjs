@@ -1,8 +1,8 @@
 import Koa from "koa";
+import axios from "axios";
 import cors = require("@koa/cors");
 import bodyParser from "koa-bodyparser";
 import qs from "node:querystring";
-import { request } from "undici";
 
 import { isValidAddress } from "../addresses";
 import * as constants from "../constants";
@@ -14,6 +14,13 @@ import { RequestParser } from "./requestparser";
 export interface ChainConstants {
   readonly nodeUrl: string;
   readonly chainId: string;
+}
+
+interface RecaptchaResponse {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  "error-codes"?: string[];
 }
 
 export class Webserver {
@@ -86,17 +93,20 @@ export class Webserver {
 
           // if enabled, require recaptcha validation
           if (process.env.GOOGLE_RECAPTCHA_SECRET_KEY !== undefined) {
-            const { body } = await request("https://www.google.com/recaptcha/api/siteverify", {
-              method: "POST",
-              headers: {
-                "content-type": "application/x-www-form-urlencoded",
-              },
-              body: qs.stringify({
+            const response = await axios.post<RecaptchaResponse>(
+              "https://www.google.com/recaptcha/api/siteverify",
+              qs.stringify({
                 secret: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
                 response: recaptcha,
               }),
-            });
-            const verifyData = (await body.json()) as { success: boolean };
+              {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              },
+            );
+
+            const verifyData = response.data;
             if (!verifyData.success) {
               console.error(`recaptcha validation FAILED ${JSON.stringify(verifyData, null, 4)}`);
               throw new HttpError(423, `Recaptcha failed to verify`);

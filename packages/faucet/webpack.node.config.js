@@ -12,10 +12,24 @@ module.exports = [
       path: distdir,
       filename: "cli.js",
       library: {
-        type: "commonjs",
+        type: "commonjs2",
       },
     },
     plugins: [],
     resolve: {},
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
+        },
+      ],
+    },
   },
 ];

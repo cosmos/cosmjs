@@ -38,6 +38,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "start-dev": "FAUCET_ADDRESS_PREFIX=wasm FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26659\"",
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\"",
+    "start-nillion": "bash test.sh",
     "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.js"
   },
   "dependencies": {
@@ -48,9 +49,9 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "@koa/cors": "^3.3",
+    "axios": "^1.7.2",
     "koa": "^2.13",
-    "koa-bodyparser": "^4.3",
-    "undici": "^6.18.2"
+    "koa-bodyparser": "^4.3"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
