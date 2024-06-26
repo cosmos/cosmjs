@@ -10,7 +10,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import { assertIsDeliverTxSuccess, coins, logs, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
+import { assertIsDeliverTxSuccess, coins, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
@@ -188,7 +188,6 @@ describe("CosmWasmClient", () => {
         amount: coins(5000, "ucosm"),
         gas: "890000",
       };
-
       const chainId = await client.getChainId();
       const sequenceResponse = await client.getSequence(alice.address0);
       assert(sequenceResponse);
@@ -222,8 +221,11 @@ describe("CosmWasmClient", () => {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const result = await client.broadcastTx(signedTx);
       assertIsDeliverTxSuccess(result);
-      const amountAttr = logs.findAttribute(logs.parseRawLog(result.rawLog), "transfer", "amount");
-      expect(amountAttr.value).toEqual("1234567ucosm");
+      const amountAttrs = result.events
+        .filter((e) => e.type == "transfer")
+        .flatMap((e) => e.attributes.filter((a) => a.key == "amount"));
+      expect(amountAttrs[0].value).toEqual("5000ucosm"); // fee
+      expect(amountAttrs[1].value).toEqual("1234567ucosm"); // MsgSend amount
       expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
   });

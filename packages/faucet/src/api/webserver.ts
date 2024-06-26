@@ -83,9 +83,9 @@ export class Webserver {
           }
 
           try {
-            await faucet.credit(address, matchingDenom);
             // Count addresses to prevent draining
             this.addressCounter.set(address, new Date());
+            await faucet.credit(address, matchingDenom);
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");

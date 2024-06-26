@@ -46,13 +46,21 @@ export function coins(amount: number | string, denom: string): Coin[] {
 /**
  * Takes a coins list like "819966000ucosm,700000000ustake" and parses it.
  *
- * A Stargate-ready variant of this function is available via:
+ * Starting with CosmJS 0.32.3, the following imports are all synonym and support
+ * a variety of denom types such as IBC denoms or tokenfactory. If you need to
+ * restrict the denom to something very minimal, this needs to be implemented
+ * separately in the caller.
  *
  * ```
  * import { parseCoins } from "@cosmjs/proto-signing";
- * // or
+ * // equals
  * import { parseCoins } from "@cosmjs/stargate";
+ * // equals
+ * import { parseCoins } from "@cosmjs/amino";
  * ```
+ *
+ * This function is not made for supporting decimal amounts and does not support
+ * parsing gas prices.
  */
 export function parseCoins(input: string): Coin[] {
   return input
@@ -60,7 +68,8 @@ export function parseCoins(input: string): Coin[] {
     .split(",")
     .filter(Boolean)
     .map((part) => {
-      const match = part.match(/^([0-9]+)([a-zA-Z]+)/);
+      // Denom regex from Stargate (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/types/coin.go#L599-L601)
+      const match = part.match(/^([0-9]+)([a-zA-Z][a-zA-Z0-9/]{2,127})$/);
       if (!match) throw new Error("Got an invalid coin string");
       return {
         amount: match[1].replace(/^0+/, "") || "0",

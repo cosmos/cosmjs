@@ -126,13 +126,14 @@ describe("SigningStargateClient", () => {
       } else {
         expect(result.rawLog).toBeTruthy();
       }
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
       expect(after).toEqual(amount[0]);
     });
 
-    it("works with legacy Amino signer", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
@@ -167,6 +168,7 @@ describe("SigningStargateClient", () => {
       } else {
         expect(result.rawLog).toBeTruthy();
       }
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
       const after = await client.getBalance(beneficiaryAddress, "ucosm");
@@ -299,7 +301,7 @@ describe("SigningStargateClient", () => {
       }
     });
 
-    it("works with Amino signing", async () => {
+    it("works with Amino JSON signer", async () => {
       pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(

@@ -1,5 +1,4 @@
 // This type happens to be shared between Amino and Direct sign modes
-export { parseCoins } from "./coins";
 export { DecodedTxRaw, decodeTxRaw } from "./decode";
 export {
   DirectSecp256k1HdWallet,
@@ -31,4 +30,6 @@ export {
 } from "./signer";
 export { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 export { executeKdf, KdfConfiguration } from "./wallet";
-export { Coin, coin, coins } from "@cosmjs/amino";
+
+// re-exports
+export { Coin, coin, coins, parseCoins } from "@cosmjs/amino";

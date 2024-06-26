@@ -6,6 +6,48 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: fix node info check to accept empty string on channels
+  field ([#1591])
+
+### Changed
+
+- @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Synchronize the default gas
+  multiplier value between the `signAndBroadcast` and `signAndBroadcastSync`
+  methods so that it is equal to 1.4 everywhere. ([#1584])
+
+## [0.32.3] - 2024-03-08
+
+### Changed
+
+- @cosmjs/amino: Add IBC denom support to `parseCoins` and use the same
+  implementation in all those imports:
+
+  ```ts
+  import { parseCoins } from "@cosmjs/proto-signing";
+  // equals
+  import { parseCoins } from "@cosmjs/stargate";
+  // equals
+  import { parseCoins } from "@cosmjs/amino";
+  ```
+
+- @cosmjs/stargate: Let `parseRawLog` gracefully handle empty strings to better
+  support Cosmos SDK 0.50 inputs. ([#1564])
+
+[#1564]: https://github.com/cosmos/cosmjs/pull/1564
+
+### Fixed
+
+- @cosmjs/encoding: Avoid using replacement character in doc comment to make
+  external tools happy. ([#1570])
+- @cosmjs/cosmwasm-stargate: Use events instead of log parsing to receive
+  information in SigningCosmWasmClient. This is required to support Cosmos SDK
+  0.50+ where the `rawLog` field is empty. ([#1564])
+
+[#1564]: https://github.com/cosmos/cosmjs/pull/1564
+[#1570]: https://github.com/cosmos/cosmjs/pull/1570
+
 ## [0.32.2] - 2023-12-19
 
 ### Fixed
@@ -1412,7 +1454,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.2...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.3...HEAD
+[0.32.3]: https://github.com/cosmos/cosmjs/compare/v0.32.2...v0.32.3
 [0.32.2]: https://github.com/cosmos/cosmjs/compare/v0.32.1...v0.32.2
 [0.32.1]: https://github.com/cosmos/cosmjs/compare/v0.32.0...v0.32.1
 [0.32.0]: https://github.com/cosmos/cosmjs/compare/v0.31.3...v0.32.0

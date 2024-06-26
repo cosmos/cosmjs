@@ -94,7 +94,7 @@ describe("staking messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON sign mode", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       if (simapp50Enabled()) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
 
@@ -235,7 +235,7 @@ describe("staking messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON sign mode", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       if (simapp50Enabled()) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
 

@@ -148,7 +148,7 @@ describe("gov messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON sign mode", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
@@ -206,7 +206,7 @@ describe("gov messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON sign mode", async () => {
+    it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
       if (simapp50Enabled()) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
       assert(voterWalletAmino);
