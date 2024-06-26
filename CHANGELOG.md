@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.32.4] - 2024-06-26
+
 ### Fixed
 
 - @cosmjs/tendermint-rpc: fix node info check to accept empty string on channels
@@ -1460,7 +1462,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.3...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.32.4...HEAD
+[0.32.4]: https://github.com/cosmos/cosmjs/compare/v0.32.3...v0.32.4
 [0.32.3]: https://github.com/cosmos/cosmjs/compare/v0.32.2...v0.32.3
 [0.32.2]: https://github.com/cosmos/cosmjs/compare/v0.32.1...v0.32.2
 [0.32.1]: https://github.com/cosmos/cosmjs/compare/v0.32.0...v0.32.1
