@@ -6,11 +6,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/tendermint-rpc: fix node info check to accept empty string on channels
+  field ([#1591])
+
 ### Changed
 
 - @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Synchronize the default gas
-multiplier value between the `signAndBroadcast` and `signAndBroadcastSync`
-methods so that it is equal to 1.4 everywhere. ([#1584])
+  multiplier value between the `signAndBroadcast` and `signAndBroadcastSync`
+  methods so that it is equal to 1.4 everywhere. ([#1584])
 
 ## [0.32.3] - 2024-03-08
 

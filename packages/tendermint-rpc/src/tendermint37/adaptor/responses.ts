@@ -597,7 +597,7 @@ function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
     listenAddr: assertNotEmpty(data.listen_addr),
     network: assertNotEmpty(data.network),
     version: assertString(data.version), // Can be empty (https://github.com/cosmos/cosmos-sdk/issues/7963)
-    channels: assertNotEmpty(data.channels),
+    channels: assertString(data.channels), // can be empty
     moniker: assertNotEmpty(data.moniker),
     other: dictionaryToStringMap(data.other),
     protocolVersion: {
