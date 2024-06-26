@@ -11,6 +11,12 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: fix node info check to accept empty string on channels
   field ([#1591])
 
+### Added
+
+- @cosmjs/stargate: Add support for `MsgCancelUnbondingDelegation` ([#1535])
+
+[#1535]: https://github.com/cosmos/cosmjs/pull/1535
+
 ### Changed
 
 - @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Synchronize the default gas
