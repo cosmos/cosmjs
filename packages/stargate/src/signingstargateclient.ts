@@ -50,7 +50,7 @@ import {
   createStakingAminoConverters,
   createVestingAminoConverters,
 } from "./modules";
-import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
+import { DeliverTxResponse, SequenceResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -315,10 +315,12 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee | "auto" | number,
     memo = "",
     timeoutHeight?: bigint,
+    explicitSignerData?: SignerData,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
 
-    const { accountNumber, sequence } = await this.getSequence(signerAddress);
+    let signerData: SignerData | undefined = explicitSignerData
+    const { sequence, accountNumber } = explicitSignerData ? explicitSignerData : await this.getSequence(signerAddress);
  
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
@@ -329,13 +331,15 @@ export class SigningStargateClient extends StargateClient {
       usedFee = fee;
     }
 
-    const chainId = await this.getChainId();
+    if (!signerData) {
+      const chainId = await this.getChainId();
 
-    const signerData: SignerData = {
-      accountNumber: accountNumber,
-      sequence: sequence,
-      chainId: chainId,
-    };
+      signerData = {
+        accountNumber: accountNumber,
+        sequence: sequence,
+        chainId: chainId,
+      };
+    }
 
     const txRaw = await this.sign(signerAddress, messages, usedFee, memo, signerData, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
