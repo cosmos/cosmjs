@@ -285,7 +285,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
 
-    let sequence: number
+    let sequence: number;
 
     if (explicitSignerData?.sequence !== undefined) {
       sequence = explicitSignerData.sequence;
@@ -625,7 +625,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
 
-    let signerData: SignerData | undefined = explicitSignerData
+    let signerData: SignerData | undefined = explicitSignerData;
     const { sequence, accountNumber } = explicitSignerData ? explicitSignerData : await this.getSequence(signerAddress);
 
     if (fee == "auto" || typeof fee === "number") {

@@ -50,7 +50,7 @@ import {
   createStakingAminoConverters,
   createVestingAminoConverters,
 } from "./modules";
-import { DeliverTxResponse, SequenceResponse, StargateClient, StargateClientOptions } from "./stargateclient";
+import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],
@@ -190,7 +190,7 @@ export class SigningStargateClient extends StargateClient {
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
 
-    let sequence: number
+    let sequence: number;
 
     if (explicitSignerData?.sequence !== undefined) {
       sequence = explicitSignerData.sequence;
@@ -319,7 +319,7 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
 
-    let signerData: SignerData | undefined = explicitSignerData
+    let signerData: SignerData | undefined = explicitSignerData;
     const { sequence, accountNumber } = explicitSignerData ? explicitSignerData : await this.getSequence(signerAddress);
  
     if (fee == "auto" || typeof fee === "number") {
