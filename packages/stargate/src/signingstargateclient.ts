@@ -317,15 +317,27 @@ export class SigningStargateClient extends StargateClient {
     timeoutHeight?: bigint,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
+
+    const { accountNumber, sequence } = await this.getSequence(signerAddress);
+ 
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
-      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const gasEstimation = await this.simulate(signerAddress, messages, memo, { sequence });
       const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
+
+    const chainId = await this.getChainId();
+
+    const signerData: SignerData = {
+      accountNumber: accountNumber,
+      sequence: sequence,
+      chainId: chainId,
+    };
+
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, signerData, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
