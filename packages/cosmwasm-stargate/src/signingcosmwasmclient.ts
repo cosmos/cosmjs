@@ -274,6 +274,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     signerAddress: string,
     messages: readonly EncodeObject[],
     memo: string | undefined,
+    explicitSignerData?: Partial<SignerData>,
   ): Promise<number> {
     const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -283,7 +284,15 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
-    const { sequence } = await this.getSequence(signerAddress);
+
+    let sequence: number
+
+    if (explicitSignerData?.sequence !== undefined) {
+      sequence = explicitSignerData.sequence;
+    } else {
+      sequence = (await this.getSequence(signerAddress)).sequence;
+    }
+
     const { gasInfo } = await this.forceGetQueryClient().tx.simulate(anyMsgs, memo, pubkey, sequence);
     assertDefined(gasInfo);
     return Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
