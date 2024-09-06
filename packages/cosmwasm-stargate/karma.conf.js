@@ -15,7 +15,7 @@ module.exports = function (config) {
     frameworks: ["jasmine"],
 
     // list of files / patterns to load in the browser
-    files: ["dist/web/tests.js"],
+    files: ["./global-variables.js", "dist/web/tests.js"],
 
     client: {
       jasmine: {
@@ -50,5 +50,13 @@ module.exports = function (config) {
 
     // Keep brower open for debugging. This is overridden by yarn scripts
     singleRun: false,
+
+    webpack: {
+      plugins: [
+        new webpack.ProvidePlugin({
+            process: 'process/browser'
+        })
+      ]
+    }
   });
 };
