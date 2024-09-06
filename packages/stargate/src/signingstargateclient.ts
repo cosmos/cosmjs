@@ -320,8 +320,10 @@ export class SigningStargateClient extends StargateClient {
     let usedFee: StdFee;
 
     let signerData: SignerData | undefined = explicitSignerData;
-    const { sequence, accountNumber } = explicitSignerData ? explicitSignerData : await this.getSequence(signerAddress);
- 
+    const { sequence, accountNumber } = explicitSignerData
+      ? explicitSignerData
+      : await this.getSequence(signerAddress);
+
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo, { sequence });
