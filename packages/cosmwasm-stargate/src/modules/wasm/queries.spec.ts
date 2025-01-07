@@ -14,7 +14,6 @@ import {
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AbsoluteTxPosition, ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import Long from "long";
 
 import { SigningCosmWasmClient } from "../../signingcosmwasmclient";
 import {
@@ -74,7 +73,7 @@ async function instantiateContract(
     typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
     value: MsgInstantiateContract.fromPartial({
       sender: alice.address0,
-      codeId: Long.fromNumber(codeId),
+      codeId: BigInt(codeId),
       label: "my escrow",
       msg: toUtf8(
         JSON.stringify({
@@ -161,7 +160,7 @@ describe("WasmExtension", () => {
       const { codeInfos } = await client.wasm.listCodeInfo();
       assert(codeInfos);
       const lastCode = codeInfos[codeInfos.length - 1];
-      expect(lastCode.codeId.toNumber()).toEqual(hackatomCodeId);
+      expect(Number(lastCode.codeId)).toEqual(hackatomCodeId);
       expect(lastCode.creator).toEqual(alice.address0);
       expect(toHex(lastCode.dataHash)).toEqual(toHex(sha256(hackatom.data)));
     });
@@ -174,7 +173,7 @@ describe("WasmExtension", () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const { codeInfo, data } = await client.wasm.getCode(hackatomCodeId);
       assert(codeInfo);
-      expect(codeInfo.codeId.toNumber()).toEqual(hackatomCodeId);
+      expect(Number(codeInfo.codeId)).toEqual(hackatomCodeId);
       expect(codeInfo.creator).toEqual(alice.address0);
       expect(toHex(codeInfo.dataHash)).toEqual(toHex(sha256(hackatom.data)));
       expect(data).toEqual(hackatom.data);
@@ -213,18 +212,20 @@ describe("WasmExtension", () => {
 
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
-      expect(contractInfo).toEqual({
-        codeId: Long.fromNumber(hackatomCodeId, true),
-        creator: alice.address0,
-        label: "my escrow",
-        admin: "",
-        ibcPortId: "",
-        created: AbsoluteTxPosition.fromPartial({
-          blockHeight: Long.fromNumber(instantiateResult.height, true),
-          txIndex: Long.UZERO,
+      expect(contractInfo).toEqual(
+        jasmine.objectContaining({
+          codeId: BigInt(hackatomCodeId),
+          creator: alice.address0,
+          label: "my escrow",
+          admin: "",
+          ibcPortId: "",
+          created: AbsoluteTxPosition.fromPartial({
+            blockHeight: BigInt(instantiateResult.height),
+            txIndex: BigInt(0),
+          }),
+          extension: undefined,
         }),
-        extension: undefined,
-      });
+      );
       expect(contractInfo.admin).toEqual("");
     });
 
@@ -261,7 +262,7 @@ describe("WasmExtension", () => {
       assert(history.entries);
       expect(history.entries).toContain(
         jasmine.objectContaining({
-          codeId: Long.fromNumber(hackatomCodeId, true),
+          codeId: BigInt(hackatomCodeId),
           operation: ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
           msg: toUtf8(
             JSON.stringify({

@@ -58,6 +58,27 @@ describe("RFC3339", () => {
     expect(fromRfc3339("2002-10-02T11:12:13.999Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 999)));
   });
 
+  it("parses dates between years 0 and 99 with and without timezones", () => {
+    expect(fromRfc3339("0001-01-01T00:00:00.000Z")).toEqual(
+      new Date(new Date(Date.UTC(1, 0, 1, 0, 0, 0, 0)).setUTCFullYear(1)),
+    );
+    expect(fromRfc3339("0000-01-01T00:00:00.000Z")).toEqual(
+      new Date(new Date(Date.UTC(0, 0, 1, 0, 0, 0, 0)).setUTCFullYear(0)),
+    );
+    expect(fromRfc3339("1999-01-01T00:00:00.000Z")).toEqual(
+      new Date(new Date(Date.UTC(1999, 0, 1, 0, 0, 0, 0)).setUTCFullYear(1999)),
+    );
+    expect(fromRfc3339("0099-01-01T00:00:00.000Z")).toEqual(
+      new Date(new Date(Date.UTC(99, 0, 1, 0, 0, 0, 0)).setUTCFullYear(99)),
+    );
+    expect(fromRfc3339("0010-01-01T00:00:00+01:00")).toEqual(
+      new Date(new Date(Date.UTC(9, 11, 31, 23, 0, 0, 0)).setUTCFullYear(9)),
+    );
+    expect(fromRfc3339("0100-01-01T00:00:00+01:00")).toEqual(
+      new Date(new Date(Date.UTC(99, 11, 31, 23, 0, 0, 0)).setUTCFullYear(99)),
+    );
+  });
+
   it("parses dates with low precision fractional seconds", () => {
     // 1 digit
     expect(fromRfc3339("2002-10-02T11:12:13.0Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 0)));

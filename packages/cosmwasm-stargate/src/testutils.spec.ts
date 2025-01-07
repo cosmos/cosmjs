@@ -19,6 +19,7 @@ import {
   setupBankExtension,
 } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -169,8 +170,8 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
 export async function makeWasmClient(
   endpoint: string,
 ): Promise<QueryClient & AuthExtension & BankExtension & WasmExtension> {
-  const tmClient = await Tendermint34Client.connect(endpoint);
-  return QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
+  const cometClient = await Tendermint34Client.connect(endpoint);
+  return QueryClient.withExtensions(cometClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
 }
 
 /**
@@ -219,10 +220,13 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
       memo: "This was modified",
     });
     const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
-    const signers = authInfo.signerInfos.map((signerInfo) => ({
-      pubkey: signerInfo.publicKey!,
-      sequence: signerInfo.sequence.toNumber(),
-    }));
+    const signers = authInfo.signerInfos.map((signerInfo) => {
+      assertDefinedAndNotNull(signerInfo.publicKey);
+      return {
+        pubkey: signerInfo.publicKey,
+        sequence: Number(signerInfo.sequence),
+      };
+    });
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
     const modifiedFeeGranter = undefined;

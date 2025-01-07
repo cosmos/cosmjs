@@ -17,12 +17,7 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  Tendermint37Client,
-  TendermintClient,
-} from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
@@ -31,13 +26,20 @@ import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
-import Long from "long";
 
 import { AminoConverters, AminoTypes } from "./aminotypes";
 import { calculateFee, GasPrice } from "./fee";
 import {
   authzTypes,
   bankTypes,
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createFeegrantAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
+  createVestingAminoConverters,
   distributionTypes,
   feegrantTypes,
   govTypes,
@@ -50,16 +52,6 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
   vestingTypes,
-} from "./modules";
-import {
-  createAuthzAminoConverters,
-  createBankAminoConverters,
-  createDistributionAminoConverters,
-  createFeegrantAminoConverters,
-  createGovAminoConverters,
-  createIbcAminoConverters,
-  createStakingAminoConverters,
-  createVestingAminoConverters,
 } from "./modules";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
@@ -126,41 +118,30 @@ export class SigningStargateClient extends StargateClient {
   private readonly gasPrice: GasPrice | undefined;
 
   /**
-   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
-   * To set the Tendermint client explicitly, use `createWithSigner`.
+   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * To set the Comet client explicitly, use `createWithSigner`.
    */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
-    // Using 0.34 as the fallback.
-    let tmClient: TendermintClient;
-    const tm37Client = await Tendermint37Client.connect(endpoint);
-    const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
-      tmClient = tm37Client;
-    } else {
-      tm37Client.disconnect();
-      tmClient = await Tendermint34Client.connect(endpoint);
-    }
-
-    return SigningStargateClient.createWithSigner(tmClient, signer, options);
+    const cometClient = await connectComet(endpoint);
+    return SigningStargateClient.createWithSigner(cometClient, signer, options);
   }
 
   /**
-   * Creates an instance from a manually created Tendermint client.
-   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   * Creates an instance from a manually created Comet client.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async createWithSigner(
-    tmClient: TendermintClient,
+    cometClient: CometClient,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    return new SigningStargateClient(tmClient, signer, options);
+    return new SigningStargateClient(cometClient, signer, options);
   }
 
   /**
@@ -180,11 +161,11 @@ export class SigningStargateClient extends StargateClient {
   }
 
   protected constructor(
-    tmClient: TendermintClient | undefined,
+    cometClient: CometClient | undefined,
     signer: OfflineSigner,
     options: SigningStargateClientOptions,
   ) {
-    super(tmClient, options);
+    super(cometClient, options);
     const {
       registry = new Registry(defaultRegistryTypes),
       aminoTypes = new AminoTypes(createDefaultAminoConverters()),
@@ -286,6 +267,12 @@ export class SigningStargateClient extends StargateClient {
     return this.signAndBroadcast(delegatorAddress, [withdrawMsg], fee, memo);
   }
 
+  /**
+   * @deprecated This API does not support setting the memo field of `MsgTransfer` (only the transaction memo).
+   * We'll remove this method at some point because trying to wrap the various message types is a losing strategy.
+   * Please migrate to `signAndBroadcast` with an `MsgTransferEncodeObject` created in the caller code instead.
+   * @see https://github.com/cosmos/cosmjs/issues/1493
+   */
   public async sendIbcTokens(
     senderAddress: string,
     recipientAddress: string,
@@ -300,7 +287,7 @@ export class SigningStargateClient extends StargateClient {
     coinType = "",
   ): Promise<DeliverTxResponse> {
     const timeoutTimestampNanoseconds = timeoutTimestamp
-      ? Long.fromNumber(timeoutTimestamp).multiply(1_000_000_000)
+      ? BigInt(timeoutTimestamp) * BigInt(1_000_000_000)
       : undefined;
     const transferMsg: MsgTransferEncodeObject = {
       typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -323,17 +310,20 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee | "auto" | number,
     memo = "",
     coinType = "",
+    timeoutHeight?: bigint,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : 1.3;
+      // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
+      // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
+      const multiplier = typeof fee === "number" ? fee : 1.4;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
@@ -350,6 +340,7 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee | "auto" | number,
     memo = "",
     coinType = "",
+    timeoutHeight?: bigint,
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -360,7 +351,7 @@ export class SigningStargateClient extends StargateClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, coinType, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }
@@ -382,6 +373,7 @@ export class SigningStargateClient extends StargateClient {
     memo: string,
     coinType: string,
     explicitSignerData?: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     let signerData: SignerData;
     if (explicitSignerData) {
@@ -397,8 +389,8 @@ export class SigningStargateClient extends StargateClient {
     }
 
     return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo, coinType, signerData)
-      : this.signAmino(signerAddress, messages, fee, memo, coinType, signerData);
+      ? this.signDirect(signerAddress, messages, fee, memo, coinType, signerData, timeoutHeight)
+      : this.signAmino(signerAddress, messages, fee, memo, coinType, signerData, timeoutHeight);
   }
 
   private async signAmino(
@@ -408,6 +400,7 @@ export class SigningStargateClient extends StargateClient {
     memo: string,
     coinType: string,
     { accountNumber, sequence, chainId }: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -431,11 +424,12 @@ export class SigningStargateClient extends StargateClient {
 
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
-    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence, timeoutHeight);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody = {
       messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
       memo: signed.memo,
+      timeoutHeight: timeoutHeight,
     };
     const signedTxBodyEncodeObject: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
@@ -466,6 +460,7 @@ export class SigningStargateClient extends StargateClient {
     memo: string,
     coinType: string,
     { accountNumber, sequence, chainId }: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -492,6 +487,7 @@ export class SigningStargateClient extends StargateClient {
       value: {
         messages: messages,
         memo: memo,
+        timeoutHeight: timeoutHeight,
       },
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);

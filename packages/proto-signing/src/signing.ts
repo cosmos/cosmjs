@@ -4,7 +4,6 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 /**
  * Create signer infos from the provided signers.
@@ -12,7 +11,7 @@ import Long from "long";
  * This implementation does not support different signing modes for the different signers.
  */
 function makeSignerInfos(
-  signers: ReadonlyArray<{ readonly pubkey: Any; readonly sequence: number }>,
+  signers: ReadonlyArray<{ readonly pubkey: Any; readonly sequence: number | bigint }>,
   signMode: SignMode,
 ): SignerInfo[] {
   return signers.map(
@@ -21,7 +20,7 @@ function makeSignerInfos(
       modeInfo: {
         single: { mode: signMode },
       },
-      sequence: Long.fromNumber(sequence),
+      sequence: BigInt(sequence),
     }),
   );
 }
@@ -32,7 +31,7 @@ function makeSignerInfos(
  * This implementation does not support different signing modes for the different signers.
  */
 export function makeAuthInfoBytes(
-  signers: ReadonlyArray<{ readonly pubkey: Any; readonly sequence: number }>,
+  signers: ReadonlyArray<{ readonly pubkey: Any; readonly sequence: bigint | number }>,
   feeAmount: readonly Coin[],
   gasLimit: number,
   feeGranter: string | undefined,
@@ -50,7 +49,7 @@ export function makeAuthInfoBytes(
     signerInfos: makeSignerInfos(signers, signMode),
     fee: {
       amount: [...feeAmount],
-      gasLimit: Long.fromNumber(gasLimit),
+      gasLimit: BigInt(gasLimit),
       granter: feeGranter,
       payer: feePayer,
     },
@@ -68,7 +67,7 @@ export function makeSignDoc(
     bodyBytes: bodyBytes,
     authInfoBytes: authInfoBytes,
     chainId: chainId,
-    accountNumber: Long.fromNumber(accountNumber),
+    accountNumber: BigInt(accountNumber),
   };
 }
 

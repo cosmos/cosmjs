@@ -113,7 +113,7 @@ export {
   QueryClient,
   QueryStoreResponse,
 } from "./queryclient";
-export { SearchByHeightQuery, SearchBySentFromOrToQuery, SearchTxQuery } from "./search";
+export { isSearchTxQueryArray, SearchPair, SearchTxQuery } from "./search";
 export {
   createDefaultAminoConverters,
   defaultRegistryTypes,

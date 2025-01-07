@@ -40,8 +40,11 @@ export function fromRfc3339(str: string): Date {
 
   const tzOffset = tzOffsetSign * (tzOffsetHours * 60 + tzOffsetMinutes) * 60; // seconds
 
-  const timestamp = Date.UTC(year, month - 1, day, hour, minute, second, milliSeconds) - tzOffset * 1000;
-  return new Date(timestamp);
+  const date = new Date();
+  date.setUTCFullYear(year, month - 1, day);
+  date.setUTCHours(hour, minute, second, milliSeconds);
+
+  return new Date(date.getTime() - tzOffset * 1000);
 }
 
 export function toRfc3339(date: Date | ReadonlyDate): string {

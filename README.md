@@ -199,8 +199,8 @@ and suggestions.
 - [GitHub issues](https://github.com/cosmos/cosmjs/issues) for bugs and feature
   requests
 - The #cosmjs channel on the
-  ["Cosmos Community" Discord server](https://discord.gg/cosmosnetwork) for questions
-  and open discussions
+  ["Cosmos Community" Discord server](https://discord.gg/cosmosnetwork) for
+  questions and open discussions
 - [#CosmJS on Twitter](https://twitter.com/search?q=%23CosmJS) to spread the
   word
 

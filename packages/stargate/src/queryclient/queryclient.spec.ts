@@ -2,7 +2,7 @@
 import { coin } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import {
@@ -24,9 +24,9 @@ import {
 } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 
-async function makeClient(rpcUrl: string): Promise<[QueryClient, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient), tmClient];
+async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient), cometClient];
 }
 
 /**
@@ -40,7 +40,7 @@ describe("QueryClient", () => {
   describe("queryStoreVerified", () => {
     it("works via WebSockets", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
+      const [client, cometClient] = await makeClient(simapp.tendermintUrlWs);
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
@@ -61,12 +61,12 @@ describe("QueryClient", () => {
       expect(response.base).toEqual(simapp.denomFee);
       expect(response.description).toEqual("The fee token of this test chain");
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works via http", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+      const [client, cometClient] = await makeClient(simapp.tendermintUrlHttp);
 
       // "keys before 0.45 had denom two times in the key"
       // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
@@ -88,45 +88,49 @@ describe("QueryClient", () => {
       expect(response.base).toEqual(simapp.denomFee);
       expect(response.description).toEqual("The fee token of this test chain");
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 
   describe("queryAbci", () => {
     it("works via WebSockets", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClient(simapp.tendermintUrlWs);
+      const [client, cometClient] = await makeClient(simapp.tendermintUrlWs);
 
       const requestData = Uint8Array.from(
-        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: unused.address }),
+        ).finish(),
       );
       const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
       const response = QueryAllBalancesResponse.decode(value);
       expect(response.balances.length).toEqual(2);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works via http", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+      const [client, cometClient] = await makeClient(simapp.tendermintUrlHttp);
 
       const requestData = Uint8Array.from(
-        QueryAllBalancesRequest.encode({ address: unused.address }).finish(),
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: unused.address }),
+        ).finish(),
       );
       const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
       const response = QueryAllBalancesResponse.decode(value);
       expect(response.balances.length).toEqual(2);
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works for height", async () => {
       pendingWithoutSimapp();
-      const [queryClient, tmClient] = await makeClient(simapp.tendermintUrlHttp);
+      const [queryClient, cometClient] = await makeClient(simapp.tendermintUrlHttp);
 
       const joe = makeRandomAddress();
-      const h1 = (await tmClient.status()).syncInfo.latestBlockHeight;
+      const h1 = (await cometClient.status()).syncInfo.latestBlockHeight;
 
       // Send tokens to `recipient`
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
@@ -138,7 +142,7 @@ describe("QueryClient", () => {
       const amount = coin(332211, simapp.denomFee);
       await client.sendTokens(faucet.address0, joe, [amount], "auto");
 
-      const h2 = (await tmClient.status()).syncInfo.latestBlockHeight;
+      const h2 = (await cometClient.status()).syncInfo.latestBlockHeight;
       assert(h1 < h2);
 
       // Query with no height
@@ -179,7 +183,7 @@ describe("QueryClient", () => {
         expect(height).toEqual(h1);
       }
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });

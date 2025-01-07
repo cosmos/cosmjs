@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/proto-signing",
-  "version": "0.31.0",
+  "version": "0.32.1",
   "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>",
@@ -44,8 +44,7 @@
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.8.0",
-    "long": "^4.0.0"
+    "cosmjs-types": "^0.9.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -75,7 +74,7 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^2.8.1",
-    "protobufjs": "~6.11.3",
+    "protobufjs": "~6.11.4",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^8",

@@ -31,12 +31,7 @@ import {
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  Tendermint37Client,
-  TendermintClient,
-} from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -52,7 +47,6 @@ import {
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import Long from "long";
 import pako from "pako";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -84,8 +78,8 @@ export interface UploadResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 /**
@@ -118,8 +112,8 @@ export interface InstantiateResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 /**
@@ -132,8 +126,8 @@ export interface ChangeAdminResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 export interface MigrateResult {
@@ -143,8 +137,8 @@ export interface MigrateResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 export interface ExecuteInstruction {
@@ -160,8 +154,8 @@ export interface ExecuteResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
@@ -186,41 +180,30 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly gasPrice: GasPrice | undefined;
 
   /**
-   * Creates an instance by connecting to the given Tendermint RPC endpoint.
+   * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a Tendermint 0.37 and 0.34 client.
-   * To set the Tendermint client explicitly, use `createWithSigner`.
+   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * To set the Comet client explicitly, use `createWithSigner`.
    */
   public static async connectWithSigner(
     endpoint: string | HttpEndpoint,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    // Tendermint/CometBFT 0.34/0.37 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
-    // Using 0.34 as the fallback.
-    let tmClient: TendermintClient;
-    const tm37Client = await Tendermint37Client.connect(endpoint);
-    const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
-      tmClient = tm37Client;
-    } else {
-      tm37Client.disconnect();
-      tmClient = await Tendermint34Client.connect(endpoint);
-    }
-
-    return SigningCosmWasmClient.createWithSigner(tmClient, signer, options);
+    const cometClient = await connectComet(endpoint);
+    return SigningCosmWasmClient.createWithSigner(cometClient, signer, options);
   }
 
   /**
-   * Creates an instance from a manually created Tendermint client.
-   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   * Creates an instance from a manually created Comet client.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
   public static async createWithSigner(
-    tmClient: TendermintClient,
+    cometClient: CometClient,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
-    return new SigningCosmWasmClient(tmClient, signer, options);
+    return new SigningCosmWasmClient(cometClient, signer, options);
   }
 
   /**
@@ -240,11 +223,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   protected constructor(
-    tmClient: TendermintClient | undefined,
+    cometClient: CometClient | undefined,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {
-    super(tmClient);
+    super(cometClient);
     const {
       registry = new Registry([...defaultStargateTypes, ...wasmTypes]),
       aminoTypes = new AminoTypes({
@@ -297,7 +280,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }),
     };
 
-    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], fee, memo);
+    // When uploading a contract, the simulation is only 1-2% away from the actual gas usage.
+    // So we have a smaller default gas multiplier than signAndBroadcast.
+    const usedFee = fee == "auto" ? 1.1 : fee;
+
+    const result = await this.signAndBroadcast(senderAddress, [storeCodeMsg], usedFee, memo);
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
@@ -329,7 +316,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract",
       value: MsgInstantiateContract.fromPartial({
         sender: senderAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         label: label,
         msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
@@ -366,7 +353,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       typeUrl: "/cosmwasm.wasm.v1.MsgInstantiateContract2",
       value: MsgInstantiateContract2.fromPartial({
         sender: senderAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         label: label,
         msg: toUtf8(JSON.stringify(msg)),
         funds: [...(options.funds || [])],
@@ -461,7 +448,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: MsgMigrateContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
-        codeId: Long.fromString(new Uint53(codeId).toString()),
+        codeId: BigInt(new Uint53(codeId).toString()),
         msg: toUtf8(JSON.stringify(migrateMsg)),
       }),
     };
@@ -587,35 +574,39 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   /**
-   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   * Creates a transaction with the given messages, fee, memo and timeout height. Then signs and broadcasts the transaction.
    *
    * @param signerAddress The address that will sign transactions using this instance. The signer must be able to sign with this address.
    * @param messages
    * @param fee
    * @param memo
+   * @param timeoutHeight (optional) timeout height to prevent the tx from being committed past a certain height
    */
   public async signAndBroadcast(
     signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
       const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : 1.3;
+      // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
+      // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
+      const multiplier = typeof fee === "number" ? fee : 1.4;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
   /**
-   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   * Creates a transaction with the given messages, fee, memo and timeout height. Then signs and broadcasts the transaction.
    *
    * This method is useful if you want to send a transaction in broadcast,
    * without waiting for it to be placed inside a block, because for example
@@ -625,6 +616,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * @param messages
    * @param fee
    * @param memo
+   * @param timeoutHeight (optional) timeout height to prevent the tx from being committed past a certain height
    *
    * @returns Returns the hash of the transaction
    */
@@ -633,6 +625,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
+    timeoutHeight?: bigint,
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
@@ -643,7 +636,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }
@@ -654,6 +647,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     explicitSignerData?: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     let signerData: SignerData;
     if (explicitSignerData) {
@@ -669,8 +663,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     }
 
     return isOfflineDirectSigner(this.signer)
-      ? this.signDirect(signerAddress, messages, fee, memo, signerData)
-      : this.signAmino(signerAddress, messages, fee, memo, signerData);
+      ? this.signDirect(signerAddress, messages, fee, memo, signerData, timeoutHeight)
+      : this.signAmino(signerAddress, messages, fee, memo, signerData, timeoutHeight);
   }
 
   private async signAmino(
@@ -679,6 +673,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(!isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -690,13 +685,14 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
-    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence, timeoutHeight);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {
         messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
         memo: signed.memo,
+        timeoutHeight: timeoutHeight,
       },
     };
     const signedTxBodyBytes = this.registry.encode(signedTxBody);
@@ -723,6 +719,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
+    timeoutHeight?: bigint,
   ): Promise<TxRaw> {
     assert(isOfflineDirectSigner(this.signer));
     const accountFromSigner = (await this.signer.getAccounts()).find(
@@ -737,6 +734,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         messages: messages,
         memo: memo,
+        timeoutHeight: timeoutHeight,
       },
     };
     const txBodyBytes = this.registry.encode(txBody);

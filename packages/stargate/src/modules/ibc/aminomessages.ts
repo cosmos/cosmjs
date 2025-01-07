@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin } from "@cosmjs/amino";
+import { AminoMsg, Coin, omitDefault } from "@cosmjs/amino";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import Long from "long";
 
 import { AminoConverters } from "../../aminotypes";
 
@@ -13,7 +12,7 @@ interface AminoHeight {
   readonly revision_height?: string;
 }
 
-// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/apps/transfer/types/tx.pb.go#L33-L53
+// https://github.com/cosmos/ibc-go/blob/a4ca39c59f770a0b6948947d5178d5f0914c3a17/modules/apps/transfer/types/tx.pb.go#L37-L56
 /** Transfers fungible tokens (i.e Coins) between ICS20 enabled chains */
 export interface AminoMsgTransfer extends AminoMsg {
   readonly type: "cosmos-sdk/MsgTransfer";
@@ -38,27 +37,12 @@ export interface AminoMsgTransfer extends AminoMsg {
      * 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L52).
      */
     readonly timeout_timestamp?: string;
+    readonly memo?: string;
   };
 }
 
 export function isAminoMsgTransfer(msg: AminoMsg): msg is AminoMsgTransfer {
   return msg.type === "cosmos-sdk/MsgTransfer";
-}
-
-function omitDefault<T extends string | number | Long>(input: T): T | undefined {
-  if (typeof input === "string") {
-    return input === "" ? undefined : input;
-  }
-
-  if (typeof input === "number") {
-    return input === 0 ? undefined : input;
-  }
-
-  if (Long.isLong(input)) {
-    return input.isZero() ? undefined : input;
-  }
-
-  throw new Error(`Got unsupported type '${typeof input}'`);
 }
 
 export function createIbcAminoConverters(): AminoConverters {
@@ -73,6 +57,7 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeoutHeight,
         timeoutTimestamp,
+        memo,
       }: MsgTransfer): AminoMsgTransfer["value"] => ({
         source_port: sourcePort,
         source_channel: sourceChannel,
@@ -86,6 +71,7 @@ export function createIbcAminoConverters(): AminoConverters {
             }
           : {},
         timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
+        memo: omitDefault(memo),
       }),
       fromAmino: ({
         source_port,
@@ -95,6 +81,7 @@ export function createIbcAminoConverters(): AminoConverters {
         receiver,
         timeout_height,
         timeout_timestamp,
+        memo,
       }: AminoMsgTransfer["value"]): MsgTransfer =>
         MsgTransfer.fromPartial({
           sourcePort: source_port,
@@ -104,11 +91,12 @@ export function createIbcAminoConverters(): AminoConverters {
           receiver: receiver,
           timeoutHeight: timeout_height
             ? {
-                revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
-                revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
+                revisionHeight: BigInt(timeout_height.revision_height || "0"),
+                revisionNumber: BigInt(timeout_height.revision_number || "0"),
               }
             : undefined,
-          timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
+          timeoutTimestamp: BigInt(timeout_timestamp || "0"),
+          memo: memo ?? "",
         }),
     },
   };

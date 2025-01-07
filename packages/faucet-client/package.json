@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet-client",
-  "version": "0.31.0",
+  "version": "0.32.1",
   "description": "The faucet client",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -40,7 +40,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "axios": "^0.21.2"
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

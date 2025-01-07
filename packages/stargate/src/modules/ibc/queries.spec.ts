@@ -1,14 +1,13 @@
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import Long from "long";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
 import { simapp } from "../../testutils.spec";
 import * as ibcTest from "./ibctestdata.spec";
 import { IbcExtension, setupIbcExtension } from "./queries";
 
-async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupIbcExtension), tmClient];
+async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExtension, CometClient]> {
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupIbcExtension), cometClient];
 }
 
 describe("IbcExtension", () => {
@@ -16,73 +15,73 @@ describe("IbcExtension", () => {
     describe("channel", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.channel(ibcTest.portId, ibcTest.channelId);
         expect(response.channel).toEqual(ibcTest.channel);
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("channels", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.channels();
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
         expect(response.pagination).toBeDefined();
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allChannels", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allChannels();
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("connectionChannels", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.connectionChannels(ibcTest.connectionId);
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
         expect(response.pagination).toBeDefined();
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allConnectionChannels", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allConnectionChannels(ibcTest.connectionId);
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("clientState", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.clientState(ibcTest.portId, ibcTest.channelId);
         expect(response.identifiedClientState).toEqual({
@@ -93,14 +92,14 @@ describe("IbcExtension", () => {
           },
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("consensusState", () => {
       xit("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.consensusState(
           ibcTest.portId,
@@ -115,14 +114,14 @@ describe("IbcExtension", () => {
         });
         expect(response.clientId).toEqual(ibcTest.clientId);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("packetCommitment", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetCommitment(
           ibcTest.portId,
@@ -133,45 +132,45 @@ describe("IbcExtension", () => {
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("packetCommitments", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetCommitments(ibcTest.portId, ibcTest.channelId);
         expect(response.commitments).toEqual([ibcTest.packetState]);
         expect(response.pagination).toBeDefined();
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allPacketCommitments", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allPacketCommitments(ibcTest.portId, ibcTest.channelId);
         expect(response.commitments).toEqual([ibcTest.packetState]);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("packetReceipt", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetReceipt(ibcTest.portId, ibcTest.channelId, 1);
         expect(response.received).toEqual(false);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
@@ -179,7 +178,7 @@ describe("IbcExtension", () => {
       it("works", async () => {
         pending("We don't have an acknowledgement for testing at the moment");
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetAcknowledgement(
           ibcTest.portId,
@@ -190,28 +189,28 @@ describe("IbcExtension", () => {
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("packetAcknowledgements", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.packetAcknowledgements(ibcTest.portId, ibcTest.channelId);
         expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
         expect(response.pagination).toBeDefined();
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allPacketAcknowledgements", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.allPacketAcknowledgements(
           ibcTest.portId,
@@ -219,55 +218,55 @@ describe("IbcExtension", () => {
         );
         expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("unreceivedPackets", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.unreceivedPackets(
           ibcTest.portId,
           ibcTest.channelId,
           [1, 2, 3],
         );
-        expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
+        expect(response.sequences).toEqual([1, 2, 3].map((n) => BigInt(n)));
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("unreceivedAcks", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.unreceivedAcks(
           ibcTest.portId,
           ibcTest.channelId,
           [1, 2, 3, 4, 5, 6, 7],
         );
-        expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
+        expect(response.sequences).toEqual([BigInt(ibcTest.commitment.sequence)]);
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("nextSequenceReceive", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.channel.nextSequenceReceive(ibcTest.portId, ibcTest.channelId);
-        expect(response.nextSequenceReceive).toEqual(Long.fromInt(1, true));
+        expect(response.nextSequenceReceive).toEqual(BigInt(1));
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
   });
@@ -276,7 +275,7 @@ describe("IbcExtension", () => {
     describe("state", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.state(ibcTest.clientId);
         expect(response.clientState).toEqual({
@@ -284,14 +283,14 @@ describe("IbcExtension", () => {
           value: jasmine.any(Uint8Array),
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("states", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.states();
         expect(response.clientStates).toEqual([
@@ -305,14 +304,14 @@ describe("IbcExtension", () => {
         ]);
         expect(response.pagination).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allStates", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allStates();
         expect(response.clientStates).toEqual([
@@ -325,14 +324,14 @@ describe("IbcExtension", () => {
           },
         ]);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("consensusState", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusState(ibcTest.clientId);
         expect(response.consensusState).toEqual({
@@ -340,14 +339,14 @@ describe("IbcExtension", () => {
           value: jasmine.any(Uint8Array),
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("consensusStates", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusStates(ibcTest.clientId);
         expect(response.consensusStates).toEqual(
@@ -362,14 +361,14 @@ describe("IbcExtension", () => {
           ]),
         );
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allConsensusStates", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allConsensusStates(ibcTest.clientId);
         expect(response.consensusStates).toEqual(
@@ -384,41 +383,41 @@ describe("IbcExtension", () => {
           ]),
         );
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("params", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.params();
         expect(response.params).toEqual({
           allowedClients: ["06-solomachine", "07-tendermint"],
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("stateTm", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.stateTm(ibcTest.clientId);
         expect(response.chainId).toEqual("ibc-1");
         // TODO: Fill these expectations out
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("statesTm", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.statesTm();
         expect(response).toEqual(
@@ -429,14 +428,14 @@ describe("IbcExtension", () => {
           ]),
         );
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allStatesTm", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.allStatesTm();
         expect(response).toEqual(
@@ -447,20 +446,20 @@ describe("IbcExtension", () => {
           ]),
         );
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("consensusStateTm", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.client.consensusStateTm(ibcTest.clientId);
         expect(response.nextValidatorsHash).toEqual(jasmine.any(Uint8Array));
         // TODO: Fill out these expectations
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
   });
@@ -469,61 +468,61 @@ describe("IbcExtension", () => {
     describe("connection", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.connection(ibcTest.connectionId);
         expect(response.connection).toEqual(ibcTest.connection);
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("connections", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.connections();
         expect(response.connections).toEqual([ibcTest.identifiedConnection]);
         expect(response.pagination).toBeDefined();
         expect(response.height).toBeDefined();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("allConnections", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.allConnections();
         expect(response.connections).toEqual([ibcTest.identifiedConnection]);
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("clientConnections", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.clientConnections(ibcTest.clientId);
         expect(response.connectionPaths).toEqual([ibcTest.connectionId]);
         expect(response.proofHeight).toBeDefined();
         expect(response.proofHeight).not.toBeNull();
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("clientState", () => {
       it("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.connection.clientState(ibcTest.connectionId);
         expect(response.identifiedClientState).toEqual({
@@ -534,14 +533,14 @@ describe("IbcExtension", () => {
           },
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
 
     describe("consensusState", () => {
       xit("works", async () => {
         pending("We cannot test this easily anymore since the IBC module was removed from simapp");
-        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+        const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         // TODO: Find valid values
         const response = await client.ibc.connection.consensusState(ibcTest.connectionId, 1, 1);
@@ -551,7 +550,7 @@ describe("IbcExtension", () => {
           value: jasmine.any(Uint8Array),
         });
 
-        tmClient.disconnect();
+        cometClient.disconnect();
       });
     });
   });

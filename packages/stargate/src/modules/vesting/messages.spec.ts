@@ -1,7 +1,6 @@
 import { coin, coins, Secp256k1HdWallet } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
-import Long from "long";
 
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
@@ -33,7 +32,7 @@ describe("vesting messages", () => {
           fromAddress: faucet.address0,
           toAddress: recipient,
           amount: coins(1234, "ucosm"),
-          endTime: Long.fromString("1838718434"),
+          endTime: BigInt("1838718434"),
           delayed: true,
         }),
       };
@@ -63,7 +62,7 @@ describe("vesting messages", () => {
           fromAddress: faucet.address0,
           toAddress: recipient,
           amount: coins(1234, "ucosm"),
-          endTime: Long.fromString("1838718434"),
+          endTime: BigInt("1838718434"),
           delayed: true,
         }),
       };

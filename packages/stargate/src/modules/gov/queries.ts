@@ -11,13 +11,12 @@ import {
   QueryVoteResponse,
   QueryVotesResponse,
 } from "cosmjs-types/cosmos/gov/v1beta1/query";
-import Long from "long";
 
 import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient";
 
 export type GovParamsType = "deposit" | "tallying" | "voting";
 
-export type GovProposalId = string | number | Long | Uint64;
+export type GovProposalId = string | number | Uint64;
 
 export interface GovExtension {
   readonly gov: {

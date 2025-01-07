@@ -1,44 +1,42 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { encodePubkey } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 import { QueryClient } from "../../queryclient";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./queries";
 
-async function makeClientWithAuth(
-  rpcUrl: string,
-): Promise<[QueryClient & AuthExtension, Tendermint34Client]> {
-  const tmClient = await Tendermint34Client.connect(rpcUrl);
-  return [QueryClient.withExtensions(tmClient, setupAuthExtension), tmClient];
+async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, CometClient]> {
+  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  return [QueryClient.withExtensions(cometClient, setupAuthExtension), cometClient];
 }
 
 describe("AuthExtension", () => {
   describe("account", () => {
     it("works for unused account", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
       const account = await client.auth.account(unused.address);
       assert(account);
 
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
-      expect(BaseAccount.decode(account.value)).toEqual({
-        address: unused.address,
-        pubKey: undefined,
-        accountNumber: Long.fromNumber(unused.accountNumber, true),
-        sequence: Long.UZERO,
-      });
+      expect(BaseAccount.decode(account.value)).toEqual(
+        jasmine.objectContaining({
+          address: unused.address,
+          accountNumber: BigInt(unused.accountNumber),
+          sequence: BigInt(0),
+        }),
+      );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("works for account with pubkey and non-zero sequence", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
       const account = await client.auth.account(validator.delegatorAddress);
       assert(account);
 
@@ -46,22 +44,22 @@ describe("AuthExtension", () => {
       expect(BaseAccount.decode(account.value)).toEqual({
         address: validator.delegatorAddress,
         pubKey: Any.fromPartial(encodePubkey(validator.pubkey)),
-        accountNumber: Long.UZERO,
-        sequence: Long.fromNumber(validator.sequence, true),
+        accountNumber: BigInt(0),
+        sequence: BigInt(validator.sequence),
       });
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
 
     it("rejects for non-existent address", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
+      const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrl);
 
       await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(
         /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
       );
 
-      tmClient.disconnect();
+      cometClient.disconnect();
     });
   });
 });

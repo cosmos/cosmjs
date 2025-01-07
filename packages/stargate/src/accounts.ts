@@ -1,6 +1,6 @@
 import { Pubkey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
-import { decodePubkey } from "@cosmjs/proto-signing";
+import { decodeOptionalPubkey } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import {
@@ -10,7 +10,6 @@ import {
   PeriodicVestingAccount,
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
 export interface Account {
   /** Bech32 account address */
@@ -20,13 +19,13 @@ export interface Account {
   readonly sequence: number;
 }
 
-function uint64FromProto(input: number | Long): Uint64 {
+function uint64FromProto(input: number | bigint): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
 function accountFromBaseAccount(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
-  const pubkey = pubKey ? decodePubkey(pubKey) : null;
+  const pubkey = decodeOptionalPubkey(pubKey);
   return {
     address: address,
     pubkey: pubkey,

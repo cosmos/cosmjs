@@ -8,10 +8,12 @@ command -v shellcheck >/dev/null && shellcheck "$0"
 declare -a TM_IMAGES
 TM_IMAGES[34]="tendermint/tendermint:v0.34.19"
 TM_IMAGES[37]="cometbft/cometbft:v0.37.0-rc3"
+TM_IMAGES[38]="cometbft/cometbft:v0.38.0"
 
 declare -a TM_ROOTS
 TM_ROOTS[34]="/tendermint"
 TM_ROOTS[37]="/cometbft"
+TM_ROOTS[38]="/cometbft"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

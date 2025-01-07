@@ -196,8 +196,8 @@ export interface TxData {
   readonly log?: string;
   readonly data?: Uint8Array;
   readonly events: readonly Event[];
-  readonly gasWanted: number;
-  readonly gasUsed: number;
+  readonly gasWanted: bigint;
+  readonly gasUsed: bigint;
 }
 
 export interface TxProof {

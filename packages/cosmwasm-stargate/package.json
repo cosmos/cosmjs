@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.31.0",
+  "version": "0.32.1",
   "description": "CosmWasm SDK",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -46,8 +46,7 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.8.0",
-    "long": "^4.0.0",
+    "cosmjs-types": "^0.9.0",
     "pako": "^2.0.2"
   },
   "devDependencies": {
@@ -79,7 +78,6 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^2.8.1",
-    "protobufjs": "~6.11.3",
     "readonly-date": "^1.0.0",
     "ses": "^0.11.0",
     "source-map-support": "^0.5.19",

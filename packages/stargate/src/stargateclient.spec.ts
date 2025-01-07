@@ -31,6 +31,9 @@ import {
   pendingWithoutSlowSimapp,
   simapp,
   simapp44Enabled,
+  simapp46Enabled,
+  simapp47Enabled,
+  simapp50Enabled,
   slowSimapp,
   tendermintIdMatcher,
   unused,
@@ -46,8 +49,8 @@ const resultFailure: DeliverTxResponse = {
   transactionHash: "FDC4FB701AABD465935F7D04AE490D1EF5F2BD4B227601C4E98B57EB077D9B7D",
   events: [],
   msgResponses: [],
-  gasUsed: 54396,
-  gasWanted: 200000,
+  gasUsed: 54396n,
+  gasWanted: 200000n,
 };
 const resultSuccess: DeliverTxResponse = {
   code: 0,
@@ -58,8 +61,8 @@ const resultSuccess: DeliverTxResponse = {
   transactionHash: "C0B416CA868C55C2B8C1BBB8F3CFA233854F13A5CB15D3E9599F50CAF7B3D161",
   events: [],
   msgResponses: [],
-  gasUsed: 61556,
-  gasWanted: 200000,
+  gasUsed: 61556n,
+  gasWanted: 200000n,
 };
 
 describe("isDeliverTxFailure", () => {
@@ -98,7 +101,7 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const openedClient = client as unknown as PrivateStargateClient;
-      const getCodeSpy = spyOn(openedClient.tmClient!, "status").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache
@@ -395,7 +398,11 @@ describe("StargateClient", () => {
 
       const { gasUsed, rawLog, transactionHash } = txResult;
       expect(gasUsed).toBeGreaterThan(0);
-      expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
+      if (simapp50Enabled()) {
+        expect(rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
+      } else {
+        expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
+      }
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
       client.disconnect();
@@ -462,10 +469,20 @@ describe("StargateClient", () => {
         assert(false, "Expected broadcastTx to throw");
       } catch (error: any) {
         expect(error).toMatch(
-          simapp44Enabled() ? /invalid recipient address/i : /Broadcasting transaction failed with code 7/i,
+          simapp44Enabled()
+            ? /invalid recipient address/i
+            : simapp46Enabled() || simapp47Enabled()
+            ? /Broadcasting transaction failed with code 7/i
+            : // New error code for SDK 0.50+
+              /Broadcasting transaction failed with code 4/i,
         );
         assert(error instanceof BroadcastTxError);
-        expect(error.code).toEqual(7);
+        if (simapp50Enabled()) {
+          // New error code for SDK 0.50+
+          expect(error.code).toEqual(4);
+        } else {
+          expect(error.code).toEqual(7);
+        }
         expect(error.codespace).toEqual("sdk");
       }
 

@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/stargate",
-  "version": "0.31.0",
+  "version": "0.32.1",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -46,9 +46,7 @@
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.8.0",
-    "long": "^4.0.0",
-    "protobufjs": "~6.11.3",
+    "cosmjs-types": "^0.9.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {

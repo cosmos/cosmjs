@@ -28,13 +28,13 @@ workflows:
             - build
           matrix:
             parameters:
-              simapp: ["simapp44", "simapp46", "simapp47"]
+              simapp: ["simapp44", "simapp46", "simapp47", "simapp50"]
       - test-node:
           requires:
             - build
           matrix:
             parameters:
-              node-version: ["14", "16", "18"]
+              node-version: ["16", "18", "20"]
       - test-chrome:
           requires:
             - build
@@ -118,9 +118,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -136,6 +138,14 @@ jobs:
           command: |
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -160,6 +170,7 @@ jobs:
             [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
+            [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             yarn test --stream
       - run:
           name: Run CLI selftest
@@ -180,6 +191,7 @@ jobs:
             [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
+            [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             ./run_examples.sh
       - run:
           name: Stop chains
@@ -242,12 +254,14 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
             declare -A node_links=(
-              ["14"]="https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb"
-              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb"
-              ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.7.0-deb-1nodesource1_amd64.deb"
+              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.20.2-1nodesource1_amd64.deb"
+              ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb"
+              ["20"]="https://deb.nodesource.com/node_20.x/pool/main/n/nodejs/nodejs_20.6.0-1nodesource1_amd64.deb"
             )
             wget -O "$HOME/nodejs.deb" "${node_links[<< parameters.node-version >>]}"
             sudo dpkg -i "$HOME/nodejs.deb"
@@ -265,6 +279,14 @@ jobs:
           command: |
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -286,7 +308,8 @@ jobs:
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
-            SES_ENABLED: 1
+            # Stopped working for Node.js 20. Maybe we need to upgrade the dependency or something.
+            # SES_ENABLED: 1
           command: yarn test --stream
       - run:
           name: Run CLI selftest
@@ -365,9 +388,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -383,6 +408,14 @@ jobs:
           command: |
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -463,9 +496,11 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
+          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
+          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -481,6 +516,14 @@ jobs:
           command: |
             wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install libudev-dev
+          # See https://packages.ubuntu.com/focal/libudev-dev (Ubuntu 20.04)
+          command: |
+            wget -O "$HOME/libudev1.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_245.4-4ubuntu3.20_amd64.deb
+            wget -O "$HOME/libudev-dev.deb" http://security.ubuntu.com/ubuntu/pool/main/s/systemd/libudev-dev_245.4-4ubuntu3.20_amd64.deb
+            sudo dpkg -i "$HOME/libudev1.deb"
+            sudo dpkg -i "$HOME/libudev-dev.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
