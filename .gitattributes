@@ -1,3 +1,7 @@
 *.png filter=lfs diff=lfs merge=lfs -text
 *.wasm filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
+
+# Be extra clear that those are binary files and must not be altered in the checkout
+# See https://github.com/yarnpkg/berry/issues/5795#issuecomment-1789768944
+*.zip binary
