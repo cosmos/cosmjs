@@ -78,8 +78,8 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2024.11.1
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2024.11.1
     steps:
       - checkout
       - run: # start early for less wait time below
@@ -207,8 +207,8 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2024.11.1
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2024.11.1
     resource_class: large
     steps:
       - checkout
@@ -334,8 +334,8 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2024.11.1
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2024.11.1
     resource_class: large
     steps:
       - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
@@ -437,8 +437,8 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2024.11.1
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2024.11.1
     resource_class: large
     steps:
       - checkout
