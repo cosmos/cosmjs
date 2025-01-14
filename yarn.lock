@@ -313,7 +313,7 @@ __metadata:
     "@types/diff": "npm:^4"
     "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@types/yargs": "npm:^15.0.4"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
@@ -362,7 +362,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/long": "npm:^4.0.1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@types/pako": "npm:^1.0.1"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
@@ -413,7 +413,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/libsodium-wrappers-sumo": "npm:^0.7.5"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     bn.js: "npm:^5.2.0"
@@ -458,7 +458,7 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     base64-js: "npm:^1.3.0"
@@ -501,7 +501,7 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     axios: "npm:^1.6.0"
@@ -720,7 +720,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/long": "npm:^4.0.1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     cosmjs-types: "npm:^0.9.0"
@@ -816,7 +816,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/long": "npm:^4.0.1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     cosmjs-types: "npm:^0.9.0"
@@ -859,7 +859,7 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     eslint: "npm:^7.5"
@@ -907,7 +907,7 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     axios: "npm:^1.6.0"
@@ -950,7 +950,7 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/node": "npm:^18"
+    "@types/node": "npm:*"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
     "@typescript-eslint/parser": "npm:^5.54.0"
     buffer: "npm:^6.0.3"
@@ -1767,15 +1767,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.20.0"
   checksum: 10/ac93c9b6337ddb70176abade1ca4cdec24cde93cfc19023f3e001d80cb42f1d3c2487dd1626ce016985953319de30528d9e73dc5c6e2e28be9eaa9ec0237fc1d
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^18":
-  version: 18.19.70
-  resolution: "@types/node@npm:18.19.70"
-  dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10/374abb7e75f7f8b2418cde5b0a8dae0032d4e1e3a76097a507a90ed9e66e40c12d19b75493db3aa9d4f92b03ae90d7d9f67c7d64c7f73f20145577350adf0e9b
   languageName: node
   linkType: hard
 
@@ -7949,13 +7940,6 @@ __metadata:
     has-symbols: "npm:^1.1.0"
     which-boxed-primitive: "npm:^1.1.1"
   checksum: 10/fadb347020f66b2c8aeacf8b9a79826fa34cc5e5457af4eb0bbc4e79bd87fed0fa795949825df534320f7c13f199259516ad30abc55a6e7b91d8d996ca069e50
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 10/0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
   languageName: node
   linkType: hard
 
