@@ -81,12 +81,6 @@ jobs:
       # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
       image: ubuntu-2004:2024.11.1
     steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
-          command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_3.6.0_amd64.deb/download.deb
-            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -217,12 +211,6 @@ jobs:
       image: ubuntu-2004:2024.11.1
     resource_class: large
     steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
-          command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_3.6.0_amd64.deb/download.deb
-            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -351,12 +339,6 @@ jobs:
     resource_class: large
     steps:
       - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
-      - run:
-          name: Install Git Large File Storage (LFS)
-          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
-          command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_3.6.0_amd64.deb/download.deb
-            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -459,12 +441,6 @@ jobs:
       image: ubuntu-2004:2024.11.1
     resource_class: large
     steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
-          command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_3.6.0_amd64.deb/download.deb
-            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
