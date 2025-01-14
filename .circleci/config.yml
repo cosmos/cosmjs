@@ -660,8 +660,7 @@ jobs:
             sudo apt install git-lfs
       - checkout
       - setup_remote_docker:
-          # >= v20.10 https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
-          version: 20.10.11
+          version: default
       - run:
           name: Build faucet Docker image
           # Use ${CIRCLE_TAG}
