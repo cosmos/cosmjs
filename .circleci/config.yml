@@ -57,7 +57,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -576,7 +578,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -631,7 +635,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
