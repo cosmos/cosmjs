@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { coin } from "@cosmjs/amino";
-import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
-import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import {
   QueryAllBalancesRequest,
   QueryAllBalancesResponse,
@@ -19,7 +17,6 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-  simapp44Enabled,
   unused,
 } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
@@ -29,69 +26,7 @@ async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
   return [QueryClient.withExtensions(cometClient), cometClient];
 }
 
-/**
- * See
- * - https://github.com/cosmos/cosmos-sdk/blob/v0.42.10/x/bank/types/key.go#L27
- * - https://github.com/cosmos/cosmos-sdk/blob/v0.44.2/x/bank/types/key.go#L28
- */
-const denomMetadataPrefix = new Uint8Array([0x01]);
-
 describe("QueryClient", () => {
-  describe("queryStoreVerified", () => {
-    it("works via WebSockets", async () => {
-      pendingWithoutSimapp();
-      const [client, cometClient] = await makeClient(simapp.tendermintUrlWs);
-
-      // "keys before 0.45 had denom two times in the key"
-      // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      let queryKey: Uint8Array;
-      if (simapp44Enabled()) {
-        queryKey = Uint8Array.from([
-          ...denomMetadataPrefix,
-          ...toAscii(simapp.denomFee),
-          ...toAscii(simapp.denomFee),
-        ]);
-      } else {
-        queryKey = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
-      }
-      const { key, value, height } = await client.queryStoreVerified("bank", queryKey);
-      expect(height).toBeGreaterThanOrEqual(1);
-      expect(key).toEqual(queryKey);
-      const response = Metadata.decode(value);
-      expect(response.base).toEqual(simapp.denomFee);
-      expect(response.description).toEqual("The fee token of this test chain");
-
-      cometClient.disconnect();
-    });
-
-    it("works via http", async () => {
-      pendingWithoutSimapp();
-      const [client, cometClient] = await makeClient(simapp.tendermintUrlHttp);
-
-      // "keys before 0.45 had denom two times in the key"
-      // https://github.com/cosmos/cosmos-sdk/blob/10ad61a4dd/x/bank/migrations/v045/store_test.go#L91
-      let queryKey: Uint8Array;
-      if (simapp44Enabled()) {
-        queryKey = Uint8Array.from([
-          ...denomMetadataPrefix,
-          ...toAscii(simapp.denomFee),
-          ...toAscii(simapp.denomFee),
-        ]);
-      } else {
-        queryKey = Uint8Array.from([...denomMetadataPrefix, ...toAscii(simapp.denomFee)]);
-      }
-
-      const { key, value, height } = await client.queryStoreVerified("bank", queryKey);
-      expect(height).toBeGreaterThanOrEqual(1);
-      expect(key).toEqual(queryKey);
-      const response = Metadata.decode(value);
-      expect(response.base).toEqual(simapp.denomFee);
-      expect(response.description).toEqual("The fee token of this test chain");
-
-      cometClient.disconnect();
-    });
-  });
-
   describe("queryAbci", () => {
     it("works via WebSockets", async () => {
       pendingWithoutSimapp();

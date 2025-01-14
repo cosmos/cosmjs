@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/stargate: Removed support for verified queries. This feature depends
+  on a JavaScript implementation of ICS-23 but
+  [@confio/ics23 is unmaintained](https://github.com/cosmos/cosmjs/issues/1618)
+  without replacement.
+
 ## [0.32.4] - 2024-06-26
 
 ### Fixed

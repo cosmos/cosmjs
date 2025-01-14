@@ -207,10 +207,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:7.23.0"\
       ],\
       [\
-        "@confio/ics23",\
-        "npm:0.6.8"\
-      ],\
-      [\
         "@cosmjs/amino",\
         "workspace:packages/amino"\
       ],\
@@ -3228,17 +3224,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@confio/ics23", [\
-        ["npm:0.6.8", {\
-          "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.8-c87607eb2c-376d72f644.zip/node_modules/@confio/ics23/",\
-          "packageDependencies": [\
-            ["@confio/ics23", "npm:0.6.8"],\
-            ["@noble/hashes", "npm:1.0.0"],\
-            ["protobufjs", "npm:6.11.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@cosmjs/amino", [\
         ["workspace:packages/amino", {\
           "packageLocation": "./packages/amino/",\
@@ -3809,7 +3794,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/stargate/",\
           "packageDependencies": [\
             ["@cosmjs/stargate", "workspace:packages/stargate"],\
-            ["@confio/ics23", "npm:0.6.8"],\
             ["@cosmjs/amino", "workspace:packages/amino"],\
             ["@cosmjs/crypto", "workspace:packages/crypto"],\
             ["@cosmjs/encoding", "workspace:packages/encoding"],\

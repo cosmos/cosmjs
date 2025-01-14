@@ -279,16 +279,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@confio/ics23@npm:^0.6.8":
-  version: 0.6.8
-  resolution: "@confio/ics23@npm:0.6.8"
-  dependencies:
-    "@noble/hashes": ^1.0.0
-    protobufjs: ^6.8.8
-  checksum: 376d72f6440db60611b002b00a13e3a5bfd0d3503e7682358dbcf79641e74d8c26c234c321452fb4a758baf66eecef25d950e08bdea270486d9d03ee489e2960
-  languageName: node
-  linkType: hard
-
 "@cosmjs/amino@workspace:^, @cosmjs/amino@workspace:packages/amino":
   version: 0.0.0-use.local
   resolution: "@cosmjs/amino@workspace:packages/amino"
@@ -838,7 +828,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stargate@workspace:packages/stargate"
   dependencies:
-    "@confio/ics23": ^0.6.8
     "@cosmjs/amino": "workspace:^"
     "@cosmjs/crypto": "workspace:^"
     "@cosmjs/encoding": "workspace:^"
@@ -1250,7 +1239,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^1, @noble/hashes@npm:^1.0.0":
+"@noble/hashes@npm:^1":
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
   checksum: bdf1c28a4b587e72ec6b0c504903239c6f96680b2c15a6d90d367512f468eeca12f2ee7bd25967a9529be2bedbf3f8d0a50c33368937f8dfef2a973d0661c7b5
@@ -6414,7 +6403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.4":
+"protobufjs@npm:~6.11.4":
   version: 6.11.4
   resolution: "protobufjs@npm:6.11.4"
   dependencies:
