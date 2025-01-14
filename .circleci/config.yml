@@ -57,7 +57,10 @@ jobs:
           command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.27-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -552,7 +555,10 @@ jobs:
           command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.27-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -607,7 +613,10 @@ jobs:
           command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.27-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
