@@ -54,7 +54,7 @@ jobs:
       - checkout
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
@@ -131,7 +131,7 @@ jobs:
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -272,7 +272,7 @@ jobs:
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -401,7 +401,7 @@ jobs:
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -509,7 +509,7 @@ jobs:
             sudo dpkg -i "$HOME/yarn.deb"
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
@@ -573,7 +573,7 @@ jobs:
           command: cp --recursive --link /tmp/builds/* .
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
@@ -628,7 +628,7 @@ jobs:
             shfmt --version
       - run:
           name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+          command: git version; git-lfs --version; echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
           command: sudo apt-get install libusb-1.0-0-dev
