@@ -13,6 +13,7 @@ and this project adheres to
   on a JavaScript implementation of ICS-23 but
   [@confio/ics23 is unmaintained](https://github.com/cosmos/cosmjs/issues/1618)
   without replacement.
+- @cosmjs/proto-signing: Upgrade protobufjs to 7.4.
 
 [#1552]: https://github.com/cosmos/cosmjs/issues/1552
 
