@@ -34,7 +34,7 @@ workflows:
             - build
           matrix:
             parameters:
-              node-version: ["16", "18", "20"]
+              node-version: ["18", "20"]
       - test-chrome:
           requires:
             - build
@@ -261,7 +261,6 @@ jobs:
           # `apt download --print-uris nodejs` to get a download URL.
           command: |
             declare -A node_links=(
-              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.20.2-1nodesource1_amd64.deb"
               ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb"
               ["20"]="https://deb.nodesource.com/node_20.x/pool/main/n/nodejs/nodejs_20.6.0-1nodesource1_amd64.deb"
             )
