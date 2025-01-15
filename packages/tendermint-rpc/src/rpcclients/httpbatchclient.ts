@@ -28,7 +28,7 @@ export class HttpBatchClient implements RpcClient {
   protected readonly url: string;
   protected readonly headers: Record<string, string> | undefined;
   protected readonly options: HttpBatchClientOptions;
-  private timer?: NodeJS.Timer;
+  private timer?: NodeJS.Timeout;
 
   private readonly queue: Array<{
     request: JsonRpcRequest;
