@@ -24,20 +24,20 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "yarn workspaces foreach --topological-dev --parallel --verbose run format",
-    "format-text": "prettier --write \"./*.md\" \"./docs/*.md\" && yarn workspaces foreach --topological-dev --parallel --verbose run format-text",
+    "format": "yarn workspaces foreach --all --topological-dev --parallel --verbose run format",
+    "format-text": "prettier --write \"./*.md\" \"./docs/*.md\" && yarn workspaces foreach --all --topological-dev --parallel --verbose run format-text",
     "format-shell": "shfmt -w scripts packages",
-    "lint": "yarn workspaces foreach --topological-dev --parallel --verbose run lint",
-    "lint-fix": "yarn workspaces foreach --topological-dev --parallel --verbose run lint-fix",
-    "test": "yarn workspaces foreach --topological-dev --parallel --verbose run test",
-    "test-firefox": "yarn workspaces foreach --topological-dev --parallel --verbose run test-firefox",
-    "test-chrome": "yarn workspaces foreach --topological-dev --parallel --verbose run test-chrome",
-    "coverage": "yarn workspaces foreach --topological-dev --parallel --verbose run coverage",
-    "build": "yarn workspaces foreach --topological-dev --parallel --verbose run build",
-    "docs": "yarn workspaces foreach --topological-dev --parallel --verbose run docs",
-    "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web",
-    "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --tag next",
-    "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish"
+    "lint": "yarn workspaces foreach --all --topological-dev --parallel --verbose run lint",
+    "lint-fix": "yarn workspaces foreach --all --topological-dev --parallel --verbose run lint-fix",
+    "test": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test",
+    "test-firefox": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-firefox",
+    "test-chrome": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
+    "coverage": "yarn workspaces foreach --all --topological-dev --parallel --verbose run coverage",
+    "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
+    "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
+    "pack-web": "yarn workspaces foreach --all --topological-dev --parallel --verbose run pack-web",
+    "publish-next": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag next",
+    "publish-latest": "yarn workspaces foreach --all --no-private exec yarn npm publish"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:^",
@@ -50,5 +50,5 @@
     "prettier": "^2.8.8",
     "typescript": "~4.9"
   },
-  "packageManager": "yarn@3.8.0"
+  "packageManager": "yarn@4.6.0"
 }

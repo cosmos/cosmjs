@@ -34,7 +34,7 @@ workflows:
             - build
           matrix:
             parameters:
-              node-version: ["16", "18", "20"]
+              node-version: ["18", "20"]
       - test-chrome:
           requires:
             - build
@@ -46,7 +46,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:16.13-bullseye
+      - image: cimg/node:18.20
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -57,7 +57,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -78,8 +80,9 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202107-02
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -213,8 +216,9 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202107-02
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - run:
@@ -259,7 +263,6 @@ jobs:
           # `apt download --print-uris nodejs` to get a download URL.
           command: |
             declare -A node_links=(
-              ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.20.2-1nodesource1_amd64.deb"
               ["18"]="https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb"
               ["20"]="https://deb.nodesource.com/node_20.x/pool/main/n/nodejs/nodejs_20.6.0-1nodesource1_amd64.deb"
             )
@@ -346,8 +349,9 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202107-02
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
@@ -455,8 +459,9 @@ jobs:
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-2004:202107-02
+      # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - run:
@@ -560,7 +565,7 @@ jobs:
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:
-      - image: circleci/node:16.13-bullseye
+      - image: cimg/node:18.20
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -576,7 +581,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -591,7 +598,7 @@ jobs:
           paths: docs_deployment
   docs-deploy:
     docker:
-      - image: circleci/node:16.13-bullseye
+      - image: cimg/node:18.20
     steps:
       - attach_workspace:
           at: .
@@ -609,7 +616,7 @@ jobs:
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
   lint:
     docker:
-      - image: circleci/node:16.13-bullseye
+      - image: cimg/node:18.20
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -631,7 +638,9 @@ jobs:
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run:
           name: Install libusb
-          command: sudo apt-get install libusb-1.0-0-dev
+          command: |
+            sudo apt update
+            sudo apt install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --immutable --immutable-cache --check-cache
@@ -655,8 +664,7 @@ jobs:
             sudo apt install git-lfs
       - checkout
       - setup_remote_docker:
-          # >= v20.10 https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
-          version: 20.10.11
+          version: default
       - run:
           name: Build faucet Docker image
           # Use ${CIRCLE_TAG}
