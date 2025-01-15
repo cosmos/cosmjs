@@ -206,10 +206,6 @@ const RAW_RUNTIME_STATE =
       "npm:7.23.0"\
     ],\
     [\
-      "@confio/ics23",\
-      "npm:0.6.8"\
-    ],\
-    [\
       "@cosmjs/amino",\
       "workspace:packages/amino"\
     ],\
@@ -1931,7 +1927,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "long",\
-      "npm:4.0.0"\
+      "npm:5.2.4"\
     ],\
     [\
       "lru-cache",\
@@ -2287,7 +2283,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "protobufjs",\
-      "npm:6.11.4"\
+      "npm:7.4.0"\
     ],\
     [\
       "proxy-from-env",\
@@ -3231,17 +3227,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@confio/ics23", [\
-      ["npm:0.6.8", {\
-        "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.8-c87607eb2c-2f3f5032cd.zip/node_modules/@confio/ics23/",\
-        "packageDependencies": [\
-          ["@confio/ics23", "npm:0.6.8"],\
-          ["@noble/hashes", "npm:1.0.0"],\
-          ["protobufjs", "npm:6.11.4"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@cosmjs/amino", [\
       ["workspace:packages/amino", {\
         "packageLocation": "./packages/amino/",\
@@ -3749,7 +3734,7 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["protobufjs", "npm:6.11.4"],\
+          ["protobufjs", "npm:7.4.0"],\
           ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
@@ -3812,7 +3797,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./packages/stargate/",\
         "packageDependencies": [\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
-          ["@confio/ics23", "npm:0.6.8"],\
           ["@cosmjs/amino", "workspace:packages/amino"],\
           ["@cosmjs/crypto", "workspace:packages/crypto"],\
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
@@ -3856,8 +3840,7 @@ const RAW_RUNTIME_STATE =
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.23.28"],\
           ["typescript", "patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"],\
           ["webpack", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:5.76.1"],\
-          ["webpack-cli", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:4.7.0"],\
-          ["xstream", "npm:11.14.0"]\
+          ["webpack-cli", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:4.7.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -9952,10 +9935,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["long", [\
-      ["npm:4.0.0", {\
-        "packageLocation": "./.yarn/cache/long-npm-4.0.0-ecd96a31ed-50a6417d15.zip/node_modules/long/",\
+      ["npm:5.2.4", {\
+        "packageLocation": "./.yarn/cache/long-npm-5.2.4-b96a88098c-0cf819ce2a.zip/node_modules/long/",\
         "packageDependencies": [\
-          ["long", "npm:4.0.0"]\
+          ["long", "npm:5.2.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -11067,10 +11050,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["protobufjs", [\
-      ["npm:6.11.4", {\
-        "packageLocation": "./.yarn/unplugged/protobufjs-npm-6.11.4-af11968b80/node_modules/protobufjs/",\
+      ["npm:7.4.0", {\
+        "packageLocation": "./.yarn/unplugged/protobufjs-npm-7.4.0-12c56a3adc/node_modules/protobufjs/",\
         "packageDependencies": [\
-          ["protobufjs", "npm:6.11.4"],\
+          ["protobufjs", "npm:7.4.0"],\
           ["@protobufjs/aspromise", "npm:1.1.2"],\
           ["@protobufjs/base64", "npm:1.1.2"],\
           ["@protobufjs/codegen", "npm:2.0.4"],\
@@ -11081,9 +11064,8 @@ const RAW_RUNTIME_STATE =
           ["@protobufjs/path", "npm:1.1.2"],\
           ["@protobufjs/pool", "npm:1.1.0"],\
           ["@protobufjs/utf8", "npm:1.1.0"],\
-          ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["long", "npm:4.0.0"]\
+          ["long", "npm:5.2.4"]\
         ],\
         "linkType": "HARD"\
       }]\

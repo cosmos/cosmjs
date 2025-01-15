@@ -38,7 +38,6 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@confio/ics23": "^0.6.8",
     "@cosmjs/amino": "workspace:^",
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
@@ -46,8 +45,7 @@
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.9.0",
-    "xstream": "^11.14.0"
+    "cosmjs-types": "^0.9.0"
   },
   "devDependencies": {
     "@cosmjs/crypto": "workspace:^",

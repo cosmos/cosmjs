@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toAscii } from "@cosmjs/encoding";
-import { Uint64 } from "@cosmjs/math";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import {
   QueryClientImpl as TransferQuery,
@@ -8,7 +6,6 @@ import {
   QueryDenomTracesResponse,
   QueryParamsResponse as QueryTransferParamsResponse,
 } from "cosmjs-types/ibc/applications/transfer/v1/query";
-import { Channel } from "cosmjs-types/ibc/core/channel/v1/channel";
 import {
   QueryChannelClientStateResponse,
   QueryChannelConsensusStateResponse,
@@ -165,22 +162,6 @@ export interface IbcExtension {
       readonly denomTraces: (paginationKey?: Uint8Array) => Promise<QueryDenomTracesResponse>;
       readonly allDenomTraces: () => Promise<QueryDenomTracesResponse>;
       readonly params: () => Promise<QueryTransferParamsResponse>;
-    };
-    readonly verified: {
-      readonly channel: {
-        readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
-        readonly packetCommitment: (
-          portId: string,
-          channelId: string,
-          sequence: number,
-        ) => Promise<Uint8Array>;
-        readonly packetAcknowledgement: (
-          portId: string,
-          channelId: string,
-          sequence: number,
-        ) => Promise<Uint8Array>;
-        readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
-      };
     };
   };
 }
@@ -501,40 +482,6 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           });
         },
         params: async () => transferQueryService.Params({}),
-      },
-      verified: {
-        channel: {
-          channel: async (portId: string, channelId: string) => {
-            // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
-            // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
-            const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
-            const { value } = await base.queryStoreVerified("ibc", key);
-            return value.length ? Channel.decode(value) : null;
-          },
-          packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-            // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
-            // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
-            const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
-            const { value } = await base.queryStoreVerified("ibc", key);
-            // keeper code doesn't parse, but returns raw
-            return value;
-          },
-          packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-            // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
-            // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
-            const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
-            const { value } = await base.queryStoreVerified("ibc", key);
-            // keeper code doesn't parse, but returns raw
-            return value;
-          },
-          nextSequenceReceive: async (portId: string, channelId: string) => {
-            // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
-            // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
-            const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
-            const { value } = await base.queryStoreVerified("ibc", key);
-            return value.length ? Uint64.fromBytes(value).toNumber() : null;
-          },
-        },
       },
     },
   };
