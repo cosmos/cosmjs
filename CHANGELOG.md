@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade to yarn 4 and drop Node.js 16 support ([#1552])
+
+[#1552]: https://github.com/cosmos/cosmjs/issues/1552
+
 ## [0.32.4] - 2024-06-26
 
 ### Fixed
