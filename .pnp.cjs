@@ -3856,8 +3856,7 @@ const RAW_RUNTIME_STATE =
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.23.28"],\
           ["typescript", "patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"],\
           ["webpack", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:5.76.1"],\
-          ["webpack-cli", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:4.7.0"],\
-          ["xstream", "npm:11.14.0"]\
+          ["webpack-cli", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:4.7.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
