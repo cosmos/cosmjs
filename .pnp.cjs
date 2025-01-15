@@ -206,10 +206,6 @@ const RAW_RUNTIME_STATE =
       "npm:7.23.0"\
     ],\
     [\
-      "@confio/ics23",\
-      "npm:0.6.8"\
-    ],\
-    [\
       "@cosmjs/amino",\
       "workspace:packages/amino"\
     ],\
@@ -3231,17 +3227,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@confio/ics23", [\
-      ["npm:0.6.8", {\
-        "packageLocation": "./.yarn/cache/@confio-ics23-npm-0.6.8-c87607eb2c-2f3f5032cd.zip/node_modules/@confio/ics23/",\
-        "packageDependencies": [\
-          ["@confio/ics23", "npm:0.6.8"],\
-          ["@noble/hashes", "npm:1.0.0"],\
-          ["protobufjs", "npm:6.11.4"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@cosmjs/amino", [\
       ["workspace:packages/amino", {\
         "packageLocation": "./packages/amino/",\
@@ -3812,7 +3797,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./packages/stargate/",\
         "packageDependencies": [\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
-          ["@confio/ics23", "npm:0.6.8"],\
           ["@cosmjs/amino", "workspace:packages/amino"],\
           ["@cosmjs/crypto", "workspace:packages/crypto"],\
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
