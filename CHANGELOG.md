@@ -9,6 +9,10 @@ and this project adheres to
 ### Changed
 
 - Upgrade to yarn 4 and drop Node.js 16 support ([#1552])
+- @cosmjs/stargate: Removed support for verified queries. This feature depends
+  on a JavaScript implementation of ICS-23 but
+  [@confio/ics23 is unmaintained](https://github.com/cosmos/cosmjs/issues/1618)
+  without replacement.
 
 [#1552]: https://github.com/cosmos/cosmjs/issues/1552
 
