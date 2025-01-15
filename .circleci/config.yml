@@ -81,7 +81,8 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2022.10.1
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -216,7 +217,8 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2022.10.1
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - run:
@@ -348,7 +350,8 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2022.10.1
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
@@ -457,7 +460,8 @@ jobs:
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
       #
       # Available images: https://circleci.com/developer/machine/image/ubuntu-2004
-      image: ubuntu-2004:2022.10.1
+      # Note that ubuntu-2004:202111-02 and above cause checksum issues when installing yarn packages. No idea why.
+      image: ubuntu-2004:202111-02
     resource_class: large
     steps:
       - run:
