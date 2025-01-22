@@ -692,7 +692,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     } else {
       usedFee = fee;
     }
-  
+
     if (!signerData) {
       const chainId = await this.getChainId();
 

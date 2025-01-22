@@ -794,9 +794,16 @@ describe("SigningStargateClient", () => {
         const explicitSignerData = {
           chainId: simapp.chainId,
           sequence,
-          accountNumber
-        }
-        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo, undefined, explicitSignerData);
+          accountNumber,
+        };
+        const transactionHash = await client.signAndBroadcastSync(
+          faucet.address0,
+          [msgAny],
+          fee,
+          memo,
+          undefined,
+          explicitSignerData,
+        );
 
         expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
