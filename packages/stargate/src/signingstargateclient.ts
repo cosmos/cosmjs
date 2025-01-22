@@ -360,17 +360,35 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee | "auto" | number,
     memo = "",
     timeoutHeight?: bigint,
+    explicitSignerData?: SignerData,
   ): Promise<string> {
     let usedFee: StdFee;
+
+    let signerData: SignerData | undefined = explicitSignerData;
+    const { sequence, accountNumber } = explicitSignerData
+      ? explicitSignerData
+      : await this.getSequence(signerAddress);
+
     if (fee == "auto" || typeof fee === "number") {
       assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
-      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const gasEstimation = await this.simulate(signerAddress, messages, memo, { sequence });
       const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
       usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
     } else {
       usedFee = fee;
     }
-    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
+
+    if (!signerData) {
+      const chainId = await this.getChainId();
+
+      signerData = {
+        accountNumber: accountNumber,
+        sequence: sequence,
+        chainId: chainId,
+      };
+    }
+
+    const txRaw = await this.sign(signerAddress, messages, usedFee, memo, signerData, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
   }
