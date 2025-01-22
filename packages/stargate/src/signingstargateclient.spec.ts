@@ -766,6 +766,43 @@ describe("SigningStargateClient", () => {
         await sleep(simapp.blockTime * 1.5);
       });
 
+      it("works with explicitSignerData", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          simapp.tendermintUrlHttp,
+          wallet,
+          defaultSigningClientOptions,
+        );
+
+        const msgSend: MsgSend = {
+          fromAddress: faucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "ucosm"),
+        };
+
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const { sequence, accountNumber } = await client.getSequence(faucet.address0);
+        const explicitSignerData = {
+          chainId: simapp.chainId,
+          sequence,
+          accountNumber
+        }
+        const transactionHash = await client.signAndBroadcastSync(faucet.address0, [msgAny], fee, memo, undefined, explicitSignerData);
+
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(simapp.blockTime * 1.5);
+      });
+
       it("works with auto gas", async () => {
         pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
