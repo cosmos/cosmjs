@@ -46,7 +46,7 @@ module.exports = function (config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ["Firefox"],
 
-    // Keep brower open for debugging. This is overridden by yarn scripts
+    // Keep browser open for debugging. This is overridden by yarn scripts
     singleRun: false,
   });
 };
