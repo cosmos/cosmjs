@@ -61,7 +61,7 @@ export class Faucet {
   }
 
   /**
-   * Returns a list of denoms of tokens owned by the the holder and configured in the faucet
+   * Returns a list of denoms of tokens owned by the holder and configured in the faucet
    */
   public async availableTokens(): Promise<string[]> {
     const { balance } = await this.loadAccount(this.holderAddress);
