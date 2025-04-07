@@ -28,7 +28,7 @@ export class Secp256k1 {
    * The resulting pubkey is uncompressed. For the use in Cosmos it should
    * be compressed first using `Secp256k1.compressPubkey`.
    */
-  public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
+  public static makeKeypair(privkey: Uint8Array): Secp256k1Keypair {
     if (privkey.length !== 32) {
       // is this check missing in secp256k1.validatePrivateKey?
       // https://github.com/bitjson/bitcoin-ts/issues/4
@@ -64,10 +64,10 @@ export class Secp256k1 {
    * - lowS signature
    * - DER encoded
    */
-  public static async createSignature(
+  public static createSignature(
     messageHash: Uint8Array,
     privkey: Uint8Array,
-  ): Promise<ExtendedSecp256k1Signature> {
+  ): ExtendedSecp256k1Signature {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }
@@ -86,11 +86,11 @@ export class Secp256k1 {
     );
   }
 
-  public static async verifySignature(
+  public static verifySignature(
     signature: Secp256k1Signature,
     messageHash: Uint8Array,
     pubkey: Uint8Array,
-  ): Promise<boolean> {
+  ): boolean {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }
