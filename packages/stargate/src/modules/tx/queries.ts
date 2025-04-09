@@ -21,6 +21,7 @@ export interface TxExtension {
       memo: string | undefined,
       signer: Pubkey,
       sequence: number,
+      nonCriticalExtensionOptions?: readonly Any[],
     ) => Promise<SimulateResponse>;
     // Add here with tests:
     // - broadcastTx
@@ -48,6 +49,7 @@ export function setupTxExtension(base: QueryClient): TxExtension {
         memo: string | undefined,
         signer: Pubkey,
         sequence: number,
+        nonCriticalExtensionOptions?: readonly Any[],
       ) => {
         const tx = Tx.fromPartial({
           authInfo: AuthInfo.fromPartial({
@@ -63,6 +65,8 @@ export function setupTxExtension(base: QueryClient): TxExtension {
           body: TxBody.fromPartial({
             messages: Array.from(messages),
             memo: memo,
+            nonCriticalExtensionOptions:
+              nonCriticalExtensionOptions && Array.from(nonCriticalExtensionOptions),
           }),
           signatures: [new Uint8Array()],
         });
