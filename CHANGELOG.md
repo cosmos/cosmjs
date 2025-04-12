@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate: Support `nonCriticalExtensionOptions` when generating
+  transactions
+- @cosmjs/cosmwasm-stargate: Support `nonCriticalExtensionOptions` and fee
+  granter when signing and executing transactions
+
 ## [0.33.1] - 2025-03-12
 
 ### Fixed
