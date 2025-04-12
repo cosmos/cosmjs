@@ -24,6 +24,7 @@ export {
 } from "./modules";
 export {
   ChangeAdminResult,
+  CustomTxOptions,
   ExecuteInstruction,
   ExecuteResult,
   InstantiateOptions,
