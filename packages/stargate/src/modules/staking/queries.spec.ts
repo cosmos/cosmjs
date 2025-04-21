@@ -2,7 +2,7 @@
 import { coin, coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
-import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgBeginRedelegate, MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
@@ -15,7 +15,7 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils.spec";
-import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
+import { MsgBeginRedelegateEncodeObject, MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
 import { setupStakingExtension, StakingExtension } from "./queries";
 
 async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & StakingExtension, CometClient]> {
@@ -52,6 +52,24 @@ describe("StakingExtension", () => {
         const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
         assertIsDeliverTxSuccess(result);
       }
+
+      // Set up a redelegation for the redelegations query test
+      {
+        const msgRedelegate = {
+          delegatorAddress: faucet.address0,
+          validatorSrcAddress: validator.validatorAddress,
+          validatorDstAddress: validator.validatorAddress,
+          amount: coin(1000, "ustake"),
+        };
+        const msgRedelegateAny: MsgBeginRedelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+          value: msgRedelegate,
+        };
+        const memo = "Test redelegation for Stargate";
+        const result = await client.signAndBroadcast(faucet.address0, [msgRedelegateAny], defaultFee, memo);
+        assertIsDeliverTxSuccess(result);
+      }
+
       {
         const msg: MsgUndelegate = {
           delegatorAddress: faucet.address0,
@@ -177,13 +195,18 @@ describe("StakingExtension", () => {
 
   describe("redelegations", () => {
     it("works", async () => {
-      // TODO: Set up a result for this test
       pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
-      await expectAsync(
-        client.staking.redelegations(faucet.address0, validator.validatorAddress, validator.validatorAddress),
-      ).toBeRejectedWithError(/redelegation not found/i);
+      const response = await client.staking.redelegations(
+        faucet.address0,
+        validator.validatorAddress,
+        validator.validatorAddress
+      );
+
+      expect(response.redelegationResponses).toBeDefined();
+      expect(response.redelegationResponses).not.toBeNull();
+      expect(response.redelegationResponses.length).toBeGreaterThan(0);
 
       cometClient.disconnect();
     });
