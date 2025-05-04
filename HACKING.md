@@ -6,7 +6,7 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Prerequisite
 
 - A UNIX-like development environment
-- Node.js 14+, Docker and yarn
+- Node.js 18+, Docker and yarn
 - `sha256sum`, which you
   [can get on macOS as well](https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos)
 - `gsed`, which you
@@ -15,7 +15,7 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Checking out code
 
 We use Git for version control. In addition to the well-known basics, we use the
-extension Git Large File Storage (LFS) to store blobs (currently \*.png and
+extension Git Large File Storage (LFS) to store blobs (currently \*.zip, \*.png, and
 \*.wasm). A git-lfs package is available directly in modern package repositories
 (Debian 10+, Ubuntu 18.04+, Homebrew, MacPorts) and as a backport for older
 systems. Please see [this website](https://git-lfs.github.com/) for instructions
