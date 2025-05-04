@@ -1,5 +1,5 @@
-import axios from "axios";
 import chalk from "chalk";
+import fetch from "cross-fetch";
 import * as fs from "fs";
 import { join } from "path";
 import yargs from "yargs";
@@ -50,7 +50,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
 
   console.info(chalk.green("Initializing session for you. Have fun!"));
   const visiblePackages = (await installedPackages()).filter(
-    (name) => name.startsWith("@cosmjs/") || name === "axios",
+    (name) => name.startsWith("@cosmjs/") || name === "cross-fetch",
   );
   console.info(chalk.yellow("The following packages have been installed and can be imported:"));
   console.info(chalk.yellow(visiblePackages.join(", ")));
@@ -59,7 +59,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
   if (args.selftest) {
     // execute some trival stuff and exit
     init += `
-      import axios from "axios";
+      import fetch from "cross-fetch";
       import * as fs from "fs";
 
       import {
@@ -135,8 +135,8 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     for (const source of args.init.map((arg) => arg.toString())) {
       if (args.debug) console.info(`Adding code from: '${source}' ...`);
       if (source.startsWith("https://")) {
-        const response = await axios.get(source);
-        init += response.data + "\n";
+        const response = await fetch(source).then((r) => r.json());
+        init += response + "\n";
       } else {
         init += fs.readFileSync(source, "utf8") + "\n";
       }
