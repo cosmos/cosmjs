@@ -12,7 +12,6 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-  simapp44Enabled,
   simappEnabled,
   validator,
 } from "../../testutils.spec";
@@ -97,7 +96,7 @@ describe("TxExtension", () => {
       expect(response.gasInfo?.gasUsed).toBeLessThanOrEqual(200_000);
       expect(response.gasInfo?.gasWanted).toEqual(
         // Some dummy value. Value does not matter for regular users.
-        simapp44Enabled() ? BigInt(0) : BigInt("0xffffffffffffffff"),
+        BigInt("0xffffffffffffffff"),
       );
 
       cometClient.disconnect();

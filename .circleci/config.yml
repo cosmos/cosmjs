@@ -28,7 +28,7 @@ workflows:
             - build
           matrix:
             parameters:
-              simapp: ["simapp44", "simapp46", "simapp47", "simapp50"]
+              simapp: ["simapp47", "simapp50"]
       - test-node:
           requires:
             - build
@@ -170,8 +170,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             yarn test --stream
@@ -191,8 +189,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             ./run_examples.sh
@@ -234,11 +230,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -305,8 +301,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -325,8 +321,8 @@ jobs:
           working_directory: packages/cli
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -338,8 +334,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   test-chrome:
     machine:
@@ -368,11 +364,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -435,8 +431,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -448,8 +444,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   coverage:
     machine:
@@ -477,11 +473,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -544,8 +540,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -560,8 +556,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:

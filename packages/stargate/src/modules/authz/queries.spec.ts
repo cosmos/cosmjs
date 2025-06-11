@@ -12,7 +12,6 @@ import {
   faucet,
   makeRandomAddress,
   pendingWithoutSimapp,
-  pendingWithoutSimapp46OrHigher,
   simapp,
   simappEnabled,
 } from "../../testutils.spec";
@@ -102,7 +101,6 @@ describe("AuthzExtension", () => {
 
   describe("granter grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp46OrHigher();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
@@ -133,7 +131,6 @@ describe("AuthzExtension", () => {
 
   describe("grantee grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp46OrHigher();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);
