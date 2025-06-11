@@ -17,7 +17,7 @@ module.exports = [
   {
     // bundle used for Karma tests
     target: target,
-    entry: globSync("./build/**/*.spec.js"),
+    entry: globSync("./build/**/*.spec.js", { dotRelative: true }),
     output: {
       path: distdir,
       filename: "tests.js",
