@@ -19,20 +19,16 @@ export async function http(
   headers: Record<string, string> | undefined,
   request?: any,
 ): Promise<any> {
-  if (typeof fetch === "function") {
-    const settings = {
-      method: method,
-      body: request ? JSON.stringify(request) : undefined,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        "Content-Type": "application/json",
-        ...headers,
-      },
-    };
-    return fetch(url, settings)
-      .then(filterBadStatus)
-      .then((res: any) => res.json());
-  } else {
-    console.error("no fetch?");
-  }
+  const settings = {
+    method: method,
+    body: request ? JSON.stringify(request) : undefined,
+    headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  };
+  return fetch(url, settings)
+    .then(filterBadStatus)
+    .then((res: any) => res.json());
 }
