@@ -199,8 +199,8 @@ and suggestions.
 - [GitHub issues](https://github.com/cosmos/cosmjs/issues) for bugs and feature
   requests
 - The `#dev-chat` channel, or `#dev-support-ai` on the
-  [interchain Discord server](https://discord.gg/interchain) for
-  questions and open discussions
+  [interchain Discord server](https://discord.gg/interchain) for questions and
+  open discussions
 - [#CosmJS on Twitter](https://twitter.com/search?q=%23CosmJS) to spread the
   word
 
