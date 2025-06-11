@@ -1,4 +1,4 @@
-import axios from "axios";
+import fetch from "cross-fetch";
 
 export class FaucetClient {
   private readonly baseUrl: string;
@@ -20,7 +20,7 @@ export class FaucetClient {
     };
 
     try {
-      await axios.post(this.baseUrl + "/credit", body);
+      await fetch(this.baseUrl + "/credit", { method: "POST", body: JSON.stringify(body) });
     } catch (error: any) {
       if (error.response) {
         // append response body to error message

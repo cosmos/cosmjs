@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+- Replaxe axios with cross-fetch ([#1645])
+
+[#1645]: https://github.com/cosmos/cosmjs/pull/1645
+
 ## [0.33.1] - 2025-03-12
 
 ### Fixed
