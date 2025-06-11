@@ -3,8 +3,8 @@ import { HdPath, stringToPath } from "@cosmjs/crypto";
 export type PathBuilder = (account_index: number) => HdPath;
 
 /**
- * Insert a BIP32 path that contains a valiable `a` for the numeric account index.
- * This variable will be replaces when the path builder is used.
+ * Insert a BIP32 path that contains a variable `a` for the numeric account index.
+ * This variable will be replaced when the path builder is used.
  *
  * @param pattern, e.g. m/44'/148'/a' for Stellar paths
  */

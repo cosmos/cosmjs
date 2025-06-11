@@ -48,7 +48,7 @@ export class Uint32 implements Integer, WithByteConverters {
 
     const beBytes = endianess === "be" ? bytes : Array.from(bytes).reverse();
 
-    // Use mulitiplication instead of shifting since bitwise operators are defined
+    // Use multiplication instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
     return new Uint32(beBytes[0] * 2 ** 24 + beBytes[1] * 2 ** 16 + beBytes[2] * 2 ** 8 + beBytes[3]);
   }
