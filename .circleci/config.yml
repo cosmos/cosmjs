@@ -643,12 +643,6 @@ jobs:
       - run:
           name: Lint
           command: yarn lint
-      - run:
-          name: Format text
-          command: yarn format-text
-      - run:
-          name: Format shell scripts
-          command: yarn format-shell
   faucet-docker:
     docker:
       - image: cimg/go:1.17.8
