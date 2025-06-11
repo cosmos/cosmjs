@@ -30,8 +30,6 @@ import {
   pendingWithoutSimapp,
   pendingWithoutSlowSimapp,
   simapp,
-  simapp44Enabled,
-  simapp46Enabled,
   simapp47Enabled,
   simapp50Enabled,
   slowSimapp,
@@ -469,9 +467,7 @@ describe("StargateClient", () => {
         assert(false, "Expected broadcastTx to throw");
       } catch (error: any) {
         expect(error).toMatch(
-          simapp44Enabled()
-            ? /invalid recipient address/i
-            : simapp46Enabled() || simapp47Enabled()
+          simapp47Enabled()
             ? /Broadcasting transaction failed with code 7/i
             : // New error code for SDK 0.50+
               /Broadcasting transaction failed with code 4/i,

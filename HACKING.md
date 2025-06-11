@@ -57,8 +57,8 @@ raw Tendermint and a basic WebSocket server.
 export WASMD_ENABLED=1
 
 # Start simapp
-./scripts/simapp44/start.sh
-export SIMAPP44_ENABLED=1
+./scripts/simapp50/start.sh
+export SIMAPP50_ENABLED=1
 
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
@@ -79,7 +79,7 @@ yarn test
 unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
-unset SIMAPP44_ENABLED
+unset SIMAPP50_ENABLED
 unset WASMD_ENABLED
 ./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh

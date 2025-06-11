@@ -23,7 +23,6 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-  simapp44Enabled,
   simappEnabled,
 } from "./testutils.spec";
 
@@ -168,13 +167,10 @@ describe("StargateClient.getTx and .searchTx", () => {
         }),
       );
 
-      // works on SDK 0.46+
-      if (!simapp44Enabled()) {
-        expect(result.msgResponses.length).toEqual(1);
-        expect(result.msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
-        const _response = MsgSendResponse.decode(result.msgResponses[0].value);
-        // MsgSendResponse has no fields to check 🤷‍♂️
-      }
+      expect(result.msgResponses.length).toEqual(1);
+      expect(result.msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+      const _response = MsgSendResponse.decode(result.msgResponses[0].value);
+      // MsgSendResponse has no fields to check 🤷‍♂️
     });
 
     it("can get unsuccessful tx by ID", async () => {
@@ -192,11 +188,8 @@ describe("StargateClient.getTx and .searchTx", () => {
         }),
       );
 
-      // works on SDK 0.46+
-      if (!simapp44Enabled()) {
-        // unsuccessful tx should not have responses
-        expect(result.msgResponses.length).toEqual(0);
-      }
+      // unsuccessful tx should not have responses
+      expect(result.msgResponses.length).toEqual(0);
     });
 
     it("can get by ID (non existent)", async () => {
@@ -224,13 +217,10 @@ describe("StargateClient.getTx and .searchTx", () => {
         }),
       );
 
-      // works on SDK 0.46+
-      if (!simapp44Enabled()) {
-        expect(result[0].msgResponses.length).toEqual(1);
-        expect(result[0].msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
-        const _response = MsgSendResponse.decode(result[0].msgResponses[0].value);
-        // MsgSendResponse has no fields to check 🤷‍♂️
-      }
+      expect(result[0].msgResponses.length).toEqual(1);
+      expect(result[0].msgResponses[0].typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSendResponse");
+      const _response = MsgSendResponse.decode(result[0].msgResponses[0].value);
+      // MsgSendResponse has no fields to check 🤷‍♂️
     });
 
     it("can search unsuccessful tx by height", async () => {

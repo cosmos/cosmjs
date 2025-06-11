@@ -28,7 +28,7 @@ workflows:
             - build
           matrix:
             parameters:
-              simapp: ["simapp44", "simapp46", "simapp47", "simapp50"]
+              simapp: ["simapp47", "simapp50"]
       - test-node:
           requires:
             - build
@@ -170,8 +170,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             yarn test --stream
@@ -191,8 +189,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             ./run_examples.sh
