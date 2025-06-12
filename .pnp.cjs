@@ -438,6 +438,10 @@ const RAW_RUNTIME_STATE =
       "npm:1.1.0"\
     ],\
     [\
+      "@scure/base",\
+      "npm:1.2.6"\
+    ],\
+    [\
       "@socket.io/component-emitter",\
       "npm:3.1.0"\
     ],\
@@ -3603,6 +3607,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@scure/base", "npm:1.2.6"],\
           ["@types/base64-js", "npm:1.3.0"],\
           ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
@@ -3612,8 +3617,6 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.10.6"],\
           ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
           ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
-          ["base64-js", "npm:1.5.1"],\
-          ["bech32", "npm:1.1.4"],\
           ["eslint", "npm:8.57.1"],\
           ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
           ["eslint-import-resolver-node", "npm:0.3.9"],\
@@ -4651,6 +4654,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@protobufjs-utf8-npm-1.1.0-02c590807c-a3fe31fe3f.zip/node_modules/@protobufjs/utf8/",\
         "packageDependencies": [\
           ["@protobufjs/utf8", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@scure/base", [\
+      ["npm:1.2.6", {\
+        "packageLocation": "./.yarn/cache/@scure-base-npm-1.2.6-f26c4d7404-49bd529337.zip/node_modules/@scure/base/",\
+        "packageDependencies": [\
+          ["@scure/base", "npm:1.2.6"]\
         ],\
         "linkType": "HARD"\
       }]\

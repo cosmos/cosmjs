@@ -37,6 +37,6 @@ export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
   }
 }
 
-export function pubkeyToAddress(pubkey: Pubkey, prefix: string): string {
+export function pubkeyToAddress(pubkey: Pubkey, prefix: string): `${string}1${string}` {
   return toBech32(prefix, pubkeyToRawAddress(pubkey));
 }
