@@ -6,10 +6,10 @@ export function toBech32(prefix: string, data: Uint8Array, limit?: number): `${s
 }
 
 export function fromBech32(
-  address: string,
+  address: `${string}1${string}`,
   limit = Infinity,
 ): { readonly prefix: string; readonly data: Uint8Array } {
-  const decodedAddress = bech32.decode(address as `${string}1${string}`, limit);
+  const decodedAddress = bech32.decode(address, limit);
   return {
     prefix: decodedAddress.prefix,
     data: new Uint8Array(bech32.fromWords(decodedAddress.words)),

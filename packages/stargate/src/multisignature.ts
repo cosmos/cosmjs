@@ -32,7 +32,7 @@ export function makeMultisignedTx(
   sequence: number,
   fee: StdFee,
   bodyBytes: Uint8Array,
-  signatures: Map<string, Uint8Array>,
+  signatures: Map<`${string}1${string}`, Uint8Array>,
 ): TxRaw {
   const addresses = Array.from(signatures.keys());
   const prefix = fromBech32(addresses[0]).prefix;
@@ -87,7 +87,7 @@ export function makeMultisignedTxBytes(
   sequence: number,
   fee: StdFee,
   bodyBytes: Uint8Array,
-  signatures: Map<string, Uint8Array>,
+  signatures: Map<`${string}1${string}`, Uint8Array>,
 ): Uint8Array {
   const signedTx = makeMultisignedTx(multisigPubkey, sequence, fee, bodyBytes, signatures);
   return Uint8Array.from(TxRaw.encode(signedTx).finish());

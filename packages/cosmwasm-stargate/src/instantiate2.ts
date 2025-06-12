@@ -25,7 +25,7 @@ function toUint64(int: number): Uint8Array {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function _instantiate2AddressIntermediate(
   checksum: Uint8Array,
-  creator: string,
+  creator: `${string}1${string}`,
   salt: Uint8Array,
   msg: string | null,
   prefix: string,
@@ -65,7 +65,7 @@ export function _instantiate2AddressIntermediate(
  */
 export function instantiate2Address(
   checksum: Uint8Array,
-  creator: string,
+  creator: `${string}1${string}`,
   salt: Uint8Array,
   bech32Prefix: string,
 ): `${string}1${string}` {
