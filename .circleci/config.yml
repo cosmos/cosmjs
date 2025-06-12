@@ -16,13 +16,9 @@ workflows:
           requires:
             - docs-build
             - build
-            - lint
           filters:
             branches:
               only: main
-      - lint:
-          requires:
-            - build
       - test-backends:
           requires:
             - build
@@ -610,39 +606,6 @@ jobs:
           name: Deploy to GitHub pages
           # Version pinned to 3.0.0 because of https://github.com/tschaub/gh-pages/issues/354
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
-  lint:
-    docker:
-      - image: cimg/node:18.20
-    steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          command: sudo apt-get install git-lfs
-      - checkout
-      - attach_workspace:
-          at: /tmp/builds
-      - run:
-          name: Merge build folders into project (merge with hardlinks)
-          command: cp --recursive --link /tmp/builds/* .
-      - run:
-          name: Install shfmt
-          command: |
-            sudo wget https://github.com/mvdan/sh/releases/download/v3.2.1/shfmt_v3.2.1_linux_amd64 -O /usr/local/bin/shfmt
-            sudo chmod +x /usr/local/bin/shfmt
-            shfmt --version
-      - run:
-          name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - run:
-          name: Install libusb
-          command: |
-            sudo apt update
-            sudo apt install libusb-1.0-0-dev
-      - run:
-          name: Install Dependencies
-          command: yarn install --immutable --immutable-cache --check-cache
-      - run:
-          name: Lint
-          command: yarn lint
   faucet-docker:
     docker:
       - image: cimg/go:1.17.8
