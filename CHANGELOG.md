@@ -7,6 +7,8 @@ and this project adheres to
 ## [Unreleased]
 
 - Replaxe axios with cross-fetch ([#1645])
+- @cosmjs/tendermint-rpc: Add timeout option for HTTP requests in `HttpClient`
+  and `HttpBatchClient`.
 
 [#1645]: https://github.com/cosmos/cosmjs/pull/1645
 
