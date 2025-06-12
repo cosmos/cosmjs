@@ -37,5 +37,8 @@ jobs:
       - name: Format shell
         run: yarn format-shell
 
+      - name: Format codebase (.ts)
+        run: yarn format
+
       # See https://autofix.ci/
       - uses: autofix-ci/action@v1
