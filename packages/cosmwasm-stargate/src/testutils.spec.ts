@@ -82,7 +82,7 @@ export const alice = {
     type: "tendermint/PubKeySecp256k1",
     value: "A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS",
   },
-  address0: "wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk",
+  address0: "wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk" as `${string}1${string}`,
   address1: "wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y",
   address2: "wasm1xv9tklw7d82sezh9haa573wufgy59vmwnxhnsl",
   address3: "wasm17yg9mssjenmc3jkqth6ulcwj9cxujrxxg9nmzk",

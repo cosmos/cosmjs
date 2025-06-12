@@ -95,7 +95,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
  *
  * @param bechEncoded the bech32 encoded pubkey
  */
-export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
+export function decodeBech32Pubkey(bechEncoded: `${string}1${string}`): Pubkey {
   const { data } = fromBech32(bechEncoded);
   return decodeAminoPubkey(data);
 }
