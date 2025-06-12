@@ -6,7 +6,6 @@ orbs:
 workflows:
   version: 2
   workflow:
-    # Keep those job names in sync with .mergify.yml
     jobs:
       - build
       - docs-build:
