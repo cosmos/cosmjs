@@ -298,7 +298,7 @@ function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResul
     results: (data.txs_results || []).map(decodeTxData),
     validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
-    finalizeBlockEvents: decodeEvents(data.finalize_block_events || [])
+    finalizeBlockEvents: decodeEvents(data.finalize_block_events || []),
   };
 }
 
