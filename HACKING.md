@@ -15,11 +15,11 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Checking out code
 
 We use Git for version control. In addition to the well-known basics, we use the
-extension Git Large File Storage (LFS) to store blobs (currently \*.zip, \*.png, and
-\*.wasm). A git-lfs package is available directly in modern package repositories
-(Debian 10+, Ubuntu 18.04+, Homebrew, MacPorts) and as a backport for older
-systems. Please see [this website](https://git-lfs.github.com/) for instructions
-how to install it.
+extension Git Large File Storage (LFS) to store blobs (currently \*.zip, \*.png,
+and \*.wasm). A git-lfs package is available directly in modern package
+repositories (Debian 10+, Ubuntu 18.04+, Homebrew, MacPorts) and as a backport
+for older systems. Please see [this website](https://git-lfs.github.com/) for
+instructions how to install it.
 
 If you installed git-lfs after cloning this repo, use this command to replace
 the links with the original files: `git lfs fetch && git lfs checkout`.
