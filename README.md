@@ -83,7 +83,7 @@ optipng docs/cosmjs-tree*.png
 
 Currently the codebase supports the following runtime environments:
 
-1. Node.js 14+
+1. Node.js 18+
 2. Modern browsers (Chromium/Firefox/Safari, no Internet Explorer or
    [Edge Spartan](https://en.wikipedia.org/wiki/Microsoft_Edge#Development))
 3. Browser extensions (Chromium/Firefox)
