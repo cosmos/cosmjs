@@ -1080,7 +1080,7 @@ describe("SigningStargateClient", () => {
           encode(message: CustomMsgDelegate, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
             writer.uint32(10).string(message.customDelegatorAddress ?? "");
             writer.uint32(18).string(message.customValidatorAddress ?? "");
-            if (message.customAmount !== undefined && message.customAmount !== undefined) {
+            if (message.customAmount !== undefined) {
               Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
             }
             return writer;
