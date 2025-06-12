@@ -16,7 +16,7 @@ import {
 } from "../../testutils.spec";
 import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages";
 
-function changePrefix(address: string, newPrefix: string): string {
+function changePrefix(address: string, newPrefix: string): `${string}1${string}` {
   return toBech32(newPrefix, fromBech32(address).data);
 }
 
