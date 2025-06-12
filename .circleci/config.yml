@@ -6,7 +6,6 @@ orbs:
 workflows:
   version: 2
   workflow:
-    # Keep those job names in sync with .mergify.yml
     jobs:
       - build
       - docs-build:
@@ -16,19 +15,15 @@ workflows:
           requires:
             - docs-build
             - build
-            - lint
           filters:
             branches:
               only: main
-      - lint:
-          requires:
-            - build
       - test-backends:
           requires:
             - build
           matrix:
             parameters:
-              simapp: ["simapp44", "simapp46", "simapp47", "simapp50"]
+              simapp: ["simapp47", "simapp50"]
       - test-node:
           requires:
             - build
@@ -170,8 +165,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             yarn test --stream
@@ -191,8 +184,6 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
-            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
             ./run_examples.sh
@@ -234,11 +225,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -305,8 +296,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -325,8 +316,8 @@ jobs:
           working_directory: packages/cli
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -338,8 +329,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   test-chrome:
     machine:
@@ -368,11 +359,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -435,8 +426,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -448,8 +439,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   coverage:
     machine:
@@ -477,11 +468,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp44/start.sh
+          command: ./scripts/simapp50/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp44/slow_start.sh
+          command: ./scripts/simapp50/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -544,8 +535,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP44_ENABLED: 1
-            SLOW_SIMAPP44_ENABLED: 1
+            SIMAPP50_ENABLED: 1
+            SLOW_SIMAPP50_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -560,8 +551,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp44/stop.sh
-            ./scripts/simapp44/slow_stop.sh
+            ./scripts/simapp50/stop.sh
+            ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:
@@ -614,45 +605,6 @@ jobs:
           name: Deploy to GitHub pages
           # Version pinned to 3.0.0 because of https://github.com/tschaub/gh-pages/issues/354
           command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
-  lint:
-    docker:
-      - image: cimg/node:18.20
-    steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          command: sudo apt-get install git-lfs
-      - checkout
-      - attach_workspace:
-          at: /tmp/builds
-      - run:
-          name: Merge build folders into project (merge with hardlinks)
-          command: cp --recursive --link /tmp/builds/* .
-      - run:
-          name: Install shfmt
-          command: |
-            sudo wget https://github.com/mvdan/sh/releases/download/v3.2.1/shfmt_v3.2.1_linux_amd64 -O /usr/local/bin/shfmt
-            sudo chmod +x /usr/local/bin/shfmt
-            shfmt --version
-      - run:
-          name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - run:
-          name: Install libusb
-          command: |
-            sudo apt update
-            sudo apt install libusb-1.0-0-dev
-      - run:
-          name: Install Dependencies
-          command: yarn install --immutable --immutable-cache --check-cache
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Format text
-          command: yarn format-text
-      - run:
-          name: Format shell scripts
-          command: yarn format-shell
   faucet-docker:
     docker:
       - image: cimg/go:1.17.8

@@ -1,5 +1,5 @@
 import { coin, coins, DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
-import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
@@ -12,14 +12,13 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-  simapp44Enabled,
   simappEnabled,
   validator,
 } from "../../testutils.spec";
 import { setupTxExtension, TxExtension } from "./queries";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, CometClient]> {
-  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  const cometClient = await connectComet(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }
 
@@ -97,7 +96,7 @@ describe("TxExtension", () => {
       expect(response.gasInfo?.gasUsed).toBeLessThanOrEqual(200_000);
       expect(response.gasInfo?.gasWanted).toEqual(
         // Some dummy value. Value does not matter for regular users.
-        simapp44Enabled() ? BigInt(0) : BigInt("0xffffffffffffffff"),
+        BigInt("0xffffffffffffffff"),
       );
 
       cometClient.disconnect();

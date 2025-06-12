@@ -16,14 +16,6 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
-export function simapp44Enabled(): boolean {
-  return !!process.env.SIMAPP44_ENABLED;
-}
-
-export function simapp46Enabled(): boolean {
-  return !!process.env.SIMAPP46_ENABLED;
-}
-
 export function simapp47Enabled(): boolean {
   return !!process.env.SIMAPP47_ENABLED;
 }
@@ -33,33 +25,22 @@ export function simapp50Enabled(): boolean {
 }
 
 export function simappEnabled(): boolean {
-  return simapp44Enabled() || simapp46Enabled() || simapp47Enabled() || simapp50Enabled();
-}
-
-export function pendingWithoutSimapp46OrHigher(): void {
-  if (!simapp46Enabled() && !simapp47Enabled() && !simapp50Enabled()) {
-    return pending("Set SIMAPP{46,47,50}_ENABLED to enable Simapp based tests");
-  }
+  return simapp47Enabled() || simapp50Enabled();
 }
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP{44,46,47,50}_ENABLED to enable Simapp based tests");
+    return pending("Set SIMAPP{47,50}_ENABLED to enable Simapp based tests");
   }
 }
 
 export function slowSimappEnabled(): boolean {
-  return (
-    !!process.env.SLOW_SIMAPP44_ENABLED ||
-    !!process.env.SLOW_SIMAPP46_ENABLED ||
-    !!process.env.SLOW_SIMAPP47_ENABLED ||
-    !!process.env.SLOW_SIMAPP50_ENABLED
-  );
+  return !!process.env.SLOW_SIMAPP47_ENABLED || !!process.env.SLOW_SIMAPP50_ENABLED;
 }
 
 export function pendingWithoutSlowSimapp(): void {
   if (!slowSimappEnabled()) {
-    return pending("Set SLOW_SIMAPP{44,46,47,50}_ENABLED to enable slow Simapp based tests");
+    return pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
   }
 }
 
@@ -153,10 +134,10 @@ export const unused = {
 
 export const validator = {
   /**
-   * From first gentx's auth_info.signer_infos in scripts/simapp44/template/.simapp/config/genesis.json
+   * From first gentx's auth_info.signer_infos in scripts/simapp50/template/.simapp/config/genesis.json
    *
    * ```
-   * jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/simapp44/template/.simapp/config/genesis.json
+   * jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/simapp50/template/.simapp/config/genesis.json
    * ```
    */
   pubkey: {
@@ -164,18 +145,18 @@ export const validator = {
     value: "A0RZ3+xLf9xJiySHQxQsQtW8HJYEcniJKbFxG2R9ZEQv",
   },
   /**
-   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp44/template/.simapp/config/genesis.json
+   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp50/template/.simapp/config/genesis.json
    *
    * ```
-   * jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/simapp44/template/.simapp/config/genesis.json
+   * jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/simapp50/template/.simapp/config/genesis.json
    * ```
    */
   delegatorAddress: "cosmos12nt2hqjps8r065wc02qks88tvqzdeua0ld3jxy",
   /**
-   * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp44/template/.simapp/config/genesis.json
+   * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp50/template/.simapp/config/genesis.json
    *
    * ```
-   * jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/simapp44/template/.simapp/config/genesis.json
+   * jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/simapp50/template/.simapp/config/genesis.json
    * ```
    */
   validatorAddress: "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",

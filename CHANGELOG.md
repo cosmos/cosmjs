@@ -6,6 +6,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Replaxe axios with cross-fetch ([#1645])
+- Fix block events in CometBFT 0.38 API (`begin_block_events`/`end_block_events`
+  -> `finalize_block_events`) in `RpcBlockResultsResponse` and
+  `BlockResultsResponse` ([#1612])
+
+[#1612]: https://github.com/cosmos/cosmjs/pull/1612
+[#1645]: https://github.com/cosmos/cosmjs/pull/1645
+
 ## [0.33.1] - 2025-03-12
 
 ### Fixed

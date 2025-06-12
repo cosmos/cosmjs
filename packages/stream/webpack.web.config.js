@@ -1,4 +1,4 @@
-const glob = require("glob");
+const { globSync } = require("glob");
 const path = require("path");
 
 const target = "web";
@@ -8,7 +8,7 @@ module.exports = [
   {
     // bundle used for Karma tests
     target: target,
-    entry: glob.sync("./build/**/*.spec.js"),
+    entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       path: distdir,
       filename: "tests.js",

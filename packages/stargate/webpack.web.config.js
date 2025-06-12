@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-const glob = require("glob");
+const { globSync } = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 
@@ -10,17 +10,13 @@ module.exports = [
   {
     // bundle used for Karma tests
     target: target,
-    entry: glob.sync("./build/**/*.spec.js"),
+    entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       path: distdir,
       filename: "tests.js",
     },
     plugins: [
       new webpack.EnvironmentPlugin({
-        SIMAPP44_ENABLED: "",
-        SLOW_SIMAPP44_ENABLED: "",
-        SIMAPP46_ENABLED: "",
-        SLOW_SIMAPP46_ENABLED: "",
         SIMAPP47_ENABLED: "",
         SLOW_SIMAPP47_ENABLED: "",
         SIMAPP50_ENABLED: "",

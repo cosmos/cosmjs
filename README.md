@@ -83,7 +83,7 @@ optipng docs/cosmjs-tree*.png
 
 Currently the codebase supports the following runtime environments:
 
-1. Node.js 14+
+1. Node.js 18+
 2. Modern browsers (Chromium/Firefox/Safari, no Internet Explorer or
    [Edge Spartan](https://en.wikipedia.org/wiki/Microsoft_Edge#Development))
 3. Browser extensions (Chromium/Firefox)
@@ -199,8 +199,8 @@ and suggestions.
 - [GitHub issues](https://github.com/cosmos/cosmjs/issues) for bugs and feature
   requests
 - The `#dev-chat` channel, or `#dev-support-ai` on the
-  [interchain Discord server](https://discord.gg/interchain) for
-  questions and open discussions
+  [interchain Discord server](https://discord.gg/interchain) for questions and
+  open discussions
 - [#CosmJS on Twitter](https://twitter.com/search?q=%23CosmJS) to spread the
   word
 

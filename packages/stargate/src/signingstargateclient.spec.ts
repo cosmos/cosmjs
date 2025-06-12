@@ -8,7 +8,7 @@ import {
   makeCosmoshubPath,
   Registry,
 } from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { connectComet } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { DeepPartial } from "cosmjs-types";
 import { BinaryWriter } from "cosmjs-types/binary";
@@ -187,7 +187,7 @@ describe("SigningStargateClient", () => {
         defaultSigningClientOptions,
       );
 
-      const cometClient = await Tendermint34Client.connect(simapp.tendermintUrlHttp);
+      const cometClient = await connectComet(simapp.tendermintUrlHttp);
       const queryClient = QueryClient.withExtensions(cometClient, setupFeegrantExtension);
       let allowanceExists: boolean;
       try {
@@ -1080,7 +1080,7 @@ describe("SigningStargateClient", () => {
           encode(message: CustomMsgDelegate, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
             writer.uint32(10).string(message.customDelegatorAddress ?? "");
             writer.uint32(18).string(message.customValidatorAddress ?? "");
-            if (message.customAmount !== undefined && message.customAmount !== undefined) {
+            if (message.customAmount !== undefined) {
               Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
             }
             return writer;

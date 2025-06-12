@@ -1,7 +1,7 @@
 import { coin, coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { toAscii } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import {
   ProposalStatus,
@@ -21,7 +21,6 @@ import {
   nonNegativeIntegerMatcher,
   pendingWithoutSimapp,
   simapp,
-  simapp44Enabled,
   simappEnabled,
   validator,
 } from "../../testutils.spec";
@@ -29,7 +28,7 @@ import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeOb
 import { GovExtension, setupGovExtension } from "./queries";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, CometClient]> {
-  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  const cometClient = await connectComet(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }
 
@@ -334,9 +333,7 @@ describe("GovExtension", () => {
         Vote.fromPartial({
           proposalId: longify(proposalId),
           voter: voter2Address,
-          option: simapp44Enabled()
-            ? VoteOption.VOTE_OPTION_NO_WITH_VETO
-            : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          option: VoteOption.VOTE_OPTION_UNSPECIFIED,
           options: [
             WeightedVoteOption.fromPartial({
               option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
@@ -347,7 +344,7 @@ describe("GovExtension", () => {
         Vote.fromPartial({
           proposalId: longify(proposalId),
           voter: voter1Address,
-          option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          option: VoteOption.VOTE_OPTION_UNSPECIFIED,
           options: [
             WeightedVoteOption.fromPartial({
               option: VoteOption.VOTE_OPTION_YES,
@@ -372,7 +369,7 @@ describe("GovExtension", () => {
         Vote.fromPartial({
           voter: voter1Address,
           proposalId: longify(proposalId),
-          option: simapp44Enabled() ? VoteOption.VOTE_OPTION_YES : VoteOption.VOTE_OPTION_UNSPECIFIED,
+          option: VoteOption.VOTE_OPTION_UNSPECIFIED,
           options: [
             WeightedVoteOption.fromPartial({
               option: VoteOption.VOTE_OPTION_YES,

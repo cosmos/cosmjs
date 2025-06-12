@@ -2093,7 +2093,7 @@ export function entropyToMnemonic(entropy: Uint8Array): string {
   return words.join(" ");
 }
 
-const invalidNumberOfWorks = "Invalid number of words";
+const invalidNumberOfWords = "Invalid number of words";
 const wordNotInWordlist = "Found word that is not in the wordlist";
 const invalidEntropy = "Invalid entropy";
 const invalidChecksum = "Invalid mnemonic checksum";
@@ -2105,7 +2105,7 @@ function normalize(str: string): string {
 export function mnemonicToEntropy(mnemonic: string): Uint8Array {
   const words = normalize(mnemonic).split(" ");
   if (!allowedWordLengths.includes(words.length)) {
-    throw new Error(invalidNumberOfWorks);
+    throw new Error(invalidNumberOfWords);
   }
 
   // convert word indices to 11 bit binary strings
