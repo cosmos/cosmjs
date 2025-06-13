@@ -1,6 +1,6 @@
 /**
  * Returns the given input. If the input is the default value
- * of protobuf, undefined is retunred. Use this when creating Amino JSON converters.
+ * of protobuf, undefined is returned. Use this when creating Amino JSON converters.
  */
 export function omitDefault<T extends string | number | bigint | boolean>(input: T): T | undefined {
   switch (typeof input) {
