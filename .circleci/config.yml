@@ -8,16 +8,6 @@ workflows:
   workflow:
     jobs:
       - build
-      - docs-build:
-          requires:
-            - build
-      - docs-deploy:
-          requires:
-            - docs-build
-            - build
-          filters:
-            branches:
-              only: main
       - test-backends:
           requires:
             - build
@@ -554,57 +544,6 @@ jobs:
             ./scripts/simapp50/stop.sh
             ./scripts/simapp50/slow_stop.sh
             ./scripts/wasmd/stop.sh
-  docs-build:
-    docker:
-      - image: cimg/node:18.20
-    steps:
-      - run:
-          name: Install Git Large File Storage (LFS)
-          command: sudo apt-get install git-lfs
-      - checkout
-      - attach_workspace:
-          at: /tmp/builds
-      - run:
-          name: Merge build folders into project (merge with hardlinks)
-          command: cp --recursive --link /tmp/builds/* .
-      - run:
-          name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - run:
-          name: Install libusb
-          command: |
-            sudo apt update
-            sudo apt install libusb-1.0-0-dev
-      - run:
-          name: Install Dependencies
-          command: yarn install --immutable --immutable-cache --check-cache
-      - run:
-          name: Build package docs
-          command: yarn docs
-      - run:
-          name: Copy docs into deployment folder
-          command: ./scripts/docs/copy_docs.sh
-      - persist_to_workspace:
-          root: .
-          paths: docs_deployment
-  docs-deploy:
-    docker:
-      - image: cimg/node:18.20
-    steps:
-      - attach_workspace:
-          at: .
-      - add_ssh_keys:
-          fingerprints:
-            - "a7:b3:94:4a:9e:e1:30:fa:ca:22:d1:db:a1:78:d6:e4"
-      - run:
-          name: Add GitHub to known hosts
-          command: |
-            mkdir -p ~/.ssh
-            echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
-      - run:
-          name: Deploy to GitHub pages
-          # Version pinned to 3.0.0 because of https://github.com/tschaub/gh-pages/issues/354
-          command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:cosmos/cosmjs.git"
   faucet-docker:
     docker:
       - image: cimg/go:1.17.8
