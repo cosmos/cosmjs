@@ -380,7 +380,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@noble/hashes",\
-      "npm:1.0.0"\
+      "npm:1.8.0"\
     ],\
     [\
       "@nodelib/fs.scandir",\
@@ -3591,7 +3591,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
-          ["@noble/hashes", "npm:1.0.0"],\
+          ["@noble/hashes", "npm:1.8.0"],\
           ["@types/bn.js", "npm:5.1.0"],\
           ["@types/elliptic", "npm:6.4.14"],\
           ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
@@ -4557,10 +4557,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@noble/hashes", [\
-      ["npm:1.0.0", {\
-        "packageLocation": "./.yarn/cache/@noble-hashes-npm-1.0.0-893cbd74b3-b6244bb44d.zip/node_modules/@noble/hashes/",\
+      ["npm:1.8.0", {\
+        "packageLocation": "./.yarn/cache/@noble-hashes-npm-1.8.0-a397449e64-06a0b52c81.zip/node_modules/@noble/hashes/",\
         "packageDependencies": [\
-          ["@noble/hashes", "npm:1.0.0"]\
+          ["@noble/hashes", "npm:1.8.0"]\
         ],\
         "linkType": "HARD"\
       }]\
