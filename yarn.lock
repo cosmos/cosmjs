@@ -1293,9 +1293,9 @@ __metadata:
   linkType: hard
 
 "@noble/hashes@npm:^1":
-  version: 1.0.0
-  resolution: "@noble/hashes@npm:1.0.0"
-  checksum: 10c0/b6244bb44d2c8774437034c5e416fb72188bbb16e1298fc3223c1a71f918d78496df79523d10d6953a8a6e3009dde745d022bb9aca2e5a5b92eede01b2d9664e
+  version: 1.8.0
+  resolution: "@noble/hashes@npm:1.8.0"
+  checksum: 10c0/06a0b52c81a6fa7f04d67762e08b2c476a00285858150caeaaff4037356dd5e119f45b2a530f638b77a5eeca013168ec1b655db41bae3236cb2e9d511484fc77
   languageName: node
   linkType: hard
 
