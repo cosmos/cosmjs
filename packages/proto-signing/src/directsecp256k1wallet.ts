@@ -33,7 +33,7 @@ export class DirectSecp256k1Wallet implements OfflineDirectSigner {
     this.prefix = prefix;
   }
 
-  private get address(): string {
+  private get address(): `${string}1${string}` {
     return toBech32(this.prefix, rawSecp256k1PubkeyToRawAddress(this.pubkey));
   }
 
