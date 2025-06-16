@@ -125,7 +125,7 @@ export class Secp256k1Signature {
 
   public toDer(): Uint8Array {
     // DER supports negative integers but our data is unsigned. Thus we need to prepend
-    // a leading 0 byte when the higest bit is set to differentiate nagative values
+    // a leading 0 byte when the highest bit is set to differentiate negative values
     const rEncoded = this.data.r[0] >= 0x80 ? new Uint8Array([0, ...this.data.r]) : this.data.r;
     const sEncoded = this.data.s[0] >= 0x80 ? new Uint8Array([0, ...this.data.s]) : this.data.s;
 
