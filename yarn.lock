@@ -307,7 +307,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -355,7 +355,7 @@ __metadata:
     recast: "npm:^0.20"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     yargs: "npm:^15.3.1"
   bin:
     cosmjs-cli: bin/cosmjs-cli
@@ -409,7 +409,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -460,7 +460,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -504,7 +504,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -545,7 +545,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -586,7 +586,7 @@ __metadata:
     ses: "npm:^0.11.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   bin:
@@ -628,7 +628,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
     xstream: "npm:^11.14.0"
@@ -675,7 +675,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -717,7 +717,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -765,7 +765,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -807,7 +807,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
     ws: "npm:^7"
@@ -860,7 +860,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -900,7 +900,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
     xstream: "npm:^11.14.0"
@@ -950,7 +950,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
     xstream: "npm:^11.14.0"
@@ -992,7 +992,7 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.23"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
   languageName: unknown
@@ -3146,7 +3146,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:^"
     eslint: "npm:^8.57.1"
     prettier: "npm:^2.8.8"
-    typescript: "npm:~4.9"
+    typescript: "npm:~5.8"
   languageName: unknown
   linkType: soft
 
@@ -8133,23 +8133,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.9":
-  version: 4.9.5
-  resolution: "typescript@npm:4.9.5"
+"typescript@npm:~5.8":
+  version: 5.8.3
+  resolution: "typescript@npm:5.8.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5f6cad2e728a8a063521328e612d7876e12f0d8a8390d3b3aaa452a6a65e24e9ac8ea22beb72a924fd96ea0a49ea63bb4e251fb922b12eedfb7f7a26475e5c56
+  checksum: 10c0/5f8bb01196e542e64d44db3d16ee0e4063ce4f3e3966df6005f2588e86d91c03e1fb131c2581baf0fb65ee79669eea6e161cd448178986587e9f6844446dbb48
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A~4.9#optional!builtin<compat/typescript>":
-  version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"
+"typescript@patch:typescript@npm%3A~5.8#optional!builtin<compat/typescript>":
+  version: 5.8.3
+  resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/e3333f887c6829dfe0ab6c1dbe0dd1e3e2aeb56c66460cb85c5440c566f900c833d370ca34eb47558c0c69e78ced4bfe09b8f4f98b6de7afed9b84b8d1dd06a1
+  checksum: 10c0/39117e346ff8ebd87ae1510b3a77d5d92dae5a89bde588c747d25da5c146603a99c8ee588c7ef80faaf123d89ed46f6dbd918d534d641083177d5fac38b8a1cb
   languageName: node
   linkType: hard
 
