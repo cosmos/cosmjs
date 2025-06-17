@@ -11,6 +11,15 @@ describe("isValidAddress", () => {
     );
   });
 
+  it("accepts a Penumbra compat address", () => {
+    expect(
+      isValidAddress(
+        "penumbracompat11ld2kghffzgwq4597ejpgmnwxa7ju0cndytuxtsjh8qhjyfuwq0rwd5flnw4a3fgclw7m5puh50nskn2c88flhne2hzchnpxru609d5wgmqqvhdf0sy2tktqfcm2p2tmxeuc86n",
+        "penumbracompat1",
+      ),
+    ).toBe(true);
+  });
+
   it("rejects an invalid address", () => {
     expect(isValidAddress("cosmos1fail", "cosmos")).toBe(false);
   });
