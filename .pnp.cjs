@@ -103,18 +103,6 @@ const RAW_RUNTIME_STATE =
   ],\
   "fallbackPool": [\
     [\
-      "@agoric/babel-standalone",\
-      "npm:7.9.5"\
-    ],\
-    [\
-      "@agoric/make-hardener",\
-      "npm:0.1.3"\
-    ],\
-    [\
-      "@agoric/transform-module",\
-      "npm:0.4.1"\
-    ],\
-    [\
       "@ampproject/remapping",\
       "npm:2.2.1"\
     ],\
@@ -2579,10 +2567,6 @@ const RAW_RUNTIME_STATE =
       "npm:6.0.1"\
     ],\
     [\
-      "ses",\
-      "npm:0.11.1"\
-    ],\
-    [\
       "set-blocking",\
       "npm:2.0.0"\
     ],\
@@ -3091,33 +3075,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
-    ["@agoric/babel-standalone", [\
-      ["npm:7.9.5", {\
-        "packageLocation": "./.yarn/cache/@agoric-babel-standalone-npm-7.9.5-d7c88bfb35-d5bae2402a.zip/node_modules/@agoric/babel-standalone/",\
-        "packageDependencies": [\
-          ["@agoric/babel-standalone", "npm:7.9.5"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@agoric/make-hardener", [\
-      ["npm:0.1.3", {\
-        "packageLocation": "./.yarn/cache/@agoric-make-hardener-npm-0.1.3-8f4efdb7f1-6fc9231218.zip/node_modules/@agoric/make-hardener/",\
-        "packageDependencies": [\
-          ["@agoric/make-hardener", "npm:0.1.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@agoric/transform-module", [\
-      ["npm:0.4.1", {\
-        "packageLocation": "./.yarn/cache/@agoric-transform-module-npm-0.4.1-65094eb3d8-94d9d66044.zip/node_modules/@agoric/transform-module/",\
-        "packageDependencies": [\
-          ["@agoric/transform-module", "npm:0.4.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@ampproject/remapping", [\
       ["npm:2.2.1", {\
         "packageLocation": "./.yarn/cache/@ampproject-remapping-npm-2.2.1-3da3d624be-92ce5915f8.zip/node_modules/@ampproject/remapping/",\
@@ -3425,7 +3382,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3529,7 +3485,6 @@ const RAW_RUNTIME_STATE =
           ["pako", "npm:2.0.3"],\
           ["prettier", "npm:2.8.8"],\
           ["readonly-date", "npm:1.0.0"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3582,7 +3537,6 @@ const RAW_RUNTIME_STATE =
           ["libsodium-wrappers-sumo", "npm:0.7.11"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3628,7 +3582,6 @@ const RAW_RUNTIME_STATE =
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
           ["readonly-date", "npm:1.0.0"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3672,7 +3625,6 @@ const RAW_RUNTIME_STATE =
           ["koa-bodyparser", "npm:4.3.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"],\
@@ -3714,7 +3666,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3756,7 +3707,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3802,7 +3752,6 @@ const RAW_RUNTIME_STATE =
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
           ["semver", "npm:7.5.4"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3846,7 +3795,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3896,7 +3844,6 @@ const RAW_RUNTIME_STATE =
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
           ["protobufjs", "npm:7.4.0"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3940,7 +3887,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -3995,7 +3941,6 @@ const RAW_RUNTIME_STATE =
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
           ["readonly-date", "npm:1.0.0"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -4037,7 +3982,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -4089,7 +4033,6 @@ const RAW_RUNTIME_STATE =
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
           ["readonly-date", "npm:1.0.0"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -4133,7 +4076,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:2.8.8"],\
-          ["ses", "npm:0.11.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["ts-node", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.10.2"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
@@ -12077,18 +12019,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["randombytes", "npm:2.1.0"],\
           ["serialize-javascript", "npm:6.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["ses", [\
-      ["npm:0.11.1", {\
-        "packageLocation": "./.yarn/cache/ses-npm-0.11.1-82b4f2a77b-0199b8830c.zip/node_modules/ses/",\
-        "packageDependencies": [\
-          ["@agoric/babel-standalone", "npm:7.9.5"],\
-          ["@agoric/make-hardener", "npm:0.1.3"],\
-          ["@agoric/transform-module", "npm:0.4.1"],\
-          ["ses", "npm:0.11.1"]\
         ],\
         "linkType": "HARD"\
       }]\
