@@ -24,6 +24,10 @@ describe("isValidAddress", () => {
     expect(isValidAddress("cosmos1fail", "cosmos")).toBe(false);
   });
 
+  it("rejects a zero-length address", () => {
+    expect(isValidAddress("cosmos1550dq7", "cosmos")).toBe(false);
+  });
+
   it("requires a prefix argument", () => {
     // @ts-expect-error intentionally omitting an argument
     expect(isValidAddress("cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r")).toBe(false);
