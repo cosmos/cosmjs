@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: `Comet38Client` is now used to connect to CometBFT
+  0.38 and 1.x backends ([#1679])
+
+[#1679]: https://github.com/cosmos/cosmjs/pull/1679
+
 ### Changed
 
 - Replaxe axios with cross-fetch ([#1645])
