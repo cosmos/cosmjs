@@ -1,5 +1,13 @@
 import fetch from "cross-fetch";
 
+/**
+ * Strip trailing `/`s
+ */
+function stripTrailingSlash(baseUrl: string): string {
+  // Limit the amount of / stripped to avoid potential regex DoS
+  return baseUrl.replace(/(\/{0,20})$/, "");
+}
+
 export class FaucetClient {
   private readonly baseUrl: string;
 
@@ -7,10 +15,7 @@ export class FaucetClient {
     if (!baseUrl.match(/^https?:\/\//)) {
       throw new Error("Expected base url to start with http:// or https://");
     }
-
-    // Strip trailing /
-    const strippedBaseUrl = baseUrl.replace(/(\/+)$/, "");
-    this.baseUrl = strippedBaseUrl;
+    this.baseUrl = stripTrailingSlash(baseUrl);
   }
 
   public async credit(address: string, denom: string): Promise<void> {
