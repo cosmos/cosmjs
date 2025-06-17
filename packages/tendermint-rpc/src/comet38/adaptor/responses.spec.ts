@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { decodeEvent, decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
+import {
+  decodeCommit,
+  decodeEvent,
+  decodeValidatorGenesis,
+  decodeValidatorInfo,
+  decodeValidatorUpdate,
+} from "./responses";
 
 describe("Responses", () => {
   describe("decodeEvent", () => {
@@ -27,6 +33,36 @@ describe("Responses", () => {
       });
       expect(event.type).toEqual("cosmos.module.EmittedEvent");
       expect(event.attributes).toEqual([]);
+    });
+  });
+
+  describe("decodeCommit", () => {
+    it("works for commit at height 0", () => {
+      // See https://github.com/cosmos/cosmjs/issues/1590
+      const data = {
+        height: "0",
+        round: 0,
+        block_id: {
+          hash: "617E8F71CC8D555B0D30D2628C919C0DB20F9AFA07E3AA547DF3CBB999B9B33C",
+          parts: {
+            total: 1,
+            hash: "617E8F71CC8D555B0D30D2628C919C0DB20F9AFA07E3AA547DF3CBB999B9B33C",
+          },
+        },
+        signatures: null,
+      };
+      expect(decodeCommit(data)).toEqual({
+        height: 0,
+        round: 0,
+        blockId: {
+          hash: fromHex("617E8F71CC8D555B0D30D2628C919C0DB20F9AFA07E3AA547DF3CBB999B9B33C"),
+          parts: {
+            total: 1,
+            hash: fromHex("617E8F71CC8D555B0D30D2628C919C0DB20F9AFA07E3AA547DF3CBB999B9B33C"),
+          },
+        },
+        signatures: [],
+      });
     });
   });
 
