@@ -20,6 +20,9 @@ type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;
 // Decoder is a generic that matches all methods of Responses
 type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
+/**
+ * A client for the CometBFT 0.38 and 1.x RPC API
+ */
 export class Comet38Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
