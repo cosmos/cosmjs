@@ -249,7 +249,6 @@ __metadata:
     "@cosmjs/math": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -260,7 +259,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -299,7 +298,6 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@types/babylon": "npm:^6.16.3"
     "@types/diff": "npm:^4"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/node": "npm:*"
     "@types/yargs": "npm:^15.0.4"
@@ -314,7 +312,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     jasmine: "npm:^4"
@@ -344,7 +342,6 @@ __metadata:
     "@cosmjs/tendermint-rpc": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -359,7 +356,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -394,7 +391,6 @@ __metadata:
     "@noble/hashes": "npm:^1"
     "@types/bn.js": "npm:^5"
     "@types/elliptic": "npm:^6.4.14"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -410,7 +406,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -439,7 +435,6 @@ __metadata:
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@types/base64-js": "npm:^1.2.5"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -453,7 +448,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -481,7 +476,6 @@ __metadata:
   resolution: "@cosmjs/faucet-client@workspace:packages/faucet-client"
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -494,7 +488,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -528,7 +522,6 @@ __metadata:
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@koa/cors": "npm:^3.3"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/koa": "npm:^2.13"
     "@types/koa-bodyparser": "npm:^4.3"
@@ -539,7 +532,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     jasmine: "npm:^4"
@@ -564,7 +557,6 @@ __metadata:
   dependencies:
     "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -575,7 +567,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -612,7 +604,6 @@ __metadata:
     "@ledgerhq/hw-transport": "npm:^6.31.4"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@ledgerhq/hw-transport-webusb": "npm:^6.29.4"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/semver": "npm:^7.3.4"
     "@typescript-eslint/eslint-plugin": "npm:^5.54.0"
@@ -622,7 +613,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -646,7 +637,6 @@ __metadata:
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@types/bn.js": "npm:^5"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -659,7 +649,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -691,7 +681,6 @@ __metadata:
     "@cosmjs/math": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -705,7 +694,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -734,7 +723,6 @@ __metadata:
   dependencies:
     "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -746,7 +734,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -784,7 +772,6 @@ __metadata:
     "@cosmjs/tendermint-rpc": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -798,7 +785,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -826,7 +813,6 @@ __metadata:
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -838,7 +824,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -873,7 +859,6 @@ __metadata:
     "@cosmjs/stream": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -886,7 +871,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -915,7 +900,6 @@ __metadata:
   resolution: "@cosmjs/utils@workspace:packages/utils"
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/eslint-plugin-prettier": "npm:^3"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -928,7 +912,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.3.0"
     eslint-import-resolver-node: "npm:^0.3.4"
     eslint-plugin-import: "npm:^2.25.0"
-    eslint-plugin-prettier: "npm:^3.4.0"
+    eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     esm: "npm:^3.2.25"
     glob: "npm:^10"
@@ -1307,6 +1291,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pkgr/core@npm:^0.2.4":
+  version: 0.2.7
+  resolution: "@pkgr/core@npm:0.2.7"
+  checksum: 10c0/951f5ebf2feb6e9dbc202d937f1a364d60f2bf0e3e53594251bcc1d9d2ed0df0a919c49ba162a9499fce73cf46ebe4d7959a8dfbac03511dbe79b69f5fedb804
+  languageName: node
+  linkType: hard
+
 "@protobufjs/aspromise@npm:^1.1.1, @protobufjs/aspromise@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/aspromise@npm:1.1.2"
@@ -1552,15 +1543,6 @@ __metadata:
   dependencies:
     "@types/bn.js": "npm:*"
   checksum: 10c0/512185ad196a4ca0d631042182bb774df04092d577273ca50a49a3f73b1b18e7c67e25af9e3664d9ed89ea2221b1796f9ce5ab29b46081fbdd80e7bb67a8cb37
-  languageName: node
-  linkType: hard
-
-"@types/eslint-plugin-prettier@npm:^3":
-  version: 3.1.0
-  resolution: "@types/eslint-plugin-prettier@npm:3.1.0"
-  dependencies:
-    "@types/eslint": "npm:*"
-  checksum: 10c0/4b6d139da8ee9bd27d3cf7e55a19df36b5073cab60a8a01a3454ccd7af2860b07f7a3b931b07169532087a2bde040c821d431b3e117ddc36a4e1849c30e60118
   languageName: node
   linkType: hard
 
@@ -3807,18 +3789,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "eslint-plugin-prettier@npm:3.4.0"
+"eslint-plugin-prettier@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "eslint-plugin-prettier@npm:5.5.0"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.0"
+    synckit: "npm:^0.11.7"
   peerDependencies:
-    eslint: ">=5.0.0"
-    prettier: ">=1.13.0"
+    "@types/eslint": ">=8.0.0"
+    eslint: ">=8.0.0"
+    eslint-config-prettier: ">= 7.0.0 <10.0.0 || >=10.1.0"
+    prettier: ">=3.0.0"
   peerDependenciesMeta:
+    "@types/eslint":
+      optional: true
     eslint-config-prettier:
       optional: true
-  checksum: 10c0/dbc9f319cf251b0f9251318b152cc8f1cbc1740bf67ac4d45447f48b03eb56eb7b9661c2c30a97b3d53a23e7de86de85ff47e54ae2293d41675f668df2bcc79c
+  checksum: 10c0/d739940d5f5ea9b4c3a52836b24907b273a46909cdd1def5526f8934e54082fe5aac13512eb2c27d538ca79e16916ca54c651e3372aa53b7d4297afb4c156d47
   languageName: node
   linkType: hard
 
@@ -7616,6 +7603,15 @@ __metadata:
   version: 2.0.3
   resolution: "symbol-observable@npm:2.0.3"
   checksum: 10c0/03fb8766b75bfa65a3c7d68ae1e51a13a5ff71b40d6d53b17a0c9c77b1685c20a3bfbf45547ab36214a079665c3f551e250798f6b2f83a2a40762d864ed87f78
+  languageName: node
+  linkType: hard
+
+"synckit@npm:^0.11.7":
+  version: 0.11.8
+  resolution: "synckit@npm:0.11.8"
+  dependencies:
+    "@pkgr/core": "npm:^0.2.4"
+  checksum: 10c0/a1de5131ee527512afcaafceb2399b2f3e63678e56b831e1cb2dc7019c972a8b654703a3b94ef4166868f87eb984ea252b467c9d9e486b018ec2e6a55c24dfd8
   languageName: node
   linkType: hard
 
