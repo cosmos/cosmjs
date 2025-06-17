@@ -1,27 +1,10 @@
 import { encodeSecp256k1Pubkey, makeCosmoshubPath, pubkeyToAddress, Secp256k1Pubkey } from "@cosmjs/amino";
-import { HdPath, Secp256k1Signature } from "@cosmjs/crypto";
+import { HdPath, pathToString, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
-import CosmosApp, {
-  AddressAndPublicKeyResponse,
-  AppInfoResponse,
-  PublicKeyResponse,
-  SignResponse,
-  VersionResponse,
-} from "ledger-cosmos-js";
+import CosmosApp from "@zondax/ledger-cosmos-js";
 import semver from "semver";
-
-/* eslint-disable @typescript-eslint/naming-convention */
-export interface LedgerAppErrorResponse {
-  readonly error_message?: string;
-  readonly device_locked?: boolean;
-}
-/* eslint-enable */
-
-function unharden(hdPath: HdPath): number[] {
-  return hdPath.map((n) => (n.isHardened() ? n.toNumber() - 2 ** 31 : n.toNumber()));
-}
 
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
@@ -87,10 +70,9 @@ export class LedgerConnector {
     assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const response = await this.app.getVersion();
-    this.handleLedgerErrors(response);
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { major, minor, patch, test_mode: testMode } = response as VersionResponse;
-    this.verifyAppMode(testMode);
+    const { major, minor, patch, testMode: testMode } = response;
+    this.verifyAppMode(!!testMode);
     return `${major}.${minor}.${patch}`;
   }
 
@@ -99,10 +81,8 @@ export class LedgerConnector {
     assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const hdPathToUse = hdPath || this.hdPaths[0];
-    // ledger-cosmos-js hardens the first three indices
-    const response = await this.app.publicKey(unharden(hdPathToUse));
-    this.handleLedgerErrors(response);
-    return Uint8Array.from((response as PublicKeyResponse).compressed_pk);
+    const response = await this.app.publicKey(pathToString(hdPathToUse));
+    return Uint8Array.from(response.compressed_pk);
   }
 
   public async getPubkeys(): Promise<readonly Uint8Array[]> {
@@ -123,10 +103,8 @@ export class LedgerConnector {
     assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const hdPathToUse = hdPath || this.hdPaths[0];
-    // ledger-cosmos-js hardens the first three indices
-    const response = await this.app.sign(unharden(hdPathToUse), fromUtf8(message));
-    this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
-    return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
+    const response = await this.app.sign(pathToString(hdPathToUse), Buffer.from(fromUtf8(message)));
+    return Secp256k1Signature.fromDer(response.signature).toFixedLength();
   }
 
   private verifyAppMode(testMode: boolean): void {
@@ -141,8 +119,7 @@ export class LedgerConnector {
     assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const response = await this.app.appInfo();
-    this.handleLedgerErrors(response);
-    return (response as AppInfoResponse).appName;
+    return response.appName || "";
   }
 
   private async verifyAppVersion(): Promise<void> {
@@ -184,48 +161,12 @@ export class LedgerConnector {
     await this.verifyDeviceIsReady();
 
     const hdPathToUse = hdPath || this.hdPaths[0];
-    // ledger-cosmos-js hardens the first three indices
-    const response = await this.app.showAddressAndPubKey(unharden(hdPathToUse), this.prefix);
-    this.handleLedgerErrors(response);
+    const response = await this.app.showAddressAndPubKey(pathToString(hdPathToUse), this.prefix);
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { address, compressed_pk } = response as AddressAndPublicKeyResponse;
+    const { bech32_address, compressed_pk } = response;
     return {
-      address: address,
+      address: bech32_address,
       pubkey: encodeSecp256k1Pubkey(compressed_pk),
     };
-  }
-
-  private handleLedgerErrors(
-    /* eslint-disable @typescript-eslint/naming-convention */
-    {
-      error_message: errorMessage = "No errors",
-      device_locked: deviceLocked = false,
-    }: LedgerAppErrorResponse,
-    /* eslint-enable */
-    rejectionMessage = "Request was rejected by the user",
-  ): void {
-    if (deviceLocked) {
-      throw new Error("Ledger’s screensaver mode is on");
-    }
-    switch (errorMessage) {
-      case "U2F: Timeout":
-        throw new Error("Connection timed out. Please try again.");
-      case "Cosmos app does not seem to be open":
-        throw new Error(`${this.ledgerAppName} app is not open`);
-      case "Command not allowed":
-        throw new Error("Transaction rejected");
-      case "Transaction rejected":
-        throw new Error(rejectionMessage);
-      case "Unknown Status Code: 26628":
-        throw new Error("Ledger’s screensaver mode is on");
-      case "Instruction not supported":
-        throw new Error(
-          `Your ${this.ledgerAppName} Ledger App is not up to date. Please update to version ${this.minLedgerAppVersion} or newer.`,
-        );
-      case "No errors":
-        break;
-      default:
-        throw new Error(`Ledger Native Error: ${errorMessage}`);
-    }
   }
 }

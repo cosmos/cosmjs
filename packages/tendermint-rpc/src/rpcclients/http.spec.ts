@@ -34,7 +34,7 @@ describe("http", () => {
   it("errors for non-open port", async () => {
     await expectAsync(
       http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
-    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed)/i);
+    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
   });
 
   it("can POST to echo server with custom headers", async () => {
