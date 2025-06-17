@@ -412,9 +412,8 @@ export class CosmWasmClient {
    * Throws an error if no contract was found at the address
    */
   public async getContract(address: string): Promise<Contract> {
-    const { address: retrievedAddress, contractInfo } = await this.forceGetQueryClient().wasm.getContractInfo(
-      address,
-    );
+    const { address: retrievedAddress, contractInfo } =
+      await this.forceGetQueryClient().wasm.getContractInfo(address);
     if (!contractInfo) throw new Error(`No contract found at address "${address}"`);
     assert(retrievedAddress, "address missing");
     assert(contractInfo.codeId && contractInfo.creator && contractInfo.label, "contractInfo incomplete");
