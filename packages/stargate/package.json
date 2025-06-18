@@ -76,6 +76,7 @@
     "nyc": "^15.1.0",
     "prettier": "^3.5.3",
     "readonly-date": "^1.0.0",
+    "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "ts-node": "^8",
     "typedoc": "^0.28",

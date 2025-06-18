@@ -53,6 +53,7 @@ jobs:
           SOCKETSERVER_ENABLED: 1
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
+          SES_ENABLED: 1
         run: yarn test --stream
       - name: Run CLI selftest
         working-directory: packages/cli
