@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.33.0",
+  "version": "0.33.1",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -16,8 +16,8 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
-    "format-examples": "prettier --write --loglevel warn \"./examples/**/*.ts\"",
+    "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
+    "format-examples": "prettier --write --log-level warn \"./examples/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
@@ -51,37 +51,36 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "axios": "^1.6.0",
     "babylon": "^6.18.0",
     "chalk": "^4",
     "cosmjs-types": "^0.9.0",
+    "cross-fetch": "^4.1.0",
     "diff": "^4",
     "recast": "^0.20",
     "ts-node": "^8",
-    "typescript": "~4.9",
+    "typescript": "~5.8",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/babylon": "^6.16.3",
     "@types/diff": "^4",
-    "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",
     "@types/node": "*",
     "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
-    "eslint": "^7.5",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-import": "^2.25.0",
+    "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "esm": "^3.2.25",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.1",
+    "prettier": "^3.5.3",
     "source-map-support": "^0.5.19"
   }
 }

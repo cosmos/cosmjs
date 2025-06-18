@@ -39,7 +39,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
   const amount = coins(1234567, "ucosm");
   const memo = "With simulate";
-  const result = await client.sendTokens(account.address, recipient, amount, 1.2, memo);
+  const result = await client.sendTokens(account.address, recipient, amount, 1.5, memo);
   assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
 }
@@ -58,7 +58,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
-  const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
+  const fee = calculateFee(Math.round(gasEstimation * 1.5), gasPrice);
   const result = await client.sendTokens(account.address, recipient, amount, fee, memo);
   assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);
@@ -114,7 +114,7 @@ const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet
   };
   const memo = "With simulate";
   const gasEstimation = await client.simulate(account.address, [sendMsg], memo);
-  const fee = calculateFee(Math.round(gasEstimation * 1.3), gasPrice);
+  const fee = calculateFee(Math.round(gasEstimation * 1.5), gasPrice);
   const result = await client.signAndBroadcast(account.address, [sendMsg], fee, memo);
   assertIsDeliverTxSuccess(result);
   console.log("Successfully broadcasted:", result);

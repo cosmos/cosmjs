@@ -1,6 +1,6 @@
 import { makeCosmoshubPath } from "@cosmjs/amino";
 import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { CometClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 
@@ -12,14 +12,13 @@ import {
   faucet,
   makeRandomAddress,
   pendingWithoutSimapp,
-  pendingWithoutSimapp46OrHigher,
   simapp,
   simappEnabled,
 } from "../../testutils.spec";
 import { AuthzExtension, setupAuthzExtension } from "./queries";
 
 async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & AuthzExtension, CometClient]> {
-  const cometClient = await Tendermint34Client.connect(rpcUrl);
+  const cometClient = await connectComet(rpcUrl);
   return [QueryClient.withExtensions(cometClient, setupAuthzExtension), cometClient];
 }
 
@@ -102,7 +101,6 @@ describe("AuthzExtension", () => {
 
   describe("granter grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp46OrHigher();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
@@ -133,7 +131,6 @@ describe("AuthzExtension", () => {
 
   describe("grantee grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp46OrHigher();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);

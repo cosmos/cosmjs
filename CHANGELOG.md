@@ -6,6 +6,37 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/faucet: `isValidAddress` now accepts addresses up to 128 bytes (e.g.
+  for Penumbra). ([#1674])
+
+[#1674]: https://github.com/cosmos/cosmjs/pull/1674
+
+### Added
+
+- @cosmjs/tendermint-rpc: `Comet38Client` is now used to connect to CometBFT
+  0.38 and 1.x backends ([#1679])
+
+[#1679]: https://github.com/cosmos/cosmjs/pull/1679
+
+### Changed
+
+- Replaxe axios with cross-fetch ([#1645])
+- Fix block events in CometBFT 0.38 API (`begin_block_events`/`end_block_events`
+  -> `finalize_block_events`) in `RpcBlockResultsResponse` and
+  `BlockResultsResponse` ([#1612])
+
+[#1612]: https://github.com/cosmos/cosmjs/pull/1612
+[#1645]: https://github.com/cosmos/cosmjs/pull/1645
+
+## [0.33.1] - 2025-03-12
+
+### Fixed
+
+- @cosmjs/crypto: Bump elliptic version to ^6.6.1 due to
+  [GHSA-vjh7-7g9h-fjfh](https://github.com/indutny/elliptic/security/advisories/GHSA-vjh7-7g9h-fjfh).
+
 ## [0.33.0] - 2025-01-15
 
 ### Changed
@@ -1475,7 +1506,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.33.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.33.1...HEAD
+[0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
 [0.33.0]: https://github.com/cosmos/cosmjs/compare/v0.32.4...v0.33.0
 [0.32.4]: https://github.com/cosmos/cosmjs/compare/v0.32.3...v0.32.4
 [0.32.3]: https://github.com/cosmos/cosmjs/compare/v0.32.2...v0.32.3

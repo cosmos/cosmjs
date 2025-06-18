@@ -6,7 +6,7 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Prerequisite
 
 - A UNIX-like development environment
-- Node.js 14+, Docker and yarn
+- Node.js 18+, Docker and yarn
 - `sha256sum`, which you
   [can get on macOS as well](https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos)
 - `gsed`, which you
@@ -15,11 +15,11 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Checking out code
 
 We use Git for version control. In addition to the well-known basics, we use the
-extension Git Large File Storage (LFS) to store blobs (currently \*.png and
-\*.wasm). A git-lfs package is available directly in modern package repositories
-(Debian 10+, Ubuntu 18.04+, Homebrew, MacPorts) and as a backport for older
-systems. Please see [this website](https://git-lfs.github.com/) for instructions
-how to install it.
+extension Git Large File Storage (LFS) to store blobs (currently \*.zip, \*.png,
+and \*.wasm). A git-lfs package is available directly in modern package
+repositories (Debian 10+, Ubuntu 18.04+, Homebrew, MacPorts) and as a backport
+for older systems. Please see [this website](https://git-lfs.github.com/) for
+instructions how to install it.
 
 If you installed git-lfs after cloning this repo, use this command to replace
 the links with the original files: `git lfs fetch && git lfs checkout`.
@@ -57,8 +57,8 @@ raw Tendermint and a basic WebSocket server.
 export WASMD_ENABLED=1
 
 # Start simapp
-./scripts/simapp44/start.sh
-export SIMAPP44_ENABLED=1
+./scripts/simapp50/start.sh
+export SIMAPP50_ENABLED=1
 
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
@@ -79,7 +79,7 @@ yarn test
 unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
-unset SIMAPP44_ENABLED
+unset SIMAPP50_ENABLED
 unset WASMD_ENABLED
 ./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh
@@ -114,9 +114,11 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 4445  | socketserver slow              | @cosmjs/sockets tests           |
 | 5555  | httpserver                     | @cosmjs/tendermint-rpc tests    |
 | 9090  | simapp gRPC                    | Manual Stargate debugging       |
+| 11101 | Standalone CometBFT 1.x RPC    | @cosmjs/tendermint-rpc tests    |
 | 11134 | Standalone Tendermint 0.34 RPC | @cosmjs/tendermint-rpc tests    |
 | 11135 | Standalone Tendermint 0.35 RPC | @cosmjs/tendermint-rpc tests    |
 | 11137 | Standalone Tendermint 0.37 RPC | @cosmjs/tendermint-rpc tests    |
+| 11138 | Standalone CometBFT 0.38 RPC   | @cosmjs/tendermint-rpc tests    |
 | 26658 | simapp Tendermint RPC          | Stargate client tests           |
 | 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm-stargate tests |
 | 26660 | simapp slow Tendermint RPC     | Stargate client tests           |

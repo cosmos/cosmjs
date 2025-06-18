@@ -1,0 +1,44 @@
+name: autofix.ci # needed to securely identify the workflow
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # format-text and format-shell in one job to ensure we don't require multiple fix commits and CI re-runs
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "oldstable"
+
+      - name: Install shfmt
+        run: go install mvdan.cc/sh/v3/cmd/shfmt@v3.11.0
+
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: Format text
+        run: yarn format-text
+
+      - name: Format shell
+        run: yarn format-shell
+
+      - name: Format codebase (.ts)
+        run: yarn format
+
+      # See https://autofix.ci/
+      - uses: autofix-ci/action@v1

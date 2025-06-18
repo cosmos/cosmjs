@@ -36,7 +36,7 @@ export async function connectComet(endpoint: string | HttpEndpoint): Promise<Com
   const version = (await tm37Client.status()).nodeInfo.version;
   if (version.startsWith("0.37.")) {
     out = tm37Client;
-  } else if (version.startsWith("0.38.")) {
+  } else if (version.startsWith("0.38.") || version.startsWith("1.0.")) {
     tm37Client.disconnect();
     out = await Comet38Client.connect(endpoint);
   } else {

@@ -71,7 +71,7 @@ export class Webserver {
             if (entry.getTime() + cooldownTimeMs > Date.now()) {
               throw new HttpError(
                 405,
-                `Too many request for the same address. Blocked to prevent draining. Please wait ${constants.cooldownTime} seconds and try it again!`,
+                `Too many requests for the same address. Blocked to prevent draining. Please wait ${constants.cooldownTime} seconds and try it again!`,
               );
             }
           }

@@ -12,6 +12,8 @@ export interface ExpectedValues {
   readonly p2pVersion: number;
   readonly blockVersion: number;
   readonly appVersion: number;
+  /** Affected by https://github.com/cometbft/cometbft/issues/5219 */
+  readonly bug5219: boolean;
 }
 
 export interface TendermintInstance {
@@ -36,7 +38,7 @@ export interface TendermintInstance {
  *   docker container ls | grep tendermint/tendermint
  *   docker container kill <container id from 1st column>
  */
-export const tendermintInstances = {
+export const tendermintInstances: Record<number, TendermintInstance> = {
   34: {
     url: "localhost:11134",
     version: "0.34.x",
@@ -48,6 +50,7 @@ export const tendermintInstances = {
       p2pVersion: 8,
       blockVersion: 11,
       appVersion: 1,
+      bug5219: false,
     },
   },
   37: {
@@ -61,6 +64,7 @@ export const tendermintInstances = {
       p2pVersion: 8,
       blockVersion: 11,
       appVersion: 1,
+      bug5219: false,
     },
   },
   38: {
@@ -74,6 +78,21 @@ export const tendermintInstances = {
       p2pVersion: 8,
       blockVersion: 11,
       appVersion: 1,
+      bug5219: false,
+    },
+  },
+  1: {
+    url: "localhost:11101",
+    version: "1.x.y",
+    blockTime: 500,
+    expected: {
+      chainId: /^dockerchain$/,
+      version: /^1\.\d+\.\d+$/,
+      appCreator: "Cosmoshi Netowoko",
+      p2pVersion: 9,
+      blockVersion: 11,
+      appVersion: 1,
+      bug5219: true,
     },
   },
 };

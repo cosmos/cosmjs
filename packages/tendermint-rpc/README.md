@@ -4,9 +4,9 @@
 
 This package provides a type-safe wrapper around
 [Tendermint RPC](https://docs.tendermint.com/master/rpc/). Notably, all binary
-data is passed in and out as `Uint8Array`, and this module is reponsible for the
-hex/base64 encoding/decoding depending on the field and version of Tendermint.
-Also handles converting numbers to and from strings.
+data is passed in and out as `Uint8Array`, and this module is responsible for
+the hex/base64 encoding/decoding depending on the field and version of
+Tendermint. Also handles converting numbers to and from strings.
 
 ## License
 

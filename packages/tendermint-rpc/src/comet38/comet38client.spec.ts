@@ -261,8 +261,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const results = await client.blockResults(height);
       expect(results.height).toEqual(height);
       expect(results.results).toEqual([]);
-      expect(results.beginBlockEvents).toEqual([]);
-      expect(results.endBlockEvents).toEqual([]);
+      expect(results.finalizeBlockEvents).toEqual([]);
 
       client.disconnect();
     });
@@ -494,7 +493,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const client = await Comet38Client.create(rpcFactory());
 
       const result = await client.txSearch({ query: `tx.hash='${toHex(broadcast1.hash)}'` });
-      expect(result.totalCount).toEqual(1);
+      expect(result.txs.length).toEqual(1);
       expect(result.txs[0]).toEqual({
         hash: broadcast1.hash,
         height: broadcast1.height,
@@ -503,6 +502,10 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
         result: broadcast1.deliverTx!,
         proof: undefined,
       });
+      if (!expected.bug5219) {
+        // This is broken in CometBFT 1.x (see https://github.com/cometbft/cometbft/issues/5219)
+        expect(result.totalCount).toEqual(1);
+      }
 
       client.disconnect();
     });
@@ -879,8 +882,44 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-describe("Comet38Client", () => {
+describe("Comet38Client with CometBFT 0.38 backend", () => {
   const { url, expected } = tendermintInstances[38];
+
+  it("can connect to a given url", async () => {
+    pendingWithoutTendermint();
+
+    // http connection
+    {
+      const client = await Comet38Client.connect("http://" + url);
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    }
+
+    // ws connection
+    {
+      const client = await Comet38Client.connect("ws://" + url);
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    }
+  });
+
+  describe("With HttpClient", () => {
+    defaultTestSuite(() => new HttpClient("http://" + url), expected);
+  });
+
+  describe("With WebsocketClient", () => {
+    // don't print out WebSocket errors if marked pending
+    const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
+    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
+    defaultTestSuite(factory, expected);
+    websocketTestSuite(factory, expected);
+  });
+});
+
+describe("Comet38Client with CometBFT 1 backend", () => {
+  const { url, expected } = tendermintInstances[1];
 
   it("can connect to a given url", async () => {
     pendingWithoutTendermint();
