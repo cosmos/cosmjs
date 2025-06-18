@@ -18,8 +18,9 @@ export async function http(
   url: string,
   headers: Record<string, string> | undefined,
   request?: any,
+  timeout?: number,
 ): Promise<any> {
-  const settings = {
+  const settings: RequestInit = {
     method: method,
     body: request ? JSON.stringify(request) : undefined,
     headers: {
@@ -27,6 +28,7 @@ export async function http(
       "Content-Type": "application/json",
       ...headers,
     },
+    signal: timeout ? AbortSignal.timeout(timeout) : undefined,
   };
   return fetch(url, settings)
     .then(filterBadStatus)
