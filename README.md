@@ -157,13 +157,7 @@ module.exports = [
 
 ## Roadmap
 
-We maintain a [development board](https://github.com/orgs/cosmos/projects?query=is%3Aopen),
-use [release milestones](https://github.com/cosmos/cosmjs/milestones) and share
-important updates in the [CosmWasm Community Call]. For higher level roadmap
-discussion please reach out to the team.
-
-[cosmwasm community call]:
-  https://github.com/CosmWasm/cosmwasm/issues?q=label%3A%22Community+Call+%F0%9F%97%BA%F0%9F%93%9E%22
+There is no roadmap anymore. Just keeping things alive, nice and clean.
 
 ## Known limitations
 
