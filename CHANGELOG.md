@@ -10,7 +10,10 @@ and this project adheres to
 
 - @cosmjs/faucet: `isValidAddress` now accepts addresses up to 128 bytes (e.g.
   for Penumbra). ([#1674])
+- @cosmjs/tendermint-rpc: Fix `decodeCommit` to allow decoding height 0 commits
+  with block hash set but empty signatures. ([#1590])
 
+[#1590]: https://github.com/cosmos/cosmjs/issues/1590
 [#1674]: https://github.com/cosmos/cosmjs/pull/1674
 
 ### Added

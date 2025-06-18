@@ -477,16 +477,16 @@ function decodeCommitSignature(data: RpcSignature): CommitSignature {
 interface RpcCommit {
   readonly block_id: RpcBlockId;
   readonly height: string;
-  readonly round: string;
-  readonly signatures: readonly RpcSignature[];
+  readonly round: string | number; // Seems to be number now (https://github.com/cosmos/cosmjs/issues/1590)
+  readonly signatures: readonly RpcSignature[] | null;
 }
 
-function decodeCommit(data: RpcCommit): responses.Commit {
+export function decodeCommit(data: RpcCommit): responses.Commit {
   return {
     blockId: decodeBlockId(assertObject(data.block_id)),
     height: apiToSmallInt(assertNotEmpty(data.height)),
     round: apiToSmallInt(data.round),
-    signatures: assertArray(data.signatures).map(decodeCommitSignature),
+    signatures: data.signatures ? assertArray(data.signatures).map(decodeCommitSignature) : [],
   };
 }
 
