@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: Add timeout option for HTTP requests in `HttpClient`
+  and `HttpBatchClient`. ([#1660])
+
+[#1660]: https://github.com/cosmos/cosmjs/pull/1660
+
 ### Changed
 
 - all: Drop support for Node.js < 20.
