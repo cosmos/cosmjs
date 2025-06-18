@@ -272,6 +272,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -371,6 +372,7 @@ __metadata:
     pako: "npm:^2.0.2"
     prettier: "npm:^3.5.3"
     readonly-date: "npm:^1.0.0"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -420,6 +422,7 @@ __metadata:
     libsodium-wrappers-sumo: "npm:^0.7.11"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -462,6 +465,7 @@ __metadata:
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     readonly-date: "npm:^1.0.0"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -501,6 +505,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -541,6 +546,7 @@ __metadata:
     koa-bodyparser: "npm:^4.3"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typescript: "npm:~5.8"
@@ -580,6 +586,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -622,6 +629,7 @@ __metadata:
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     semver: "npm:^7.5.2"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -662,6 +670,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -708,6 +717,7 @@ __metadata:
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     protobufjs: "npm:^7.4.0"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -748,6 +758,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -799,6 +810,7 @@ __metadata:
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     readonly-date: "npm:^1.0.0"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -837,6 +849,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -885,6 +898,7 @@ __metadata:
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     readonly-date: "npm:^1.0.0"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -925,6 +939,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
+    ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     ts-node: "npm:^8"
     typedoc: "npm:^0.28"
@@ -938,6 +953,20 @@ __metadata:
   version: 0.5.3
   resolution: "@discoveryjs/json-ext@npm:0.5.3"
   checksum: 10c0/73789df18a61dfd91d839b95c403af9ba32b897c5b419d9a724de588099ce6cefc379ada7617a77dad967b6a026927faa65f55154205cfe88da8c0fca3da2986
+  languageName: node
+  linkType: hard
+
+"@endo/env-options@npm:^1.1.10":
+  version: 1.1.10
+  resolution: "@endo/env-options@npm:1.1.10"
+  checksum: 10c0/80624b9d6e2dc8faf6b58813d0ecddf0bac1d4e94abfa0de4db3a0cd7f2a678a7632ca6837cbd90bffb87223e2c8330eb0996e22a6cbd445c90a31f9e078aaee
+  languageName: node
+  linkType: hard
+
+"@endo/immutable-arraybuffer@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@endo/immutable-arraybuffer@npm:1.1.1"
+  checksum: 10c0/7670c3dbaa3b6b996eb528ae9736fd3d3582879efdeb3483ae88ed1a04248537da35ecdf2e5937c5528ea79fe1cebfb04e130b735a45b357ad45792cc778c653
   languageName: node
   linkType: hard
 
@@ -7099,6 +7128,16 @@ __metadata:
   dependencies:
     randombytes: "npm:^2.1.0"
   checksum: 10c0/1af427f4fee3fee051f54ffe15f77068cff78a3c96d20f5c1178d20630d3ab122d8350e639d5e13cde8111ef9db9439b871305ffb185e24be0a2149cec230988
+  languageName: node
+  linkType: hard
+
+"ses@npm:^1.13.0":
+  version: 1.13.1
+  resolution: "ses@npm:1.13.1"
+  dependencies:
+    "@endo/env-options": "npm:^1.1.10"
+    "@endo/immutable-arraybuffer": "npm:^1.1.1"
+  checksum: 10c0/bc76ed5fe446ab82f77a1b4341c378126586f1d3c52bb234edc88144edb5263fc7d8a2f3e2d74b13228a418b2a4b9ebe489fba5f2a44882e38278f2f7afa6fbf
   languageName: node
   linkType: hard
 
