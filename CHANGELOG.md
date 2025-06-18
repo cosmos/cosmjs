@@ -6,6 +6,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/faucet: `isValidAddress` now accepts addresses up to 128 bytes (e.g.
+  for Penumbra). ([#1674])
+
+[#1674]: https://github.com/cosmos/cosmjs/pull/1674
+
 ### Added
 
 - @cosmjs/tendermint-rpc: `Comet38Client` is now used to connect to CometBFT
