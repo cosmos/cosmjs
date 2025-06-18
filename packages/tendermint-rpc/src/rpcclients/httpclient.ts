@@ -25,8 +25,9 @@ export interface HttpEndpoint {
 export class HttpClient implements RpcClient {
   protected readonly url: string;
   protected readonly headers: Record<string, string> | undefined;
+  protected readonly timeout: number | undefined;
 
-  public constructor(endpoint: string | HttpEndpoint) {
+  public constructor(endpoint: string | HttpEndpoint, timeout?: number) {
     if (typeof endpoint === "string") {
       if (!hasProtocol(endpoint)) {
         throw new Error("Endpoint URL is missing a protocol. Expected 'https://' or 'http://'.");
@@ -36,6 +37,7 @@ export class HttpClient implements RpcClient {
       this.url = endpoint.url;
       this.headers = endpoint.headers;
     }
+    this.timeout = timeout;
   }
 
   public disconnect(): void {
@@ -43,7 +45,7 @@ export class HttpClient implements RpcClient {
   }
 
   public async execute(request: JsonRpcRequest): Promise<JsonRpcSuccessResponse> {
-    const response = parseJsonRpcResponse(await http("POST", this.url, this.headers, request));
+    const response = parseJsonRpcResponse(await http("POST", this.url, this.headers, request, this.timeout));
     if (isJsonRpcErrorResponse(response)) {
       throw new Error(JSON.stringify(response.error));
     }
