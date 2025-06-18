@@ -48,7 +48,7 @@ module.exports = function (config) {
 
     browserNoActivityTimeout: 90000,
 
-    // Keep brower open for debugging. This is overridden by yarn scripts
+    // Keep browser open for debugging. This is overridden by yarn scripts
     singleRun: false,
   });
 };
