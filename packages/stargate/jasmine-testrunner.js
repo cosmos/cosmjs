@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-if (process.env.SES_ENABLED) {
-  require("ses/lockdown");
-  // eslint-disable-next-line no-undef
-  lockdown();
-}
-
 require("source-map-support").install();
 const defaultSpecReporterConfig = require("../../jasmine-spec-reporter.config.json");
 
