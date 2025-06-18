@@ -58,7 +58,6 @@
     "eslint-plugin-import": "^2.25.0",
     "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "esm": "^3.2.25",
     "glob": "^10",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
