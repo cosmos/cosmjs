@@ -3083,8 +3083,15 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
+          ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
+          ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
           ["cosmjs-monorepo-root", "workspace:."],\
           ["eslint", "npm:8.57.1"],\
+          ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
+          ["eslint-import-resolver-node", "npm:0.3.9"],\
+          ["eslint-plugin-import", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:2.26.0"],\
+          ["eslint-plugin-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.5.0"],\
+          ["eslint-plugin-simple-import-sort", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:7.0.0"],\
           ["prettier", "npm:3.5.3"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"]\
         ],\
@@ -7350,8 +7357,15 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
+          ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
+          ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
           ["cosmjs-monorepo-root", "workspace:."],\
           ["eslint", "npm:8.57.1"],\
+          ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
+          ["eslint-import-resolver-node", "npm:0.3.9"],\
+          ["eslint-plugin-import", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:2.26.0"],\
+          ["eslint-plugin-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.5.0"],\
+          ["eslint-plugin-simple-import-sort", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:7.0.0"],\
           ["prettier", "npm:3.5.3"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"]\
         ],\
