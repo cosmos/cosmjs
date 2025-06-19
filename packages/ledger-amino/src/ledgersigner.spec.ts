@@ -150,7 +150,7 @@ describe("LedgerSigner", () => {
         );
         const { signed, signature } = await signer.signAmino(firstAccount.address, signDoc);
         expect(signed).toEqual(signDoc);
-        const valid = await Secp256k1.verifySignature(
+        const valid = Secp256k1.verifySignature(
           Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
           sha256(serializeSignDoc(signed)),
           firstAccount.pubkey,
