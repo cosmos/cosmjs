@@ -25,7 +25,7 @@ and this project adheres to
 
 ### Changed
 
-- Replaxe axios with cross-fetch ([#1645])
+- Replace axios with cross-fetch ([#1645])
 - Fix block events in CometBFT 0.38 API (`begin_block_events`/`end_block_events`
   -> `finalize_block_events`) in `RpcBlockResultsResponse` and
   `BlockResultsResponse` ([#1612])
