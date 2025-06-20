@@ -27,6 +27,7 @@ coverage/
 /docs_deployment/
 
 # Yarn v2
+.pnp.*
 .yarn/*
 !.yarn/cache
 !.yarn/patches
