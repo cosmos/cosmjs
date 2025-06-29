@@ -14,6 +14,8 @@ export interface HttpBatchClientOptions {
   dispatchInterval: number;
   /** Max number of items sent in one request */
   batchSizeLimit: number;
+  /** Timeout for HTTP requests in milliseconds. Set to undefined to disable timeout. */
+  httpTimeout?: number;
 }
 
 // Those values are private and can change any time.
@@ -40,6 +42,7 @@ export class HttpBatchClient implements RpcClient {
     this.options = {
       batchSizeLimit: options.batchSizeLimit ?? defaultHttpBatchClientOptions.batchSizeLimit,
       dispatchInterval: options.dispatchInterval ?? defaultHttpBatchClientOptions.dispatchInterval,
+      httpTimeout: options.httpTimeout,
     };
     if (typeof endpoint === "string") {
       if (!hasProtocol(endpoint)) {
@@ -93,7 +96,7 @@ export class HttpBatchClient implements RpcClient {
     const requests = batch.map((s) => s.request);
     const requestIds = requests.map((request) => request.id);
 
-    http("POST", this.url, this.headers, requests).then(
+    http("POST", this.url, this.headers, requests, this.options.httpTimeout).then(
       (raw) => {
         // Requests with a single entry return as an object
         const arr = Array.isArray(raw) ? raw : [raw];
