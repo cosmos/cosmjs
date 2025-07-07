@@ -4,6 +4,7 @@ import { arrayContentStartsWith } from "@cosmjs/utils";
 
 import {
   Ed25519Pubkey,
+  EthSecp256k1Pubkey,
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
@@ -37,6 +38,20 @@ export function encodeEd25519Pubkey(pubkey: Uint8Array): Ed25519Pubkey {
   }
   return {
     type: pubkeyType.ed25519,
+    value: toBase64(pubkey),
+  };
+}
+
+/**
+ * Takes a EthSecp256k1 public key as raw bytes and returns the Amino JSON
+ * representation of it (the type/value wrapper object).
+ */
+export function encodeEthSecp256k1Pubkey(pubkey: Uint8Array): EthSecp256k1Pubkey {
+  if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
+    throw new Error("Public key must be compressed secp256k1, i.e. 33 bytes starting with 0x02 or 0x03");
+  }
+  return {
+    type: pubkeyType.ethsecp256k1,
     value: toBase64(pubkey),
   };
 }

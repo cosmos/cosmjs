@@ -1,4 +1,5 @@
-import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
+/* eslint-disable @typescript-eslint/naming-convention */
+import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import { Int53, Uint53 } from "@cosmjs/math";
@@ -749,7 +750,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    let pubkey;
+    if (accountFromSigner.algo == "eth_secp256k1") {
+      pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
+    } else {
+      pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    }
     const txBody: TxBodyEncodeObject = {
       typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: {

@@ -2,6 +2,8 @@
 
 import { ripemd160, sha256 } from "@cosmjs/crypto";
 import { fromBase64, toBech32 } from "@cosmjs/encoding";
+import { keccak256 } from "@cosmjs/crypto";
+import { Secp256k1 } from "@cosmjs/crypto";
 
 import { encodeAminoPubkey } from "./encoding";
 import { isEd25519Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";
@@ -19,6 +21,14 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
   }
   return ripemd160(sha256(pubkeyData));
 }
+
+export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+  const uncompressed = Secp256k1.uncompressPubkey(pubkeyData);
+  const pubkeyWithoutPrefix = uncompressed.slice(1);
+  const hash = keccak256(pubkeyWithoutPrefix);
+  return hash.slice(-20);
+}
+
 
 // For secp256k1 this assumes we already have a compressed pubkey.
 export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
