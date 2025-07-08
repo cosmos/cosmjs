@@ -29,7 +29,9 @@ and this project adheres to
 - Fix block events in CometBFT 0.38 API (`begin_block_events`/`end_block_events`
   -> `finalize_block_events`) in `RpcBlockResultsResponse` and
   `BlockResultsResponse` ([#1612])
+- @cosmjs/crypto: Migrate from elliptic to noble-curves ([#1272]).
 
+[#1272]: https://github.com/cosmos/cosmjs/issues/1272
 [#1612]: https://github.com/cosmos/cosmjs/pull/1612
 [#1645]: https://github.com/cosmos/cosmjs/pull/1645
 
