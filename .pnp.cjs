@@ -592,7 +592,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@types/koa",\
-      "npm:2.13.4"\
+      "npm:2.15.0"\
     ],\
     [\
       "@types/koa-bodyparser",\
@@ -1092,7 +1092,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "cookies",\
-      "npm:0.8.0"\
+      "npm:0.9.1"\
     ],\
     [\
       "copy-to",\
@@ -2000,7 +2000,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "koa",\
-      "npm:2.13.4"\
+      "npm:2.16.1"\
     ],\
     [\
       "koa-bodyparser",\
@@ -3596,7 +3596,7 @@ const RAW_RUNTIME_STATE =
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
           ["@koa/cors", "npm:3.3.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
-          ["@types/koa", "npm:2.13.4"],\
+          ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-bodyparser", "npm:4.3.7"],\
           ["@types/koa__cors", "npm:3.3.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
@@ -3609,7 +3609,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-simple-import-sort", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:7.0.0"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
-          ["koa", "npm:2.13.4"],\
+          ["koa", "npm:2.16.1"],\
           ["koa-bodyparser", "npm:4.3.0"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:3.5.3"],\
@@ -4982,8 +4982,8 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/koa", [\
-      ["npm:2.13.4", {\
-        "packageLocation": "./.yarn/cache/@types-koa-npm-2.13.4-e10e6e7742-040954632e.zip/node_modules/@types/koa/",\
+      ["npm:2.15.0", {\
+        "packageLocation": "./.yarn/cache/@types-koa-npm-2.15.0-fe318dc6d8-3fd591e25e.zip/node_modules/@types/koa/",\
         "packageDependencies": [\
           ["@types/accepts", "npm:1.3.5"],\
           ["@types/content-disposition", "npm:0.5.3"],\
@@ -4991,7 +4991,7 @@ const RAW_RUNTIME_STATE =
           ["@types/http-assert", "npm:1.5.1"],\
           ["@types/http-errors", "npm:1.8.0"],\
           ["@types/keygrip", "npm:1.0.2"],\
-          ["@types/koa", "npm:2.13.4"],\
+          ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-compose", "npm:3.2.5"],\
           ["@types/node", "npm:22.10.6"]\
         ],\
@@ -5002,7 +5002,7 @@ const RAW_RUNTIME_STATE =
       ["npm:4.3.7", {\
         "packageLocation": "./.yarn/cache/@types-koa-bodyparser-npm-4.3.7-ff2df015ea-3c37c22a94.zip/node_modules/@types/koa-bodyparser/",\
         "packageDependencies": [\
-          ["@types/koa", "npm:2.13.4"],\
+          ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-bodyparser", "npm:4.3.7"]\
         ],\
         "linkType": "HARD"\
@@ -5012,7 +5012,7 @@ const RAW_RUNTIME_STATE =
       ["npm:3.2.5", {\
         "packageLocation": "./.yarn/cache/@types-koa-compose-npm-3.2.5-b9ab25d904-ef3f1a1c11.zip/node_modules/@types/koa-compose/",\
         "packageDependencies": [\
-          ["@types/koa", "npm:2.13.4"],\
+          ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-compose", "npm:3.2.5"]\
         ],\
         "linkType": "HARD"\
@@ -5022,7 +5022,7 @@ const RAW_RUNTIME_STATE =
       ["npm:3.3.0", {\
         "packageLocation": "./.yarn/cache/@types-koa__cors-npm-3.3.0-d247b76272-7f6efc4110.zip/node_modules/@types/koa__cors/",\
         "packageDependencies": [\
-          ["@types/koa", "npm:2.13.4"],\
+          ["@types/koa", "npm:2.15.0"],\
           ["@types/koa__cors", "npm:3.3.0"]\
         ],\
         "linkType": "HARD"\
@@ -7284,10 +7284,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["cookies", [\
-      ["npm:0.8.0", {\
-        "packageLocation": "./.yarn/cache/cookies-npm-0.8.0-d7388cbd94-0af32f30d1.zip/node_modules/cookies/",\
+      ["npm:0.9.1", {\
+        "packageLocation": "./.yarn/cache/cookies-npm-0.9.1-80a82ae099-3ffa1c0e99.zip/node_modules/cookies/",\
         "packageDependencies": [\
-          ["cookies", "npm:0.8.0"],\
+          ["cookies", "npm:0.9.1"],\
           ["depd", "npm:2.0.0"],\
           ["keygrip", "npm:1.1.0"]\
         ],\
@@ -10147,14 +10147,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["koa", [\
-      ["npm:2.13.4", {\
-        "packageLocation": "./.yarn/cache/koa-npm-2.13.4-8aee05a69e-6c94284214.zip/node_modules/koa/",\
+      ["npm:2.16.1", {\
+        "packageLocation": "./.yarn/cache/koa-npm-2.16.1-7f26717794-66beb2e4d7.zip/node_modules/koa/",\
         "packageDependencies": [\
           ["accepts", "npm:1.3.7"],\
           ["cache-content-type", "npm:1.0.1"],\
           ["content-disposition", "npm:0.5.3"],\
           ["content-type", "npm:1.0.5"],\
-          ["cookies", "npm:0.8.0"],\
+          ["cookies", "npm:0.9.1"],\
           ["debug", "virtual:6d7ba8035a34a8cbc48e227f3e803dbc3acaabbab2521c3cd66a45a2853fa6bda5b3ccb3ab1942c8a738927bc0e228ea8d5baa6461d73e2cf6a345db629c4f47#npm:4.4.1"],\
           ["delegates", "npm:1.0.0"],\
           ["depd", "npm:2.0.0"],\
@@ -10165,7 +10165,7 @@ const RAW_RUNTIME_STATE =
           ["http-assert", "npm:1.4.1"],\
           ["http-errors", "npm:1.8.0"],\
           ["is-generator-function", "npm:1.1.0"],\
-          ["koa", "npm:2.13.4"],\
+          ["koa", "npm:2.16.1"],\
           ["koa-compose", "npm:4.1.0"],\
           ["koa-convert", "npm:2.0.0"],\
           ["on-finished", "npm:2.4.1"],\
