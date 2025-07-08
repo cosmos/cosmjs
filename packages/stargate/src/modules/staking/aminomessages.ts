@@ -93,7 +93,7 @@ export function isAminoMsgEditValidator(msg: AminoMsg): msg is AminoMsgEditValid
 /**
  * Performs a delegation from a delegate to a validator.
  *
- * @see https://docs.cosmos.network/master/modules/staking/03_messages.html#msgdelegate
+ * @see https://docs.cosmos.network/main/build/modules/staking#msgdelegate
  */
 export interface AminoMsgDelegate extends AminoMsg {
   readonly type: "cosmos-sdk/MsgDelegate";
