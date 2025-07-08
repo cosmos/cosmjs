@@ -6,7 +6,7 @@ import { keccak256 } from "@cosmjs/crypto";
 import { Secp256k1 } from "@cosmjs/crypto";
 
 import { encodeAminoPubkey } from "./encoding";
-import { isEd25519Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";
+import { isEd25519Pubkey, isEthSecp256k1Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";
 
 export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
   if (pubkeyData.length !== 32) {
@@ -23,6 +23,9 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
 }
 
 export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+  if (pubkeyData.length !== 33) {
+    throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
+  }
   const uncompressed = Secp256k1.uncompressPubkey(pubkeyData);
   const pubkeyWithoutPrefix = uncompressed.slice(1);
   const hash = keccak256(pubkeyWithoutPrefix);
@@ -35,6 +38,9 @@ export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
   if (isSecp256k1Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     return rawSecp256k1PubkeyToRawAddress(pubkeyData);
+  } else if (isEthSecp256k1Pubkey(pubkey)) {
+    const pubkeyData = fromBase64(pubkey.value);
+    return rawEthSecp256k1PubkeyToRawAddress(pubkeyData);
   } else if (isEd25519Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     return rawEd25519PubkeyToRawAddress(pubkeyData);
