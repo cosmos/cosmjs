@@ -26,12 +26,13 @@ coverage/
 # Documentation builds
 /docs_deployment/
 
-# Yarn v2
+# Yarn v2+
+# See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+# for Zero-Installs (https://yarnpkg.com/features/caching#zero-installs)
 .yarn/*
 !.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
-# We are not using yarn's deferred versioning for now (see https://yarnpkg.com/features/release-workflow)
-# !.yarn/versions
+!.yarn/versions
