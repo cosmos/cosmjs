@@ -371,6 +371,10 @@ const RAW_RUNTIME_STATE =
       "npm:6.13.0"\
     ],\
     [\
+      "@noble/curves",\
+      "npm:1.9.2"\
+    ],\
+    [\
       "@noble/hashes",\
       "npm:1.8.0"\
     ],\
@@ -943,10 +947,6 @@ const RAW_RUNTIME_STATE =
       "npm:3.0.2"\
     ],\
     [\
-      "brorand",\
-      "npm:1.1.0"\
-    ],\
-    [\
       "browserslist",\
       "npm:4.22.1"\
     ],\
@@ -1221,10 +1221,6 @@ const RAW_RUNTIME_STATE =
     [\
       "electron-to-chromium",\
       "npm:1.4.565"\
-    ],\
-    [\
-      "elliptic",\
-      "npm:6.6.1"\
     ],\
     [\
       "emoji-regex",\
@@ -1635,20 +1631,12 @@ const RAW_RUNTIME_STATE =
       "npm:3.1.0"\
     ],\
     [\
-      "hash.js",\
-      "npm:1.1.7"\
-    ],\
-    [\
       "hasha",\
       "npm:5.2.2"\
     ],\
     [\
       "hasown",\
       "npm:2.0.2"\
-    ],\
-    [\
-      "hmac-drbg",\
-      "npm:1.0.1"\
     ],\
     [\
       "html-escaper",\
@@ -2137,14 +2125,6 @@ const RAW_RUNTIME_STATE =
     [\
       "mimic-response",\
       "npm:3.1.0"\
-    ],\
-    [\
-      "minimalistic-assert",\
-      "npm:1.0.1"\
-    ],\
-    [\
-      "minimalistic-crypto-utils",\
-      "npm:1.0.1"\
     ],\
     [\
       "minimatch",\
@@ -3516,6 +3496,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
           ["@types/bn.js", "npm:5.1.0"],\
           ["@types/elliptic", "npm:6.4.14"],\
@@ -3529,7 +3510,6 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/parser", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.54.0"],\
           ["bn.js", "npm:5.2.0"],\
           ["buffer", "npm:6.0.3"],\
-          ["elliptic", "npm:6.6.1"],\
           ["eslint", "npm:8.57.1"],\
           ["eslint-config-prettier", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:8.3.0"],\
           ["eslint-import-resolver-node", "npm:0.3.9"],\
@@ -4459,6 +4439,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@ledgerhq-logs-npm-6.13.0-131ea1f797-8b40a7af64.zip/node_modules/@ledgerhq/logs/",\
         "packageDependencies": [\
           ["@ledgerhq/logs", "npm:6.13.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@noble/curves", [\
+      ["npm:1.9.2", {\
+        "packageLocation": "./.yarn/cache/@noble-curves-npm-1.9.2-2584df26a7-21d049ae45.zip/node_modules/@noble/curves/",\
+        "packageDependencies": [\
+          ["@noble/curves", "npm:1.9.2"],\
+          ["@noble/hashes", "npm:1.8.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6787,13 +6777,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["bn.js", [\
-      ["npm:4.12.0", {\
-        "packageLocation": "./.yarn/cache/bn.js-npm-4.12.0-3ec6c884f6-9736aaa317.zip/node_modules/bn.js/",\
-        "packageDependencies": [\
-          ["bn.js", "npm:4.12.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:5.2.0", {\
         "packageLocation": "./.yarn/cache/bn.js-npm-5.2.0-11748c0b07-67e17b1934.zip/node_modules/bn.js/",\
         "packageDependencies": [\
@@ -6848,15 +6831,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["braces", "npm:3.0.2"],\
           ["fill-range", "npm:7.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["brorand", [\
-      ["npm:1.1.0", {\
-        "packageLocation": "./.yarn/cache/brorand-npm-1.1.0-ea86634c4b-6f366d7c49.zip/node_modules/brorand/",\
-        "packageDependencies": [\
-          ["brorand", "npm:1.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7746,22 +7720,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.565-e46f4c4b3f-9593bae9eb.zip/node_modules/electron-to-chromium/",\
         "packageDependencies": [\
           ["electron-to-chromium", "npm:1.4.565"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["elliptic", [\
-      ["npm:6.6.1", {\
-        "packageLocation": "./.yarn/cache/elliptic-npm-6.6.1-87bb857cbc-8b24ef782e.zip/node_modules/elliptic/",\
-        "packageDependencies": [\
-          ["bn.js", "npm:4.12.0"],\
-          ["brorand", "npm:1.1.0"],\
-          ["elliptic", "npm:6.6.1"],\
-          ["hash.js", "npm:1.1.7"],\
-          ["hmac-drbg", "npm:1.0.1"],\
-          ["inherits", "npm:2.0.4"],\
-          ["minimalistic-assert", "npm:1.0.1"],\
-          ["minimalistic-crypto-utils", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9133,17 +9091,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["hash.js", [\
-      ["npm:1.1.7", {\
-        "packageLocation": "./.yarn/cache/hash.js-npm-1.1.7-f1ad187358-41ada59494.zip/node_modules/hash.js/",\
-        "packageDependencies": [\
-          ["hash.js", "npm:1.1.7"],\
-          ["inherits", "npm:2.0.4"],\
-          ["minimalistic-assert", "npm:1.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["hasha", [\
       ["npm:5.2.2", {\
         "packageLocation": "./.yarn/cache/hasha-npm-5.2.2-d171116d12-9d10d4e665.zip/node_modules/hasha/",\
@@ -9161,18 +9108,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["function-bind", "npm:1.1.2"],\
           ["hasown", "npm:2.0.2"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["hmac-drbg", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/hmac-drbg-npm-1.0.1-3499ad31cd-f3d9ba31b4.zip/node_modules/hmac-drbg/",\
-        "packageDependencies": [\
-          ["hash.js", "npm:1.1.7"],\
-          ["hmac-drbg", "npm:1.0.1"],\
-          ["minimalistic-assert", "npm:1.0.1"],\
-          ["minimalistic-crypto-utils", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10588,24 +10523,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/mimic-response-npm-3.1.0-a4a24b4e96-0d6f07ce6e.zip/node_modules/mimic-response/",\
         "packageDependencies": [\
           ["mimic-response", "npm:3.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["minimalistic-assert", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/minimalistic-assert-npm-1.0.1-dc8bb23d29-96730e5601.zip/node_modules/minimalistic-assert/",\
-        "packageDependencies": [\
-          ["minimalistic-assert", "npm:1.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["minimalistic-crypto-utils", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/minimalistic-crypto-utils-npm-1.0.1-e66b10822e-790ecec8c5.zip/node_modules/minimalistic-crypto-utils/",\
-        "packageDependencies": [\
-          ["minimalistic-crypto-utils", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\

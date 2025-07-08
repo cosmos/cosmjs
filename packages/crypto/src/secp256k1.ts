@@ -1,11 +1,8 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
-import BN from "bn.js";
-import elliptic from "elliptic";
+import { assert } from "@cosmjs/utils";
+import { secp256k1 } from "@noble/curves/secp256k1";
 
 import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
-
-const secp256k1 = new elliptic.ec("secp256k1");
-const secp256k1N = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", "hex");
 
 export interface Secp256k1Keypair {
   /** A 32 byte private key */
@@ -21,6 +18,17 @@ export interface Secp256k1Keypair {
   readonly privkey: Uint8Array;
 }
 
+function unsignedBigIntToBytes(a: bigint): Uint8Array {
+  assert(a >= 0n);
+  let hex = a.toString(16);
+  if (hex.length % 2) hex = "0" + hex;
+  return fromHex(hex);
+}
+
+function bytesToUnsignedBigInt(a: Uint8Array): bigint {
+  return BigInt("0x" + toHex(a));
+}
+
 export class Secp256k1 {
   /**
    * Takes a 32 byte private key and returns a privkey/pubkey pair.
@@ -30,30 +38,21 @@ export class Secp256k1 {
    */
   public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
     if (privkey.length !== 32) {
-      // is this check missing in secp256k1.validatePrivateKey?
-      // https://github.com/bitjson/bitcoin-ts/issues/4
       throw new Error("input data is not a valid secp256k1 private key");
     }
 
-    const keypair = secp256k1.keyFromPrivate(privkey);
-    if (keypair.validate().result !== true) {
-      throw new Error("input data is not a valid secp256k1 private key");
-    }
-
-    // range test that is not part of the elliptic implementation
-    const privkeyAsBigInteger = new BN(privkey);
-    if (privkeyAsBigInteger.gte(secp256k1N)) {
+    if (!secp256k1.utils.isValidPrivateKey(privkey)) {
       // not strictly smaller than N
       throw new Error("input data is not a valid secp256k1 private key");
     }
 
     const out: Secp256k1Keypair = {
-      privkey: fromHex(keypair.getPrivate("hex")),
+      privkey: privkey,
       // encodes uncompressed as
       // - 1-byte prefix "04"
       // - 32-byte x coordinate
       // - 32-byte y coordinate
-      pubkey: Uint8Array.from(keypair.getPublic("array")),
+      pubkey: secp256k1.getPublicKey(privkey, false),
     };
     return out;
   }
@@ -75,15 +74,11 @@ export class Secp256k1 {
       throw new Error("Message hash length must not exceed 32 bytes");
     }
 
-    const keypair = secp256k1.keyFromPrivate(privkey);
-    // the `canonical` option ensures creation of lowS signature representations
-    const { r, s, recoveryParam } = keypair.sign(messageHash, { canonical: true });
-    if (typeof recoveryParam !== "number") throw new Error("Recovery param missing");
-    return new ExtendedSecp256k1Signature(
-      Uint8Array.from(r.toArray()),
-      Uint8Array.from(s.toArray()),
-      recoveryParam,
-    );
+    const { recovery, r, s } = secp256k1.sign(messageHash, privkey, {
+      lowS: true,
+    });
+    if (typeof recovery !== "number") throw new Error("Recovery param missing");
+    return new ExtendedSecp256k1Signature(unsignedBigIntToBytes(r), unsignedBigIntToBytes(s), recovery);
   }
 
   public static async verifySignature(
@@ -98,33 +93,17 @@ export class Secp256k1 {
       throw new Error("Message hash length must not exceed 32 bytes");
     }
 
-    const keypair = secp256k1.keyFromPublic(pubkey);
-
-    // From https://github.com/indutny/elliptic:
-    //
-    //     Sign the message's hash (input must be an array, or a hex-string)
-    //
-    //     Signature MUST be either:
-    //     1) DER-encoded signature as hex-string; or
-    //     2) DER-encoded signature as buffer; or
-    //     3) object with two hex-string properties (r and s); or
-    //     4) object with two buffer properties (r and s)
-    //
-    // Uint8Array is not a Buffer, but elliptic seems to be happy with the interface
-    // common to both types. Uint8Array is not an array of ints but the interface is
-    // similar
-    try {
-      return keypair.verify(messageHash, signature.toDer());
-    } catch (error) {
-      return false;
-    }
+    const encodedSig = secp256k1.Signature.fromDER(signature.toDer());
+    return secp256k1.verify(encodedSig, messageHash, pubkey, { lowS: false });
   }
 
   public static recoverPubkey(signature: ExtendedSecp256k1Signature, messageHash: Uint8Array): Uint8Array {
-    const signatureForElliptic = { r: toHex(signature.r()), s: toHex(signature.s()) };
-    const point = secp256k1.recoverPubKey(messageHash, signatureForElliptic, signature.recovery);
-    const keypair = secp256k1.keyFromPublic(point);
-    return fromHex(keypair.getPublic(false, "hex"));
+    const pk = new secp256k1.Signature(
+      bytesToUnsignedBigInt(signature.r()),
+      bytesToUnsignedBigInt(signature.s()),
+      signature.recovery,
+    ).recoverPublicKey(messageHash);
+    return pk.toBytes(false);
   }
 
   /**
@@ -137,7 +116,7 @@ export class Secp256k1 {
       case 33:
         return pubkey;
       case 65:
-        return Uint8Array.from(secp256k1.keyFromPublic(pubkey).getPublic(true, "array"));
+        return secp256k1.Point.fromHex(pubkey).toRawBytes(true);
       default:
         throw new Error("Invalid pubkey length");
     }
@@ -151,7 +130,7 @@ export class Secp256k1 {
   public static uncompressPubkey(pubkey: Uint8Array): Uint8Array {
     switch (pubkey.length) {
       case 33:
-        return Uint8Array.from(secp256k1.keyFromPublic(pubkey).getPublic(false, "array"));
+        return secp256k1.Point.fromHex(pubkey).toRawBytes(false);
       case 65:
         return pubkey;
       default:

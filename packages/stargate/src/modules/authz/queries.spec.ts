@@ -101,6 +101,7 @@ describe("AuthzExtension", () => {
 
   describe("granter grants", () => {
     it("works", async () => {
+      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
@@ -131,6 +132,7 @@ describe("AuthzExtension", () => {
 
   describe("grantee grants", () => {
     it("works", async () => {
+      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);

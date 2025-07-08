@@ -44,9 +44,9 @@
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
+    "@noble/curves": "^1.9.2",
     "@noble/hashes": "^1",
     "bn.js": "^5.2.0",
-    "elliptic": "^6.6.1",
     "libsodium-wrappers-sumo": "^0.7.11"
   },
   "devDependencies": {

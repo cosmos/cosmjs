@@ -45,6 +45,7 @@ describe("vesting messages", () => {
     });
 
     it("works with Amino JSON signer", async () => {
+      pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
