@@ -76,7 +76,10 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/parameter-properties": "warn",
     "@typescript-eslint/no-shadow": "warn",
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },
+    ],
     "@typescript-eslint/no-use-before-define": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
   },
