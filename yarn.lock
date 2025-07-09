@@ -369,7 +369,6 @@ __metadata:
     "@noble/curves": "npm:^1.9.2"
     "@noble/hashes": "npm:^1"
     "@types/bn.js": "npm:^5"
-    "@types/elliptic": "npm:^6.4.14"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -1358,7 +1357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bn.js@npm:*, @types/bn.js@npm:^5":
+"@types/bn.js@npm:^5":
   version: 5.1.0
   resolution: "@types/bn.js@npm:5.1.0"
   dependencies:
@@ -1423,15 +1422,6 @@ __metadata:
   version: 4.0.2
   resolution: "@types/diff@npm:4.0.2"
   checksum: 10c0/bb5f594003fa1424094561a797af04dba5066d4acb1bc5349b36e6456d77c1d2e0d09a3b03aea3aa7c388592229bdd5751bfe2d297a1594520b7816aa18cc419
-  languageName: node
-  linkType: hard
-
-"@types/elliptic@npm:^6.4.14":
-  version: 6.4.14
-  resolution: "@types/elliptic@npm:6.4.14"
-  dependencies:
-    "@types/bn.js": "npm:*"
-  checksum: 10c0/512185ad196a4ca0d631042182bb774df04092d577273ca50a49a3f73b1b18e7c67e25af9e3664d9ed89ea2221b1796f9ce5ab29b46081fbdd80e7bb67a8cb37
   languageName: node
   linkType: hard
 
