@@ -83,11 +83,16 @@ module.exports = {
   overrides: [
     {
       files: "**/*.js",
+      parser: "espree",
+      parserOptions: { ecmaVersion: 2022 },
       rules: {
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/consistent-type-exports": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/prefer-readonly": "off",
       },
     },
     {
