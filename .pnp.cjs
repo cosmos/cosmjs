@@ -523,10 +523,6 @@ const RAW_RUNTIME_STATE =
       "npm:4.0.2"\
     ],\
     [\
-      "@types/elliptic",\
-      "npm:6.4.14"\
-    ],\
-    [\
       "@types/eslint",\
       "npm:7.2.10"\
     ],\
@@ -3469,7 +3465,6 @@ const RAW_RUNTIME_STATE =
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
           ["@types/bn.js", "npm:5.1.0"],\
-          ["@types/elliptic", "npm:6.4.14"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
@@ -4684,16 +4679,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-diff-npm-4.0.2-e0c9c256aa-bb5f594003.zip/node_modules/@types/diff/",\
         "packageDependencies": [\
           ["@types/diff", "npm:4.0.2"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/elliptic", [\
-      ["npm:6.4.14", {\
-        "packageLocation": "./.yarn/cache/@types-elliptic-npm-6.4.14-77735f3256-512185ad19.zip/node_modules/@types/elliptic/",\
-        "packageDependencies": [\
-          ["@types/bn.js", "npm:5.1.0"],\
-          ["@types/elliptic", "npm:6.4.14"]\
         ],\
         "linkType": "HARD"\
       }]\
