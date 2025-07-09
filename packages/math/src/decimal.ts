@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BN from "bn.js";
 
 import { Uint32, Uint53, Uint64 } from "./integers";

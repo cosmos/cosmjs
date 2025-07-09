@@ -3,6 +3,7 @@ import { pathToString, stringToPath } from "@cosmjs/crypto";
 import { toBase64 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
 import { LedgerSigner } from "../ledgersigner";

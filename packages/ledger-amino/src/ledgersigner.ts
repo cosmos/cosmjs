@@ -8,6 +8,7 @@ import {
   StdSignDoc,
 } from "@cosmjs/amino";
 import { HdPath } from "@cosmjs/crypto";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Transport from "@ledgerhq/hw-transport";
 
 import { AddressAndPubkey, LedgerConnector, LedgerConnectorOptions } from "./ledgerconnector";

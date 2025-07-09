@@ -72,7 +72,7 @@ async function sendTokens(
     },
   };
   const txBodyBytes = registry.encode(txBodyFields);
-  const { accountNumber, sequence } = (await client.getSequence(walletAddress))!;
+  const { accountNumber, sequence } = await client.getSequence(walletAddress);
   const feeAmount = [
     {
       amount: "2000",

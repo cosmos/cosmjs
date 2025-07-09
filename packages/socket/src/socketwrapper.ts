@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import WebSocket from "isomorphic-ws";
 
 function environmentIsNodeJs(): boolean {

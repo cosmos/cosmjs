@@ -1,6 +1,7 @@
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
 import { secp256k1 } from "@noble/curves/secp256k1";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BN from "bn.js";
 
 import { Hmac } from "./hmac";
