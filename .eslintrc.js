@@ -1,9 +1,5 @@
-// The master version of this file is in the repo root. Eslint seems to have
-// problems using symbolic links for the config file, so we copy it to the packages.
-// To update:
-//   1. Go to the repo root
-//   2. Make edits in .eslintrc.js
-//   3. Run `find ./packages -name ".eslintrc.js" -exec cp .eslintrc.js {} \;`
+// Use one config file at monorepo root for all workspaces.
+// https://eslint.org/docs/v8.x/use/configure/configuration-files#cascading-and-hierarchy
 
 module.exports = {
   root: true,
@@ -17,7 +13,6 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     project: "./tsconfig.eslint.json",
-    tsconfigRootDir: __dirname,
   },
   plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import"],
   extends: [
