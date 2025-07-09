@@ -2,7 +2,7 @@
 // `import { comet38 } from "@cosmjs/tendermint-rpc"`
 
 export { Comet38Client } from "./comet38client";
-export {
+export type {
   AbciInfoRequest,
   AbciQueryParams,
   AbciQueryRequest,
@@ -16,12 +16,10 @@ export {
   CommitRequest,
   GenesisRequest,
   HealthRequest,
-  Method,
   NumUnconfirmedTxsRequest,
   QueryTag,
   Request,
   StatusRequest,
-  SubscriptionEventType,
   TxParams,
   TxRequest,
   TxSearchParams,
@@ -29,7 +27,8 @@ export {
   ValidatorsParams,
   ValidatorsRequest,
 } from "./requests";
-export {
+export { Method, SubscriptionEventType } from "./requests";
+export type {
   AbciInfoResponse,
   AbciQueryResponse,
   EventAttribute as Attribute,
@@ -44,9 +43,7 @@ export {
   BlockSearchResponse,
   BroadcastTxAsyncResponse,
   BroadcastTxCommitResponse,
-  broadcastTxCommitSuccess,
   BroadcastTxSyncResponse,
-  broadcastTxSyncSuccess,
   Commit,
   CommitResponse,
   ConsensusParams,
@@ -75,5 +72,5 @@ export {
   ValidatorsResponse,
   Version,
   Vote,
-  VoteType,
 } from "./responses";
+export { broadcastTxCommitSuccess, broadcastTxSyncSuccess, VoteType } from "./responses";

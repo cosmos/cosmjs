@@ -1,6 +1,18 @@
-export { Code, CodeDetails, Contract, ContractCodeHistoryEntry, CosmWasmClient } from "./cosmwasmclient";
+export type { Code, CodeDetails, Contract, ContractCodeHistoryEntry } from "./cosmwasmclient";
+export { CosmWasmClient } from "./cosmwasmclient";
 export { fromBinary, toBinary } from "./encoding";
 export { _instantiate2AddressIntermediate, instantiate2Address } from "./instantiate2";
+export type {
+  JsonObject,
+  MsgClearAdminEncodeObject,
+  MsgExecuteContractEncodeObject,
+  MsgInstantiateContract2EncodeObject,
+  MsgInstantiateContractEncodeObject,
+  MsgMigrateContractEncodeObject,
+  MsgStoreCodeEncodeObject,
+  MsgUpdateAdminEncodeObject,
+  WasmExtension,
+} from "./modules";
 export {
   createWasmAminoConverters,
   isMsgClearAdminEncodeObject,
@@ -10,30 +22,21 @@ export {
   isMsgMigrateEncodeObject,
   isMsgStoreCodeEncodeObject,
   isMsgUpdateAdminEncodeObject,
-  JsonObject,
-  MsgClearAdminEncodeObject,
-  MsgExecuteContractEncodeObject,
-  MsgInstantiateContract2EncodeObject,
-  MsgInstantiateContractEncodeObject,
-  MsgMigrateContractEncodeObject,
-  MsgStoreCodeEncodeObject,
-  MsgUpdateAdminEncodeObject,
   setupWasmExtension,
-  WasmExtension,
   wasmTypes,
 } from "./modules";
-export {
+export type {
   ChangeAdminResult,
   ExecuteInstruction,
   ExecuteResult,
   InstantiateOptions,
   InstantiateResult,
   MigrateResult,
-  SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
   UploadResult,
 } from "./signingcosmwasmclient";
+export { SigningCosmWasmClient } from "./signingcosmwasmclient";
 
 // Re-exported because this is part of the CosmWasmClient/SigningCosmWasmClient APIs
-export { Attribute, DeliverTxResponse, Event, IndexedTx } from "@cosmjs/stargate";
-export { HttpEndpoint } from "@cosmjs/tendermint-rpc";
+export type { Attribute, DeliverTxResponse, Event, IndexedTx } from "@cosmjs/stargate";
+export type { HttpEndpoint } from "@cosmjs/tendermint-rpc";

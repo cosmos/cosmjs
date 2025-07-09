@@ -5,10 +5,10 @@ export {
   rawSecp256k1PubkeyToRawAddress,
 } from "./addresses";
 export {
+  type ReadonlyDateWithNanoseconds,
   DateTime,
   fromRfc3339WithNanoseconds,
   fromSeconds,
-  ReadonlyDateWithNanoseconds,
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
@@ -17,15 +17,9 @@ export {
 // Due to this API, we make RPC client implementations public.
 export * as comet38 from "./comet38";
 export { Comet38Client } from "./comet38";
-export {
-  HttpBatchClient,
-  HttpBatchClientOptions,
-  HttpClient,
-  HttpEndpoint, // This type is part of the Tendermint34Client.connect API
-  RpcClient, // Interface type in Tendermint34Client.create
-  WebsocketClient,
-} from "./rpcclients";
-export {
+export type { HttpBatchClientOptions, HttpEndpoint, RpcClient } from "./rpcclients";
+export { HttpBatchClient, HttpClient, WebsocketClient } from "./rpcclients";
+export type {
   AbciInfoRequest,
   AbciInfoResponse,
   AbciQueryParams,
@@ -45,11 +39,9 @@ export {
   BlockResultsResponse,
   BroadcastTxAsyncResponse,
   BroadcastTxCommitResponse,
-  broadcastTxCommitSuccess,
   BroadcastTxParams,
   BroadcastTxRequest,
   BroadcastTxSyncResponse,
-  broadcastTxSyncSuccess,
   Commit,
   CommitRequest,
   CommitResponse,
@@ -62,7 +54,6 @@ export {
   Header,
   HealthRequest,
   HealthResponse,
-  Method,
   NewBlockEvent,
   NewBlockHeaderEvent,
   NodeInfo,
@@ -75,7 +66,6 @@ export {
   Response,
   StatusRequest,
   StatusResponse,
-  SubscriptionEventType,
   SyncInfo,
   TxData,
   TxEvent,
@@ -93,24 +83,29 @@ export {
   ValidatorsResponse,
   Version,
   Vote,
+} from "./tendermint34";
+export {
+  broadcastTxCommitSuccess,
+  broadcastTxSyncSuccess,
+  Method,
+  SubscriptionEventType,
   VoteType,
 } from "./tendermint34";
 export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
 export * as tendermint37 from "./tendermint37";
 export { Tendermint37Client } from "./tendermint37";
+export type { CometClient, TendermintClient } from "./tendermintclient";
 export {
-  CometClient,
   connectComet,
   isComet38Client,
   isTendermint34Client,
   isTendermint37Client,
-  TendermintClient,
 } from "./tendermintclient";
-export {
-  BlockIdFlag,
+export type {
   CommitSignature,
   ValidatorEd25519Pubkey,
   ValidatorPubkey,
   ValidatorSecp256k1Pubkey,
 } from "./types";
+export { BlockIdFlag } from "./types";
