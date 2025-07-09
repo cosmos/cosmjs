@@ -11,8 +11,8 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2018,
-    project: "./tsconfig.eslint.json",
+    ecmaVersion: 2022,
+    project: true,
   },
   plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import"],
   extends: [
