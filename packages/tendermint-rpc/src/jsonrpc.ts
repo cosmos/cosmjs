@@ -20,8 +20,7 @@ function randomId(): number {
 }
 
 /** Creates a JSON-RPC request with random ID */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function createJsonRpcRequest(method: string, params?: {}): JsonRpcRequest {
+export function createJsonRpcRequest(method: string, params?: object): JsonRpcRequest {
   const paramsCopy = params ? { ...params } : {};
   return {
     jsonrpc: "2.0",
