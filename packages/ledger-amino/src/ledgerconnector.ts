@@ -2,7 +2,9 @@ import { encodeSecp256k1Pubkey, makeCosmoshubPath, pubkeyToAddress, Secp256k1Pub
 import { HdPath, pathToString, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Transport from "@ledgerhq/hw-transport";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import CosmosApp from "@zondax/ledger-cosmos-js";
 import semver from "semver";
 

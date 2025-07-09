@@ -369,7 +369,7 @@ describe("StargateClient", () => {
         },
       };
       const txBodyBytes = registry.encode(txBodyFields);
-      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const { accountNumber, sequence } = await client.getSequence(address);
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
       const feeGranter = undefined;
@@ -438,7 +438,7 @@ describe("StargateClient", () => {
         },
       };
       const txBodyBytes = registry.encode(txBodyFields);
-      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const { accountNumber, sequence } = await client.getSequence(address);
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
       const feeGranter = undefined;
@@ -522,7 +522,7 @@ describe("StargateClient", () => {
       const feeGranter = undefined;
       const feePayer = undefined;
 
-      const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
+      const { accountNumber: accountNumber1, sequence: sequence1 } = await client.getSequence(address);
       const authInfoBytes1 = makeAuthInfoBytes(
         [{ pubkey, sequence: sequence1 }],
         feeAmount,
@@ -542,7 +542,7 @@ describe("StargateClient", () => {
       const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
       assertIsDeliverTxSuccess(txResult);
 
-      const { accountNumber: accountNumber2, sequence: sequence2 } = (await client.getSequence(address))!;
+      const { accountNumber: accountNumber2, sequence: sequence2 } = await client.getSequence(address);
       const authInfoBytes2 = makeAuthInfoBytes(
         [{ pubkey, sequence: sequence2 }],
         feeAmount,
@@ -600,7 +600,7 @@ describe("StargateClient", () => {
         },
       };
       const txBodyBytes = registry.encode(txBodyFields);
-      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const { accountNumber, sequence } = await client.getSequence(address);
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
       const feeGranter = undefined;

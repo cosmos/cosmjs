@@ -1,4 +1,6 @@
 /* eslint-disable no-bitwise */
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BN from "bn.js";
 
 const uint64MaxValue = new BN("18446744073709551615", 10, "be");
