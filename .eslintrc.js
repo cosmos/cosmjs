@@ -2,7 +2,7 @@
 // https://eslint.org/docs/v8.x/use/configure/configuration-files#cascading-and-hierarchy
 
 module.exports = {
-  ignorePatterns: [ "packages/*/build/", "packages/*/examples/" ],
+  ignorePatterns: ["packages/*/build/", "packages/*/docs/", "packages/*/examples/"],
   root: true,
   env: {
     es6: true,
