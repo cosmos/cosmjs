@@ -1,9 +1,12 @@
-export { Account, accountFromAny, AccountParser } from "./accounts";
-export { AminoConverter, AminoConverters, AminoTypes } from "./aminotypes";
-export { Attribute, Event, fromTendermintEvent } from "./events";
+export type { Account, AccountParser } from "./accounts";
+export { accountFromAny } from "./accounts";
+export type { AminoConverter, AminoConverters } from "./aminotypes";
+export { AminoTypes } from "./aminotypes";
+export type { Attribute, Event } from "./events";
+export { fromTendermintEvent } from "./events";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
-export {
+export type {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
   AminoMsgCreateVestingAccount,
@@ -26,6 +29,30 @@ export {
   AminoMsgWithdrawValidatorCommission,
   AuthExtension,
   BankExtension,
+  DistributionExtension,
+  GovExtension,
+  GovParamsType,
+  GovProposalId,
+  IbcExtension,
+  MintExtension,
+  MintParams,
+  MsgBeginRedelegateEncodeObject,
+  MsgCancelUnbondingDelegationEncodeObject,
+  MsgCreateValidatorEncodeObject,
+  MsgDelegateEncodeObject,
+  MsgDepositEncodeObject,
+  MsgEditValidatorEncodeObject,
+  MsgSendEncodeObject,
+  MsgSubmitProposalEncodeObject,
+  MsgTransferEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgVoteEncodeObject,
+  MsgVoteWeightedEncodeObject,
+  MsgWithdrawDelegatorRewardEncodeObject,
+  StakingExtension,
+  TxExtension,
+} from "./modules";
+export {
   createAuthzAminoConverters,
   createBankAminoConverters,
   createCrysisAminoConverters,
@@ -38,11 +65,6 @@ export {
   createSlashingAminoConverters,
   createStakingAminoConverters,
   createVestingAminoConverters,
-  DistributionExtension,
-  GovExtension,
-  GovParamsType,
-  GovProposalId,
-  IbcExtension,
   isAminoMsgBeginRedelegate,
   isAminoMsgCreateValidator,
   isAminoMsgCreateVestingAccount,
@@ -76,21 +98,6 @@ export {
   isMsgVoteEncodeObject,
   isMsgVoteWeightedEncodeObject,
   isMsgWithdrawDelegatorRewardEncodeObject,
-  MintExtension,
-  MintParams,
-  MsgBeginRedelegateEncodeObject,
-  MsgCancelUnbondingDelegationEncodeObject,
-  MsgCreateValidatorEncodeObject,
-  MsgDelegateEncodeObject,
-  MsgDepositEncodeObject,
-  MsgEditValidatorEncodeObject,
-  MsgSendEncodeObject,
-  MsgSubmitProposalEncodeObject,
-  MsgTransferEncodeObject,
-  MsgUndelegateEncodeObject,
-  MsgVoteEncodeObject,
-  MsgVoteWeightedEncodeObject,
-  MsgWithdrawDelegatorRewardEncodeObject,
   setupAuthExtension,
   setupAuthzExtension,
   setupBankExtension,
@@ -102,44 +109,43 @@ export {
   setupSlashingExtension,
   setupStakingExtension,
   setupTxExtension,
-  StakingExtension,
-  TxExtension,
 } from "./modules";
 export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature";
+export type { ProtobufRpcClient, QueryAbciResponse, QueryStoreResponse } from "./queryclient";
 export {
   createPagination,
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
-  ProtobufRpcClient,
-  QueryAbciResponse,
   QueryClient,
-  QueryStoreResponse,
 } from "./queryclient";
-export { isSearchTxQueryArray, SearchPair, SearchTxQuery } from "./search";
+export type { SearchPair, SearchTxQuery } from "./search";
+export { isSearchTxQueryArray } from "./search";
+export type { SignerData, SigningStargateClientOptions } from "./signingstargateclient";
 export {
   createDefaultAminoConverters,
   defaultRegistryTypes,
-  SignerData,
   SigningStargateClient,
-  SigningStargateClientOptions,
 } from "./signingstargateclient";
+export type {
+  Block,
+  BlockHeader,
+  DeliverTxResponse,
+  IndexedTx,
+  SequenceResponse,
+  StargateClientOptions,
+} from "./stargateclient";
 export {
   assertIsDeliverTxFailure,
   assertIsDeliverTxSuccess,
-  Block,
-  BlockHeader,
   BroadcastTxError,
-  DeliverTxResponse,
-  IndexedTx,
   isDeliverTxFailure,
   isDeliverTxSuccess,
-  SequenceResponse,
   StargateClient,
-  StargateClientOptions,
   TimeoutError,
 } from "./stargateclient";
-export { StdFee } from "@cosmjs/amino";
-export { Coin, coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
+export type { StdFee } from "@cosmjs/amino";
+export type { Coin } from "@cosmjs/proto-signing";
+export { coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
 
 // Re-exported because this is part of the StargateClient/SigningStargateClient APIs
-export { HttpEndpoint } from "@cosmjs/tendermint-rpc";
+export type { HttpEndpoint } from "@cosmjs/tendermint-rpc";

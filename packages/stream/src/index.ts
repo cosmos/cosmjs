@@ -1,6 +1,6 @@
 export { concat } from "./concat";
-export { DefaultValueProducer, DefaultValueProducerCallsbacks } from "./defaultvalueproducer";
-export { dropDuplicates, SameTypeStreamOperator } from "./dropduplicates";
+export { type DefaultValueProducerCallsbacks, DefaultValueProducer } from "./defaultvalueproducer";
+export { type SameTypeStreamOperator, dropDuplicates } from "./dropduplicates";
 export { firstEvent, fromListPromise, toListPromise } from "./promise";
 export * from "./reducer";
 export { ValueAndUpdates } from "./valueandupdates";

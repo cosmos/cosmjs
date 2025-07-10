@@ -38,6 +38,7 @@ module.exports = {
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/explicit-member-accessibility": "warn",
     "@typescript-eslint/naming-convention": [

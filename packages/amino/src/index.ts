@@ -4,7 +4,8 @@ export {
   rawEd25519PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
 } from "./addresses";
-export { addCoins, Coin, coin, coins, parseCoins } from "./coins";
+export type { Coin } from "./coins";
+export { addCoins, coin, coins, parseCoins } from "./coins";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
@@ -16,22 +17,29 @@ export {
 export { createMultisigThresholdPubkey } from "./multisig";
 export { omitDefault } from "./omitdefault";
 export { makeCosmoshubPath } from "./paths";
-export {
+export type {
   Ed25519Pubkey,
+  MultisigThresholdPubkey,
+  Pubkey,
+  Secp256k1Pubkey,
+  SinglePubkey,
+} from "./pubkeys";
+export {
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
   isSinglePubkey,
-  MultisigThresholdPubkey,
-  Pubkey,
   pubkeyType,
-  Secp256k1Pubkey,
-  SinglePubkey,
 } from "./pubkeys";
-export { extractKdfConfiguration, Secp256k1HdWallet, Secp256k1HdWalletOptions } from "./secp256k1hdwallet";
+export {
+  type Secp256k1HdWalletOptions,
+  extractKdfConfiguration,
+  Secp256k1HdWallet,
+} from "./secp256k1hdwallet";
 export { Secp256k1Wallet } from "./secp256k1wallet";
-export { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";
-export { AminoMsg, makeSignDoc, serializeSignDoc, StdFee, StdSignDoc } from "./signdoc";
-export { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";
-export { isStdTx, makeStdTx, StdTx } from "./stdtx";
-export { executeKdf, KdfConfiguration } from "./wallet";
+export { type StdSignature, decodeSignature, encodeSecp256k1Signature } from "./signature";
+export type { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
+export { makeSignDoc, serializeSignDoc } from "./signdoc";
+export type { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";
+export { type StdTx, isStdTx, makeStdTx } from "./stdtx";
+export { type KdfConfiguration, executeKdf } from "./wallet";
