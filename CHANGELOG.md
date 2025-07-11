@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.34.0] - 2025-07-11
+
 ### Fixed
 
 - @cosmjs/faucet: `isValidAddress` now accepts addresses up to 128 bytes (e.g.
@@ -1511,7 +1513,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.33.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.34.0...HEAD
+[0.34.0]: https://github.com/cosmos/cosmjs/compare/v0.33.1...v0.34.0
 [0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
 [0.33.0]: https://github.com/cosmos/cosmjs/compare/v0.32.4...v0.33.0
 [0.32.4]: https://github.com/cosmos/cosmjs/compare/v0.32.3...v0.32.4
