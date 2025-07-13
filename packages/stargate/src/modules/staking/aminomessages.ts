@@ -70,14 +70,14 @@ export interface AminoMsgEditValidator extends AminoMsg {
     /** Bech32 encoded validator address */
     readonly validator_address: string;
     /**
-     * The new value for the comission rate.
+     * The new value for the commission rate.
      *
      * An empty string in the protobuf document means "do not change".
      * In Amino JSON this empty string becomes undefined (omitempty)
      */
     readonly commission_rate: string | undefined;
     /**
-     * The new value for the comission rate.
+     * The new value for the commission rate.
      *
      * An empty string in the protobuf document means "do not change".
      * In Amino JSON this empty string becomes undefined (omitempty)
