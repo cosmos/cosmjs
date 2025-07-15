@@ -1,9 +1,7 @@
 export function toHex(data: Uint8Array): string {
-  let out = "";
-  for (const byte of data) {
-    out += ("0" + byte.toString(16)).slice(-2);
-  }
-  return out;
+  return Array.from(data)
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 export function fromHex(hexstring: string): Uint8Array {
