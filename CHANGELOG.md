@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- @cosmjs/cli: package got removed with no replacement
+
 ## [0.34.0] - 2025-07-11
 
 ### Fixed
