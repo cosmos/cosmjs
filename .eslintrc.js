@@ -12,8 +12,8 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2018,
-    project: "./tsconfig.eslint.json",
+    ecmaVersion: 2022,
+    project: true,
   },
   plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import"],
   extends: [
@@ -37,8 +37,6 @@ module.exports = {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
-    "@typescript-eslint/await-thenable": "warn",
-    "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/explicit-member-accessibility": "warn",
@@ -77,22 +75,25 @@ module.exports = {
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/parameter-properties": "warn",
     "@typescript-eslint/no-shadow": "warn",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
-    "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-use-before-define": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
   },
   overrides: [
     {
       files: "**/*.js",
+      parser: "espree",
+      parserOptions: { ecmaVersion: 2022 },
       rules: {
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/consistent-type-exports": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/prefer-readonly": "off",
       },
     },
     {
