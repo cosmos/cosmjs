@@ -20,7 +20,7 @@ function randomId(): number {
 }
 
 /** Creates a JSON-RPC request with random ID */
-export function createJsonRpcRequest(method: string, params?: params?: Record<string, any>): JsonRpcRequest {
+export function createJsonRpcRequest(method: string, params?: Record<string, any>): JsonRpcRequest {
   const paramsCopy = params ? { ...params } : {};
   return {
     jsonrpc: "2.0",
