@@ -64,7 +64,6 @@
     "prettier": "^3.5.3",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
-    "ts-node": "^8",
     "typescript": "~5.8",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"

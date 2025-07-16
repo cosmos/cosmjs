@@ -266,7 +266,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -310,7 +309,6 @@ __metadata:
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -351,7 +349,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -386,7 +383,6 @@ __metadata:
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -418,7 +414,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -451,7 +446,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
@@ -483,7 +477,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -518,7 +511,6 @@ __metadata:
     semver: "npm:^7.5.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -551,7 +543,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -590,7 +581,6 @@ __metadata:
     protobufjs: "npm:^7.4.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -623,7 +613,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -667,7 +656,6 @@ __metadata:
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -698,7 +686,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -739,7 +726,6 @@ __metadata:
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -772,7 +758,6 @@ __metadata:
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
-    ts-node: "npm:^8"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -2165,13 +2150,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arg@npm:^4.1.0":
-  version: 4.1.3
-  resolution: "arg@npm:4.1.3"
-  checksum: 10c0/070ff801a9d236a6caa647507bdcc7034530604844d64408149a26b9e87c2f97650055c0f049abd1efc024b334635c01f29e0b632b371ac3f26130f4cf65997a
-  languageName: node
-  linkType: hard
-
 "argparse@npm:^1.0.7":
   version: 1.0.10
   resolution: "argparse@npm:1.0.10"
@@ -3051,13 +3029,6 @@ __metadata:
   version: 0.0.1
   resolution: "di@npm:0.0.1"
   checksum: 10c0/fbca4cc93e8c493d50f82df3a9ecaa5d8b2935674aabddeb8f68db3ab03c942c201f9c3d920de094407392ee6f488eac16b96f500c0ea6b408634864b7b939d1
-  languageName: node
-  linkType: hard
-
-"diff@npm:^4.0.1":
-  version: 4.0.2
-  resolution: "diff@npm:4.0.2"
-  checksum: 10c0/81b91f9d39c4eaca068eb0c1eb0e4afbdc5bb2941d197f513dd596b820b956fef43485876226d65d497bebc15666aa2aa82c679e84f65d5f2bfbf14ee46e32c1
   languageName: node
   linkType: hard
 
@@ -5359,13 +5330,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-error@npm:^1.1.1":
-  version: 1.3.6
-  resolution: "make-error@npm:1.3.6"
-  checksum: 10c0/171e458d86854c6b3fc46610cfacf0b45149ba043782558c6875d9f42f222124384ad0b468c92e996d815a8a2003817a710c0a160e49c1c394626f76fa45396f
-  languageName: node
-  linkType: hard
-
 "make-fetch-happen@npm:^11.0.3":
   version: 11.1.1
   resolution: "make-fetch-happen@npm:11.1.1"
@@ -6877,7 +6841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.17, source-map-support@npm:^0.5.19, source-map-support@npm:~0.5.20":
+"source-map-support@npm:^0.5.19, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -7294,26 +7258,6 @@ __metadata:
   peerDependencies:
     typescript: ">=4.2.0"
   checksum: 10c0/e65dc6e7e8141140c23e1dc94984bf995d4f6801919c71d6dc27cf0cd51b100a91ffcfe5217626193e5bea9d46831e8586febdc7e172df3f1091a7384299e23a
-  languageName: node
-  linkType: hard
-
-"ts-node@npm:^8":
-  version: 8.10.2
-  resolution: "ts-node@npm:8.10.2"
-  dependencies:
-    arg: "npm:^4.1.0"
-    diff: "npm:^4.0.1"
-    make-error: "npm:^1.1.1"
-    source-map-support: "npm:^0.5.17"
-    yn: "npm:3.1.1"
-  peerDependencies:
-    typescript: ">=2.7"
-  bin:
-    ts-node: dist/bin.js
-    ts-node-script: dist/bin-script.js
-    ts-node-transpile-only: dist/bin-transpile.js
-    ts-script: dist/bin-script-deprecated.js
-  checksum: 10c0/628343f62fff2543b4559a93eb27005084aea7609945e77f311031c5e96c4099736646856e1792605b90e8007d2c060fe80783be21c94788d91d6f259aab92e2
   languageName: node
   linkType: hard
 
@@ -8040,13 +7984,6 @@ __metadata:
   version: 1.2.1
   resolution: "ylru@npm:1.2.1"
   checksum: 10c0/8e5bb5f2b4d2666c0722236d9146b3452252c4550f8ff950fae2fd69a311a8e0a168813994bada965fb73c523aca90840667c493de54e00c3c16881c83a932cf
-  languageName: node
-  linkType: hard
-
-"yn@npm:3.1.1":
-  version: 3.1.1
-  resolution: "yn@npm:3.1.1"
-  checksum: 10c0/0732468dd7622ed8a274f640f191f3eaf1f39d5349a1b72836df484998d7d9807fbea094e2f5486d6b0cd2414aad5775972df0e68f8604db89a239f0f4bf7443
   languageName: node
   linkType: hard
 
