@@ -8,6 +8,7 @@ and this project adheres to
 
 ### Changed
 
+- all: Drop support for Node.js < 20.
 - @cosmjs/cli: package got removed with no replacement
 
 ## [0.34.0] - 2025-07-11
