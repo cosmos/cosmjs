@@ -331,7 +331,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@koa/cors",\
-      "npm:3.3.0"\
+      "npm:5.0.0"\
     ],\
     [\
       "@ledgerhq/devices",\
@@ -3440,7 +3440,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
-          ["@koa/cors", "npm:3.3.0"],\
+          ["@koa/cors", "npm:5.0.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-bodyparser", "npm:4.3.7"],\
@@ -4093,10 +4093,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@koa/cors", [\
-      ["npm:3.3.0", {\
-        "packageLocation": "./.yarn/cache/@koa-cors-npm-3.3.0-0564248a2f-41d2bac9aa.zip/node_modules/@koa/cors/",\
+      ["npm:5.0.0", {\
+        "packageLocation": "./.yarn/cache/@koa-cors-npm-5.0.0-693911adf6-49e5f3b861.zip/node_modules/@koa/cors/",\
         "packageDependencies": [\
-          ["@koa/cors", "npm:3.3.0"],\
+          ["@koa/cors", "npm:5.0.0"],\
           ["vary", "npm:1.1.2"]\
         ],\
         "linkType": "HARD"\

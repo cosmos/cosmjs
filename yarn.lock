@@ -432,7 +432,7 @@ __metadata:
     "@cosmjs/stargate": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@koa/cors": "npm:^3.3"
+    "@koa/cors": "npm:^5.0"
     "@types/jasmine": "npm:^4"
     "@types/koa": "npm:^2.15.0"
     "@types/koa-bodyparser": "npm:^4.3"
@@ -965,12 +965,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/cors@npm:^3.3":
-  version: 3.3.0
-  resolution: "@koa/cors@npm:3.3.0"
+"@koa/cors@npm:^5.0":
+  version: 5.0.0
+  resolution: "@koa/cors@npm:5.0.0"
   dependencies:
     vary: "npm:^1.1.2"
-  checksum: 10c0/41d2bac9aaae610cb5061bfca5ee23498b16eefd770159b7f9a547cc289f53b2087d1596b4b1e1a93bc9160885134657fd070a70f48a28c7c543cb2a0f4ed87f
+  checksum: 10c0/49e5f3b861590bd81aa3663a2f0658234a9b378840bb54a2947b3c5f2067f9d966b6fa2e9049fdc7c74c787456d1885bacd0b7ee1f134274d28282c7df99c3fd
   languageName: node
   linkType: hard
 
