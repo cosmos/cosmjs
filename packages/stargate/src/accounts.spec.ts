@@ -6,7 +6,7 @@ import { accountFromAny } from "./accounts";
 describe("accounts", () => {
   describe("accountFromAny", () => {
     it("works for PeriodicVestingAccount", () => {
-      // Queried from chain via `packages/cli/examples/get_akash_vesting_account.ts`.
+      // Queried from chain via https://github.com/cosmos/cosmjs/blob/v0.34.0/packages/cli/examples/get_akash_vesting_account.ts
       const any = Any.fromPartial({
         typeUrl: "/cosmos.vesting.v1beta1.PeriodicVestingAccount",
         value: fromBase64(
