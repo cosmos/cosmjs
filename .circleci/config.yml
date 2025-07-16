@@ -24,7 +24,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20
+      - image: cimg/node:22.17
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -99,12 +99,9 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
-          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
-          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
-            sudo dpkg -i "$HOME/nodejs.deb"
+            curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+            sudo apt-get install -y nodejs
       - run:
           name: Install yarn
           command: |
@@ -211,12 +208,9 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
-          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
-          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
-            sudo dpkg -i "$HOME/nodejs.deb"
+            curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+            sudo apt-get install -y nodejs
       - run:
           name: Install yarn
           command: |
@@ -320,12 +314,9 @@ jobs:
             mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
-          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow.
-          # Follow instructions of https://deb.nodesource.com/ except the last step. Then run
-          # `apt download --print-uris nodejs` to get a download URL.
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_18.x/pool/main/n/nodejs/nodejs_18.17.1-1nodesource1_amd64.deb
-            sudo dpkg -i "$HOME/nodejs.deb"
+            curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+            sudo apt-get install -y nodejs
       - run:
           name: Install yarn
           command: |

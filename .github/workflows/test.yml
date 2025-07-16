@@ -9,7 +9,7 @@ jobs:
   test:
     strategy:
       matrix:
-        node-version: ["18", "20", "22", "24"]
+        node-version: ["20", "22", "24"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

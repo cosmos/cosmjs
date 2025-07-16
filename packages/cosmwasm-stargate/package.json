@@ -59,7 +59,7 @@
     "@types/node": "*",
     "@types/pako": "^1.0.1",
     "eslint": "^8.57.1",
-    "glob": "^10",
+    "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",

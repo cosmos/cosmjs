@@ -51,7 +51,7 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "buffer": "^6.0.3",
     "eslint": "^8.57.1",
-    "glob": "^10",
+    "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",
