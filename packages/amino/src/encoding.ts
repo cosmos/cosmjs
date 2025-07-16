@@ -91,7 +91,7 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
 
 /**
  * Decodes a bech32 pubkey to Amino binary, which is then decoded to a type/value object.
- * The bech32 prefix is ignored and discareded.
+ * The bech32 prefix is ignored and discarded.
  *
  * @param bechEncoded the bech32 encoded pubkey
  */

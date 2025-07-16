@@ -12,7 +12,7 @@ export interface Coin {
  * you can use the number type here. This is the case for all typical Cosmos SDK
  * chains that use the default 6 decimals.
  *
- * In case you need to supportr larger values, use unsigned integer strings instead.
+ * In case you need to support larger values, use unsigned integer strings instead.
  */
 export function coin(amount: number | string, denom: string): Coin {
   let outAmount: string;
