@@ -54,7 +54,7 @@
     "@types/jasmine": "^4",
     "@types/semver": "^7.3.4",
     "eslint": "^8.57.1",
-    "glob": "^10",
+    "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
