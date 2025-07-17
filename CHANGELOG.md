@@ -27,8 +27,11 @@ and this project adheres to
 
 - @cosmjs/tendermint-rpc: `Comet38Client` is now used to connect to CometBFT
   0.38 and 1.x backends ([#1679])
+- @cosmjs/tendermint-rpc: Add timeout option for HTTP requests in `HttpClient`
+  and `HttpBatchClient`. ([#1660])
 
 [#1679]: https://github.com/cosmos/cosmjs/pull/1679
+[#1660]: https://github.com/cosmos/cosmjs/pull/1660
 
 ### Changed
 
