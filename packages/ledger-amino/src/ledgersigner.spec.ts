@@ -33,7 +33,7 @@ async function createTransport(): Promise<Transport> {
   let platform: string;
   try {
     platform = navigator.platform;
-  } catch (error) {
+  } catch (_error) {
     platform = "node";
   }
   // HACK: Use a variable to get webpack to ignore this

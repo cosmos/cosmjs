@@ -107,7 +107,7 @@ export class QueueingStreamingSocket {
       try {
         await this.socket.send(request);
         this.isProcessingQueue = false;
-      } catch (error) {
+      } catch (_error) {
         // Probably the connection is down; will try again automatically when reconnected.
         this.queue.unshift(request);
         this.isProcessingQueue = false;
