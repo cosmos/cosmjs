@@ -11,10 +11,10 @@ my branch (which can be rebased).
 ## Setup
 
 Test vectors are generated using those additions:
-https://github.com/CosmWasm/cosmos-sdk/pull/58
+https://github.com/cosmos/cosmos-sdk/pull/58
 
 ```
-git clone https://github.com/CosmWasm/cosmos-sdk.git
+git clone https://github.com/cosmos/cosmos-sdk.git
 cd cosmos-sdk
 git checkout cosmjs-test-vectors-v2
 
