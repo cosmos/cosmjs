@@ -482,10 +482,6 @@ const RAW_RUNTIME_STATE =
       "npm:1.3.0"\
     ],\
     [\
-      "@types/bn.js",\
-      "npm:5.1.0"\
-    ],\
-    [\
       "@types/body-parser",\
       "npm:1.19.0"\
     ],\
@@ -892,10 +888,6 @@ const RAW_RUNTIME_STATE =
     [\
       "bl",\
       "npm:4.1.0"\
-    ],\
-    [\
-      "bn.js",\
-      "npm:5.2.0"\
     ],\
     [\
       "body-parser",\
@@ -3369,14 +3361,12 @@ const RAW_RUNTIME_STATE =
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
-          ["@types/bn.js", "npm:5.1.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/libsodium-wrappers-sumo", "npm:0.7.5"],\
           ["@types/node", "npm:22.10.6"],\
-          ["bn.js", "npm:5.2.0"],\
           ["buffer", "npm:6.0.3"],\
           ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
@@ -4489,16 +4479,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-base64-js-npm-1.3.0-9eadeb8d0d-6db015a703.zip/node_modules/@types/base64-js/",\
         "packageDependencies": [\
           ["@types/base64-js", "npm:1.3.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/bn.js", [\
-      ["npm:5.1.0", {\
-        "packageLocation": "./.yarn/cache/@types-bn.js-npm-5.1.0-4a0335ff4f-04c6705445.zip/node_modules/@types/bn.js/",\
-        "packageDependencies": [\
-          ["@types/bn.js", "npm:5.1.0"],\
-          ["@types/node", "npm:22.10.6"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6468,15 +6448,6 @@ const RAW_RUNTIME_STATE =
           ["buffer", "npm:5.7.1"],\
           ["inherits", "npm:2.0.4"],\
           ["readable-stream", "npm:3.6.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["bn.js", [\
-      ["npm:5.2.0", {\
-        "packageLocation": "./.yarn/cache/bn.js-npm-5.2.0-11748c0b07-67e17b1934.zip/node_modules/bn.js/",\
-        "packageDependencies": [\
-          ["bn.js", "npm:5.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
