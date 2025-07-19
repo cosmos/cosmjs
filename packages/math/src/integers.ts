@@ -274,7 +274,7 @@ export class Uint64 implements Integer, WithByteConverters {
   public toNumber(): number {
     const num = Number(this.data);
     if (!Number.isSafeInteger(num)) {
-      throw new Error("Not safe integer");
+      throw new Error("number can only safely store up to 53 bits");
     }
     return num;
   }
