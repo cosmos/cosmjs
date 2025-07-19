@@ -523,12 +523,10 @@ __metadata:
   resolution: "@cosmjs/math@workspace:packages/math"
   dependencies:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
-    "@types/bn.js": "npm:^5"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    bn.js: "npm:^5.2.0"
     buffer: "npm:^6.0.3"
     eslint: "npm:^8.57.1"
     glob: "npm:^11"
