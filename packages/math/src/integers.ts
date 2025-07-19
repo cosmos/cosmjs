@@ -1,9 +1,6 @@
 /* eslint-disable no-bitwise */
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import BN from "bn.js";
-
-const uint64MaxValue = new BN("18446744073709551615", 10, "be");
+const uint64MaxValue = 18446744073709551615n;
 
 /** Internal interface to ensure all integer types can be used equally */
 interface Integer {
@@ -201,21 +198,25 @@ export class Uint64 implements Integer, WithByteConverters {
       throw new Error("Invalid input length. Expected 8 bytes.");
     }
 
-    for (let i = 0; i < bytes.length; ++i) {
-      if (!Number.isInteger(bytes[i]) || bytes[i] > 255 || bytes[i] < 0) {
-        throw new Error("Invalid value in byte. Found: " + bytes[i]);
+    const beBytes = endianess === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
+    let value = 0n;
+
+    for (const byte of beBytes) {
+      value *= 256n;
+      if (!Number.isInteger(byte) || byte > 255 || byte < 0) {
+        throw new Error("Invalid value in byte. Found: " + byte);
       }
+      value += BigInt(byte);
     }
 
-    const beBytes = endianess === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
-    return new Uint64(new BN(beBytes));
+    return new Uint64(value);
   }
 
   public static fromString(str: string): Uint64 {
     if (!str.match(/^[0-9]+$/)) {
       throw new Error("Invalid string format");
     }
-    return new Uint64(new BN(str, 10, "be"));
+    return new Uint64(BigInt(str));
   }
 
   public static fromNumber(input: number): Uint64 {
@@ -227,33 +228,39 @@ export class Uint64 implements Integer, WithByteConverters {
       throw new Error("Input is not an integer");
     }
 
-    let bigint: BN;
-    try {
-      bigint = new BN(input);
-    } catch {
+    if (!Number.isSafeInteger(input)) {
       throw new Error("Input is not a safe integer");
     }
+
+    const bigint = BigInt(input);
     return new Uint64(bigint);
   }
 
-  private readonly data: BN;
+  private readonly data: bigint;
 
-  private constructor(data: BN) {
-    if (data.isNeg()) {
+  private constructor(data: bigint) {
+    if (data < 0n) {
       throw new Error("Input is negative");
     }
-    if (data.gt(uint64MaxValue)) {
+    if (data > uint64MaxValue) {
       throw new Error("Input exceeds uint64 range");
     }
     this.data = data;
   }
 
   public toBytesBigEndian(): Uint8Array {
-    return Uint8Array.from(this.data.toArray("be", 8));
+    return this.toBytesLittleEndian().reverse();
   }
 
   public toBytesLittleEndian(): Uint8Array {
-    return Uint8Array.from(this.data.toArray("le", 8));
+    const bytes = new Uint8Array(8);
+    let value = this.data;
+    for (let i = 0; i < bytes.length; i++) {
+      bytes[i] = Number(value % 256n);
+      value /= 256n;
+    }
+
+    return bytes;
   }
 
   public toString(): string {
@@ -261,11 +268,15 @@ export class Uint64 implements Integer, WithByteConverters {
   }
 
   public toBigInt(): bigint {
-    return BigInt(this.toString());
+    return this.data;
   }
 
   public toNumber(): number {
-    return this.data.toNumber();
+    const num = Number(this.data);
+    if (!Number.isSafeInteger(num)) {
+      throw new Error("Not safe integer");
+    }
+    return num;
   }
 }
 
