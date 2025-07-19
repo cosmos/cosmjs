@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import BN from "bn.js";
-
 import { Uint32, Uint53, Uint64 } from "./integers";
 
 // Too large values lead to massive memory usage. Limit to something sensible.
@@ -94,7 +91,7 @@ export class Decimal {
 
   public static compare(a: Decimal, b: Decimal): number {
     if (a.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
-    return a.data.atomics.cmp(new BN(b.atomics));
+    return Math.sign(Number(a.data.atomics - b.data.atomics));
   }
 
   public get atomics(): string {
@@ -106,7 +103,7 @@ export class Decimal {
   }
 
   private readonly data: {
-    readonly atomics: BN;
+    readonly atomics: bigint;
     readonly fractionalDigits: number;
   };
 
@@ -118,7 +115,7 @@ export class Decimal {
     }
 
     this.data = {
-      atomics: new BN(atomics),
+      atomics: BigInt(atomics),
       fractionalDigits: fractionalDigits,
     };
   }
@@ -130,36 +127,36 @@ export class Decimal {
 
   /** Returns the greatest decimal <= this which has no fractional part (rounding down) */
   public floor(): Decimal {
-    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
-    const whole = this.data.atomics.div(factor);
-    const fractional = this.data.atomics.mod(factor);
+    const factor = 10n ** BigInt(this.data.fractionalDigits);
+    const whole = this.data.atomics / factor;
+    const fractional = this.data.atomics % factor;
 
-    if (fractional.isZero()) {
+    if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics(whole.mul(factor).toString(), this.fractionalDigits);
+      return Decimal.fromAtomics((whole * factor).toString(), this.fractionalDigits);
     }
   }
 
   /** Returns the smallest decimal >= this which has no fractional part (rounding up) */
   public ceil(): Decimal {
-    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
-    const whole = this.data.atomics.div(factor);
-    const fractional = this.data.atomics.mod(factor);
+    const factor = 10n ** BigInt(this.data.fractionalDigits);
+    const whole = this.data.atomics / factor;
+    const fractional = this.data.atomics % factor;
 
-    if (fractional.isZero()) {
+    if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics(whole.addn(1).mul(factor).toString(), this.fractionalDigits);
+      return Decimal.fromAtomics(((whole + 1n) * factor).toString(), this.fractionalDigits);
     }
   }
 
   public toString(): string {
-    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
-    const whole = this.data.atomics.div(factor);
-    const fractional = this.data.atomics.mod(factor);
+    const factor = 10n ** BigInt(this.data.fractionalDigits);
+    const whole = this.data.atomics / factor;
+    const fractional = this.data.atomics % factor;
 
-    if (fractional.isZero()) {
+    if (fractional === 0n) {
       return whole.toString();
     } else {
       const fullFractionalPart = fractional.toString().padStart(this.data.fractionalDigits, "0");
@@ -185,7 +182,7 @@ export class Decimal {
    */
   public plus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
-    const sum = this.data.atomics.add(new BN(b.atomics));
+    const sum = this.data.atomics + b.data.atomics;
     return new Decimal(sum.toString(), this.fractionalDigits);
   }
 
@@ -197,8 +194,8 @@ export class Decimal {
    */
   public minus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
-    const difference = this.data.atomics.sub(new BN(b.atomics));
-    if (difference.ltn(0)) throw new Error("Difference must not be negative");
+    const difference = this.data.atomics - b.data.atomics;
+    if (difference < 0n) throw new Error("Difference must not be negative");
     return new Decimal(difference.toString(), this.fractionalDigits);
   }
 
@@ -208,7 +205,7 @@ export class Decimal {
    * We only allow multiplication by unsigned integers to avoid rounding errors.
    */
   public multiply(b: Uint32 | Uint53 | Uint64): Decimal {
-    const product = this.data.atomics.mul(new BN(b.toString()));
+    const product = this.data.atomics * b.toBigInt();
     return new Decimal(product.toString(), this.fractionalDigits);
   }
 
