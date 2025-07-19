@@ -3576,12 +3576,10 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
-          ["@types/bn.js", "npm:5.1.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["bn.js", "npm:5.2.0"],\
           ["buffer", "npm:6.0.3"],\
           ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
