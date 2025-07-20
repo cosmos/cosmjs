@@ -43,8 +43,7 @@
     "@noble/ciphers": "^1.3.0",
     "@noble/curves": "^1.9.2",
     "@noble/hashes": "^1",
-    "libsodium-wrappers-sumo": "^0.7.11",
-    "tweetnacl": "^1.0.3"
+    "libsodium-wrappers-sumo": "^0.7.11"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

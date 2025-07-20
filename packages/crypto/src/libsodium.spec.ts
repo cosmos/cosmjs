@@ -238,7 +238,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("bad seed size");
+            expect(error.message).toContain("key of length 32 expected");
           });
       }
 
@@ -250,7 +250,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("bad seed size");
+            expect(error.message).toContain("key of length 32 expected");
           });
       }
     });
