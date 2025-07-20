@@ -324,6 +324,7 @@ __metadata:
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@noble/curves": "npm:^1.9.2"
     "@noble/hashes": "npm:^1"
+    "@stablelib/xchacha20poly1305": "npm:^2.0.1"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
@@ -1371,6 +1372,101 @@ __metadata:
   version: 3.1.0
   resolution: "@socket.io/component-emitter@npm:3.1.0"
   checksum: 10c0/b838ccccf74c36fa7d3ed89a7efb5858cba1a84db4d08250c2fc44d8235140f10d31875bde71517d8503cb3fb08fcd34d3b7a3d0d89058ca3f74f7c816f0fb9c
+  languageName: node
+  linkType: hard
+
+"@stablelib/aead@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@stablelib/aead@npm:2.0.0"
+  checksum: 10c0/fa80f5499bf746394409b99e09cd86953f40c10b5be17511aaf5f685f5185e726745ac51f31784fcb6e0b1b61db7517a750f6ec2fc1aac29610eb21a07e14d3d
+  languageName: node
+  linkType: hard
+
+"@stablelib/binary@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/binary@npm:2.0.1"
+  dependencies:
+    "@stablelib/int": "npm:^2.0.1"
+  checksum: 10c0/6c6a5c84e523fefa98ae50bb1dfe03d03df5d346a9f65da07d784901eb1f3df0d4f9382429ec56df2833c133a77be106e04c72254c9b9471c4f15da993cde24e
+  languageName: node
+  linkType: hard
+
+"@stablelib/chacha20poly1305@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/chacha20poly1305@npm:2.0.1"
+  dependencies:
+    "@stablelib/aead": "npm:^2.0.0"
+    "@stablelib/binary": "npm:^2.0.1"
+    "@stablelib/chacha": "npm:^2.0.1"
+    "@stablelib/constant-time": "npm:^2.0.1"
+    "@stablelib/poly1305": "npm:^2.0.1"
+    "@stablelib/wipe": "npm:^2.0.1"
+  checksum: 10c0/75a5ef9016653daf3d9b4065a021241c1bd9b3be46246938aa0b8410ec2319e2f8982fe8b20b4981d98a5c88f2a2d0a50a4da803db3b746710b0d0d300016b8e
+  languageName: node
+  linkType: hard
+
+"@stablelib/chacha@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/chacha@npm:2.0.1"
+  dependencies:
+    "@stablelib/binary": "npm:^2.0.1"
+    "@stablelib/wipe": "npm:^2.0.1"
+  checksum: 10c0/f6a4416bdb9b89e587da7490c4bccc2d41165328a29120af82fd1dca9c838aecf601b2552f1e1684022316c9909d997b45c4f206574549c5debce89f6e0a4971
+  languageName: node
+  linkType: hard
+
+"@stablelib/constant-time@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/constant-time@npm:2.0.1"
+  checksum: 10c0/d81e3602450380f0991414d393cf5147c50eb7f2cbc306ac7f93d9131a6d4845ed4a04c5eb04438cf9b2cf8788da9e15f3045a270852d82d3d0e6fff075ffde6
+  languageName: node
+  linkType: hard
+
+"@stablelib/int@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/int@npm:2.0.1"
+  checksum: 10c0/bf70d40b910dcc19e15e23eb6ce0beddb9bcc8bda958184490753b5e757c8028f5f1d7ccc056766129e02c416665ce474b95031c84f285105a8d7e1da781059a
+  languageName: node
+  linkType: hard
+
+"@stablelib/poly1305@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/poly1305@npm:2.0.1"
+  dependencies:
+    "@stablelib/constant-time": "npm:^2.0.1"
+    "@stablelib/wipe": "npm:^2.0.1"
+  checksum: 10c0/87b4adfb50456e32b35f021d955c2abfaf7030d01155a1b5436283500f2877edcd0ce7a76a100b1c382b36e53e25081ef0cb4bd97870ee407dea9db65ec40e1d
+  languageName: node
+  linkType: hard
+
+"@stablelib/wipe@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/wipe@npm:2.0.1"
+  checksum: 10c0/f0b76e98f773e5a9875a53fd5d3f311f2585aead8578c4cbd82719154ecf7ec98c9575e6c4068339b7bf445341180312f3a73b5c80b92eb24810c3511b5a4927
+  languageName: node
+  linkType: hard
+
+"@stablelib/xchacha20@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/xchacha20@npm:2.0.1"
+  dependencies:
+    "@stablelib/binary": "npm:^2.0.1"
+    "@stablelib/chacha": "npm:^2.0.1"
+    "@stablelib/wipe": "npm:^2.0.1"
+  checksum: 10c0/4fb631e027da79e2f5d3067f181cecec927c6c3994697a21ff186abb952f6cf6c5ba3c43822dd520ff604bd4b242b5b4ca983664a74e126892e872c3535aa6f9
+  languageName: node
+  linkType: hard
+
+"@stablelib/xchacha20poly1305@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@stablelib/xchacha20poly1305@npm:2.0.1"
+  dependencies:
+    "@stablelib/aead": "npm:^2.0.0"
+    "@stablelib/chacha20poly1305": "npm:^2.0.1"
+    "@stablelib/constant-time": "npm:^2.0.1"
+    "@stablelib/wipe": "npm:^2.0.1"
+    "@stablelib/xchacha20": "npm:^2.0.1"
+  checksum: 10c0/15655e0824815dbe606e9f25a79273c42472c843e0046a5fc7508f554c149aa5e1e8bdf01bf9945488f0debf13ea869a855e0739bb12e17efeef0939cbb83ad1
   languageName: node
   linkType: hard
 

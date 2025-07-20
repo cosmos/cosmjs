@@ -426,7 +426,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/invalid key length/);
+            expect(error).toMatch(/needs 32-byte key/);
           });
       }
       {
@@ -437,7 +437,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/invalid key length/);
+            expect(error).toMatch(/needs 32-byte key/);
           });
       }
       {
@@ -448,7 +448,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/invalid key length/);
+            expect(error).toMatch(/needs 32-byte key/);
           });
       }
       {
@@ -461,7 +461,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/invalid key length/);
+            expect(error).toMatch(/needs 32-byte key/);
           });
       }
     });
