@@ -44,8 +44,7 @@
     "@cosmjs/utils": "workspace:^",
     "@noble/curves": "^1.9.2",
     "@noble/hashes": "^1",
-    "@stablelib/xchacha20poly1305": "^2.0.1",
-    "tweetnacl": "^1.0.3"
+    "@stablelib/xchacha20poly1305": "^2.0.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

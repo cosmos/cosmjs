@@ -1,7 +1,7 @@
 import { isNonNullObject } from "@cosmjs/utils";
+import { ed25519 } from "@noble/curves/ed25519.js";
 import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
 import { XChaCha20Poly1305 } from "@stablelib/xchacha20poly1305";
-import nacl from "tweetnacl";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -82,13 +82,13 @@ export class Ed25519 {
    * https://download.libsodium.org/doc/public-key_cryptography/public-key_signatures.html
    * and diagram on https://blog.mozilla.org/warner/2011/11/29/ed25519-keys/
    */
-  public static async makeKeypair(seed: Uint8Array): Promise<Ed25519Keypair> {
-    const keypair = nacl.sign.keyPair.fromSeed(seed);
-    return Ed25519Keypair.fromLibsodiumPrivkey(keypair.secretKey);
+  public static async makeKeypair(privKey: Uint8Array): Promise<Ed25519Keypair> {
+    const pubKey = ed25519.getPublicKey(privKey);
+    return new Ed25519Keypair(privKey, pubKey);
   }
 
   public static async createSignature(message: Uint8Array, keyPair: Ed25519Keypair): Promise<Uint8Array> {
-    return nacl.sign.detached(message, keyPair.toLibsodiumPrivkey());
+    return ed25519.sign(message, keyPair.privkey);
   }
 
   public static async verifySignature(
@@ -96,7 +96,7 @@ export class Ed25519 {
     message: Uint8Array,
     pubkey: Uint8Array,
   ): Promise<boolean> {
-    return nacl.sign.detached.verify(message, signature, pubkey);
+    return ed25519.verify(signature, message, pubkey);
   }
 }
 
