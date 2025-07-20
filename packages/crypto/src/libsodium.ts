@@ -1,15 +1,7 @@
-// Keep all classes requiring libsodium-js in one file as having multiple
-// requiring of the libsodium-wrappers module currently crashes browsers
-//
-// libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
-
 import { isNonNullObject } from "@cosmjs/utils";
 import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
 import { ed25519 } from "@noble/curves/ed25519.js";
-// Using crypto_pwhash requires sumo. Once we migrate to a standalone
-// Argon2 implementation, we can use the normal libsodium-wrappers
-// again: https://github.com/cosmos/cosmjs/issues/1031
-import sodium from "libsodium-wrappers-sumo";
+import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -44,15 +36,18 @@ export class Argon2id {
     salt: Uint8Array,
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
-    await sodium.ready;
-    return sodium.crypto_pwhash(
-      options.outputLength,
-      password,
-      salt, // libsodium only supports 16 byte salts and will throw when you don't respect that
-      options.opsLimit,
-      options.memLimitKib * 1024,
-      sodium.crypto_pwhash_ALG_ARGON2ID13,
-    );
+    const opts: ArgonOpts = {
+      t: options.opsLimit,
+      m: options.memLimitKib,
+      p: 1, // no parallelism allowed, just like libsodium
+      dkLen: options.outputLength,
+    };
+
+    if (salt.length !== 16) {
+      throw new Error(`Got invalid salt length ${salt.length}. Must be 16.`);
+    }
+
+    return argon2id(password, salt, opts);
   }
 }
 

@@ -2110,14 +2110,6 @@ const RAW_RUNTIME_STATE =
       "npm:0.4.1"\
     ],\
     [\
-      "libsodium-sumo",\
-      "npm:0.7.11"\
-    ],\
-    [\
-      "libsodium-wrappers-sumo",\
-      "npm:0.7.11"\
-    ],\
-    [\
       "linkify-it",\
       "npm:5.0.0"\
     ],\
@@ -3526,7 +3518,6 @@ const RAW_RUNTIME_STATE =
           ["karma-firefox-launcher", "npm:2.1.0"],\
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:3.5.3"],\
           ["ses", "npm:1.13.1"],\
@@ -10522,25 +10513,6 @@ const RAW_RUNTIME_STATE =
           ["levn", "npm:0.4.1"],\
           ["prelude-ls", "npm:1.2.1"],\
           ["type-check", "npm:0.4.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["libsodium-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-sumo-npm-0.7.11-aaac6bcc6c-f7518d1781.zip/node_modules/libsodium-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["libsodium-wrappers-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-wrappers-sumo-npm-0.7.11-08fe1b2cf4-81270738b3.zip/node_modules/libsodium-wrappers-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"]\
         ],\
         "linkType": "HARD"\
       }]\

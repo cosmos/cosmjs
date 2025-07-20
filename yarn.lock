@@ -340,7 +340,6 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    libsodium-wrappers-sumo: "npm:^0.7.11"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
@@ -5613,22 +5612,6 @@ __metadata:
     prelude-ls: "npm:^1.2.1"
     type-check: "npm:~0.4.0"
   checksum: 10c0/effb03cad7c89dfa5bd4f6989364bfc79994c2042ec5966cb9b95990e2edee5cd8969ddf42616a0373ac49fac1403437deaf6e9050fbbaa3546093a59b9ac94e
-  languageName: node
-  linkType: hard
-
-"libsodium-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-sumo@npm:0.7.11"
-  checksum: 10c0/f7518d178148d17c04d716898ea8aa5c5ebc302920ff67258a1fbe52e9d4605bb4a9912541db06bce7c16bde9a3af86110b749c869846d087a1b64a921007db8
-  languageName: node
-  linkType: hard
-
-"libsodium-wrappers-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-wrappers-sumo@npm:0.7.11"
-  dependencies:
-    libsodium-sumo: "npm:^0.7.11"
-  checksum: 10c0/81270738b3e7c50910c34e161aa34d84ab6fbfe9e5256561fc279498b594cb3b090c58ec19d40ada67dc24e7f1f7e018d9fd68d2ae367196116164795b6d2896
   languageName: node
   linkType: hard
 
