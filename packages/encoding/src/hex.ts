@@ -1,5 +1,5 @@
 export function toHex(data: Uint8Array): string {
-  return Array.from(data)
+  return data.values()
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
 }
