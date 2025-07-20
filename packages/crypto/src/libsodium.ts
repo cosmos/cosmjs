@@ -1,15 +1,7 @@
-// Keep all classes requiring libsodium-js in one file as having multiple
-// requiring of the libsodium-wrappers module currently crashes browsers
-//
-// libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
-
 import { isNonNullObject } from "@cosmjs/utils";
 import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
 import { XChaCha20Poly1305 } from "@stablelib/xchacha20poly1305";
-// Using crypto_pwhash requires sumo. Once we migrate to a standalone
-// Argon2 implementation, we can use the normal libsodium-wrappers
-// again: https://github.com/cosmos/cosmjs/issues/1031
-import sodium from "libsodium-wrappers-sumo";
+import nacl from "tweetnacl";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -91,14 +83,12 @@ export class Ed25519 {
    * and diagram on https://blog.mozilla.org/warner/2011/11/29/ed25519-keys/
    */
   public static async makeKeypair(seed: Uint8Array): Promise<Ed25519Keypair> {
-    await sodium.ready;
-    const keypair = sodium.crypto_sign_seed_keypair(seed);
-    return Ed25519Keypair.fromLibsodiumPrivkey(keypair.privateKey);
+    const keypair = nacl.sign.keyPair.fromSeed(seed);
+    return Ed25519Keypair.fromLibsodiumPrivkey(keypair.secretKey);
   }
 
   public static async createSignature(message: Uint8Array, keyPair: Ed25519Keypair): Promise<Uint8Array> {
-    await sodium.ready;
-    return sodium.crypto_sign_detached(message, keyPair.toLibsodiumPrivkey());
+    return nacl.sign.detached(message, keyPair.toLibsodiumPrivkey());
   }
 
   public static async verifySignature(
@@ -106,8 +96,7 @@ export class Ed25519 {
     message: Uint8Array,
     pubkey: Uint8Array,
   ): Promise<boolean> {
-    await sodium.ready;
-    return sodium.crypto_sign_verify_detached(signature, message, pubkey);
+    return nacl.sign.detached.verify(message, signature, pubkey);
   }
 }
 

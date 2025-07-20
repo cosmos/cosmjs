@@ -222,7 +222,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("invalid seed length");
+            expect(error.message).toContain("bad seed size");
           });
       }
 
@@ -234,7 +234,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("invalid seed length");
+            expect(error.message).toContain("bad seed size");
           });
       }
     });

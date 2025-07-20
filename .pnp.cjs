@@ -2002,14 +2002,6 @@ const RAW_RUNTIME_STATE =
       "npm:0.4.1"\
     ],\
     [\
-      "libsodium-sumo",\
-      "npm:0.7.11"\
-    ],\
-    [\
-      "libsodium-wrappers-sumo",\
-      "npm:0.7.11"\
-    ],\
-    [\
       "linkify-it",\
       "npm:5.0.0"\
     ],\
@@ -2784,6 +2776,10 @@ const RAW_RUNTIME_STATE =
       "npm:0.6.0"\
     ],\
     [\
+      "tweetnacl",\
+      "npm:1.0.3"\
+    ],\
+    [\
       "type-check",\
       "npm:0.4.0"\
     ],\
@@ -3418,11 +3414,11 @@ const RAW_RUNTIME_STATE =
           ["karma-firefox-launcher", "npm:2.1.0"],\
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:3.5.3"],\
           ["ses", "npm:1.13.1"],\
           ["source-map-support", "npm:0.5.21"],\
+          ["tweetnacl", "npm:1.0.3"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"],\
           ["webpack", "virtual:1a72a83ae6f92c6f3e756c713a9a31ccfa711e7e2f1243788a7cf7ade4d78c0c1ff62213d9b07eaa19d318c078695418641698a55516ba18eae8be3fd315083a#npm:5.76.1"],\
@@ -10036,25 +10032,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["libsodium-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-sumo-npm-0.7.11-aaac6bcc6c-f7518d1781.zip/node_modules/libsodium-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["libsodium-wrappers-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-wrappers-sumo-npm-0.7.11-08fe1b2cf4-81270738b3.zip/node_modules/libsodium-wrappers-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["linkify-it", [\
       ["npm:5.0.0", {\
         "packageLocation": "./.yarn/cache/linkify-it-npm-5.0.0-adb5f9c96f-ff4abbcdfa.zip/node_modules/linkify-it/",\
@@ -12830,6 +12807,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["safe-buffer", "npm:5.2.1"],\
           ["tunnel-agent", "npm:0.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tweetnacl", [\
+      ["npm:1.0.3", {\
+        "packageLocation": "./.yarn/cache/tweetnacl-npm-1.0.3-b7eef04660-069d9df51e.zip/node_modules/tweetnacl/",\
+        "packageDependencies": [\
+          ["tweetnacl", "npm:1.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\

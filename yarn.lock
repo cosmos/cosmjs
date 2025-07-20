@@ -343,11 +343,11 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    libsodium-wrappers-sumo: "npm:^0.7.11"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
+    tweetnacl: "npm:^1.0.3"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.8"
     webpack: "npm:^5.76.0"
@@ -5338,22 +5338,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libsodium-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-sumo@npm:0.7.11"
-  checksum: 10c0/f7518d178148d17c04d716898ea8aa5c5ebc302920ff67258a1fbe52e9d4605bb4a9912541db06bce7c16bde9a3af86110b749c869846d087a1b64a921007db8
-  languageName: node
-  linkType: hard
-
-"libsodium-wrappers-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-wrappers-sumo@npm:0.7.11"
-  dependencies:
-    libsodium-sumo: "npm:^0.7.11"
-  checksum: 10c0/81270738b3e7c50910c34e161aa34d84ab6fbfe9e5256561fc279498b594cb3b090c58ec19d40ada67dc24e7f1f7e018d9fd68d2ae367196116164795b6d2896
-  languageName: node
-  linkType: hard
-
 "linkify-it@npm:^5.0.0":
   version: 5.0.0
   resolution: "linkify-it@npm:5.0.0"
@@ -7457,6 +7441,13 @@ __metadata:
   dependencies:
     safe-buffer: "npm:^5.0.1"
   checksum: 10c0/4c7a1b813e7beae66fdbf567a65ec6d46313643753d0beefb3c7973d66fcec3a1e7f39759f0a0b4465883499c6dc8b0750ab8b287399af2e583823e40410a17a
+  languageName: node
+  linkType: hard
+
+"tweetnacl@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "tweetnacl@npm:1.0.3"
+  checksum: 10c0/069d9df51e8ad4a89fbe6f9806c68e06c65be3c7d42f0701cc43dba5f0d6064686b238bbff206c5addef8854e3ce00c643bff59432ea2f2c639feab0ee1a93f9
   languageName: node
   linkType: hard
 
