@@ -5,6 +5,7 @@
 
 import { isNonNullObject } from "@cosmjs/utils";
 import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
+import { XChaCha20Poly1305 } from "@stablelib/xchacha20poly1305";
 // Using crypto_pwhash requires sumo. Once we migrate to a standalone
 // Argon2 implementation, we can use the normal libsodium-wrappers
 // again: https://github.com/cosmos/cosmjs/issues/1031
@@ -119,17 +120,14 @@ export const xchacha20NonceLength = 24;
 
 export class Xchacha20poly1305Ietf {
   public static async encrypt(message: Uint8Array, key: Uint8Array, nonce: Uint8Array): Promise<Uint8Array> {
-    await sodium.ready;
+    const associatedData = undefined;
 
-    const additionalData = null;
+    const k = new XChaCha20Poly1305(key);
 
-    return sodium.crypto_aead_xchacha20poly1305_ietf_encrypt(
-      message,
-      additionalData,
-      null, // secret nonce: unused and should be null (https://download.libsodium.org/doc/secret-key_cryptography/aead/chacha20-poly1305/xchacha20-poly1305_construction)
-      nonce,
-      key,
-    );
+    let ciphertext = new Uint8Array(message.length + k.tagLength);
+    ciphertext = k.seal(nonce, message, associatedData, ciphertext);
+
+    return ciphertext;
   }
 
   public static async decrypt(
@@ -137,16 +135,17 @@ export class Xchacha20poly1305Ietf {
     key: Uint8Array,
     nonce: Uint8Array,
   ): Promise<Uint8Array> {
-    await sodium.ready;
+    const associatedData = undefined;
 
-    const additionalData = null;
+    const k = new XChaCha20Poly1305(key);
 
-    return sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
-      null, // secret nonce: unused and should be null (https://download.libsodium.org/doc/secret-key_cryptography/aead/chacha20-poly1305/xchacha20-poly1305_construction)
-      ciphertext,
-      additionalData,
-      nonce,
-      key,
-    );
+    const plaintextBuffer = new Uint8Array(ciphertext.length - k.tagLength);
+    const plaintext = k.open(nonce, ciphertext, associatedData, plaintextBuffer);
+
+    if (plaintext == null) {
+      throw new Error("ciphertext cannot be decrypted using that key");
+    }
+
+    return plaintext;
   }
 }

@@ -407,21 +407,21 @@ describe("Libsodium", () => {
         const key = fromHex("");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
       }
       {
         // 31 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
       }
       {
         // 33 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
       }
       {
         // 64 bytes
@@ -430,7 +430,7 @@ describe("Libsodium", () => {
         );
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
       }
     });
 
