@@ -5,9 +5,7 @@ function* map<T, U>(iterable: Iterable<T>, fn: (value: T) => U): IterableIterato
 }
 
 export function toHex(data: Uint8Array): string {
-  return Array.from(
-    map(data.values(), (byte) => byte.toString(16).padStart(2, "0"))
-  ).join("");
+  return Array.from(map(data.values(), (byte) => byte.toString(16).padStart(2, "0"))).join("");
 }
 
 export function fromHex(hexstring: string): Uint8Array {
