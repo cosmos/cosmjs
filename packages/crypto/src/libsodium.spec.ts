@@ -426,7 +426,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/needs 32-byte key/);
+            expect(error).toMatch(/key, got length=0/);
           });
       }
       {
@@ -437,7 +437,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/needs 32-byte key/);
+            expect(error).toMatch(/key, got length=31/);
           });
       }
       {
@@ -448,7 +448,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/needs 32-byte key/);
+            expect(error).toMatch(/key, got length=33/);
           });
       }
       {
@@ -461,7 +461,7 @@ describe("Libsodium", () => {
             fail("encryption must not succeed");
           })
           .catch((error) => {
-            expect(error).toMatch(/needs 32-byte key/);
+            expect(error).toMatch(/key, got length=64/);
           });
       }
     });
@@ -487,7 +487,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           },
           (error) => {
-            expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i);
+            expect(error.message).toMatch(/invalid tag/i);
           },
         );
       }
@@ -499,7 +499,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           },
           (error) => {
-            expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i);
+            expect(error.message).toMatch(/invalid tag/i);
           },
         );
       }
@@ -511,7 +511,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           },
           (error) => {
-            expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i);
+            expect(error.message).toMatch(/invalid tag/i);
           },
         );
       }

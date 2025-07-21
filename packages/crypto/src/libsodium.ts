@@ -4,7 +4,7 @@
 // libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
 
 import { isNonNullObject } from "@cosmjs/utils";
-import { XChaCha20Poly1305 } from "@stablelib/xchacha20poly1305";
+import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
 // Using crypto_pwhash requires sumo. Once we migrate to a standalone
 // Argon2 implementation, we can use the normal libsodium-wrappers
 // again: https://github.com/cosmos/cosmjs/issues/1031
@@ -114,12 +114,12 @@ export const xchacha20NonceLength = 24;
 
 export class Xchacha20poly1305Ietf {
   public static async encrypt(message: Uint8Array, key: Uint8Array, nonce: Uint8Array): Promise<Uint8Array> {
-    const associatedData = undefined;
+    const additionalAuthenticatedData = undefined;
 
-    const k = new XChaCha20Poly1305(key);
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    let ciphertext: Uint8Array = new Uint8Array(message.length + k.tagLength);
-    ciphertext = k.seal(nonce, message, associatedData, ciphertext);
+    let ciphertext: Uint8Array = new Uint8Array(message.length + 16);
+    ciphertext = cipher.encrypt(message, ciphertext);
 
     return ciphertext;
   }
@@ -129,16 +129,12 @@ export class Xchacha20poly1305Ietf {
     key: Uint8Array,
     nonce: Uint8Array,
   ): Promise<Uint8Array> {
-    const associatedData = undefined;
+    const additionalAuthenticatedData = undefined;
 
-    const k = new XChaCha20Poly1305(key);
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    const plaintextBuffer = new Uint8Array(ciphertext.length - k.tagLength);
-    const plaintext = k.open(nonce, ciphertext, associatedData, plaintextBuffer);
-
-    if (plaintext == null) {
-      throw new Error("ciphertext cannot be decrypted using that key");
-    }
+    let plaintext: Uint8Array = new Uint8Array(ciphertext.length - 16);
+    plaintext = cipher.decrypt(ciphertext, plaintext);
 
     return plaintext;
   }

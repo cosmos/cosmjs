@@ -414,6 +414,10 @@ const RAW_RUNTIME_STATE =
       "npm:0.2.12"\
     ],\
     [\
+      "@noble/ciphers",\
+      "npm:1.3.0"\
+    ],\
+    [\
       "@noble/curves",\
       "npm:1.9.2"\
     ],\
@@ -516,46 +520,6 @@ const RAW_RUNTIME_STATE =
     [\
       "@socket.io/component-emitter",\
       "npm:3.1.0"\
-    ],\
-    [\
-      "@stablelib/aead",\
-      "npm:2.0.0"\
-    ],\
-    [\
-      "@stablelib/binary",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/chacha",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/chacha20poly1305",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/constant-time",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/int",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/poly1305",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/wipe",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/xchacha20",\
-      "npm:2.0.1"\
-    ],\
-    [\
-      "@stablelib/xchacha20poly1305",\
-      "npm:2.0.1"\
     ],\
     [\
       "@tootallnate/once",\
@@ -3548,9 +3512,9 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@noble/ciphers", "npm:1.3.0"],\
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
-          ["@stablelib/xchacha20poly1305", "npm:2.0.1"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
@@ -4523,6 +4487,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@noble/ciphers", [\
+      ["npm:1.3.0", {\
+        "packageLocation": "./.yarn/cache/@noble-ciphers-npm-1.3.0-73a7db337f-3ba6da645c.zip/node_modules/@noble/ciphers/",\
+        "packageDependencies": [\
+          ["@noble/ciphers", "npm:1.3.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@noble/curves", [\
       ["npm:1.9.2", {\
         "packageLocation": "./.yarn/cache/@noble-curves-npm-1.9.2-2584df26a7-21d049ae45.zip/node_modules/@noble/curves/",\
@@ -4767,115 +4740,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@socket.io-component-emitter-npm-3.1.0-3f778351c2-b838ccccf7.zip/node_modules/@socket.io/component-emitter/",\
         "packageDependencies": [\
           ["@socket.io/component-emitter", "npm:3.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/aead", [\
-      ["npm:2.0.0", {\
-        "packageLocation": "./.yarn/cache/@stablelib-aead-npm-2.0.0-08c9763f2c-fa80f5499b.zip/node_modules/@stablelib/aead/",\
-        "packageDependencies": [\
-          ["@stablelib/aead", "npm:2.0.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/binary", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-binary-npm-2.0.1-eeaf1c2cc4-6c6a5c84e5.zip/node_modules/@stablelib/binary/",\
-        "packageDependencies": [\
-          ["@stablelib/binary", "npm:2.0.1"],\
-          ["@stablelib/int", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/chacha", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-chacha-npm-2.0.1-a6576d4026-f6a4416bdb.zip/node_modules/@stablelib/chacha/",\
-        "packageDependencies": [\
-          ["@stablelib/binary", "npm:2.0.1"],\
-          ["@stablelib/chacha", "npm:2.0.1"],\
-          ["@stablelib/wipe", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/chacha20poly1305", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-chacha20poly1305-npm-2.0.1-05089d8d27-75a5ef9016.zip/node_modules/@stablelib/chacha20poly1305/",\
-        "packageDependencies": [\
-          ["@stablelib/aead", "npm:2.0.0"],\
-          ["@stablelib/binary", "npm:2.0.1"],\
-          ["@stablelib/chacha", "npm:2.0.1"],\
-          ["@stablelib/chacha20poly1305", "npm:2.0.1"],\
-          ["@stablelib/constant-time", "npm:2.0.1"],\
-          ["@stablelib/poly1305", "npm:2.0.1"],\
-          ["@stablelib/wipe", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/constant-time", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-constant-time-npm-2.0.1-51f3947aeb-d81e360245.zip/node_modules/@stablelib/constant-time/",\
-        "packageDependencies": [\
-          ["@stablelib/constant-time", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/int", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-int-npm-2.0.1-4b54f9cbc4-bf70d40b91.zip/node_modules/@stablelib/int/",\
-        "packageDependencies": [\
-          ["@stablelib/int", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/poly1305", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-poly1305-npm-2.0.1-0f4dbbf406-87b4adfb50.zip/node_modules/@stablelib/poly1305/",\
-        "packageDependencies": [\
-          ["@stablelib/constant-time", "npm:2.0.1"],\
-          ["@stablelib/poly1305", "npm:2.0.1"],\
-          ["@stablelib/wipe", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/wipe", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-wipe-npm-2.0.1-3323c03e2a-f0b76e98f7.zip/node_modules/@stablelib/wipe/",\
-        "packageDependencies": [\
-          ["@stablelib/wipe", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/xchacha20", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-xchacha20-npm-2.0.1-579641491a-4fb631e027.zip/node_modules/@stablelib/xchacha20/",\
-        "packageDependencies": [\
-          ["@stablelib/binary", "npm:2.0.1"],\
-          ["@stablelib/chacha", "npm:2.0.1"],\
-          ["@stablelib/wipe", "npm:2.0.1"],\
-          ["@stablelib/xchacha20", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@stablelib/xchacha20poly1305", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@stablelib-xchacha20poly1305-npm-2.0.1-34d0e44487-15655e0824.zip/node_modules/@stablelib/xchacha20poly1305/",\
-        "packageDependencies": [\
-          ["@stablelib/aead", "npm:2.0.0"],\
-          ["@stablelib/chacha20poly1305", "npm:2.0.1"],\
-          ["@stablelib/constant-time", "npm:2.0.1"],\
-          ["@stablelib/wipe", "npm:2.0.1"],\
-          ["@stablelib/xchacha20", "npm:2.0.1"],\
-          ["@stablelib/xchacha20poly1305", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
