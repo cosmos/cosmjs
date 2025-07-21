@@ -1,7 +1,7 @@
 import { isNonNullObject } from "@cosmjs/utils";
+import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
 import { ed25519 } from "@noble/curves/ed25519.js";
 import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
-import { XChaCha20Poly1305 } from "@stablelib/xchacha20poly1305";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -109,12 +109,12 @@ export const xchacha20NonceLength = 24;
 
 export class Xchacha20poly1305Ietf {
   public static async encrypt(message: Uint8Array, key: Uint8Array, nonce: Uint8Array): Promise<Uint8Array> {
-    const associatedData = undefined;
+    const additionalAuthenticatedData = undefined;
 
-    const k = new XChaCha20Poly1305(key);
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    let ciphertext = new Uint8Array(message.length + k.tagLength);
-    ciphertext = k.seal(nonce, message, associatedData, ciphertext);
+    let ciphertext = new Uint8Array(message.length + 16);
+    ciphertext = cipher.encrypt(message, ciphertext);
 
     return ciphertext;
   }
@@ -124,16 +124,12 @@ export class Xchacha20poly1305Ietf {
     key: Uint8Array,
     nonce: Uint8Array,
   ): Promise<Uint8Array> {
-    const associatedData = undefined;
+    const additionalAuthenticatedData = undefined;
 
-    const k = new XChaCha20Poly1305(key);
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    const plaintextBuffer = new Uint8Array(ciphertext.length - k.tagLength);
-    const plaintext = k.open(nonce, ciphertext, associatedData, plaintextBuffer);
-
-    if (plaintext == null) {
-      throw new Error("ciphertext cannot be decrypted using that key");
-    }
+    let plaintext = new Uint8Array(ciphertext.length - 16);
+    plaintext = cipher.decrypt(ciphertext, plaintext);
 
     return plaintext;
   }

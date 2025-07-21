@@ -407,21 +407,21 @@ describe("Libsodium", () => {
         const key = fromHex("");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
+          .catch((error) => expect(error).toMatch(/key, got length=0/));
       }
       {
         // 31 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
+          .catch((error) => expect(error).toMatch(/key, got length=31/));
       }
       {
         // 33 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
+          .catch((error) => expect(error).toMatch(/key, got length=33/));
       }
       {
         // 64 bytes
@@ -430,7 +430,7 @@ describe("Libsodium", () => {
         );
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
           .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/needs 32-byte key/));
+          .catch((error) => expect(error).toMatch(/key, got length=64/));
       }
     });
 
@@ -452,7 +452,7 @@ describe("Libsodium", () => {
         const corruptedCiphertext = ciphertext.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(corruptedCiphertext, key, nonce).then(
           () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          (error) => expect(error.message).toMatch(/invalid tag/i),
         );
       }
       {
@@ -460,7 +460,7 @@ describe("Libsodium", () => {
         const corruptedKey = key.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(ciphertext, corruptedKey, nonce).then(
           () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          (error) => expect(error.message).toMatch(/invalid tag/i),
         );
       }
       {
@@ -468,7 +468,7 @@ describe("Libsodium", () => {
         const corruptedNonce = nonce.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(ciphertext, key, corruptedNonce).then(
           () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          (error) => expect(error.message).toMatch(/invalid tag/i),
         );
       }
     });
