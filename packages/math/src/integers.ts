@@ -272,10 +272,10 @@ export class Uint64 implements Integer, WithByteConverters {
   }
 
   public toNumber(): number {
-    const num = Number(this.data);
-    if (!Number.isSafeInteger(num)) {
+    if (this.data > BigInt(Number.MAX_SAFE_INTEGER)) {
       throw new Error("number can only safely store up to 53 bits");
     }
+    const num = Number(this.data);
     return num;
   }
 }

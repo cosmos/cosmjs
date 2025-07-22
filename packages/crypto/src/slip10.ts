@@ -1,5 +1,6 @@
 import { fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
+import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
 import { Hmac } from "./hmac";
@@ -25,6 +26,8 @@ function bytesToUnsignedBigInt(a: Uint8Array): bigint {
 }
 
 function intTo32be(n: bigint): Uint8Array {
+  assert(n >= 0n);
+  assert(n < 2n ** (32n * 8n));
   // 32 bytes is 64 hexadecimal characters
   const hex = n.toString(16).padStart(64, "0");
   return fromHex(hex);
