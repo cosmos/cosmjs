@@ -28,7 +28,7 @@ describe("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const apiUrl = "http://localhost:26658";
-  const stargate = true;
+  const logging = true;
   let originalEnvVariable: string | undefined;
 
   beforeAll(() => {
@@ -51,7 +51,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         expect(faucet).toBeTruthy();
       });
@@ -67,7 +67,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const tickers = await faucet.availableTokens();
         expect(tickers).toEqual([]);
@@ -82,7 +82,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const tickers = await faucet.availableTokens();
         expect(tickers).toEqual(["ucosm", "ustake"]);
@@ -99,7 +99,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const recipient = makeRandomAddress();
         await faucet.send({
@@ -133,7 +133,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         await faucet.refill();
         const readOnlyClient = await StargateClient.connect(apiUrl);
@@ -162,7 +162,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const recipient = makeRandomAddress();
         await faucet.credit(recipient, "ucosm");
@@ -187,7 +187,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const recipient = makeRandomAddress();
         await faucet.credit(recipient, "ustake");
@@ -214,7 +214,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           3,
-          stargate,
+          logging,
         );
         const tickers = faucet.configuredTokens();
         expect(tickers).toEqual(["ucosm", "ustake"]);
@@ -231,7 +231,7 @@ describe("Faucet", () => {
           faucetMnemonic,
           pathBuilder,
           1,
-          stargate,
+          logging,
         );
         const accounts = await faucet.loadAccounts();
 
