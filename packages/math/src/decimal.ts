@@ -91,7 +91,10 @@ export class Decimal {
 
   public static compare(a: Decimal, b: Decimal): number {
     if (a.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
-    return Math.sign(Number(a.data.atomics - b.data.atomics));
+    const difference = a.data.atomics - b.data.atomics;
+    if (difference < 0n) return -1;
+    if (difference > 0n) return 1;
+    return 0;
   }
 
   public get atomics(): string {
