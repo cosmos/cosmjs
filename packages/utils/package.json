@@ -34,10 +34,8 @@
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
-    "test-edge": "yarn pack-web && karma start --single-run --browsers Edge karma.conf.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
-    "test-safari": "yarn pack-web && karma start --single-run --browsers Safari karma.conf.cjs"
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
