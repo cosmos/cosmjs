@@ -1,6 +1,6 @@
+import cors from "@koa/cors";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Koa from "koa";
-import cors = require("@koa/cors");
 import bodyParser from "koa-bodyparser";
 
 import { isValidAddress } from "../addresses";
