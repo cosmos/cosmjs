@@ -17,6 +17,15 @@ and this project adheres to
 
 - all: Drop support for Node.js < 20.
 - @cosmjs/cli: package got removed with no replacement
+- @cosmjs/tendermint-rpc: Make constructor functions
+  `Tendermint34Client.create`, `Tendermint37Client.create` and
+  `Comet38Client.create` non-async. ([#1597])
+- @cosmjs/stargate: Make constructor functions `{Signing,}StargateClient.create`
+  and `SigningStargateClient.createWithSigner` non-async. ([#1597])
+- @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
+  and `SigningCosmWasmClient.createWithSigner` non-async. ([#1597])
+
+[#1597]: https://github.com/cosmos/cosmjs/pull/1597
 
 ## [0.34.0] - 2025-07-11
 
