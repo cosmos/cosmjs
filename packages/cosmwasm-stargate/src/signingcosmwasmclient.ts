@@ -225,11 +225,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * Creates an instance from a manually created Comet client.
    * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
-  public static async createWithSigner(
+  public static createWithSigner(
     cometClient: CometClient,
     signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
-  ): Promise<SigningCosmWasmClient> {
+  ): SigningCosmWasmClient {
     return new SigningCosmWasmClient(cometClient, signer, options);
   }
 

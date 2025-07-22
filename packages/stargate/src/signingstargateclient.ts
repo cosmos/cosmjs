@@ -133,11 +133,11 @@ export class SigningStargateClient extends StargateClient {
    * Creates an instance from a manually created Comet client.
    * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
    */
-  public static async createWithSigner(
+  public static createWithSigner(
     cometClient: CometClient,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
-  ): Promise<SigningStargateClient> {
+  ): SigningStargateClient {
     return new SigningStargateClient(cometClient, signer, options);
   }
 
