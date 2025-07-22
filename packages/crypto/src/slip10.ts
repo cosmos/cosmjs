@@ -181,7 +181,7 @@ export class Slip10 {
     }
 
     // step 5
-    const n: bigint = this.n(curve);
+    const n = this.n(curve);
     const returnChildKeyAsNumber = (bytesToUnsignedBigInt(il) + bytesToUnsignedBigInt(parentPrivkey)) % n;
     const returnChildKey = intTo32be(returnChildKeyAsNumber);
 
@@ -205,7 +205,7 @@ export class Slip10 {
   }
 
   private static isGteN(curve: Slip10Curve, privkey: Uint8Array): boolean {
-    const keyAsNumber: bigint = bytesToUnsignedBigInt(privkey);
+    const keyAsNumber = bytesToUnsignedBigInt(privkey);
     return keyAsNumber >= this.n(curve);
   }
 
