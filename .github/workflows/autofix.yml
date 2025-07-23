@@ -9,7 +9,7 @@ permissions:
 jobs:
   # format-text and format-shell in one job to ensure we don't require multiple fix commits and CI re-runs
   format:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
