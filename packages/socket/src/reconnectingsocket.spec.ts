@@ -97,13 +97,19 @@ describe("ReconnectingSocket", () => {
     const startServerCmd = `${dirPath}/start.sh`;
     const stopServerCmd = `${dirPath}/stop.sh`;
 
-    it("automatically reconnects if no connection can be established at init", (done) => {
+    it("automatically reconnects if no connection can be established at init", async () => {
+      let pass!: () => void, fail!: (reason?: any) => void;
+      const ret = new Promise<void>((resolve, reject) => {
+        pass = resolve;
+        fail = reject;
+      });
+
       pendingWithoutChildProcess();
       pendingWithoutSocketServer();
 
       exec!(stopServerCmd, (stopError) => {
         if (stopError && stopError.code !== codePkillNoProcessesMatched) {
-          done.fail(stopError);
+          fail(stopError);
         }
 
         const socket = new ReconnectingSocket(socketServerUrl);
@@ -119,7 +125,7 @@ describe("ReconnectingSocket", () => {
           complete: () => {
             // Make sure we don't get a completion unexpectedly
             expect(eventsSeen).toEqual(requests.length);
-            done();
+            pass();
           },
         });
 
@@ -130,15 +136,23 @@ describe("ReconnectingSocket", () => {
           () =>
             exec!(startServerCmd, (startError) => {
               if (startError) {
-                done.fail(startError);
+                fail(startError);
               }
             }),
           2000,
         );
       });
+
+      return ret;
     });
 
-    it("automatically reconnects if the connection is broken off", (done) => {
+    it("automatically reconnects if the connection is broken off", async () => {
+      let pass!: () => void, fail!: (reason?: any) => void;
+      const ret = new Promise<void>((resolve, reject) => {
+        pass = resolve;
+        fail = reject;
+      });
+
       pendingWithoutChildProcess();
       pendingWithoutSocketServer();
 
@@ -155,7 +169,7 @@ describe("ReconnectingSocket", () => {
         complete: () => {
           // Make sure we don't get a completion unexpectedly
           expect(eventsSeen).toEqual(requests.length);
-          done();
+          pass();
         },
       });
 
@@ -166,7 +180,7 @@ describe("ReconnectingSocket", () => {
         () =>
           exec!(stopServerCmd, (stopError) => {
             if (stopError && stopError.code !== codePkillNoProcessesMatched) {
-              done.fail(stopError);
+              fail(stopError);
             }
 
             // TODO: This timeout is here to avoid an edge case where if a request
@@ -181,7 +195,7 @@ describe("ReconnectingSocket", () => {
                 () =>
                   exec!(startServerCmd, (startError) => {
                     if (startError) {
-                      done.fail(startError);
+                      fail(startError);
                     }
                   }),
                 2000,
@@ -190,6 +204,8 @@ describe("ReconnectingSocket", () => {
           }),
         1000,
       );
+
+      return ret;
     });
   });
 });
