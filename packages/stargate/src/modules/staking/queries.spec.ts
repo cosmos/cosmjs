@@ -15,7 +15,11 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils.spec";
-import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject, MsgBeginRedelegateEncodeObject } from "./messages";
+import {
+  MsgDelegateEncodeObject,
+  MsgUndelegateEncodeObject,
+  MsgBeginRedelegateEncodeObject,
+} from "./messages";
 import { setupStakingExtension, StakingExtension } from "./queries";
 
 async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & StakingExtension, CometClient]> {
@@ -203,14 +207,18 @@ describe("StakingExtension", () => {
           validator.validatorAddress,
           validator.validatorAddress,
         );
-        
+
         // If we get here, the redelegation was found
         expect(response.redelegationResponses).toBeDefined();
         if (response.redelegationResponses.length > 0) {
           // If we have redelegation responses, verify their structure
           expect(response.redelegationResponses[0].redelegation.delegatorAddress).toEqual(faucet.address0);
-          expect(response.redelegationResponses[0].redelegation.validatorSrcAddress).toEqual(validator.validatorAddress);
-          expect(response.redelegationResponses[0].redelegation.validatorDstAddress).toEqual(validator.validatorAddress);
+          expect(response.redelegationResponses[0].redelegation.validatorSrcAddress).toEqual(
+            validator.validatorAddress,
+          );
+          expect(response.redelegationResponses[0].redelegation.validatorDstAddress).toEqual(
+            validator.validatorAddress,
+          );
         }
       } catch (error: any) {
         // If redelegation to the same validator is not allowed, we'll get an error
