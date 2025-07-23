@@ -6,6 +6,52 @@ on:
     branches: [ "main" ]
 
 jobs:
+  test-chrome:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: 'yarn'
+
+      - name: Start wasmd
+        run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
+      - name: Start simapp
+        run: RUNNER_TRACKING_ID="" && ./scripts/simapp50/start.sh &
+      - name: Start slow simapp
+        run: RUNNER_TRACKING_ID="" && ./scripts/simapp50/slow_start.sh &
+      - name: Start Tendermint blockchains
+        run: RUNNER_TRACKING_ID="" && ./scripts/tendermint/all_start.sh &
+      - name: Start socket server
+        run: RUNNER_TRACKING_ID="" && ./scripts/socketserver/start.sh &
+      - name: Start http server
+        run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
+
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: Build
+        run: yarn build
+
+      - name: Initialize wasmd (deploy contracts and friends)
+        run: ./scripts/wasmd/init.sh
+
+      - name: Test
+        env:
+          HTTPSERVER_ENABLED: 1
+          SIMAPP50_ENABLED: 1
+          SLOW_SIMAPP50_ENABLED: 1
+          TENDERMINT_ENABLED: 1
+          SOCKETSERVER_ENABLED: 1
+          SKIP_BUILD: 1
+          WASMD_ENABLED: 1
+        run: yarn test-chrome
+
   test:
     strategy:
       matrix:
