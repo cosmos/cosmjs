@@ -24,8 +24,10 @@ and this project adheres to
   and `SigningStargateClient.createWithSigner` non-async. ([#1597])
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
   and `SigningCosmWasmClient.createWithSigner` non-async. ([#1597])
+- replace bn.js dependency with bigint ([#1720])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
+[#1720]: https://github.com/cosmos/cosmjs/pull/1720
 
 ## [0.34.0] - 2025-07-11
 

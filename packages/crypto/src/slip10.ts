@@ -1,8 +1,7 @@
-import { toAscii, toHex } from "@cosmjs/encoding";
+import { fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
+import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import BN from "bn.js";
 
 import { Hmac } from "./hmac";
 import { Sha512 } from "./sha";
@@ -24,6 +23,14 @@ export enum Slip10Curve {
 
 function bytesToUnsignedBigInt(a: Uint8Array): bigint {
   return BigInt("0x" + toHex(a));
+}
+
+function intTo32be(n: bigint): Uint8Array {
+  assert(n >= 0n);
+  assert(n < 2n ** (32n * 8n));
+  // 32 bytes is 64 hexadecimal characters
+  const hex = n.toString(16).padStart(64, "0");
+  return fromHex(hex);
 }
 
 /**
@@ -175,8 +182,8 @@ export class Slip10 {
 
     // step 5
     const n = this.n(curve);
-    const returnChildKeyAsNumber = new BN(il).add(new BN(parentPrivkey)).mod(n);
-    const returnChildKey = Uint8Array.from(returnChildKeyAsNumber.toArray("be", 32));
+    const returnChildKeyAsNumber = (bytesToUnsignedBigInt(il) + bytesToUnsignedBigInt(parentPrivkey)) % n;
+    const returnChildKey = intTo32be(returnChildKeyAsNumber);
 
     // step 6
     if (this.isGteN(curve, il) || this.isZero(returnChildKey)) {
@@ -198,14 +205,14 @@ export class Slip10 {
   }
 
   private static isGteN(curve: Slip10Curve, privkey: Uint8Array): boolean {
-    const keyAsNumber = new BN(privkey);
-    return keyAsNumber.gte(this.n(curve));
+    const keyAsNumber = bytesToUnsignedBigInt(privkey);
+    return keyAsNumber >= this.n(curve);
   }
 
-  private static n(curve: Slip10Curve): BN {
+  private static n(curve: Slip10Curve): bigint {
     switch (curve) {
       case Slip10Curve.Secp256k1:
-        return new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16);
+        return 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
       default:
         throw new Error("curve not supported");
     }
