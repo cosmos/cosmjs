@@ -1,3 +1,5 @@
+// Helper function needed to support environments that do not yet have
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/map
 function* map<T, U>(iterable: Iterable<T>, fn: (value: T) => U): IterableIterator<U> {
   for (const value of iterable) {
     yield fn(value);
