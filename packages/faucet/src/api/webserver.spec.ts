@@ -36,7 +36,7 @@ describe("Webserver", () => {
     process.env.FAUCET_CREDIT_AMOUNT_USTAKE = originalEnvVariable;
   });
 
-  it("can be constructed", async () => {
+  it("can be constructed and started", async () => {
     pendingWithoutSimapp();
     const faucet = await Faucet.make(
       rpcUrl,
@@ -58,5 +58,11 @@ describe("Webserver", () => {
     expect(server).toBeTruthy();
     server.start(testingPort);
     await sleep(2_000);
+
+    const healthz = await fetch(`http://localhost:${testingPort}/healthz`);
+    expect(healthz.ok);
+
+    const status = await fetch(`http://localhost:${testingPort}/status`);
+    expect(status.ok);
   });
 });
