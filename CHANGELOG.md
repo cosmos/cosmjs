@@ -20,6 +20,7 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Make constructor functions
   `Tendermint34Client.create`, `Tendermint37Client.create` and
   `Comet38Client.create` non-async. ([#1597])
+- @cosmjs/tendermint-rpc, @cosmjs/faucet-client: Remove cross-fetch polyfilling.
 - @cosmjs/stargate: Make constructor functions `{Signing,}StargateClient.create`
   and `SigningStargateClient.createWithSigner` non-async. ([#1597])
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
