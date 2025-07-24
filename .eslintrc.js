@@ -86,7 +86,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: "**/*.js",
+      files: "**/*.cjs",
       parser: "espree",
       parserOptions: { ecmaVersion: 2022 },
       rules: {

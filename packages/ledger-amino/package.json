@@ -23,14 +23,14 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "docs": "typedoc --options typedoc.js",
+    "docs": "typedoc --options typedoc.cjs",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.js\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.js\"",
+    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.cjs\"",
+    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.cjs\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.js",
+    "test-node": "yarn node jasmine-testrunner.cjs",
     "test": "yarn build-or-skip && yarn test-node",
     "demo-node": "yarn build-or-skip && node ./demo/node.js",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
