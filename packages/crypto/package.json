@@ -29,7 +29,7 @@
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "test-node": "yarn node jasmine-testrunner.js",
+    "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn build-or-skip && yarn test-node",
