@@ -34,7 +34,7 @@
     "test": "yarn build-or-skip && yarn test-node",
     "demo-node": "yarn build-or-skip && node ./demo/node.js",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
