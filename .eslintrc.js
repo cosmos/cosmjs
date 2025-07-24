@@ -37,7 +37,7 @@ module.exports = {
         project: true,
       },
       plugins: ["@typescript-eslint"],
-      extends: ["plugin:@typescript-eslint/recommended", "plugin:import/typescript"],
+      extends: ["plugin:@typescript-eslint/recommended-type-checked", "plugin:import/typescript"],
       rules: {
         "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
         "@typescript-eslint/consistent-type-exports": "error",
