@@ -777,7 +777,7 @@ interface RpcBlock {
     /** Raw tx bytes, base64 encoded */
     readonly txs?: readonly string[];
   };
-  // It's currently unclear why the deep nesting is requied.
+  // It's currently unclear why the deep nesting is required.
   // See https://github.com/tendermint/tendermint/issues/7697.
   readonly evidence?: {
     readonly evidence?: readonly RpcEvidence[];
