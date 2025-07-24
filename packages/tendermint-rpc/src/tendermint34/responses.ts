@@ -284,7 +284,7 @@ export interface Header {
   readonly time: ReadonlyDateWithNanoseconds;
 
   /**
-   * Block ID of the previous block. This can be `null` when the currect block is height 1.
+   * Block ID of the previous block. This can be `null` when the current block is height 1.
    */
   readonly lastBlockId: BlockId | null;
 

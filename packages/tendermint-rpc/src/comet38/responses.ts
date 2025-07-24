@@ -96,7 +96,7 @@ export interface BroadcastTxCommitResponse {
   readonly height: number;
   readonly hash: Uint8Array;
   readonly checkTx: TxData;
-  /** @deprecated use txResult. Containes the same data as txResult for now */
+  /** @deprecated use txResult. Contains the same data as txResult for now */
   readonly deliverTx?: TxData;
   readonly txResult?: TxData;
 }
@@ -290,7 +290,7 @@ export interface Header {
   readonly time: ReadonlyDateWithNanoseconds;
 
   /**
-   * Block ID of the previous block. This can be `null` when the currect block is height 1.
+   * Block ID of the previous block. This can be `null` when the current block is height 1.
    */
   readonly lastBlockId: BlockId | null;
 
