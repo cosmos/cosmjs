@@ -47,7 +47,6 @@
     "@cosmjs/socket": "workspace:^",
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cross-fetch": "^4.1.0",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },

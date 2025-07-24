@@ -1,5 +1,3 @@
-import fetch from "cross-fetch";
-
 function filterBadStatus(res: any): any {
   if (res.status >= 400) {
     throw new Error(`Bad status on response: ${res.status}`);
