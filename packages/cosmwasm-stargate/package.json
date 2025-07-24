@@ -35,7 +35,7 @@
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
