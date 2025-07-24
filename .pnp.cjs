@@ -3284,7 +3284,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3327,7 +3326,6 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.10.6"],\
           ["@types/pako", "npm:1.0.1"],\
           ["cosmjs-types", "npm:0.9.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3368,7 +3366,6 @@ const RAW_RUNTIME_STATE =
           ["@types/libsodium-wrappers-sumo", "npm:0.7.5"],\
           ["@types/node", "npm:22.10.6"],\
           ["buffer", "npm:6.0.3"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3404,7 +3401,6 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.10.6"],\
           ["base64-js", "npm:1.5.1"],\
           ["bech32", "npm:1.1.4"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3443,7 +3439,6 @@ const RAW_RUNTIME_STATE =
           ["@types/koa", "npm:2.15.0"],\
           ["@types/koa-bodyparser", "npm:4.3.7"],\
           ["@types/koa__cors", "npm:3.3.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["koa", "npm:2.16.1"],\
@@ -3471,7 +3466,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cross-fetch", "npm:4.1.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3503,7 +3497,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3543,7 +3536,6 @@ const RAW_RUNTIME_STATE =
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/semver", "npm:7.7.0"],\
           ["@zondax/ledger-cosmos-js", "npm:4.0.1"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3571,7 +3563,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["buffer", "npm:6.0.3"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3610,7 +3601,6 @@ const RAW_RUNTIME_STATE =
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.9.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3644,7 +3634,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/ws", "npm:6.0.4"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["isomorphic-ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1"],\
           ["jasmine", "npm:4.6.0"],\
@@ -3689,7 +3678,6 @@ const RAW_RUNTIME_STATE =
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.9.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3722,7 +3710,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3763,7 +3750,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cross-fetch", "npm:4.1.0"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3798,7 +3784,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["buffer", "npm:6.0.3"],\
-          ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
