@@ -23,7 +23,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "docs": "typedoc --options typedoc.js",
+    "docs": "typedoc --options typedoc.cjs",
     "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
