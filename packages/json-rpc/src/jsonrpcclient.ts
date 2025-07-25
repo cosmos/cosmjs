@@ -11,7 +11,7 @@ export interface SimpleMessagingConnection<Request, Response> {
 /**
  * A thin wrapper that is used to bring together requests and responses by ID.
  *
- * Using this class is only advised for continous communication channels like
+ * Using this class is only advised for continuous communication channels like
  * WebSockets or WebWorker messaging.
  */
 export class JsonRpcClient {

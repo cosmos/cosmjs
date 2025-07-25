@@ -71,7 +71,7 @@ export interface UploadResult {
   readonly originalSize: number;
   /** Size of the compressed wasm code in bytes */
   readonly compressedSize: number;
-  /** The ID of the code asigned by the chain */
+  /** The ID of the code assigned by the chain */
   readonly codeId: number;
   /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
