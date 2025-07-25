@@ -373,7 +373,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
-      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision erors
+      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision errors
       const wasm = getHackatom().data;
       const msg = {
         verifier: alice.address0,

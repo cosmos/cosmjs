@@ -89,7 +89,7 @@ export class Slip10RawIndex extends Uint32 {
  */
 export type HdPath = readonly Slip10RawIndex[];
 
-// Universal private key derivation accoring to
+// Universal private key derivation according to
 // https://github.com/satoshilabs/slips/blob/master/slip-0010.md
 export class Slip10 {
   public static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result {

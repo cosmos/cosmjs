@@ -95,7 +95,7 @@ describe("Integers", () => {
       expect(new Uint32(4294967295)).toBeTruthy();
     });
 
-    it("throws for invald numbers", () => {
+    it("throws for invalid numbers", () => {
       expect(() => new Uint32(NaN)).toThrowError(/not a number/);
 
       expect(() => new Uint32(1.1)).toThrowError(/not an integer/i);
@@ -192,7 +192,7 @@ describe("Integers", () => {
       expect(new Int53(-9007199254740991)).toBeTruthy();
     });
 
-    it("throws for invald numbers", () => {
+    it("throws for invalid numbers", () => {
       expect(() => new Int53(NaN)).toThrowError(/not a number/);
 
       expect(() => new Int53(1.1)).toThrowError(/not an integer/i);
@@ -279,7 +279,7 @@ describe("Integers", () => {
       expect(new Uint53(9007199254740991)).toBeTruthy();
     });
 
-    it("throws for invald numbers", () => {
+    it("throws for invalid numbers", () => {
       expect(() => new Uint53(NaN)).toThrowError(/not a number/);
 
       expect(() => new Uint53(1.1)).toThrowError(/not an integer/i);

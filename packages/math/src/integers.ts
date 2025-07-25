@@ -19,7 +19,7 @@ interface IntegerStatic<T> {
 }
 
 interface FixedLengthIntegerStatic<T> {
-  readonly fromBytes: (bytes: ArrayLike<number>, endianess: "be" | "le") => T;
+  readonly fromBytes: (bytes: ArrayLike<number>, endianness: "be" | "le") => T;
 }
 
 export class Uint32 implements Integer, WithByteConverters {
@@ -32,9 +32,9 @@ export class Uint32 implements Integer, WithByteConverters {
    * Creates a Uint32 from a fixed length byte array.
    *
    * @param bytes a list of exactly 4 bytes
-   * @param endianess defaults to big endian
+   * @param endianness defaults to big endian
    */
-  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint32 {
+  public static fromBytes(bytes: ArrayLike<number>, endianness: "be" | "le" = "be"): Uint32 {
     if (bytes.length !== 4) {
       throw new Error("Invalid input length. Expected 4 bytes.");
     }
@@ -45,7 +45,7 @@ export class Uint32 implements Integer, WithByteConverters {
       }
     }
 
-    const beBytes = endianess === "be" ? bytes : Array.from(bytes).reverse();
+    const beBytes = endianness === "be" ? bytes : Array.from(bytes).reverse();
 
     // Use multiplication instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
@@ -191,14 +191,14 @@ export class Uint64 implements Integer, WithByteConverters {
    * Creates a Uint64 from a fixed length byte array.
    *
    * @param bytes a list of exactly 8 bytes
-   * @param endianess defaults to big endian
+   * @param endianness defaults to big endian
    */
-  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint64 {
+  public static fromBytes(bytes: ArrayLike<number>, endianness: "be" | "le" = "be"): Uint64 {
     if (bytes.length !== 8) {
       throw new Error("Invalid input length. Expected 8 bytes.");
     }
 
-    const beBytes = endianess === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
+    const beBytes = endianness === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
     let value = 0n;
 
     for (const byte of beBytes) {
