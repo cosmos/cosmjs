@@ -27,7 +27,7 @@ export interface AminoMsgTransfer extends AminoMsg {
     /**
      * The timeout as a (revision_number, revision_height) pair.
      *
-     * This fied is is non-optional (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L49).
+     * This fied is non-optional (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/applications/transfer/types/tx.pb.go#L49).
      * In order to not set the timeout height, set it to {}.
      */
     readonly timeout_height: AminoHeight;
