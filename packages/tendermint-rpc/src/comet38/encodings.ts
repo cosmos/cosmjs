@@ -71,7 +71,7 @@ export function assertNumber(value: number): number {
 export function assertArray<T>(value: readonly T[]): readonly T[] {
   assertSet(value);
   if (!Array.isArray(value as unknown)) {
-    throw new Error("Value must be a an array");
+    throw new Error("Value must be an array");
   }
   return value;
 }
