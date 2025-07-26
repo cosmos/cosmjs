@@ -256,7 +256,7 @@ describe("Secp256k1HdWallet", () => {
       };
       const { signed, signature } = await wallet.signAmino(defaultAddress, signDoc);
       expect(signed).toEqual(signDoc);
-      const valid = await Secp256k1.verifySignature(
+      const valid = Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         sha256(serializeSignDoc(signed)),
         defaultPubkey,
