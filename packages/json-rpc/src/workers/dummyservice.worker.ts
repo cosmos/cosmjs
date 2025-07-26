@@ -42,6 +42,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
         } else if (typeof p === "string") {
           return `"${p}"`;
         } else {
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           return p.toString();
         }
       })
