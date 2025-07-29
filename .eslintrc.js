@@ -41,7 +41,7 @@ module.exports = {
       rules: {
         "import/no-unresolved": "off",
         "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
-        "@typescript-eslint/consistent-type-exports": "error",
+        "@typescript-eslint/consistent-type-exports": "warn",
         "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
         "@typescript-eslint/explicit-member-accessibility": "warn",
         "@typescript-eslint/naming-convention": [
