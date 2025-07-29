@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: 22
           cache: 'yarn'
 
       - name: Start wasmd
@@ -55,7 +55,7 @@ jobs:
   test:
     strategy:
       matrix:
-        node-version: ["20", "22", "24"]
+        node-version: [20, 22, 24]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
