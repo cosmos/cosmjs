@@ -16,6 +16,7 @@ and this project adheres to
 ### Changed
 
 - all: Drop support for Node.js < 20.
+- all: Upgrade cosmjs-types to ^0.10.1 (Cosmos SDK 0.50 series)
 - @cosmjs/cli: package got removed with no replacement
 - @cosmjs/tendermint-rpc: Make constructor functions
   `Tendermint34Client.create`, `Tendermint37Client.create` and
