@@ -29,7 +29,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
     return errorResponse;
   }
 
-  // This is just a text representation of the requst. It can be lossy as it is not needed for further processing.
+  // This is just a text representation of the request. It can be lossy as it is not needed for further processing.
   let paramsString: string;
   if (isJsonCompatibleDictionary(request.params)) {
     paramsString = JSON.stringify(request.params);
