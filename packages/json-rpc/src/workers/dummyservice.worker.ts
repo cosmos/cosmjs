@@ -29,20 +29,22 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
     return errorResponse;
   }
 
+  // This is just a text representation of the requst. It can be lossy as it is not needed for further processing.
   let paramsString: string;
   if (isJsonCompatibleDictionary(request.params)) {
     paramsString = JSON.stringify(request.params);
   } else {
     paramsString = request.params
-      .map((p) => {
-        if (typeof p === "number") {
-          return p;
+      .map((p): string => {
+        if (typeof p === "number" || typeof p === "boolean") {
+          return `${p}`;
         } else if (p === null) {
           return `null`;
         } else if (typeof p === "string") {
           return `"${p}"`;
         } else {
-          return p.toString();
+          // Nested arrays or dictionaries. No need to traverse.
+          return isJsonCompatibleDictionary(p) ? "{ … }" : "[ … ]";
         }
       })
       .join(", ");
