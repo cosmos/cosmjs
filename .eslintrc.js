@@ -39,7 +39,6 @@ module.exports = {
       plugins: ["@typescript-eslint"],
       extends: ["plugin:@typescript-eslint/recommended-type-checked", "plugin:import/typescript"],
       rules: {
-        "import/no-unresolved": "off",
         "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
         "@typescript-eslint/consistent-type-exports": "warn",
         "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
