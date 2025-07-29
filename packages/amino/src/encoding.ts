@@ -103,7 +103,7 @@ export function decodeBech32Pubkey(bechEncoded: string): Pubkey {
 /**
  * Uvarint decoder for Amino.
  * @see https://github.com/tendermint/go-amino/blob/8e779b71f40d175/decoder.go#L64-76
- * @returns varint as number, and bytes count occupied by varaint
+ * @returns varint as number, and bytes count occupied by varint
  */
 function decodeUvarint(reader: number[]): [number, number] {
   if (reader.length < 1) {

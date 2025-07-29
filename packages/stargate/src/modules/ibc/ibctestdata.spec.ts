@@ -65,7 +65,7 @@ export const packetState = PacketState.fromPartial({
 });
 
 /**
- * Unfortunatly empty right now
+ * Unfortunately empty right now
  *
  * ```
  * jq ".channel_genesis.acknowledgements" scripts/simapp42/genesis-ibc.json
