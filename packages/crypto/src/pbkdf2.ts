@@ -13,7 +13,7 @@ export async function getNodeCrypto(): Promise<any | undefined> {
   try {
     const nodeCrypto = await import("crypto");
     // We get `Object{default: Object{}}` as a fallback when using
-    // `crypto: false` in Webpack 5, which we interprete as unavailable.
+    // `crypto: false` in Webpack 5, which we interpret as unavailable.
     if (typeof nodeCrypto === "object" && Object.keys(nodeCrypto).length <= 1) {
       return undefined;
     }
@@ -69,7 +69,7 @@ export async function pbkdf2Sha512Subtle(
 }
 
 /**
- * Implements pbkdf2-sha512 using the Node.js crypro module (`import "crypto"`).
+ * Implements pbkdf2-sha512 using the Node.js crypto module (`import "crypto"`).
  * This does not use subtle from [Crypto](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
  */
 export async function pbkdf2Sha512NodeCrypto(
