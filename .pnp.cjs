@@ -1059,7 +1059,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "cosmjs-types",\
-      "npm:0.9.0"\
+      "npm:0.10.1"\
     ],\
     [\
       "cross-spawn",\
@@ -3306,7 +3306,7 @@ const RAW_RUNTIME_STATE =
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["@types/pako", "npm:1.0.1"],\
-          ["cosmjs-types", "npm:0.9.0"],\
+          ["cosmjs-types", "npm:0.10.1"],\
           ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -3588,7 +3588,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["cosmjs-types", "npm:0.9.0"],\
+          ["cosmjs-types", "npm:0.10.1"],\
           ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -3667,7 +3667,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["cosmjs-types", "npm:0.9.0"],\
+          ["cosmjs-types", "npm:0.10.1"],\
           ["eslint", "npm:8.57.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -6985,10 +6985,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["cosmjs-types", [\
-      ["npm:0.9.0", {\
-        "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.9.0-e5d36a4ae5-bc20f4293f.zip/node_modules/cosmjs-types/",\
+      ["npm:0.10.1", {\
+        "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.10.1-89e1d3ec63-f114cd1a06.zip/node_modules/cosmjs-types/",\
         "packageDependencies": [\
-          ["cosmjs-types", "npm:0.9.0"]\
+          ["cosmjs-types", "npm:0.10.1"]\
         ],\
         "linkType": "HARD"\
       }]\
