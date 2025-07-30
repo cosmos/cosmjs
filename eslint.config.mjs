@@ -75,7 +75,6 @@ export default [
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 2022,
-      sourceType: "script",
 
       parserOptions: {
         project: true,
