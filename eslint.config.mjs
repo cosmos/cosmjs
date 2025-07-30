@@ -96,6 +96,9 @@ export default [
     },
 
     rules: {
+      "no-dupe-class-members": "off",
+      "no-redeclare": "off",
+      "no-undef": "off",
       ...importt.flatConfigs.typescript.rules,
       "@typescript-eslint/array-type": [
         "warn",
