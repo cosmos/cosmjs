@@ -54,7 +54,7 @@ describe("makeStdTx", () => {
 describe("isStdTx", () => {
   const validTx: StdTx = {
     memo: "memoe",
-    msg: [{ type: "test", value: "Test Value" }],
+    msg: [{ type: "test", value: { test: "Value" } }],
     fee: { amount: [{ denom: "ATOM", amount: "10" }], gas: "100000" },
     signatures: [{ signature: "signature", pub_key: { type: "type", value: "value" } }],
   };
