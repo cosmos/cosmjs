@@ -84,7 +84,6 @@ export default [
     },
 
     ...typescriptEslint.configs.recommendedTypeChecked,
-    ...importt.flatConfigs.typescript,
 
     languageOptions: {
       parser: tsParser,
@@ -97,6 +96,7 @@ export default [
     },
 
     rules: {
+      ...importt.flatConfigs.typescript.rules,
       "@typescript-eslint/array-type": [
         "warn",
         {
