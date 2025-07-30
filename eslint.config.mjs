@@ -83,8 +83,6 @@ export default [
       "@typescript-eslint": fixupPluginRules(typescriptEslint),
     },
 
-    ...typescriptEslint.configs.recommendedTypeChecked,
-
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 2022,
@@ -96,9 +94,10 @@ export default [
     },
 
     rules: {
-      "no-dupe-class-members": "off",
-      "no-redeclare": "off",
-      "no-undef": "off",
+      ...typescriptEslint.configs["flat/recommended-type-checked"].reduce(
+        (obj, c) => Object.assign(obj, c.rules),
+        {},
+      ),
       ...importt.flatConfigs.typescript.rules,
       "@typescript-eslint/array-type": [
         "warn",
