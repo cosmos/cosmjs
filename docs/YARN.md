@@ -368,7 +368,7 @@ you’ll want to add to VCS. If you’re using VSCode, it will also add some stu
 to `.vscode/extensions.json` and `.vscode/settings.json`. You may or may not
 want to add these to VCS—talk to your colleagues.
 
-https://next.yarnpkg.com/advanced/pnpify#ide-support
+https://yarnpkg.com/advanced/pnpify#ide-support
 
 ## Step 15: Switch versioning from Lerna to Yarn
 
@@ -376,7 +376,7 @@ Lerna unfortunately appears to be unmaintained. Remove the dependency and the
 `lerna.json` configuration file.
 
 You can read about Yarn’s release workflow here:
-https://next.yarnpkg.com/features/release-workflow
+https://yarnpkg.com/features/release-workflow
 
 ## Step 16: Consider using constraints
 
