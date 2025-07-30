@@ -24,8 +24,6 @@
   },
   "scripts": {
     "docs": "typedoc --options typedoc.cjs",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.cjs\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.cjs\"",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
@@ -45,7 +43,6 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/node": "*",
     "buffer": "^6.0.3",
-    "eslint": "^8.57.1",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
