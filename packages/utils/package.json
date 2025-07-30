@@ -6,8 +6,10 @@
     "IOV SAS <admin@iov.one>"
   ],
   "license": "Apache-2.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "exports": {
+    "types": "./build/index.d.ts",
+    "default": "./build/index.js"
+  },
   "files": [
     "build/",
     "*.md",
