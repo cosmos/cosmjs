@@ -71,6 +71,7 @@ export default [
       ],
 
       "import/no-cycle": "off",
+      "import/no-named-as-default-member": "off",
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
     },
