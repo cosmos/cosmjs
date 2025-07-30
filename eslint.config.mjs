@@ -21,7 +21,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
+    ignores: [".yarn/", "packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
   },
   js.configs.recommended,
   prettier,
