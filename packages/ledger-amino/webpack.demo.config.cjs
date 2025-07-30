@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 const { globSync } = require("glob");
 const path = require("path");
 const webpack = require("webpack");
