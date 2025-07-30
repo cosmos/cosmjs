@@ -58,7 +58,7 @@ export class HttpBatchClient implements RpcClient {
   }
 
   public disconnect(): void {
-    this.timer && clearInterval(this.timer);
+    if (this.timer) clearInterval(this.timer);
     this.timer = undefined;
   }
 
