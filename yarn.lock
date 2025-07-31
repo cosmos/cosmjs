@@ -291,7 +291,7 @@ __metadata:
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/long": "npm:^4.0.1"
     "@types/node": "npm:*"
-    "@types/pako": "npm:^1.0.1"
+    "@types/pako": "npm:^2.0.3"
     cosmjs-types: "npm:^0.10.1"
     glob: "npm:^11"
     jasmine: "npm:^4"
@@ -1554,10 +1554,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pako@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@types/pako@npm:1.0.1"
-  checksum: 10c0/69c57c9d0d9251122ffdb5f7be5ca9929f6c07e1ee3821d6225f7ab0b24fc9c359f8e50c5bccc7c1dddd093811a70443d250dfb6f21c89bf7d1b71aecf9500e0
+"@types/pako@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@types/pako@npm:2.0.3"
+  checksum: 10c0/45119ac3c4e8a77317c35493327039b74e333562f06ce038048228918d8ddfaa7958125aab960d1565b3861046022754c414dba1eecb210c44a32c415956bee2
   languageName: node
   linkType: hard
 

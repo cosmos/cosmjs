@@ -607,7 +607,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@types/pako",\
-      "npm:1.0.1"\
+      "npm:2.0.3"\
     ],\
     [\
       "@types/qs",\
@@ -3292,7 +3292,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["@types/pako", "npm:1.0.1"],\
+          ["@types/pako", "npm:2.0.3"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -4752,10 +4752,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/pako", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/@types-pako-npm-1.0.1-9e979aac42-69c57c9d0d.zip/node_modules/@types/pako/",\
+      ["npm:2.0.3", {\
+        "packageLocation": "./.yarn/cache/@types-pako-npm-2.0.3-94a7224daf-45119ac3c4.zip/node_modules/@types/pako/",\
         "packageDependencies": [\
-          ["@types/pako", "npm:1.0.1"]\
+          ["@types/pako", "npm:2.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
