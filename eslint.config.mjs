@@ -42,8 +42,6 @@ export default [
       ],
 
       "no-param-reassign": "warn",
-      "no-shadow": "off",
-      "no-unused-vars": "off",
       "prefer-const": "warn",
       radix: ["warn", "always"],
 
@@ -79,6 +77,8 @@ export default [
     },
 
     rules: {
+      "no-shadow": "off",
+      "no-unused-vars": "off",
       ...typescriptEslint.configs["flat/recommended-type-checked"].reduce(
         (obj, c) => Object.assign(obj, c.rules),
         {},
