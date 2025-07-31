@@ -45,7 +45,7 @@
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.10.1",
-    "pako": "^2.0.2"
+    "pako": "^2.1.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
