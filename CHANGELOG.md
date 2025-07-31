@@ -27,9 +27,12 @@ and this project adheres to
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
   and `SigningCosmWasmClient.createWithSigner` non-async. ([#1597])
 - replace bn.js dependency with bigint ([#1720])
+- @cosmjs/stargate: the `GasPrice` constructor now enforces a non-empty denom.
+  ([#1761])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
+[#1761]: https://github.com/cosmos/cosmjs/pull/1761
 
 ## [0.34.0] - 2025-07-11
 

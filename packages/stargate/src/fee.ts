@@ -23,6 +23,10 @@ export class GasPrice {
   public readonly denom: string;
 
   public constructor(amount: Decimal, denom: string) {
+    if (!denom) {
+      throw new Error("denom must not be empty");
+    }
+
     this.amount = amount;
     this.denom = denom;
   }

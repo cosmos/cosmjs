@@ -12,6 +12,23 @@ describe("GasPrice", () => {
     });
   });
 
+  it("constructor works for denoms that do not match the pattern enforced by fromString", () => {
+    // Being able to use an arbitrary non-empty denom here is intentional
+    // See https://github.com/cosmos/cosmjs/issues/1588
+    const gasPrice = new GasPrice(Decimal.fromUserInput("1.23", 18), "fx");
+    expect(gasPrice.amount.toString()).toEqual("1.23");
+    expect(gasPrice.denom).toEqual("fx");
+
+    const gasPrice2 = new GasPrice(Decimal.fromUserInput("1.23", 18), "🤡");
+    expect(gasPrice2.amount.toString()).toEqual("1.23");
+    expect(gasPrice2.denom).toEqual("🤡");
+
+    // But anything falsy is certainly a bug
+    expect(() => new GasPrice(Decimal.fromUserInput("1.23", 18), "")).toThrowError(
+      /denom must not be empty/i,
+    );
+  });
+
   describe("fromString", () => {
     it("works", () => {
       const inputs: Record<string, { amount: string; denom: string }> = {
