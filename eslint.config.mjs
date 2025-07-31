@@ -76,6 +76,12 @@ export default [
       },
     },
 
+    settings: {
+      "import/resolver": {
+        typescript: {},
+      },
+    },
+
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
