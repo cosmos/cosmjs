@@ -1,6 +1,5 @@
 #!/usr/bin/env -S yarn node
 
-/* eslint-disable @typescript-eslint/naming-convention */
 const { coins } = require("@cosmjs/amino");
 const { Random } = require("@cosmjs/crypto");
 const { toBech32 } = require("@cosmjs/encoding");

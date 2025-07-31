@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 if (process.env.SES_ENABLED) {
   require("ses");
   // eslint-disable-next-line no-undef

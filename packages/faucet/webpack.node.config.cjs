@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 const path = require("path");
 
 const target = "node";
