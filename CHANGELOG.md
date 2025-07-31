@@ -29,10 +29,13 @@ and this project adheres to
 - replace bn.js dependency with bigint ([#1720])
 - @cosmjs/stargate: the `GasPrice` constructor now enforces a non-empty denom.
   ([#1761])
+- @cosmjs/amino: `parseCoins` now supports denoms with colons, periods,
+  underscores and dashes ([#1763])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
 [#1761]: https://github.com/cosmos/cosmjs/pull/1761
+[#1763]: https://github.com/cosmos/cosmjs/pull/1763
 
 ## [0.34.0] - 2025-07-11
 

@@ -118,6 +118,15 @@ describe("coins", () => {
           denom: "factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo",
         },
       ]);
+
+      // Colon in demon
+      expect(parseCoins("85foo:bar")).toEqual([{ amount: "85", denom: "foo:bar" }]);
+      // Period in demon
+      expect(parseCoins("85foo.bar")).toEqual([{ amount: "85", denom: "foo.bar" }]);
+      // Underscore in demon
+      expect(parseCoins("85foo_bar")).toEqual([{ amount: "85", denom: "foo_bar" }]);
+      // Dash in demon
+      expect(parseCoins("85foo-bar")).toEqual([{ amount: "85", denom: "foo-bar" }]);
     });
 
     it("trims leading zeros", () => {

@@ -3,8 +3,8 @@ import { Decimal, Uint53 } from "@cosmjs/math";
 import { coins } from "@cosmjs/proto-signing";
 
 /**
- * Denom checker for the Cosmos SDK 0.42 denom pattern
- * (https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601).
+ * Denom checker for the Cosmos SDK 0.53 denom pattern
+ * (https://github.com/cosmos/cosmos-sdk/blob/v0.53.0/types/coin.go#L846).
  *
  * This is like a regexp but with helpful error messages.
  */
@@ -34,7 +34,7 @@ export class GasPrice {
   /**
    * Parses a gas price formatted as `<amount><denom>`, e.g. `GasPrice.fromString("0.012utoken")`.
    *
-   * The denom must match the Cosmos SDK 0.42 pattern (https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L599-L601).
+   * The denom must match the Cosmos SDK 0.53 pattern (https://github.com/cosmos/cosmos-sdk/blob/v0.53.0/types/coin.go#L846).
    * See `GasPrice` in @cosmjs/stargate for a more generic matcher.
    *
    * Separators are not yet supported.

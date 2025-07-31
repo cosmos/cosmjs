@@ -36,6 +36,7 @@ describe("GasPrice", () => {
         "3.14utest": { amount: "3.14", denom: "utest" },
         "3utest": { amount: "3", denom: "utest" },
         "0.14utest": { amount: "0.14", denom: "utest" },
+        ".14utest": { amount: "0.14", denom: "utest" },
         // Test denoms
         "0.14sht": { amount: "0.14", denom: "sht" },
         "0.14testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest":
@@ -51,6 +52,15 @@ describe("GasPrice", () => {
           amount: "0.01",
           denom: "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
         },
+        // Colon in denom
+        "85foo:bar": { amount: "85", denom: "foo:bar" },
+        // Period in denom
+        "85foo.bar": { amount: "85", denom: "foo.bar" },
+        "2.3foo.bar": { amount: "2.3", denom: "foo.bar" },
+        // Underscore in denom
+        "85foo_bar": { amount: "85", denom: "foo_bar" },
+        // Dash in denom
+        "85foo-bar": { amount: "85", denom: "foo-bar" },
       };
       for (const [input, expected] of Object.entries(inputs)) {
         const gasPrice = GasPrice.fromString(input);
