@@ -607,7 +607,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@types/pako",\
-      "npm:1.0.1"\
+      "npm:2.0.3"\
     ],\
     [\
       "@types/qs",\
@@ -2239,7 +2239,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "pako",\
-      "npm:2.0.3"\
+      "npm:2.1.0"\
     ],\
     [\
       "parent-module",\
@@ -3292,7 +3292,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["@types/pako", "npm:1.0.1"],\
+          ["@types/pako", "npm:2.0.3"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -3303,7 +3303,7 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
-          ["pako", "npm:2.0.3"],\
+          ["pako", "npm:2.1.0"],\
           ["prettier", "npm:3.5.3"],\
           ["readonly-date", "npm:1.0.0"],\
           ["ses", "npm:1.13.1"],\
@@ -4752,10 +4752,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/pako", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/@types-pako-npm-1.0.1-9e979aac42-69c57c9d0d.zip/node_modules/@types/pako/",\
+      ["npm:2.0.3", {\
+        "packageLocation": "./.yarn/cache/@types-pako-npm-2.0.3-94a7224daf-45119ac3c4.zip/node_modules/@types/pako/",\
         "packageDependencies": [\
-          ["@types/pako", "npm:1.0.1"]\
+          ["@types/pako", "npm:2.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10750,10 +10750,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["pako", [\
-      ["npm:2.0.3", {\
-        "packageLocation": "./.yarn/cache/pako-npm-2.0.3-92007e2210-b24e97e8f0.zip/node_modules/pako/",\
+      ["npm:2.1.0", {\
+        "packageLocation": "./.yarn/cache/pako-npm-2.1.0-78df11948c-8e86465814.zip/node_modules/pako/",\
         "packageDependencies": [\
-          ["pako", "npm:2.0.3"]\
+          ["pako", "npm:2.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\

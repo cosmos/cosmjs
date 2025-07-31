@@ -291,7 +291,7 @@ __metadata:
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/long": "npm:^4.0.1"
     "@types/node": "npm:*"
-    "@types/pako": "npm:^1.0.1"
+    "@types/pako": "npm:^2.0.3"
     cosmjs-types: "npm:^0.10.1"
     glob: "npm:^11"
     jasmine: "npm:^4"
@@ -302,7 +302,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    pako: "npm:^2.0.2"
+    pako: "npm:^2.1.0"
     prettier: "npm:^3.5.3"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
@@ -1554,10 +1554,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pako@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@types/pako@npm:1.0.1"
-  checksum: 10c0/69c57c9d0d9251122ffdb5f7be5ca9929f6c07e1ee3821d6225f7ab0b24fc9c359f8e50c5bccc7c1dddd093811a70443d250dfb6f21c89bf7d1b71aecf9500e0
+"@types/pako@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@types/pako@npm:2.0.3"
+  checksum: 10c0/45119ac3c4e8a77317c35493327039b74e333562f06ce038048228918d8ddfaa7958125aab960d1565b3861046022754c414dba1eecb210c44a32c415956bee2
   languageName: node
   linkType: hard
 
@@ -6058,10 +6058,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pako@npm:^2.0.2":
-  version: 2.0.3
-  resolution: "pako@npm:2.0.3"
-  checksum: 10c0/b24e97e8f03b33df24ce26e879cb1f2b6af7aa0d46fa9f3b8e89621c1949c4b37aae9af123b390e518eae2f0c2a02fbf226ef6f9b01a1e9f19288fdc78d5810c
+"pako@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "pako@npm:2.1.0"
+  checksum: 10c0/8e8646581410654b50eb22a5dfd71159cae98145bd5086c9a7a816ec0370b5f72b4648d08674624b3870a521e6a3daffd6c2f7bc00fdefc7063c9d8232ff5116
   languageName: node
   linkType: hard
 
