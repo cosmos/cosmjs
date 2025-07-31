@@ -522,10 +522,6 @@ const RAW_RUNTIME_STATE =
       "npm:3.7.4"\
     ],\
     [\
-      "@types/espree",\
-      "npm:10.1.0"\
-    ],\
-    [\
       "@types/estree",\
       "npm:0.0.51"\
     ],\
@@ -1319,11 +1315,11 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "eslint-visitor-keys",\
-      "npm:4.2.1"\
+      "npm:3.4.3"\
     ],\
     [\
       "espree",\
-      "npm:10.4.0"\
+      "npm:9.6.1"\
     ],\
     [\
       "esprima",\
@@ -2977,7 +2973,6 @@ const RAW_RUNTIME_STATE =
           ["@eslint/compat", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"],\
           ["@eslint/eslintrc", "npm:3.3.1"],\
           ["@eslint/js", "npm:8.57.1"],\
-          ["@types/espree", "npm:10.1.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.38.0"],\
           ["@typescript-eslint/parser", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.38.0"],\
           ["cosmjs-monorepo-root", "workspace:."],\
@@ -2987,7 +2982,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-import", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:2.32.0"],\
           ["eslint-plugin-prettier", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:5.5.0"],\
           ["eslint-plugin-simple-import-sort", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:7.0.0"],\
-          ["espree", "npm:10.4.0"],\
           ["globals", "npm:16.3.0"],\
           ["prettier", "npm:3.5.3"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"]\
@@ -4590,17 +4584,6 @@ const RAW_RUNTIME_STATE =
           ["@types/eslint", "npm:7.2.10"],\
           ["@types/eslint-scope", "npm:3.7.4"],\
           ["@types/estree", "npm:0.0.51"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/espree", [\
-      ["npm:10.1.0", {\
-        "packageLocation": "./.yarn/cache/@types-espree-npm-10.1.0-a8d546c704-8e3fb60c3e.zip/node_modules/@types/espree/",\
-        "packageDependencies": [\
-          ["@types/espree", "npm:10.1.0"],\
-          ["acorn", "npm:8.15.0"],\
-          ["eslint-visitor-keys", "npm:4.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7094,7 +7077,6 @@ const RAW_RUNTIME_STATE =
           ["@eslint/compat", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"],\
           ["@eslint/eslintrc", "npm:3.3.1"],\
           ["@eslint/js", "npm:8.57.1"],\
-          ["@types/espree", "npm:10.1.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.38.0"],\
           ["@typescript-eslint/parser", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.38.0"],\
           ["cosmjs-monorepo-root", "workspace:."],\
@@ -7104,7 +7086,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-import", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:2.32.0"],\
           ["eslint-plugin-prettier", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:5.5.0"],\
           ["eslint-plugin-simple-import-sort", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:7.0.0"],\
-          ["espree", "npm:10.4.0"],\
           ["globals", "npm:16.3.0"],\
           ["prettier", "npm:3.5.3"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"]\

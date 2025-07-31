@@ -5,7 +5,6 @@ import tsParser from "@typescript-eslint/parser";
 import importt from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import * as espree from "espree";
 import globals from "globals";
 
 export default [
@@ -28,7 +27,6 @@ export default [
         ...globals.worker,
       },
 
-      parser: espree,
       ecmaVersion: 2022,
     },
 
