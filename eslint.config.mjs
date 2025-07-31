@@ -127,6 +127,8 @@ export default [
           leadingUnderscore: "allow",
         },
         {
+          // For object literal keys we want to allow things like numbers (e.g. 35),
+          // type URLs (e.g. "/cosmos.feegrant.v1beta1.MsgGrantAllowance") or test data (e.g. "0.14ucoin2")
           selector: "objectLiteralProperty",
           format: null,
         },
