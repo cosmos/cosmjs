@@ -14,7 +14,7 @@ export class Ripemd160 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Ripemd160 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }

@@ -15,7 +15,7 @@ export class Sha256 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Sha256 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }
@@ -41,7 +41,7 @@ export class Sha512 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Sha512 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }
