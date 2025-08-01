@@ -1,9 +1,13 @@
-export function toHex(data: Uint8Array): string {
-  let out = "";
-  for (const byte of data) {
-    out += ("0" + byte.toString(16)).slice(-2);
+// Helper function needed to support environments that do not yet have
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/map
+function* map<T, U>(iterable: Iterable<T>, fn: (value: T) => U): IterableIterator<U> {
+  for (const value of iterable) {
+    yield fn(value);
   }
-  return out;
+}
+
+export function toHex(data: Uint8Array): string {
+  return Array.from(map(data.values(), (byte) => byte.toString(16).padStart(2, "0"))).join("");
 }
 
 export function fromHex(hexstring: string): Uint8Array {
