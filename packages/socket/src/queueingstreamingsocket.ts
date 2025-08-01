@@ -46,7 +46,9 @@ export class QueueingStreamingSocket {
         if (!this.eventProducerListener) throw new Error("No event producer listener set");
         this.eventProducerListener.next(event);
       },
-      error: () => this.connectionStatusProducer.update(ConnectionStatus.Disconnected),
+      error: () => {
+        this.connectionStatusProducer.update(ConnectionStatus.Disconnected);
+      },
     });
   }
 
@@ -57,7 +59,9 @@ export class QueueingStreamingSocket {
         this.connectionStatusProducer.update(ConnectionStatus.Connected);
         return this.processQueue();
       },
-      () => this.connectionStatusProducer.update(ConnectionStatus.Disconnected),
+      () => {
+        this.connectionStatusProducer.update(ConnectionStatus.Disconnected);
+      },
     );
     this.socket.connect();
   }
@@ -74,7 +78,9 @@ export class QueueingStreamingSocket {
         if (!this.eventProducerListener) throw new Error("No event producer listener set");
         this.eventProducerListener.next(event);
       },
-      error: () => this.connectionStatusProducer.update(ConnectionStatus.Disconnected),
+      error: () => {
+        this.connectionStatusProducer.update(ConnectionStatus.Disconnected);
+      },
     });
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.socket.connected.then(() => {

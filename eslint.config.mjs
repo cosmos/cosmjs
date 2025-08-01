@@ -86,7 +86,6 @@ export default [
       ...importt.flatConfigs.typescript.rules,
 
       // lints from 'strict-type-checked' config
-      "@typescript-eslint/no-confusing-void-expression": "off",
       "@typescript-eslint/no-deprecated": "off",
       "@typescript-eslint/no-extraneous-class": "off",
       "@typescript-eslint/no-unnecessary-condition": "off",

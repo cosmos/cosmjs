@@ -14,7 +14,9 @@ export function fromListPromise<T>(promise: Promise<Iterable<T>>): Stream<T> {
           }
           listener.complete();
         })
-        .catch((error) => listener.error(error));
+        .catch((error) => {
+          listener.error(error);
+        });
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     stop: () => {},
@@ -52,7 +54,9 @@ export async function toListPromise<T>(stream: Stream<T>, count: number): Promis
             `Collected ${events.length}, expected ${count}`,
         );
       },
-      error: (error) => reject(error),
+      error: (error) => {
+        reject(error);
+      },
     });
   });
 }

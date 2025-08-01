@@ -151,7 +151,8 @@ export function wasmdEnabled(): boolean {
 
 export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
-    return pending("Set WASMD_ENABLED to enable Wasmd-based tests");
+    pending("Set WASMD_ENABLED to enable Wasmd-based tests");
+    return;
   }
 }
 

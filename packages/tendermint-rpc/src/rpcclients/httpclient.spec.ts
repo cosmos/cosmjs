@@ -24,8 +24,12 @@ describe("HttpClient", () => {
 
     await client
       .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => fail("must not resolve"))
-      .catch((error) => expect(error).toBeTruthy());
+      .then(() => {
+        fail("must not resolve");
+      })
+      .catch((error) => {
+        expect(error).toBeTruthy();
+      });
 
     client.disconnect();
   });

@@ -123,7 +123,10 @@ describe("pbkdf2", () => {
   describe("pbkdf2Sha512Subtle", () => {
     it("works", async () => {
       const subtle = await getSubtle();
-      if (!subtle) return pending("Subtle is not available in this environment");
+      if (!subtle) {
+        pending("Subtle is not available in this environment");
+        return;
+      }
 
       {
         const { secret, salt, iterations, keylen, expected } = botanTest;

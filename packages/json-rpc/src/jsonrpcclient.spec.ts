@@ -28,7 +28,9 @@ function makeSimpleMessagingConnection(
 
   return {
     responseStream: Stream.create(producer),
-    sendRequest: (request) => worker.postMessage(request),
+    sendRequest: (request) => {
+      worker.postMessage(request);
+    },
   };
 }
 

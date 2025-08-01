@@ -30,7 +30,8 @@ export function simappEnabled(): boolean {
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP{47,50}_ENABLED to enable Simapp based tests");
+    pending("Set SIMAPP{47,50}_ENABLED to enable Simapp based tests");
+    return;
   }
 }
 
@@ -40,7 +41,8 @@ export function slowSimappEnabled(): boolean {
 
 export function pendingWithoutSlowSimapp(): void {
   if (!slowSimappEnabled()) {
-    return pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
+    pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
+    return;
   }
 }
 

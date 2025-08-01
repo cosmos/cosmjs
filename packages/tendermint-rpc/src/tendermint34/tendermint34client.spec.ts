@@ -673,7 +673,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           }
         },
         error: done.fail,
-        complete: () => done.fail("Stream completed before we are done"),
+        complete: () => {
+          done.fail("Stream completed before we are done");
+        },
       });
     })().catch(done.fail);
   });
