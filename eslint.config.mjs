@@ -9,7 +9,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: [".yarn/", "packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
+    ignores: [".*", "packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
   },
   js.configs.recommended,
   prettier,
