@@ -33,6 +33,8 @@ function intTo32be(n: bigint): Uint8Array {
   return fromHex(hex);
 }
 
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+
 /**
  * Reverse mapping of Slip10Curve
  */
