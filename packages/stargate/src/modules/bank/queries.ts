@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import {

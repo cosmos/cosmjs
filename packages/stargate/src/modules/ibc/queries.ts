@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Any } from "cosmjs-types/google/protobuf/any";
 import {
   QueryClientImpl as TransferQuery,

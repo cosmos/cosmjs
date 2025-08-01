@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { createJsonRpcRequest } from "../jsonrpc";
 import { defaultInstance } from "../testutil.spec";
 import { HttpBatchClient } from "./httpbatchclient";

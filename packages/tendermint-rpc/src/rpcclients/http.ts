@@ -21,7 +21,6 @@ export async function http(
     method: method,
     body: request ? JSON.stringify(request) : undefined,
     headers: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       "Content-Type": "application/json",
       ...headers,
     },
