@@ -102,6 +102,8 @@ export default [
 
       "@typescript-eslint/explicit-member-accessibility": "warn",
 
+      "@typescript-eslint/explicit-module-boundary-types": "warn",
+
       "@typescript-eslint/naming-convention": [
         "warn",
         {
