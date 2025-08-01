@@ -1,4 +1,4 @@
-function filterBadStatus(res: any): any {
+function filterBadStatus(res: Response): Response {
   if (res.status >= 400) {
     throw new Error(`Bad status on response: ${res.status}`);
   }
@@ -30,5 +30,5 @@ export async function http(
   };
   return fetch(url, settings)
     .then(filterBadStatus)
-    .then((res: any) => res.json());
+    .then((res) => res.json());
 }

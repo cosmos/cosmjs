@@ -12,7 +12,7 @@ export interface SubscriptionEvent {
   readonly query: string;
   readonly data: {
     readonly type: string;
-    readonly value: any;
+    readonly value: Record<string, any>;
   };
 }
 
@@ -26,7 +26,7 @@ export interface RpcStreamingClient extends RpcClient {
 }
 
 export function instanceOfRpcStreamingClient(client: RpcClient): client is RpcStreamingClient {
-  return typeof (client as any).listen === "function";
+  return "listen" in client && typeof client.listen === "function";
 }
 
 // Helpers for all RPC clients
