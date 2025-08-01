@@ -1,6 +1,6 @@
 import { assert } from "@cosmjs/utils";
 import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
-import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
+import { sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
 export async function getSubtle(): Promise<typeof crypto.subtle | undefined> {
   // From Node.js 15 onwards, webcrypto is available in globalThis.
