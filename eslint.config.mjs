@@ -79,11 +79,22 @@ export default [
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
-      ...typescriptEslint.configs["flat/recommended-type-checked"].reduce(
+      ...typescriptEslint.configs["flat/strict-type-checked"].reduce(
         (obj, c) => Object.assign(obj, c.rules),
         {},
       ),
       ...importt.flatConfigs.typescript.rules,
+
+      // lints from 'strict-type-checked' config
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-deprecated": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/no-unnecessary-type-parameters": "off",
+      "@typescript-eslint/prefer-return-this-type": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
+      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+
       "@typescript-eslint/array-type": [
         "warn",
         {
