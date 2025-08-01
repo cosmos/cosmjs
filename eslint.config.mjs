@@ -89,7 +89,6 @@ export default [
       "@typescript-eslint/no-deprecated": "off",
       "@typescript-eslint/no-extraneous-class": "off",
       "@typescript-eslint/no-unnecessary-condition": "off",
-      "@typescript-eslint/restrict-plus-operands": "off",
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
 
       "@typescript-eslint/array-type": [
