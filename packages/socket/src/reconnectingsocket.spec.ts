@@ -29,7 +29,9 @@ describe("ReconnectingSocket", () => {
       socket.connect();
 
       setTimeout(() => {
-        expect(() => socket.connect()).toThrowError(/cannot connect/i);
+        expect(() => {
+          socket.connect();
+        }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
     });
@@ -45,7 +47,9 @@ describe("ReconnectingSocket", () => {
 
       socket.connect();
 
-      setTimeout(() => socket.disconnect(), 1000);
+      setTimeout(() => {
+        socket.disconnect();
+      }, 1000);
     });
 
     it("cannot connect after being disconnected", (done) => {
@@ -58,7 +62,9 @@ describe("ReconnectingSocket", () => {
 
       setTimeout(() => {
         socket.disconnect();
-        expect(() => socket.connect()).toThrowError(/cannot connect/i);
+        expect(() => {
+          socket.connect();
+        }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
     });
@@ -117,17 +123,17 @@ describe("ReconnectingSocket", () => {
         });
 
         socket.connect();
-        requests.forEach((request) => socket.queueRequest(request));
+        requests.forEach((request) => {
+          socket.queueRequest(request);
+        });
 
-        setTimeout(
-          () =>
-            exec(startServerCmd, (startError) => {
-              if (startError) {
-                fail(startError);
-              }
-            }),
-          2000,
-        );
+        setTimeout(() => {
+          exec(startServerCmd, (startError) => {
+            if (startError) {
+              fail(startError);
+            }
+          });
+        }, 2000);
       });
 
       return ret;
@@ -168,34 +174,32 @@ describe("ReconnectingSocket", () => {
       socket.connect();
       socket.queueRequest(requests[0]);
 
-      setTimeout(
-        () =>
-          exec(stopServerCmd, (stopError) => {
-            if (stopError && stopError.code !== codePkillNoProcessesMatched) {
-              fail(stopError);
-            }
+      setTimeout(() => {
+        exec(stopServerCmd, (stopError) => {
+          if (stopError && stopError.code !== codePkillNoProcessesMatched) {
+            fail(stopError);
+          }
 
-            // TODO: This timeout is here to avoid an edge case where if a request
-            // is sent just as a disconnection occurs, then the websocket’s `send`
-            // method may not error even though the request is never sent.
-            // Ideally we would have a way to cover this edge case and the timeout
-            // would not be necessary for this test to pass.
+          // TODO: This timeout is here to avoid an edge case where if a request
+          // is sent just as a disconnection occurs, then the websocket’s `send`
+          // method may not error even though the request is never sent.
+          // Ideally we would have a way to cover this edge case and the timeout
+          // would not be necessary for this test to pass.
+          setTimeout(() => {
+            requests.slice(1).forEach((request) => {
+              socket.queueRequest(request);
+            });
+
             setTimeout(() => {
-              requests.slice(1).forEach((request) => socket.queueRequest(request));
-
-              setTimeout(
-                () =>
-                  exec(startServerCmd, (startError) => {
-                    if (startError) {
-                      fail(startError);
-                    }
-                  }),
-                2000,
-              );
+              exec(startServerCmd, (startError) => {
+                if (startError) {
+                  fail(startError);
+                }
+              });
             }, 2000);
-          }),
-        1000,
-      );
+          }, 2000);
+        });
+      }, 1000);
 
       return ret;
     });

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { coins } from "./coins";
 import { StdSignature } from "./signature";
 import { makeSignDoc, StdFee } from "./signdoc";

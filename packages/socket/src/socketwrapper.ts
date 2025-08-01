@@ -175,7 +175,10 @@ export class SocketWrapper {
       }
 
       if (environmentIsNodeJs()) {
-        this.socket.send(data, (err) => (err ? reject(err) : resolve()));
+        this.socket.send(data, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
       } else {
         // Browser websocket send method does not accept a callback
         this.socket.send(data);

@@ -28,7 +28,7 @@ export function accessTypeFromString(str: string): AccessType {
   }
 }
 
-export function accessTypeToString(object: any): string {
+export function accessTypeToString(object: AccessType): string {
   switch (object) {
     case AccessType.ACCESS_TYPE_UNSPECIFIED:
       return "Unspecified";

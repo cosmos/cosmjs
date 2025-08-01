@@ -1,8 +1,8 @@
 import { assert } from "@cosmjs/utils";
 import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
-import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
+import { sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
-export async function getSubtle(): Promise<any | undefined> {
+export async function getSubtle(): Promise<typeof crypto.subtle | undefined> {
   // From Node.js 15 onwards, webcrypto is available in globalThis.
   // In version 15 and 16 this was stored under the webcrypto key.
   // With Node.js 17 it was moved to the same locations where browsers
@@ -11,7 +11,7 @@ export async function getSubtle(): Promise<any | undefined> {
   // causes issues with bundlers and does not increase compatibility.
 
   // Browsers and Node.js 17+
-  let subtle: any | undefined = (globalThis as any)?.crypto?.subtle;
+  let subtle: typeof crypto.subtle | undefined = (globalThis as any)?.crypto?.subtle;
   // Node.js 15+
   if (!subtle) subtle = (globalThis as any)?.crypto?.webcrypto?.subtle;
 
@@ -19,8 +19,7 @@ export async function getSubtle(): Promise<any | undefined> {
 }
 
 export async function pbkdf2Sha512Subtle(
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  subtle: any,
+  subtle: typeof crypto.subtle,
   secret: Uint8Array,
   salt: Uint8Array,
   iterations: number,
@@ -31,7 +30,7 @@ export async function pbkdf2Sha512Subtle(
   assert(typeof subtle.importKey === "function", "subtle.importKey is not a function");
   assert(typeof subtle.deriveBits === "function", "subtle.deriveBits is not a function");
 
-  return subtle.importKey("raw", secret, { name: "PBKDF2" }, false, ["deriveBits"]).then((key: Uint8Array) =>
+  return subtle.importKey("raw", secret, { name: "PBKDF2" }, false, ["deriveBits"]).then((key) =>
     subtle
       .deriveBits(
         {

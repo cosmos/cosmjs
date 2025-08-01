@@ -33,7 +33,9 @@ describe("promise", () => {
     it("works for delayed resolution", async () => {
       const inputPromise = new Promise<number[]>((resolve) => {
         // resolve after 50 ms
-        setTimeout(() => resolve([1, 2, 3]), 50);
+        setTimeout(() => {
+          resolve([1, 2, 3]);
+        }, 50);
       });
       const stream = fromListPromise(inputPromise);
 
@@ -77,8 +79,12 @@ describe("promise", () => {
 
     it("rejects for simple stream with less events than count", async () => {
       await toListPromise(Stream.fromArray([1, 6, 92]), 5)
-        .then(() => fail("must not resolve"))
-        .catch((error) => expect(error).toMatch(/stream completed before all events could be collected/i));
+        .then(() => {
+          fail("must not resolve");
+        })
+        .catch((error) => {
+          expect(error).toMatch(/stream completed before all events could be collected/i);
+        });
     });
 
     it("works for async stream", async () => {
@@ -113,8 +119,12 @@ describe("promise", () => {
 
     it("rejects for stream with no events", async () => {
       await firstEvent(Stream.fromArray([]))
-        .then(() => fail("must not resolve"))
-        .catch((error) => expect(error).toMatch(/stream completed before all events could be collected/i));
+        .then(() => {
+          fail("must not resolve");
+        })
+        .catch((error) => {
+          expect(error).toMatch(/stream completed before all events could be collected/i);
+        });
     });
 
     it("works for async stream", async () => {

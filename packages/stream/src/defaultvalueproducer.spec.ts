@@ -57,7 +57,9 @@ describe("DefaultValueProducer", () => {
         expect(error).toEqual("oh no :(");
         done();
       },
-      complete: () => done.fail("Stream must not complete successfully"),
+      complete: () => {
+        done.fail("Stream must not complete successfully");
+      },
     });
 
     producer.update(1);

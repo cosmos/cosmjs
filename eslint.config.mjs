@@ -9,7 +9,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: [".yarn/", "packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
+    ignores: [".*", "packages/*/build/", "packages/*/dist/", "packages/*/docs/", "packages/*/examples/"],
   },
   js.configs.recommended,
   prettier,
@@ -79,11 +79,18 @@ export default [
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
-      ...typescriptEslint.configs["flat/recommended-type-checked"].reduce(
+      ...typescriptEslint.configs["flat/strict-type-checked"].reduce(
         (obj, c) => Object.assign(obj, c.rules),
         {},
       ),
       ...importt.flatConfigs.typescript.rules,
+
+      // lints from 'strict-type-checked' config
+      "@typescript-eslint/no-deprecated": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+
       "@typescript-eslint/array-type": [
         "warn",
         {
@@ -101,6 +108,8 @@ export default [
       ],
 
       "@typescript-eslint/explicit-member-accessibility": "warn",
+
+      "@typescript-eslint/explicit-module-boundary-types": "warn",
 
       "@typescript-eslint/naming-convention": [
         "warn",
@@ -135,7 +144,6 @@ export default [
       ],
 
       "@typescript-eslint/no-dynamic-delete": "warn",
-      "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-misused-promises": "off",

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import {

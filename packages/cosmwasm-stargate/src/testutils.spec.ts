@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoSignResponse, Secp256k1HdWallet, Secp256k1HdWalletOptions, StdSignDoc } from "@cosmjs/amino";
 import { Bip39, EnglishMnemonic, Random } from "@cosmjs/crypto";
 import { fromBase64, toBech32 } from "@cosmjs/encoding";
@@ -151,7 +150,8 @@ export function wasmdEnabled(): boolean {
 
 export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
-    return pending("Set WASMD_ENABLED to enable Wasmd-based tests");
+    pending("Set WASMD_ENABLED to enable Wasmd-based tests");
+    return;
   }
 }
 

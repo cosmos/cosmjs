@@ -65,5 +65,7 @@ onmessage = (event) => {
   }
 
   const response = handleRequest(event);
-  setTimeout(() => postMessage(response), 50);
+  setTimeout(() => {
+    postMessage(response);
+  }, 50);
 };

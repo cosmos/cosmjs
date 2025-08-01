@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Random } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 
