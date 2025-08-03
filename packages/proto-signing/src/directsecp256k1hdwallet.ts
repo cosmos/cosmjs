@@ -276,7 +276,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     const { privkey, pubkey } = account;
     const signBytes = makeSignBytes(signDoc);
     const hashedMessage = sha256(signBytes);
-    const signature = await Secp256k1.createSignature(hashedMessage, privkey);
+    const signature = Secp256k1.createSignature(hashedMessage, privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     const stdSignature = encodeSecp256k1Signature(pubkey, signatureBytes);
     return {
@@ -333,27 +333,25 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     return JSON.stringify(out);
   }
 
-  private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
+  private getKeyPair(hdPath: HdPath): Secp256k1Keypair {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
-    const { pubkey } = await Secp256k1.makeKeypair(privkey);
+    const { pubkey } = Secp256k1.makeKeypair(privkey);
     return {
       privkey: privkey,
       pubkey: Secp256k1.compressPubkey(pubkey),
     };
   }
 
-  private async getAccountsWithPrivkeys(): Promise<readonly AccountDataWithPrivkey[]> {
-    return Promise.all(
-      this.accounts.map(async ({ hdPath, prefix }) => {
-        const { privkey, pubkey } = await this.getKeyPair(hdPath);
+  private getAccountsWithPrivkeys(): readonly AccountDataWithPrivkey[] {
+    return this.accounts.map(({ hdPath, prefix }) => {
+      const { privkey, pubkey } = this.getKeyPair(hdPath);
         const address = toBech32(prefix, rawSecp256k1PubkeyToRawAddress(pubkey));
         return {
           algo: "secp256k1" as const,
           privkey: privkey,
           pubkey: pubkey,
-          address: address,
-        };
-      }),
-    );
+        address: address,
+      };
+    });
   }
 }
