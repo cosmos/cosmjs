@@ -6,6 +6,7 @@
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "type": "module",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
