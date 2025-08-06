@@ -12,7 +12,6 @@
     "lib": ["es2022"],
     "target": "es2022",
     "module": "node20",
-    "moduleResolution": "node16",
     "newLine": "LF",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
