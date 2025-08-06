@@ -24,6 +24,8 @@ and this project adheres to
 - @cosmjs/tendermint-rpc, @cosmjs/faucet-client: Remove cross-fetch polyfilling.
 - @cosmjs/tendermint-rpc: Avoid unnecessary status request when connecting a
   `Comet38Client`, `Tendermint37Client` or `Tendermint34Client`. ([#1772])
+- @cosmjs/tendermint-rpc: The fields in `interface ConsensusParams` are now
+  optional as Tendermint RPC might omit them.
 - @cosmjs/stargate: Make constructor functions `{Signing,}StargateClient.create`
   and `SigningStargateClient.createWithSigner` non-async. ([#1597])
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`

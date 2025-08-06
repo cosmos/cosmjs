@@ -370,8 +370,8 @@ export interface ValidatorUpdate {
 }
 
 export interface ConsensusParams {
-  readonly block: BlockParams;
-  readonly evidence: EvidenceParams;
+  readonly block: BlockParams | undefined;
+  readonly evidence: EvidenceParams | undefined;
 }
 
 export interface BlockParams {
