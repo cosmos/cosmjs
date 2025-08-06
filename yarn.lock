@@ -3046,7 +3046,6 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.38.0"
     eslint: "npm:^8.57.1"
     eslint-config-prettier: "npm:^8.3.0"
-    eslint-import-resolver-node: "npm:^0.3.4"
     eslint-import-resolver-typescript: "npm:^4.4.4"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-prettier: "npm:^5.5.0"
@@ -3643,7 +3642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-node@npm:^0.3.4, eslint-import-resolver-node@npm:^0.3.9":
+"eslint-import-resolver-node@npm:^0.3.9":
   version: 0.3.9
   resolution: "eslint-import-resolver-node@npm:0.3.9"
   dependencies:
