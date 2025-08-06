@@ -1,7 +1,6 @@
 import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { Stream } from "xstream";
 
-import { createJsonRpcRequest } from "../jsonrpc";
 import {
   HttpClient,
   HttpEndpoint,
@@ -42,22 +41,6 @@ export class Tendermint37Client {
    */
   public static create(rpcClient: RpcClient): Tendermint37Client {
     return new Tendermint37Client(rpcClient);
-  }
-
-  private static async detectVersion(client: RpcClient): Promise<string> {
-    const req = createJsonRpcRequest(requests.Method.Status);
-    const response = await client.execute(req);
-    const result = response.result;
-
-    if (!result || !result.node_info) {
-      throw new Error("Unrecognized format for status response");
-    }
-
-    const version = result.node_info.version;
-    if (typeof version !== "string") {
-      throw new Error("Unrecognized version format: must be string");
-    }
-    return version;
   }
 
   private readonly client: RpcClient;
