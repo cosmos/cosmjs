@@ -9,7 +9,7 @@ describe("coins", () => {
         amount: "9007199254740991",
         denom: "utoken",
       });
-      expect(coin(+0, "utoken")).toEqual({ amount: "0", denom: "utoken" });
+      expect(coin(0, "utoken")).toEqual({ amount: "0", denom: "utoken" });
       expect(coin(-0, "utoken")).toEqual({ amount: "0", denom: "utoken" });
     });
 
