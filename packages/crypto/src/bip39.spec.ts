@@ -19,7 +19,7 @@ describe("entropyToMnemonic", () => {
     const { "12": vec12, "15": vec15, "18": vec18, "21": vec21, "24": vec24 } = bip39Vectors.encoding;
     for (const vectors of [vec12, vec15, vec18, vec21, vec24]) {
       for (const { entropy, mnemonic } of vectors) {
-        expect(entropyToMnemonic(fromHex(entropy)).toString()).toEqual(mnemonic);
+        expect(entropyToMnemonic(fromHex(entropy))).toEqual(mnemonic);
       }
     }
   });
