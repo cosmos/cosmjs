@@ -18,9 +18,7 @@ let accounts: readonly AccountData[] = [];
 
 function createSignDoc(accountNumber: number, address: string): string {
   const signDoc: StdSignDoc = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     chain_id: "testing",
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     account_number: `${accountNumber}`,
     sequence: "0",
     fee: {
@@ -38,9 +36,7 @@ function createSignDoc(accountNumber: number, address: string): string {
               denom: "ucosm",
             },
           ],
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           from_address: address,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           to_address: address,
         },
       },

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";

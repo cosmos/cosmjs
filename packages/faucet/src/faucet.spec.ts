@@ -8,7 +8,8 @@ import { TokenConfiguration } from "./tokenmanager";
 
 function pendingWithoutSimapp(): void {
   if (!process.env.SIMAPP47_ENABLED && !process.env.SIMAPP50_ENABLED) {
-    return pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
+    pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
+    return;
   }
 }
 

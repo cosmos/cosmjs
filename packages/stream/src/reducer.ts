@@ -46,7 +46,7 @@ export class Reducer<T, U> {
   }
 }
 
-function increment<T>(sum: number, _: T): number {
+function increment(sum: number, _: unknown): number {
   return sum + 1;
 }
 

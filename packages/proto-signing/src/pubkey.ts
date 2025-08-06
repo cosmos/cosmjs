@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {
   encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,

@@ -12,7 +12,9 @@ describe("concat", () => {
     const expected: string[] = [];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -27,7 +29,9 @@ describe("concat", () => {
     const expected = ["1", "2", "3"];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -43,7 +47,9 @@ describe("concat", () => {
     const expected = ["1", "2", "3", "a", "b", "c"];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -60,7 +66,9 @@ describe("concat", () => {
     const expected = ["1", "2", "3", "a", "b", "c", "X", "Y", "Z"];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -76,7 +84,9 @@ describe("concat", () => {
     const expected = ["a", "b", "c", "1", "2", "3"];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -92,7 +102,9 @@ describe("concat", () => {
     const expected = [0, 1, 2, 0, 1];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -108,7 +120,9 @@ describe("concat", () => {
     const expected = [0, 1, 2, 30, 40, 50, 60];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -125,7 +139,9 @@ describe("concat", () => {
     const expected = [0, 1, 2, 0, 1, 2];
 
     concatenatedStream.addListener({
-      next: (value) => expect(value).toEqual(expected.shift()!),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
       complete: () => {
         expect(expected.length).toEqual(0);
         done();
@@ -144,7 +160,9 @@ describe("concat", () => {
     let producerValue = 0;
     const loggingProducer: Producer<string> = {
       start: (listener) => {
-        producerInterval = setInterval(() => listener.next(`event${producerValue++}`), intervalDuration);
+        producerInterval = setInterval(() => {
+          listener.next(`event${producerValue++}`);
+        }, intervalDuration);
         producerActiveLog.push(true);
       },
       stop: () => {
@@ -160,8 +178,12 @@ describe("concat", () => {
     expect(producerActiveLog).toEqual([]);
 
     const subscription = concatenatedStream.subscribe({
-      next: (value) => expect(value).toEqual(expected.shift()!),
-      complete: () => done.fail(),
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
+      complete: () => {
+        done.fail();
+      },
       error: done.fail,
     });
 
@@ -180,8 +202,12 @@ describe("concat", () => {
       expect(producerActiveLog).toEqual([true, false]);
 
       const subscription2 = concatenatedStream.subscribe({
-        next: (value) => expect(value).toEqual(expected.shift()!),
-        complete: () => done.fail(),
+        next: (value) => {
+          expect(value).toEqual(expected.shift()!);
+        },
+        complete: () => {
+          done.fail();
+        },
         error: done.fail,
       });
 
