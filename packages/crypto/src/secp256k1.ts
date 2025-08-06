@@ -116,7 +116,7 @@ export class Secp256k1 {
       case 33:
         return pubkey;
       case 65:
-        return secp256k1.Point.fromHex(pubkey).toBytes(true);
+        return secp256k1.Point.fromBytes(pubkey).toBytes(true);
       default:
         throw new Error("Invalid pubkey length");
     }
@@ -130,7 +130,7 @@ export class Secp256k1 {
   public static uncompressPubkey(pubkey: Uint8Array): Uint8Array {
     switch (pubkey.length) {
       case 33:
-        return secp256k1.Point.fromHex(pubkey).toBytes(false);
+        return secp256k1.Point.fromBytes(pubkey).toBytes(false);
       case 65:
         return pubkey;
       default:
