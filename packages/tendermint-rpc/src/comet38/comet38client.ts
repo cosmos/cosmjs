@@ -37,13 +37,6 @@ export class Comet38Client {
       const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
       rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
     }
-
-    // For some very strange reason I don't understand, tests start to fail on some systems
-    // (our CI) when skipping the status call before doing other queries. Sleeping a little
-    // while did not help. Thus we query the version as a way to say "hi" to the backend,
-    // even in cases where we don't use the result.
-    const _version = await this.detectVersion(rpcClient);
-
     return Comet38Client.create(rpcClient);
   }
 
