@@ -1,4 +1,4 @@
-import { ripemd160 as nobleRipemd160 } from "@noble/hashes/ripemd160";
+import { ripemd160 as nobleRipemd160 } from "@noble/hashes/legacy.js";
 
 import { HashFunction } from "./hash";
 import { toRealUint8Array } from "./utils";
@@ -14,7 +14,7 @@ export class Ripemd160 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Ripemd160 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }

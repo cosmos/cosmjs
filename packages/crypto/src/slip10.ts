@@ -33,6 +33,8 @@ function intTo32be(n: bigint): Uint8Array {
   return fromHex(hex);
 }
 
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+
 /**
  * Reverse mapping of Slip10Curve
  */
@@ -151,7 +153,7 @@ export class Slip10 {
   private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array {
     switch (curve) {
       case Slip10Curve.Secp256k1:
-        return secp256k1.Point.BASE.multiply(p).toRawBytes(true);
+        return secp256k1.Point.BASE.multiply(p).toBytes(true);
       default:
         throw new Error("curve not supported");
     }

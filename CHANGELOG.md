@@ -22,14 +22,25 @@ and this project adheres to
   `Tendermint34Client.create`, `Tendermint37Client.create` and
   `Comet38Client.create` non-async. ([#1597])
 - @cosmjs/tendermint-rpc, @cosmjs/faucet-client: Remove cross-fetch polyfilling.
+- @cosmjs/tendermint-rpc: Avoid unnecessary status request when connecting a
+  `Comet38Client`, `Tendermint37Client` or `Tendermint34Client`. ([#1772])
+- @cosmjs/tendermint-rpc: The fields in `interface ConsensusParams` are now
+  optional as Tendermint RPC might omit them.
 - @cosmjs/stargate: Make constructor functions `{Signing,}StargateClient.create`
   and `SigningStargateClient.createWithSigner` non-async. ([#1597])
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
   and `SigningCosmWasmClient.createWithSigner` non-async. ([#1597])
 - replace bn.js dependency with bigint ([#1720])
+- @cosmjs/stargate: the `GasPrice` constructor now enforces a non-empty denom.
+  ([#1761])
+- @cosmjs/amino: `parseCoins` now supports denoms with colons, periods,
+  underscores and dashes ([#1763])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
+[#1761]: https://github.com/cosmos/cosmjs/pull/1761
+[#1763]: https://github.com/cosmos/cosmjs/pull/1763
+[#1772]: https://github.com/cosmos/cosmjs/pull/1772
 
 ## [0.34.0] - 2025-07-11
 

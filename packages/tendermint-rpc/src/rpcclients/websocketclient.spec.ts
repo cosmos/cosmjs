@@ -31,8 +31,12 @@ describe("WebsocketClient", () => {
 
     await client
       .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => fail("must not resolve"))
-      .catch((error) => expect(error).toBeTruthy());
+      .then(() => {
+        fail("must not resolve");
+      })
+      .catch((error) => {
+        expect(error).toBeTruthy();
+      });
 
     client.disconnect();
   });
@@ -50,7 +54,9 @@ describe("WebsocketClient", () => {
 
     const subscription = headers.subscribe({
       error: done.fail,
-      complete: () => done.fail("subscription should not complete"),
+      complete: () => {
+        done.fail("subscription should not complete");
+      },
       next: (event: SubscriptionEvent) => {
         events.push(event);
         expect(event.query).toEqual(query);
@@ -113,7 +119,9 @@ describe("WebsocketClient", () => {
 
     const subscription = headers.subscribe({
       error: done.fail,
-      complete: () => done.fail("subscription should not complete"),
+      complete: () => {
+        done.fail("subscription should not complete");
+      },
       next: (event: SubscriptionEvent) => {
         events.push(event);
         expect(event.query).toEqual(query);
@@ -134,7 +142,9 @@ describe("WebsocketClient", () => {
 
     client
       .execute(createJsonRpcRequest("status"))
-      .then((startusResponse) => expect(startusResponse).toBeTruthy())
+      .then((startusResponse) => {
+        expect(startusResponse).toBeTruthy();
+      })
       .catch(done.fail);
   });
 
@@ -149,7 +159,9 @@ describe("WebsocketClient", () => {
 
     const receivedEvents: SubscriptionEvent[] = [];
 
-    setTimeout(() => client.disconnect(), blockTime);
+    setTimeout(() => {
+      client.disconnect();
+    }, blockTime);
 
     headers.subscribe({
       error: done.fail,
@@ -172,8 +184,12 @@ describe("WebsocketClient", () => {
 
     await client
       .execute(createJsonRpcRequest("health"))
-      .then(() => fail("must not resolve"))
-      .catch((error) => expect(error).toMatch(/socket has disconnected/i));
+      .then(() => {
+        fail("must not resolve");
+      })
+      .catch((error) => {
+        expect(error).toMatch(/socket has disconnected/i);
+      });
   });
 
   it("fails when listening to a disconnected client", (done) => {

@@ -15,7 +15,6 @@ export function toBinary(obj: any): string {
  *
  * This can be used for parsing the values of a CosmWasm Binary field.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function fromBinary(base64: string): any {
   return JSON.parse(fromUtf8(fromBase64(base64)));
 }

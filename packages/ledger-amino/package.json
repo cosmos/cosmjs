@@ -26,8 +26,6 @@
     "docs": "typedoc --options typedoc.cjs",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.cjs\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.cjs\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
@@ -53,7 +51,6 @@
     "@ledgerhq/hw-transport-webusb": "^6.29.4",
     "@types/jasmine": "^4",
     "@types/semver": "^7.3.4",
-    "eslint": "^8.57.1",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
@@ -62,7 +59,7 @@
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
-    "typescript": "~5.8",
+    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

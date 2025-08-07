@@ -1,9 +1,7 @@
 const { makeCosmoshubPath, makeSignDoc } = require("@cosmjs/amino");
 const { pathToString } = require("@cosmjs/crypto");
 const { toBase64 } = require("@cosmjs/encoding");
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const { LedgerSigner } = require("@cosmjs/ledger-amino");
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const TransportNodeHid = require("@ledgerhq/hw-transport-node-hid").default;
 
 const interactiveTimeout = 120_000;
@@ -28,9 +26,7 @@ async function signMsgSend(signer, accountNumber, fromAddress, toAddress) {
           denom: "ucosm",
         },
       ],
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       from_address: fromAddress,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       to_address: toAddress,
     },
   };

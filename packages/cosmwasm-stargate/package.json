@@ -26,8 +26,6 @@
     "docs": "typedoc --options typedoc.cjs",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.cjs\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.cjs\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
@@ -47,7 +45,7 @@
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.10.1",
-    "pako": "^2.0.2"
+    "pako": "^2.1.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -57,8 +55,7 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/long": "^4.0.1",
     "@types/node": "*",
-    "@types/pako": "^1.0.1",
-    "eslint": "^8.57.1",
+    "@types/pako": "^2.0.3",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
@@ -73,7 +70,7 @@
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
-    "typescript": "~5.8",
+    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

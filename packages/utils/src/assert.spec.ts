@@ -3,16 +3,22 @@ import { assert, assertDefined, assertDefinedAndNotNull } from "./assert";
 describe("assert", () => {
   describe("assert", () => {
     it("assert should not throw an error when condition is truthy", () => {
-      expect(() => assert(true)).not.toThrow();
+      expect(() => {
+        assert(true);
+      }).not.toThrow();
     });
 
     it("assert should throw an error with default message when condition is falsy", () => {
-      expect(() => assert(false)).toThrowError("condition is not truthy");
+      expect(() => {
+        assert(false);
+      }).toThrowError("condition is not truthy");
     });
 
     it("assert should throw an error with custom message when condition is falsy", () => {
       const errorMessage = "Custom error message";
-      expect(() => assert(false, errorMessage)).toThrowError(errorMessage);
+      expect(() => {
+        assert(false, errorMessage);
+      }).toThrowError(errorMessage);
     });
   });
 
@@ -51,17 +57,23 @@ describe("assert", () => {
     it("throws for undefined values", () => {
       {
         const value: number | undefined = undefined;
-        expect(() => assertDefined(value)).toThrowError("value is undefined");
+        expect(() => {
+          assertDefined(value);
+        }).toThrowError("value is undefined");
       }
       {
         let value: string | undefined;
-        expect(() => assertDefined(value)).toThrowError("value is undefined");
+        expect(() => {
+          assertDefined(value);
+        }).toThrowError("value is undefined");
       }
     });
 
     it("throws with custom message", () => {
       const value: number | undefined = undefined;
-      expect(() => assertDefined(value, "Bug in the data source")).toThrowError("Bug in the data source");
+      expect(() => {
+        assertDefined(value, "Bug in the data source");
+      }).toThrowError("Bug in the data source");
     });
   });
 
@@ -95,24 +107,30 @@ describe("assert", () => {
     it("throws for undefined values", () => {
       {
         const value: number | undefined | null = undefined;
-        expect(() => assertDefinedAndNotNull(value)).toThrowError("value is undefined or null");
+        expect(() => {
+          assertDefinedAndNotNull(value);
+        }).toThrowError("value is undefined or null");
       }
       {
         let value: string | undefined | null;
-        expect(() => assertDefinedAndNotNull(value)).toThrowError("value is undefined or null");
+        expect(() => {
+          assertDefinedAndNotNull(value);
+        }).toThrowError("value is undefined or null");
       }
     });
 
     it("throws for null values", () => {
       const value: number | undefined | null = null;
-      expect(() => assertDefinedAndNotNull(value)).toThrowError("value is undefined or null");
+      expect(() => {
+        assertDefinedAndNotNull(value);
+      }).toThrowError("value is undefined or null");
     });
 
     it("throws with custom message", () => {
       const value: number | undefined = undefined;
-      expect(() => assertDefinedAndNotNull(value, "Bug in the data source")).toThrowError(
-        "Bug in the data source",
-      );
+      expect(() => {
+        assertDefinedAndNotNull(value, "Bug in the data source");
+      }).toThrowError("Bug in the data source");
     });
   });
 });

@@ -41,7 +41,7 @@ export class Uint32 implements Integer, WithByteConverters {
 
     for (let i = 0; i < bytes.length; ++i) {
       if (!Number.isInteger(bytes[i]) || bytes[i] > 255 || bytes[i] < 0) {
-        throw new Error("Invalid value in byte. Found: " + bytes[i]);
+        throw new Error(`Invalid value in byte. Found: ${bytes[i]}`);
       }
     }
 
@@ -204,7 +204,7 @@ export class Uint64 implements Integer, WithByteConverters {
     for (const byte of beBytes) {
       value *= 256n;
       if (!Number.isInteger(byte) || byte > 255 || byte < 0) {
-        throw new Error("Invalid value in byte. Found: " + byte);
+        throw new Error(`Invalid value in byte. Found: ${byte}`);
       }
       value += BigInt(byte);
     }

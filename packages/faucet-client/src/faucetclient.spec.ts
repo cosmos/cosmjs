@@ -41,8 +41,12 @@ describe("FaucetClient", () => {
     pendingWithoutFaucet();
     const faucet = new FaucetClient(faucetUrl);
     await faucet.credit(defaultAddress, "ETH").then(
-      () => fail("must not resolve"),
-      (error) => expect(error).toMatch(/token is not available/i),
+      () => {
+        fail("must not resolve");
+      },
+      (error) => {
+        expect(error).toMatch(/token is not available/i);
+      },
     );
   });
 
@@ -52,8 +56,12 @@ describe("FaucetClient", () => {
 
     for (const address of ["be5cc2cc05db2cdb4313c18306a5157291cfdcd1", "1234L"]) {
       await faucet.credit(address, primaryToken).then(
-        () => fail("must not resolve"),
-        (error) => expect(error).toMatch(/address is not in the expected format for this chain/i),
+        () => {
+          fail("must not resolve");
+        },
+        (error) => {
+          expect(error).toMatch(/address is not in the expected format for this chain/i);
+        },
       );
     }
   });

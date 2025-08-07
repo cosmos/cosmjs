@@ -1,6 +1,5 @@
 #!/usr/bin/env -S yarn node
 
-/* eslint-disable @typescript-eslint/naming-convention */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { calculateFee, GasPrice } = require("@cosmjs/stargate");
@@ -33,12 +32,7 @@ async function main() {
 
   const wasm = fs.readFileSync(__dirname + "/contracts/ibc_reflect.wasm");
   const uploadFee = calculateFee(2_500_000, gasPrice);
-  const uploadReceipt = await client.upload(
-    alice.address0,
-    wasm,
-    uploadFee,
-    "Upload IBC reflect contract",
-  );
+  const uploadReceipt = await client.upload(alice.address0, wasm, uploadFee, "Upload IBC reflect contract");
   console.info(`Upload succeeded. Receipt:`, uploadReceipt);
 
   const instantiateFee = calculateFee(900_000, gasPrice);
