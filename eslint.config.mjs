@@ -1,5 +1,5 @@
-import { fixupPluginRules } from "@eslint/compat";
 import js from "@eslint/js";
+// eslint-disable-next-line import/no-unresolved
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import importt from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier/recommended";
@@ -12,11 +12,10 @@ export default [
   },
   js.configs.recommended,
   prettier,
-  // importt.flatConfigs.recommended,
+  importt.flatConfigs.recommended,
   {
     plugins: {
       "simple-import-sort": simpleImportSort,
-      import: fixupPluginRules(importt),
     },
 
     languageOptions: {
@@ -59,6 +58,7 @@ export default [
       "simple-import-sort/exports": "warn",
     },
   },
+  { files: ["**/*.ts"], ...importt.flatConfigs.typescript },
   ...typescriptEslint.configs["flat/strict-type-checked"].map((c) => ({ files: ["**/*.ts"], ...c })),
   {
     files: ["**/*.ts"],
@@ -80,7 +80,6 @@ export default [
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
-      ...importt.flatConfigs.typescript.rules,
 
       // lints from 'strict-type-checked' config
       "@typescript-eslint/no-deprecated": "off",
