@@ -6,7 +6,7 @@ import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import CosmosApp from "@zondax/ledger-cosmos-js";
-import semver from "semver";
+import semverGte from "semver/functions/gte.js";
 
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
@@ -125,7 +125,7 @@ export class LedgerConnector {
 
   private async verifyAppVersion(): Promise<void> {
     const version = await this.getCosmosAppVersion();
-    if (!semver.gte(version, this.minLedgerAppVersion)) {
+    if (!semverGte(version, this.minLedgerAppVersion)) {
       throw new Error(
         `Outdated version: Please update ${this.ledgerAppName} Ledger App to the latest version.`,
       );
