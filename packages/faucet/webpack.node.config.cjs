@@ -8,6 +8,7 @@ module.exports = [
     target: target,
     entry: "./build/cli.js",
     output: {
+      asyncChunks: false,
       path: distdir,
       filename: "cli.js",
       library: {
