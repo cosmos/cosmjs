@@ -1,15 +1,15 @@
 import { Pubkey } from "@cosmjs/amino";
 import { encodePubkey } from "@cosmjs/proto-signing";
-import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing.js";
 import {
   GetTxRequest,
   GetTxResponse,
   ServiceClientImpl,
   SimulateRequest,
   SimulateResponse,
-} from "cosmjs-types/cosmos/tx/v1beta1/service";
-import { AuthInfo, Fee, Tx, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { Any } from "cosmjs-types/google/protobuf/any";
+} from "cosmjs-types/cosmos/tx/v1beta1/service.js";
+import { AuthInfo, Fee, Tx, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { createProtobufRpcClient, QueryClient } from "../../queryclient";
 

@@ -1,5 +1,10 @@
-import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
+import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov.js";
+import {
+  MsgDeposit,
+  MsgSubmitProposal,
+  MsgVote,
+  MsgVoteWeighted,
+} from "cosmjs-types/cosmos/gov/v1beta1/tx.js";
 
 import { AminoTypes } from "../../aminotypes";
 import {

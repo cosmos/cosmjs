@@ -2,7 +2,7 @@ import { makeCosmoshubPath } from "@cosmjs/amino";
 import { coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
-import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
+import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz.js";
 
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";

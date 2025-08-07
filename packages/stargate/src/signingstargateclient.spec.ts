@@ -11,14 +11,14 @@ import {
 import { connectComet } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
 import { DeepPartial } from "cosmjs-types";
-import { BinaryWriter } from "cosmjs-types/binary";
-import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant";
-import { MsgGrantAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
-import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
-import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { BinaryWriter } from "cosmjs-types/binary.js";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx.js";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
+import { BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant.js";
+import { MsgGrantAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx.js";
+import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
+import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { AminoTypes } from "./aminotypes";
 import {

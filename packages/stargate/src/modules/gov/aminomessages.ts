@@ -2,9 +2,14 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { Decimal } from "@cosmjs/math";
 import { assert, assertDefinedAndNotNull, isNonNullObject } from "@cosmjs/utils";
-import { TextProposal, voteOptionFromJSON } from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { TextProposal, voteOptionFromJSON } from "cosmjs-types/cosmos/gov/v1beta1/gov.js";
+import {
+  MsgDeposit,
+  MsgSubmitProposal,
+  MsgVote,
+  MsgVoteWeighted,
+} from "cosmjs-types/cosmos/gov/v1beta1/tx.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { AminoConverters } from "../../aminotypes";
 import { decodeCosmosSdkDecFromProto } from "../../queryclient";
