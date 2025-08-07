@@ -1,5 +1,4 @@
 import js from "@eslint/js";
-// eslint-disable-next-line import/no-unresolved
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import importt from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier/recommended";
@@ -26,6 +25,12 @@ export default [
       },
 
       ecmaVersion: 2022,
+    },
+
+    settings: {
+      "import/resolver": {
+        typescript: {},
+      },
     },
 
     rules: {
@@ -68,12 +73,6 @@ export default [
 
       parserOptions: {
         project: true,
-      },
-    },
-
-    settings: {
-      "import/resolver": {
-        typescript: {},
       },
     },
 
