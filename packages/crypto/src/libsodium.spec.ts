@@ -400,7 +400,7 @@ describe("Libsodium", () => {
   });
 
   describe("Xchacha20poly1305Ietf", () => {
-    it("can encrypt and decypt simple data", async () => {
+    it("can encrypt and decrypt simple data", async () => {
       const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8");
       const nonce = fromHex("000000000000000000000000000000000000000000000000");
 
