@@ -6,7 +6,7 @@ import { Coin } from "./coins";
 
 export interface AminoMsg {
   readonly type: string;
-  readonly value: any;
+  readonly value: Record<string, any>;
 }
 
 export interface StdFee {
