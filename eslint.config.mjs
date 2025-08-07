@@ -1,7 +1,6 @@
 import { fixupPluginRules } from "@eslint/compat";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
 import importt from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
@@ -60,15 +59,11 @@ export default [
       "simple-import-sort/exports": "warn",
     },
   },
+  ...typescriptEslint.configs["flat/strict-type-checked"].map((c) => ({ files: ["**/*.ts"], ...c })),
   {
     files: ["**/*.ts"],
 
-    plugins: {
-      "@typescript-eslint": fixupPluginRules(typescriptEslint),
-    },
-
     languageOptions: {
-      parser: tsParser,
       ecmaVersion: 2022,
 
       parserOptions: {
@@ -85,10 +80,6 @@ export default [
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
-      ...typescriptEslint.configs["flat/strict-type-checked"].reduce(
-        (obj, c) => Object.assign(obj, c.rules),
-        {},
-      ),
       ...importt.flatConfigs.typescript.rules,
 
       // lints from 'strict-type-checked' config
