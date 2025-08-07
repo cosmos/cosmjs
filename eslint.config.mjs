@@ -58,7 +58,6 @@ export default [
         },
       ],
 
-      "import/no-cycle": "off",
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
     },
