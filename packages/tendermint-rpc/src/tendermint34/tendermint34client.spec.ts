@@ -272,7 +272,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       if (tendermintEnabled()) {
         const client = Tendermint34Client.create(rpcFactory());
 
-        // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<void> {
           const tx = buildKvTx(randomString(), randomString());
 
@@ -463,7 +462,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       if (tendermintEnabled()) {
         const client = Tendermint34Client.create(rpcFactory());
 
-        // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
           const me = randomString();
           const tx = buildKvTx(txKey, me);
