@@ -1,12 +1,12 @@
 import { assert } from "@cosmjs/utils";
-import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
+import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank.js";
 import {
   QueryAllBalancesRequest,
   QueryClientImpl,
   QueryDenomsMetadataRequest,
   QueryTotalSupplyResponse,
-} from "cosmjs-types/cosmos/bank/v1beta1/query";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+} from "cosmjs-types/cosmos/bank/v1beta1/query.js";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 

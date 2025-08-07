@@ -9,7 +9,7 @@ import {
   QueryValidatorCommissionResponse,
   QueryValidatorOutstandingRewardsResponse,
   QueryValidatorSlashesResponse,
-} from "cosmjs-types/cosmos/distribution/v1beta1/query";
+} from "cosmjs-types/cosmos/distribution/v1beta1/query.js";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 

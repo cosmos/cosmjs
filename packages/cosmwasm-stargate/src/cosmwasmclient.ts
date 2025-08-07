@@ -23,14 +23,14 @@ import {
 } from "@cosmjs/stargate";
 import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
-import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import { TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci.js";
 import {
   CodeInfoResponse,
   QueryCodesResponse,
   QueryContractsByCodeResponse,
   QueryContractsByCreatorResponse,
-} from "cosmjs-types/cosmwasm/wasm/v1/query";
-import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
+} from "cosmjs-types/cosmwasm/wasm/v1/query.js";
+import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types.js";
 
 import { JsonObject, setupWasmExtension, WasmExtension } from "./modules";
 
