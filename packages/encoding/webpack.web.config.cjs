@@ -11,6 +11,7 @@ module.exports = [
     target: target,
     entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
+      asyncChunks: false,
       path: distdir,
       filename: "tests.js",
     },

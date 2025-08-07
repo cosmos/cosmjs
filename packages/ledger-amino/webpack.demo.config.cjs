@@ -11,6 +11,7 @@ module.exports = [
     target: target,
     entry: globSync("./build/demo/web.js"),
     output: {
+      asyncChunks: false,
       path: demodir,
       filename: "ledger.js",
     },
