@@ -17,7 +17,7 @@ import { Any } from "cosmjs-types/google/protobuf/any";
 
 /**
  * Takes a pubkey in the Amino JSON object style (type/value wrapper)
- * and convertes it into a protobuf `Any`.
+ * and converts it into a protobuf `Any`.
  *
  * This is the reverse operation to `decodePubkey`.
  */
