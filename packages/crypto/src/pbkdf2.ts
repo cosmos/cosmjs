@@ -2,6 +2,13 @@ import { assert } from "@cosmjs/utils";
 import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
 import { sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
+/**
+ * Returns the SubtleCrypto API for this environment if present.
+ *
+ * Right now (CosmJS 0.35), all supported environments we are aware of have
+ * SubtleCrypto. However, we keep the optional return type just in case as we can
+ * use the pure-JS fallback.
+ */
 export async function getSubtle(): Promise<typeof crypto.subtle | undefined> {
   // From Node.js 15 onwards, webcrypto is available in globalThis.
   // In version 15 and 16 this was stored under the webcrypto key.
@@ -9,13 +16,7 @@ export async function getSubtle(): Promise<typeof crypto.subtle | undefined> {
   // make it available.
   // Loading `require("crypto")` here seems unnecessary since it only
   // causes issues with bundlers and does not increase compatibility.
-
-  // Browsers and Node.js 17+
-  let subtle: typeof crypto.subtle | undefined = (globalThis as any)?.crypto?.subtle;
-  // Node.js 15+
-  if (!subtle) subtle = (globalThis as any)?.crypto?.webcrypto?.subtle;
-
-  return subtle;
+  return (globalThis as any)?.crypto?.subtle;
 }
 
 export async function pbkdf2Sha512Subtle(
