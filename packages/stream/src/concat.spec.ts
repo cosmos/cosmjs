@@ -152,7 +152,7 @@ describe("concat", () => {
 
   it("unsubscribes and re-subscribes from source streams", (done) => {
     // For browsers and CI, clocks and runtimes are very unreliable.
-    // Especialls Mac+Firefox on Travis is makes big trouble. Thus we need huge intervals.
+    // Especially Mac+Firefox on Travis makes big trouble. Thus we need huge intervals.
     const intervalDuration = 1000;
     const producerActiveLog = new Array<boolean>();
 
