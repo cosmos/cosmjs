@@ -143,7 +143,7 @@ describe("BankExtension", () => {
   });
 
   describe("denomMetadata", () => {
-    it("works for existent denom", async () => {
+    it("works for existing denom", async () => {
       pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
