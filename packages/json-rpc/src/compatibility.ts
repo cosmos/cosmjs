@@ -19,7 +19,7 @@ export interface JsonCompatibleArray extends ReadonlyArray<JsonCompatibleValue> 
  * A string to json value dictionary.
  */
 export interface JsonCompatibleDictionary {
-  readonly [key: string]: JsonCompatibleValue | readonly JsonCompatibleValue[];
+  readonly [key: string]: JsonCompatibleValue;
 }
 
 export function isJsonCompatibleValue(value: unknown): value is JsonCompatibleValue {
