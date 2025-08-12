@@ -4,7 +4,8 @@ import {
   isJsonCompatibleValue,
   JsonCompatibleDictionary,
   JsonCompatibleValue,
-} from "./compatibility";
+} from "@cosmjs/utils";
+
 import {
   JsonRpcError,
   JsonRpcErrorResponse,

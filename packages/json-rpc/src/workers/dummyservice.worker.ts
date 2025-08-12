@@ -2,7 +2,8 @@
 
 // for testing only
 
-import { isJsonCompatibleDictionary } from "../compatibility";
+import { isJsonCompatibleDictionary } from "@cosmjs/utils";
+
 import { parseJsonRpcId, parseJsonRpcRequest } from "../parse";
 import {
   jsonRpcCode,

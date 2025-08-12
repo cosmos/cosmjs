@@ -1,4 +1,4 @@
-import { JsonCompatibleArray, JsonCompatibleDictionary, JsonCompatibleValue } from "./compatibility";
+import type { JsonCompatibleArray, JsonCompatibleDictionary, JsonCompatibleValue } from "@cosmjs/utils";
 
 export type JsonRpcId = number | string;
 

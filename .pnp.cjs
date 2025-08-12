@@ -3638,6 +3638,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@cosmjs/json-rpc", "workspace:packages/json-rpc"],\
           ["@cosmjs/stream", "workspace:packages/stream"],\
+          ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
