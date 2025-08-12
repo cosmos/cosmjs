@@ -1,4 +1,4 @@
-import type { JsonCompatibleArray, JsonCompatibleDictionary, JsonCompatibleValue } from "@cosmjs/utils";
+import type { JsonArray, JsonObject, JsonValue } from "@cosmjs/utils";
 
 export type JsonRpcId = number | string;
 
@@ -6,7 +6,7 @@ export interface JsonRpcRequest {
   readonly jsonrpc: "2.0";
   readonly id: JsonRpcId;
   readonly method: string;
-  readonly params: JsonCompatibleArray | JsonCompatibleDictionary;
+  readonly params: JsonArray | JsonObject;
 }
 
 export interface JsonRpcSuccessResponse {
@@ -18,7 +18,7 @@ export interface JsonRpcSuccessResponse {
 export interface JsonRpcError {
   readonly code: number;
   readonly message: string;
-  readonly data?: JsonCompatibleValue;
+  readonly data?: JsonValue;
 }
 
 /**

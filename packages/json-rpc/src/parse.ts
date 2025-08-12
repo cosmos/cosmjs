@@ -1,10 +1,4 @@
-import {
-  isJsonCompatibleArray,
-  isJsonCompatibleDictionary,
-  isJsonCompatibleValue,
-  JsonCompatibleDictionary,
-  JsonCompatibleValue,
-} from "@cosmjs/utils";
+import { type JsonObject, type JsonValue, isJsonArray, isJsonObject, isJsonValue } from "@cosmjs/utils";
 
 import {
   JsonRpcError,
@@ -21,7 +15,7 @@ import {
  * Returns `null` when no valid ID was found.
  */
 export function parseJsonRpcId(data: unknown): JsonRpcId | null {
-  if (!isJsonCompatibleDictionary(data)) {
+  if (!isJsonObject(data)) {
     throw new Error("Data must be JSON compatible dictionary");
   }
 
@@ -33,7 +27,7 @@ export function parseJsonRpcId(data: unknown): JsonRpcId | null {
 }
 
 export function parseJsonRpcRequest(data: unknown): JsonRpcRequest {
-  if (!isJsonCompatibleDictionary(data)) {
+  if (!isJsonObject(data)) {
     throw new Error("Data must be JSON compatible dictionary");
   }
 
@@ -54,7 +48,7 @@ export function parseJsonRpcRequest(data: unknown): JsonRpcRequest {
     throw new Error(`Invalid "method" field. Must be a string.`);
   }
 
-  if (!isJsonCompatibleArray(data.params) && !isJsonCompatibleDictionary(data.params)) {
+  if (!isJsonArray(data.params) && !isJsonObject(data.params)) {
     throw new Error("Invalid params field");
   }
 
@@ -66,7 +60,7 @@ export function parseJsonRpcRequest(data: unknown): JsonRpcRequest {
   };
 }
 
-function parseError(error: JsonCompatibleDictionary): JsonRpcError {
+function parseError(error: JsonObject): JsonRpcError {
   if (typeof error.code !== "number") {
     throw new Error("Error property 'code' is not a number");
   }
@@ -75,11 +69,11 @@ function parseError(error: JsonCompatibleDictionary): JsonRpcError {
     throw new Error("Error property 'message' is not a string");
   }
 
-  let maybeUndefinedData: JsonCompatibleValue | undefined;
+  let maybeUndefinedData: JsonValue | undefined;
 
   if (error.data === undefined) {
     maybeUndefinedData = undefined;
-  } else if (isJsonCompatibleValue(error.data)) {
+  } else if (isJsonValue(error.data)) {
     maybeUndefinedData = error.data;
   } else {
     throw new Error("Error property 'data' is defined but not a JSON compatible value.");
@@ -94,7 +88,7 @@ function parseError(error: JsonCompatibleDictionary): JsonRpcError {
 
 /** Throws if data is not a JsonRpcErrorResponse */
 export function parseJsonRpcErrorResponse(data: unknown): JsonRpcErrorResponse {
-  if (!isJsonCompatibleDictionary(data)) {
+  if (!isJsonObject(data)) {
     throw new Error("Data must be JSON compatible dictionary");
   }
 
@@ -107,7 +101,7 @@ export function parseJsonRpcErrorResponse(data: unknown): JsonRpcErrorResponse {
     throw new Error("Invalid id field");
   }
 
-  if (typeof data.error === "undefined" || !isJsonCompatibleDictionary(data.error)) {
+  if (typeof data.error === "undefined" || !isJsonObject(data.error)) {
     throw new Error("Invalid error field");
   }
 
@@ -120,7 +114,7 @@ export function parseJsonRpcErrorResponse(data: unknown): JsonRpcErrorResponse {
 
 /** Throws if data is not a JsonRpcSuccessResponse */
 export function parseJsonRpcSuccessResponse(data: unknown): JsonRpcSuccessResponse {
-  if (!isJsonCompatibleDictionary(data)) {
+  if (!isJsonObject(data)) {
     throw new Error("Data must be JSON compatible dictionary");
   }
 
