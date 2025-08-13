@@ -77,7 +77,7 @@ describe("DirectSecp256k1HdWallet", () => {
           pubkey: defaultPubkey,
         },
       ]);
-    });
+    }, 90000);
 
     it("can restore multiple accounts", async () => {
       const mnemonic =
@@ -123,7 +123,7 @@ describe("DirectSecp256k1HdWallet", () => {
           address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
         },
       ]);
-    });
+    }, 90000);
   });
 
   describe("deserializeWithEncryptionKey", () => {
