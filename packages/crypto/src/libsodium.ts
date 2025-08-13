@@ -1,7 +1,7 @@
-import { isNonNullObject } from "@cosmjs/utils";
+import { assert, isNonNullObject } from "@cosmjs/utils";
 import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
 import { ed25519 } from "@noble/curves/ed25519.js";
-import { type ArgonOpts, argon2id } from "@noble/hashes/argon2.js";
+import { type IArgon2Options, argon2id } from "hash-wasm";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -36,18 +36,24 @@ export class Argon2id {
     salt: Uint8Array,
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
-    const opts: ArgonOpts = {
-      t: options.opsLimit,
-      m: options.memLimitKib,
-      p: 1, // no parallelism allowed, just like libsodium
-      dkLen: options.outputLength,
+    const opts: IArgon2Options = {
+      password,
+      salt,
+      outputType: "binary",
+      iterations: options.opsLimit,
+      memorySize: options.memLimitKib,
+      parallelism: 1, // no parallelism allowed, just like libsodium
+      hashLength: options.outputLength,
     };
 
     if (salt.length !== 16) {
       throw new Error(`Got invalid salt length ${salt.length}. Must be 16.`);
     }
 
-    return argon2id(password, salt, opts);
+    const hash = await argon2id(opts);
+    // guaranteed by outputType: 'binary'
+    assert(typeof hash !== "string");
+    return hash;
   }
 }
 
