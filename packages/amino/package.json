@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/amino",
-  "version": "0.35.0-rc.0",
+  "version": "0.35.0",
   "description": "Helpers for Amino based signing.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -63,6 +63,5 @@
     "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
-  },
-  "stableVersion": "0.34.0"
+  }
 }
