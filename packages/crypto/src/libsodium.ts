@@ -118,10 +118,7 @@ export class Xchacha20poly1305Ietf {
 
     const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    let ciphertext: Uint8Array = new Uint8Array(message.length + 16);
-    ciphertext = cipher.encrypt(message, ciphertext);
-
-    return ciphertext;
+    return cipher.encrypt(message);
   }
 
   public static async decrypt(
@@ -133,9 +130,6 @@ export class Xchacha20poly1305Ietf {
 
     const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    let plaintext: Uint8Array = new Uint8Array(ciphertext.length - 16);
-    plaintext = cipher.decrypt(ciphertext, plaintext);
-
-    return plaintext;
+    return cipher.decrypt(ciphertext);
   }
 }
