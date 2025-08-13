@@ -278,10 +278,6 @@ const RAW_RUNTIME_STATE =
       "npm:4.12.1"\
     ],\
     [\
-      "@eslint/compat",\
-      "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"\
-    ],\
-    [\
       "@eslint/eslintrc",\
       "npm:3.3.1"\
     ],\
@@ -3106,7 +3102,6 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
-          ["@eslint/compat", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"],\
           ["@eslint/eslintrc", "npm:3.3.1"],\
           ["@eslint/js", "npm:8.57.1"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.39.0"],\
@@ -4016,28 +4011,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@eslint-community-regexpp-npm-4.12.1-ef4ab5217e-a03d98c246.zip/node_modules/@eslint-community/regexpp/",\
         "packageDependencies": [\
           ["@eslint-community/regexpp", "npm:4.12.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@eslint/compat", [\
-      ["npm:1.3.1", {\
-        "packageLocation": "./.yarn/cache/@eslint-compat-npm-1.3.1-41a44c7960-8dfcea5ecb.zip/node_modules/@eslint/compat/",\
-        "packageDependencies": [\
-          ["@eslint/compat", "npm:1.3.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1", {\
-        "packageLocation": "./.yarn/__virtual__/@eslint-compat-virtual-feb91cc737/0/cache/@eslint-compat-npm-1.3.1-41a44c7960-8dfcea5ecb.zip/node_modules/@eslint/compat/",\
-        "packageDependencies": [\
-          ["@eslint/compat", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"],\
-          ["@types/eslint", null],\
-          ["eslint", "npm:8.57.1"]\
-        ],\
-        "packagePeers": [\
-          "@types/eslint",\
-          "eslint"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7435,7 +7408,6 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@cosmjs/proto-signing", "workspace:packages/proto-signing"],\
           ["@cosmjs/stargate", "workspace:packages/stargate"],\
-          ["@eslint/compat", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:1.3.1"],\
           ["@eslint/eslintrc", "npm:3.3.1"],\
           ["@eslint/js", "npm:8.57.1"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.39.0"],\
