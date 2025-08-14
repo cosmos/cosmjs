@@ -6,6 +6,40 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Migrate from libsodium to different implementation in order to reduce bundle
+  size and improve compatibility.
+
+  - ed25519 now uses @noble/curves
+  - xchacha20poly1305 now uses @noble/ciphers
+  - Argon2 now uses hash-wasm
+
+  ([#1722])
+
+[#1722]: https://github.com/cosmos/cosmjs/pull/1722
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
+
+  A scream test was established which slows down the key derivation function a
+  lot. This simulates the use of a pure-JS implementation of Argon2 which we
+  will use on one of the next releases. If this causes problems for your app,
+  switch back to `^0.35.0` and comment in the issue.
+
+  ([#1797])
+
+[#1797]: https://github.com/cosmos/cosmjs/pull/1797
+
 ## [0.35.0] - 2025-08-13
 
 ### Added
