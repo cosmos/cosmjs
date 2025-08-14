@@ -414,6 +414,10 @@ const RAW_RUNTIME_STATE =
       "npm:0.2.12"\
     ],\
     [\
+      "@noble/ciphers",\
+      "npm:1.3.0"\
+    ],\
+    [\
       "@noble/curves",\
       "npm:1.9.2"\
     ],\
@@ -1710,6 +1714,10 @@ const RAW_RUNTIME_STATE =
       "npm:3.1.0"\
     ],\
     [\
+      "hash-wasm",\
+      "npm:4.12.0"\
+    ],\
+    [\
       "hasha",\
       "npm:5.2.2"\
     ],\
@@ -2104,14 +2112,6 @@ const RAW_RUNTIME_STATE =
     [\
       "levn",\
       "npm:0.4.1"\
-    ],\
-    [\
-      "libsodium-sumo",\
-      "npm:0.7.11"\
-    ],\
-    [\
-      "libsodium-wrappers-sumo",\
-      "npm:0.7.11"\
     ],\
     [\
       "linkify-it",\
@@ -3504,6 +3504,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@noble/ciphers", "npm:1.3.0"],\
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
@@ -3514,6 +3515,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.10.6"],\
           ["buffer", "npm:6.0.3"],\
           ["glob", "npm:11.0.3"],\
+          ["hash-wasm", "npm:4.12.0"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["karma", "npm:6.3.16"],\
@@ -3521,7 +3523,6 @@ const RAW_RUNTIME_STATE =
           ["karma-firefox-launcher", "npm:2.1.0"],\
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:3.5.3"],\
           ["ses", "npm:1.13.1"],\
@@ -4473,6 +4474,15 @@ const RAW_RUNTIME_STATE =
           ["@emnapi/runtime", "npm:1.4.5"],\
           ["@napi-rs/wasm-runtime", "npm:0.2.12"],\
           ["@tybys/wasm-util", "npm:0.10.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@noble/ciphers", [\
+      ["npm:1.3.0", {\
+        "packageLocation": "./.yarn/cache/@noble-ciphers-npm-1.3.0-73a7db337f-3ba6da645c.zip/node_modules/@noble/ciphers/",\
+        "packageDependencies": [\
+          ["@noble/ciphers", "npm:1.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9348,6 +9358,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["hash-wasm", [\
+      ["npm:4.12.0", {\
+        "packageLocation": "./.yarn/unplugged/hash-wasm-npm-4.12.0-d6bb202626/node_modules/hash-wasm/",\
+        "packageDependencies": [\
+          ["hash-wasm", "npm:4.12.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["hasha", [\
       ["npm:5.2.2", {\
         "packageLocation": "./.yarn/cache/hasha-npm-5.2.2-d171116d12-9d10d4e665.zip/node_modules/hasha/",\
@@ -10508,25 +10527,6 @@ const RAW_RUNTIME_STATE =
           ["levn", "npm:0.4.1"],\
           ["prelude-ls", "npm:1.2.1"],\
           ["type-check", "npm:0.4.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["libsodium-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-sumo-npm-0.7.11-aaac6bcc6c-f7518d1781.zip/node_modules/libsodium-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["libsodium-wrappers-sumo", [\
-      ["npm:0.7.11", {\
-        "packageLocation": "./.yarn/cache/libsodium-wrappers-sumo-npm-0.7.11-08fe1b2cf4-81270738b3.zip/node_modules/libsodium-wrappers-sumo/",\
-        "packageDependencies": [\
-          ["libsodium-sumo", "npm:0.7.11"],\
-          ["libsodium-wrappers-sumo", "npm:0.7.11"]\
         ],\
         "linkType": "HARD"\
       }]\

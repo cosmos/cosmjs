@@ -40,9 +40,10 @@
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
+    "@noble/ciphers": "^1.3.0",
     "@noble/curves": "^1.9.2",
     "@noble/hashes": "^1",
-    "libsodium-wrappers-sumo": "^0.7.11"
+    "hash-wasm": "^4.12.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

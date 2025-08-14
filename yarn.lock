@@ -322,6 +322,7 @@ __metadata:
     "@cosmjs/math": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
+    "@noble/ciphers": "npm:^1.3.0"
     "@noble/curves": "npm:^1.9.2"
     "@noble/hashes": "npm:^1"
     "@types/jasmine": "npm:^4"
@@ -332,6 +333,7 @@ __metadata:
     "@types/node": "npm:*"
     buffer: "npm:^6.0.3"
     glob: "npm:^11"
+    hash-wasm: "npm:^4.12.0"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
     karma: "npm:^6.3.14"
@@ -339,7 +341,6 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    libsodium-wrappers-sumo: "npm:^0.7.11"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
@@ -1165,6 +1166,13 @@ __metadata:
     "@emnapi/runtime": "npm:^1.4.3"
     "@tybys/wasm-util": "npm:^0.10.0"
   checksum: 10c0/6d07922c0613aab30c6a497f4df297ca7c54e5b480e00035e0209b872d5c6aab7162fc49477267556109c2c7ed1eb9c65a174e27e9b87568106a87b0a6e3ca7d
+  languageName: node
+  linkType: hard
+
+"@noble/ciphers@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@noble/ciphers@npm:1.3.0"
+  checksum: 10c0/3ba6da645ce45e2f35e3b2e5c87ceba86b21dfa62b9466ede9edfb397f8116dae284f06652c0cd81d99445a2262b606632e868103d54ecc99fd946ae1af8cd37
   languageName: node
   linkType: hard
 
@@ -4594,6 +4602,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hash-wasm@npm:^4.12.0":
+  version: 4.12.0
+  resolution: "hash-wasm@npm:4.12.0"
+  checksum: 10c0/6cb95055319810b6f673de755289960683a9831807690795f0e8918b2fd7e6ae5b82a9dc47cbace171cf2814b412ef68c315a0ead0b4d96bd3e56a05e4bde136
+  languageName: node
+  linkType: hard
+
 "hasha@npm:^5.0.0":
   version: 5.2.2
   resolution: "hasha@npm:5.2.2"
@@ -5605,22 +5620,6 @@ __metadata:
     prelude-ls: "npm:^1.2.1"
     type-check: "npm:~0.4.0"
   checksum: 10c0/effb03cad7c89dfa5bd4f6989364bfc79994c2042ec5966cb9b95990e2edee5cd8969ddf42616a0373ac49fac1403437deaf6e9050fbbaa3546093a59b9ac94e
-  languageName: node
-  linkType: hard
-
-"libsodium-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-sumo@npm:0.7.11"
-  checksum: 10c0/f7518d178148d17c04d716898ea8aa5c5ebc302920ff67258a1fbe52e9d4605bb4a9912541db06bce7c16bde9a3af86110b749c869846d087a1b64a921007db8
-  languageName: node
-  linkType: hard
-
-"libsodium-wrappers-sumo@npm:^0.7.11":
-  version: 0.7.11
-  resolution: "libsodium-wrappers-sumo@npm:0.7.11"
-  dependencies:
-    libsodium-sumo: "npm:^0.7.11"
-  checksum: 10c0/81270738b3e7c50910c34e161aa34d84ab6fbfe9e5256561fc279498b594cb3b090c58ec19d40ada67dc24e7f1f7e018d9fd68d2ae367196116164795b6d2896
   languageName: node
   linkType: hard
 

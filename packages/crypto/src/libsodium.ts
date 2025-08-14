@@ -1,13 +1,7 @@
-// Keep all classes requiring libsodium-js in one file as having multiple
-// requiring of the libsodium-wrappers module currently crashes browsers
-//
-// libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
-
-import { isNonNullObject } from "@cosmjs/utils";
-// Using crypto_pwhash requires sumo. Once we migrate to a standalone
-// Argon2 implementation, we can use the normal libsodium-wrappers
-// again: https://github.com/cosmos/cosmjs/issues/1031
-import sodium from "libsodium-wrappers-sumo";
+import { assert, isNonNullObject } from "@cosmjs/utils";
+import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
+import { ed25519 } from "@noble/curves/ed25519.js";
+import { type IArgon2Options, argon2id } from "hash-wasm";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -42,15 +36,24 @@ export class Argon2id {
     salt: Uint8Array,
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
-    await sodium.ready;
-    return sodium.crypto_pwhash(
-      options.outputLength,
+    const opts: IArgon2Options = {
       password,
-      salt, // libsodium only supports 16 byte salts and will throw when you don't respect that
-      options.opsLimit,
-      options.memLimitKib * 1024,
-      sodium.crypto_pwhash_ALG_ARGON2ID13,
-    );
+      salt,
+      outputType: "binary",
+      iterations: options.opsLimit,
+      memorySize: options.memLimitKib,
+      parallelism: 1, // no parallelism allowed, just like libsodium
+      hashLength: options.outputLength,
+    };
+
+    if (salt.length !== 16) {
+      throw new Error(`Got invalid salt length ${salt.length}. Must be 16.`);
+    }
+
+    const hash = await argon2id(opts);
+    // guaranteed by outputType: 'binary'
+    assert(typeof hash !== "string");
+    return hash;
   }
 }
 
@@ -85,15 +88,13 @@ export class Ed25519 {
    * https://download.libsodium.org/doc/public-key_cryptography/public-key_signatures.html
    * and diagram on https://blog.mozilla.org/warner/2011/11/29/ed25519-keys/
    */
-  public static async makeKeypair(seed: Uint8Array): Promise<Ed25519Keypair> {
-    await sodium.ready;
-    const keypair = sodium.crypto_sign_seed_keypair(seed);
-    return Ed25519Keypair.fromLibsodiumPrivkey(keypair.privateKey);
+  public static async makeKeypair(privKey: Uint8Array): Promise<Ed25519Keypair> {
+    const pubKey = ed25519.getPublicKey(privKey);
+    return new Ed25519Keypair(privKey, pubKey);
   }
 
   public static async createSignature(message: Uint8Array, keyPair: Ed25519Keypair): Promise<Uint8Array> {
-    await sodium.ready;
-    return sodium.crypto_sign_detached(message, keyPair.toLibsodiumPrivkey());
+    return ed25519.sign(message, keyPair.privkey);
   }
 
   public static async verifySignature(
@@ -101,8 +102,7 @@ export class Ed25519 {
     message: Uint8Array,
     pubkey: Uint8Array,
   ): Promise<boolean> {
-    await sodium.ready;
-    return sodium.crypto_sign_verify_detached(signature, message, pubkey);
+    return ed25519.verify(signature, message, pubkey);
   }
 }
 
@@ -115,17 +115,11 @@ export const xchacha20NonceLength = 24;
 
 export class Xchacha20poly1305Ietf {
   public static async encrypt(message: Uint8Array, key: Uint8Array, nonce: Uint8Array): Promise<Uint8Array> {
-    await sodium.ready;
+    const additionalAuthenticatedData = undefined;
 
-    const additionalData = null;
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    return sodium.crypto_aead_xchacha20poly1305_ietf_encrypt(
-      message,
-      additionalData,
-      null, // secret nonce: unused and should be null (https://download.libsodium.org/doc/secret-key_cryptography/aead/chacha20-poly1305/xchacha20-poly1305_construction)
-      nonce,
-      key,
-    );
+    return cipher.encrypt(message);
   }
 
   public static async decrypt(
@@ -133,16 +127,10 @@ export class Xchacha20poly1305Ietf {
     key: Uint8Array,
     nonce: Uint8Array,
   ): Promise<Uint8Array> {
-    await sodium.ready;
+    const additionalAuthenticatedData = undefined;
 
-    const additionalData = null;
+    const cipher = xchacha20poly1305(key, nonce, additionalAuthenticatedData);
 
-    return sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
-      null, // secret nonce: unused and should be null (https://download.libsodium.org/doc/secret-key_cryptography/aead/chacha20-poly1305/xchacha20-poly1305_construction)
-      ciphertext,
-      additionalData,
-      nonce,
-      key,
-    );
+    return cipher.decrypt(ciphertext);
   }
 }
