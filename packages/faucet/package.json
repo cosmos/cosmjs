@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "description": "The faucet",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",

@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/stargate",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
