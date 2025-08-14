@@ -4,6 +4,7 @@
   <a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">
     <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/cosmos/cosmjs.svg" />
   </a>
+  <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2025" />
 </div>
 
 CosmJS is the Swiss Army knife to power JavaScript based client solutions
