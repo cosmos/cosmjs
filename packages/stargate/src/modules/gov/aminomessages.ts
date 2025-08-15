@@ -28,7 +28,7 @@ export interface AminoMsgSubmitProposal extends AminoMsg {
      */
     readonly content: {
       readonly type: string;
-      readonly value: any;
+      readonly value: Record<string, any>;
     };
     readonly initial_deposit: readonly Coin[];
     /** Bech32 account address */
