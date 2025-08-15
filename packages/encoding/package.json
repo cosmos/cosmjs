@@ -28,7 +28,7 @@
     "docs": "typedoc",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "test-node": "yarn node jasmine-testrunner.cjs",
+    "test-node": "vitest run --globals",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn build-or-skip && yarn test-node",
@@ -45,14 +45,11 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/base64-js": "^1.2.5",
-    "@types/jasmine": "^4",
     "@types/karma-firefox-launcher": "^2",
     "@types/karma-jasmine": "^4",
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/node": "*",
     "glob": "^11",
-    "jasmine": "^4",
-    "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
@@ -64,6 +61,7 @@
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
     "typescript": "~5.9",
+    "vitest": "^3.2.4",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }
