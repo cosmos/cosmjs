@@ -10,10 +10,10 @@ import {
 } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
-import { PubKey as CosmosCryptoEd25519Pubkey } from "cosmjs-types/cosmos/crypto/ed25519/keys";
-import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys";
-import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { PubKey as CosmosCryptoEd25519Pubkey } from "cosmjs-types/cosmos/crypto/ed25519/keys.js";
+import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys.js";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 /**
  * Takes a pubkey in the Amino JSON object style (type/value wrapper)
