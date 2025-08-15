@@ -85,7 +85,7 @@ describe("RFC3339", () => {
     expect(fromRfc3339("2002-10-02T11:12:13.1Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 100)));
     expect(fromRfc3339("2002-10-02T11:12:13.9Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 900)));
 
-    // 2 digit
+    // 2 digits
     expect(fromRfc3339("2002-10-02T11:12:13.00Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 0)));
     expect(fromRfc3339("2002-10-02T11:12:13.12Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 120)));
     expect(fromRfc3339("2002-10-02T11:12:13.99Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13, 990)));
