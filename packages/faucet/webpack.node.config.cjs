@@ -1,12 +1,12 @@
 const path = require("path");
 
 const target = "node";
-const distdir = path.join(__dirname, "dist", target);
+const distdir = path.join(__dirname, "build", target);
 
 module.exports = [
   {
     target: target,
-    entry: "./build/cli.js",
+    entry: "./dist/cli.js",
     output: {
       asyncChunks: false,
       path: distdir,
