@@ -257,7 +257,7 @@ describe("multisignature", () => {
           signingInstruction.sequence,
           signingInstruction.fee,
           bodyBytes,
-          new Map<`${string}1${string}`, Uint8Array>([
+          new Map<string, Uint8Array>([
             [address0, signature0],
             [address1, signature1],
             [address2, signature2],

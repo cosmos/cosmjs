@@ -9,7 +9,7 @@ import { QueryClient } from "./queryclient";
  * This is called AccAddress in Cosmos SDK, which is basically an alias for raw binary data.
  * The result is typically 20 bytes long but not restricted to that.
  */
-export function toAccAddress(address: `${string}1${string}`): Uint8Array {
+export function toAccAddress(address: string): Uint8Array {
   return fromBech32(address).data;
 }
 
