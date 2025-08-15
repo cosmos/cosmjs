@@ -30,7 +30,7 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./dist/ && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
