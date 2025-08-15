@@ -65,7 +65,7 @@ export function getHackatom(): ContractUploadInstructions {
   };
 }
 
-export function makeRandomAddress(): `${string}1${string}` {
+export function makeRandomAddress(): string {
   return toBech32("wasm", Random.getBytes(20));
 }
 

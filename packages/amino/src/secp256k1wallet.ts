@@ -33,7 +33,7 @@ export class Secp256k1Wallet implements OfflineAminoSigner {
     this.prefix = prefix;
   }
 
-  private get address(): `${string}1${string}` {
+  private get address(): string {
     return toBech32(this.prefix, rawSecp256k1PubkeyToRawAddress(this.pubkey));
   }
 
