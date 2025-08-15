@@ -7,7 +7,7 @@ import { ChainConstants, Webserver } from "./webserver";
 
 function pendingWithoutSimapp(): void {
   if (!process.env.SIMAPP47_ENABLED && !process.env.SIMAPP50_ENABLED) {
-    pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
+    pending("Set SIMAPP{47,50}_ENABLED to enable Stargate node-based tests");
     return;
   }
 }
