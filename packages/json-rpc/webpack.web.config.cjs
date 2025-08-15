@@ -8,7 +8,7 @@ module.exports = [
   {
     // bundle for WebWorker tests
     target: target,
-    entry: "./dist/workers/dummyservice.worker.js",
+    entry: "./build/workers/dummyservice.worker.js",
     output: {
       asyncChunks: false,
       path: distdir,
@@ -18,7 +18,7 @@ module.exports = [
   {
     // bundle used for Karma tests
     target: target,
-    entry: globSync("./dist/**/*.spec.js", { dotRelative: true }).sort(),
+    entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
       path: distdir,
