@@ -8,11 +8,11 @@
   ],
   "license": "Apache-2.0",
   "exports": {
-    "types": "./build/index.d.ts",
-    "default": "./build/index.js"
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
   },
   "files": [
-    "build/",
+    "dist/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
@@ -29,7 +29,7 @@
     "docs": "typedoc",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "build": "rm -rf ./build && tsc",
+    "build": "rm -rf ./dist/ && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
