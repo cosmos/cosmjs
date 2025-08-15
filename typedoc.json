@@ -1,0 +1,8 @@
+{
+  "entryPoints": ["./src"],
+  "exclude": "**/*.spec.ts",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "out": "docs",
+  "readme": "README.md"
+}
