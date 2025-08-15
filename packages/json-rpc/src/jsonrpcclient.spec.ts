@@ -35,7 +35,7 @@ function makeSimpleMessagingConnection(
 }
 
 describe("JsonRpcClient", () => {
-  const dummyserviceKarmaUrl = "/base/dist/web/dummyservice.worker.js";
+  const dummyserviceKarmaUrl = "/base/build/web/dummyservice.worker.js";
 
   it("can be constructed with a Worker", () => {
     pendingWithoutWorker();
