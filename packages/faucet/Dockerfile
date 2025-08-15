@@ -17,7 +17,7 @@ RUN apk add --update --no-cache alpine-sdk linux-headers build-base gcc libusb-d
 RUN ln -sf python3 /usr/bin/python
 
 RUN yarn install && yarn run build
-RUN (cd packages/faucet && SKIP_BUILD=1 yarn pack-node)
+RUN (cd packages/faucet && yarn run pack-node)
 
 # Use Alpine and install Node.js which is 50% smaller than the -alpine version of the node
 # image (53 MB including the faucet app).

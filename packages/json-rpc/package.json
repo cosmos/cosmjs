@@ -8,6 +8,7 @@
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "type": "commonjs",
   "exports": {
     "types": "./dist/index.d.ts",
     "default": "./dist/index.js"
@@ -33,11 +34,11 @@
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "build": "rm -rf ./dist/ && tsc && tsc -p src/workers/tsconfig.json",
-    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
+    "build": "tsdown --format cjs --unbundle",
+    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
+    "pack-web": "yarn run build:test && tsdown --format cjs src/workers/*.ts -d build/workers/ && webpack --mode development --config webpack.web.config.cjs"
   },
   "dependencies": {
     "@cosmjs/stream": "workspace:^",
@@ -61,6 +62,7 @@
     "prettier": "^3.5.3",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
+    "tsdown": "^0.14.2",
     "typedoc": "^0.28",
     "typescript": "~5.9",
     "webpack": "^5.76.0",

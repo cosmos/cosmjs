@@ -9,7 +9,7 @@ module.exports = [
   {
     // bundle used for Karma tests
     target: target,
-    entry: globSync("./dist/**/*.spec.js", { dotRelative: true }).sort(),
+    entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
       path: distdir,
