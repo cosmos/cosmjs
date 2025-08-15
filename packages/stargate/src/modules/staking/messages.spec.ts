@@ -16,11 +16,11 @@ import {
 } from "../../testutils.spec";
 import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages";
 
-function changePrefix(address: `${string}1${string}`, newPrefix: string): `${string}1${string}` {
+function changePrefix(address: string, newPrefix: string): `${string}1${string}` {
   return toBech32(newPrefix, fromBech32(address).data);
 }
 
-async function sendFeeAndStakingTokens(address: `${string}1${string}`): Promise<void> {
+async function sendFeeAndStakingTokens(address: string): Promise<void> {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
   const [firstAccount] = await wallet.getAccounts();
   const client = await SigningStargateClient.connectWithSigner(

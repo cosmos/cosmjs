@@ -4,7 +4,7 @@ import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
 export interface AccountData {
   /** A printable address (typically bech32 encoded) */
-  readonly address: `${string}1${string}`;
+  readonly address: string;
   readonly algo: Algo;
   readonly pubkey: Uint8Array;
 }

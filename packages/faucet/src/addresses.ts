@@ -6,7 +6,7 @@ const lengthLimit = 512;
 
 export function isValidAddress(input: string, requiredPrefix: string): boolean {
   try {
-    const { prefix, data } = fromBech32(input as `${string}1${string}`, lengthLimit);
+    const { prefix, data } = fromBech32(input, lengthLimit);
     if (prefix !== requiredPrefix) {
       return false;
     }
