@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@cosmjs/*": [
+        "packages/*"
+      ]
+    },
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

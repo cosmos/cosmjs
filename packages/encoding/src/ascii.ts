@@ -7,7 +7,7 @@ export function toAscii(input: string): Uint8Array {
       // 0x7F delete character
       // 0x80–0xFF out of 7 bit ascii range
       if (charCode < 0x20 || charCode > 0x7e) {
-        throw new Error("Cannot encode character that is out of printable ASCII range: " + charCode);
+        throw new Error(`Cannot encode character that is out of printable ASCII range: ${charCode}`);
       }
       return charCode;
     });
@@ -22,7 +22,7 @@ export function fromAscii(data: Uint8Array): string {
       // 0x7F delete character
       // 0x80–0xFF out of 7 bit ascii range
       if (x < 0x20 || x > 0x7e) {
-        throw new Error("Cannot decode character that is out of printable ASCII range: " + x);
+        throw new Error(`Cannot decode character that is out of printable ASCII range: ${x}`);
       }
       return String.fromCharCode(x);
     });

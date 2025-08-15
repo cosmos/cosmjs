@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { addCoins } from "@cosmjs/amino";
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
@@ -111,7 +110,7 @@ export interface DeliverTxResponse {
   readonly height: number;
   /** The position of the transaction within the block. This is a 0-based index. */
   readonly txIndex: number;
-  /** Error code. The transaction suceeded if and only if code is 0. */
+  /** Error code. The transaction succeeded if and only if code is 0. */
   readonly code: number;
   readonly transactionHash: string;
   readonly events: readonly Event[];

@@ -6,6 +6,44 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.36.0] - 2025-08-14
+
+### Changed
+
+- Migrate from libsodium to different implementation in order to reduce bundle
+  size and improve compatibility.
+
+  - ed25519 now uses @noble/curves
+  - xchacha20poly1305 now uses @noble/ciphers
+  - Argon2 now uses hash-wasm
+
+  ([#1722])
+
+[#1722]: https://github.com/cosmos/cosmjs/pull/1722
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
+
+  A scream test was established which slows down the key derivation function a
+  lot. This simulates the use of a pure-JS implementation of Argon2 which we
+  will use on one of the next releases. If this causes problems for your app,
+  switch back to `^0.35.0` and comment in the issue.
+
+  ([#1797])
+
+[#1797]: https://github.com/cosmos/cosmjs/pull/1797
+
+## [0.35.0] - 2025-08-13
+
 ### Added
 
 - @cosmjs/tendermint-rpc: Add timeout option for HTTP requests in `HttpClient`
@@ -16,18 +54,32 @@ and this project adheres to
 ### Changed
 
 - all: Drop support for Node.js < 20.
+- all: All JS output is now es2022.
+- all: Upgrade cosmjs-types to ^0.10.1 (Cosmos SDK 0.50 series)
 - @cosmjs/cli: package got removed with no replacement
 - @cosmjs/tendermint-rpc: Make constructor functions
   `Tendermint34Client.create`, `Tendermint37Client.create` and
   `Comet38Client.create` non-async. ([#1597])
+- @cosmjs/tendermint-rpc, @cosmjs/faucet-client: Remove cross-fetch polyfilling.
+- @cosmjs/tendermint-rpc: Avoid unnecessary status request when connecting a
+  `Comet38Client`, `Tendermint37Client` or `Tendermint34Client`. ([#1772])
+- @cosmjs/tendermint-rpc: The fields in `interface ConsensusParams` are now
+  optional as Tendermint RPC might omit them.
 - @cosmjs/stargate: Make constructor functions `{Signing,}StargateClient.create`
   and `SigningStargateClient.createWithSigner` non-async. ([#1597])
 - @cosmjs/cosmwasm: Make constructor functions `{Signing,}CosmWasmClient.create`
   and `SigningCosmWasmClient.createWithSigner` non-async. ([#1597])
 - replace bn.js dependency with bigint ([#1720])
+- @cosmjs/stargate: the `GasPrice` constructor now enforces a non-empty denom.
+  ([#1761])
+- @cosmjs/amino: `parseCoins` now supports denoms with colons, periods,
+  underscores and dashes ([#1763])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
+[#1761]: https://github.com/cosmos/cosmjs/pull/1761
+[#1763]: https://github.com/cosmos/cosmjs/pull/1763
+[#1772]: https://github.com/cosmos/cosmjs/pull/1772
 
 ## [0.34.0] - 2025-07-11
 
@@ -1536,7 +1588,9 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.34.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.36.0...HEAD
+[0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
+[0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
 [0.34.0]: https://github.com/cosmos/cosmjs/compare/v0.33.1...v0.34.0
 [0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
 [0.33.0]: https://github.com/cosmos/cosmjs/compare/v0.32.4...v0.33.0

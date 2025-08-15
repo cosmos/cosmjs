@@ -7,7 +7,6 @@ describe("encoding", () => {
       expect(toBinary({})).toEqual("e30=");
 
       // echo -n '{"swap":{"max_spread":"0.25"}}' | base64
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       expect(toBinary({ swap: { max_spread: "0.25" } })).toEqual("eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjI1In19");
 
       // echo -n '{"num":3.45,"null":null,"bool":true,"obj":{"str":"bar"}}' | base64
@@ -55,7 +54,6 @@ describe("encoding", () => {
 
       // echo -n '{"swap":{"max_spread":"0.25"}}' | base64
       expect(fromBinary("eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjI1In19")).toEqual({
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         swap: { max_spread: "0.25" },
       });
 

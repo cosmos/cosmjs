@@ -32,7 +32,9 @@ describe("QueueingStreamingSocket", () => {
       });
 
       socket.connect();
-      requests.forEach((request) => socket.queueRequest(request));
+      requests.forEach((request) => {
+        socket.queueRequest(request);
+      });
     });
 
     it("can queue requests without a connection and process them later", (done) => {
@@ -51,7 +53,9 @@ describe("QueueingStreamingSocket", () => {
         },
       });
 
-      requests.forEach((request) => socket.queueRequest(request));
+      requests.forEach((request) => {
+        socket.queueRequest(request);
+      });
       setTimeout(() => {
         expect(socket.getQueueLength()).toEqual(3);
         socket.connect();
@@ -71,7 +75,9 @@ describe("QueueingStreamingSocket", () => {
             done();
           }
         },
-        complete: () => done.fail("Stream completed"),
+        complete: () => {
+          done.fail("Stream completed");
+        },
       });
 
       socket.connect();
@@ -89,7 +95,9 @@ describe("QueueingStreamingSocket", () => {
       socket.connect();
       socket.disconnect();
 
-      requests.forEach((request) => socket.queueRequest(request));
+      requests.forEach((request) => {
+        socket.queueRequest(request);
+      });
 
       socket.events.subscribe({
         next: (event) => {
@@ -148,7 +156,9 @@ describe("QueueingStreamingSocket", () => {
       setTimeout(() => {
         socket.disconnect();
         socket.reconnect();
-        setTimeout(() => socket.disconnect(), 1000);
+        setTimeout(() => {
+          socket.disconnect();
+        }, 1000);
       }, 1000);
     });
   });

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { assert, sleep } from "@cosmjs/utils";
@@ -272,7 +271,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       if (tendermintEnabled()) {
         const client = Comet38Client.create(rpcFactory());
 
-        // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<void> {
           const tx = buildKvTx(randomString(), randomString());
 
@@ -464,7 +462,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       if (tendermintEnabled()) {
         const client = Comet38Client.create(rpcFactory());
 
-        // eslint-disable-next-line no-inner-declarations
         async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
           const me = randomString();
           const tx = buildKvTx(txKey, me);
@@ -682,7 +679,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           }
         },
         error: done.fail,
-        complete: () => done.fail("Stream completed before we are done"),
+        complete: () => {
+          done.fail("Stream completed before we are done");
+        },
       });
     })().catch(done.fail);
   });

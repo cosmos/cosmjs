@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
   coins,

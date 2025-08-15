@@ -1,31 +1,13 @@
-import assert from "assert";
-
 import { ReconnectingSocket } from "./reconnectingsocket";
 
 /** @see https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback */
-type Exec = (command: string, callback: (error: null | (Error & { readonly code: number })) => void) => void;
+type Exec = (command: string, callback: (error: null | (Error & { readonly code?: number })) => void) => void;
 
-let exec: Exec | undefined;
-let childProcessAvailable: boolean;
-
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  exec = require("child_process").exec;
-  assert.strict(typeof exec === "function");
-  childProcessAvailable = true;
-} catch {
-  childProcessAvailable = false;
-}
+const getExec = async (): Promise<Exec | undefined> => (await import("child_process")).exec;
 
 function pendingWithoutSocketServer(): void {
   if (!process.env.SOCKETSERVER_ENABLED) {
     pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-  }
-}
-
-function pendingWithoutChildProcess(): void {
-  if (!childProcessAvailable) {
-    pending("Run test in an environment which supports child processes to enable socket tests");
   }
 }
 
@@ -47,7 +29,9 @@ describe("ReconnectingSocket", () => {
       socket.connect();
 
       setTimeout(() => {
-        expect(() => socket.connect()).toThrowError(/cannot connect/i);
+        expect(() => {
+          socket.connect();
+        }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
     });
@@ -63,7 +47,9 @@ describe("ReconnectingSocket", () => {
 
       socket.connect();
 
-      setTimeout(() => socket.disconnect(), 1000);
+      setTimeout(() => {
+        socket.disconnect();
+      }, 1000);
     });
 
     it("cannot connect after being disconnected", (done) => {
@@ -76,7 +62,9 @@ describe("ReconnectingSocket", () => {
 
       setTimeout(() => {
         socket.disconnect();
-        expect(() => socket.connect()).toThrowError(/cannot connect/i);
+        expect(() => {
+          socket.connect();
+        }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
     });
@@ -97,13 +85,24 @@ describe("ReconnectingSocket", () => {
     const startServerCmd = `${dirPath}/start.sh`;
     const stopServerCmd = `${dirPath}/stop.sh`;
 
-    it("automatically reconnects if no connection can be established at init", (done) => {
-      pendingWithoutChildProcess();
+    it("automatically reconnects if no connection can be established at init", async () => {
+      let pass!: () => void, fail!: (reason?: any) => void;
+      const ret = new Promise<void>((resolve, reject) => {
+        pass = resolve;
+        fail = reject;
+      });
+
+      const exec = await getExec();
+      if (exec === undefined) {
+        pending("Run test in an environment which supports child processes to enable socket tests");
+        return;
+      }
+
       pendingWithoutSocketServer();
 
-      exec!(stopServerCmd, (stopError) => {
+      exec(stopServerCmd, (stopError) => {
         if (stopError && stopError.code !== codePkillNoProcessesMatched) {
-          done.fail(stopError);
+          fail(stopError);
         }
 
         const socket = new ReconnectingSocket(socketServerUrl);
@@ -119,27 +118,40 @@ describe("ReconnectingSocket", () => {
           complete: () => {
             // Make sure we don't get a completion unexpectedly
             expect(eventsSeen).toEqual(requests.length);
-            done();
+            pass();
           },
         });
 
         socket.connect();
-        requests.forEach((request) => socket.queueRequest(request));
+        requests.forEach((request) => {
+          socket.queueRequest(request);
+        });
 
-        setTimeout(
-          () =>
-            exec!(startServerCmd, (startError) => {
-              if (startError) {
-                done.fail(startError);
-              }
-            }),
-          2000,
-        );
+        setTimeout(() => {
+          exec(startServerCmd, (startError) => {
+            if (startError) {
+              fail(startError);
+            }
+          });
+        }, 2000);
       });
+
+      return ret;
     });
 
-    it("automatically reconnects if the connection is broken off", (done) => {
-      pendingWithoutChildProcess();
+    it("automatically reconnects if the connection is broken off", async () => {
+      let pass!: () => void, fail!: (reason?: any) => void;
+      const ret = new Promise<void>((resolve, reject) => {
+        pass = resolve;
+        fail = reject;
+      });
+
+      const exec = await getExec();
+      if (exec === undefined) {
+        pending("Run test in an environment which supports child processes to enable socket tests");
+        return;
+      }
+
       pendingWithoutSocketServer();
 
       const socket = new ReconnectingSocket(socketServerUrl);
@@ -155,41 +167,41 @@ describe("ReconnectingSocket", () => {
         complete: () => {
           // Make sure we don't get a completion unexpectedly
           expect(eventsSeen).toEqual(requests.length);
-          done();
+          pass();
         },
       });
 
       socket.connect();
       socket.queueRequest(requests[0]);
 
-      setTimeout(
-        () =>
-          exec!(stopServerCmd, (stopError) => {
-            if (stopError && stopError.code !== codePkillNoProcessesMatched) {
-              done.fail(stopError);
-            }
+      setTimeout(() => {
+        exec(stopServerCmd, (stopError) => {
+          if (stopError && stopError.code !== codePkillNoProcessesMatched) {
+            fail(stopError);
+          }
 
-            // TODO: This timeout is here to avoid an edge case where if a request
-            // is sent just as a disconnection occurs, then the websocket’s `send`
-            // method may not error even though the request is never sent.
-            // Ideally we would have a way to cover this edge case and the timeout
-            // would not be necessary for this test to pass.
+          // TODO: This timeout is here to avoid an edge case where if a request
+          // is sent just as a disconnection occurs, then the websocket’s `send`
+          // method may not error even though the request is never sent.
+          // Ideally we would have a way to cover this edge case and the timeout
+          // would not be necessary for this test to pass.
+          setTimeout(() => {
+            requests.slice(1).forEach((request) => {
+              socket.queueRequest(request);
+            });
+
             setTimeout(() => {
-              requests.slice(1).forEach((request) => socket.queueRequest(request));
-
-              setTimeout(
-                () =>
-                  exec!(startServerCmd, (startError) => {
-                    if (startError) {
-                      done.fail(startError);
-                    }
-                  }),
-                2000,
-              );
+              exec(startServerCmd, (startError) => {
+                if (startError) {
+                  fail(startError);
+                }
+              });
             }, 2000);
-          }),
-        1000,
-      );
+          }, 2000);
+        });
+      }, 1000);
+
+      return ret;
     });
   });
 });

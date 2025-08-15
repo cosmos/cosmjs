@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
@@ -78,7 +77,7 @@ describe("Secp256k1HdWallet", () => {
           pubkey: defaultPubkey,
         },
       ]);
-    });
+    }, 90000);
 
     it("can restore multiple accounts", async () => {
       const mnemonic =
@@ -124,7 +123,7 @@ describe("Secp256k1HdWallet", () => {
           address: "wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d",
         },
       ]);
-    });
+    }, 90000);
   });
 
   describe("deserializeWithEncryptionKey", () => {

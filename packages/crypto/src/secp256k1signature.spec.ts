@@ -32,7 +32,7 @@ describe("Secp256k1Signature", () => {
     expect(signature.s()).toEqual(new Uint8Array([0xaa]));
   });
 
-  it("can padd r and s", () => {
+  it("can pad r and s", () => {
     const signature = new Secp256k1Signature(new Uint8Array([0x22, 0x33]), new Uint8Array([0xaa]));
     expect(signature.r(2)).toEqual(fromHex("2233"));
     expect(signature.r(5)).toEqual(fromHex("0000002233"));

@@ -60,7 +60,7 @@ export class Decimal {
   }
 
   /**
-   * Creates a Decimal with value 0.0 and the given number of fractial digits.
+   * Creates a Decimal with value 0.0 and the given number of fractional digits.
    *
    * Fractional digits are not relevant for the value but needed to be able
    * to perform arithmetic operations with other decimals.
@@ -71,7 +71,7 @@ export class Decimal {
   }
 
   /**
-   * Creates a Decimal with value 1.0 and the given number of fractial digits.
+   * Creates a Decimal with value 1.0 and the given number of fractional digits.
    *
    * Fractional digits are not relevant for the value but needed to be able
    * to perform arithmetic operations with other decimals.

@@ -22,7 +22,7 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import pako from "pako";
+import { gzip } from "pako";
 
 import { instantiate2Address } from "./instantiate2";
 import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
@@ -373,7 +373,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
       const funds = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
-      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision erors
+      const salt = Random.getBytes(64); // different salt every time we run the test to avoid address collision errors
       const wasm = getHackatom().data;
       const msg = {
         verifier: alice.address0,
@@ -1076,7 +1076,7 @@ describe("SigningCosmWasmClient", () => {
 
         const msgStoreCode = MsgStoreCode.fromPartial({
           sender: alice.address0,
-          wasmByteCode: pako.gzip(data),
+          wasmByteCode: gzip(data),
         });
         const msgAny: MsgStoreCodeEncodeObject = {
           typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
