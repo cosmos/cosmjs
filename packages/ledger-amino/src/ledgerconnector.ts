@@ -95,7 +95,7 @@ export class LedgerConnector {
     );
   }
 
-  public async getCosmosAddress(pubkey?: Uint8Array): Promise<`${string}1${string}`> {
+  public async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
     const pubkeyToUse = pubkey || (await this.getPubkey());
     return pubkeyToAddress(encodeSecp256k1Pubkey(pubkeyToUse), this.prefix);
   }

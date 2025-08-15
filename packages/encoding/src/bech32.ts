@@ -1,6 +1,6 @@
 import { bech32 } from "@scure/base";
 
-export function toBech32(prefix: string, data: Uint8Array, limit?: number): `${string}1${string}` {
+export function toBech32(prefix: string, data: Uint8Array, limit?: number): string {
   const address: `${typeof prefix}1${string}` = bech32.encode(prefix, bech32.toWords(data), limit);
   return address;
 }
@@ -22,7 +22,7 @@ export function fromBech32(
  * The input is validated along the way, which makes this significantly safer than
  * using `address.toLowerCase()`.
  */
-export function normalizeBech32(address: string): `${string}1${string}` {
+export function normalizeBech32(address: string): string {
   const { prefix, data } = fromBech32(address as `${string}1${string}`);
   return toBech32(prefix, data);
 }

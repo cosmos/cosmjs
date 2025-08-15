@@ -29,7 +29,7 @@ export function _instantiate2AddressIntermediate(
   salt: Uint8Array,
   msg: string | null,
   prefix: string,
-): { key: Uint8Array; addressData: Uint8Array; address: `${string}1${string}` } {
+): { key: Uint8Array; addressData: Uint8Array; address: string } {
   assert(checksum.length === 32);
   const creatorData = fromBech32(creator).data;
 
@@ -68,7 +68,7 @@ export function instantiate2Address(
   creator: string,
   salt: Uint8Array,
   bech32Prefix: string,
-): `${string}1${string}` {
+): string {
   // Non-empty msg values are discouraged.
   // See https://medium.com/cosmwasm/dev-note-3-limitations-of-instantiate2-and-how-to-deal-with-them-a3f946874230.
   const msg = null;
