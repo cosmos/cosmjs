@@ -24,7 +24,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "docs": "typedoc --options typedoc.cjs",
+    "docs": "typedoc",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "test-node": "yarn node jasmine-testrunner.cjs",
