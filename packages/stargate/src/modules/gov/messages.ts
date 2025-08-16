@@ -5,8 +5,13 @@ import {
   MsgUpdateParams as V1MsgUpdateParams,
   MsgVote as V1MsgVote,
   MsgVoteWeighted as V1MsgVoteWeighted,
-} from "cosmjs-types/cosmos/gov/v1/tx";
-import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
+} from "cosmjs-types/cosmos/gov/v1/tx.js";
+import {
+  MsgDeposit,
+  MsgSubmitProposal,
+  MsgVote,
+  MsgVoteWeighted,
+} from "cosmjs-types/cosmos/gov/v1beta1/tx.js";
 
 export const govTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.gov.v1.MsgDeposit", V1MsgDeposit],
