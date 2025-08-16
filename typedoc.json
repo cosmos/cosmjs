@@ -1,3 +1,7 @@
 {
+  "compilerOptions": {
+    "module": 7,
+    "moduleResolution": 100
+  },
   "excludeExternals": true
 }
