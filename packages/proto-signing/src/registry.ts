@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { BinaryWriter } from "cosmjs-types/binary";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -106,7 +105,7 @@ export class Registry {
    * but we also support protobuf.js as a type generator.
    *
    * If there is no parameter given, a `new Registry()` adds the types `Coin` and `MsgSend`
-   * for historic reasons. Those can be overriden by customTypes.
+   * for historic reasons. Those can be overridden by customTypes.
    *
    * There are currently two methods for adding new types:
    * 1. Passing types to the constructor.

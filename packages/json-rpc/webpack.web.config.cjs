@@ -10,6 +10,7 @@ module.exports = [
     target: target,
     entry: "./build/workers/dummyservice.worker.js",
     output: {
+      asyncChunks: false,
       path: distdir,
       filename: "dummyservice.worker.js",
     },
@@ -19,6 +20,7 @@ module.exports = [
     target: target,
     entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
+      asyncChunks: false,
       path: distdir,
       filename: "tests.js",
     },

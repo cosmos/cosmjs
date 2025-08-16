@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/stargate",
-  "version": "0.34.0",
+  "version": "0.36.0",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -26,8 +26,6 @@
   },
   "scripts": {
     "docs": "typedoc --options typedoc.cjs",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
@@ -47,7 +45,7 @@
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.9.0"
+    "cosmjs-types": "^0.10.1"
   },
   "devDependencies": {
     "@cosmjs/crypto": "workspace:^",
@@ -58,7 +56,6 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/long": "^4.0.1",
     "@types/node": "*",
-    "eslint": "^8.57.1",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
@@ -73,7 +70,7 @@
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
-    "typescript": "~5.8",
+    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

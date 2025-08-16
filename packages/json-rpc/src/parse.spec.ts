@@ -28,7 +28,7 @@ describe("parse", () => {
       expect(parseJsonRpcId(request)).toEqual("329fg3b");
     });
 
-    it("returns null for invaid IDs", () => {
+    it("returns null for invalid IDs", () => {
       // unset
       {
         const request = {

@@ -48,8 +48,12 @@ describe("StreamingSocket", () => {
     socket.connect();
 
     await socket.connected
-      .then(() => fail("must not resolve"))
-      .catch((error) => expect(error).toMatch(/connection attempt timed out/i));
+      .then(() => {
+        fail("must not resolve");
+      })
+      .catch((error) => {
+        expect(error).toMatch(/connection attempt timed out/i);
+      });
   });
 
   it("can send events when connected", async () => {

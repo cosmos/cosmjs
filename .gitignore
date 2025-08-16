@@ -36,3 +36,9 @@ coverage/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Yarn on Mac
+# The fsevents-patch is added on macOS but removed on other systems. To avoid annoying back and forth
+# we just ignore it here. The file is not needed in the Linux-based CI and `yarn install` will bring it back on
+# macOS based dev machines.
+.yarn/cache/fsevents-patch-*-*.zip

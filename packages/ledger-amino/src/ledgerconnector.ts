@@ -72,7 +72,6 @@ export class LedgerConnector {
     assert(this.app, `${this.ledgerAppName} Ledger App is not connected`);
 
     const response = await this.app.getVersion();
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { major, minor, patch, testMode: testMode } = response;
     this.verifyAppMode(!!testMode);
     return `${major}.${minor}.${patch}`;

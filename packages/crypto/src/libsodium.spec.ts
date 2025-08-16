@@ -16,18 +16,18 @@ describe("Libsodium", () => {
       const salt = toAscii("ABCDEFGHIJKLMNOP");
 
       // echo -n "123" | ./argon2 ABCDEFGHIJKLMNOP -id -v 13 -k 1024 -t 5
-      await Argon2id.execute("123", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("3c5d010180ba0cf5b6b858cba23b318e42d33088983c404598599c3b029ecac6")),
-      );
-      await Argon2id.execute("!'§$%&/()", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("b0268bd63015c3d8f866f9be385507b466a9bfc75f271c2c1e97c00bf53224ba")),
-      );
-      await Argon2id.execute("ö", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("b113fc7863dbc87b7d1366c3b468d3864a2473ce46e90ed3641fff87ada561f7")),
-      );
-      await Argon2id.execute("😎", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("dc92db2a69a5607a75472e1581ac0851292ed9a2606f1000f62fa2efc97964e0")),
-      );
+      await Argon2id.execute("123", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("3c5d010180ba0cf5b6b858cba23b318e42d33088983c404598599c3b029ecac6"));
+      });
+      await Argon2id.execute("!'§$%&/()", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("b0268bd63015c3d8f866f9be385507b466a9bfc75f271c2c1e97c00bf53224ba"));
+      });
+      await Argon2id.execute("ö", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("b113fc7863dbc87b7d1366c3b468d3864a2473ce46e90ed3641fff87ada561f7"));
+      });
+      await Argon2id.execute("😎", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("dc92db2a69a5607a75472e1581ac0851292ed9a2606f1000f62fa2efc97964e0"));
+      });
     });
 
     it("works for 8 MiB memory and opsLimit = 2", async () => {
@@ -39,18 +39,18 @@ describe("Libsodium", () => {
       const salt = toAscii("ABCDEFGHIJKLMNOP");
 
       // echo -n "123" | ./argon2 ABCDEFGHIJKLMNOP -id -v 13 -k 8192 -t 2
-      await Argon2id.execute("123", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("3ee950488d26ce691657b1d753f562139857b61a58f234d6cb0ce84c4cc27328")),
-      );
-      await Argon2id.execute("!'§$%&/()", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("ab410498b44942a28f9d0dde72f0398edf104021ee41bb80412464975817a8a1")),
-      );
-      await Argon2id.execute("ö", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("f80c502bc3fe7b191f6e7e06359955d5dbd23f532548b7058ecbcf77a58e683d")),
-      );
-      await Argon2id.execute("😎", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("474d9445596d2600ba3dc9bbe87d21ed4879e2445cafb10fcb69c5c3ab8ecbc7")),
-      );
+      await Argon2id.execute("123", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("3ee950488d26ce691657b1d753f562139857b61a58f234d6cb0ce84c4cc27328"));
+      });
+      await Argon2id.execute("!'§$%&/()", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("ab410498b44942a28f9d0dde72f0398edf104021ee41bb80412464975817a8a1"));
+      });
+      await Argon2id.execute("ö", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("f80c502bc3fe7b191f6e7e06359955d5dbd23f532548b7058ecbcf77a58e683d"));
+      });
+      await Argon2id.execute("😎", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("474d9445596d2600ba3dc9bbe87d21ed4879e2445cafb10fcb69c5c3ab8ecbc7"));
+      });
     });
 
     it("works for 10 MiB memory and opsLimit = 1", async () => {
@@ -62,18 +62,18 @@ describe("Libsodium", () => {
       const salt = toAscii("ABCDEFGHIJKLMNOP");
 
       // echo -n "123" | ./argon2 ABCDEFGHIJKLMNOP -id -v 13 -k 10240 -t 1
-      await Argon2id.execute("123", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("f1832edbd41c209546eafd01f3aae28390de39bc13ff38981c4fc0c1ceaa05e3")),
-      );
-      await Argon2id.execute("!'§$%&/()", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("30c74f405d148fd5c882a0f4238aad9ed85ef255adc102411d22736d68f76f76")),
-      );
-      await Argon2id.execute("ö", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("b80a62f11e7a058194a8ddd80d341c47e0f3b6c41c72ee15b7926788e9963e8f")),
-      );
-      await Argon2id.execute("😎", salt, options).then((result) =>
-        expect(result).toEqual(fromHex("b868aa1875de2edc57bc22de1fc75f9d19f451067c529565f73c61958088b5e9")),
-      );
+      await Argon2id.execute("123", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("f1832edbd41c209546eafd01f3aae28390de39bc13ff38981c4fc0c1ceaa05e3"));
+      });
+      await Argon2id.execute("!'§$%&/()", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("30c74f405d148fd5c882a0f4238aad9ed85ef255adc102411d22736d68f76f76"));
+      });
+      await Argon2id.execute("ö", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("b80a62f11e7a058194a8ddd80d341c47e0f3b6c41c72ee15b7926788e9963e8f"));
+      });
+      await Argon2id.execute("😎", salt, options).then((result) => {
+        expect(result).toEqual(fromHex("b868aa1875de2edc57bc22de1fc75f9d19f451067c529565f73c61958088b5e9"));
+      });
     });
 
     it("works for different output lengths", async () => {
@@ -112,9 +112,9 @@ describe("Libsodium", () => {
           opsLimit: 5,
           memLimitKib: 1024,
         };
-        await Argon2id.execute("123", salt, options).then((result) =>
-          expect(result).toEqual(fromHex(data.get(length)!)),
-        );
+        await Argon2id.execute("123", salt, options).then((result) => {
+          expect(result).toEqual(fromHex(data.get(length)!));
+        });
       }
     });
 
@@ -128,24 +128,40 @@ describe("Libsodium", () => {
 
       // 8 bytes
       await Argon2id.execute(password, fromHex("aabbccddeeff0011"), options)
-        .then(() => fail("Argon2id with invalid salt length must not resolve"))
-        .catch((e) => expect(e).toMatch(/invalid salt length/));
+        .then(() => {
+          fail("Argon2id with invalid salt length must not resolve");
+        })
+        .catch((e) => {
+          expect(e).toMatch(/invalid salt length/);
+        });
       // 15 bytes
       await Argon2id.execute(password, fromHex("aabbccddeeff001122334455667788"), options)
-        .then(() => fail("Argon2id with invalid salt length must not resolve"))
-        .catch((e) => expect(e).toMatch(/invalid salt length/));
+        .then(() => {
+          fail("Argon2id with invalid salt length must not resolve");
+        })
+        .catch((e) => {
+          expect(e).toMatch(/invalid salt length/);
+        });
       // 17 bytes
       await Argon2id.execute(password, fromHex("aabbccddeeff00112233445566778899aa"), options)
-        .then(() => fail("Argon2id with invalid salt length must not resolve"))
-        .catch((e) => expect(e).toMatch(/invalid salt length/));
+        .then(() => {
+          fail("Argon2id with invalid salt length must not resolve");
+        })
+        .catch((e) => {
+          expect(e).toMatch(/invalid salt length/);
+        });
       // 32 bytes
       await Argon2id.execute(
         password,
         fromHex("aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"),
         options,
       )
-        .then(() => fail("Argon2id with invalid salt length must not resolve"))
-        .catch((e) => expect(e).toMatch(/invalid salt length/));
+        .then(() => {
+          fail("Argon2id with invalid salt length must not resolve");
+        })
+        .catch((e) => {
+          expect(e).toMatch(/invalid salt length/);
+        });
     });
   });
 
@@ -222,7 +238,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("invalid seed length");
+            expect(error.message).toContain("key of length 32 expected");
           });
       }
 
@@ -234,7 +250,7 @@ describe("Libsodium", () => {
             fail("promise must not resolve");
           })
           .catch((error) => {
-            expect(error.message).toContain("invalid seed length");
+            expect(error.message).toContain("key of length 32 expected");
           });
       }
     });
@@ -406,22 +422,34 @@ describe("Libsodium", () => {
         // empty
         const key = fromHex("");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .then(() => {
+            fail("encryption must not succeed");
+          })
+          .catch((error) => {
+            expect(error).toMatch(/key, got length=0/);
+          });
       }
       {
         // 31 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .then(() => {
+            fail("encryption must not succeed");
+          })
+          .catch((error) => {
+            expect(error).toMatch(/key, got length=31/);
+          });
       }
       {
         // 33 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .then(() => {
+            fail("encryption must not succeed");
+          })
+          .catch((error) => {
+            expect(error).toMatch(/key, got length=33/);
+          });
       }
       {
         // 64 bytes
@@ -429,8 +457,12 @@ describe("Libsodium", () => {
           "1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d81324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8",
         );
         await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => fail("encryption must not succeed"))
-          .catch((error) => expect(error).toMatch(/invalid key length/));
+          .then(() => {
+            fail("encryption must not succeed");
+          })
+          .catch((error) => {
+            expect(error).toMatch(/key, got length=64/);
+          });
       }
     });
 
@@ -451,24 +483,36 @@ describe("Libsodium", () => {
         // corrupted ciphertext
         const corruptedCiphertext = ciphertext.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(corruptedCiphertext, key, nonce).then(
-          () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          () => {
+            fail("promise must not resolve");
+          },
+          (error) => {
+            expect(error.message).toMatch(/invalid tag/i);
+          },
         );
       }
       {
         // corrupted key
         const corruptedKey = key.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(ciphertext, corruptedKey, nonce).then(
-          () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          () => {
+            fail("promise must not resolve");
+          },
+          (error) => {
+            expect(error.message).toMatch(/invalid tag/i);
+          },
         );
       }
       {
         // corrupted nonce
         const corruptedNonce = nonce.map((x, i) => (i === 0 ? x ^ 0x01 : x));
         await Xchacha20poly1305Ietf.decrypt(ciphertext, key, corruptedNonce).then(
-          () => fail("promise must not resolve"),
-          (error) => expect(error.message).toMatch(/ciphertext cannot be decrypted using that key/i),
+          () => {
+            fail("promise must not resolve");
+          },
+          (error) => {
+            expect(error.message).toMatch(/invalid tag/i);
+          },
         );
       }
     });

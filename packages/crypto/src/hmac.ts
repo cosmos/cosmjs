@@ -37,7 +37,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
     this.update(this.iKeyPad);
   }
 
-  public update(data: Uint8Array): Hmac<H> {
+  public update(data: Uint8Array): this {
     this.messageHasher.update(data);
     return this;
   }

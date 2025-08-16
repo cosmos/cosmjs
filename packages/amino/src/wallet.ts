@@ -6,6 +6,7 @@ import {
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii } from "@cosmjs/encoding";
+import { sleep } from "@cosmjs/utils";
 
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.
@@ -23,12 +24,21 @@ export interface KdfConfiguration {
   readonly params: Record<string, unknown>;
 }
 
+/**
+ * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+ */
 export async function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array> {
   switch (configuration.algorithm) {
     case "argon2id": {
       const options = configuration.params;
       if (!isArgon2idOptions(options)) throw new Error("Invalid format of argon2id params");
-      return Argon2id.execute(password, cosmjsSalt, options);
+
+      // Emulate a slower implementation. The fast WASM code may get removed.
+      // This approximates the speed of using a pure JS implementation (@noble/hashes) in Node 22.
+      const screamTest = sleep(options.opsLimit * 250);
+      const result = await Argon2id.execute(password, cosmjsSalt, options);
+      await screamTest;
+      return result;
     }
     default:
       throw new Error("Unsupported KDF algorithm");
@@ -52,6 +62,9 @@ export const supportedAlgorithms = {
   xchacha20poly1305Ietf: "xchacha20poly1305-ietf",
 };
 
+/**
+ * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+ */
 export async function encrypt(
   plaintext: Uint8Array,
   encryptionKey: Uint8Array,
@@ -71,6 +84,9 @@ export async function encrypt(
   }
 }
 
+/**
+ * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+ */
 export async function decrypt(
   ciphertext: Uint8Array,
   encryptionKey: Uint8Array,

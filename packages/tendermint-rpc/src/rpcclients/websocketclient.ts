@@ -19,7 +19,7 @@ function defaultErrorHandler(error: any): never {
 function toJsonRpcResponse(message: SocketWrapperMessageEvent): JsonRpcResponse {
   // this should never happen, but I want an alert if it does
   if (message.type !== "message") {
-    throw new Error(`Unexcepted message type on websocket: ${message.type}`);
+    throw new Error(`Unexpected message type on websocket: ${message.type}`);
   }
 
   const jsonRpcEvent = parseJsonRpcResponse(JSON.parse(message.data));

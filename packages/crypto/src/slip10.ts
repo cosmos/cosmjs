@@ -33,6 +33,8 @@ function intTo32be(n: bigint): Uint8Array {
   return fromHex(hex);
 }
 
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+
 /**
  * Reverse mapping of Slip10Curve
  */
@@ -89,7 +91,7 @@ export class Slip10RawIndex extends Uint32 {
  */
 export type HdPath = readonly Slip10RawIndex[];
 
-// Universal private key derivation accoring to
+// Universal private key derivation according to
 // https://github.com/satoshilabs/slips/blob/master/slip-0010.md
 export class Slip10 {
   public static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result {
@@ -151,7 +153,7 @@ export class Slip10 {
   private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array {
     switch (curve) {
       case Slip10Curve.Secp256k1:
-        return secp256k1.Point.BASE.multiply(p).toRawBytes(true);
+        return secp256k1.Point.BASE.multiply(p).toBytes(true);
       default:
         throw new Error("curve not supported");
     }

@@ -258,14 +258,16 @@ function decodeEvidenceParams(data: RpcEvidenceParams): responses.EvidenceParams
  * }
  */
 interface RpcConsensusParams {
-  readonly block: RpcBlockParams;
-  readonly evidence: RpcEvidenceParams;
+  // The fields in here are all potentially omitted
+  // https://github.com/cometbft/cometbft/blob/v0.34.35/proto/tendermint/types/params.pb.go#L30-L37
+  readonly block?: RpcBlockParams;
+  readonly evidence?: RpcEvidenceParams;
 }
 
 function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusParams {
   return {
-    block: decodeBlockParams(assertObject(data.block)),
-    evidence: decodeEvidenceParams(assertObject(data.evidence)),
+    block: data.block ? decodeBlockParams(assertObject(data.block)) : undefined,
+    evidence: data.evidence ? decodeEvidenceParams(assertObject(data.evidence)) : undefined,
   };
 }
 
@@ -777,7 +779,7 @@ interface RpcBlock {
     /** Raw tx bytes, base64 encoded */
     readonly txs?: readonly string[];
   };
-  // It's currently unclear why the deep nesting is requied.
+  // It's currently unclear why the deep nesting is required.
   // See https://github.com/tendermint/tendermint/issues/7697.
   readonly evidence?: {
     readonly evidence?: readonly RpcEvidence[];

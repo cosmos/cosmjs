@@ -1,5 +1,4 @@
-import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
-import { sha512 as nobleSha512 } from "@noble/hashes/sha512";
+import { sha256 as nobleSha256, sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
 import { HashFunction } from "./hash";
 import { toRealUint8Array } from "./utils";
@@ -15,7 +14,7 @@ export class Sha256 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Sha256 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }
@@ -41,7 +40,7 @@ export class Sha512 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Sha512 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }

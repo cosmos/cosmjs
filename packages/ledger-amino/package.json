@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/ledger-amino",
-  "version": "0.34.0",
+  "version": "0.36.0",
   "description": "A library for signing Amino-encoded transactions using Ledger devices",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -28,15 +28,13 @@
     "docs": "typedoc --options typedoc.cjs",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.js\"",
-    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./{,demo/}*.js\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test": "yarn build-or-skip && yarn test-node",
-    "demo-node": "yarn build-or-skip && node ./demo/node.js",
+    "demo-node": "yarn build-or-skip && node ./demo/node.cjs",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
@@ -55,7 +53,6 @@
     "@ledgerhq/hw-transport-webusb": "^6.29.4",
     "@types/jasmine": "^4",
     "@types/semver": "^7.3.4",
-    "eslint": "^8.57.1",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
@@ -64,7 +61,7 @@
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
-    "typescript": "~5.8",
+    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

@@ -40,7 +40,6 @@ export function concat<T>(...streams: Array<Stream<T>>): Stream<T> {
       streams.forEach((_) => queues.push([]));
 
       function emitAllQueuesEvents(streamIndex: number): void {
-        // eslint-disable-next-line no-constant-condition
         while (true) {
           const element = queues[streamIndex].shift();
           if (element === undefined) {

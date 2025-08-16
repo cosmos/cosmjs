@@ -85,7 +85,7 @@ Currently the codebase supports the following runtime environments:
 
 1. Node.js 20+
 2. Modern browsers (Chromium/Firefox/Safari, no Internet Explorer or
-   [Edge Spartan](https://en.wikipedia.org/wiki/Microsoft_Edge#Development))
+   [Edge Legacy](https://en.wikipedia.org/wiki/Microsoft_Edge_Legacy))
 3. Browser extensions (Chromium/Firefox)
 
 Our current JavaScript target standard is ES2020. We use WebAssembly to

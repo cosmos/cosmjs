@@ -55,10 +55,9 @@ export class ReconnectingSocket {
             clearTimeout(this.reconnectTimeout);
             this.reconnectTimeout = null;
           }
-          this.reconnectTimeout = setTimeout(
-            () => this.socket.reconnect(),
-            ReconnectingSocket.calculateTimeout(this.timeoutIndex++),
-          );
+          this.reconnectTimeout = setTimeout(() => {
+            this.socket.reconnect();
+          }, ReconnectingSocket.calculateTimeout(this.timeoutIndex++));
         }
       },
     });

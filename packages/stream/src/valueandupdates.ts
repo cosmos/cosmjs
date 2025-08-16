@@ -41,7 +41,9 @@ export class ValueAndUpdates<T> {
 
             // MemoryStream.subscribe() calls next with the last value.
             // Make async to ensure the subscription exists
-            setTimeout(() => subscription.unsubscribe(), 0);
+            setTimeout(() => {
+              subscription.unsubscribe();
+            }, 0);
           }
         },
         complete: () => {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino } from "@cosmjs/amino";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex, toUtf8 } from "@cosmjs/encoding";
@@ -48,7 +47,7 @@ import {
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import pako from "pako";
+import { gzip } from "pako";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
@@ -71,7 +70,7 @@ export interface UploadResult {
   readonly originalSize: number;
   /** Size of the compressed wasm code in bytes */
   readonly compressedSize: number;
-  /** The ID of the code asigned by the chain */
+  /** The ID of the code assigned by the chain */
   readonly codeId: number;
   /** @deprecated Not filled in Cosmos SDK >= 0.50. Use events instead. */
   readonly logs: readonly logs.Log[];
@@ -297,7 +296,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
     instantiatePermission?: AccessConfig,
   ): Promise<UploadResult> {
-    const compressed = pako.gzip(wasmCode, { level: 9 });
+    const compressed = gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCodeEncodeObject = {
       typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
       value: MsgStoreCode.fromPartial({

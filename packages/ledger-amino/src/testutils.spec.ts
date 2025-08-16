@@ -14,7 +14,8 @@ export function ledgerEnabled(): boolean {
 
 export function pendingWithoutLedger(): void {
   if (!ledgerEnabled()) {
-    return pending("Set LEDGER_ENABLED to enable Ledger-based tests");
+    pending("Set LEDGER_ENABLED to enable Ledger-based tests");
+    return;
   }
 }
 
@@ -24,7 +25,8 @@ export function simappEnabled(): boolean {
 
 export function pendingWithoutSimapp(): void {
   if (!simappEnabled()) {
-    return pending("Set SIMAPP{47,50}_ENABLED to enable Simapp-based tests");
+    pending("Set SIMAPP{47,50}_ENABLED to enable Simapp-based tests");
+    return;
   }
 }
 

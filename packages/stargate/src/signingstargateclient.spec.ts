@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1HdWallet } from "@cosmjs/amino";
 import {
   coin,

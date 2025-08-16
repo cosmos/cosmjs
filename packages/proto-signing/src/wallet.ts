@@ -6,6 +6,7 @@ import {
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii } from "@cosmjs/encoding";
+import { sleep } from "@cosmjs/utils";
 
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.
@@ -28,7 +29,13 @@ export async function executeKdf(password: string, configuration: KdfConfigurati
     case "argon2id": {
       const options = configuration.params;
       if (!isArgon2idOptions(options)) throw new Error("Invalid format of argon2id params");
-      return Argon2id.execute(password, cosmjsSalt, options);
+
+      // Emulate a slower implementation. The fast WASM code may get removed.
+      // This approximates the speed of using a pure JS implementation (@noble/hashes) in Node 22.
+      const screamTest = sleep(options.opsLimit * 250);
+      const result = await Argon2id.execute(password, cosmjsSalt, options);
+      await screamTest;
+      return result;
     }
     default:
       throw new Error("Unsupported KDF algorithm");

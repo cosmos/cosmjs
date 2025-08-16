@@ -14,7 +14,7 @@ export class Keccak256 implements HashFunction {
     }
   }
 
-  public update(data: Uint8Array): Keccak256 {
+  public update(data: Uint8Array): this {
     this.impl.update(toRealUint8Array(data));
     return this;
   }

@@ -36,6 +36,9 @@ export function parseJsonRpcRequest(data: unknown): JsonRpcRequest {
     throw new Error("Data must be JSON compatible dictionary");
   }
 
+  if (typeof data.jsonrpc !== "string") {
+    throw new Error(`Invalid "jsonrpc" field. Must be a string.`);
+  }
   if (data.jsonrpc !== "2.0") {
     throw new Error(`Got unexpected jsonrpc version: ${data.jsonrpc}`);
   }
@@ -47,7 +50,7 @@ export function parseJsonRpcRequest(data: unknown): JsonRpcRequest {
 
   const method = data.method;
   if (typeof method !== "string") {
-    throw new Error("Invalid method field");
+    throw new Error(`Invalid "method" field. Must be a string.`);
   }
 
   if (!isJsonCompatibleArray(data.params) && !isJsonCompatibleDictionary(data.params)) {

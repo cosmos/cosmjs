@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoTypes, coins } from "@cosmjs/stargate";
 import {
@@ -50,9 +49,8 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
         instantiatePermission: {
-          permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
-          address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-          addresses: [],
+          permission: AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES,
+          addresses: ["cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6"],
         },
       };
       const aminoMsg = new AminoTypes(createWasmAminoConverters()).toAmino({
@@ -65,9 +63,8 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           wasm_byte_code: "WUVMTE9XIFNVQk1BUklORQ==",
           instantiate_permission: {
-            permission: "OnlyAddress",
-            address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-            addresses: undefined,
+            permission: "AnyOfAddresses",
+            addresses: ["cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6"],
           },
         },
       };
@@ -344,9 +341,8 @@ describe("AminoTypes", () => {
           sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           wasm_byte_code: "WUVMTE9XIFNVQk1BUklORQ==",
           instantiate_permission: {
-            permission: "OnlyAddress",
-            address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-            addresses: undefined,
+            permission: "AnyOfAddresses",
+            addresses: ["cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6"],
           },
         },
       };
@@ -355,9 +351,8 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
         instantiatePermission: {
-          permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS,
-          address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-          addresses: [],
+          permission: AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES,
+          addresses: ["cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6"],
         },
       };
       expect(msg).toEqual({

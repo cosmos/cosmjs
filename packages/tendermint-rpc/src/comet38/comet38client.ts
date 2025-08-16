@@ -1,7 +1,6 @@
 import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { Stream } from "xstream";
 
-import { createJsonRpcRequest } from "../jsonrpc";
 import {
   HttpClient,
   HttpEndpoint,
@@ -37,13 +36,6 @@ export class Comet38Client {
       const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
       rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
     }
-
-    // For some very strange reason I don't understand, tests start to fail on some systems
-    // (our CI) when skipping the status call before doing other queries. Sleeping a little
-    // while did not help. Thus we query the version as a way to say "hi" to the backend,
-    // even in cases where we don't use the result.
-    const _version = await this.detectVersion(rpcClient);
-
     return Comet38Client.create(rpcClient);
   }
 
@@ -52,22 +44,6 @@ export class Comet38Client {
    */
   public static create(rpcClient: RpcClient): Comet38Client {
     return new Comet38Client(rpcClient);
-  }
-
-  private static async detectVersion(client: RpcClient): Promise<string> {
-    const req = createJsonRpcRequest(requests.Method.Status);
-    const response = await client.execute(req);
-    const result = response.result;
-
-    if (!result || !result.node_info) {
-      throw new Error("Unrecognized format for status response");
-    }
-
-    const version = result.node_info.version;
-    if (typeof version !== "string") {
-      throw new Error("Unrecognized version format: must be string");
-    }
-    return version;
   }
 
   private readonly client: RpcClient;
