@@ -9,6 +9,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "lib": ["es2022"],
     "target": "es2022",
     "module": "preserve",
