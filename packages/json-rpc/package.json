@@ -38,7 +38,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "build": "tsdown --unbundle",
     "build:test": "tsdown 'src/**/*.spec.ts' -d build/",
-    "pack-web": "yarn run build:test && tsc -p src/workers/tsconfig.json && webpack --mode development --config webpack.web.config.cjs"
+    "pack-web": "yarn run build:test && tsdown src/workers/*.ts -d build/workers/ && webpack --mode development --config webpack.web.config.cjs"
   },
   "dependencies": {
     "@cosmjs/stream": "workspace:^",
