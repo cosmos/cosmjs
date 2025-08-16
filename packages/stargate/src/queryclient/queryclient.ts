@@ -1,6 +1,6 @@
 import { CometClient } from "@cosmjs/tendermint-rpc";
 import { assert, isNonNullObject } from "@cosmjs/utils";
-import { ProofOps } from "cosmjs-types/tendermint/crypto/proof";
+import { ProofOps } from "cosmjs-types/tendermint/crypto/proof.js";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 

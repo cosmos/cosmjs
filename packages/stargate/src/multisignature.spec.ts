@@ -7,7 +7,7 @@ import {
 } from "@cosmjs/amino";
 import { coins } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
-import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx.js";
 
 import { MsgSendEncodeObject } from "./modules";
 import { makeCompactBitArray, makeMultisignedTxBytes } from "./multisignature";

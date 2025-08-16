@@ -2,7 +2,7 @@ const { globSync } = require("glob");
 const path = require("path");
 
 const target = "web";
-const distdir = path.join(__dirname, "dist", "web");
+const distdir = path.join(__dirname, "build", "web");
 
 module.exports = [
   {

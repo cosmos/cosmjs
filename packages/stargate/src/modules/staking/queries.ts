@@ -14,8 +14,8 @@ import {
   QueryValidatorResponse,
   QueryValidatorsResponse,
   QueryValidatorUnbondingDelegationsResponse,
-} from "cosmjs-types/cosmos/staking/v1beta1/query";
-import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+} from "cosmjs-types/cosmos/staking/v1beta1/query.js";
+import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking.js";
 
 import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
 

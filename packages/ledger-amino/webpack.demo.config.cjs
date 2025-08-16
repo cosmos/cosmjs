@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const target = "web";
-const demodir = path.join(__dirname, "dist", "demo");
+const demodir = path.join(__dirname, "build", "demo");
 
 module.exports = [
   {

@@ -7,7 +7,7 @@ import {
   QueryAllBalancesResponse,
   QueryBalanceRequest,
   QueryBalanceResponse,
-} from "cosmjs-types/cosmos/bank/v1beta1/query";
+} from "cosmjs-types/cosmos/bank/v1beta1/query.js";
 
 import { SigningStargateClient } from "../signingstargateclient";
 import {
