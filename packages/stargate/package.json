@@ -6,8 +6,10 @@
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "exports": {
+    "default": "./build/index.js"
+  },
+  "types": "./build/index.d.ts",
   "files": [
     "build/",
     "*.md",
