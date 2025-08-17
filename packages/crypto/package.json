@@ -7,7 +7,7 @@
     "Simon Warta"
   ],
   "license": "Apache-2.0",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
     "default": "./dist/index.js"
@@ -35,8 +35,8 @@
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "build": "tsdown --format cjs --unbundle",
-    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
+    "build": "tsdown --unbundle",
+    "build:test": "tsdown 'src/**/*.spec.ts' -d build/",
     "pack-web": "yarn run build:test && webpack --mode development --config webpack.web.config.cjs"
   },
   "dependencies": {
