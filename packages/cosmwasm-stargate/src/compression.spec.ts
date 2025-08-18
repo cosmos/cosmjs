@@ -34,7 +34,7 @@ describe("compression", () => {
         //  - [...]
         //  - and an 8-byte footer, containing a CRC-32 checksum and the length of the original uncompressed data."
         // https://bits.ashleyblewer.com/blog/2024/01/12/researching-file-formats-20-gzip/
-        expect(compressed.length).withContext(`Data with index ${index}`).toBeGreaterThanOrEqual(18);
+        expect(compressed.length, `Data with index ${index}`).toBeGreaterThanOrEqual(18);
         expect(compressed.slice(0, 3)).toEqual(fromHex("1F8B08"));
         expect(compressed.subarray(-4)).toEqual(new Uint32(original.length).toBytesLittleEndian());
         expect(await uncompress(compressed)).toEqual(original);
