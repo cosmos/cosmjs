@@ -13,7 +13,7 @@ import { sleep } from "@cosmjs/utils";
  * This reduces the scope of a potential rainbow attack to all CosmJS users.
  * Must be 16 bytes due to implementation limitations.
  */
-export const cosmjsSalt = toAscii("The CosmJS salt.");
+export const cosmjsSalt: Uint8Array = toAscii("The CosmJS salt.");
 
 export interface KdfConfiguration {
   /**

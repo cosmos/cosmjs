@@ -35,7 +35,7 @@ export function makeAuthInfoBytes(
   gasLimit: number,
   feeGranter: string | undefined,
   feePayer: string | undefined,
-  signMode = SignMode.SIGN_MODE_DIRECT,
+  signMode: SignMode = SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   // Required arguments 4 and 5 were added in CosmJS 0.29. Use runtime checks to help our non-TS users.
   assert(
