@@ -1,9 +1,10 @@
 import { FaucetClient } from "./faucetclient";
 
 function pendingWithoutFaucet(): void {
-  if (!process.env.FAUCET_ENABLED) {
-    pending("Set FAUCET_ENABLED to enable tests that need a faucet");
+  if (globalThis.process?.env.FAUCET_ENABLED) {
+    return;
   }
+  pending("Set FAUCET_ENABLED to enable tests that need a faucet");
 }
 
 describe("FaucetClient", () => {
