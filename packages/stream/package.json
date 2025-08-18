@@ -32,13 +32,12 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "test-node": "yarn node jasmine-testrunner.cjs",
-    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
+    "test-firefox": "yarn run build:test && karma start --single-run --browsers Firefox karma.conf.cjs",
+    "test-chrome": "yarn run build:test && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "build": "tsdown --unbundle",
-    "build:test": "tsdown 'src/**/*.spec.ts' -d build/",
-    "pack-web": "yarn run build:test && webpack --mode development --config webpack.web.config.cjs"
+    "build:test": "find . -name '*spec.ts' | xargs rolldown -d build/"
   },
   "dependencies": {
     "xstream": "^11.14.0"
@@ -60,11 +59,10 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^3.5.3",
+    "rolldown": "1.0.0-beta.34",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "tsdown": "^0.14.2",
-    "typedoc": "^0.28",
-    "webpack": "^5.76.0",
-    "webpack-cli": "^4.6.0"
+    "typedoc": "^0.28"
   }
 }
