@@ -20,7 +20,12 @@ describe("ReconnectingSocket", () => {
   });
 
   describe("connect", () => {
-    it("cannot connect after being connected", (done) => {
+    it("cannot connect after being connected", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
@@ -34,11 +39,18 @@ describe("ReconnectingSocket", () => {
         }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
+
+      return ret;
     });
   });
 
   describe("disconnect", () => {
-    it("ends the events stream", (done) => {
+    it("ends the events stream", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new ReconnectingSocket(socketServerUrl);
       socket.events.subscribe({
@@ -50,9 +62,16 @@ describe("ReconnectingSocket", () => {
       setTimeout(() => {
         socket.disconnect();
       }, 1000);
+
+      return ret;
     });
 
-    it("cannot connect after being disconnected", (done) => {
+    it("cannot connect after being disconnected", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
@@ -67,6 +86,8 @@ describe("ReconnectingSocket", () => {
         }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
+
+      return ret;
     });
 
     it("can disconnect without waiting for open", () => {

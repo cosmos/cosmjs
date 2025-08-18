@@ -20,7 +20,12 @@ describe("SocketWrapper", () => {
     expect(socket).toBeTruthy();
   });
 
-  it("can connect", (done) => {
+  it("can connect", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
@@ -38,9 +43,16 @@ describe("SocketWrapper", () => {
     );
     expect(socket).toBeTruthy();
     socket.connect();
+
+    return ret;
   });
 
-  it("fails to connect to non-existing server", (done) => {
+  it("fails to connect to non-existing server", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
@@ -61,9 +73,16 @@ describe("SocketWrapper", () => {
     );
     expect(socket).toBeTruthy();
     socket.connect();
+
+    return ret;
   });
 
-  it("fails to connect to non-existing server but timeout is not triggered", (done) => {
+  it("fails to connect to non-existing server but timeout is not triggered", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
     const timeout = 1200; // ms
 
@@ -86,9 +105,16 @@ describe("SocketWrapper", () => {
     );
     expect(socket).toBeTruthy();
     socket.connect();
+
+    return ret;
   });
 
-  it("can connect to slow server", (done) => {
+  it("can connect to slow server", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
@@ -106,6 +132,8 @@ describe("SocketWrapper", () => {
     );
     expect(socket).toBeTruthy();
     socket.connect();
+
+    return ret;
   });
 
   it("times out when establishing connection takes too long", async () => {
@@ -138,7 +166,12 @@ describe("SocketWrapper", () => {
       });
   });
 
-  it("can connect and disconnect", (done) => {
+  it("can connect and disconnect", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     let opened = 0;
@@ -164,9 +197,16 @@ describe("SocketWrapper", () => {
       },
     );
     socket.connect();
+
+    return ret;
   });
 
-  it("can disconnect before waiting for open", (done) => {
+  it("can disconnect before waiting for open", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
@@ -188,9 +228,16 @@ describe("SocketWrapper", () => {
     );
     socket.connect();
     socket.disconnect();
+
+    return ret;
   });
 
-  it("can disconnect before waiting for open and timeout will not be triggered", (done) => {
+  it("can disconnect before waiting for open and timeout will not be triggered", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
     const timeout = 500; // ms
 
@@ -216,9 +263,16 @@ describe("SocketWrapper", () => {
     );
     socket.connect();
     socket.disconnect();
+
+    return ret;
   });
 
-  it("can send events when connected", (done) => {
+  it("can send events when connected", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const responseMessages = new Array<string>();
@@ -247,9 +301,16 @@ describe("SocketWrapper", () => {
       },
     );
     socket.connect();
+
+    return ret;
   });
 
-  it("can send events after timeout period", (done) => {
+  it("can send events after timeout period", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     // The "timeout period" is the period in which a timeout could potentially be triggered
@@ -275,9 +336,16 @@ describe("SocketWrapper", () => {
     socket.connect();
 
     setTimeout(() => socket.send("Hello world"), 2 * timeoutPeriodLength);
+
+    return ret;
   });
 
-  it("cannot send on a disconnect socket (it will never come back)", (done) => {
+  it("cannot send on a disconnect socket (it will never come back)", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
@@ -304,5 +372,7 @@ describe("SocketWrapper", () => {
       },
     );
     socket.connect();
+
+    return ret;
   });
 });

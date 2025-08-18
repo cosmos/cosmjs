@@ -76,7 +76,12 @@ describe("StreamingSocket", () => {
     socket.disconnect();
   });
 
-  it("completes stream when disconnected", (done) => {
+  it("completes stream when disconnected", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutSocketServer();
 
     const socket = new StreamingSocket(socketServerUrl);
@@ -96,5 +101,7 @@ describe("StreamingSocket", () => {
       await socket.send("lalala");
       socket.disconnect();
     })().catch(done.fail);
+
+    return ret;
   });
 });

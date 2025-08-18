@@ -15,7 +15,12 @@ describe("QueueingStreamingSocket", () => {
   });
 
   describe("queueRequest", () => {
-    it("can queue and process requests with a connection", (done) => {
+    it("can queue and process requests with a connection", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -35,9 +40,16 @@ describe("QueueingStreamingSocket", () => {
       requests.forEach((request) => {
         socket.queueRequest(request);
       });
+
+      return ret;
     });
 
-    it("can queue requests without a connection and process them later", (done) => {
+    it("can queue requests without a connection and process them later", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -60,11 +72,18 @@ describe("QueueingStreamingSocket", () => {
         expect(socket.getQueueLength()).toEqual(3);
         socket.connect();
       }, 5_000);
+
+      return ret;
     });
   });
 
   describe("reconnect", () => {
-    it("does not emit a completed event when disconnected", (done) => {
+    it("does not emit a completed event when disconnected", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const request = "request";
       const socket = new QueueingStreamingSocket(socketServerUrl);
@@ -84,9 +103,16 @@ describe("QueueingStreamingSocket", () => {
       socket.disconnect();
       socket.reconnect();
       socket.queueRequest(request);
+
+      return ret;
     });
 
-    it("can reconnect and process remaining queue", (done) => {
+    it("can reconnect and process remaining queue", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -110,18 +136,32 @@ describe("QueueingStreamingSocket", () => {
         },
       });
       socket.reconnect();
+
+      return ret;
     });
 
-    it("notifies on reconnection via a callback", (done) => {
+    it("notifies on reconnection via a callback", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl, undefined, done);
 
       socket.reconnect();
+
+      return ret;
     });
   });
 
   describe("connectionStatus", () => {
-    it("exposes connection status", (done) => {
+    it("exposes connection status", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       let statusChangesSeen = 0;
@@ -160,6 +200,8 @@ describe("QueueingStreamingSocket", () => {
           socket.disconnect();
         }, 1000);
       }, 1000);
+
+      return ret;
     });
   });
 });
