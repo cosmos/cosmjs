@@ -12,7 +12,11 @@ describe("SocketWrapper", () => {
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
 
   it("can be constructed", () => {
-    const socket = new SocketWrapper(socketServerUrl, fail, fail);
+    const socket = new SocketWrapper(
+      socketServerUrl,
+      () => {},
+      () => {},
+    );
     expect(socket).toBeTruthy();
   });
 
@@ -110,16 +114,16 @@ describe("SocketWrapper", () => {
     const socket = new SocketWrapper(
       socketServerUrlSlow,
       () => {
-        fail("Got unexpected message event");
+        throw new Error("Got unexpected message event");
       },
       (error) => {
-        fail(error.message || "Unknown socket error");
+        throw new Error(error.message || "Unknown socket error");
       },
       () => {
-        fail("Got unexpected opened event");
+        throw new Error("Got unexpected opened event");
       },
       () => {
-        fail("Got unexpected closed event");
+        throw new Error("Got unexpected closed event");
       },
       2_000,
     );
@@ -127,7 +131,7 @@ describe("SocketWrapper", () => {
 
     await socket.connected
       .then(() => {
-        fail("must not resolve");
+        throw new Error("must not resolve");
       })
       .catch((error) => {
         expect(error).toMatch(/connection attempt timed out/i);

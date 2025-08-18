@@ -49,7 +49,7 @@ describe("StreamingSocket", () => {
 
     await socket.connected
       .then(() => {
-        fail("must not resolve");
+        throw new Error("must not resolve");
       })
       .catch((error) => {
         expect(error).toMatch(/connection attempt timed out/i);

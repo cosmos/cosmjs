@@ -248,7 +248,7 @@ describe("ValueAndUpdates", () => {
       }, 10);
       await vau.waitFor(3).then(
         () => {
-          fail("must not resolve");
+          throw new Error("must not resolve");
         },
         (error) => {
           expect(error).toMatch(/something went wrong/);

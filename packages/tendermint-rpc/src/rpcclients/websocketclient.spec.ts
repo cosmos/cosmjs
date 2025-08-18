@@ -32,7 +32,7 @@ describe("WebsocketClient", () => {
     await client
       .execute(createJsonRpcRequest("no-such-method"))
       .then(() => {
-        fail("must not resolve");
+        throw new Error("must not resolve");
       })
       .catch((error) => {
         expect(error).toBeTruthy();
@@ -185,7 +185,7 @@ describe("WebsocketClient", () => {
     await client
       .execute(createJsonRpcRequest("health"))
       .then(() => {
-        fail("must not resolve");
+        throw new Error("must not resolve");
       })
       .catch((error) => {
         expect(error).toMatch(/socket has disconnected/i);
