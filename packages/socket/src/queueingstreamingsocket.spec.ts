@@ -1,9 +1,10 @@
 import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket";
 
 function pendingWithoutSocketServer(): void {
-  if (!process.env.SOCKETSERVER_ENABLED) {
-    pending("Set SOCKETSERVER_ENABLED to enable socket tests");
+  if (globalThis.process?.env.SOCKETSERVER_ENABLED) {
+    return;
   }
+  pending("Set SOCKETSERVER_ENABLED to enable socket tests");
 }
 
 describe("QueueingStreamingSocket", () => {

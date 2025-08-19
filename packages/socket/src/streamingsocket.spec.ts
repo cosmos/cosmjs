@@ -2,14 +2,11 @@ import { toListPromise } from "@cosmjs/stream";
 
 import { StreamingSocket } from "./streamingsocket";
 
-function skipTests(): boolean {
-  return !process.env.SOCKETSERVER_ENABLED;
-}
-
 function pendingWithoutSocketServer(): void {
-  if (skipTests()) {
-    pending("Set SOCKETSERVER_ENABLED to enable socket tests");
+  if (globalThis.process?.env.SOCKETSERVER_ENABLED) {
+    return;
   }
+  pending("Set SOCKETSERVER_ENABLED to enable socket tests");
 }
 
 describe("StreamingSocket", () => {
