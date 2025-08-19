@@ -2,14 +2,9 @@ import { toListPromise } from "@cosmjs/stream";
 
 import { StreamingSocket } from "./streamingsocket";
 
-function pendingWithoutSocketServer(): void {
-  if (globalThis.process?.env.SOCKETSERVER_ENABLED) {
-    return;
-  }
-  pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-}
+const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-describe("StreamingSocket", () => {
+(enabled ? describe : xdescribe)("StreamingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
 
@@ -19,8 +14,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can connect", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrl);
     expect(socket).toBeTruthy();
     socket.connect();
@@ -29,8 +22,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can connect to slow server", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrlSlow);
     expect(socket).toBeTruthy();
     socket.connect();
@@ -39,8 +30,6 @@ describe("StreamingSocket", () => {
   });
 
   it("times out when establishing connection takes too long", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrlSlow, 2_000);
     socket.connect();
 
@@ -54,8 +43,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can send events when connected", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrl);
 
     const responsePromise = toListPromise(socket.events, 3);
@@ -79,7 +66,6 @@ describe("StreamingSocket", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new StreamingSocket(socketServerUrl);
     expect(socket).toBeTruthy();

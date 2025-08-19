@@ -1,13 +1,8 @@
 import { SocketWrapper } from "./socketwrapper";
 
-function pendingWithoutSocketServer(): void {
-  if (globalThis.process?.env.SOCKETSERVER_ENABLED) {
-    return;
-  }
-  pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-}
+const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-describe("SocketWrapper", () => {
+(enabled ? describe : xdescribe)("SocketWrapper", () => {
   const socketServerUrlNonExisting = "ws://localhost:4443/websocket";
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
@@ -27,7 +22,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
       socketServerUrl,
@@ -54,7 +48,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
       socketServerUrlNonExisting,
@@ -84,7 +77,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
     const timeout = 1200; // ms
 
     const socket = new SocketWrapper(
@@ -116,7 +108,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
       socketServerUrlSlow,
@@ -138,8 +129,6 @@ describe("SocketWrapper", () => {
   });
 
   it("times out when establishing connection takes too long", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new SocketWrapper(
       socketServerUrlSlow,
       () => {
@@ -173,7 +162,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     let opened = 0;
 
@@ -208,7 +196,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
       socketServerUrl,
@@ -239,7 +226,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
     const timeout = 500; // ms
 
     const socket = new SocketWrapper(
@@ -274,7 +260,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const responseMessages = new Array<string>();
 
@@ -312,7 +297,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     // The "timeout period" is the period in which a timeout could potentially be triggered
 
@@ -347,7 +331,6 @@ describe("SocketWrapper", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutSocketServer();
 
     const socket = new SocketWrapper(
       socketServerUrl,

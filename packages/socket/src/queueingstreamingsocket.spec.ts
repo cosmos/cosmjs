@@ -1,11 +1,6 @@
 import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket";
 
-function pendingWithoutSocketServer(): void {
-  if (globalThis.process?.env.SOCKETSERVER_ENABLED) {
-    return;
-  }
-  pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-}
+const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
 describe("QueueingStreamingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
@@ -15,14 +10,13 @@ describe("QueueingStreamingSocket", () => {
     expect(socket).toBeTruthy();
   });
 
-  describe("queueRequest", () => {
+  (enabled ? describe : xdescribe)("queueRequest", () => {
     it("can queue and process requests with a connection", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
       let eventsSeen = 0;
@@ -51,7 +45,6 @@ describe("QueueingStreamingSocket", () => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
       let eventsSeen = 0;
@@ -78,14 +71,13 @@ describe("QueueingStreamingSocket", () => {
     });
   });
 
-  describe("reconnect", () => {
+  (enabled ? describe : xdescribe)("reconnect", () => {
     it("does not emit a completed event when disconnected", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const request = "request";
       const socket = new QueueingStreamingSocket(socketServerUrl);
       socket.events.subscribe({
@@ -114,7 +106,6 @@ describe("QueueingStreamingSocket", () => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
       let eventsSeen = 0;
@@ -147,7 +138,6 @@ describe("QueueingStreamingSocket", () => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl, undefined, done);
 
       socket.reconnect();
@@ -163,7 +153,6 @@ describe("QueueingStreamingSocket", () => {
         done = resolve as typeof done;
         done.fail = reject;
       });
-      pendingWithoutSocketServer();
       const socket = new QueueingStreamingSocket(socketServerUrl);
       let statusChangesSeen = 0;
       socket.connectionStatus.updates.subscribe({
