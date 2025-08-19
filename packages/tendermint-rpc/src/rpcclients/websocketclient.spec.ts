@@ -8,9 +8,10 @@ import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
 function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
+  if (globalThis.process?.env.TENDERMINT_ENABLED) {
+    return;
   }
+  pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
 }
 
 describe("WebsocketClient", () => {

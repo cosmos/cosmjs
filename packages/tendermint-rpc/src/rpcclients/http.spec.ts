@@ -3,9 +3,10 @@ import { defaultInstance, pendingWithoutTendermint } from "../testutil.spec";
 import { http } from "./http";
 
 function pendingWithoutHttpServer(): void {
-  if (!process.env.HTTPSERVER_ENABLED) {
-    pending("Set HTTPSERVER_ENABLED to enable HTTP tests");
+  if (globalThis.process?.env.HTTPSERVER_ENABLED) {
+    return;
   }
+  pending("Set HTTPSERVER_ENABLED to enable HTTP tests");
 }
 
 const tendermintUrl = defaultInstance.url;
