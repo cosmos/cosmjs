@@ -6,12 +6,7 @@ import { assert } from "@cosmjs/utils";
 import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";
 
-function pendingWithoutSimapp(): void {
-  if (globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED)) {
-    return;
-  }
-  pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
-}
+const enabled = !!(globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED);
 
 const defaultTokenConfig: TokenConfiguration = {
   bankTokens: ["ucosm", "ustake"],
@@ -25,7 +20,7 @@ function makeRandomAddress(): string {
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
-describe("Faucet", () => {
+(enabled ? describe : xdescribe)("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const apiUrl = "http://localhost:26658";
@@ -44,7 +39,6 @@ describe("Faucet", () => {
   describe("stargate", () => {
     describe("constructor", () => {
       it("can be constructed", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -60,7 +54,6 @@ describe("Faucet", () => {
 
     describe("availableTokens", () => {
       it("is empty when no tokens are configured", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -75,7 +68,6 @@ describe("Faucet", () => {
       });
 
       it("is not empty with default token config", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -92,7 +84,6 @@ describe("Faucet", () => {
 
     describe("send", () => {
       it("can send bank token", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -126,7 +117,6 @@ describe("Faucet", () => {
 
     describe("refill", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -155,7 +145,6 @@ describe("Faucet", () => {
 
     describe("credit", () => {
       it("works for fee token", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -180,7 +169,6 @@ describe("Faucet", () => {
       });
 
       it("works for stake token", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -207,7 +195,6 @@ describe("Faucet", () => {
 
     describe("configuredTokens", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -224,7 +211,6 @@ describe("Faucet", () => {
 
     describe("loadAccounts", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
