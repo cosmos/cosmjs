@@ -7,10 +7,10 @@ import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";
 
 function pendingWithoutSimapp(): void {
-  if (!process.env.SIMAPP47_ENABLED && !process.env.SIMAPP50_ENABLED) {
-    pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
+  if (globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED)) {
     return;
   }
+  pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
 }
 
 const defaultTokenConfig: TokenConfiguration = {
