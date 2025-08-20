@@ -12,22 +12,8 @@ export function ledgerEnabled(): boolean {
   return !!process.env.LEDGER_ENABLED;
 }
 
-export function pendingWithoutLedger(): void {
-  if (!ledgerEnabled()) {
-    pending("Set LEDGER_ENABLED to enable Ledger-based tests");
-    return;
-  }
-}
-
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP47_ENABLED || !!process.env.SIMAPP50_ENABLED;
-}
-
-export function pendingWithoutSimapp(): void {
-  if (!simappEnabled()) {
-    pending("Set SIMAPP{47,50}_ENABLED to enable Simapp-based tests");
-    return;
-  }
 }
 
 export const simapp = {
