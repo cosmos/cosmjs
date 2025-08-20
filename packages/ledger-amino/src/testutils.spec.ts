@@ -9,11 +9,11 @@ export const faucet = {
 };
 
 export function ledgerEnabled(): boolean {
-  return !!process.env.LEDGER_ENABLED;
+  return !!globalThis.process?.env.LEDGER_ENABLED;
 }
 
 export function simappEnabled(): boolean {
-  return !!process.env.SIMAPP47_ENABLED || !!process.env.SIMAPP50_ENABLED;
+  return !!(globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED);
 }
 
 export const simapp = {
