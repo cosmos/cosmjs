@@ -1,11 +1,9 @@
 <h1><p align="center"><img alt="CosmJS" src="docs/logo-vertical-light.png" width="180" /></p></h1>
 
-<div align="center">
-  <a href="https://github.com/cosmos/cosmjs/blob/main/LICENSE">
-    <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/cosmos/cosmjs.svg" />
-  </a>
-  <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2025" />
-</div>
+[![License: Apache-2.0](https://img.shields.io/github/license/cosmos/cosmjs.svg)](https://github.com/cosmos/cosmjs/blob/main/LICENSE)
+[![OpenSSF scorecard](https://api.scorecard.dev/projects/github.com/cosmos/cosmjs/badge)](https://scorecard.dev/viewer/?uri=github.com/cosmos/cosmjs)
+![[code coverage](https://codecov.io/gh/cosmos/cosmjs/graph/badge.svg)](https://codecov.io/gh/cosmos/cosmjs)
+![Maintenance](https://img.shields.io/maintenance/yes/2025.svg)
 
 CosmJS is the Swiss Army knife to power JavaScript based client solutions
 ranging from Web apps/explorers over browser extensions to server-side clients
