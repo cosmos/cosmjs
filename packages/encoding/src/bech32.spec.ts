@@ -16,7 +16,7 @@ describe("bech32", () => {
     });
 
     it("works for very long prefixes", () => {
-      expect(() => toBech32("p".repeat(70), new Uint8Array(20))).toThrowError(/exceeds length limit/i);
+      expect(() => toBech32("p".repeat(70), new Uint8Array(20))).toThrowError(/exceeds limit 90/i);
     });
 
     // See https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#Bech32
@@ -26,7 +26,7 @@ describe("bech32", () => {
     });
 
     it("throws if result exceeds 90 characters", () => {
-      expect(() => toBech32("eth", new Uint8Array(51))).toThrowError(/exceeds length limit/i);
+      expect(() => toBech32("eth", new Uint8Array(51))).toThrowError(/Length 92 exceeds limit 90/i);
     });
 
     it("works if a limit parameter is provided", () => {
@@ -40,7 +40,7 @@ describe("bech32", () => {
 
     it("throws if result exceeds the provided limit parameter", () => {
       const limit = 10;
-      expect(() => toBech32("eth", ethAddressRaw, limit)).toThrowError(/exceeds length limit/i);
+      expect(() => toBech32("eth", ethAddressRaw, limit)).toThrowError(/exceeds limit 10/i);
     });
   });
 
@@ -77,16 +77,16 @@ describe("bech32", () => {
           "cosmospub1ytql0csgqvfzd666axrjzqmn5q2ucztcyxw8hvlzen94ay05tegaerkug5pn3xn8wqdymt598ufzd666axrjzqsxllmwacap3f6xyc4x30jl8ecrcs2tze3zzgxkmthcsqxnqxhwwgfzd666axrjzqs2rlu3wz5gnslgpprszjr8r65n0d6y39q657th77eyvengtk3z0y6h2pnk",
           90,
         ),
-      ).toThrowError(/exceeds length limit/i);
+      ).toThrowError(/invalid string length/i);
     });
 
     it("throws for mixed case addresses", () => {
       // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
       // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
-      expect(() => fromBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => fromBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => fromBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => fromBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => fromBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/or uppercase/i);
+      expect(() => fromBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/or uppercase/i);
+      expect(() => fromBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/or uppercase/i);
+      expect(() => fromBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/or uppercase/i);
     });
   });
 
@@ -103,10 +103,10 @@ describe("bech32", () => {
     it("throws for mixed case addresses", () => {
       // "Decoders MUST NOT accept strings where some characters are uppercase and some are lowercase (such strings are referred to as mixed case strings)."
       // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki
-      expect(() => normalizeBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => normalizeBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => normalizeBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
-      expect(() => normalizeBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/Mixed-case/i);
+      expect(() => normalizeBech32("Eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/uppercase/i);
+      expect(() => normalizeBech32("eTh1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/uppercase/i);
+      expect(() => normalizeBech32("ETH1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/uppercase/i);
+      expect(() => normalizeBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(/uppercase/i);
     });
   });
 });
