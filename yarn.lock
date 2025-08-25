@@ -331,7 +331,6 @@ __metadata:
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/libsodium-wrappers-sumo": "npm:^0.7.5"
     "@types/node": "npm:*"
-    buffer: "npm:^6.0.3"
     glob: "npm:^11"
     hash-wasm: "npm:^4.12.0"
     jasmine: "npm:^4"

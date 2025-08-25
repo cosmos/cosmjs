@@ -3513,7 +3513,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/libsodium-wrappers-sumo", "npm:0.7.5"],\
           ["@types/node", "npm:22.10.6"],\
-          ["buffer", "npm:6.0.3"],\
           ["glob", "npm:11.0.3"],\
           ["hash-wasm", "npm:4.12.0"],\
           ["jasmine", "npm:4.6.0"],\
