@@ -704,7 +704,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    let pubkey;
+    if (accountFromSigner.algo == "eth_secp256k1" || accountFromSigner.algo == "ethsecp256k1" ) {
+      pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
+    } else {
+      pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    }
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence, timeoutHeight);
@@ -751,7 +756,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       throw new Error("Failed to retrieve account from signer");
     }
     let pubkey;
-    if (accountFromSigner.algo == "eth_secp256k1") {
+    if (accountFromSigner.algo == "eth_secp256k1" || accountFromSigner.algo == "ethsecp256k1" ) {
       pubkey = encodePubkey(encodeEthSecp256k1Pubkey(accountFromSigner.pubkey));
     } else {
       pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
