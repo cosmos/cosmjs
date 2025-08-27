@@ -32,7 +32,6 @@ export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8
   return hash.slice(-20);
 }
 
-
 // For secp256k1 this assumes we already have a compressed pubkey.
 export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
   if (isSecp256k1Pubkey(pubkey)) {
