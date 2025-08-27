@@ -45,5 +45,6 @@ export { type StdSignature, decodeSignature, encodeEthSecp256k1Signature, encode
 export type { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
 export { makeSignDoc, serializeSignDoc } from "./signdoc";
 export type { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";
+export { isEthereumSecp256k1Account, getAminoPubkey } from "./signerutils";
 export { type StdTx, isStdTx, makeStdTx } from "./stdtx";
 export { type KdfConfiguration, executeKdf } from "./wallet";
