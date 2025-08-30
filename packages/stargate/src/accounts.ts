@@ -2,14 +2,14 @@ import { Pubkey } from "@cosmjs/amino";
 import { Uint64 } from "@cosmjs/math";
 import { decodeOptionalPubkey } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
-import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
+import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth.js";
 import {
   BaseVestingAccount,
   ContinuousVestingAccount,
   DelayedVestingAccount,
   PeriodicVestingAccount,
-} from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
-import { Any } from "cosmjs-types/google/protobuf/any";
+} from "cosmjs-types/cosmos/vesting/v1beta1/vesting.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 export interface Account {
   /** Bech32 account address */

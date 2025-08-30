@@ -1,5 +1,5 @@
 import { EncodeObject, GeneratedType } from "@cosmjs/proto-signing";
-import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx.js";
 import {
   MsgAcknowledgement,
   MsgChannelCloseConfirm,
@@ -11,19 +11,19 @@ import {
   MsgRecvPacket,
   MsgTimeout,
   MsgTimeoutOnClose,
-} from "cosmjs-types/ibc/core/channel/v1/tx";
+} from "cosmjs-types/ibc/core/channel/v1/tx.js";
 import {
   MsgCreateClient,
   MsgSubmitMisbehaviour,
   MsgUpdateClient,
   MsgUpgradeClient,
-} from "cosmjs-types/ibc/core/client/v1/tx";
+} from "cosmjs-types/ibc/core/client/v1/tx.js";
 import {
   MsgConnectionOpenAck,
   MsgConnectionOpenConfirm,
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
-} from "cosmjs-types/ibc/core/connection/v1/tx";
+} from "cosmjs-types/ibc/core/connection/v1/tx.js";
 
 export const ibcTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/ibc.applications.transfer.v1.MsgTransfer", MsgTransfer],

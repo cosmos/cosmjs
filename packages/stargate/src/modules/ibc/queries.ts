@@ -1,10 +1,10 @@
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 import {
   QueryClientImpl as TransferQuery,
   QueryDenomTraceResponse,
   QueryDenomTracesResponse,
   QueryParamsResponse as QueryTransferParamsResponse,
-} from "cosmjs-types/ibc/applications/transfer/v1/query";
+} from "cosmjs-types/ibc/applications/transfer/v1/query.js";
 import {
   QueryChannelClientStateResponse,
   QueryChannelConsensusStateResponse,
@@ -21,8 +21,8 @@ import {
   QueryPacketReceiptResponse,
   QueryUnreceivedAcksResponse,
   QueryUnreceivedPacketsResponse,
-} from "cosmjs-types/ibc/core/channel/v1/query";
-import { Height } from "cosmjs-types/ibc/core/client/v1/client";
+} from "cosmjs-types/ibc/core/channel/v1/query.js";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client.js";
 import {
   QueryClientImpl as ClientQuery,
   QueryClientParamsResponse,
@@ -31,7 +31,7 @@ import {
   QueryConsensusStateRequest,
   QueryConsensusStateResponse,
   QueryConsensusStatesResponse,
-} from "cosmjs-types/ibc/core/client/v1/query";
+} from "cosmjs-types/ibc/core/client/v1/query.js";
 import {
   QueryClientConnectionsResponse,
   QueryClientImpl as ConnectionQuery,
@@ -40,11 +40,11 @@ import {
   QueryConnectionConsensusStateResponse,
   QueryConnectionResponse,
   QueryConnectionsResponse,
-} from "cosmjs-types/ibc/core/connection/v1/query";
+} from "cosmjs-types/ibc/core/connection/v1/query.js";
 import {
   ClientState as TendermintClientState,
   ConsensusState as TendermintConsensusState,
-} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
+} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint.js";
 
 import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient";
 

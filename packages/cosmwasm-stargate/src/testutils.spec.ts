@@ -19,8 +19,8 @@ import {
 } from "@cosmjs/stargate";
 import { connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
-import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing.js";
+import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
 
 import { setupWasmExtension, WasmExtension } from "./modules";
 import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
