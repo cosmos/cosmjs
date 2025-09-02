@@ -6,6 +6,7 @@ import {
   Ed25519Pubkey,
   EthSecp256k1Pubkey,
   isEd25519Pubkey,
+  isEthSecp256k1Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
   MultisigThresholdPubkey,
@@ -60,6 +61,7 @@ export function encodeEthSecp256k1Pubkey(pubkey: Uint8Array): EthSecp256k1Pubkey
 // Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
 // Last bytes is varint-encoded length prefix
 const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae987" + "21" /* fixed length */);
+const pubkeyAminoPrefixEthSecp256k1 = fromHex("5D7423DF" + "21" /* fixed length */);
 const pubkeyAminoPrefixEd25519 = fromHex("1624de64" + "20" /* fixed length */);
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005" + "20" /* fixed length */);
 /** See https://github.com/tendermint/tendermint/commit/38b401657e4ad7a7eeb3c30a3cbf512037df3740 */
@@ -222,6 +224,8 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
     return new Uint8Array([...pubkeyAminoPrefixEd25519, ...fromBase64(pubkey.value)]);
   } else if (isSecp256k1Pubkey(pubkey)) {
     return new Uint8Array([...pubkeyAminoPrefixSecp256k1, ...fromBase64(pubkey.value)]);
+  } else if (isEthSecp256k1Pubkey(pubkey)) {
+    return new Uint8Array([...pubkeyAminoPrefixEthSecp256k1, ...fromBase64(pubkey.value)])
   } else {
     throw new Error("Unsupported pubkey type");
   }
