@@ -13,7 +13,8 @@ export default [
   },
   js.configs.recommended,
   prettier,
-  // importt.flatConfigs.recommended,
+  // eslint-plugin-import: use fixupPluginRules(importt) to adapt plugin rules to flat config.
+  // We intentionally do not enable importt.flatConfigs.recommended globally to avoid rule duplication/conflicts.
   {
     plugins: {
       "simple-import-sort": simpleImportSort,
@@ -89,6 +90,7 @@ export default [
         (obj, c) => Object.assign(obj, c.rules),
         {},
       ),
+      // Reuse plugin-import's TypeScript rules in flat-config form without pulling the full recommended preset
       ...importt.flatConfigs.typescript.rules,
 
       // lints from 'strict-type-checked' config
