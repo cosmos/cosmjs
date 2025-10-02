@@ -6,6 +6,18 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/crypto: Fix import path of @noble/hashes to avoid bunding issue
+
+  > Error \[ERR_PACKAGE_PATH_NOT_EXPORTED\]: Package subpath './sha2.js' is not
+  > defined by "exports" in …
+
+  In @noble/hashes version 1.x the import paths must not contain the .js suffix.
+  This issue was intoduced in CosmJS 0.35.0. ([#1817])
+
+[#1817]: https://github.com/cosmos/cosmjs/pull/1817
+
 ## [0.36.0] - 2025-08-14
 
 ### Changed
