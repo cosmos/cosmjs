@@ -6,6 +6,27 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- all: The `package.json`s now all use the modern `exports` field instead of the
+  classic `main`/`types` to define the entry points. This ensures only symbols
+  from the top level module can be imported (like
+  `import { toBech32 } from "@cosmjs/encoding"`). Other import paths like
+  `import { toBech32 } from "@cosmjs/encoding/src/bech32"` are not allowed
+  anymore. As all public interfaces used to be exported from the top level for a
+  long time, this should not affect most users. However, if you accidentally
+  imported a subpath before you will get an error now. This can typically be
+  resolved like this:
+
+  ```diff
+  -import { toBech32 } from "@cosmjs/encoding/src/bech32"
+  +import { toBech32 } from "@cosmjs/encoding"
+  ```
+
+  ([#1819])
+
+[#1819]: https://github.com/cosmos/cosmjs/pull/1819
+
 ## [0.36.1] - 2025-10-02
 
 ### Fixed
