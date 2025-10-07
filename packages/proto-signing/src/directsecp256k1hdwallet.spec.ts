@@ -197,7 +197,6 @@ describe("DirectSecp256k1HdWallet", () => {
         const accounts = await deserialized.getAccounts();
 
         expect(deserialized.mnemonic).toEqual(mnemonic);
-        expect(deserialized.mnemonic).toEqual(mnemonic);
         // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
         expect(accounts).toEqual([
           {
