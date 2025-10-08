@@ -847,7 +847,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-(tendermintEnabled ? describe : xdescribe)("Comet38Client with CometBFT 0.38 backend", () => {
+(tendermintEnabled ? describe : describe.skip)("Comet38Client with CometBFT 0.38 backend", () => {
   const { url, expected } = tendermintInstances[38];
 
   it("can connect to a given url", async () => {
@@ -883,7 +883,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 describe("Comet38Client with CometBFT 1 backend", () => {
   const { url, expected } = tendermintInstances[1];
 
-  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
+  (tendermintEnabled ? it : it.skip)("can connect to a given url", async () => {
     // http connection
     {
       const client = await Comet38Client.connect("http://" + url);
@@ -901,11 +901,11 @@ describe("Comet38Client with CometBFT 1 backend", () => {
     }
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
+  (tendermintEnabled ? describe : describe.skip)("With HttpClient", () => {
     defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
+  (tendermintEnabled ? describe : describe.skip)("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
     const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
     const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
