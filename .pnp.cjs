@@ -495,7 +495,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@scure/base",\
-      "npm:1.2.6"\
+      "npm:2.0.0"\
     ],\
     [\
       "@shikijs/engine-oniguruma",\
@@ -3541,6 +3541,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@cosmjs/encoding", "workspace:packages/encoding"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@scure/base", "npm:2.0.0"],\
           ["@types/base64-js", "npm:1.3.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
@@ -4671,6 +4672,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@scure-base-npm-1.2.6-f26c4d7404-49bd529337.zip/node_modules/@scure/base/",\
         "packageDependencies": [\
           ["@scure/base", "npm:1.2.6"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:2.0.0", {\
+        "packageLocation": "./.yarn/cache/@scure-base-npm-2.0.0-97a775035d-7d999c7beb.zip/node_modules/@scure/base/",\
+        "packageDependencies": [\
+          ["@scure/base", "npm:2.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
