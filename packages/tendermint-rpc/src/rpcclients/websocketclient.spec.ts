@@ -7,7 +7,7 @@ import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-(tendermintEnabled ? describe : describe.skip)("WebsocketClient", () => {
+(tendermintEnabled ? describe : xdescribe)("WebsocketClient", () => {
   const { blockTime, url } = defaultInstance;
   const tendermintUrl = "ws://" + url;
 

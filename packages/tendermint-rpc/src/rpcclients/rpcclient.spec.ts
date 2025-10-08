@@ -4,7 +4,7 @@ import { HttpClient } from "./httpclient";
 import { hasProtocol, instanceOfRpcStreamingClient } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-(tendermintEnabled ? describe : describe.skip)("RpcClient", () => {
+(tendermintEnabled ? describe : xdescribe)("RpcClient", () => {
   const httpUrl = "http://" + defaultInstance.url;
   const wsUrl = "ws://" + defaultInstance.url;
 

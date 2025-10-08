@@ -663,11 +663,14 @@ __metadata:
     "@cosmjs/stream": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
+    "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/node": "npm:*"
     glob: "npm:^11"
+    jasmine: "npm:^4"
+    jasmine-spec-reporter: "npm:^6"
     karma: "npm:^6.3.14"
     karma-chrome-launcher: "npm:^3.1.0"
     karma-firefox-launcher: "npm:^2.1.0"
@@ -680,7 +683,6 @@ __metadata:
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
     typescript: "npm:~5.9"
-    vitest: "npm:^3.2.4"
     webpack: "npm:^5.76.0"
     webpack-cli: "npm:^4.6.0"
     xstream: "npm:^11.14.0"
@@ -1898,6 +1900,13 @@ __metadata:
   version: 4.6.1
   resolution: "@types/jasmine@npm:4.6.1"
   checksum: 10c0/dd7f887058f1b648c49f22ec1d8ae8b6e44c7c292b6fc6fd0b968ea4e01800e79f77d02e2572a289ca1618678ee4f5af252564e8234dd0629261b15e3c782ebb
+  languageName: node
+  linkType: hard
+
+"@types/jasmine@npm:^4":
+  version: 4.6.5
+  resolution: "@types/jasmine@npm:4.6.5"
+  checksum: 10c0/9d20e00de9f3a9f68f949d0df55087f47928c03506c110de540945a4837df7c351a2d5fb93cd319cec15ce08ee3560920840d9ab86fae8bfe05242ce48679485
   languageName: node
   linkType: hard
 
@@ -5887,6 +5896,34 @@ __metadata:
   version: 4.6.0
   resolution: "jasmine-core@npm:4.6.0"
   checksum: 10c0/c78338fff7e6383653e049f7d5101f0933beb5dc09be6ed526c209c0521b7fa974477206c0ac1041455f6555a4bdcba163ea8581d420fdd35cd58a67a07466dc
+  languageName: node
+  linkType: hard
+
+"jasmine-core@npm:^4.6.0":
+  version: 4.6.1
+  resolution: "jasmine-core@npm:4.6.1"
+  checksum: 10c0/3d038b7f6f6f0d3cb56cdb4d2f0323a9d84f3a64a03746f9329a2d5a5166ec5e0ad3232d72ceb4f357cf2f120fdb86310715eaeb174f325833515fd0792a6860
+  languageName: node
+  linkType: hard
+
+"jasmine-spec-reporter@npm:^6":
+  version: 6.0.0
+  resolution: "jasmine-spec-reporter@npm:6.0.0"
+  dependencies:
+    colors: "npm:1.4.0"
+  checksum: 10c0/aab493d4e13cfbec1a4800f85e4eb52143a05a15c433580784dddb8c9dfb71873a8b06005fe15c0f3309fc9769f253675cc28b8fd9f76788fe53f01ed4d73c05
+  languageName: node
+  linkType: hard
+
+"jasmine@npm:^4":
+  version: 4.6.0
+  resolution: "jasmine@npm:4.6.0"
+  dependencies:
+    glob: "npm:^7.1.6"
+    jasmine-core: "npm:^4.6.0"
+  bin:
+    jasmine: bin/jasmine.js
+  checksum: 10c0/73dbb28a0051531b3dfa644884f9e9e2a421516ae4a1b33e706dec2d31357ad69aadc936d4e7585a3c9921fe552d3c7bc4ddfb227c46c969f5271ea6ceae5661
   languageName: node
   linkType: hard
 

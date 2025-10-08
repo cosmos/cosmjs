@@ -2,7 +2,7 @@ import { createJsonRpcRequest } from "../jsonrpc";
 import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { HttpClient } from "./httpclient";
 
-(tendermintEnabled ? describe : describe.skip)("HttpClient", () => {
+(tendermintEnabled ? describe : xdescribe)("HttpClient", () => {
   const tendermintUrl = "http://" + defaultInstance.url;
 
   it("can make a simple call", async () => {

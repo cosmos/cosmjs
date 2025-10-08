@@ -787,7 +787,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@types/jasmine",\
-      "npm:4.6.1"\
+      "npm:4.6.5"\
     ],\
     [\
       "@types/json-schema",\
@@ -2258,8 +2258,16 @@ const RAW_RUNTIME_STATE =
       "npm:4.1.1"\
     ],\
     [\
+      "jasmine",\
+      "npm:4.6.0"\
+    ],\
+    [\
       "jasmine-core",\
       "npm:4.6.0"\
+    ],\
+    [\
+      "jasmine-spec-reporter",\
+      "npm:6.0.0"\
     ],\
     [\
       "jest-worker",\
@@ -4189,11 +4197,14 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/tendermint-rpc", "workspace:packages/tendermint-rpc"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@types/jasmine", "npm:4.6.5"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["glob", "npm:11.0.3"],\
+          ["jasmine", "npm:4.6.0"],\
+          ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["karma", "npm:6.3.16"],\
           ["karma-chrome-launcher", "npm:3.1.0"],\
           ["karma-firefox-launcher", "npm:2.1.0"],\
@@ -4206,7 +4217,6 @@ const RAW_RUNTIME_STATE =
           ["source-map-support", "npm:0.5.21"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
-          ["vitest", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:3.2.4"],\
           ["webpack", "virtual:7bcfa345571c06768a3dbc91a42526f0822237866e2d9cb58705577be6cb39fb02f8c1251069bcf70d11a05dfde2de19f521968b6f5d0f6652f231deb4bdab09#npm:5.76.1"],\
           ["webpack-cli", "virtual:7bcfa345571c06768a3dbc91a42526f0822237866e2d9cb58705577be6cb39fb02f8c1251069bcf70d11a05dfde2de19f521968b6f5d0f6652f231deb4bdab09#npm:4.7.0"],\
           ["xstream", "npm:11.14.0"]\
@@ -5696,6 +5706,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-jasmine-npm-4.6.1-55b5288466-dd7f887058.zip/node_modules/@types/jasmine/",\
         "packageDependencies": [\
           ["@types/jasmine", "npm:4.6.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:4.6.5", {\
+        "packageLocation": "./.yarn/cache/@types-jasmine-npm-4.6.5-38956b86dc-9d20e00de9.zip/node_modules/@types/jasmine/",\
+        "packageDependencies": [\
+          ["@types/jasmine", "npm:4.6.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -11155,11 +11172,39 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["jasmine", [\
+      ["npm:4.6.0", {\
+        "packageLocation": "./.yarn/cache/jasmine-npm-4.6.0-610a07828e-73dbb28a00.zip/node_modules/jasmine/",\
+        "packageDependencies": [\
+          ["glob", "npm:7.2.0"],\
+          ["jasmine", "npm:4.6.0"],\
+          ["jasmine-core", "npm:4.6.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["jasmine-core", [\
       ["npm:4.6.0", {\
         "packageLocation": "./.yarn/cache/jasmine-core-npm-4.6.0-57a71d0bb0-c78338fff7.zip/node_modules/jasmine-core/",\
         "packageDependencies": [\
           ["jasmine-core", "npm:4.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:4.6.1", {\
+        "packageLocation": "./.yarn/cache/jasmine-core-npm-4.6.1-8b205bcb86-3d038b7f6f.zip/node_modules/jasmine-core/",\
+        "packageDependencies": [\
+          ["jasmine-core", "npm:4.6.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["jasmine-spec-reporter", [\
+      ["npm:6.0.0", {\
+        "packageLocation": "./.yarn/cache/jasmine-spec-reporter-npm-6.0.0-575b473233-aab493d4e1.zip/node_modules/jasmine-spec-reporter/",\
+        "packageDependencies": [\
+          ["colors", "npm:1.4.0"],\
+          ["jasmine-spec-reporter", "npm:6.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
