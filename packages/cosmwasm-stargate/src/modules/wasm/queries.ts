@@ -12,7 +12,7 @@ import {
   QueryContractsByCodeResponse,
   QueryContractsByCreatorResponse,
   QueryRawContractStateResponse,
-} from "cosmjs-types/cosmwasm/wasm/v1/query";
+} from "cosmjs-types/cosmwasm/wasm/v1/query.js";
 
 /**
  * An object containing a parsed JSON document. The result of JSON.parse().

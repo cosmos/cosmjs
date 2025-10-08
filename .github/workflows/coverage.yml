@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: 'yarn'
 
       - name: Start wasmd
@@ -48,7 +48,6 @@ jobs:
           SLOW_SIMAPP50_ENABLED: 1
           TENDERMINT_ENABLED: 1
           SOCKETSERVER_ENABLED: 1
-          SKIP_BUILD: 1
           WASMD_ENABLED: 1
         run: yarn coverage
 

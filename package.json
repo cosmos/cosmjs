@@ -35,7 +35,6 @@
     "coverage": "yarn workspaces foreach --all --topological-dev --parallel --verbose run coverage",
     "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
-    "pack-web": "yarn workspaces foreach --all --topological-dev --parallel --verbose run pack-web",
     "publish-next": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag next",
     "publish-latest": "yarn workspaces foreach --all --no-private exec yarn npm publish"
   },

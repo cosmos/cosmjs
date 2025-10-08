@@ -33,10 +33,10 @@ import {
 } from "@cosmjs/stargate";
 import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
-import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
-import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
-import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx.js";
+import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing.js";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -45,8 +45,8 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "cosmjs-types/cosmwasm/wasm/v1/tx";
-import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
+} from "cosmjs-types/cosmwasm/wasm/v1/tx.js";
+import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types.js";
 import { gzip } from "pako";
 
 import { CosmWasmClient } from "./cosmwasmclient";

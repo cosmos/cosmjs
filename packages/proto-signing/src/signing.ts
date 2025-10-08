@@ -1,8 +1,8 @@
 import { assert } from "@cosmjs/utils";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignDoc, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing.js";
+import { AuthInfo, SignDoc, SignerInfo } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 /**
  * Create signer infos from the provided signers.

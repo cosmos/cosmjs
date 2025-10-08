@@ -1,5 +1,5 @@
 import { coin } from "@cosmjs/proto-signing";
-import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
 
 import { AminoTypes } from "./aminotypes";
 import { createBankAminoConverters, createStakingAminoConverters } from "./modules";

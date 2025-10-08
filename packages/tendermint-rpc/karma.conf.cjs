@@ -15,7 +15,7 @@ module.exports = function (config) {
     frameworks: ["jasmine"],
 
     // list of files / patterns to load in the browser
-    files: ["dist/web/tests.js"],
+    files: ["build/web/tests.js"],
 
     client: {
       jasmine: {

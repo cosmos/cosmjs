@@ -1,7 +1,7 @@
 import { coin, coins, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
-import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
 
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";

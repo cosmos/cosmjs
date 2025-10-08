@@ -15,7 +15,10 @@ module.exports = function (config) {
     frameworks: ["jasmine"],
 
     // list of files / patterns to load in the browser
-    files: ["dist/web/tests.js"],
+    files: [
+      { pattern: "build/**.spec.js", type: "module" },
+      { pattern: "build/**.js", included: false },
+    ],
 
     client: {
       jasmine: {
@@ -45,6 +48,8 @@ module.exports = function (config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ["Firefox"],
+
+    browserNoActivityTimeout: 90000,
 
     // Keep browser open for debugging. This is overridden by yarn scripts
     singleRun: false,

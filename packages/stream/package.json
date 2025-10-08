@@ -8,10 +8,13 @@
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "type": "module",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
+  },
   "files": [
-    "build/",
+    "dist/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
@@ -29,13 +32,12 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "test-node": "yarn node jasmine-testrunner.cjs",
-    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test-firefox": "yarn run build:test && karma start --single-run --browsers Firefox karma.conf.cjs",
+    "test-chrome": "yarn run build:test && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
+    "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
+    "build": "tsdown --unbundle",
+    "build:test": "find . -name '*spec.ts' | xargs rolldown -d build/"
   },
   "dependencies": {
     "xstream": "^11.14.0"
@@ -57,11 +59,10 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
     "prettier": "^3.5.3",
+    "rolldown": "1.0.0-beta.34",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
-    "typedoc": "^0.28",
-    "typescript": "~5.9",
-    "webpack": "^5.76.0",
-    "webpack-cli": "^4.6.0"
+    "tsdown": "^0.14.2",
+    "typedoc": "^0.28"
   }
 }

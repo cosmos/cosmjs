@@ -1,8 +1,8 @@
 import { encodePubkey } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
-import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { QueryClient } from "../../queryclient";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils.spec";

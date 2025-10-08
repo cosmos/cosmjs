@@ -1,9 +1,9 @@
 import { MultisigThresholdPubkey, pubkeyToAddress, StdFee } from "@cosmjs/amino";
 import { fromBech32 } from "@cosmjs/encoding";
 import { encodePubkey } from "@cosmjs/proto-signing";
-import { CompactBitArray, MultiSignature } from "cosmjs-types/cosmos/crypto/multisig/v1beta1/multisig";
-import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignerInfo, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { CompactBitArray, MultiSignature } from "cosmjs-types/cosmos/crypto/multisig/v1beta1/multisig.js";
+import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing.js";
+import { AuthInfo, SignerInfo, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
 
 export function makeCompactBitArray(bits: readonly boolean[]): CompactBitArray {
   const byteCount = Math.ceil(bits.length / 8);

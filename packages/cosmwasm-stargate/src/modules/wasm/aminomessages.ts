@@ -10,8 +10,8 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} from "cosmjs-types/cosmwasm/wasm/v1/tx";
-import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
+} from "cosmjs-types/cosmwasm/wasm/v1/tx.js";
+import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types.js";
 
 export function accessTypeFromString(str: string): AccessType {
   switch (str) {
