@@ -1,5 +1,5 @@
 import { assert } from "@cosmjs/utils";
-import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2";
+import { pbkdf2Async as noblePbkdf2Async } from "@noble/hashes/pbkdf2.js";
 import { sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
 /**
