@@ -38,7 +38,7 @@ async function createTransport(): Promise<Transport> {
   return TransportClass.create(interactiveTimeout, interactiveTimeout);
 }
 
-(ledgerEnabled() ? describe : xdescribe)("LedgerSigner", () => {
+(ledgerEnabled ? describe : xdescribe)("LedgerSigner", () => {
   const defaultChainId = "testing";
   const defaultFee = calculateFee(100_000, "0.025ucosm");
   const defaultMemo = "Some memo";
@@ -48,7 +48,7 @@ async function createTransport(): Promise<Transport> {
   let transport: Transport;
 
   beforeAll(async () => {
-    if (simappEnabled()) {
+    if (simappEnabled) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, wallet);
       const amount = coins(226644, "ucosm");
@@ -147,7 +147,7 @@ async function createTransport(): Promise<Transport> {
       interactiveTimeout,
     );
 
-    (simappEnabled() ? it : xit)(
+    (simappEnabled ? it : xit)(
       "creates signature accepted by Stargate backend",
       async () => {
         const signer = new LedgerSigner(transport, {

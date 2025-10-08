@@ -1,18 +1,11 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { HttpClient } from "./httpclient";
 
-function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
-  }
-}
-
-describe("HttpClient", () => {
+(tendermintEnabled ? describe : xdescribe)("HttpClient", () => {
   const tendermintUrl = "http://" + defaultInstance.url;
 
   it("can make a simple call", async () => {
-    pendingWithoutTendermint();
     const client = new HttpClient(tendermintUrl);
 
     const healthResponse = await client.execute(createJsonRpcRequest("health"));

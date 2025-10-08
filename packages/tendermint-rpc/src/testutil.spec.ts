@@ -99,15 +99,7 @@ export const tendermintInstances: Record<number, TendermintInstance> = {
 
 export const defaultInstance: TendermintInstance = tendermintInstances[34];
 
-export function tendermintEnabled(): boolean {
-  return !!globalThis.process?.env.TENDERMINT_ENABLED;
-}
-
-export function pendingWithoutTendermint(): void {
-  if (!tendermintEnabled()) {
-    pending("Set TENDERMINT_ENABLED to enable tendermint-based tests");
-  }
-}
+export const tendermintEnabled: boolean = !!globalThis.process?.env.TENDERMINT_ENABLED;
 
 export async function tendermintSearchIndexUpdated(): Promise<void> {
   // Tendermint needs some time before a committed transaction is found in search

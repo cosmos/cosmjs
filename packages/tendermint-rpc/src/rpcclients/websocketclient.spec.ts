@@ -3,24 +3,15 @@ import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-function pendingWithoutTendermint(): void {
-  if (globalThis.process?.env.TENDERMINT_ENABLED) {
-    return;
-  }
-  pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
-}
-
-describe("WebsocketClient", () => {
+(tendermintEnabled ? describe : xdescribe)("WebsocketClient", () => {
   const { blockTime, url } = defaultInstance;
   const tendermintUrl = "ws://" + url;
 
   it("can make a simple call", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const healthResponse = await client.execute(createJsonRpcRequest("health"));
@@ -48,7 +39,6 @@ describe("WebsocketClient", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutTendermint();
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -90,8 +80,6 @@ describe("WebsocketClient", () => {
   });
 
   it("can listen to the same query twice", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const newBlockHeaderQuery = "tm.event='NewBlockHeader'";
@@ -120,7 +108,6 @@ describe("WebsocketClient", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutTendermint();
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -169,7 +156,6 @@ describe("WebsocketClient", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutTendermint();
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -196,8 +182,6 @@ describe("WebsocketClient", () => {
   });
 
   it("fails when executing on a disconnected client", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
     // dummy command to ensure client is connected
     await client.execute(createJsonRpcRequest("health"));
@@ -220,7 +204,6 @@ describe("WebsocketClient", () => {
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutTendermint();
 
     // async and done does not work together with pending() in Jasmine 2.8
     (async () => {
@@ -240,8 +223,6 @@ describe("WebsocketClient", () => {
   });
 
   it("cannot listen to simple requests", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const req = createJsonRpcRequest("health");

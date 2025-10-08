@@ -42,7 +42,7 @@ describe("gov messages", () => {
   let proposalId: string | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled()) {
+    if (simappEnabled) {
       voterWallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPaths: voterPaths });
       voterWalletAmino = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPaths: voterPaths });
       const client = await SigningStargateClient.connectWithSigner(
@@ -208,7 +208,7 @@ describe("gov messages", () => {
 
     it("works with Amino JSON signer", async () => {
       pendingWithoutSimapp();
-      if (simapp50Enabled()) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
+      if (simapp50Enabled) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(

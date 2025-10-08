@@ -1,5 +1,5 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, pendingWithoutTendermint } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { http } from "./http";
 
 function pendingWithoutHttpServer(): void {
@@ -13,8 +13,7 @@ const tendermintUrl = defaultInstance.url;
 const echoUrl = "http://localhost:5555/echo_headers";
 
 describe("http", () => {
-  it("can send a health request", async () => {
-    pendingWithoutTendermint();
+  (tendermintEnabled ? it : xit)("can send a health request", async () => {
     const response = await http("POST", `http://${tendermintUrl}`, undefined, createJsonRpcRequest("health"));
     expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
   });

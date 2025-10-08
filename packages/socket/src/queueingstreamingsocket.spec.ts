@@ -146,7 +146,7 @@ describe("QueueingStreamingSocket", () => {
     });
   });
 
-  describe("connectionStatus", () => {
+  (enabled ? describe : xdescribe)("connectionStatus", () => {
     it("exposes connection status", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {

@@ -395,7 +395,7 @@ describe("StargateClient", () => {
 
       const { gasUsed, rawLog, transactionHash } = txResult;
       expect(gasUsed).toBeGreaterThan(0);
-      if (simapp50Enabled()) {
+      if (simapp50Enabled) {
         expect(rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
       } else {
         expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
@@ -466,13 +466,13 @@ describe("StargateClient", () => {
         assert(false, "Expected broadcastTx to throw");
       } catch (error: any) {
         expect(error).toMatch(
-          simapp47Enabled()
+          simapp47Enabled
             ? /Broadcasting transaction failed with code 7/i
             : // New error code for SDK 0.50+
               /Broadcasting transaction failed with code 4/i,
         );
         assert(error instanceof BroadcastTxError);
-        if (simapp50Enabled()) {
+        if (simapp50Enabled) {
           // New error code for SDK 0.50+
           expect(error.code).toEqual(4);
         } else {

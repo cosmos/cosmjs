@@ -4,9 +4,8 @@ import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
 import { Faucet } from "./faucet";
+import { simappEnabled } from "./testutils.spec";
 import { TokenConfiguration } from "./tokenmanager";
-
-const enabled = !!(globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED);
 
 const defaultTokenConfig: TokenConfiguration = {
   bankTokens: ["ucosm", "ustake"],
@@ -20,7 +19,7 @@ function makeRandomAddress(): string {
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
-(enabled ? describe : xdescribe)("Faucet", () => {
+(simappEnabled ? describe : xdescribe)("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const apiUrl = "http://localhost:26658";
