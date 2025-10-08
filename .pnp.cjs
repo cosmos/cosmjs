@@ -2829,7 +2829,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "tar-fs",\
-      "npm:2.1.3"\
+      "npm:2.1.4"\
     ],\
     [\
       "tar-stream",\
@@ -11583,7 +11583,7 @@ const RAW_RUNTIME_STATE =
           ["pump", "npm:3.0.0"],\
           ["rc", "npm:1.2.8"],\
           ["simple-get", "npm:4.0.1"],\
-          ["tar-fs", "npm:2.1.3"],\
+          ["tar-fs", "npm:2.1.4"],\
           ["tunnel-agent", "npm:0.6.0"]\
         ],\
         "linkType": "HARD"\
@@ -12680,13 +12680,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["tar-fs", [\
-      ["npm:2.1.3", {\
-        "packageLocation": "./.yarn/cache/tar-fs-npm-2.1.3-32d6d6fb31-472ee0c3c8.zip/node_modules/tar-fs/",\
+      ["npm:2.1.4", {\
+        "packageLocation": "./.yarn/cache/tar-fs-npm-2.1.4-90a454735f-decb25acdc.zip/node_modules/tar-fs/",\
         "packageDependencies": [\
           ["chownr", "npm:1.1.4"],\
           ["mkdirp-classic", "npm:0.5.3"],\
           ["pump", "npm:3.0.0"],\
-          ["tar-fs", "npm:2.1.3"],\
+          ["tar-fs", "npm:2.1.4"],\
           ["tar-stream", "npm:2.2.0"]\
         ],\
         "linkType": "HARD"\
