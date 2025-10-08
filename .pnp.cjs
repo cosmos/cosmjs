@@ -1014,10 +1014,6 @@ const RAW_RUNTIME_STATE =
       "npm:2.0.0"\
     ],\
     [\
-      "bech32",\
-      "npm:1.1.4"\
-    ],\
-    [\
       "binary-extensions",\
       "npm:2.2.0"\
     ],\
@@ -3549,7 +3545,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["base64-js", "npm:1.5.1"],\
-          ["bech32", "npm:1.1.4"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -6929,15 +6924,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/base64id-npm-2.0.0-ef4afeee0a-6919efd237.zip/node_modules/base64id/",\
         "packageDependencies": [\
           ["base64id", "npm:2.0.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["bech32", [\
-      ["npm:1.1.4", {\
-        "packageLocation": "./.yarn/cache/bech32-npm-1.1.4-87b69922f7-5f62ca47b8.zip/node_modules/bech32/",\
-        "packageDependencies": [\
-          ["bech32", "npm:1.1.4"]\
         ],\
         "linkType": "HARD"\
       }]\
