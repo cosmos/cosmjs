@@ -1199,7 +1199,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "cross-spawn",\
-      "npm:7.0.3"\
+      "npm:7.0.6"\
     ],\
     [\
       "custom-event",\
@@ -7534,16 +7534,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["cross-spawn", [\
-      ["npm:7.0.3", {\
-        "packageLocation": "./.yarn/cache/cross-spawn-npm-7.0.3-e4ff3e65b3-5738c31238.zip/node_modules/cross-spawn/",\
-        "packageDependencies": [\
-          ["cross-spawn", "npm:7.0.3"],\
-          ["path-key", "npm:3.1.1"],\
-          ["shebang-command", "npm:2.0.0"],\
-          ["which", "npm:2.0.2"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:7.0.6", {\
         "packageLocation": "./.yarn/cache/cross-spawn-npm-7.0.6-264bddf921-053ea8b213.zip/node_modules/cross-spawn/",\
         "packageDependencies": [\
@@ -8610,7 +8600,7 @@ const RAW_RUNTIME_STATE =
       ["npm:5.0.0", {\
         "packageLocation": "./.yarn/cache/execa-npm-5.0.0-4ee568fb49-e110add7ca.zip/node_modules/execa/",\
         "packageDependencies": [\
-          ["cross-spawn", "npm:7.0.3"],\
+          ["cross-spawn", "npm:7.0.6"],\
           ["execa", "npm:5.0.0"],\
           ["get-stream", "npm:6.0.1"],\
           ["human-signals", "npm:2.1.0"],\
@@ -8890,7 +8880,7 @@ const RAW_RUNTIME_STATE =
       ["npm:2.0.0", {\
         "packageLocation": "./.yarn/cache/foreground-child-npm-2.0.0-80c976b61e-6719982783.zip/node_modules/foreground-child/",\
         "packageDependencies": [\
-          ["cross-spawn", "npm:7.0.3"],\
+          ["cross-spawn", "npm:7.0.6"],\
           ["foreground-child", "npm:2.0.0"],\
           ["signal-exit", "npm:3.0.7"]\
         ],\
@@ -8899,7 +8889,7 @@ const RAW_RUNTIME_STATE =
       ["npm:3.1.1", {\
         "packageLocation": "./.yarn/cache/foreground-child-npm-3.1.1-77e78ed774-9700a02856.zip/node_modules/foreground-child/",\
         "packageDependencies": [\
-          ["cross-spawn", "npm:7.0.3"],\
+          ["cross-spawn", "npm:7.0.6"],\
           ["foreground-child", "npm:3.1.1"],\
           ["signal-exit", "npm:4.1.0"]\
         ],\
@@ -10107,7 +10097,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/istanbul-lib-processinfo-npm-2.0.2-74916fa6cb-274efa2b78.zip/node_modules/istanbul-lib-processinfo/",\
         "packageDependencies": [\
           ["archy", "npm:1.0.0"],\
-          ["cross-spawn", "npm:7.0.3"],\
+          ["cross-spawn", "npm:7.0.6"],\
           ["istanbul-lib-coverage", "npm:3.0.0"],\
           ["istanbul-lib-processinfo", "npm:2.0.2"],\
           ["make-dir", "npm:3.1.0"],\
