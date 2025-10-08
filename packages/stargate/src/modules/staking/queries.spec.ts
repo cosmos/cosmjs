@@ -15,7 +15,7 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
   return [QueryClient.withExtensions(cometClient, setupStakingExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("StakingExtension", () => {
+(simappEnabled ? describe : describe.skip)("StakingExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million

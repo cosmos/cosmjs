@@ -76,7 +76,7 @@ describe("isDeliverTxSuccess", () => {
   });
 });
 
-(simappEnabled ? describe : xdescribe)("StargateClient", () => {
+(simappEnabled ? describe : describe.skip)("StargateClient", () => {
   describe("connect", () => {
     it("works", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
@@ -465,7 +465,7 @@ describe("isDeliverTxSuccess", () => {
       client.disconnect();
     });
 
-    (slowSimappEnabled ? it : xit)(
+    (slowSimappEnabled ? it : it.skip)(
       "respects user timeouts rather than RPC timeouts",
       async () => {
         const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);

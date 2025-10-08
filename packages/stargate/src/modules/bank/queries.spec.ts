@@ -15,7 +15,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
   return [QueryClient.withExtensions(cometClient, setupBankExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("BankExtension", () => {
+(simappEnabled ? describe : describe.skip)("BankExtension", () => {
   describe("balance", () => {
     it("works for different existing balances", async () => {
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);

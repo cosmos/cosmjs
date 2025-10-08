@@ -31,7 +31,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
   return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("GovExtension", () => {
+(simappEnabled ? describe : describe.skip)("GovExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million

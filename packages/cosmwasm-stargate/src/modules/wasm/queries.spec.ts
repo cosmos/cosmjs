@@ -123,7 +123,7 @@ async function executeContract(
   return client.signAndBroadcast(firstAddress, [theMsg], fee, memo);
 }
 
-(wasmdEnabled ? describe : xdescribe)("WasmExtension", () => {
+(wasmdEnabled ? describe : describe.skip)("WasmExtension", () => {
   const hackatom = getHackatom();
   const hackatomConfigKey = toAscii("config");
   let hackatomCodeId: number | undefined;

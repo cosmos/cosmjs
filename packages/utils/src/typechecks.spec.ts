@@ -33,7 +33,7 @@ describe("typechecks", () => {
       expect(isUint8Array(new Uint8Array([1, 2, 3]))).toEqual(true);
     });
 
-    (typeof Buffer !== "undefined" ? it : xit)("returns false for Buffer", () => {
+    (typeof Buffer !== "undefined" ? it : it.skip)("returns false for Buffer", () => {
       // One could start a big debate about whether or not a Buffer is a Uint8Array, which
       // required a definition of "is a" in a languages that has no proper object oriented
       // programming support.

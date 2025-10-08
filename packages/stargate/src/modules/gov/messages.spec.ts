@@ -19,7 +19,7 @@ import {
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { MsgVoteWeightedEncodeObject } from "./messages";
 
-(simappEnabled ? describe : xdescribe)("gov messages", () => {
+(simappEnabled ? describe : describe.skip)("gov messages", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -201,7 +201,7 @@ import { MsgVoteWeightedEncodeObject } from "./messages";
     });
 
     // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
-    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
+    (!simapp50Enabled ? it : it.skip)("works with Amino JSON signer", async () => {
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(

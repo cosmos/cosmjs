@@ -21,7 +21,7 @@ async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtens
   return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("TxExtension", () => {
+(simappEnabled ? describe : describe.skip)("TxExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million

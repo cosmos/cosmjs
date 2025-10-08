@@ -4,7 +4,7 @@ import { StreamingSocket } from "./streamingsocket";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-(enabled ? describe : xdescribe)("StreamingSocket", () => {
+(enabled ? describe : describe.skip)("StreamingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
 

@@ -859,7 +859,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-(tendermintEnabled ? describe : xdescribe)("Comet38Client with CometBFT 0.38 backend", () => {
+(tendermintEnabled ? describe : describe.skip)("Comet38Client with CometBFT 0.38 backend", () => {
   const { url, expected } = tendermintInstances[38];
 
   it("can connect to a given url", async () => {

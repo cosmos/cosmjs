@@ -13,7 +13,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
   return [QueryClient.withExtensions(cometClient, setupAuthExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("AuthExtension", () => {
+(simappEnabled ? describe : describe.skip)("AuthExtension", () => {
   describe("account", () => {
     it("works for unused account", async () => {
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);

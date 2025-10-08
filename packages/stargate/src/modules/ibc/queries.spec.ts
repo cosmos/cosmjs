@@ -11,7 +11,7 @@ async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExte
 }
 
 // We cannot test this easily anymore since the IBC module was removed from simapp
-xdescribe("IbcExtension", () => {
+describe.skip("IbcExtension", () => {
   describe("channel", () => {
     describe("channel", () => {
       it("works", async () => {
@@ -92,7 +92,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         const response = await client.ibc.channel.consensusState(
@@ -506,7 +506,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         // TODO: Find valid values

@@ -98,7 +98,7 @@ async function sendTokens(
   };
 }
 
-(simappEnabled ? describe : xdescribe)("StargateClient.getTx and .searchTx", () => {
+(simappEnabled ? describe : describe.skip)("StargateClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;

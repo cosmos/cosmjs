@@ -38,7 +38,7 @@ interface HackatomInstance {
   readonly address: string;
 }
 
-(wasmdEnabled ? describe : xdescribe)("CosmWasmClient", () => {
+(wasmdEnabled ? describe : describe.skip)("CosmWasmClient", () => {
   describe("connect", () => {
     it("can be constructed", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);

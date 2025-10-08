@@ -92,7 +92,7 @@ async function sendTokens(
   };
 }
 
-(wasmdEnabled ? describe : xdescribe)("CosmWasmClient.getTx and .searchTx", () => {
+(wasmdEnabled ? describe : describe.skip)("CosmWasmClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;

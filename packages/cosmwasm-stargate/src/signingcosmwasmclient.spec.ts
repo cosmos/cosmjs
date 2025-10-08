@@ -50,7 +50,7 @@ import {
   wasmdEnabled,
 } from "./testutils";
 
-(wasmdEnabled ? describe : xdescribe)("SigningCosmWasmClient", () => {
+(wasmdEnabled ? describe : describe.skip)("SigningCosmWasmClient", () => {
   describe("connectWithSigner", () => {
     it("can be constructed", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
@@ -143,7 +143,7 @@ import {
     });
 
     // Test disabled. Known issue: https://github.com/CosmWasm/wasmd/issues/1863
-    xit("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
+    it.skip("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -170,7 +170,7 @@ import {
     });
 
     // Test disabled. Known issue: https://github.com/CosmWasm/wasmd/issues/1863
-    xit("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
+    it.skip("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,

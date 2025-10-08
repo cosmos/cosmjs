@@ -39,7 +39,7 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
   client.disconnect();
 }
 
-(simappEnabled ? describe : xdescribe)("staking messages", () => {
+(simappEnabled ? describe : describe.skip)("staking messages", () => {
   const createFee = calculateFee(200_000, defaultGasPrice);
   const editFee = calculateFee(200_000, defaultGasPrice);
 
@@ -93,7 +93,7 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
     });
 
     // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
-    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
+    (!simapp50Enabled ? it : it.skip)("works with Amino JSON signer", async () => {
       const valWallet = await Secp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 
@@ -230,7 +230,7 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
     });
 
     // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
-    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
+    (!simapp50Enabled ? it : it.skip)("works with Amino JSON signer", async () => {
       const valWallet = await Secp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 

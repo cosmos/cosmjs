@@ -168,7 +168,7 @@ describe("multisignature", () => {
     });
   });
 
-  (simappEnabled ? describe : xdescribe)("makeMultisignedTxBytes", () => {
+  (simappEnabled ? describe : describe.skip)("makeMultisignedTxBytes", () => {
     it("works", async () => {
       const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
 
