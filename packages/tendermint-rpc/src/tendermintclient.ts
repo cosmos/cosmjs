@@ -34,16 +34,19 @@ export function isComet1Client(client: CometClient): client is Comet1Client {
  * Auto-detects the version of the backend and uses a suitable client.
  */
 export async function connectComet(endpoint: string | HttpEndpoint): Promise<CometClient> {
-  // Tendermint/CometBFT 0.34/0.37/0.38 auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
+  // Tendermint/CometBFT 0.34/0.37/0.38/1.x auto-detection. Starting with 0.37 we seem to get reliable versions again 🎉
   // Using 0.34 as the fallback.
   let out: CometClient;
   const tm37Client = await Tendermint37Client.connect(endpoint);
   const version = (await tm37Client.status()).nodeInfo.version;
   if (version.startsWith("0.37.")) {
     out = tm37Client;
-  } else if (version.startsWith("0.38.") || version.startsWith("1.0.")) {
+  } else if (version.startsWith("0.38.")) {
     tm37Client.disconnect();
     out = await Comet38Client.connect(endpoint);
+  } else if (version.startsWith("1.")) {
+    tm37Client.disconnect();
+    out = await Comet1Client.connect(endpoint);
   } else {
     tm37Client.disconnect();
     out = await Tendermint34Client.connect(endpoint);
