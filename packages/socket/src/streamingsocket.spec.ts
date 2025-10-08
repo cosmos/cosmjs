@@ -2,17 +2,9 @@ import { toListPromise } from "@cosmjs/stream";
 
 import { StreamingSocket } from "./streamingsocket";
 
-function skipTests(): boolean {
-  return !process.env.SOCKETSERVER_ENABLED;
-}
+const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-function pendingWithoutSocketServer(): void {
-  if (skipTests()) {
-    pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-  }
-}
-
-describe("StreamingSocket", () => {
+(enabled ? describe : xdescribe)("StreamingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
 
@@ -22,8 +14,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can connect", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrl);
     expect(socket).toBeTruthy();
     socket.connect();
@@ -32,8 +22,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can connect to slow server", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrlSlow);
     expect(socket).toBeTruthy();
     socket.connect();
@@ -42,14 +30,12 @@ describe("StreamingSocket", () => {
   });
 
   it("times out when establishing connection takes too long", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrlSlow, 2_000);
     socket.connect();
 
     await socket.connected
       .then(() => {
-        fail("must not resolve");
+        throw new Error("must not resolve");
       })
       .catch((error) => {
         expect(error).toMatch(/connection attempt timed out/i);
@@ -57,8 +43,6 @@ describe("StreamingSocket", () => {
   });
 
   it("can send events when connected", async () => {
-    pendingWithoutSocketServer();
-
     const socket = new StreamingSocket(socketServerUrl);
 
     const responsePromise = toListPromise(socket.events, 3);
@@ -76,8 +60,12 @@ describe("StreamingSocket", () => {
     socket.disconnect();
   });
 
-  it("completes stream when disconnected", (done) => {
-    pendingWithoutSocketServer();
+  it("completes stream when disconnected", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
 
     const socket = new StreamingSocket(socketServerUrl);
     expect(socket).toBeTruthy();
@@ -96,5 +84,7 @@ describe("StreamingSocket", () => {
       await socket.send("lalala");
       socket.disconnect();
     })().catch(done.fail);
+
+    return ret;
   });
 });

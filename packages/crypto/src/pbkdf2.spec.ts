@@ -123,9 +123,8 @@ describe("pbkdf2", () => {
   describe("pbkdf2Sha512Subtle", () => {
     it("works", async () => {
       const subtle = await getSubtle();
-      if (!subtle) {
-        pending("Subtle is not available in this environment");
-        return;
+      if (subtle === undefined) {
+        throw new Error("Subtle is not available in this environment");
       }
 
       {

@@ -12,7 +12,12 @@ describe("DefaultValueProducer", () => {
     expect(producer.value).toEqual(1);
   });
 
-  it("can be used as a stream backend", (done) => {
+  it("can be used as a stream backend", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const producer = new DefaultValueProducer(42);
     const stream = Stream.createWithMemory(producer);
     stream.addListener({
@@ -23,9 +28,16 @@ describe("DefaultValueProducer", () => {
       error: done.fail,
       complete: done.fail,
     });
+
+    return ret;
   });
 
-  it("can send updates", (done) => {
+  it("can send updates", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const producer = new DefaultValueProducer(42);
     const stream = Stream.createWithMemory(producer);
 
@@ -46,9 +58,16 @@ describe("DefaultValueProducer", () => {
     producer.update(43);
     producer.update(44);
     producer.update(45);
+
+    return ret;
   });
 
-  it("can send errors", (done) => {
+  it("can send errors", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const producer = new DefaultValueProducer(42);
     const stream = Stream.createWithMemory(producer);
 
@@ -66,6 +85,8 @@ describe("DefaultValueProducer", () => {
     producer.update(2);
     producer.update(3);
     producer.error("oh no :(");
+
+    return ret;
   });
 
   it("calls callbacks", async () => {

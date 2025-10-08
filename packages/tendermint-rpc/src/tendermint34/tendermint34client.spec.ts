@@ -619,7 +619,12 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 }
 
 function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
-  it("can subscribe to block header events", (done) => {
+  it("can subscribe to block header events", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     pendingWithoutTendermint();
 
     const testStart = ReadonlyDate.now();
@@ -675,6 +680,8 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
         },
       });
     })().catch(done.fail);
+
+    return ret;
   });
 
   it("can subscribe to block events", async () => {
@@ -898,7 +905,7 @@ describe("Tendermint34Client", () => {
 
   describe("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
-    const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
+    const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
     const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);

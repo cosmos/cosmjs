@@ -5,11 +5,7 @@ type Exec = (command: string, callback: (error: null | (Error & { readonly code?
 
 const getExec = async (): Promise<Exec | undefined> => (await import("child_process")).exec;
 
-function pendingWithoutSocketServer(): void {
-  if (!process.env.SOCKETSERVER_ENABLED) {
-    pending("Set SOCKETSERVER_ENABLED to enable socket tests");
-  }
-}
+const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
 describe("ReconnectingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
@@ -19,9 +15,13 @@ describe("ReconnectingSocket", () => {
     expect(socket).toBeTruthy();
   });
 
-  describe("connect", () => {
-    it("cannot connect after being connected", (done) => {
-      pendingWithoutSocketServer();
+  (enabled ? describe : xdescribe)("connect", () => {
+    it("cannot connect after being connected", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
       socket.events.subscribe({});
@@ -34,12 +34,18 @@ describe("ReconnectingSocket", () => {
         }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
+
+      return ret;
     });
   });
 
-  describe("disconnect", () => {
-    it("ends the events stream", (done) => {
-      pendingWithoutSocketServer();
+  (enabled ? describe : xdescribe)("disconnect", () => {
+    it("ends the events stream", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       const socket = new ReconnectingSocket(socketServerUrl);
       socket.events.subscribe({
         complete: done,
@@ -50,10 +56,16 @@ describe("ReconnectingSocket", () => {
       setTimeout(() => {
         socket.disconnect();
       }, 1000);
+
+      return ret;
     });
 
-    it("cannot connect after being disconnected", (done) => {
-      pendingWithoutSocketServer();
+    it("cannot connect after being disconnected", async () => {
+      let done!: (() => void) & { fail: (e?: any) => void };
+      const ret = new Promise<void>((resolve, reject) => {
+        done = resolve as typeof done;
+        done.fail = reject;
+      });
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
       socket.events.subscribe({});
@@ -67,10 +79,11 @@ describe("ReconnectingSocket", () => {
         }).toThrowError(/cannot connect/i);
         done();
       }, 1000);
+
+      return ret;
     });
 
     it("can disconnect without waiting for open", () => {
-      pendingWithoutSocketServer();
       const socket = new ReconnectingSocket(socketServerUrl);
       expect(() => {
         socket.connect();
@@ -79,7 +92,7 @@ describe("ReconnectingSocket", () => {
     });
   });
 
-  describe("reconnection", () => {
+  (enabled ? describe : xdescribe)("reconnection", () => {
     const dirPath = "../../scripts/socketserver";
     const codePkillNoProcessesMatched = 1;
     const startServerCmd = `${dirPath}/start.sh`;
@@ -94,11 +107,8 @@ describe("ReconnectingSocket", () => {
 
       const exec = await getExec();
       if (exec === undefined) {
-        pending("Run test in an environment which supports child processes to enable socket tests");
-        return;
+        throw new Error("Socket test was enabled in an environment without child processes!");
       }
-
-      pendingWithoutSocketServer();
 
       exec(stopServerCmd, (stopError) => {
         if (stopError && stopError.code !== codePkillNoProcessesMatched) {
@@ -148,11 +158,8 @@ describe("ReconnectingSocket", () => {
 
       const exec = await getExec();
       if (exec === undefined) {
-        pending("Run test in an environment which supports child processes to enable socket tests");
-        return;
+        throw new Error("Socket test was enabled in an environment without child processes!");
       }
-
-      pendingWithoutSocketServer();
 
       const socket = new ReconnectingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;

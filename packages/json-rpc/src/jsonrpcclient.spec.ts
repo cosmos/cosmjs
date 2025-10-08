@@ -6,12 +6,6 @@ import { JsonRpcClient, SimpleMessagingConnection } from "./jsonrpcclient";
 import { parseJsonRpcResponse } from "./parse";
 import { JsonRpcRequest, JsonRpcResponse } from "./types";
 
-function pendingWithoutWorker(): void {
-  if (typeof Worker === "undefined") {
-    pending("Environment without WebWorker support detected. Marked as pending.");
-  }
-}
-
 function makeSimpleMessagingConnection(
   worker: Worker,
 ): SimpleMessagingConnection<JsonRpcRequest, JsonRpcResponse> {
@@ -34,12 +28,10 @@ function makeSimpleMessagingConnection(
   };
 }
 
-describe("JsonRpcClient", () => {
+(typeof Worker !== "undefined" ? describe : xdescribe)("JsonRpcClient", () => {
   const dummyserviceKarmaUrl = "/base/dist/web/dummyservice.worker.js";
 
   it("can be constructed with a Worker", () => {
-    pendingWithoutWorker();
-
     const worker = new Worker(dummyserviceKarmaUrl);
     const client = new JsonRpcClient(makeSimpleMessagingConnection(worker));
     expect(client).toBeTruthy();
@@ -47,8 +39,6 @@ describe("JsonRpcClient", () => {
   });
 
   it("can communicate with worker", async () => {
-    pendingWithoutWorker();
-
     const worker = new Worker(dummyserviceKarmaUrl);
 
     const client = new JsonRpcClient(makeSimpleMessagingConnection(worker));
@@ -66,8 +56,6 @@ describe("JsonRpcClient", () => {
   });
 
   it("supports params as dictionary", async () => {
-    pendingWithoutWorker();
-
     const worker = new Worker(dummyserviceKarmaUrl);
 
     const client = new JsonRpcClient(makeSimpleMessagingConnection(worker));

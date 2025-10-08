@@ -8,7 +8,12 @@ describe("dropDuplicates", () => {
     expect(operand).toBeTruthy();
   });
 
-  it("passes unique values", (done) => {
+  it("passes unique values", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const instream = Stream.fromArray([0, 1, 2, 3]);
     const operand = dropDuplicates<number>((value) => `${value}`);
 
@@ -20,9 +25,16 @@ describe("dropDuplicates", () => {
         done();
       },
     });
+
+    return ret;
   });
 
-  it("drops consecutive duplicates", (done) => {
+  it("drops consecutive duplicates", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const instream = Stream.fromArray([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]);
     const operand = dropDuplicates<number>((value) => `${value}`);
 
@@ -34,9 +46,16 @@ describe("dropDuplicates", () => {
         done();
       },
     });
+
+    return ret;
   });
 
-  it("drops non-consecutive duplicates", (done) => {
+  it("drops non-consecutive duplicates", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const instream = Stream.fromArray([1, 2, 3, 4, 3, 2, 1]);
     const operand = dropDuplicates<number>((value) => `${value}`);
 
@@ -48,9 +67,16 @@ describe("dropDuplicates", () => {
         done();
       },
     });
+
+    return ret;
   });
 
-  it("uses value to key method for duplicate checks", (done) => {
+  it("uses value to key method for duplicate checks", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const instream = Stream.fromArray([1, 10, 100, 2000, 2, 27, 1337, 3.14, 33]);
     // use first character of native string representation
     const valueToKey = (value: number): string => `${value}`.charAt(0);
@@ -64,9 +90,16 @@ describe("dropDuplicates", () => {
         done();
       },
     });
+
+    return ret;
   });
 
-  it("works for empty string keys", (done) => {
+  it("works for empty string keys", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     interface Name {
       readonly first: string;
       readonly last: string;
@@ -91,5 +124,7 @@ describe("dropDuplicates", () => {
         done();
       },
     });
+
+    return ret;
   });
 });

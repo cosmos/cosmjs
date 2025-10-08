@@ -100,7 +100,7 @@ export const tendermintInstances: Record<number, TendermintInstance> = {
 export const defaultInstance: TendermintInstance = tendermintInstances[34];
 
 export function tendermintEnabled(): boolean {
-  return !!process.env.TENDERMINT_ENABLED;
+  return !!globalThis.process?.env.TENDERMINT_ENABLED;
 }
 
 export function pendingWithoutTendermint(): void {
