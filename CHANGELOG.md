@@ -25,7 +25,11 @@ and this project adheres to
 
   ([#1819])
 
+- Replace bech32 implementation by @scure/base. This changes a bunch of error
+  messages but is otherwise not breaking user code. ([#1825])
+
 [#1819]: https://github.com/cosmos/cosmjs/pull/1819
+[#1825]: https://github.com/cosmos/cosmjs/pull/1825
 
 ## [0.36.1] - 2025-10-02
 
