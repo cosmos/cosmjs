@@ -878,37 +878,3 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     websocketTestSuite(factory, expected);
   });
 });
-
-describe("Comet38Client with CometBFT 1 backend", () => {
-  const { url, expected } = tendermintInstances[1];
-
-  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
-    // http connection
-    {
-      const client = await Comet38Client.connect("http://" + url);
-      const info = await client.abciInfo();
-      expect(info).toBeTruthy();
-      client.disconnect();
-    }
-
-    // ws connection
-    {
-      const client = await Comet38Client.connect("ws://" + url);
-      const info = await client.abciInfo();
-      expect(info).toBeTruthy();
-      client.disconnect();
-    }
-  });
-
-  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
-    defaultTestSuite(() => new HttpClient("http://" + url), expected);
-  });
-
-  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
-    // don't print out WebSocket errors if marked pending
-    const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
-    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
-    defaultTestSuite(factory, expected);
-    websocketTestSuite(factory, expected);
-  });
-});
