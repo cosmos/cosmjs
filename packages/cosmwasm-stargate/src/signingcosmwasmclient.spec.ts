@@ -1340,7 +1340,7 @@ import {
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
         await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
-          jasmine.objectContaining({
+          expect.objectContaining({
             code: 30,
           }),
         );
@@ -1614,7 +1614,7 @@ import {
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
         await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
-          jasmine.objectContaining({
+          expect.objectContaining({
             code: 30,
           }),
         );

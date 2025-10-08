@@ -206,7 +206,7 @@ async function executeContract(
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
       expect(contractInfo).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           codeId: BigInt(hackatomCodeId),
           creator: alice.address0,
           label: "my escrow",
@@ -250,7 +250,7 @@ async function executeContract(
       const history = await client.wasm.getContractCodeHistory(myAddress);
       assert(history.entries);
       expect(history.entries).toContain(
-        jasmine.objectContaining({
+        expect.objectContaining({
           codeId: BigInt(hackatomCodeId),
           operation: ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
           msg: toUtf8(

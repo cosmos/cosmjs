@@ -40,10 +40,10 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(genesis).toBeTruthy();
       expect(genesis.validators).toEqual([
         {
-          address: jasmine.any(Uint8Array), // changes on every chain restart
+          address: expect.any(Uint8Array), // changes on every chain restart
           pubkey: {
             algorithm: "ed25519",
-            data: jasmine.any(Uint8Array), // changes on every chain restart
+            data: expect.any(Uint8Array), // changes on every chain restart
           },
           power: 10n,
           name: "The Machine 2035",
@@ -386,15 +386,15 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
       const meta = blockchain.blockMetas[0];
 
-      expect(meta.blockId).toEqual(jasmine.objectContaining({}));
+      expect(meta.blockId).toEqual(expect.objectContaining({}));
       expect(typeof meta.blockSize).toBe("number");
       expect(meta.header).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           version: {
             block: expected.blockVersion,
             app: expected.appVersion,
           },
-          chainId: jasmine.stringMatching(expected.chainId),
+          chainId: expect.stringMatching(expected.chainId),
         }),
       );
       expect(typeof meta.numTxs).toBe("number");

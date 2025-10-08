@@ -99,7 +99,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
           denom: simapp.denomFee,
         },
         {
-          amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
+          amount: expect.stringMatching(nonNegativeIntegerMatcher),
           denom: simapp.denomStaking,
         },
       ]);
@@ -140,7 +140,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
 
       const metadata = await client.bank.denomMetadata("ucosm");
       expect(metadata).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           description: "The fee token of this test chain",
           denomUnits: [
             {
@@ -180,7 +180,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
       const metadatas = await client.bank.denomsMetadata();
       expect(metadatas.length).toEqual(1);
       expect(metadatas[0]).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           description: "The fee token of this test chain",
           denomUnits: [
             {

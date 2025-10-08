@@ -22,7 +22,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
 
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
       expect(BaseAccount.decode(account.value)).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           address: unused.address,
           accountNumber: BigInt(unused.accountNumber),
           sequence: BigInt(0),

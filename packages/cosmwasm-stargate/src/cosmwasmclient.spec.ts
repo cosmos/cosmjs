@@ -243,7 +243,7 @@ interface HackatomInstance {
       };
 
       // check info
-      expect(result).toEqual(jasmine.objectContaining(expectedInfo));
+      expect(result).toEqual(expect.objectContaining(expectedInfo));
       // check data
       expect(sha256(result.data)).toEqual(fromHex(expectedInfo.checksum));
     });
@@ -319,7 +319,7 @@ interface HackatomInstance {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const contract = await client.getContract(deployedIbcReflect.instances[0].address);
       expect(contract).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           address: deployedIbcReflect.instances[0].address,
           codeId: deployedIbcReflect.codeId,
           ibcPortId: deployedIbcReflect.instances[0].ibcPortId,

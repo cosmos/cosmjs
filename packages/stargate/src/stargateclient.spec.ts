@@ -192,12 +192,12 @@ describe("isDeliverTxSuccess", () => {
       const response = await client.getBlock();
 
       expect(response).toEqual(
-        jasmine.objectContaining({
-          id: jasmine.stringMatching(tendermintIdMatcher),
-          header: jasmine.objectContaining({
+        expect.objectContaining({
+          id: expect.stringMatching(tendermintIdMatcher),
+          header: expect.objectContaining({
             chainId: await client.getChainId(),
           }),
-          txs: jasmine.arrayContaining([]),
+          txs: expect.arrayContaining([]),
         }),
       );
 
@@ -216,13 +216,13 @@ describe("isDeliverTxSuccess", () => {
       const response = await client.getBlock(height - 1);
 
       expect(response).toEqual(
-        jasmine.objectContaining({
-          id: jasmine.stringMatching(tendermintIdMatcher),
-          header: jasmine.objectContaining({
+        expect.objectContaining({
+          id: expect.stringMatching(tendermintIdMatcher),
+          header: expect.objectContaining({
             height: height - 1,
             chainId: await client.getChainId(),
           }),
-          txs: jasmine.arrayContaining([]),
+          txs: expect.arrayContaining([]),
         }),
       );
 

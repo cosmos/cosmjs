@@ -10,13 +10,13 @@ const echoUrl = "http://localhost:5555/echo_headers";
 describe("http", () => {
   (tendermintEnabled ? it : it.skip)("can send a health request", async () => {
     const response = await http("POST", `http://${tendermintUrl}`, undefined, createJsonRpcRequest("health"));
-    expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
+    expect(response).toEqual(expect.objectContaining({ jsonrpc: "2.0" }));
   });
 
   (httpServerEnabled ? it : it.skip)("can POST to echo server", async () => {
     const response = await http("POST", echoUrl, undefined, createJsonRpcRequest("health"));
     expect(response).toEqual({
-      request_headers: jasmine.objectContaining({
+      request_headers: expect.objectContaining({
         // Basic headers from http client
         "Content-Type": "application/json",
       }),
@@ -38,7 +38,7 @@ describe("http", () => {
       createJsonRpcRequest("health"),
     );
     expect(response).toEqual({
-      request_headers: jasmine.objectContaining({
+      request_headers: expect.objectContaining({
         // Basic headers from http client
         "Content-Type": "application/json",
         // Custom headers
