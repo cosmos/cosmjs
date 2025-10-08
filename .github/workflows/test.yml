@@ -100,7 +100,7 @@ jobs:
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
           SES_ENABLED: 1
-        run: yarn test --stream
+        run: yarn run test
 
   test-backends:
     strategy:
