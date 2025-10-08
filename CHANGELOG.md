@@ -36,8 +36,9 @@ and this project adheres to
   > Error \[ERR_PACKAGE_PATH_NOT_EXPORTED\]: Package subpath './sha2.js' is not
   > defined by "exports" in …
 
-  In @noble/hashes version 1.x the import paths must not contain the .js suffix.
-  This issue was intoduced in CosmJS 0.35.0. ([#1817])
+  In @noble/hashes version >=1.0.0 <1.8.0 the import paths must not contain the
+  .js suffix. This issue was intoduced in CosmJS 0.35.0 but only affects users
+  who have @noble/hashes lower than 1.8.0 in their lockfile. ([#1817])
 
 [#1817]: https://github.com/cosmos/cosmjs/pull/1817
 
