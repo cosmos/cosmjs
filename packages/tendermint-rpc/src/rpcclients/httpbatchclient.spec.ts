@@ -15,14 +15,14 @@ import { HttpBatchClient } from "./httpbatchclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await client
-      .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => {
+    await client.execute(createJsonRpcRequest("no-such-method")).then(
+      () => {
         throw new Error("must not resolve");
-      })
-      .catch((error) => {
+      },
+      (error) => {
         expect(error).toBeTruthy();
-      });
+      },
+    );
 
     client.disconnect();
   });

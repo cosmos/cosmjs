@@ -21,14 +21,14 @@ import { WebsocketClient } from "./websocketclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await client
-      .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => {
+    await client.execute(createJsonRpcRequest("no-such-method")).then(
+      () => {
         throw new Error("must not resolve");
-      })
-      .catch((error) => {
+      },
+      (error) => {
         expect(error).toBeTruthy();
-      });
+      },
+    );
 
     client.disconnect();
   });
@@ -188,14 +188,14 @@ import { WebsocketClient } from "./websocketclient";
 
     client.disconnect();
 
-    await client
-      .execute(createJsonRpcRequest("health"))
-      .then(() => {
+    await client.execute(createJsonRpcRequest("health")).then(
+      () => {
         throw new Error("must not resolve");
-      })
-      .catch((error) => {
+      },
+      (error) => {
         expect(error).toMatch(/socket has disconnected/i);
-      });
+      },
+    );
   });
 
   it("fails when listening to a disconnected client", async () => {

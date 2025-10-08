@@ -147,13 +147,14 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     );
     socket.connect();
 
-    await socket.connected
-      .then(() => {
+    await socket.connected.then(
+      () => {
         throw new Error("must not resolve");
-      })
-      .catch((error) => {
+      },
+      (error) => {
         expect(error).toMatch(/connection attempt timed out/i);
-      });
+      },
+    );
   });
 
   it("can connect and disconnect", async () => {
