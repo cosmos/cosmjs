@@ -15,7 +15,7 @@ describe("ReconnectingSocket", () => {
     expect(socket).toBeTruthy();
   });
 
-  (enabled ? describe : xdescribe)("connect", () => {
+  (enabled ? describe : describe.skip)("connect", () => {
     it("cannot connect after being connected", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
@@ -39,7 +39,7 @@ describe("ReconnectingSocket", () => {
     });
   });
 
-  (enabled ? describe : xdescribe)("disconnect", () => {
+  (enabled ? describe : describe.skip)("disconnect", () => {
     it("ends the events stream", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
@@ -92,7 +92,7 @@ describe("ReconnectingSocket", () => {
     });
   });
 
-  (enabled ? describe : xdescribe)("reconnection", () => {
+  (enabled ? describe : describe.skip)("reconnection", () => {
     const dirPath = "../../scripts/socketserver";
     const codePkillNoProcessesMatched = 1;
     const startServerCmd = `${dirPath}/start.sh`;

@@ -19,7 +19,7 @@ function makeRandomAddress(): string {
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
-(simappEnabled ? describe : xdescribe)("Faucet", () => {
+(simappEnabled ? describe : describe.skip)("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const apiUrl = "http://localhost:26658";

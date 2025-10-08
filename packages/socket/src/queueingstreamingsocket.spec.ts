@@ -10,7 +10,7 @@ describe("QueueingStreamingSocket", () => {
     expect(socket).toBeTruthy();
   });
 
-  (enabled ? describe : xdescribe)("queueRequest", () => {
+  (enabled ? describe : describe.skip)("queueRequest", () => {
     it("can queue and process requests with a connection", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
@@ -71,7 +71,7 @@ describe("QueueingStreamingSocket", () => {
     });
   });
 
-  (enabled ? describe : xdescribe)("reconnect", () => {
+  (enabled ? describe : describe.skip)("reconnect", () => {
     it("does not emit a completed event when disconnected", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {
@@ -146,7 +146,7 @@ describe("QueueingStreamingSocket", () => {
     });
   });
 
-  (enabled ? describe : xdescribe)("connectionStatus", () => {
+  (enabled ? describe : describe.skip)("connectionStatus", () => {
     it("exposes connection status", async () => {
       let done!: (() => void) & { fail: (e?: any) => void };
       const ret = new Promise<void>((resolve, reject) => {

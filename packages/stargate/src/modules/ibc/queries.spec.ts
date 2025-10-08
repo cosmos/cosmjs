@@ -92,7 +92,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         const response = await client.ibc.channel.consensusState(
@@ -506,7 +506,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         // TODO: Find valid values

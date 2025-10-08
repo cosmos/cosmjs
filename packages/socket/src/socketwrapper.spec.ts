@@ -2,7 +2,7 @@ import { SocketWrapper } from "./socketwrapper";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-(enabled ? describe : xdescribe)("SocketWrapper", () => {
+(enabled ? describe : describe.skip)("SocketWrapper", () => {
   const socketServerUrlNonExisting = "ws://localhost:4443/websocket";
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
