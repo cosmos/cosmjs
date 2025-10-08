@@ -130,10 +130,10 @@ const faucetMnemonic =
         const distributorBalance = await readOnlyClient.getAllBalances(faucet.distributorAddresses[0]);
         assert(distributorBalance);
         expect(distributorBalance).toEqual([
-          jasmine.objectContaining({
+          expect.objectContaining({
             denom: "ucosm",
           }),
-          jasmine.objectContaining({
+          expect.objectContaining({
             denom: "ustake",
           }),
         ]);
@@ -229,11 +229,11 @@ const faucetMnemonic =
         assert(expectedHolderBalance);
         assert(expectedDistributorBalance);
         expect(accounts).toEqual([
-          jasmine.objectContaining({
+          expect.objectContaining({
             address: faucet.holderAddress,
             balance: expectedHolderBalance,
           }),
-          jasmine.objectContaining({
+          expect.objectContaining({
             address: faucet.distributorAddresses[0],
             balance: expectedDistributorBalance,
           }),
