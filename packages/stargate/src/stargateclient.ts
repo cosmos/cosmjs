@@ -287,7 +287,8 @@ export class StargateClient {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
       return account ? this.accountParser(account) : null;
-    } catch (error: any) {
+    } catch (error) {
+      assert(error instanceof Error);
       if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;
       }
@@ -369,7 +370,8 @@ export class StargateClient {
       delegatedAmount = (
         await this.forceGetQueryClient().staking.delegation(delegatorAddress, validatorAddress)
       ).delegationResponse?.balance;
-    } catch (e: any) {
+    } catch (e) {
+      assert(e instanceof Error);
       if (e.toString().includes("key not found")) {
         // ignore, `delegatedAmount` remains undefined
       } else {
