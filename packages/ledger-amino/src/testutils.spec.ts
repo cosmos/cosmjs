@@ -8,13 +8,11 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
-export function ledgerEnabled(): boolean {
-  return !!globalThis.process?.env.LEDGER_ENABLED;
-}
+export const ledgerEnabled: boolean = !!globalThis.process?.env.LEDGER_ENABLED;
 
-export function simappEnabled(): boolean {
-  return !!(globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED);
-}
+export const simappEnabled: boolean = !!(
+  globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED
+);
 
 export const simapp = {
   endpoint: "ws://localhost:26658",

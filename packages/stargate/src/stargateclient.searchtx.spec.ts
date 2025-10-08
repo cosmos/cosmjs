@@ -106,7 +106,7 @@ describe("StargateClient.getTx and .searchTx", () => {
   let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled()) {
+    if (simappEnabled) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const unsuccessfulRecipient = makeRandomAddress();

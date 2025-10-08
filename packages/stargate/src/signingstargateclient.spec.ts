@@ -121,7 +121,7 @@ describe("SigningStargateClient", () => {
       );
       assertIsDeliverTxSuccess(result);
 
-      if (simapp50Enabled()) {
+      if (simapp50Enabled) {
         expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
       } else {
         expect(result.rawLog).toBeTruthy();
@@ -163,7 +163,7 @@ describe("SigningStargateClient", () => {
       );
       assertIsDeliverTxSuccess(result);
 
-      if (simapp50Enabled()) {
+      if (simapp50Enabled) {
         expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
       } else {
         expect(result.rawLog).toBeTruthy();

@@ -33,7 +33,7 @@ describe("AuthzExtension", () => {
   const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 
   beforeAll(async () => {
-    if (simappEnabled()) {
+    if (simappEnabled) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
         // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
         // This must match `voterAddress` above.

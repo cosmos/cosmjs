@@ -15,31 +15,22 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
-export function simapp47Enabled(): boolean {
-  return !!process.env.SIMAPP47_ENABLED;
-}
-
-export function simapp50Enabled(): boolean {
-  return !!process.env.SIMAPP50_ENABLED;
-}
-
-export function simappEnabled(): boolean {
-  return simapp47Enabled() || simapp50Enabled();
-}
+export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
+export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
+export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled;
 
 export function pendingWithoutSimapp(): void {
-  if (!simappEnabled()) {
+  if (!simappEnabled) {
     pending("Set SIMAPP{47,50}_ENABLED to enable Simapp based tests");
     return;
   }
 }
 
-export function slowSimappEnabled(): boolean {
-  return !!process.env.SLOW_SIMAPP47_ENABLED || !!process.env.SLOW_SIMAPP50_ENABLED;
-}
+export const slowSimappEnabled: boolean =
+  !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED || !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED;
 
 export function pendingWithoutSlowSimapp(): void {
-  if (!slowSimappEnabled()) {
+  if (!slowSimappEnabled) {
     pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
     return;
   }

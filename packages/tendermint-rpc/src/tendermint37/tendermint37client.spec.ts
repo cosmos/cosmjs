@@ -9,7 +9,6 @@ import {
   buildKvTx,
   ExpectedValues,
   nonNegativeIntegerMatcher,
-  pendingWithoutTendermint,
   randomString,
   tendermintEnabled,
   tendermintInstances,
@@ -20,10 +19,13 @@ import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { Tendermint37Client } from "./tendermint37client";
 
+/**
+ * Runs tests using given client. A compatible backend must be running for this suite.
+ * Code that does not require a functional backend should be extracted and tested low-level.
+ */
 function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   describe("create", () => {
     it("can auto-discover Tendermint version and communicate", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
       const info = await client.abciInfo();
       expect(info).toBeTruthy();
@@ -31,7 +33,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can connect to Tendermint with known version", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
       expect(await client.abciInfo()).toBeTruthy();
       client.disconnect();
@@ -39,7 +40,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get genesis", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
     const genesis = await client.genesis();
     expect(genesis).toBeTruthy();
@@ -48,7 +48,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("broadcastTxCommit", () => {
     it("can broadcast a transaction", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
@@ -68,7 +67,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("broadcastTxSync", () => {
     it("can broadcast a transaction", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
@@ -84,7 +82,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("broadcastTxAsync", () => {
     it("can broadcast a transaction", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
@@ -96,7 +93,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("gets the same tx hash from backend as calculated locally", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
     const calculatedTxHash = hashTx(tx);
@@ -109,7 +105,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("abciQuery", () => {
     it("can query the state", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const key = randomString();
@@ -135,7 +130,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get a commit", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
     const response = await client.commit(4);
 
@@ -150,7 +144,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get validators", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
     const response = await client.validators({});
 
@@ -168,7 +161,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get all validators", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
     const response = await client.validatorsAll();
 
@@ -186,7 +178,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can call a bunch of methods", async () => {
-    pendingWithoutTendermint();
     const client = Tendermint37Client.create(rpcFactory());
 
     expect(await client.block()).toBeTruthy();
@@ -198,7 +189,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("status", () => {
     it("works", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const status = await client.status();
@@ -239,7 +229,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("numUnconfirmedTxs", () => {
     it("works", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const response = await client.numUnconfirmedTxs();
@@ -253,7 +242,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockResults", () => {
     it("works", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const height = 3;
@@ -269,7 +257,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockSearch", () => {
     beforeAll(async () => {
-      if (tendermintEnabled()) {
+      if (tendermintEnabled) {
         const client = Tendermint37Client.create(rpcFactory());
 
         async function sendTx(): Promise<void> {
@@ -293,7 +281,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can paginate over blockSearch results", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
@@ -312,7 +299,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can get all search results in one call", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
@@ -331,7 +317,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockchain", () => {
     it("returns latest in descending order by default", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       // Run in parallel to increase chance there is no block between the calls
@@ -348,7 +333,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can limit by maxHeight", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
@@ -362,7 +346,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("works with maxHeight in the future", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
@@ -377,7 +360,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can limit by minHeight and maxHeight", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
@@ -391,7 +373,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("contains all the info", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
@@ -420,7 +401,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("tx", () => {
     it("can query a tx properly", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const find = randomString();
@@ -460,7 +440,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
-      if (tendermintEnabled()) {
+      if (tendermintEnabled) {
         const client = Tendermint37Client.create(rpcFactory());
 
         async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
@@ -486,7 +466,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("finds a single tx by hash", async () => {
-      pendingWithoutTendermint();
       assert(tx1 && broadcast1);
       const client = Tendermint37Client.create(rpcFactory());
 
@@ -505,7 +484,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("finds a single tx by tags", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const txKey2 = randomString();
@@ -555,7 +533,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       // Code 0.34: https://github.com/tendermint/tendermint/blob/v0.34.10/rpc/core/tx.go#L89
       // Code 0.35: https://github.com/tendermint/tendermint/blob/v0.35.6/internal/rpc/core/tx.go#L93
       // Code 0.37: https://github.com/cometbft/cometbft/blob/v0.37.0-rc3/rpc/core/tx.go#L87
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
@@ -572,7 +549,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can set the order", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
@@ -587,7 +563,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can paginate over txSearch results", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
@@ -606,7 +581,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can get all search results in one call", async () => {
-      pendingWithoutTendermint();
       const client = Tendermint37Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
@@ -623,6 +597,10 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 }
 
+/**
+ * Runs tests using given client. A compatible backend must be running for this suite.
+ * Code that does not require a functional backend should be extracted and tested low-level.
+ */
 function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   it("can subscribe to block header events", async () => {
     let done!: (() => void) & { fail: (e?: any) => void };
@@ -630,7 +608,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
       done = resolve as typeof done;
       done.fail = reject;
     });
-    pendingWithoutTendermint();
 
     const testStart = ReadonlyDate.now();
 
@@ -691,8 +668,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can subscribe to block events", async () => {
-    pendingWithoutTendermint();
-
     const testStart = ReadonlyDate.now();
 
     const transactionData1 = buildKvTx(randomString(), randomString());
@@ -755,8 +730,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can subscribe to transaction events", async () => {
-    pendingWithoutTendermint();
-
     const events: responses.TxEvent[] = [];
     const client = Tendermint37Client.create(rpcFactory());
     const stream = client.subscribeTx();
@@ -796,8 +769,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can subscribe to transaction events filtered by creator", async () => {
-    pendingWithoutTendermint();
-
     const transactionData1 = buildKvTx(randomString(), randomString());
     const transactionData2 = buildKvTx(randomString(), randomString());
 
@@ -838,8 +809,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can unsubscribe and re-subscribe to the same stream", async () => {
-    pendingWithoutTendermint();
-
     const client = Tendermint37Client.create(rpcFactory());
     const stream = client.subscribeNewBlockHeader();
 
@@ -871,8 +840,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can subscribe twice", async () => {
-    pendingWithoutTendermint();
-
     const client = Tendermint37Client.create(rpcFactory());
     const stream1 = client.subscribeNewBlockHeader();
     const stream2 = client.subscribeNewBlockHeader();
@@ -888,9 +855,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 describe("Tendermint37Client", () => {
   const { url, expected } = tendermintInstances[37];
 
-  it("can connect to a given url", async () => {
-    pendingWithoutTendermint();
-
+  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
     // http connection
     {
       const client = await Tendermint37Client.connect("http://" + url);
@@ -908,11 +873,11 @@ describe("Tendermint37Client", () => {
     }
   });
 
-  describe("With HttpClient", () => {
+  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
     defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
-  describe("With WebsocketClient", () => {
+  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
     const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
     const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);

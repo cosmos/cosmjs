@@ -131,7 +131,7 @@ describe("WasmExtension", () => {
   let hackatomContractAddress: string | undefined;
 
   beforeAll(async () => {
-    if (wasmdEnabled()) {
+    if (wasmdEnabled) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const result = await uploadContract(wallet, hackatom);
       assertIsDeliverTxSuccess(result);

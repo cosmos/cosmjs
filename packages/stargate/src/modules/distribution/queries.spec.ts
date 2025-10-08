@@ -31,7 +31,7 @@ describe("DistributionExtension", () => {
   };
 
   beforeAll(async () => {
-    if (simappEnabled()) {
+    if (simappEnabled) {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,

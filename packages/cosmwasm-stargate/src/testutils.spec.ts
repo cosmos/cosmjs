@@ -144,12 +144,10 @@ export const deployedIbcReflect = {
   ],
 };
 
-export function wasmdEnabled(): boolean {
-  return !!process.env.WASMD_ENABLED;
-}
+export const wasmdEnabled: boolean = !!globalThis.process?.env.WASMD_ENABLED;
 
 export function pendingWithoutWasmd(): void {
-  if (!wasmdEnabled()) {
+  if (!wasmdEnabled) {
     pending("Set WASMD_ENABLED to enable Wasmd-based tests");
     return;
   }
