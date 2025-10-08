@@ -24,17 +24,20 @@ import { Tendermint34Client } from "./tendermint34client";
  * Code that does not require a functional backend should be extracted and tested low-level.
  */
 function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
-  describe("create", () => {
-    it("can auto-discover Tendermint version and communicate", async () => {
+  describe("abciInfo", () => {
+    it("works", async () => {
       const client = Tendermint34Client.create(rpcFactory());
       const info = await client.abciInfo();
       expect(info).toBeTruthy();
       client.disconnect();
     });
+  });
 
-    it("can connect to Tendermint with known version", async () => {
+  describe("genesis", () => {
+    it("works", async () => {
       const client = Tendermint34Client.create(rpcFactory());
-      expect(await client.abciInfo()).toBeTruthy();
+      const genesis = await client.genesis();
+      expect(genesis).toBeTruthy();
       client.disconnect();
     });
   });
