@@ -4128,6 +4128,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/tendermint-rpc", "workspace:packages/tendermint-rpc"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@types/jasmine", "npm:4.6.5"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
@@ -4135,6 +4136,8 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
+          ["jasmine", "npm:4.6.0"],\
+          ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["karma", "npm:6.3.16"],\
           ["karma-chrome-launcher", "npm:3.1.0"],\
           ["karma-firefox-launcher", "npm:2.1.0"],\
@@ -4147,7 +4150,6 @@ const RAW_RUNTIME_STATE =
           ["source-map-support", "npm:0.5.21"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
-          ["vitest", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:3.2.4"],\
           ["webpack", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:5.76.1"],\
           ["webpack-cli", "virtual:d5037fb6cb5ae0ea3e1abfa18c6b0b09006e3ee27af43c076bb3eab879c3679bba8a5c55c42f03ddd47ae58ceabbf7a06477ca582879ac7623c7c140cfd0449f#npm:4.7.0"]\
         ],\

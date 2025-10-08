@@ -63,8 +63,8 @@ describe("GasPrice", () => {
       };
       for (const [input, expected] of Object.entries(inputs)) {
         const gasPrice = GasPrice.fromString(input);
-        expect(gasPrice.amount.toString(), `Input: ${input}`).toEqual(expected.amount);
-        expect(gasPrice.denom, `Input: ${input}`).toEqual(expected.denom);
+        expect(gasPrice.amount.toString()).withContext(`Input: ${input}`).toEqual(expected.amount);
+        expect(gasPrice.denom).withContext(`Input: ${input}`).toEqual(expected.denom);
       }
     });
 
