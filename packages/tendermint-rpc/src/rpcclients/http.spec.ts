@@ -2,12 +2,7 @@ import { createJsonRpcRequest } from "../jsonrpc";
 import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { http } from "./http";
 
-function pendingWithoutHttpServer(): void {
-  if (globalThis.process?.env.HTTPSERVER_ENABLED) {
-    return;
-  }
-  pending("Set HTTPSERVER_ENABLED to enable HTTP tests");
-}
+const httpServerEnabled = !!globalThis.process?.env.HTTPSERVER_ENABLED;
 
 const tendermintUrl = defaultInstance.url;
 const echoUrl = "http://localhost:5555/echo_headers";
@@ -18,9 +13,7 @@ describe("http", () => {
     expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
   });
 
-  it("can POST to echo server", async () => {
-    pendingWithoutHttpServer();
-
+  (httpServerEnabled ? it : xit)("can POST to echo server", async () => {
     const response = await http("POST", echoUrl, undefined, createJsonRpcRequest("health"));
     expect(response).toEqual({
       request_headers: jasmine.objectContaining({
@@ -36,9 +29,7 @@ describe("http", () => {
     ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
   });
 
-  it("can POST to echo server with custom headers", async () => {
-    pendingWithoutHttpServer();
-
+  (httpServerEnabled ? it : xit)("can POST to echo server with custom headers", async () => {
     // With custom headers
     const response = await http(
       "POST",
