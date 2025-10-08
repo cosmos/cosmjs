@@ -79,11 +79,12 @@ describe("Responses", () => {
       });
       expect(validator).toEqual({
         address: fromHex("A03DC128D38DB0BC5F18AE1872F1CB2E1FD41157"),
-        votingPower: BigInt(169980),
+        power: BigInt(169980),
         pubkey: {
           algorithm: "ed25519",
           data: fromBase64("2BX6Zuj8RmdJAkD1BAg6KB0v04liyM7jBdwOGIb9F9Q="),
         },
+        name: "真本聪&IOSG",
       });
     });
   });

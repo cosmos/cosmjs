@@ -513,14 +513,15 @@ interface RpcValidatorGenesis {
   readonly address: string;
   readonly pub_key: RpcPubkey;
   readonly power: string;
-  readonly name?: string;
+  readonly name: string;
 }
 
-export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
+export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.GenesisValidator {
   return {
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToBigInt(assertNotEmpty(data.power)),
+    power: apiToBigInt(assertNotEmpty(data.power)),
+    name: data.name,
   };
 }
 

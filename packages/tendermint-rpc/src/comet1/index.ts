@@ -51,6 +51,7 @@ export type {
   Evidence,
   EvidenceParams,
   GenesisResponse,
+  GenesisValidator,
   Header,
   HealthResponse,
   NewBlockEvent,

@@ -38,6 +38,17 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const client = Comet1Client.create(rpcFactory());
       const genesis = await client.genesis();
       expect(genesis).toBeTruthy();
+      expect(genesis.validators).toEqual([
+        {
+          address: jasmine.any(Uint8Array), // changes on every chain restart
+          pubkey: {
+            algorithm: "ed25519",
+            data: jasmine.any(Uint8Array), // changes on every chain restart
+          },
+          power: 10n,
+          name: "The Machine 2035",
+        },
+      ]);
       client.disconnect();
     });
   });

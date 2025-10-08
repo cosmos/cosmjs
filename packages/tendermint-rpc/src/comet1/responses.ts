@@ -121,7 +121,7 @@ export interface GenesisResponse {
   readonly genesisTime: ReadonlyDate;
   readonly chainId: string;
   readonly consensusParams: ConsensusParams;
-  readonly validators: readonly Validator[];
+  readonly validators: readonly GenesisValidator[];
   readonly appHash: Uint8Array;
   readonly appState: Record<string, unknown> | undefined;
 }
@@ -355,6 +355,14 @@ export interface SyncInfo {
   readonly latestBlockHeight: number;
   readonly latestBlockTime: ReadonlyDate;
   readonly catchingUp: boolean;
+}
+
+/** See https://github.com/cometbft/cometbft/blob/v1.0.1/types/genesis.go#L29-L35 */
+export interface GenesisValidator {
+  readonly address: Uint8Array;
+  readonly pubkey?: ValidatorPubkey;
+  readonly power: bigint;
+  readonly name: string;
 }
 
 export interface Validator {

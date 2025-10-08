@@ -521,6 +521,8 @@ export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Val
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
     votingPower: apiToBigInt(assertNotEmpty(data.power)),
+    // Field `name` is omitted because return type `responses.Validator` doesn't have it. Fixed
+    // in comet1 adapter. We could backport this change but want to avoid unnecessary breakage.
   };
 }
 
