@@ -1,4 +1,4 @@
-import { ripemd160 as nobleRipemd160 } from "@noble/hashes/legacy";
+import { ripemd160 as nobleRipemd160 } from "@noble/hashes/legacy.js";
 
 import { HashFunction } from "./hash";
 import { toRealUint8Array } from "./utils";
