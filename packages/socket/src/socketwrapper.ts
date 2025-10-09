@@ -116,7 +116,7 @@ export class SocketWrapper {
 
       const elapsed = Math.floor(Date.now() - started);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.connectedRejecter!(`Connection attempt timed out after ${elapsed} ms`);
+      this.connectedRejecter!(new Error(`Connection attempt timed out after ${elapsed} ms`));
     }, this.timeout);
 
     this.socket = socket;
