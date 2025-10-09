@@ -344,7 +344,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
             done.fail("must not resolve");
           })
           .catch((error) => {
-            expect(error).toMatch(/socket was closed/i);
+            expect(error.message).toMatch(/socket was closed/i);
             done();
           });
       },
