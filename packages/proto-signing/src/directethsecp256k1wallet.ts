@@ -9,7 +9,7 @@ import { makeSignBytes } from "./signing";
 /**
  * A wallet that holds a single secp256k1 keypair.
  *
- * If you want to work with BIP39 mnemonics and multiple accounts, use DirectSecp256k1HdWallet.
+ * If you want to work with BIP39 mnemonics and multiple accounts, use DirectEthSecp256k1HdWallet.
  */
 export class DirectEthSecp256k1Wallet implements OfflineDirectSigner {
   /**

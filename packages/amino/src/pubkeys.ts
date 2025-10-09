@@ -36,7 +36,7 @@ export function isEthSecp256k1Pubkey(pubkey: Pubkey): pubkey is EthSecp256k1Pubk
 export const pubkeyType = {
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/secp256k1/secp256k1.go#L23 */
   secp256k1: "tendermint/PubKeySecp256k1" as const,
-  /** @see https://github.com/cosmos/evm/blob/main/crypto/ethsecp256k1/ethsecp256k1.go#L36 */
+  /** @see https://github.com/cosmos/evm/blob/v1.0.0-rc2/crypto/ethsecp256k1/ethsecp256k1.go#L35-L36 */
   ethsecp256k1: "os/PubKeyEthSecp256k1" as const,
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/ed25519/ed25519.go#L22 */
   ed25519: "tendermint/PubKeyEd25519" as const,
