@@ -252,27 +252,25 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockSearch", () => {
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Comet38Client.create(rpcFactory());
+      const client = Comet38Client.create(rpcFactory());
 
-        async function sendTx(): Promise<void> {
-          const tx = buildKvTx(randomString(), randomString());
+      async function sendTx(): Promise<void> {
+        const tx = buildKvTx(randomString(), randomString());
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).not.toEqual(0);
-        }
-
-        // send 3 txs
-        await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).not.toEqual(0);
       }
+
+      // send 3 txs
+      await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("can paginate over blockSearch results", async () => {
@@ -435,29 +433,27 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Comet38Client.create(rpcFactory());
+      const client = Comet38Client.create(rpcFactory());
 
-        async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
-          const me = randomString();
-          const tx = buildKvTx(txKey, me);
+      async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
+        const me = randomString();
+        const tx = buildKvTx(txKey, me);
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).toEqual(32);
-          return [tx, txRes];
-        }
-
-        // send 3 txs
-        [tx1, broadcast1] = await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).toEqual(32);
+        return [tx, txRes];
       }
+
+      // send 3 txs
+      [tx1, broadcast1] = await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("finds a single tx by hash", async () => {
@@ -851,10 +847,10 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-describe("Comet38Client with CometBFT 0.38 backend", () => {
+(tendermintEnabled ? describe : xdescribe)("Comet38Client with CometBFT 0.38 backend", () => {
   const { url, expected } = tendermintInstances[38];
 
-  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
+  it("can connect to a given url", async () => {
     // http connection
     {
       const client = await Comet38Client.connect("http://" + url);
@@ -872,14 +868,13 @@ describe("Comet38Client with CometBFT 0.38 backend", () => {
     }
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
+  describe("With HttpClient", () => {
     defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
+  describe("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
-    const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
-    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
+    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, console.error);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);
   });
