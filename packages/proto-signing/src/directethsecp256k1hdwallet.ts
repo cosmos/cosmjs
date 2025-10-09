@@ -3,11 +3,11 @@ import {
   Bip39,
   EnglishMnemonic,
   HdPath,
+  keccak256,
   pathToString,
   Random,
   Secp256k1,
   Secp256k1Keypair,
-  keccak256,
   Slip10,
   Slip10Curve,
   Slip10RawIndex,
@@ -180,7 +180,10 @@ export class DirectEthSecp256k1HdWallet implements OfflineDirectSigner {
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
-  public static async deserialize(serialization: string, password: string): Promise<DirectEthSecp256k1HdWallet> {
+  public static async deserialize(
+    serialization: string,
+    password: string,
+  ): Promise<DirectEthSecp256k1HdWallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     switch ((root as any).type) {

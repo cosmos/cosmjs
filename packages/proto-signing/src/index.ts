@@ -1,16 +1,14 @@
 // This type happens to be shared between Amino and Direct sign modes
 export { type DecodedTxRaw, decodeTxRaw } from "./decode";
+export type { DirectEthSecp256k1HdWalletOptions } from "./directethsecp256k1hdwallet";
+export { DirectEthSecp256k1HdWallet } from "./directethsecp256k1hdwallet";
+export { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";
 export {
   type DirectSecp256k1HdWalletOptions,
   DirectSecp256k1HdWallet,
   extractKdfConfiguration,
 } from "./directsecp256k1hdwallet";
-export {
-  DirectEthSecp256k1HdWallet,
-  DirectEthSecp256k1HdWalletOptions,
-} from "./directethsecp256k1hdwallet";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
-export { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";
 export { makeCosmoshubPath } from "./paths";
 export { anyToSinglePubkey, decodeOptionalPubkey, decodePubkey, encodePubkey } from "./pubkey";
 export type {

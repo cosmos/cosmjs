@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { coins } from "@cosmjs/amino";
-import { Secp256k1, Secp256k1Signature, keccak256 } from "@cosmjs/crypto";
+import { keccak256, Secp256k1, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";

@@ -1,7 +1,7 @@
 import {
   encodeEd25519Pubkey,
-  encodeSecp256k1Pubkey,
   encodeEthSecp256k1Pubkey,
+  encodeSecp256k1Pubkey,
   isEd25519Pubkey,
   isEthSecp256k1Pubkey,
   isMultisigThresholdPubkey,

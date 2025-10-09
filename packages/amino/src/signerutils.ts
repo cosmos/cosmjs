@@ -2,12 +2,12 @@
  * Utility functions for working with signer accounts and algorithm detection.
  */
 
-import type { AccountData } from "./signer";
 import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding";
+import type { AccountData } from "./signer";
 
 /**
  * Checks if an account uses Ethereum secp256k1 keys by examining the algorithm name.
- * 
+ *
  * Handle Ethereum secp256k1 keys with dual naming convention support:
  * Different wallets and chains report Ethereum key algorithms inconsistently:
  * - "eth_secp256k1" (with underscore) - de facto standard used by Keplr wallet, CosmJS, some Cosmos SDK chains
@@ -23,7 +23,7 @@ export function isEthereumSecp256k1Account(account: AccountData): boolean {
 
 /**
  * Gets the correctly encoded amino pubkey for an account based on its algorithm.
- * 
+ *
  * This utility automatically selects the appropriate encoding function based on whether
  * the account uses Ethereum secp256k1 keys or standard secp256k1 keys.
  *

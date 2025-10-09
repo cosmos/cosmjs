@@ -1,5 +1,5 @@
 import { coins } from "@cosmjs/amino";
-import { Secp256k1, Secp256k1Signature, keccak256, Slip10RawIndex } from "@cosmjs/crypto";
+import { keccak256, Secp256k1, Secp256k1Signature, Slip10RawIndex } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectEthSecp256k1HdWallet, extractKdfConfiguration } from "./directethsecp256k1hdwallet";
@@ -24,13 +24,15 @@ describe("DirectEthSecp256k1HdWallet", () => {
     it("works with options", async () => {
       const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(defaultMnemonic, {
         bip39Password: "password123",
-        hdPaths: [[
-          Slip10RawIndex.hardened(44),
-          Slip10RawIndex.hardened(60),
-          Slip10RawIndex.hardened(0),
-          Slip10RawIndex.normal(0),
-          Slip10RawIndex.normal(123),
-        ]],
+        hdPaths: [
+          [
+            Slip10RawIndex.hardened(44),
+            Slip10RawIndex.hardened(60),
+            Slip10RawIndex.hardened(0),
+            Slip10RawIndex.normal(0),
+            Slip10RawIndex.normal(123),
+          ],
+        ],
         prefix: "yolo",
       });
       expect(wallet.mnemonic).toEqual(defaultMnemonic);
