@@ -33,13 +33,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     const socket = new StreamingSocket(socketServerUrlSlow, 2_000);
     socket.connect();
 
-    await socket.connected
-      .then(() => {
-        throw new Error("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toMatch(/connection attempt timed out/i);
-      });
+    await expectAsync(socket.connected).toBeRejectedWithError(/connection attempt timed out/i);
   });
 
   it("can send events when connected", async () => {
