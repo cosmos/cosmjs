@@ -30,7 +30,7 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "tsdown --format cjs --unbundle",
-    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
+    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/ --external='@cosmjs/crypto'",
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
