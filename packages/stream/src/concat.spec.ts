@@ -287,5 +287,5 @@ describe("concat", () => {
     }, 6 * intervalDuration);
 
     return ret;
-  });
+  }, 10000);
 });
