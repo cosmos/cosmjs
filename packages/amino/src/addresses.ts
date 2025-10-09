@@ -4,7 +4,13 @@ import { keccak256, ripemd160, Secp256k1, sha256 } from "@cosmjs/crypto";
 import { fromBase64, toBech32 } from "@cosmjs/encoding";
 
 import { encodeAminoPubkey } from "./encoding";
-import { isEd25519Pubkey, isEthSecp256k1Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";
+import {
+  isEd25519Pubkey,
+  isEthSecp256k1Pubkey,
+  isMultisigThresholdPubkey,
+  isSecp256k1Pubkey,
+  Pubkey,
+} from "./pubkeys";
 
 export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
   if (pubkeyData.length !== 32) {

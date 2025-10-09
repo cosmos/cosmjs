@@ -2,9 +2,9 @@
  * Utility functions for working with signer accounts and algorithm detection.
  */
 
-import type { AccountData } from "./signer";
 import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding";
 import { EthSecp256k1Pubkey, Secp256k1Pubkey } from "./pubkeys";
+import type { AccountData } from "./signer";
 
 /**
  * Checks if an account uses Ethereum secp256k1 keys by examining the algorithm name.

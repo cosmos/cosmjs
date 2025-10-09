@@ -1,5 +1,5 @@
 import { encodeEthSecp256k1Signature, rawEthSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
-import { Secp256k1, keccak256 } from "@cosmjs/crypto";
+import { keccak256, Secp256k1 } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
@@ -9,7 +9,7 @@ import { makeSignBytes } from "./signing";
 /**
  * A wallet that holds a single secp256k1 keypair.
  *
- * If you want to work with BIP39 mnemonics and multiple accounts, use DirectSecp256k1HdWallet.
+ * If you want to work with BIP39 mnemonics and multiple accounts, use DirectEthSecp256k1HdWallet.
  */
 export class DirectEthSecp256k1Wallet implements OfflineDirectSigner {
   /**
