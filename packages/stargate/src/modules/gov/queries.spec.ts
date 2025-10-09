@@ -49,103 +49,104 @@ describe("GovExtension", () => {
   let proposalId: string | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
-        // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
-        // This must match `voterAddress` above.
-        hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
-      });
-      const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrlHttp,
-        wallet,
-        defaultSigningClientOptions,
-      );
+    if (!simappEnabled) {
+      return;
+    }
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+      // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
+      // This must match `voterAddress` above.
+      hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
+    });
+    const client = await SigningStargateClient.connectWithSigner(
+      simapp.tendermintUrlHttp,
+      wallet,
+      defaultSigningClientOptions,
+    );
 
-      const proposalMsg: MsgSubmitProposalEncodeObject = {
-        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+    const proposalMsg: MsgSubmitProposalEncodeObject = {
+      typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+      value: {
+        content: Any.fromPartial({
+          typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+          value: Uint8Array.from(TextProposal.encode(textProposal).finish()),
+        }),
+        proposer: voter1Address,
+        initialDeposit: initialDeposit,
+      },
+    };
+    const proposalResult = await client.signAndBroadcast(
+      voter1Address,
+      [proposalMsg],
+      defaultFee,
+      "Test proposal for simd",
+    );
+    assertIsDeliverTxSuccess(proposalResult);
+
+    proposalId = proposalResult.events
+      .find(({ type }) => type === "submit_proposal")
+      ?.attributes.find(({ key }: any) => key === "proposal_id")?.value;
+    assert(proposalId, "Proposal ID not found in events");
+    assert(proposalId.match(nonNegativeIntegerMatcher));
+
+    // Voter 1
+    {
+      // My vote only counts when I delegate
+      if (!(await client.getDelegation(voter1Address, validator.validatorAddress))) {
+        const msgDelegate: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: {
+            delegatorAddress: voter1Address,
+            validatorAddress: validator.validatorAddress,
+            amount: delegationVoter1,
+          },
+        };
+        const result = await client.signAndBroadcast(voter1Address, [msgDelegate], defaultFee);
+        assertIsDeliverTxSuccess(result);
+      }
+
+      const voteMsg: MsgVoteEncodeObject = {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
         value: {
-          content: Any.fromPartial({
-            typeUrl: "/cosmos.gov.v1beta1.TextProposal",
-            value: Uint8Array.from(TextProposal.encode(textProposal).finish()),
-          }),
-          proposer: voter1Address,
-          initialDeposit: initialDeposit,
+          proposalId: longify(proposalId),
+          voter: voter1Address,
+          option: VoteOption.VOTE_OPTION_YES,
         },
       };
-      const proposalResult = await client.signAndBroadcast(
-        voter1Address,
-        [proposalMsg],
-        defaultFee,
-        "Test proposal for simd",
-      );
-      assertIsDeliverTxSuccess(proposalResult);
-
-      proposalId = proposalResult.events
-        .find(({ type }) => type === "submit_proposal")
-        ?.attributes.find(({ key }: any) => key === "proposal_id")?.value;
-      assert(proposalId, "Proposal ID not found in events");
-      assert(proposalId.match(nonNegativeIntegerMatcher));
-
-      // Voter 1
-      {
-        // My vote only counts when I delegate
-        if (!(await client.getDelegation(voter1Address, validator.validatorAddress))) {
-          const msgDelegate: MsgDelegateEncodeObject = {
-            typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-            value: {
-              delegatorAddress: voter1Address,
-              validatorAddress: validator.validatorAddress,
-              amount: delegationVoter1,
-            },
-          };
-          const result = await client.signAndBroadcast(voter1Address, [msgDelegate], defaultFee);
-          assertIsDeliverTxSuccess(result);
-        }
-
-        const voteMsg: MsgVoteEncodeObject = {
-          typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-          value: {
-            proposalId: longify(proposalId),
-            voter: voter1Address,
-            option: VoteOption.VOTE_OPTION_YES,
-          },
-        };
-        const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
-        assertIsDeliverTxSuccess(voteResult);
-      }
-
-      // Voter 2
-      {
-        // My vote only counts when I delegate
-        if (!(await client.getDelegation(voter2Address, validator.validatorAddress))) {
-          const msgDelegate: MsgDelegateEncodeObject = {
-            typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-            value: {
-              delegatorAddress: voter2Address,
-              validatorAddress: validator.validatorAddress,
-              amount: delegationVoter2,
-            },
-          };
-          const result = await client.signAndBroadcast(voter2Address, [msgDelegate], defaultFee);
-          assertIsDeliverTxSuccess(result);
-        }
-
-        const voteMsg: MsgVoteEncodeObject = {
-          typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-          value: {
-            proposalId: longify(proposalId),
-            voter: voter2Address,
-            option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
-          },
-        };
-        const voteResult = await client.signAndBroadcast(voter2Address, [voteMsg], defaultFee);
-        assertIsDeliverTxSuccess(voteResult);
-      }
-
-      await sleep(75); // wait until transactions are indexed
-
-      client.disconnect();
+      const voteResult = await client.signAndBroadcast(voter1Address, [voteMsg], defaultFee);
+      assertIsDeliverTxSuccess(voteResult);
     }
+
+    // Voter 2
+    {
+      // My vote only counts when I delegate
+      if (!(await client.getDelegation(voter2Address, validator.validatorAddress))) {
+        const msgDelegate: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: {
+            delegatorAddress: voter2Address,
+            validatorAddress: validator.validatorAddress,
+            amount: delegationVoter2,
+          },
+        };
+        const result = await client.signAndBroadcast(voter2Address, [msgDelegate], defaultFee);
+        assertIsDeliverTxSuccess(result);
+      }
+
+      const voteMsg: MsgVoteEncodeObject = {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: {
+          proposalId: longify(proposalId),
+          voter: voter2Address,
+          option: VoteOption.VOTE_OPTION_NO_WITH_VETO,
+        },
+      };
+      const voteResult = await client.signAndBroadcast(voter2Address, [voteMsg], defaultFee);
+      assertIsDeliverTxSuccess(voteResult);
+    }
+
+    await sleep(75); // wait until transactions are indexed
+
+    client.disconnect();
   });
 
   describe("params", () => {

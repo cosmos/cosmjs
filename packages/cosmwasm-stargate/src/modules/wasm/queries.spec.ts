@@ -131,24 +131,25 @@ describe("WasmExtension", () => {
   let hackatomContractAddress: string | undefined;
 
   beforeAll(async () => {
-    if (wasmdEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const result = await uploadContract(wallet, hackatom);
-      assertIsDeliverTxSuccess(result);
-      const codeIdFromEvents = result.events
-        .find((event) => event.type === "store_code")
-        ?.attributes.find((attribute) => attribute.key === "code_id")?.value;
-      assertDefined(codeIdFromEvents);
-      hackatomCodeId = Number.parseInt(codeIdFromEvents, 10);
-
-      const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
-      assertIsDeliverTxSuccess(instantiateResult);
-      const addr = instantiateResult.events
-        .find((event) => event.type === "instantiate")
-        ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
-      assertDefined(addr);
-      hackatomContractAddress = addr;
+    if (!wasmdEnabled) {
+      return;
     }
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+    const result = await uploadContract(wallet, hackatom);
+    assertIsDeliverTxSuccess(result);
+    const codeIdFromEvents = result.events
+      .find((event) => event.type === "store_code")
+      ?.attributes.find((attribute) => attribute.key === "code_id")?.value;
+    assertDefined(codeIdFromEvents);
+    hackatomCodeId = Number.parseInt(codeIdFromEvents, 10);
+
+    const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
+    assertIsDeliverTxSuccess(instantiateResult);
+    const addr = instantiateResult.events
+      .find((event) => event.type === "instantiate")
+      ?.attributes.find((attribute) => attribute.key === "_contract_address")?.value;
+    assertDefined(addr);
+    hackatomContractAddress = addr;
   });
 
   describe("listCodeInfo", () => {
