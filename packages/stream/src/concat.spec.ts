@@ -214,7 +214,7 @@ describe("concat", () => {
     });
     // For browsers and CI, clocks and runtimes are very unreliable.
     // Especially Mac+Firefox on Travis makes big trouble. Thus we need huge intervals.
-    const intervalDuration = 1000;
+    const intervalDuration = 500;
     const producerActiveLog = new Array<boolean>();
 
     let producerInterval: NodeJS.Timeout;
