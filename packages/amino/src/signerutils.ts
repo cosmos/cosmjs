@@ -3,6 +3,7 @@
  */
 
 import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding";
+import { EthSecp256k1Pubkey, Secp256k1Pubkey } from "./pubkeys";
 import type { AccountData } from "./signer";
 
 /**
@@ -30,7 +31,7 @@ export function isEthereumSecp256k1Account(account: AccountData): boolean {
  * @param account The account data from a signer
  * @returns The amino-encoded pubkey (EthSecp256k1Pubkey or Secp256k1Pubkey)
  */
-export function getAminoPubkey(account: AccountData): any {
+export function getAminoPubkey(account: AccountData): EthSecp256k1Pubkey | Secp256k1Pubkey {
   if (isEthereumSecp256k1Account(account)) {
     return encodeEthSecp256k1Pubkey(account.pubkey);
   } else {
