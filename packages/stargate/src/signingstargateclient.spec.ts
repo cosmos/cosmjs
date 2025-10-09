@@ -251,9 +251,9 @@ describe("SigningStargateClient", () => {
     });
   });
 
-  describe("sendIbcTokens", () => {
+  // We cannot test this easily anymore since the IBC module was removed from simapp
+  xdescribe("sendIbcTokens", () => {
     it("works with direct signing", async () => {
-      pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
@@ -302,7 +302,6 @@ describe("SigningStargateClient", () => {
     });
 
     it("works with Amino JSON signer", async () => {
-      pending("We cannot test this easily anymore since the IBC module was removed from simapp");
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
