@@ -33,6 +33,13 @@ export function encodePubkey(pubkey: Pubkey): Any {
       value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkeyProto).finish()),
     });
   } else if (isEthSecp256k1Pubkey(pubkey)) {
+    // Note: This code block is hacky because we should use the correct EVM proto type
+    // https://github.com/cosmos/evm/blob/v1.0.0-rc2/proto/cosmos/evm/crypto/v1/ethsecp256k1/keys.proto#L12-L17.
+    // However, we do not have that available here or in cosmjs-types yet and the classic secp256k1 pubkey has the same structure except for documentation and annotations:
+    // https://github.com/cosmos/cosmos-sdk/blob/v0.53.4/proto/cosmos/crypto/secp256k1/keys.proto#L14-L30
+    //
+    // Actually this type is so simple we should just have an Anybuf for TS instead of code generation (https://github.com/webmaster128/anybuf)
+
     const pubkeyProto = CosmosCryptoSecp256k1Pubkey.fromPartial({
       key: fromBase64(pubkey.value),
     });
