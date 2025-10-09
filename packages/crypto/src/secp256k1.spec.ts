@@ -68,58 +68,23 @@ describe("Secp256k1", () => {
     ).toBeTruthy();
 
     // too short and too long
-    await Secp256k1.makeKeypair(
-      fromHex("e4ade2a5232a7c6f37e7b854a774e25e6047ee7c6d63e8304ae04fa190bc17"),
-    ).then(
-      () => {
-        throw new Error("promise must be rejected");
-      },
-      (error) => {
-        expect(error.message).toContain("not a valid secp256k1 private key");
-      },
-    );
-    await Secp256k1.makeKeypair(
-      fromHex("e4ade2a5232a7c6f37e7b854a774e25e6047ee7c6d63e8304ae04fa190bc1732aa"),
-    ).then(
-      () => {
-        throw new Error("promise must be rejected");
-      },
-      (error) => {
-        expect(error.message).toContain("not a valid secp256k1 private key");
-      },
-    );
+    await expectAsync(
+      Secp256k1.makeKeypair(fromHex("e4ade2a5232a7c6f37e7b854a774e25e6047ee7c6d63e8304ae04fa190bc17")),
+    ).toBeRejectedWithError("input data is not a valid secp256k1 private key");
+    await expectAsync(
+      Secp256k1.makeKeypair(fromHex("e4ade2a5232a7c6f37e7b854a774e25e6047ee7c6d63e8304ae04fa190bc1732aa")),
+    ).toBeRejectedWithError("input data is not a valid secp256k1 private key");
     // value out of range (too small)
-    await Secp256k1.makeKeypair(
-      fromHex("0000000000000000000000000000000000000000000000000000000000000000"),
-    ).then(
-      () => {
-        throw new Error("promise must be rejected");
-      },
-      (error) => {
-        expect(error.message).toContain("not a valid secp256k1 private key");
-      },
-    );
+    await expectAsync(
+      Secp256k1.makeKeypair(fromHex("0000000000000000000000000000000000000000000000000000000000000000")),
+    ).toBeRejectedWithError("input data is not a valid secp256k1 private key");
     // value out of range (>= n)
-    await Secp256k1.makeKeypair(
-      fromHex("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
-    ).then(
-      () => {
-        throw new Error("promise must be rejected");
-      },
-      (error) => {
-        expect(error.message).toContain("not a valid secp256k1 private key");
-      },
-    );
-    await Secp256k1.makeKeypair(
-      fromHex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141"),
-    ).then(
-      () => {
-        throw new Error("promise must be rejected");
-      },
-      (error) => {
-        expect(error.message).toContain("not a valid secp256k1 private key");
-      },
-    );
+    await expectAsync(
+      Secp256k1.makeKeypair(fromHex("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")),
+    ).toBeRejectedWithError("input data is not a valid secp256k1 private key");
+    await expectAsync(
+      Secp256k1.makeKeypair(fromHex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141")),
+    ).toBeRejectedWithError("input data is not a valid secp256k1 private key");
   });
 
   it("creates signatures", async () => {

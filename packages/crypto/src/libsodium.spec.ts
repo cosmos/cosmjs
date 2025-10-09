@@ -393,37 +393,22 @@ describe("Libsodium", () => {
       {
         // empty
         const key = fromHex("");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce).then(
-          () => {
-            throw new Error("encryption must not succeed");
-          },
-          (error) => {
-            expect(error).toMatch(/key, got length=0/);
-          },
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=0/,
         );
       }
       {
         // 31 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce).then(
-          () => {
-            throw new Error("encryption must not succeed");
-          },
-          (error) => {
-            expect(error).toMatch(/key, got length=31/);
-          },
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=31/,
         );
       }
       {
         // 33 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce).then(
-          () => {
-            throw new Error("encryption must not succeed");
-          },
-          (error) => {
-            expect(error).toMatch(/key, got length=33/);
-          },
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=33/,
         );
       }
       {
@@ -431,13 +416,8 @@ describe("Libsodium", () => {
         const key = fromHex(
           "1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d81324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8",
         );
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce).then(
-          () => {
-            throw new Error("encryption must not succeed");
-          },
-          (error) => {
-            expect(error).toMatch(/key, got length=64/);
-          },
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=64/,
         );
       }
     });
