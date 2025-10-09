@@ -875,8 +875,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
   describe("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
-    const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
-    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
+    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, console.error);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);
   });
