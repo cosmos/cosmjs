@@ -848,10 +848,10 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-describe("Tendermint37Client", () => {
+(tendermintEnabled ? describe : xdescribe)("Tendermint37Client", () => {
   const { url, expected } = tendermintInstances[37];
 
-  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
+  it("can connect to a given url", async () => {
     // http connection
     {
       const client = await Tendermint37Client.connect("http://" + url);
@@ -869,11 +869,11 @@ describe("Tendermint37Client", () => {
     }
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
+  describe("With HttpClient", () => {
     defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
+  describe("With WebsocketClient", () => {
     // don't print out WebSocket errors if marked pending
     const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
     const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
