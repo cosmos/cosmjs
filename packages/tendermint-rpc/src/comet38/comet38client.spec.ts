@@ -252,27 +252,25 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockSearch", () => {
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Comet38Client.create(rpcFactory());
+      const client = Comet38Client.create(rpcFactory());
 
-        async function sendTx(): Promise<void> {
-          const tx = buildKvTx(randomString(), randomString());
+      async function sendTx(): Promise<void> {
+        const tx = buildKvTx(randomString(), randomString());
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).not.toEqual(0);
-        }
-
-        // send 3 txs
-        await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).not.toEqual(0);
       }
+
+      // send 3 txs
+      await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("can paginate over blockSearch results", async () => {
@@ -435,29 +433,27 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Comet38Client.create(rpcFactory());
+      const client = Comet38Client.create(rpcFactory());
 
-        async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
-          const me = randomString();
-          const tx = buildKvTx(txKey, me);
+      async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
+        const me = randomString();
+        const tx = buildKvTx(txKey, me);
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).toEqual(32);
-          return [tx, txRes];
-        }
-
-        // send 3 txs
-        [tx1, broadcast1] = await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).toEqual(32);
+        return [tx, txRes];
       }
+
+      // send 3 txs
+      [tx1, broadcast1] = await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("finds a single tx by hash", async () => {
