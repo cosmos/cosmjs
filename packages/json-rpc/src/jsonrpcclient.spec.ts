@@ -28,7 +28,7 @@ function makeSimpleMessagingConnection(
   };
 }
 
-(typeof Worker !== "undefined" ? describe : xdescribe)("JsonRpcClient", () => {
+(typeof Worker !== "undefined" ? describe : describe.skip)("JsonRpcClient", () => {
   const dummyserviceKarmaUrl = "/base/dist/web/dummyservice.worker.js";
 
   it("can be constructed with a Worker", () => {

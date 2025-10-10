@@ -96,7 +96,7 @@ describe("registry demo", () => {
     const decoder = registry.lookupType(msg.typeUrl)!;
     const msgDemoDecoded = decoder.decode(msg.value);
     expect(msgDemoDecoded).toEqual(
-      jasmine.objectContaining({
+      expect.objectContaining({
         creator: "Me",
         title: "Something with stars",
         body: "la la la",

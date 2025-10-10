@@ -267,14 +267,7 @@ describe("ValueAndUpdates", () => {
       setTimeout(() => {
         producer.error(new Error("something went wrong"));
       }, 10);
-      await vau.waitFor(3).then(
-        () => {
-          throw new Error("must not resolve");
-        },
-        (error) => {
-          expect(error).toMatch(/something went wrong/);
-        },
-      );
+      await expect(vau.waitFor(3)).rejects.toThrowError(/something went wrong/);
     });
   });
 });
