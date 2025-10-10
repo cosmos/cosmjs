@@ -4090,12 +4090,15 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/socket", "workspace:packages/socket"],\
           ["@cosmjs/stream", "workspace:packages/stream"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
+          ["@types/jasmine", "npm:4.6.5"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/ws", "npm:6.0.4"],\
           ["glob", "npm:11.0.3"],\
           ["isomorphic-ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1"],\
+          ["jasmine", "npm:4.6.0"],\
+          ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["karma", "npm:6.3.16"],\
           ["karma-chrome-launcher", "npm:3.1.0"],\
           ["karma-firefox-launcher", "npm:2.1.0"],\
@@ -4107,7 +4110,6 @@ const RAW_RUNTIME_STATE =
           ["source-map-support", "npm:0.5.21"],\
           ["typedoc", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:0.28.5"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
-          ["vitest", "virtual:32bdce0525b6fd38c0ffab310007869ff277762ac809c2d2b6ac7a63bc1b80e6f56e6507ed75fd8459648eb5d0172adc064466a9729b1d8c49e093b697f760e1#npm:3.2.4"],\
           ["webpack", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:5.76.1"],\
           ["webpack-cli", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.7.0"],\
           ["ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10"],\
