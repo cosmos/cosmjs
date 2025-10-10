@@ -140,10 +140,10 @@ export class Faucet {
             : "  none",
         );
       }
-      for (const refillDistibutor of refillDistibutors) {
+      for (const refillDistributor of refillDistibutors) {
         jobs.push({
           sender: this.holderAddress,
-          recipient: refillDistibutor.address,
+          recipient: refillDistributor.address,
           amount: this.tokenManager.refillAmount(denom),
         });
       }
