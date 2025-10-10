@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "outDir": "build",
     "rootDir": "src",
-    "types": ["jasmine", "karma-firefox-launcher", "karma-jasmine", "karma-jasmine-html-reporter", "node"]
+    "types": ["jasmine", "karma-firefox-launcher", "karma-jasmine", "karma-jasmine-html-reporter"]
   },
   "include": [
     "src/**/*"
