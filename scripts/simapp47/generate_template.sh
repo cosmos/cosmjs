@@ -36,8 +36,10 @@ if [ ! -x "$SCRIPT_DIR/template/.simapp/config/gentx" ]; then
 fi
 
 function inline_jq() {
-  IN_OUT_PATH="$1"
+  local IN_OUT_PATH="$1"
   shift
+  local TMP_DIR
+  local TMP_FILE
   TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/inline_jq.XXXXXXXXX")
   TMP_FILE="$TMP_DIR/$(basename "$IN_OUT_PATH")"
   jq "$@" <"$IN_OUT_PATH" >"$TMP_FILE"

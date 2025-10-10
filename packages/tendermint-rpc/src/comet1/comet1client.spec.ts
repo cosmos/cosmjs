@@ -14,7 +14,7 @@ import {
   tendermintInstances,
   tendermintSearchIndexUpdated,
 } from "../testutil.spec";
-import { Comet38Client } from "./comet38client";
+import { Comet1Client } from "./comet1client";
 import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
@@ -26,7 +26,7 @@ import * as responses from "./responses";
 function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues): void {
   describe("abciInfo", () => {
     it("works", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const info = await client.abciInfo();
       expect(info).toBeTruthy();
       client.disconnect();
@@ -35,16 +35,27 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("genesis", () => {
     it("works", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const genesis = await client.genesis();
       expect(genesis).toBeTruthy();
+      expect(genesis.validators).toEqual([
+        {
+          address: jasmine.any(Uint8Array), // changes on every chain restart
+          pubkey: {
+            algorithm: "ed25519",
+            data: jasmine.any(Uint8Array), // changes on every chain restart
+          },
+          power: 10n,
+          name: "The Machine 2035",
+        },
+      ]);
       client.disconnect();
     });
   });
 
   describe("broadcastTxCommit", () => {
     it("can broadcast a transaction", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
       const response = await client.broadcastTxCommit({ tx: tx });
@@ -63,7 +74,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("broadcastTxSync", () => {
     it("can broadcast a transaction", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
       const response = await client.broadcastTxSync({ tx: tx });
@@ -78,7 +89,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("broadcastTxAsync", () => {
     it("can broadcast a transaction", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const tx = buildKvTx(randomString(), randomString());
 
       const response = await client.broadcastTxAsync({ tx: tx });
@@ -89,7 +100,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("gets the same tx hash from backend as calculated locally", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const tx = buildKvTx(randomString(), randomString());
     const calculatedTxHash = hashTx(tx);
 
@@ -101,7 +112,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("abciQuery", () => {
     it("can query the state", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const key = randomString();
       const value = randomString();
@@ -126,7 +137,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get a commit", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const response = await client.commit(4);
 
     expect(response).toBeTruthy();
@@ -140,7 +151,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get validators", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const response = await client.validators({});
 
     expect(response).toBeTruthy();
@@ -157,7 +168,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can get all validators", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const response = await client.validatorsAll();
 
     expect(response).toBeTruthy();
@@ -174,7 +185,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
   });
 
   it("can call a bunch of methods", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
 
     expect(await client.block()).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
@@ -185,7 +196,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("status", () => {
     it("works", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const status = await client.status();
 
@@ -225,7 +236,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("numUnconfirmedTxs", () => {
     it("works", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const response = await client.numUnconfirmedTxs();
 
@@ -238,7 +249,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockResults", () => {
     it("works", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const height = 3;
       const results = await client.blockResults(height);
@@ -252,7 +263,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockSearch", () => {
     beforeAll(async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       async function sendTx(): Promise<void> {
         const tx = buildKvTx(randomString(), randomString());
@@ -274,7 +285,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can paginate over blockSearch results", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
 
@@ -292,7 +303,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can get all search results in one call", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ raw: "block.height >= 1 AND block.height <= 3" });
 
@@ -310,7 +321,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockchain", () => {
     it("returns latest in descending order by default", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       // Run in parallel to increase chance there is no block between the calls
       const [status, blockchain] = await Promise.all([client.status(), client.blockchain()]);
@@ -326,7 +337,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can limit by maxHeight", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height - 1);
@@ -339,7 +350,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("works with maxHeight in the future", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(undefined, height + 20);
@@ -353,7 +364,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can limit by minHeight and maxHeight", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 2, height - 1);
@@ -366,7 +377,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("contains all the info", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const height = (await client.status()).syncInfo.latestBlockHeight;
       const blockchain = await client.blockchain(height - 1, height - 1);
@@ -394,7 +405,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("tx", () => {
     it("can query a tx properly", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const find = randomString();
       const me = randomString();
@@ -433,7 +444,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
         const me = randomString();
@@ -458,7 +469,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
     it("finds a single tx by hash", async () => {
       assert(tx1 && broadcast1);
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const result = await client.txSearch({ query: `tx.hash='${toHex(broadcast1.hash)}'` });
       expect(result.txs.length).toEqual(1);
@@ -479,7 +490,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("finds a single tx by tags", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const txKey2 = randomString();
       const txValue2 = randomString();
@@ -528,7 +539,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       // Code 0.34: https://github.com/tendermint/tendermint/blob/v0.34.10/rpc/core/tx.go#L89
       // Code 0.35: https://github.com/tendermint/tendermint/blob/v0.35.6/internal/rpc/core/tx.go#L93
       // Code 0.37: https://github.com/cometbft/cometbft/blob/v0.37.0-rc3/rpc/core/tx.go#L87
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
@@ -544,7 +555,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can set the order", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
@@ -558,7 +569,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can paginate over txSearch results", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
@@ -576,7 +587,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     });
 
     it("can get all search results in one call", async () => {
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
 
       const query = buildQuery({ tags: [{ key: "app.key", value: txKey }] });
 
@@ -608,7 +619,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
     (async () => {
       const events: responses.NewBlockHeaderEvent[] = [];
-      const client = Comet38Client.create(rpcFactory());
+      const client = Comet1Client.create(rpcFactory());
       const stream = client.subscribeNewBlockHeader();
       expect(stream).toBeTruthy();
       const subscription = stream.subscribe({
@@ -669,7 +680,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const transactionData2 = buildKvTx(randomString(), randomString());
 
     const events: responses.NewBlockEvent[] = [];
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const stream = client.subscribeNewBlock();
     const subscription = stream.subscribe({
       next: (event) => {
@@ -726,7 +737,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
   it("can subscribe to transaction events", async () => {
     const events: responses.TxEvent[] = [];
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const stream = client.subscribeTx();
     const subscription = stream.subscribe({
       next: (event) => {
@@ -768,7 +779,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const transactionData2 = buildKvTx(randomString(), randomString());
 
     const events: responses.TxEvent[] = [];
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const query = buildQuery({ tags: [{ key: "app.creator", value: expected.appCreator }] });
     const stream = client.subscribeTx(query);
     expect(stream).toBeTruthy();
@@ -804,7 +815,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can unsubscribe and re-subscribe to the same stream", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const stream = client.subscribeNewBlockHeader();
 
     const event1 = await firstEvent(stream);
@@ -835,7 +846,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   it("can subscribe twice", async () => {
-    const client = Comet38Client.create(rpcFactory());
+    const client = Comet1Client.create(rpcFactory());
     const stream1 = client.subscribeNewBlockHeader();
     const stream2 = client.subscribeNewBlockHeader();
 
@@ -847,13 +858,13 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-(tendermintEnabled ? describe : xdescribe)("Comet38Client with CometBFT 0.38 backend", () => {
-  const { url, expected } = tendermintInstances[38];
+(tendermintEnabled ? describe : xdescribe)("Comet1Client with CometBFT 1 backend", () => {
+  const { url, expected } = tendermintInstances[1];
 
   it("can connect to a given url", async () => {
     // http connection
     {
-      const client = await Comet38Client.connect("http://" + url);
+      const client = await Comet1Client.connect("http://" + url);
       const info = await client.abciInfo();
       expect(info).toBeTruthy();
       client.disconnect();
@@ -861,7 +872,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
     // ws connection
     {
-      const client = await Comet38Client.connect("ws://" + url);
+      const client = await Comet1Client.connect("ws://" + url);
       const info = await client.abciInfo();
       expect(info).toBeTruthy();
       client.disconnect();
