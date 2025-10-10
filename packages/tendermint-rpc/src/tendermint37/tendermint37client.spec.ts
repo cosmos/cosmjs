@@ -870,7 +870,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 
   describe("With WebsocketClient", () => {
-    // don't print out WebSocket errors if marked pending
     const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, console.error);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);
