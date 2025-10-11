@@ -29,45 +29,46 @@ describe("StakingExtension", () => {
   };
 
   beforeAll(async () => {
-    if (simappEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrlHttp,
-        wallet,
-        defaultSigningClientOptions,
-      );
-
-      {
-        const msg: MsgDelegate = {
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          amount: coin(25000, "ustake"),
-        };
-        const msgAny: MsgDelegateEncodeObject = {
-          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-          value: msg,
-        };
-        const memo = "Test delegation for Stargate";
-        const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
-        assertIsDeliverTxSuccess(result);
-      }
-      {
-        const msg: MsgUndelegate = {
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          amount: coin(100, "ustake"),
-        };
-        const msgAny: MsgUndelegateEncodeObject = {
-          typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-          value: msg,
-        };
-        const memo = "Test undelegation for Stargate";
-        const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
-        assertIsDeliverTxSuccess(result);
-      }
-
-      await sleep(75); // wait until transactions are indexed
+    if (!simappEnabled) {
+      return;
     }
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+    const client = await SigningStargateClient.connectWithSigner(
+      simapp.tendermintUrlHttp,
+      wallet,
+      defaultSigningClientOptions,
+    );
+
+    {
+      const msg: MsgDelegate = {
+        delegatorAddress: faucet.address0,
+        validatorAddress: validator.validatorAddress,
+        amount: coin(25000, "ustake"),
+      };
+      const msgAny: MsgDelegateEncodeObject = {
+        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+        value: msg,
+      };
+      const memo = "Test delegation for Stargate";
+      const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
+      assertIsDeliverTxSuccess(result);
+    }
+    {
+      const msg: MsgUndelegate = {
+        delegatorAddress: faucet.address0,
+        validatorAddress: validator.validatorAddress,
+        amount: coin(100, "ustake"),
+      };
+      const msgAny: MsgUndelegateEncodeObject = {
+        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+        value: msg,
+      };
+      const memo = "Test undelegation for Stargate";
+      const result = await client.signAndBroadcast(faucet.address0, [msgAny], defaultFee, memo);
+      assertIsDeliverTxSuccess(result);
+    }
+
+    await sleep(75); // wait until transactions are indexed
   });
 
   describe("delegation", () => {

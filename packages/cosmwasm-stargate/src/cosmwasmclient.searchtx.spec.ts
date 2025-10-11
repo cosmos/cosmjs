@@ -106,51 +106,52 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
   let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
-    if (wasmdEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
-      const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const unsuccessfulRecipient = makeRandomAddress();
-      const successfulRecipient = makeRandomAddress();
-
-      const unsuccessfulResult = await sendTokens(
-        client,
-        registry,
-        wallet,
-        unsuccessfulRecipient,
-        coins(123456700000000, "ucosm"),
-        "Sending more than I can afford",
-      );
-      if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
-        sendUnsuccessful = {
-          sender: alice.address0,
-          recipient: unsuccessfulRecipient,
-          hash: unsuccessfulResult.broadcastResponse.transactionHash,
-          height: unsuccessfulResult.broadcastResponse.height,
-          txIndex: unsuccessfulResult.broadcastResponse.txIndex,
-          tx: unsuccessfulResult.tx,
-        };
-      }
-      const successfulResult = await sendTokens(
-        client,
-        registry,
-        wallet,
-        successfulRecipient,
-        coins(1234567, "ucosm"),
-        "Something I can afford",
-      );
-      if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
-        sendSuccessful = {
-          sender: alice.address0,
-          recipient: successfulRecipient,
-          hash: successfulResult.broadcastResponse.transactionHash,
-          height: successfulResult.broadcastResponse.height,
-          txIndex: successfulResult.broadcastResponse.txIndex,
-          tx: successfulResult.tx,
-        };
-      }
-
-      await sleep(75); // wait until transactions are indexed
+    if (!wasmdEnabled) {
+      return;
     }
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
+    const client = await CosmWasmClient.connect(wasmd.endpoint);
+    const unsuccessfulRecipient = makeRandomAddress();
+    const successfulRecipient = makeRandomAddress();
+
+    const unsuccessfulResult = await sendTokens(
+      client,
+      registry,
+      wallet,
+      unsuccessfulRecipient,
+      coins(123456700000000, "ucosm"),
+      "Sending more than I can afford",
+    );
+    if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
+      sendUnsuccessful = {
+        sender: alice.address0,
+        recipient: unsuccessfulRecipient,
+        hash: unsuccessfulResult.broadcastResponse.transactionHash,
+        height: unsuccessfulResult.broadcastResponse.height,
+        txIndex: unsuccessfulResult.broadcastResponse.txIndex,
+        tx: unsuccessfulResult.tx,
+      };
+    }
+    const successfulResult = await sendTokens(
+      client,
+      registry,
+      wallet,
+      successfulRecipient,
+      coins(1234567, "ucosm"),
+      "Something I can afford",
+    );
+    if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
+      sendSuccessful = {
+        sender: alice.address0,
+        recipient: successfulRecipient,
+        hash: successfulResult.broadcastResponse.transactionHash,
+        height: successfulResult.broadcastResponse.height,
+        txIndex: successfulResult.broadcastResponse.txIndex,
+        tx: successfulResult.tx,
+      };
+    }
+
+    await sleep(75); // wait until transactions are indexed
   });
 
   describe("getTx", () => {
