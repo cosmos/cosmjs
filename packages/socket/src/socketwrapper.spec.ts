@@ -147,13 +147,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     );
     socket.connect();
 
-    await socket.connected
-      .then(() => {
-        throw new Error("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toMatch(/connection attempt timed out/i);
-      });
+    await expectAsync(socket.connected).toBeRejectedWithError(/connection attempt timed out/i);
   });
 
   it("can connect and disconnect", async () => {
@@ -326,7 +320,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
   });
 
   it("cannot send on a disconnect socket (it will never come back)", async () => {
-    let done!: (() => void) & { fail: (e?: any) => void };
+    let done!: ((p?: void | PromiseLike<void>) => void) & { fail: (e?: any) => void };
     const ret = new Promise<void>((resolve, reject) => {
       done = resolve as typeof done;
       done.fail = reject;
@@ -344,15 +338,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
         socket.disconnect();
       },
       () => {
-        socket
-          .send("la li lu")
-          .then(() => {
-            done.fail("must not resolve");
-          })
-          .catch((error) => {
-            expect(error).toMatch(/socket was closed/i);
-            done();
-          });
+        done(expectAsync(socket.send("la li lu")).toBeRejectedWithError(/socket was closed/i));
       },
     );
     socket.connect();

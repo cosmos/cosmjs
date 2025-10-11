@@ -465,13 +465,13 @@ describe("StargateClient", () => {
         await client.broadcastTx(txRawBytes);
         assert(false, "Expected broadcastTx to throw");
       } catch (error: any) {
-        expect(error).toMatch(
+        assert(error instanceof BroadcastTxError);
+        expect(error.message).toMatch(
           simapp47Enabled
             ? /Broadcasting transaction failed with code 7/i
             : // New error code for SDK 0.50+
               /Broadcasting transaction failed with code 4/i,
         );
-        assert(error instanceof BroadcastTxError);
         if (simapp50Enabled) {
           // New error code for SDK 0.50+
           expect(error.code).toEqual(4);
