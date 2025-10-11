@@ -140,7 +140,7 @@ export class Faucet {
             : "  none",
         );
       }
-      for (const refillDistributor of refillDistibutors) {
+      for (const refillDistributor of refillDistibutor) {
         jobs.push({
           sender: this.holderAddress,
           recipient: refillDistributor.address,
