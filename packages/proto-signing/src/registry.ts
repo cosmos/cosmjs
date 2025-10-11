@@ -1,8 +1,8 @@
-import { BinaryWriter } from "cosmjs-types/binary";
-import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { BinaryWriter } from "cosmjs-types/binary.js";
+import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx.js";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
+import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 import type protobuf from "protobufjs";
 
 /**

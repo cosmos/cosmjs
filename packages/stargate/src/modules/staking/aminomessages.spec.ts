@@ -1,6 +1,6 @@
 import { fromBase64 } from "@cosmjs/encoding";
 import { coin } from "@cosmjs/proto-signing";
-import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys.js";
 import {
   MsgBeginRedelegate,
   MsgCancelUnbondingDelegation,
@@ -8,7 +8,7 @@ import {
   MsgDelegate,
   MsgEditValidator,
   MsgUndelegate,
-} from "cosmjs-types/cosmos/staking/v1beta1/tx";
+} from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
 
 import { AminoTypes } from "../../aminotypes";
 import {

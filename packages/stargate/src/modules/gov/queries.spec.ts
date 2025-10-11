@@ -9,8 +9,8 @@ import {
   Vote,
   VoteOption,
   WeightedVoteOption,
-} from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { Any } from "cosmjs-types/google/protobuf/any";
+} from "cosmjs-types/cosmos/gov/v1beta1/gov.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { longify, QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
