@@ -203,7 +203,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     // This cast is safe because `root` comes from a valid JSON document and `root` is a non-null object.
-    // I.e. it can only be a JSON object, not an aribitrary JS object.
+    // I.e. it can only be a JSON object, not an arbitrary JS object.
     const untypedRoot: Record<string, any> = root;
     switch (untypedRoot.type) {
       case serializationTypeV1: {
