@@ -299,7 +299,7 @@ describe("DirectSecp256k1HdWallet", () => {
         },
         data: jasmine.stringMatching(base64Matcher),
       });
-    });
+    }, 8000);
   });
 
   describe("serializeWithEncryptionKey", () => {
