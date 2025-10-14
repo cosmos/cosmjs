@@ -499,7 +499,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@scure/bip39",\
-      "npm:2.0.1"\
+      "npm:1.6.0"\
     ],\
     [\
       "@shikijs/engine-oniguruma",\
@@ -3507,7 +3507,7 @@ const RAW_RUNTIME_STATE =
           ["@noble/ciphers", "npm:1.3.0"],\
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
-          ["@scure/bip39", "npm:2.0.1"],\
+          ["@scure/bip39", "npm:1.6.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
@@ -4505,13 +4505,6 @@ const RAW_RUNTIME_STATE =
           ["@noble/hashes", "npm:1.8.0"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@noble-hashes-npm-2.0.1-3deaaa8c92-e81769ce21.zip/node_modules/@noble/hashes/",\
-        "packageDependencies": [\
-          ["@noble/hashes", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["@nodelib/fs.scandir", [\
@@ -4691,12 +4684,12 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@scure/bip39", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/@scure-bip39-npm-2.0.1-715af0e367-ed8a0788bc.zip/node_modules/@scure/bip39/",\
+      ["npm:1.6.0", {\
+        "packageLocation": "./.yarn/cache/@scure-bip39-npm-1.6.0-63a27ac0b7-73a54b5566.zip/node_modules/@scure/bip39/",\
         "packageDependencies": [\
-          ["@noble/hashes", "npm:2.0.1"],\
-          ["@scure/base", "npm:2.0.0"],\
-          ["@scure/bip39", "npm:2.0.1"]\
+          ["@noble/hashes", "npm:1.8.0"],\
+          ["@scure/base", "npm:1.2.6"],\
+          ["@scure/bip39", "npm:1.6.0"]\
         ],\
         "linkType": "HARD"\
       }]\
