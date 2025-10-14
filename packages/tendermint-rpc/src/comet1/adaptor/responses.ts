@@ -272,16 +272,25 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
   };
 }
 
-// for block results
+/**
+ * Validator update for block results.
+ * The type is coming from ABCI.
+ *
+ * @see https://github.com/cometbft/cometbft/blob/v1.0.1/proto/cometbft/abci/v1/types.proto#L518-L525
+ */
 interface RpcValidatorUpdate {
-  readonly pub_key: RpcPubkey;
+  readonly pub_key_bytes: string;
+  readonly pub_key_type: string;
   // When omitted, this means zero (see https://github.com/cosmos/cosmjs/issues/1177#issuecomment-1160115080)
   readonly power?: string;
 }
 
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
-    pubkey: decodePubkey(assertObject(data.pub_key)),
+    pubkey: {
+      bytes: fromBase64(data.pub_key_bytes),
+      type: data.pub_key_type,
+    },
     votingPower: apiToBigInt(data.power ?? "0"),
   };
 }

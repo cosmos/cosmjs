@@ -91,43 +91,29 @@ describe("Responses", () => {
 
   describe("decodeValidatorUpdate", () => {
     it("works for block results format", () => {
-      // from https://rpc.cosmos.network/block_results?height=10539773
       const update = decodeValidatorUpdate({
-        pub_key: {
-          Sum: {
-            type: "tendermint.crypto.PublicKey_Ed25519",
-            value: {
-              ed25519: "0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI=",
-            },
-          },
-        },
+        pub_key_type: "tendermint.crypto.PublicKey_Ed25519",
+        pub_key_bytes: "0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI=",
         power: "11418237",
       });
       expect(update).toEqual({
         pubkey: {
-          algorithm: "ed25519",
-          data: fromBase64("0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI="),
+          type: "tendermint.crypto.PublicKey_Ed25519",
+          bytes: fromBase64("0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI="),
         },
         votingPower: BigInt(11418237),
       });
     });
 
     it("works for block results format without voting power", () => {
-      // from https://rpc.cosmos.network/block_results?height=10883046
       const update = decodeValidatorUpdate({
-        pub_key: {
-          Sum: {
-            type: "tendermint.crypto.PublicKey_Ed25519",
-            value: {
-              ed25519: "HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE=",
-            },
-          },
-        },
+        pub_key_type: "tendermint.crypto.PublicKey_Ed25519",
+        pub_key_bytes: "0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI=",
       });
       expect(update).toEqual({
         pubkey: {
-          algorithm: "ed25519",
-          data: fromBase64("HjSC7VkhKih6xMhudlqfaFE8ZZnP8RKJPv4iqR7RhcE="),
+          type: "tendermint.crypto.PublicKey_Ed25519",
+          bytes: fromBase64("0kNlxBMpm+5WtfHIG1xsWatOXTKPLtmSqn3EiEIDZeI="),
         },
         votingPower: BigInt(0),
       });

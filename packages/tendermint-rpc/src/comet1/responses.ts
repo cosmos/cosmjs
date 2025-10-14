@@ -365,6 +365,7 @@ export interface GenesisValidator {
   readonly name: string;
 }
 
+/** See https://github.com/cometbft/cometbft/blob/v1.0.1/types/validator.go#L19-L28 */
 export interface Validator {
   readonly address: Uint8Array;
   readonly pubkey?: ValidatorPubkey;
@@ -372,8 +373,23 @@ export interface Validator {
   readonly proposerPriority?: number;
 }
 
+/**
+ * Between 0.38 and 1.0 this validator update was changed from a public key object to
+ * a pair of bytes+type.
+ *
+ * @see https://github.com/cosmos/cosmjs/issues/1787
+ */
 export interface ValidatorUpdate {
-  readonly pubkey: ValidatorPubkey;
+  /**
+   * Pubkey encoding and type specifier coming directly from CometBFT/ABCI.
+   * We don't try to parse or normalize it here.
+   *
+   * @see https://github.com/cometbft/cometbft/blob/v1.0.1/proto/cometbft/abci/v1/types.proto#L518-L525
+   */
+  readonly pubkey: {
+    readonly bytes: Uint8Array;
+    readonly type: string;
+  };
   readonly votingPower: bigint;
 }
 
