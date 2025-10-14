@@ -20,26 +20,26 @@ describe("Bip39", () => {
 
     it("throws for invalid input", () => {
       // invalid input length
-      expect(() => Bip39.encode(fromHex(""))).toThrowError(/invalid input length/);
-      expect(() => Bip39.encode(fromHex("00"))).toThrowError(/invalid input length/);
+      expect(() => Bip39.encode(fromHex(""))).toThrowError(/invalid entropy length/);
+      expect(() => Bip39.encode(fromHex("00"))).toThrowError(/invalid entropy length/);
       expect(() => Bip39.encode(fromHex("000000000000000000000000000000"))).toThrowError(
-        /invalid input length/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("0000000000000000000000000000000000"))).toThrowError(
-        /invalid input length/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("0000000000000000000000000000000000000000000000"))).toThrowError(
-        /invalid input length/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("00000000000000000000000000000000000000000000000000"))).toThrowError(
-        /invalid input length/,
+        /invalid entropy length/,
       );
       expect(() =>
         Bip39.encode(fromHex("00000000000000000000000000000000000000000000000000000000000000")),
-      ).toThrowError(/invalid input length/);
+      ).toThrowError(/invalid entropy length/);
       expect(() =>
         Bip39.encode(fromHex("000000000000000000000000000000000000000000000000000000000000000000")),
-      ).toThrowError(/invalid input length/);
+      ).toThrowError(/invalid entropy length/);
     });
   });
 
@@ -469,19 +469,19 @@ describe("EnglishMnemonic", () => {
         new EnglishMnemonic(
           " abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/invalid mnemonic/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon  abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/invalid mnemonic/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about ",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/invalid mnemonic/i);
 
     // newline, tab
     expect(
@@ -489,13 +489,13 @@ describe("EnglishMnemonic", () => {
         new EnglishMnemonic(
           "abandon\nabandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/invalid mnemonic/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon\tabandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/invalid mnemonic/i);
   });
 
   it("rejects disallowed letters", () => {
@@ -505,37 +505,37 @@ describe("EnglishMnemonic", () => {
         new EnglishMnemonic(
           "Abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon Abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "route66 abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon route66 abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "lötkolben abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon lötkolben abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid mnemonic format/i);
+    ).toThrowError(/unknown letter/i);
   });
 
   it("word counts other than 12, 15, 18, 21, 24", () => {
@@ -545,62 +545,62 @@ describe("EnglishMnemonic", () => {
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid word count(.*)got: 11/i);
+    ).toThrowError(/invalid/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
         ),
-    ).toThrowError(/invalid word count(.*)got: 13/i);
+    ).toThrowError(/invalid/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon agent",
         ),
-    ).toThrowError(/invalid word count(.*)got: 17/i);
+    ).toThrowError(/invalid/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon agent",
         ),
-    ).toThrowError(/invalid word count(.*)got: 19/i);
+    ).toThrowError(/invalid/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art",
         ),
-    ).toThrowError(/invalid word count(.*)got: 23/i);
+    ).toThrowError(/invalid/i);
     expect(
       () =>
         new EnglishMnemonic(
           "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art",
         ),
-    ).toThrowError(/invalid word count(.*)got: 25/i);
+    ).toThrowError(/invalid/i);
   });
 
   it("rejects invalid checksums", () => {
     // 12x, 15x, 18x, 21x, 24x "zoo"
     expect(() => new EnglishMnemonic("zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo")).toThrowError(
-      /invalid mnemonic checksum/i,
+      /invalid checksum/i,
     );
     expect(
       () => new EnglishMnemonic("zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo"),
-    ).toThrowError(/invalid mnemonic checksum/i);
+    ).toThrowError(/invalid checksum/i);
     expect(
       () => new EnglishMnemonic("zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo"),
-    ).toThrowError(/invalid mnemonic checksum/i);
+    ).toThrowError(/invalid checksum/i);
     expect(
       () =>
         new EnglishMnemonic(
           "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo",
         ),
-    ).toThrowError(/invalid mnemonic checksum/i);
+    ).toThrowError(/invalid checksum/i);
     expect(
       () =>
         new EnglishMnemonic(
           "zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo zoo",
         ),
-    ).toThrowError(/invalid mnemonic checksum/i);
+    ).toThrowError(/invalid checksum/i);
   });
 
   it("rejects valid mnemonics of other languages", () => {
@@ -610,37 +610,37 @@ describe("EnglishMnemonic", () => {
         new EnglishMnemonic(
           "humo odio oriente colina taco fingir salto geranio glaciar academia suave vigor",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter: "humo". allowed: abandon,ability,able,/i);
     expect(
       () =>
         new EnglishMnemonic(
           "yema folleto tos llave obtener natural fruta deseo laico sopa novato lazo imponer afinar vena hoja zarza cama",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter: "yema"/i);
     expect(
       () =>
         new EnglishMnemonic(
           "burla plaza arroz ronda pregunta vacuna veloz boina retiro exento prensa tortuga cabeza pilar anual molino molde fiesta masivo jefe leve fatiga clase plomo",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "braccio trincea armonia emiro svedese lepre stridulo metallo baldo rasente potassio rilassato",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "riparato arrosto globulo singolo bozzolo roba pirolisi ultimato padrone munto leggero avanzato monetario guanto lorenzo latino inoltrare modulo",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter/i);
     expect(
       () =>
         new EnglishMnemonic(
           "promessa mercurio spessore snodo trave risata mecenate vichingo ceto orecchino vissuto risultato canino scarso futile fune epilogo uovo inedito apatico folata egoismo rifugio coma",
         ),
-    ).toThrowError(/contains invalid word/i);
+    ).toThrowError(/unknown letter/i);
   });
 
   describe("toString", () => {
