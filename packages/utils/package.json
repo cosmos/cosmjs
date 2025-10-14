@@ -32,7 +32,7 @@
     "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
     "test-node": "vitest run",
     "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs"

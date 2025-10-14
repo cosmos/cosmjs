@@ -34,7 +34,7 @@
     "test-node": "vitest run",
     "test": "yarn build-or-skip && yarn test-node",
     "demo-node": "yarn build-or-skip && node ./demo/node.cjs",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
   },
   "engines": {
