@@ -1,49 +1,9 @@
 import { fromAscii, fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { Bip39, EnglishMnemonic, entropyToMnemonic, mnemonicToEntropy } from "./bip39";
+import { Bip39, EnglishMnemonic } from "./bip39";
 import { sha256 } from "./sha";
 import bip39Vectors from "./testdata/bip39.json";
 import wordlists from "./testdata/bip39_wordlists.json";
-
-describe("entropyToMnemonic", () => {
-  it("works", () => {
-    // From https://iancoleman.io/bip39/
-    expect(entropyToMnemonic(fromHex("a323224e6b13d31942509dc4e2e579be3d5bb7f2"))).toEqual(
-      "permit boil near stomach diamond million announce beauty shaft blame fury ladder stick swim slab",
-    );
-  });
-
-  it("works for all the test vectors", () => {
-    // Test vectors from https://github.com/trezor/python-mnemonic/blob/b502451a33a440783926e04428115e0bed87d01f/vectors.json
-    // plus similar vectors generated for the missing lengths 15 and 21 words
-    const { "12": vec12, "15": vec15, "18": vec18, "21": vec21, "24": vec24 } = bip39Vectors.encoding;
-    for (const vectors of [vec12, vec15, vec18, vec21, vec24]) {
-      for (const { entropy, mnemonic } of vectors) {
-        expect(entropyToMnemonic(fromHex(entropy))).toEqual(mnemonic);
-      }
-    }
-  });
-});
-
-describe("mnemonicToEntropy", () => {
-  it("works", () => {
-    // From https://iancoleman.io/bip39/
-    expect(
-      mnemonicToEntropy(
-        "permit boil near stomach diamond million announce beauty shaft blame fury ladder stick swim slab",
-      ),
-    ).toEqual(fromHex("a323224e6b13d31942509dc4e2e579be3d5bb7f2"));
-  });
-
-  it("works for all the test vectors", () => {
-    const { "12": vec12, "15": vec15, "18": vec18, "21": vec21, "24": vec24 } = bip39Vectors.encoding;
-    for (const vectors of [vec12, vec15, vec18, vec21, vec24]) {
-      for (const { entropy, mnemonic } of vectors) {
-        expect(mnemonicToEntropy(mnemonic)).toEqual(fromHex(entropy));
-      }
-    }
-  });
-});
 
 describe("Bip39", () => {
   describe("encode", () => {
