@@ -167,7 +167,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
     it("works for non-existent denom", async () => {
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
-      await expectAsync(client.bank.denomMetadata("nothere")).toBeRejectedWithError(/code = NotFound/i);
+      await expect(client.bank.denomMetadata("nothere")).rejects.toThrowError(/code = NotFound/i);
 
       cometClient.disconnect();
     });

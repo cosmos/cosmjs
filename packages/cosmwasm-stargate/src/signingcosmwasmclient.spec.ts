@@ -1339,9 +1339,7 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
           jasmine.objectContaining({
             code: 30,
           }),
@@ -1615,9 +1613,7 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
           jasmine.objectContaining({
             code: 30,
           }),

@@ -20,7 +20,6 @@ import {
   isDeliverTxSuccess,
   PrivateStargateClient,
   StargateClient,
-  TimeoutError,
 } from "./stargateclient";
 import {
   faucet,
@@ -179,7 +178,7 @@ describe("isDeliverTxSuccess", () => {
     it("rejects for non-existent address", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
-      await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
+      await expect(client.getSequence(nonExistentAddress)).rejects.toThrowError(
         /account '([a-z0-9]{10,90})' does not exist on chain/i,
       );
 
@@ -540,9 +539,13 @@ describe("isDeliverTxSuccess", () => {
         });
         const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
         const smallTimeoutMs = 1_000;
-        await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
-          TimeoutError,
-          /transaction with id .+ was submitted but was not yet found on the chain/i,
+        await expect(client.broadcastTx(txRawBytes2, smallTimeoutMs)).rejects.toThrowError(
+          expect.objectContaining({
+            name: "TimeoutError",
+            message: expect.stringMatching(
+              /transaction with id .+ was submitted but was not yet found on the chain/i,
+            ),
+          }),
         );
 
         client.disconnect();

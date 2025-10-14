@@ -21,7 +21,7 @@ import { WebsocketClient } from "./websocketclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
+    await expect(client.execute(createJsonRpcRequest("no-such-method"))).rejects.toThrowError();
 
     client.disconnect();
   });
@@ -181,7 +181,7 @@ import { WebsocketClient } from "./websocketclient";
 
     client.disconnect();
 
-    await expectAsync(client.execute(createJsonRpcRequest("health"))).toBeRejectedWithError(
+    await expect(client.execute(createJsonRpcRequest("health"))).rejects.toThrowError(
       /socket has disconnected/i,
     );
   });

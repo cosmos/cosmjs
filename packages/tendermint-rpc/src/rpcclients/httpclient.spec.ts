@@ -15,7 +15,7 @@ import { HttpClient } from "./httpclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
+    await expect(client.execute(createJsonRpcRequest("no-such-method"))).rejects.toThrowError();
 
     client.disconnect();
   });

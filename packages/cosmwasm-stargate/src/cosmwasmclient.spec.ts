@@ -109,7 +109,7 @@ interface HackatomInstance {
     it("rejects for missing accounts", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
-      await expectAsync(client.getSequence(missing)).toBeRejectedWithError(
+      await expect(client.getSequence(missing)).rejects.toThrowError(
         /account '([a-z0-9]{10,90})' does not exist on chain/i,
       );
     });
@@ -375,7 +375,7 @@ interface HackatomInstance {
 
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(client.queryContractRaw(nonExistentAddress, configKey)).toBeRejectedWithError(
+      await expect(client.queryContractRaw(nonExistentAddress, configKey)).rejects.toThrowError(
         /no such contract/i,
       );
     });
@@ -422,7 +422,7 @@ interface HackatomInstance {
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(client.queryContractSmart(contract.address, { broken: {} })).toBeRejectedWithError(
+      await expect(client.queryContractSmart(contract.address, { broken: {} })).rejects.toThrowError(
         /Error parsing into type hackatom::msg::QueryMsg: unknown variant/i,
       );
     });
@@ -430,9 +430,9 @@ interface HackatomInstance {
     it("errors for non-existent contract", async () => {
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(
-        client.queryContractSmart(nonExistentAddress, { verifier: {} }),
-      ).toBeRejectedWithError(/no such contract/i);
+      await expect(client.queryContractSmart(nonExistentAddress, { verifier: {} })).rejects.toThrowError(
+        /no such contract/i,
+      );
     });
   });
 });

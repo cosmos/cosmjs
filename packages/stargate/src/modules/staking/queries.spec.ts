@@ -162,9 +162,9 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
       // TODO: Set up a result for this test
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
-      await expectAsync(
+      await expect(
         client.staking.redelegations(faucet.address0, validator.validatorAddress, validator.validatorAddress),
-      ).toBeRejectedWithError(/redelegation not found/i);
+      ).rejects.toThrowError(/redelegation not found/i);
 
       cometClient.disconnect();
     });

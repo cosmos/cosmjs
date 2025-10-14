@@ -24,9 +24,9 @@ describe("http", () => {
   });
 
   it("errors for non-open port", async () => {
-    await expectAsync(
+    await expect(
       http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
-    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
+    ).rejects.toThrowError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
   });
 
   (httpServerEnabled ? it : it.skip)("can POST to echo server with custom headers", async () => {

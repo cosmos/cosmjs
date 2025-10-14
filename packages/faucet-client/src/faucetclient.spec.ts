@@ -39,14 +39,14 @@ describe("FaucetClient", () => {
 
   (enabled ? it : it.skip)("throws for invalid ticker", async () => {
     const faucet = new FaucetClient(faucetUrl);
-    await expectAsync(faucet.credit(defaultAddress, "ETH")).toBeRejectedWithError(/token is not available/i);
+    await expect(faucet.credit(defaultAddress, "ETH")).rejects.toThrowError(/token is not available/i);
   });
 
   (enabled ? it : it.skip)("throws for invalid address", async () => {
     const faucet = new FaucetClient(faucetUrl);
 
     for (const address of ["be5cc2cc05db2cdb4313c18306a5157291cfdcd1", "1234L"]) {
-      await expectAsync(faucet.credit(address, primaryToken)).toBeRejectedWithError(
+      await expect(faucet.credit(address, primaryToken)).rejects.toThrowError(
         /address is not in the expected format for this chain/i,
       );
     }
