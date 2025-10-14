@@ -15,6 +15,7 @@
     "build/",
     "*.md",
     "!*.spec.*",
+    "!*testutils.*",
     "!**/testdata/"
   ],
   "repository": {
