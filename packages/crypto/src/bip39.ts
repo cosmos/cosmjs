@@ -1,4 +1,4 @@
-import { entropyToMnemonic, mnemonicToEntropy, mnemonicToSeed } from "@scure/bip39";
+import { entropyToMnemonic, mnemonicToEntropy, mnemonicToSeedWebcrypto } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
 export class EnglishMnemonic {
@@ -43,6 +43,6 @@ export class Bip39 {
   }
 
   public static async mnemonicToSeed(mnemonic: EnglishMnemonic, password?: string): Promise<Uint8Array> {
-    return await mnemonicToSeed(mnemonic.toString(), password);
+    return await mnemonicToSeedWebcrypto(mnemonic.toString(), password);
   }
 }
