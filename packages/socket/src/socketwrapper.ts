@@ -39,7 +39,7 @@ export class SocketWrapper {
   public readonly connected: Promise<void>;
 
   private connectedResolver: (() => void) | undefined;
-  private connectedRejecter: ((reason: any) => void) | undefined;
+  private connectedRejecter: ((reason: Error) => void) | undefined;
   private socket: WebSocket | undefined;
   private timeoutId: NodeJS.Timeout | undefined;
   private closed = false;
