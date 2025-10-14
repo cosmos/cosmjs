@@ -225,7 +225,7 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
   } else if (isSecp256k1Pubkey(pubkey)) {
     return new Uint8Array([...pubkeyAminoPrefixSecp256k1, ...fromBase64(pubkey.value)]);
   } else if (isEthSecp256k1Pubkey(pubkey)) {
-    return new Uint8Array([...pubkeyAminoPrefixEthSecp256k1, ...fromBase64(pubkey.value)])
+    return new Uint8Array([...pubkeyAminoPrefixEthSecp256k1, ...fromBase64(pubkey.value)]);
   } else {
     throw new Error("Unsupported pubkey type");
   }

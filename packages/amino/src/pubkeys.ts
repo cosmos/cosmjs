@@ -64,7 +64,12 @@ export interface SinglePubkey extends Pubkey {
 }
 
 export function isSinglePubkey(pubkey: Pubkey): pubkey is SinglePubkey {
-  const singPubkeyTypes: string[] = [pubkeyType.ed25519, pubkeyType.secp256k1, pubkeyType.ethsecp256k1, pubkeyType.sr25519];
+  const singPubkeyTypes: string[] = [
+    pubkeyType.ed25519,
+    pubkeyType.secp256k1,
+    pubkeyType.ethsecp256k1,
+    pubkeyType.sr25519,
+  ];
   return singPubkeyTypes.includes(pubkey.type);
 }
 
