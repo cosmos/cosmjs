@@ -14,7 +14,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   simappEnabled,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { AuthzExtension, setupAuthzExtension } from "./queries";
 
 async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & AuthzExtension, CometClient]> {

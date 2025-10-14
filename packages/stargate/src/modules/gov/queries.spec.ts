@@ -23,7 +23,7 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { GovExtension, setupGovExtension } from "./queries";
 

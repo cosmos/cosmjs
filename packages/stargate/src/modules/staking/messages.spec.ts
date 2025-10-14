@@ -13,7 +13,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   simapp50Enabled,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages";
 
 function changePrefix(address: string, newPrefix: string): string {

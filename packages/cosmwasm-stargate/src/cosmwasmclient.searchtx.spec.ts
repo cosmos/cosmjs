@@ -27,7 +27,7 @@ import {
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
-} from "./testutils.spec";
+} from "./testutils";
 
 interface TestTxSend {
   readonly sender: string;

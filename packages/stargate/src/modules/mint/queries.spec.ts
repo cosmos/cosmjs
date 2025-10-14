@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { pendingWithoutSimapp, simapp } from "../../testutils.spec";
+import { pendingWithoutSimapp, simapp } from "../../testutils";
 import { MintExtension, setupMintExtension } from "./queries";
 
 async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintExtension, CometClient]> {

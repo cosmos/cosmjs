@@ -4,7 +4,7 @@ import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
 import { Faucet } from "./faucet";
-import { simappEnabled } from "./testutils.spec";
+import { simappEnabled } from "./testutils";
 import { TokenConfiguration } from "./tokenmanager";
 
 const defaultTokenConfig: TokenConfiguration = {

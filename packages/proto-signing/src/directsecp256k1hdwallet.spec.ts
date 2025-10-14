@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { base64Matcher, faucet, testVectors } from "./testutils.spec";
+import { base64Matcher, faucet, testVectors } from "./testutils";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("DirectSecp256k1HdWallet", () => {

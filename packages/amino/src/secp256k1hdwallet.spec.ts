@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { makeCosmoshubPath } from "./paths";
 import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { serializeSignDoc, StdSignDoc } from "./signdoc";
-import { base64Matcher } from "./testutils.spec";
+import { base64Matcher } from "./testutils";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("Secp256k1HdWallet", () => {

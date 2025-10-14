@@ -17,7 +17,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   unused,
-} from "../testutils.spec";
+} from "../testutils";
 import { QueryClient } from "./queryclient";
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {

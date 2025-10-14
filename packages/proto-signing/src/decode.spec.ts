@@ -5,7 +5,7 @@ import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { decodeTxRaw } from "./decode";
-import { faucet, testVectors } from "./testutils.spec";
+import { faucet, testVectors } from "./testutils";
 
 describe("decode", () => {
   describe("decodeTxRaw", () => {

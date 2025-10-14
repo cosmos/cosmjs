@@ -29,7 +29,7 @@ import {
   unused,
   wasmd,
   wasmdEnabled,
-} from "./testutils.spec";
+} from "./testutils";
 
 interface HackatomInstance {
   readonly instantiateMsg: {

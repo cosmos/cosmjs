@@ -24,7 +24,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   simappEnabled,
-} from "./testutils.spec";
+} from "./testutils";
 
 interface TestTxSend {
   readonly sender: string;

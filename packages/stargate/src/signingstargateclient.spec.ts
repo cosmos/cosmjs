@@ -46,7 +46,7 @@ import {
   simapp,
   simapp50Enabled,
   validator,
-} from "./testutils.spec";
+} from "./testutils";
 
 describe("SigningStargateClient", () => {
   describe("constructor", () => {
