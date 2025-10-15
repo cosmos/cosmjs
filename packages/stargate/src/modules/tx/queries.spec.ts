@@ -31,30 +31,31 @@ describe("TxExtension", () => {
   let memo: string | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrlHttp,
-        wallet,
-        defaultSigningClientOptions,
-      );
-
-      {
-        const recipient = makeRandomAddress();
-        memo = `Test tx ${Date.now()}`;
-        const result = await client.sendTokens(
-          faucet.address0,
-          recipient,
-          coins(25000, "ucosm"),
-          defaultFee,
-          memo,
-        );
-        assertIsDeliverTxSuccess(result);
-        txHash = result.transactionHash;
-      }
-
-      await sleep(75); // wait until transactions are indexed
+    if (!simappEnabled) {
+      return;
     }
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+    const client = await SigningStargateClient.connectWithSigner(
+      simapp.tendermintUrlHttp,
+      wallet,
+      defaultSigningClientOptions,
+    );
+
+    {
+      const recipient = makeRandomAddress();
+      memo = `Test tx ${Date.now()}`;
+      const result = await client.sendTokens(
+        faucet.address0,
+        recipient,
+        coins(25000, "ucosm"),
+        defaultFee,
+        memo,
+      );
+      assertIsDeliverTxSuccess(result);
+      txHash = result.transactionHash;
+    }
+
+    await sleep(75); // wait until transactions are indexed
   });
 
   describe("getTx", () => {
