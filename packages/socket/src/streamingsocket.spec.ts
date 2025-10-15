@@ -27,7 +27,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     socket.connect();
     await socket.connected;
     socket.disconnect();
-  });
+  }, 6000);
 
   it("times out when establishing connection takes too long", async () => {
     const socket = new StreamingSocket(socketServerUrlSlow, 2_000);

@@ -126,7 +126,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     socket.connect();
 
     return ret;
-  });
+  }, 6000);
 
   it("times out when establishing connection takes too long", async () => {
     const socket = new SocketWrapper(
