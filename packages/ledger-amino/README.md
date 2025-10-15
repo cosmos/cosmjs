@@ -1,6 +1,11 @@
 # @cosmjs/ledger-amino
 
+![typescript](https://img.shields.io/npm/types/@cosmjs/ledger-amino.svg)
 [![npm version](https://img.shields.io/npm/v/@cosmjs/ledger-amino.svg)](https://www.npmjs.com/package/@cosmjs/ledger-amino)
+[![license](https://img.shields.io/npm/l/@cosmjs/ledger-amino.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE]
+![minimum node version](https://img.shields.io/node/v/@cosmjs/ledger-amino.svg)
+![minified size](https://img.shields.io/bundlephobia/min/@cosmjs/ledger-amino.svg)
+![monthly downloads](https://img.shields.io/npm/dm/@cosmjs/ledger-amino.svg)
 
 ## Supported platforms
 

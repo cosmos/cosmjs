@@ -1,6 +1,11 @@
 # @cosmjs/stargate
 
+![typescript](https://img.shields.io/npm/types/@cosmjs/stargate.svg)
 [![npm version](https://img.shields.io/npm/v/@cosmjs/stargate.svg)](https://www.npmjs.com/package/@cosmjs/stargate)
+[![license](https://img.shields.io/npm/l/@cosmjs/stargate.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE]
+![minimum node version](https://img.shields.io/node/v/@cosmjs/stargate.svg)
+![minified size](https://img.shields.io/bundlephobia/min/@cosmjs/stargate.svg)
+![monthly downloads](https://img.shields.io/npm/dm/@cosmjs/stargate.svg)
 
 A client library for the Cosmos SDK 0.40+.
 
