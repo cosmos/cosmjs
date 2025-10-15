@@ -29,13 +29,6 @@ export function pendingWithoutSimapp(): void {
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED || !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED;
 
-export function pendingWithoutSlowSimapp(): void {
-  if (!slowSimappEnabled) {
-    pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
-    return;
-  }
-}
-
 export function makeRandomAddressBytes(): Uint8Array {
   return Random.getBytes(20);
 }

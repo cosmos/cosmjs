@@ -27,11 +27,11 @@ import {
   makeRandomAddress,
   nonExistentAddress,
   pendingWithoutSimapp,
-  pendingWithoutSlowSimapp,
   simapp,
   simapp47Enabled,
   simapp50Enabled,
   slowSimapp,
+  slowSimappEnabled,
   tendermintIdMatcher,
   unused,
   validator,
@@ -484,87 +484,90 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
-    it("respects user timeouts rather than RPC timeouts", async () => {
-      pendingWithoutSlowSimapp();
-      const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-      const pubkey = encodePubkey({
-        type: "tendermint/PubKeySecp256k1",
-        value: toBase64(pubkeyBytes),
-      });
-      const registry = new Registry();
-      const txBodyFields: TxBodyEncodeObject = {
-        typeUrl: "/cosmos.tx.v1beta1.TxBody",
-        value: {
-          messages: [
-            {
-              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-              value: {
-                fromAddress: address,
-                toAddress: makeRandomAddress(),
-                amount: [
-                  {
-                    denom: "ucosm",
-                    amount: "1234567",
-                  },
-                ],
+    (slowSimappEnabled ? it : xit)(
+      "respects user timeouts rather than RPC timeouts",
+      async () => {
+        const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+        const pubkey = encodePubkey({
+          type: "tendermint/PubKeySecp256k1",
+          value: toBase64(pubkeyBytes),
+        });
+        const registry = new Registry();
+        const txBodyFields: TxBodyEncodeObject = {
+          typeUrl: "/cosmos.tx.v1beta1.TxBody",
+          value: {
+            messages: [
+              {
+                typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+                value: {
+                  fromAddress: address,
+                  toAddress: makeRandomAddress(),
+                  amount: [
+                    {
+                      denom: "ucosm",
+                      amount: "1234567",
+                    },
+                  ],
+                },
               },
-            },
-          ],
-        },
-      };
-      const txBodyBytes = registry.encode(txBodyFields);
-      const chainId = await client.getChainId();
-      const feeAmount = coins(2000, "ucosm");
-      const gasLimit = 200000;
-      const feeGranter = undefined;
-      const feePayer = undefined;
+            ],
+          },
+        };
+        const txBodyBytes = registry.encode(txBodyFields);
+        const chainId = await client.getChainId();
+        const feeAmount = coins(2000, "ucosm");
+        const gasLimit = 200000;
+        const feeGranter = undefined;
+        const feePayer = undefined;
 
-      const { accountNumber: accountNumber1, sequence: sequence1 } = await client.getSequence(address);
-      const authInfoBytes1 = makeAuthInfoBytes(
-        [{ pubkey, sequence: sequence1 }],
-        feeAmount,
-        gasLimit,
-        feeGranter,
-        feePayer,
-      );
-      const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
-      const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
-      const txRaw1 = TxRaw.fromPartial({
-        bodyBytes: txBodyBytes,
-        authInfoBytes: authInfoBytes1,
-        signatures: [fromBase64(signature1.signature)],
-      });
-      const txRawBytes1 = Uint8Array.from(TxRaw.encode(txRaw1).finish());
-      const largeTimeoutMs = 30_000;
-      const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
-      assertIsDeliverTxSuccess(txResult);
+        const { accountNumber: accountNumber1, sequence: sequence1 } = await client.getSequence(address);
+        const authInfoBytes1 = makeAuthInfoBytes(
+          [{ pubkey, sequence: sequence1 }],
+          feeAmount,
+          gasLimit,
+          feeGranter,
+          feePayer,
+        );
+        const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
+        const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
+        const txRaw1 = TxRaw.fromPartial({
+          bodyBytes: txBodyBytes,
+          authInfoBytes: authInfoBytes1,
+          signatures: [fromBase64(signature1.signature)],
+        });
+        const txRawBytes1 = Uint8Array.from(TxRaw.encode(txRaw1).finish());
+        const largeTimeoutMs = 30_000;
+        const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
+        assertIsDeliverTxSuccess(txResult);
 
-      const { accountNumber: accountNumber2, sequence: sequence2 } = await client.getSequence(address);
-      const authInfoBytes2 = makeAuthInfoBytes(
-        [{ pubkey, sequence: sequence2 }],
-        feeAmount,
-        gasLimit,
-        feeGranter,
-        feePayer,
-      );
-      const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
-      const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
-      const txRaw2 = TxRaw.fromPartial({
-        bodyBytes: txBodyBytes,
-        authInfoBytes: authInfoBytes2,
-        signatures: [fromBase64(signature2.signature)],
-      });
-      const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
-      const smallTimeoutMs = 1_000;
-      await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
-        TimeoutError,
-        /transaction with id .+ was submitted but was not yet found on the chain/i,
-      );
+        const { accountNumber: accountNumber2, sequence: sequence2 } = await client.getSequence(address);
+        const authInfoBytes2 = makeAuthInfoBytes(
+          [{ pubkey, sequence: sequence2 }],
+          feeAmount,
+          gasLimit,
+          feeGranter,
+          feePayer,
+        );
+        const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
+        const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
+        const txRaw2 = TxRaw.fromPartial({
+          bodyBytes: txBodyBytes,
+          authInfoBytes: authInfoBytes2,
+          signatures: [fromBase64(signature2.signature)],
+        });
+        const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
+        const smallTimeoutMs = 1_000;
+        await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
+          TimeoutError,
+          /transaction with id .+ was submitted but was not yet found on the chain/i,
+        );
 
-      client.disconnect();
-    }, 30_000);
+        client.disconnect();
+      },
+      30_000,
+    );
   });
 
   describe("broadcastTxSync", () => {
