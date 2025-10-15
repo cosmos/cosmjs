@@ -31,7 +31,7 @@
     "lint-fix": "eslint --max-warnings 0 --fix .",
     "test": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test",
     "test-firefox": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-firefox",
-    "test-chrome": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
+    "test-chrome": "playwright install && yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
     "coverage": "yarn workspaces foreach --all --topological-dev --parallel --verbose run coverage",
     "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
