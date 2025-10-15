@@ -100,7 +100,7 @@ jobs:
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
           SES_ENABLED: 1
-        run: yarn test --stream
+        run: yarn run test
 
   test-backends:
     strategy:
@@ -150,4 +150,4 @@ jobs:
         run: |
           [ "${{ matrix.simapp }}" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
           [ "${{ matrix.simapp }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
-          yarn test --stream
+          yarn run test
