@@ -10,9 +10,9 @@ import {
   TxBodyEncodeObject,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
-import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx.js";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx.js";
 
 import { isMsgSendEncodeObject } from "./modules";
 import { DeliverTxResponse, isDeliverTxFailure, isDeliverTxSuccess, StargateClient } from "./stargateclient";

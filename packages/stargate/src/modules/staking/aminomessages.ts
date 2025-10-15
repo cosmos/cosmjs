@@ -10,7 +10,7 @@ import {
   MsgDelegate,
   MsgEditValidator,
   MsgUndelegate,
-} from "cosmjs-types/cosmos/staking/v1beta1/tx";
+} from "cosmjs-types/cosmos/staking/v1beta1/tx.js";
 
 import { AminoConverter } from "../..";
 

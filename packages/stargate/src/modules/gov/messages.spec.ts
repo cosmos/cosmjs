@@ -1,8 +1,8 @@
 import { coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
-import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov.js";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
 
 import { longify } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";

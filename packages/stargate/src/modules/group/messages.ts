@@ -14,7 +14,7 @@ import {
   MsgUpdateGroupPolicyMetadata,
   MsgVote,
   MsgWithdrawProposal,
-} from "cosmjs-types/cosmos/group/v1/tx";
+} from "cosmjs-types/cosmos/group/v1/tx.js";
 
 export const groupTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.group.v1.MsgCreateGroup", MsgCreateGroup],
