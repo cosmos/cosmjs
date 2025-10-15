@@ -6,6 +6,17 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/tendermint-rpc: Add dedicated `Comet1Client` for compatibility with
+  CometBFT 1.x RPC. The module `comet1` contains all CometBFT 1.x specific
+  types. `connectComet` now uses this client automatically when connecting to a
+  1.x RPC backend. Before CosmJS 0.37 the `Comet38Client` was used for both 0.38
+  and 1.0 backends. However it turned out that there are breaking API changes
+  between those versions. ([#1787])
+
+[#1787]: https://github.com/cosmos/cosmjs/issues/1787
+
 ### Changed
 
 - all: The `package.json`s now all use the modern `exports` field instead of the
@@ -29,9 +40,13 @@ and this project adheres to
   messages but is otherwise not breaking user code. ([#1825])
 - Replace bip39 implementation by @scure/bip39. This changes a bunch of error
   messages but is otherwise not breaking user code. ([#1843])
+- @cosmjs/tendermint-rpc: `connectComet` now returns a `Comet1Client` when a
+  CometBFT 1.x RPC is found. `CometClient` now includes `Comet1Client`.
+  ([#1827])
 
 [#1819]: https://github.com/cosmos/cosmjs/pull/1819
 [#1825]: https://github.com/cosmos/cosmjs/pull/1825
+[#1827]: https://github.com/cosmos/cosmjs/pull/1827
 [#1843]: https://github.com/cosmos/cosmjs/pull/1843
 
 ## [0.36.1] - 2025-10-02
