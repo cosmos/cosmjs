@@ -2,7 +2,7 @@
 
 ![typescript](https://img.shields.io/npm/types/@cosmjs/faucet-client.svg)
 [![npm version](https://img.shields.io/npm/v/@cosmjs/faucet-client.svg)](https://www.npmjs.com/package/@cosmjs/faucet-client)
-[![license](https://img.shields.io/npm/l/@cosmjs/faucet-client.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE]
+[![license](https://img.shields.io/npm/l/@cosmjs/faucet-client.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE)
 ![minimum node version](https://img.shields.io/node/v/@cosmjs/faucet-client.svg)
 ![minified size](https://img.shields.io/bundlephobia/min/@cosmjs/faucet-client.svg)
 ![monthly downloads](https://img.shields.io/npm/dm/@cosmjs/faucet-client.svg)
