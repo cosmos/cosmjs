@@ -52,7 +52,6 @@ and this project adheres to
 
 - Migrate from libsodium to different implementation in order to reduce bundle
   size and improve compatibility.
-
   - ed25519 now uses @noble/curves
   - xchacha20poly1305 now uses @noble/ciphers
   - Argon2 now uses hash-wasm
@@ -64,7 +63,6 @@ and this project adheres to
 ### Deprecated
 
 - The use of encrypted wallet storage is deprecated. In particular this means:
-
   - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
   - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
   - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
