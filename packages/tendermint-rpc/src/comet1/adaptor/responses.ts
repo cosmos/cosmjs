@@ -260,7 +260,7 @@ function decodeEvidenceParams(data: RpcEvidenceParams): responses.EvidenceParams
  */
 interface RpcConsensusParams {
   // The fields in here are all potentially omitted
-  // https://github.com/cometbft/cometbft/blob/v0.37.15/proto/tendermint/types/params.pb.go#L30-L37
+  // https://github.com/cometbft/cometbft/blob/v0.38.18/proto/tendermint/types/params.pb.go#L30-L38
   readonly block?: RpcBlockParams;
   readonly evidence?: RpcEvidenceParams;
 }
@@ -272,16 +272,25 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
   };
 }
 
-// for block results
+/**
+ * Validator update for block results.
+ * The type is coming from ABCI.
+ *
+ * @see https://github.com/cometbft/cometbft/blob/v1.0.1/proto/cometbft/abci/v1/types.proto#L518-L525
+ */
 interface RpcValidatorUpdate {
-  readonly pub_key: RpcPubkey;
+  readonly pub_key_bytes: string;
+  readonly pub_key_type: string;
   // When omitted, this means zero (see https://github.com/cosmos/cosmjs/issues/1177#issuecomment-1160115080)
   readonly power?: string;
 }
 
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
-    pubkey: decodePubkey(assertObject(data.pub_key)),
+    pubkey: {
+      bytes: fromBase64(data.pub_key_bytes),
+      type: data.pub_key_type,
+    },
     votingPower: apiToBigInt(data.power ?? "0"),
   };
 }
@@ -289,20 +298,18 @@ export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.Valid
 interface RpcBlockResultsResponse {
   readonly height: string;
   readonly txs_results: readonly RpcTxData[] | null;
-  readonly begin_block_events: readonly RpcEvent[] | null;
-  readonly end_block_events: readonly RpcEvent[] | null;
+  readonly finalize_block_events: readonly RpcEvent[] | null;
   readonly validator_updates: readonly RpcValidatorUpdate[] | null;
   readonly consensus_param_updates: RpcConsensusParams | null;
 }
 
-function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
+export function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
   return {
     height: apiToSmallInt(assertNotEmpty(data.height)),
     results: (data.txs_results || []).map(decodeTxData),
     validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
-    beginBlockEvents: decodeEvents(data.begin_block_events || []),
-    endBlockEvents: decodeEvents(data.end_block_events || []),
+    finalizeBlockEvents: decodeEvents(data.finalize_block_events || []),
   };
 }
 
@@ -438,15 +445,17 @@ interface RpcBroadcastTxCommitResponse {
   /** hex encoded */
   readonly hash: string;
   readonly check_tx: RpcTxData;
-  readonly deliver_tx?: RpcTxData;
+  readonly tx_result?: RpcTxData;
 }
 
 function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.BroadcastTxCommitResponse {
+  const txResult = data.tx_result ? decodeTxData(data.tx_result) : undefined;
   return {
     height: apiToSmallInt(data.height),
     hash: fromHex(assertNotEmpty(data.hash)),
     checkTx: decodeTxData(assertObject(data.check_tx)),
-    deliverTx: may(decodeTxData, data.deliver_tx),
+    deliverTx: txResult,
+    txResult: txResult,
   };
 }
 
@@ -479,16 +488,16 @@ function decodeCommitSignature(data: RpcSignature): CommitSignature {
 interface RpcCommit {
   readonly block_id: RpcBlockId;
   readonly height: string;
-  readonly round: string;
-  readonly signatures: readonly RpcSignature[];
+  readonly round: string | number; // Seems to be number now (https://github.com/cosmos/cosmjs/issues/1590)
+  readonly signatures: readonly RpcSignature[] | null;
 }
 
-function decodeCommit(data: RpcCommit): responses.Commit {
+export function decodeCommit(data: RpcCommit): responses.Commit {
   return {
     blockId: decodeBlockId(assertObject(data.block_id)),
     height: apiToSmallInt(assertNotEmpty(data.height)),
     round: apiToSmallInt(data.round),
-    signatures: assertArray(data.signatures).map(decodeCommitSignature),
+    signatures: data.signatures ? assertArray(data.signatures).map(decodeCommitSignature) : [],
   };
 }
 
@@ -513,16 +522,15 @@ interface RpcValidatorGenesis {
   readonly address: string;
   readonly pub_key: RpcPubkey;
   readonly power: string;
-  readonly name?: string;
+  readonly name: string;
 }
 
-export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
+export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.GenesisValidator {
   return {
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToBigInt(assertNotEmpty(data.power)),
-    // Field `name` is omitted because return type `responses.Validator` doesn't have it. Fixed
-    // in comet1 adapter. We could backport this change but want to avoid unnecessary breakage.
+    power: apiToBigInt(assertNotEmpty(data.power)),
+    name: data.name,
   };
 }
 
