@@ -43,7 +43,10 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: `connectComet` now returns a `Comet1Client` when a
   CometBFT 1.x RPC is found. `CometClient` now includes `Comet1Client`.
   ([#1827])
+- @cosmjs/cosmwasm-stargate: use native compression APIs instead of pako for
+  gzip. ([#1764])
 
+[#1764]: https://github.com/cosmos/cosmjs/issues/1764
 [#1819]: https://github.com/cosmos/cosmjs/pull/1819
 [#1825]: https://github.com/cosmos/cosmjs/pull/1825
 [#1827]: https://github.com/cosmos/cosmjs/pull/1827
