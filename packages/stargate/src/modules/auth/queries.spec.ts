@@ -5,7 +5,7 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { QueryClient } from "../../queryclient";
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils";
+import { nonExistentAddress, simapp, simappEnabled, unused, validator } from "../../testutils";
 import { AuthExtension, setupAuthExtension } from "./queries";
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, CometClient]> {
@@ -13,10 +13,9 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
   return [QueryClient.withExtensions(cometClient, setupAuthExtension), cometClient];
 }
 
-describe("AuthExtension", () => {
+(simappEnabled ? describe : xdescribe)("AuthExtension", () => {
   describe("account", () => {
     it("works for unused account", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
       const account = await client.auth.account(unused.address);
       assert(account);
@@ -34,7 +33,6 @@ describe("AuthExtension", () => {
     });
 
     it("works for account with pubkey and non-zero sequence", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
       const account = await client.auth.account(validator.delegatorAddress);
       assert(account);
@@ -51,7 +49,6 @@ describe("AuthExtension", () => {
     });
 
     it("rejects for non-existent address", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
 
       await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(

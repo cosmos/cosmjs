@@ -13,7 +13,7 @@ import { MsgSendEncodeObject } from "./modules";
 import { makeCompactBitArray, makeMultisignedTxBytes } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxSuccess, StargateClient } from "./stargateclient";
-import { faucet, pendingWithoutSimapp, simapp } from "./testutils";
+import { faucet, simapp, simappEnabled } from "./testutils";
 
 describe("multisignature", () => {
   describe("makeCompactBitArray", () => {
@@ -168,9 +168,8 @@ describe("multisignature", () => {
     });
   });
 
-  describe("makeMultisignedTxBytes", () => {
+  (simappEnabled ? describe : xdescribe)("makeMultisignedTxBytes", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const multisigAccountAddress = "cosmos1h90ml36rcu7yegwduzgzderj2jmq49hcpfclw9";
 
       // On the composer's machine signing instructions are created.

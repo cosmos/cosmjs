@@ -11,7 +11,6 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
 } from "../../testutils";
@@ -22,7 +21,7 @@ async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & Authz
   return [QueryClient.withExtensions(cometClient, setupAuthzExtension), cometClient];
 }
 
-describe("AuthzExtension", () => {
+(simappEnabled ? describe : xdescribe)("AuthzExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -33,9 +32,6 @@ describe("AuthzExtension", () => {
   const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
       // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
       // This must match `voterAddress` above.
@@ -78,7 +74,6 @@ describe("AuthzExtension", () => {
 
   describe("grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);
@@ -102,7 +97,6 @@ describe("AuthzExtension", () => {
 
   describe("granter grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
@@ -133,7 +127,6 @@ describe("AuthzExtension", () => {
 
   describe("grantee grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);

@@ -26,10 +26,10 @@ import {
   faucet,
   makeRandomAddress,
   nonExistentAddress,
-  pendingWithoutSimapp,
   simapp,
   simapp47Enabled,
   simapp50Enabled,
+  simappEnabled,
   slowSimapp,
   slowSimappEnabled,
   tendermintIdMatcher,
@@ -76,10 +76,9 @@ describe("isDeliverTxSuccess", () => {
   });
 });
 
-describe("StargateClient", () => {
+(simappEnabled ? describe : xdescribe)("StargateClient", () => {
   describe("connect", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       expect(client).toBeTruthy();
       client.disconnect();
@@ -88,14 +87,12 @@ describe("StargateClient", () => {
 
   describe("getChainId", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       expect(await client.getChainId()).toEqual(simapp.chainId);
       client.disconnect();
     });
 
     it("caches chain ID", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const openedClient = client as unknown as PrivateStargateClient;
       const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
@@ -111,7 +108,6 @@ describe("StargateClient", () => {
 
   describe("getHeight", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const height1 = await client.getHeight();
@@ -127,7 +123,6 @@ describe("StargateClient", () => {
 
   describe("getAccount", () => {
     it("works for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(unused.address);
@@ -143,7 +138,6 @@ describe("StargateClient", () => {
     });
 
     it("works for account with pubkey and non-zero sequence", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(validator.delegatorAddress);
@@ -159,7 +153,6 @@ describe("StargateClient", () => {
     });
 
     it("returns null for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(nonExistentAddress);
@@ -171,7 +164,6 @@ describe("StargateClient", () => {
 
   describe("getSequence", () => {
     it("works for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getSequence(unused.address);
@@ -185,7 +177,6 @@ describe("StargateClient", () => {
     });
 
     it("rejects for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
@@ -198,7 +189,6 @@ describe("StargateClient", () => {
 
   describe("getBlock", () => {
     it("works for latest block", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const response = await client.getBlock();
 
@@ -222,7 +212,6 @@ describe("StargateClient", () => {
     });
 
     it("works for block by height", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
@@ -249,7 +238,6 @@ describe("StargateClient", () => {
 
   describe("getBalance", () => {
     it("works for different existing balances", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response1 = await client.getBalance(unused.address, simapp.denomFee);
@@ -267,7 +255,6 @@ describe("StargateClient", () => {
     });
 
     it("returns 0 for non-existent balance", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response = await client.getBalance(unused.address, "gintonic");
@@ -280,7 +267,6 @@ describe("StargateClient", () => {
     });
 
     it("returns 0 for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response = await client.getBalance(nonExistentAddress, simapp.denomFee);
@@ -295,7 +281,6 @@ describe("StargateClient", () => {
 
   describe("getAllBalances", () => {
     it("returns all balances for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const balances = await client.getAllBalances(unused.address);
@@ -314,7 +299,6 @@ describe("StargateClient", () => {
     });
 
     it("returns an empty list for non-existent account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const balances = await client.getAllBalances(nonExistentAddress);
@@ -326,7 +310,6 @@ describe("StargateClient", () => {
 
   describe("getBalanceStaked", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const response = await client.getBalanceStaked(faucet.address0);
 
@@ -338,7 +321,6 @@ describe("StargateClient", () => {
 
   describe("broadcastTx", () => {
     it("broadcasts a transaction", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -406,7 +388,6 @@ describe("StargateClient", () => {
     });
 
     it("errors immediately for a CheckTx failure", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -572,7 +553,6 @@ describe("StargateClient", () => {
 
   describe("broadcastTxSync", () => {
     it("broadcasts sync a transaction, to get transaction hash", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();

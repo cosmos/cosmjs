@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { pendingWithoutSimapp, simapp } from "../../testutils";
+import { simapp, simappEnabled } from "../../testutils";
 import { setupSlashingExtension, SlashingExtension } from "./queries";
 
 async function makeClientWithSlashing(
@@ -11,10 +11,9 @@ async function makeClientWithSlashing(
   return [QueryClient.withExtensions(cometClient, setupSlashingExtension), cometClient];
 }
 
-describe("SlashingExtension", () => {
+(simappEnabled ? describe : xdescribe)("SlashingExtension", () => {
   describe("signingInfos", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrlHttp);
 
       const response = await client.slashing.signingInfos();
@@ -27,7 +26,6 @@ describe("SlashingExtension", () => {
 
   describe("params", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrlHttp);
 
       const response = await client.slashing.params();

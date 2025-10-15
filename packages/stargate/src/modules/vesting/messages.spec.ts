@@ -8,14 +8,13 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
+  simappEnabled,
 } from "../../testutils";
 
-describe("vesting messages", () => {
+(simappEnabled ? describe : xdescribe)("vesting messages", () => {
   describe("MsgCreateVestingAccount", () => {
     it("works with sign mode direct", async () => {
-      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
@@ -45,7 +44,6 @@ describe("vesting messages", () => {
     });
 
     it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
