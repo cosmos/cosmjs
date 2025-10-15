@@ -200,8 +200,8 @@ import { MsgVoteWeightedEncodeObject } from "./messages";
       client.disconnect();
     });
 
-    it("works with Amino JSON signer", async () => {
-      if (simapp50Enabled) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
+    // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
+    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(
