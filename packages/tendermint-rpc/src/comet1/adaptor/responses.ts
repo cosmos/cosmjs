@@ -303,7 +303,7 @@ interface RpcBlockResultsResponse {
   readonly consensus_param_updates: RpcConsensusParams | null;
 }
 
-function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
+export function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
   return {
     height: apiToSmallInt(assertNotEmpty(data.height)),
     results: (data.txs_results || []).map(decodeTxData),

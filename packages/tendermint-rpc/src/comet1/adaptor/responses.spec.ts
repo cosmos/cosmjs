@@ -1,6 +1,8 @@
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
+import blockResponse from "../testdata/block_results.json";
 import {
+  decodeBlockResults,
   decodeCommit,
   decodeEvent,
   decodeValidatorGenesis,
@@ -140,6 +142,22 @@ describe("Responses", () => {
         },
         votingPower: BigInt(11228980),
         proposerPriority: 62870960,
+      });
+    });
+  });
+
+  describe("decodeBlockResults", () => {
+    it("works", () => {
+      // Injective uses CometBFT 1.0.1 in October 2025
+      // curl -sS "https://sentry.tm.injective.network/block_results?height=137512194" | jq .result > block_results.json
+      const parsed = decodeBlockResults(blockResponse);
+      expect(parsed.validatorUpdates.length).toEqual(1);
+      expect(parsed.validatorUpdates[0]).toEqual({
+        votingPower: 820743n,
+        pubkey: {
+          bytes: fromBase64("mT+Z0UTq93hWl7FhJSpZcc+b07F0OUMcsddSDjJvqLk="),
+          type: "ed25519",
+        },
       });
     });
   });
