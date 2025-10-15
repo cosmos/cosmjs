@@ -26,7 +26,7 @@ import {
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
-} from "../../testutils.spec";
+} from "../../testutils";
 import {
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,

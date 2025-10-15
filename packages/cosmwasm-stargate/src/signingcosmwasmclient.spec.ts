@@ -48,7 +48,7 @@ import {
   unused,
   validator,
   wasmd,
-} from "./testutils.spec";
+} from "./testutils";
 
 describe("SigningCosmWasmClient", () => {
   describe("connectWithSigner", () => {

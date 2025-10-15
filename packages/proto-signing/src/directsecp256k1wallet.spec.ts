@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { testVectors } from "./testutils.spec";
+import { testVectors } from "./testutils";
 
 describe("DirectSecp256k1Wallet", () => {
   const defaultPrivkey = fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e");

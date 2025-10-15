@@ -19,7 +19,7 @@ import {
   testgroup3PubkeyBech32,
   testgroup4,
   testgroup4PubkeyBech32,
-} from "./testutils.spec";
+} from "./testutils";
 
 describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {

@@ -35,7 +35,7 @@ import {
   tendermintIdMatcher,
   unused,
   validator,
-} from "./testutils.spec";
+} from "./testutils";
 
 const resultFailure: DeliverTxResponse = {
   code: 5,

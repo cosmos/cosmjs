@@ -10,7 +10,7 @@ import {
   makeRandomAddress,
   pendingWithoutSimapp,
   simapp,
-} from "../../testutils.spec";
+} from "../../testutils";
 
 describe("vesting messages", () => {
   describe("MsgCreateVestingAccount", () => {

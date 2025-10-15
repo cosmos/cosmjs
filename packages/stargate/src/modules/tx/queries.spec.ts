@@ -14,7 +14,7 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { setupTxExtension, TxExtension } from "./queries";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, CometClient]> {

@@ -16,7 +16,7 @@ import {
   simapp50Enabled,
   simappEnabled,
   validator,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { MsgVoteWeightedEncodeObject } from "./messages";
 

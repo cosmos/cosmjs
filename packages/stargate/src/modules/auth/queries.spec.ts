@@ -5,7 +5,7 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { QueryClient } from "../../queryclient";
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils.spec";
+import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../../testutils";
 import { AuthExtension, setupAuthExtension } from "./queries";
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, CometClient]> {

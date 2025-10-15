@@ -7,7 +7,7 @@ import {
   pendingWithoutSimapp,
   simapp,
   unused,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { BankExtension, setupBankExtension } from "./queries";
 
 async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, CometClient]> {

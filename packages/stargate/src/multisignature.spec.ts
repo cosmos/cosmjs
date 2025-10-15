@@ -13,7 +13,7 @@ import { MsgSendEncodeObject } from "./modules";
 import { makeCompactBitArray, makeMultisignedTxBytes } from "./multisignature";
 import { SignerData, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxSuccess, StargateClient } from "./stargateclient";
-import { faucet, pendingWithoutSimapp, simapp } from "./testutils.spec";
+import { faucet, pendingWithoutSimapp, simapp } from "./testutils";
 
 describe("multisignature", () => {
   describe("makeCompactBitArray", () => {

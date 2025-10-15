@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { simapp } from "../../testutils.spec";
+import { simapp } from "../../testutils";
 import * as ibcTest from "./ibctestdata.spec";
 import { IbcExtension, setupIbcExtension } from "./queries";
 

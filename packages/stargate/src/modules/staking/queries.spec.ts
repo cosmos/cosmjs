@@ -13,7 +13,7 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
 import { setupStakingExtension, StakingExtension } from "./queries";
 

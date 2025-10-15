@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { pendingWithoutSimapp, simapp } from "../../testutils.spec";
+import { pendingWithoutSimapp, simapp } from "../../testutils";
 import { setupSlashingExtension, SlashingExtension } from "./queries";
 
 async function makeClientWithSlashing(
