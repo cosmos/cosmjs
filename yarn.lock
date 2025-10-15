@@ -262,7 +262,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -303,7 +303,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
     pako: "npm:^2.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -342,7 +342,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -374,7 +374,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -404,7 +404,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -435,7 +435,7 @@ __metadata:
     koa: "npm:^2.16.1"
     koa-bodyparser: "npm:^4.3"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:~5.9"
@@ -465,7 +465,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -497,7 +497,7 @@ __metadata:
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     semver: "npm:^7.5.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -527,7 +527,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -563,7 +563,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     protobufjs: "npm:^7.4.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -595,7 +595,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -636,7 +636,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -666,7 +666,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -703,7 +703,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -735,7 +735,7 @@ __metadata:
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
     nyc: "npm:^15.1.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
     typedoc: "npm:^0.28"
@@ -3085,7 +3085,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.5.0"
     eslint-plugin-simple-import-sort: "npm:^7.0.0"
     globals: "npm:^16.3.0"
-    prettier: "npm:^3.5.3"
+    prettier: "npm:^3.6.2"
     typescript: "npm:~5.9"
   languageName: unknown
   linkType: soft
@@ -6589,12 +6589,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.5.3":
-  version: 3.5.3
-  resolution: "prettier@npm:3.5.3"
+"prettier@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "prettier@npm:3.6.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/3880cb90b9dc0635819ab52ff571518c35bd7f15a6e80a2054c05dbc8a3aa6e74f135519e91197de63705bcb38388ded7e7230e2178432a1468005406238b877
+  checksum: 10c0/488cb2f2b99ec13da1e50074912870217c11edaddedeadc649b1244c749d15ba94e846423d062e2c4c9ae683e2d65f754de28889ba06e697ac4f988d44f45812
   languageName: node
   linkType: hard
 
