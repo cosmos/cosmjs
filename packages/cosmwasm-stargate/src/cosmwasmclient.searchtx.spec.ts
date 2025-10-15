@@ -20,14 +20,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { CosmWasmClient } from "./cosmwasmclient";
-import {
-  alice,
-  fromOneElementArray,
-  makeRandomAddress,
-  pendingWithoutWasmd,
-  wasmd,
-  wasmdEnabled,
-} from "./testutils";
+import { alice, fromOneElementArray, makeRandomAddress, wasmd, wasmdEnabled } from "./testutils";
 
 interface TestTxSend {
   readonly sender: string;
@@ -99,16 +92,13 @@ async function sendTokens(
   };
 }
 
-describe("CosmWasmClient.getTx and .searchTx", () => {
+(wasmdEnabled ? describe : xdescribe)("CosmWasmClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;
   let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
-    if (!wasmdEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
     const client = await CosmWasmClient.connect(wasmd.endpoint);
     const unsuccessfulRecipient = makeRandomAddress();
@@ -156,7 +146,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
   describe("getTx", () => {
     it("can get successful tx by ID", async () => {
-      pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getTx(sendSuccessful.hash);
@@ -172,7 +161,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("can get unsuccessful tx by ID", async () => {
-      pendingWithoutWasmd();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getTx(sendUnsuccessful.hash);
@@ -188,7 +176,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("can get by ID (non existent)", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
       const result = await client.getTx(nonExistentId);
@@ -198,7 +185,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
 
   describe("searchTx", () => {
     it("can search successful tx by height", async () => {
-      pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.searchTx(`tx.height=${sendSuccessful.height}`);
@@ -215,7 +201,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("can search unsuccessful tx by height", async () => {
-      pendingWithoutWasmd();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.searchTx(`tx.height=${sendUnsuccessful.height}`);
@@ -232,7 +217,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("can search by sender", async () => {
-      pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const query = `message.action = '/cosmos.bank.v1beta1.MsgSend' AND message.sender = '${sendSuccessful.sender}'`;
@@ -262,7 +246,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("can search by recipient", async () => {
-      pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const results = await client.searchTx(`transfer.recipient='${sendSuccessful.recipient}'`);
@@ -290,7 +273,6 @@ describe("CosmWasmClient.getTx and .searchTx", () => {
     });
 
     it("works with tags", async () => {
-      pendingWithoutWasmd();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const results = await client.searchTx([{ key: "transfer.recipient", value: sendSuccessful.recipient }]);
