@@ -203,8 +203,8 @@ describe("ReconnectingSocket", () => {
                   fail(startError);
                 }
               });
-            }, 2000);
-          }, 2000);
+            }, 1000);
+          }, 1000);
         });
       }, 1000);
 

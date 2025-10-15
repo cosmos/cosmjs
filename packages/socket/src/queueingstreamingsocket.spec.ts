@@ -65,7 +65,7 @@ describe("QueueingStreamingSocket", () => {
       setTimeout(() => {
         expect(socket.getQueueLength()).toEqual(3);
         socket.connect();
-      }, 5_000);
+      }, 3_000);
 
       return ret;
     });
