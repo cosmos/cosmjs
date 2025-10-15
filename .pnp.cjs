@@ -494,6 +494,10 @@ const RAW_RUNTIME_STATE =
       "npm:2.0.0"\
     ],\
     [\
+      "@scure/bip39",\
+      "npm:1.6.0"\
+    ],\
+    [\
       "@shikijs/engine-oniguruma",\
       "npm:3.6.0"\
     ],\
@@ -3498,6 +3502,7 @@ const RAW_RUNTIME_STATE =
           ["@noble/ciphers", "npm:1.3.0"],\
           ["@noble/curves", "npm:1.9.2"],\
           ["@noble/hashes", "npm:1.8.0"],\
+          ["@scure/bip39", "npm:1.6.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
@@ -4647,6 +4652,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@scure-base-npm-2.0.0-97a775035d-7d999c7beb.zip/node_modules/@scure/base/",\
         "packageDependencies": [\
           ["@scure/base", "npm:2.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@scure/bip39", [\
+      ["npm:1.6.0", {\
+        "packageLocation": "./.yarn/cache/@scure-bip39-npm-1.6.0-63a27ac0b7-73a54b5566.zip/node_modules/@scure/bip39/",\
+        "packageDependencies": [\
+          ["@noble/hashes", "npm:1.8.0"],\
+          ["@scure/base", "npm:1.2.6"],\
+          ["@scure/bip39", "npm:1.6.0"]\
         ],\
         "linkType": "HARD"\
       }]\
