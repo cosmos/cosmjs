@@ -662,10 +662,6 @@ const RAW_RUNTIME_STATE =
       "npm:22.10.6"\
     ],\
     [\
-      "@types/pako",\
-      "npm:2.0.3"\
-    ],\
-    [\
       "@types/qs",\
       "npm:6.9.6"\
     ],\
@@ -2398,10 +2394,6 @@ const RAW_RUNTIME_STATE =
       "npm:1.0.1"\
     ],\
     [\
-      "pako",\
-      "npm:2.1.0"\
-    ],\
-    [\
       "parent-module",\
       "npm:1.0.1"\
     ],\
@@ -3466,7 +3458,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["@types/pako", "npm:2.0.3"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
@@ -3477,7 +3468,6 @@ const RAW_RUNTIME_STATE =
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
           ["nyc", "npm:15.1.0"],\
-          ["pako", "npm:2.1.0"],\
           ["prettier", "npm:3.6.2"],\
           ["readonly-date", "npm:1.0.0"],\
           ["ses", "npm:1.13.1"],\
@@ -5085,15 +5075,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/node", "npm:22.10.6"],\
           ["undici-types", "npm:6.20.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/pako", [\
-      ["npm:2.0.3", {\
-        "packageLocation": "./.yarn/cache/@types-pako-npm-2.0.3-94a7224daf-45119ac3c4.zip/node_modules/@types/pako/",\
-        "packageDependencies": [\
-          ["@types/pako", "npm:2.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -11407,15 +11388,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/package-json-from-dist-npm-1.0.1-4631a88465-62ba2785eb.zip/node_modules/package-json-from-dist/",\
         "packageDependencies": [\
           ["package-json-from-dist", "npm:1.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["pako", [\
-      ["npm:2.1.0", {\
-        "packageLocation": "./.yarn/cache/pako-npm-2.1.0-78df11948c-8e86465814.zip/node_modules/pako/",\
-        "packageDependencies": [\
-          ["pako", "npm:2.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\

@@ -1,5 +1,4 @@
 import { fromHex } from "@cosmjs/encoding";
-import { ungzip } from "pako";
 
 import { gzip } from "./compression";
 
@@ -34,7 +33,6 @@ describe("compression", () => {
         expect(compressed.length).withContext(`Data with index ${index}`).toBeGreaterThanOrEqual(10);
         expect(compressed.slice(0, 3)).toEqual(fromHex("1F8B08"));
         expect(await uncompress(compressed)).toEqual(d);
-        expect(ungzip(compressed)).toEqual(d);
       }
     });
   });
