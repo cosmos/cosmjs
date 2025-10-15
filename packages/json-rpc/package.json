@@ -32,7 +32,7 @@
     "format-text": "prettier --write \"./*.md\"",
     "test-node": "vitest run",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
+    "test-chrome": "vitest run --browser",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test",
     "build": "rm -rf ./build && tsc && tsc -p src/workers/tsconfig.json",

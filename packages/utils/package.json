@@ -35,7 +35,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs"
+    "test-chrome": "vitest run --browser"
   },
   "engines": {
     "node": "^20.19 || >=22.12"
