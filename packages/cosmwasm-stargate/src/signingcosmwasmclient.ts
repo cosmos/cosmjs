@@ -47,8 +47,8 @@ import {
   MsgUpdateAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import { gzip } from "pako";
 
+import { gzip } from "./compression";
 import { CosmWasmClient } from "./cosmwasmclient";
 import {
   createWasmAminoConverters,
@@ -296,7 +296,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
     instantiatePermission?: AccessConfig,
   ): Promise<UploadResult> {
-    const compressed = gzip(wasmCode, { level: 9 });
+    const compressed = await gzip(wasmCode);
     const storeCodeMsg: MsgStoreCodeEncodeObject = {
       typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
       value: MsgStoreCode.fromPartial({

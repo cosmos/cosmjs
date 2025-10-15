@@ -22,8 +22,8 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
-import { gzip } from "pako";
 
+import { gzip } from "./compression";
 import { instantiate2Address } from "./instantiate2";
 import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
@@ -1074,7 +1074,7 @@ describe("SigningCosmWasmClient", () => {
 
         const msgStoreCode = MsgStoreCode.fromPartial({
           sender: alice.address0,
-          wasmByteCode: gzip(data),
+          wasmByteCode: await gzip(data),
         });
         const msgAny: MsgStoreCodeEncodeObject = {
           typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
