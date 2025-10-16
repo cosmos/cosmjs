@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { pendingWithoutSimapp, simapp } from "../../testutils";
+import { simapp, simappEnabled } from "../../testutils";
 import { MintExtension, setupMintExtension } from "./queries";
 
 async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintExtension, CometClient]> {
@@ -9,10 +9,9 @@ async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintEx
   return [QueryClient.withExtensions(cometClient, setupMintExtension), cometClient];
 }
 
-describe("MintExtension", () => {
+(simappEnabled ? describe : xdescribe)("MintExtension", () => {
   describe("params", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const params = await client.mint.params();
@@ -30,7 +29,6 @@ describe("MintExtension", () => {
 
   describe("inflation", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const inflation = await client.mint.inflation();
@@ -43,7 +41,6 @@ describe("MintExtension", () => {
 
   describe("annualProvisions", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);
 
       const annualProvisions = await client.mint.annualProvisions();

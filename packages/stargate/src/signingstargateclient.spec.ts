@@ -42,16 +42,15 @@ import {
   makeRandomAddress,
   ModifyingDirectSecp256k1HdWallet,
   ModifyingSecp256k1HdWallet,
-  pendingWithoutSimapp,
   simapp,
   simapp50Enabled,
+  simappEnabled,
   validator,
 } from "./testutils";
 
-describe("SigningStargateClient", () => {
+(simappEnabled ? describe : xdescribe)("SigningStargateClient", () => {
   describe("constructor", () => {
     it("can be constructed with custom registry", async () => {
-      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const registry = new Registry();
       registry.register("/custom.MsgCustom", MsgSend);
@@ -64,7 +63,6 @@ describe("SigningStargateClient", () => {
 
   describe("simulate", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
@@ -92,7 +90,6 @@ describe("SigningStargateClient", () => {
 
   describe("sendTokens", () => {
     it("works with direct signer", async () => {
-      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
@@ -134,7 +131,6 @@ describe("SigningStargateClient", () => {
     });
 
     it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
         simapp.tendermintUrlHttp,
@@ -176,7 +172,6 @@ describe("SigningStargateClient", () => {
     });
 
     it("works with feegrant granter", async () => {
-      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
         hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1)],
       });
@@ -353,7 +348,6 @@ describe("SigningStargateClient", () => {
   describe("signAndBroadcast", () => {
     describe("direct mode", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -384,7 +378,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("returns DeliverTxFailure on DeliverTx failure", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -414,7 +407,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with auto gas", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrlHttp, wallet, {
           ...defaultSigningClientOptions,
@@ -435,7 +427,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a modifying signer", async () => {
-        pendingWithoutSimapp();
         const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -474,7 +465,6 @@ describe("SigningStargateClient", () => {
 
     describe("legacy Amino mode", () => {
       it("works with special characters in memo", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -501,7 +491,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with bank MsgSend", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -528,7 +517,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with staking MsgDelegate", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -555,7 +543,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a custom registry and custom message", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
 
         const customRegistry = new Registry();
@@ -667,7 +654,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a modifying signer", async () => {
-        pendingWithoutSimapp();
         const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -708,7 +694,6 @@ describe("SigningStargateClient", () => {
   describe("signAndBroadcastSync", () => {
     describe("direct mode", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -739,7 +724,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with auto gas", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrlHttp, wallet, {
           ...defaultSigningClientOptions,
@@ -764,7 +748,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a modifying signer", async () => {
-        pendingWithoutSimapp();
         const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -798,7 +781,6 @@ describe("SigningStargateClient", () => {
 
     describe("legacy Amino mode", () => {
       it("works with special characters in memo", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -828,7 +810,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with bank MsgSend", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -862,7 +843,6 @@ describe("SigningStargateClient", () => {
   describe("sign", () => {
     describe("direct mode", () => {
       it("works", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -892,7 +872,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a modifying signer", async () => {
-        pendingWithoutSimapp();
         const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -929,7 +908,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with custom timeoutHeight", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -960,7 +938,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("fails with past timeoutHeight", async () => {
-        pendingWithoutSimapp();
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -999,7 +976,6 @@ describe("SigningStargateClient", () => {
 
     describe("legacy Amino mode", () => {
       it("works with bank MsgSend", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -1029,7 +1005,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with staking MsgDelegate", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -1059,7 +1034,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a custom registry and custom message", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
 
         const customRegistry = new Registry();
@@ -1174,7 +1148,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with a modifying signer", async () => {
-        pendingWithoutSimapp();
         const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -1211,7 +1184,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("works with custom timeoutHeight", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,
@@ -1242,7 +1214,6 @@ describe("SigningStargateClient", () => {
       });
 
       it("fails with past timeoutHeight", async () => {
-        pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(
           simapp.tendermintUrlHttp,

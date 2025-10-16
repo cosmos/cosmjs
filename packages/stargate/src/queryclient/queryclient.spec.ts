@@ -14,8 +14,8 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
+  simappEnabled,
   unused,
 } from "../testutils";
 import { QueryClient } from "./queryclient";
@@ -25,10 +25,9 @@ async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
   return [QueryClient.withExtensions(cometClient), cometClient];
 }
 
-describe("QueryClient", () => {
+(simappEnabled ? describe : xdescribe)("QueryClient", () => {
   describe("queryAbci", () => {
     it("works via WebSockets", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClient(simapp.tendermintUrlWs);
 
       const requestData = Uint8Array.from(
@@ -44,7 +43,6 @@ describe("QueryClient", () => {
     });
 
     it("works via http", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClient(simapp.tendermintUrlHttp);
 
       const requestData = Uint8Array.from(
@@ -60,7 +58,6 @@ describe("QueryClient", () => {
     });
 
     it("works for height", async () => {
-      pendingWithoutSimapp();
       const [queryClient, cometClient] = await makeClient(simapp.tendermintUrlHttp);
 
       const joe = makeRandomAddress();

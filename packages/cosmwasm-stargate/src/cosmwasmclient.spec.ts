@@ -24,7 +24,6 @@ import {
   deployedIbcReflect,
   getHackatom,
   makeRandomAddress,
-  pendingWithoutWasmd,
   tendermintIdMatcher,
   unused,
   wasmd,
@@ -39,10 +38,9 @@ interface HackatomInstance {
   readonly address: string;
 }
 
-describe("CosmWasmClient", () => {
+(wasmdEnabled ? describe : xdescribe)("CosmWasmClient", () => {
   describe("connect", () => {
     it("can be constructed", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       expect(client).toBeTruthy();
     });
@@ -50,13 +48,11 @@ describe("CosmWasmClient", () => {
 
   describe("getChainId", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       expect(await client.getChainId()).toEqual(wasmd.chainId);
     });
 
     it("caches chain ID", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
@@ -70,7 +66,6 @@ describe("CosmWasmClient", () => {
 
   describe("getHeight", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
 
       const height1 = await client.getHeight();
@@ -86,7 +81,6 @@ describe("CosmWasmClient", () => {
 
   describe("getAccount", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       expect(await client.getAccount(unused.address)).toEqual({
         address: unused.address,
@@ -97,7 +91,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("returns null for missing accounts", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
       expect(await client.getAccount(missing)).toBeNull();
@@ -106,7 +99,6 @@ describe("CosmWasmClient", () => {
 
   describe("getSequence", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       expect(await client.getSequence(unused.address)).toEqual({
         accountNumber: unused.accountNumber,
@@ -115,7 +107,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("rejects for missing accounts", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
       await expectAsync(client.getSequence(missing)).toBeRejectedWithError(
@@ -126,7 +117,6 @@ describe("CosmWasmClient", () => {
 
   describe("getBlock", () => {
     it("works for latest block", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const response = await client.getBlock();
 
@@ -146,7 +136,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("works for block by height", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
@@ -169,7 +158,6 @@ describe("CosmWasmClient", () => {
 
   describe("broadcastTx", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const registry = new Registry();
@@ -231,7 +219,6 @@ describe("CosmWasmClient", () => {
 
   describe("getCodes", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getCodes();
       expect(result.length).toBeGreaterThanOrEqual(1);
@@ -246,7 +233,6 @@ describe("CosmWasmClient", () => {
 
   describe("getCodeDetails", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getCodeDetails(1);
 
@@ -263,7 +249,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("caches downloads", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.queryClient!.wasm, "getCode").and.callThrough();
@@ -278,7 +263,6 @@ describe("CosmWasmClient", () => {
 
   describe("getContracts", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getContracts(deployedHackatom.codeId);
       const expectedAddresses = deployedHackatom.instances.map((info) => info.address);
@@ -292,7 +276,6 @@ describe("CosmWasmClient", () => {
 
   describe("getContractsByCreator", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const result = await client.getContractsByCreator(alice.address0);
       const expectedAddresses = deployedHackatom.instances.map((info) => info.address);
@@ -307,7 +290,6 @@ describe("CosmWasmClient", () => {
 
   describe("getContract", () => {
     it("works for instance without admin", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const zero = await client.getContract(deployedHackatom.instances[0].address);
       expect(zero).toEqual({
@@ -321,7 +303,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("works for instance with admin", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const two = await client.getContract(deployedHackatom.instances[2].address);
       expect(two).toEqual({
@@ -335,7 +316,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("works for instance with IBC port ID", async () => {
-      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const contract = await client.getContract(deployedIbcReflect.instances[0].address);
       expect(contract).toEqual(
@@ -354,9 +334,6 @@ describe("CosmWasmClient", () => {
     let contract: HackatomInstance | undefined;
 
     beforeAll(async () => {
-      if (!wasmdEnabled) {
-        return;
-      }
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data, defaultUploadFee);
@@ -373,7 +350,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("can query existing key", async () => {
-      pendingWithoutWasmd();
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
@@ -387,7 +363,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("can query non-existent key", async () => {
-      pendingWithoutWasmd();
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
@@ -396,7 +371,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("errors for non-existent contract", async () => {
-      pendingWithoutWasmd();
       assert(contract);
 
       const nonExistentAddress = makeRandomAddress();
@@ -429,7 +403,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("works", async () => {
-      pendingWithoutWasmd();
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
@@ -446,7 +419,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("errors for malformed query message", async () => {
-      pendingWithoutWasmd();
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
@@ -456,8 +428,6 @@ describe("CosmWasmClient", () => {
     });
 
     it("errors for non-existent contract", async () => {
-      pendingWithoutWasmd();
-
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       await expectAsync(

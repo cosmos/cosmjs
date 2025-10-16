@@ -19,22 +19,8 @@ export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABL
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
 export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled;
 
-export function pendingWithoutSimapp(): void {
-  if (!simappEnabled) {
-    pending("Set SIMAPP{47,50}_ENABLED to enable Simapp based tests");
-    return;
-  }
-}
-
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED || !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED;
-
-export function pendingWithoutSlowSimapp(): void {
-  if (!slowSimappEnabled) {
-    pending("Set SLOW_SIMAPP{47,50}_ENABLED to enable slow Simapp based tests");
-    return;
-  }
-}
 
 export function makeRandomAddressBytes(): Uint8Array {
   return Random.getBytes(20);

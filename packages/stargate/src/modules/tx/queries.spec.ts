@@ -10,7 +10,6 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
   validator,
@@ -22,7 +21,7 @@ async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtens
   return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }
 
-describe("TxExtension", () => {
+(simappEnabled ? describe : xdescribe)("TxExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -31,9 +30,6 @@ describe("TxExtension", () => {
   let memo: string | undefined;
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const client = await SigningStargateClient.connectWithSigner(
       simapp.tendermintUrlHttp,
@@ -60,7 +56,6 @@ describe("TxExtension", () => {
 
   describe("getTx", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
       const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);
@@ -74,7 +69,6 @@ describe("TxExtension", () => {
 
   describe("simulate", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
       const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);

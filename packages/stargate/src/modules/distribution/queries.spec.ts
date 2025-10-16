@@ -6,14 +6,7 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
-import {
-  defaultSigningClientOptions,
-  faucet,
-  pendingWithoutSimapp,
-  simapp,
-  simappEnabled,
-  validator,
-} from "../../testutils";
+import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils";
 import { MsgDelegateEncodeObject } from "../";
 import { DistributionExtension, setupDistributionExtension } from "./queries";
 
@@ -24,16 +17,13 @@ async function makeClientWithDistribution(
   return [QueryClient.withExtensions(cometClient, setupDistributionExtension), cometClient];
 }
 
-describe("DistributionExtension", () => {
+(simappEnabled ? describe : xdescribe)("DistributionExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
   };
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const client = await SigningStargateClient.connectWithSigner(
       simapp.tendermintUrlHttp,
@@ -59,7 +49,6 @@ describe("DistributionExtension", () => {
 
   describe("communityPool", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.communityPool();
@@ -72,7 +61,6 @@ describe("DistributionExtension", () => {
 
   describe("delegationRewards", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegationRewards(
@@ -88,7 +76,6 @@ describe("DistributionExtension", () => {
 
   describe("delegationTotalRewards", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegationTotalRewards(faucet.address0);
@@ -101,7 +88,6 @@ describe("DistributionExtension", () => {
 
   describe("delegatorValidators", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegatorValidators(faucet.address0);
@@ -114,7 +100,6 @@ describe("DistributionExtension", () => {
 
   describe("delegatorWithdrawAddress", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.delegatorWithdrawAddress(faucet.address0);
@@ -127,7 +112,6 @@ describe("DistributionExtension", () => {
 
   describe("params", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.params();
@@ -140,7 +124,6 @@ describe("DistributionExtension", () => {
 
   describe("validatorCommission", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorCommission(validator.validatorAddress);
@@ -153,7 +136,6 @@ describe("DistributionExtension", () => {
 
   describe("validatorOutstandingRewards", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorOutstandingRewards(validator.validatorAddress);
@@ -166,7 +148,6 @@ describe("DistributionExtension", () => {
 
   describe("validatorSlashes", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
       const response = await client.distribution.validatorSlashes(validator.validatorAddress, 1, 5);

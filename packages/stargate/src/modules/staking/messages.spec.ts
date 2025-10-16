@@ -10,9 +10,9 @@ import {
   defaultGasPrice,
   defaultSigningClientOptions,
   faucet,
-  pendingWithoutSimapp,
   simapp,
   simapp50Enabled,
+  simappEnabled,
 } from "../../testutils";
 import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages";
 
@@ -39,14 +39,12 @@ async function sendFeeAndStakingTokens(address: string): Promise<void> {
   client.disconnect();
 }
 
-describe("staking messages", () => {
+(simappEnabled ? describe : xdescribe)("staking messages", () => {
   const createFee = calculateFee(200_000, defaultGasPrice);
   const editFee = calculateFee(200_000, defaultGasPrice);
 
   describe("MsgCreateValidator", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
-
       const valWallet = await DirectSecp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 
@@ -94,10 +92,8 @@ describe("staking messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
-      if (simapp50Enabled) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
-
+    // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
+    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
       const valWallet = await Secp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 
@@ -148,8 +144,6 @@ describe("staking messages", () => {
 
   describe("MsgEditValidator", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
-
       const valWallet = await DirectSecp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 
@@ -235,10 +229,8 @@ describe("staking messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
-      if (simapp50Enabled) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
-
+    // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
+    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
       const valWallet = await Secp256k1HdWallet.generate();
       const [valAccount] = await valWallet.getAccounts();
 

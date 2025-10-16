@@ -4,8 +4,8 @@ import { QueryClient } from "../../queryclient";
 import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
-  pendingWithoutSimapp,
   simapp,
+  simappEnabled,
   unused,
 } from "../../testutils";
 import { BankExtension, setupBankExtension } from "./queries";
@@ -15,10 +15,9 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
   return [QueryClient.withExtensions(cometClient, setupBankExtension), cometClient];
 }
 
-describe("BankExtension", () => {
+(simappEnabled ? describe : xdescribe)("BankExtension", () => {
   describe("balance", () => {
     it("works for different existing balances", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response1 = await client.bank.balance(unused.address, simapp.denomFee);
@@ -36,7 +35,6 @@ describe("BankExtension", () => {
     });
 
     it("returns zero for non-existent balance", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.balance(unused.address, "gintonic");
@@ -49,7 +47,6 @@ describe("BankExtension", () => {
     });
 
     it("returns zero for non-existent address", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.balance(nonExistentAddress, simapp.denomFee);
@@ -64,7 +61,6 @@ describe("BankExtension", () => {
 
   describe("allBalances", () => {
     it("returns all balances for unused account", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const balances = await client.bank.allBalances(unused.address);
@@ -83,7 +79,6 @@ describe("BankExtension", () => {
     });
 
     it("returns an empty list for non-existent account", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const balances = await client.bank.allBalances(nonExistentAddress);
@@ -95,7 +90,6 @@ describe("BankExtension", () => {
 
   describe("totalSupply", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const { supply } = await client.bank.totalSupply();
@@ -116,7 +110,6 @@ describe("BankExtension", () => {
 
   describe("supplyOf", () => {
     it("works for existing denom", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.supplyOf(simapp.denomFee);
@@ -129,7 +122,6 @@ describe("BankExtension", () => {
     });
 
     it("returns zero for non-existent denom", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const response = await client.bank.supplyOf("gintonic");
@@ -144,7 +136,6 @@ describe("BankExtension", () => {
 
   describe("denomMetadata", () => {
     it("works for existing denom", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const metadata = await client.bank.denomMetadata("ucosm");
@@ -174,7 +165,6 @@ describe("BankExtension", () => {
     });
 
     it("works for non-existent denom", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       await expectAsync(client.bank.denomMetadata("nothere")).toBeRejectedWithError(/code = NotFound/i);
@@ -185,7 +175,6 @@ describe("BankExtension", () => {
 
   describe("denomsMetadata", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
       const metadatas = await client.bank.denomsMetadata();

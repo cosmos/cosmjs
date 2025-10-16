@@ -19,7 +19,6 @@ import {
   defaultSigningClientOptions,
   faucet,
   nonNegativeIntegerMatcher,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
   validator,
@@ -32,7 +31,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
   return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }
 
-describe("GovExtension", () => {
+(simappEnabled ? describe : xdescribe)("GovExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -49,9 +48,6 @@ describe("GovExtension", () => {
   let proposalId: string | undefined;
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
       // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
       // This must match `voterAddress` above.
@@ -151,7 +147,6 @@ describe("GovExtension", () => {
 
   describe("params", () => {
     it("works for deposit", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
       const response = await client.gov.params("deposit");
@@ -171,7 +166,6 @@ describe("GovExtension", () => {
     });
 
     it("works for tallying", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
       const response = await client.gov.params("tallying");
@@ -190,7 +184,6 @@ describe("GovExtension", () => {
     });
 
     it("works for voting", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
       const response = await client.gov.params("voting");
@@ -211,7 +204,6 @@ describe("GovExtension", () => {
 
   describe("proposals", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -242,7 +234,6 @@ describe("GovExtension", () => {
 
   describe("proposal", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -269,7 +260,6 @@ describe("GovExtension", () => {
 
   describe("deposits", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -288,7 +278,6 @@ describe("GovExtension", () => {
 
   describe("deposit", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -305,7 +294,6 @@ describe("GovExtension", () => {
 
   describe("tally", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -323,7 +311,6 @@ describe("GovExtension", () => {
 
   describe("votes", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 
@@ -361,7 +348,6 @@ describe("GovExtension", () => {
 
   describe("vote", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(proposalId, "Missing proposal ID");
       const [client, cometClient] = await makeClientWithGov(simapp.tendermintUrlHttp);
 

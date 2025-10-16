@@ -6,14 +6,7 @@ import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
-import {
-  defaultSigningClientOptions,
-  faucet,
-  pendingWithoutSimapp,
-  simapp,
-  simappEnabled,
-  validator,
-} from "../../testutils";
+import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils";
 import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
 import { setupStakingExtension, StakingExtension } from "./queries";
 
@@ -22,16 +15,13 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
   return [QueryClient.withExtensions(cometClient, setupStakingExtension), cometClient];
 }
 
-describe("StakingExtension", () => {
+(simappEnabled ? describe : xdescribe)("StakingExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
   };
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const client = await SigningStargateClient.connectWithSigner(
       simapp.tendermintUrlHttp,
@@ -73,7 +63,6 @@ describe("StakingExtension", () => {
 
   describe("delegation", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.delegation(faucet.address0, validator.validatorAddress);
@@ -86,7 +75,6 @@ describe("StakingExtension", () => {
 
   describe("delegatorDelegations", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.delegatorDelegations(faucet.address0);
@@ -99,7 +87,6 @@ describe("StakingExtension", () => {
 
   describe("delegatorUnbondingDelegations", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.delegatorUnbondingDelegations(faucet.address0);
@@ -112,7 +99,6 @@ describe("StakingExtension", () => {
 
   describe("delegatorValidator", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.delegatorValidator(faucet.address0, validator.validatorAddress);
@@ -125,7 +111,6 @@ describe("StakingExtension", () => {
 
   describe("delegatorValidators", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.delegatorValidators(faucet.address0);
@@ -138,7 +123,6 @@ describe("StakingExtension", () => {
 
   describe("historicalInfo", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.historicalInfo(5);
@@ -151,7 +135,6 @@ describe("StakingExtension", () => {
 
   describe("params", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.params();
@@ -164,7 +147,6 @@ describe("StakingExtension", () => {
 
   describe("pool", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.pool();
@@ -178,7 +160,6 @@ describe("StakingExtension", () => {
   describe("redelegations", () => {
     it("works", async () => {
       // TODO: Set up a result for this test
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       await expectAsync(
@@ -191,7 +172,6 @@ describe("StakingExtension", () => {
 
   describe("unbondingDelegation", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.unbondingDelegation(faucet.address0, validator.validatorAddress);
@@ -204,7 +184,6 @@ describe("StakingExtension", () => {
 
   describe("validator", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.validator(validator.validatorAddress);
@@ -217,7 +196,6 @@ describe("StakingExtension", () => {
 
   describe("validatorDelegations", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.validatorDelegations(validator.validatorAddress);
@@ -239,7 +217,6 @@ describe("StakingExtension", () => {
 
   describe("validators", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.validators("BOND_STATUS_BONDED");
@@ -252,7 +229,6 @@ describe("StakingExtension", () => {
 
   describe("validatorUnbondingDelegations", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithStaking(simapp.tendermintUrlHttp);
 
       const response = await client.staking.validatorUnbondingDelegations(validator.validatorAddress);

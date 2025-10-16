@@ -11,7 +11,6 @@ import {
   defaultSigningClientOptions,
   faucet,
   nonNegativeIntegerMatcher,
-  pendingWithoutSimapp,
   simapp,
   simapp50Enabled,
   simappEnabled,
@@ -20,7 +19,7 @@ import {
 import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
 import { MsgVoteWeightedEncodeObject } from "./messages";
 
-describe("gov messages", () => {
+(simappEnabled ? describe : xdescribe)("gov messages", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -42,9 +41,6 @@ describe("gov messages", () => {
   let proposalId: string | undefined;
 
   beforeAll(async () => {
-    if (!simappEnabled) {
-      return;
-    }
     voterWallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPaths: voterPaths });
     voterWalletAmino = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, { hdPaths: voterPaths });
     const client = await SigningStargateClient.connectWithSigner(
@@ -130,7 +126,6 @@ describe("gov messages", () => {
 
   describe("MsgVote", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(voterWallet);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrlHttp, voterWallet);
@@ -150,7 +145,6 @@ describe("gov messages", () => {
     });
 
     it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(
@@ -175,7 +169,6 @@ describe("gov messages", () => {
 
   describe("MsgVoteWeighted", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assert(voterWallet);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrlHttp, voterWallet);
@@ -207,9 +200,8 @@ describe("gov messages", () => {
       client.disconnect();
     });
 
-    it("works with Amino JSON signer", async () => {
-      pendingWithoutSimapp();
-      if (simapp50Enabled) pending("Not working, see https://github.com/cosmos/cosmos-sdk/issues/18546");
+    // Not working with simapp 50, see https://github.com/cosmos/cosmos-sdk/issues/18546
+    (!simapp50Enabled ? it : xit)("works with Amino JSON signer", async () => {
       assert(voterWalletAmino);
       assert(proposalId, "Missing proposal ID");
       const client = await SigningStargateClient.connectWithSigner(
