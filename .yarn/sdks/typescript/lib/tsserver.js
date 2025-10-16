@@ -60,7 +60,7 @@ const moduleWrapperFn = tsserver => {
       // dependencies, since otherwise Ctrl+Click would bring us to the virtual
       // file instances instead of the real ones.
       //
-      // We only do this to modules owned by the the dependency tree roots.
+      // We only do this to modules owned by the dependency tree roots.
       // This avoids breaking the resolution when jumping inside a vendor
       // with peer dep (otherwise jumping into react-dom would show resolution
       // errors on react).
