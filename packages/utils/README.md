@@ -2,7 +2,7 @@
 
 ![typescript](https://img.shields.io/npm/types/@cosmjs/utils.svg)
 [![npm version](https://img.shields.io/npm/v/@cosmjs/utils.svg)](https://www.npmjs.com/package/@cosmjs/utils)
-[![license](https://img.shields.io/npm/l/@cosmjs/utils.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE]
+[![license](https://img.shields.io/npm/l/@cosmjs/utils.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE)
 ![minimum node version](https://img.shields.io/node/v/@cosmjs/utils.svg)
 ![minified size](https://img.shields.io/bundlephobia/min/@cosmjs/utils.svg)
 ![monthly downloads](https://img.shields.io/npm/dm/@cosmjs/utils.svg)
