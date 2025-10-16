@@ -28,6 +28,7 @@ export class TimeoutError extends Error {
 
   public constructor(message: string, txId: string) {
     super(message);
+    this.name = "TimeoutError";
     this.txId = txId;
   }
 }
@@ -179,6 +180,7 @@ export class BroadcastTxError extends Error {
 
   public constructor(code: number, codespace: string, log: string | undefined) {
     super(`Broadcasting transaction failed with code ${code} (codespace: ${codespace}). Log: ${log}`);
+    this.name = "BroadcastTxError";
     this.code = code;
     this.codespace = codespace;
     this.log = log;
