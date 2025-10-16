@@ -2182,6 +2182,14 @@ const RAW_RUNTIME_STATE =
       "npm:1.4.1"\
     ],\
     [\
+      "micro-key-producer",\
+      "npm:0.7.6"\
+    ],\
+    [\
+      "micro-packed",\
+      "npm:0.7.3"\
+    ],\
+    [\
       "micromatch",\
       "npm:4.0.8"\
     ],\
@@ -3514,6 +3522,7 @@ const RAW_RUNTIME_STATE =
           ["karma-firefox-launcher", "npm:2.1.0"],\
           ["karma-jasmine", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:5.1.0"],\
           ["karma-jasmine-html-reporter", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.6.0"],\
+          ["micro-key-producer", "npm:0.7.6"],\
           ["nyc", "npm:15.1.0"],\
           ["prettier", "npm:3.6.2"],\
           ["ses", "npm:1.13.1"],\
@@ -10718,6 +10727,30 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/merge2-npm-1.4.1-a2507bd06c-254a8a4605.zip/node_modules/merge2/",\
         "packageDependencies": [\
           ["merge2", "npm:1.4.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["micro-key-producer", [\
+      ["npm:0.7.6", {\
+        "packageLocation": "./.yarn/cache/micro-key-producer-npm-0.7.6-e7775849c1-03fce10fdc.zip/node_modules/micro-key-producer/",\
+        "packageDependencies": [\
+          ["@noble/ciphers", "npm:1.3.0"],\
+          ["@noble/curves", "npm:1.9.4"],\
+          ["@noble/hashes", "npm:1.8.0"],\
+          ["@scure/base", "npm:1.2.6"],\
+          ["micro-key-producer", "npm:0.7.6"],\
+          ["micro-packed", "npm:0.7.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["micro-packed", [\
+      ["npm:0.7.3", {\
+        "packageLocation": "./.yarn/cache/micro-packed-npm-0.7.3-b41f4feea8-1fde48a96d.zip/node_modules/micro-packed/",\
+        "packageDependencies": [\
+          ["@scure/base", "npm:1.2.6"],\
+          ["micro-packed", "npm:0.7.3"]\
         ],\
         "linkType": "HARD"\
       }]\

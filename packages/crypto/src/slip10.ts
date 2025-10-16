@@ -3,6 +3,7 @@ import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 import { HDKey } from "@scure/bip32";
+import { HDKey as edHDKey } from "micro-key-producer/slip10.js";
 
 import { Hmac } from "./hmac";
 import { Sha512 } from "./sha";
@@ -127,14 +128,26 @@ export class Slip10 {
       throw new Error("Normal keys are not allowed with ed25519");
     }
 
-    const master = HDKey.fromMasterSeed(seed);
     const pathStr = pathToString(path);
-    const derived: HDKey = master.derive(pathStr);
 
+    if (curve === Slip10Curve.Ed25519) {
+      return this.derivePathEd(seed, pathStr);
+    }
+
+    const master = HDKey.fromMasterSeed(seed);
+    const derived: HDKey = master.derive(pathStr);
     const privkey = derived.privateKey;
     const chainCode = derived.chainCode;
     assert(privkey !== null);
     assert(chainCode !== null);
+    return { privkey, chainCode };
+  }
+
+  private static derivePathEd(seed: Uint8Array, pathStr: string): Slip10Result {
+    const master = edHDKey.fromMasterSeed(seed);
+    const derived: edHDKey = master.derive(pathStr);
+    const privkey = derived.privateKey;
+    const chainCode = derived.chainCode;
     return { privkey, chainCode };
   }
 
