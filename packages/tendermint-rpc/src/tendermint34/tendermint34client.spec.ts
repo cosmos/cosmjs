@@ -669,7 +669,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const events: responses.NewBlockEvent[] = [];
     const client = Tendermint34Client.create(rpcFactory());
     const stream = client.subscribeNewBlock();
-    let errored = false;
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.header.chainId).toMatch(expected.chainId);
@@ -695,8 +695,8 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           subscription.unsubscribe();
         }
       },
-      error: (_) => {
-        errored = true;
+      error: (e) => {
+        errored = `${e}`;
       },
     });
 
@@ -706,7 +706,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // wait for events to be processed
     await sleep(100);
 
-    expect(errored).toEqual(false);
+    expect(errored).toEqual(undefined);
     expect(events.length).toEqual(2);
     // Block header
     expect(events[1].header.height).toEqual(events[0].header.height + 1);
@@ -727,7 +727,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const events: responses.TxEvent[] = [];
     const client = Tendermint34Client.create(rpcFactory());
     const stream = client.subscribeTx();
-    let errored = false;
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
@@ -740,8 +740,8 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           subscription.unsubscribe();
         }
       },
-      error: (_) => {
-        errored = true;
+      error: (e) => {
+        errored = `${e}`;
       },
     });
 
@@ -754,7 +754,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // wait for events to be processed
     await sleep(100);
 
-    expect(errored).toEqual(false);
+    expect(errored).toEqual(undefined);
     expect(events.length).toEqual(2);
     // Meta
     expect(events[1].height).toEqual(events[0].height + 1);
@@ -775,7 +775,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const query = buildQuery({ tags: [{ key: "app.creator", value: expected.appCreator }] });
     const stream = client.subscribeTx(query);
     expect(stream).toBeTruthy();
-    let errored = false;
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
@@ -787,8 +787,8 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           subscription.unsubscribe();
         }
       },
-      error: (_) => {
-        errored = true;
+      error: (e) => {
+        errored = `${e}`;
       },
     });
 
@@ -798,7 +798,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // wait for events to be processed
     await sleep(100);
 
-    expect(errored).toEqual(false);
+    expect(errored).toEqual(undefined);
     expect(events.length).toEqual(2);
     // Meta
     expect(events[1].height).toEqual(events[0].height + 1);
