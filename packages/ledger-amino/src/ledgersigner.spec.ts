@@ -38,7 +38,7 @@ async function createTransport(): Promise<Transport> {
   return TransportClass.create(interactiveTimeout, interactiveTimeout);
 }
 
-(ledgerEnabled ? describe : xdescribe)("LedgerSigner", () => {
+(ledgerEnabled ? describe : describe.skip)("LedgerSigner", () => {
   const defaultChainId = "testing";
   const defaultFee = calculateFee(100_000, "0.025ucosm");
   const defaultMemo = "Some memo";
@@ -147,7 +147,7 @@ async function createTransport(): Promise<Transport> {
       interactiveTimeout,
     );
 
-    (simappEnabled ? it : xit)(
+    (simappEnabled ? it : it.skip)(
       "creates signature accepted by Stargate backend",
       async () => {
         const signer = new LedgerSigner(transport, {

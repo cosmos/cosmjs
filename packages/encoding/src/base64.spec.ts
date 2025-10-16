@@ -79,9 +79,7 @@ describe("base64", () => {
       // "aa==", // non-strict, should be aQ==
     ];
     for (const input of invalid) {
-      expect(() => fromBase64(input))
-        .withContext(`invalid input: '${input}'`)
-        .toThrow();
+      expect(() => fromBase64(input), `invalid input: '${input}'`).toThrow();
     }
   });
 

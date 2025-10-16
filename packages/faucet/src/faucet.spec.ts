@@ -19,7 +19,7 @@ function makeRandomAddress(): string {
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
-(simappEnabled ? describe : xdescribe)("Faucet", () => {
+(simappEnabled ? describe : describe.skip)("Faucet", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const apiUrl = "http://localhost:26658";
@@ -130,10 +130,10 @@ const faucetMnemonic =
         const distributorBalance = await readOnlyClient.getAllBalances(faucet.distributorAddresses[0]);
         assert(distributorBalance);
         expect(distributorBalance).toEqual([
-          jasmine.objectContaining({
+          expect.objectContaining({
             denom: "ucosm",
           }),
-          jasmine.objectContaining({
+          expect.objectContaining({
             denom: "ustake",
           }),
         ]);
@@ -229,11 +229,11 @@ const faucetMnemonic =
         assert(expectedHolderBalance);
         assert(expectedDistributorBalance);
         expect(accounts).toEqual([
-          jasmine.objectContaining({
+          expect.objectContaining({
             address: faucet.holderAddress,
             balance: expectedHolderBalance,
           }),
-          jasmine.objectContaining({
+          expect.objectContaining({
             address: faucet.distributorAddresses[0],
             balance: expectedDistributorBalance,
           }),

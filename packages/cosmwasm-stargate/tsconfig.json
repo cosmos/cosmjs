@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "outDir": "build",
     "experimentalDecorators": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["jasmine", "karma-firefox-launcher", "karma-jasmine", "karma-jasmine-html-reporter", "node"]
   },
   "include": [
     "src/**/*"

@@ -115,7 +115,7 @@ describe("pbkdf2", () => {
       for (const [index, test] of brycxTests.entries()) {
         const { secret, salt, iterations, keylen, expected } = test;
         const hash = await pbkdf2Sha512(secret, salt, iterations, keylen);
-        expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
+        expect(hash, `brycx tests index ${index}`).toEqual(expected);
       }
     });
   });
@@ -136,7 +136,7 @@ describe("pbkdf2", () => {
       for (const [index, test] of brycxTests.entries()) {
         const { secret, salt, iterations, keylen, expected } = test;
         const hash = await pbkdf2Sha512Subtle(subtle, secret, salt, iterations, keylen);
-        expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
+        expect(hash, `brycx tests index ${index}`).toEqual(expected);
       }
     });
   });
@@ -152,7 +152,7 @@ describe("pbkdf2", () => {
       for (const [index, test] of brycxTests.entries()) {
         const { secret, salt, iterations, keylen, expected } = test;
         const hash = await pbkdf2Sha512Noble(secret, salt, iterations, keylen);
-        expect(hash).withContext(`brycx tests index ${index}`).toEqual(expected);
+        expect(hash, `brycx tests index ${index}`).toEqual(expected);
       }
     }, 120_000);
   });

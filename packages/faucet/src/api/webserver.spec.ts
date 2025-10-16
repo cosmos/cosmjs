@@ -16,7 +16,7 @@ const faucetMnemonic =
 
 const testingPort = 62222;
 
-(simappEnabled ? describe : xdescribe)("Webserver", () => {
+(simappEnabled ? describe : describe.skip)("Webserver", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const rpcUrl = "http://localhost:26658";

@@ -81,7 +81,7 @@ describe("encoding", () => {
       });
     });
 
-    xit("works for sr25519", () => {
+    it.skip("works for sr25519", () => {
       // No test data available
     });
 
