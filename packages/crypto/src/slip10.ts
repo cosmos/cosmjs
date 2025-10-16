@@ -123,9 +123,14 @@ export function stringToPath(input: string): HdPath {
 // https://github.com/satoshilabs/slips/blob/master/slip-0010.md
 export class Slip10 {
   public static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result {
+    if (curve === Slip10Curve.Ed25519 && path.some((i) => !i.isHardened())) {
+      throw new Error("Normal keys are not allowed with ed25519");
+    }
+
     const master = HDKey.fromMasterSeed(seed);
     const pathStr = pathToString(path);
     const derived: HDKey = master.derive(pathStr);
+
     const privkey = derived.privateKey;
     const chainCode = derived.chainCode;
     assert(privkey !== null);
