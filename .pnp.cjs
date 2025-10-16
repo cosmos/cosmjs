@@ -415,7 +415,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@noble/curves",\
-      "npm:1.9.7"\
+      "npm:1.9.4"\
     ],\
     [\
       "@noble/hashes",\
@@ -3490,7 +3490,7 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
           ["@noble/ciphers", "npm:1.3.0"],\
-          ["@noble/curves", "npm:1.9.7"],\
+          ["@noble/curves", "npm:1.9.4"],\
           ["@noble/hashes", "npm:1.8.0"],\
           ["@scure/bip39", "npm:1.6.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
@@ -4452,10 +4452,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@noble/curves", [\
-      ["npm:1.9.7", {\
-        "packageLocation": "./.yarn/cache/@noble-curves-npm-1.9.7-2b9efc8ab4-150014751e.zip/node_modules/@noble/curves/",\
+      ["npm:1.9.4", {\
+        "packageLocation": "./.yarn/cache/@noble-curves-npm-1.9.4-2868d6d100-c5ac42bf0c.zip/node_modules/@noble/curves/",\
         "packageDependencies": [\
-          ["@noble/curves", "npm:1.9.7"],\
+          ["@noble/curves", "npm:1.9.4"],\
           ["@noble/hashes", "npm:1.8.0"]\
         ],\
         "linkType": "HARD"\
