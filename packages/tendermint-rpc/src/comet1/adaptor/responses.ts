@@ -287,8 +287,8 @@ interface RpcValidatorUpdate {
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: {
-      bytes: fromBase64(data.pub_key_bytes),
-      type: data.pub_key_type,
+      bytes: fromBase64(jCheckString(data.pub_key_bytes)),
+      type: jCheckString(data.pub_key_type),
     },
     votingPower: apiToBigInt(data.power ?? "0"),
   };
