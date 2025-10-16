@@ -2,6 +2,7 @@ import { fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
+import { HDKey } from "@scure/bip32";
 
 import { Hmac } from "./hmac";
 import { Sha512 } from "./sha";
@@ -89,17 +90,47 @@ export class Slip10RawIndex extends Uint32 {
  * ];
  * ```
  */
-export type HdPath = readonly Slip10RawIndex[];
+export type HdPath = Slip10RawIndex[];
+
+export function pathToString(path: HdPath): string {
+  return path.reduce((current, component): string => {
+    const componentString = component.isHardened()
+      ? `${component.toNumber() - 2 ** 31}'`
+      : component.toString();
+    return current + "/" + componentString;
+  }, "m");
+}
+
+export function stringToPath(input: string): HdPath {
+  if (!input.startsWith("m")) throw new Error("Path string must start with 'm'");
+  let rest = input.slice(1);
+
+  const out = new Array<Slip10RawIndex>();
+  while (rest) {
+    const match = rest.match(/^\/([0-9]+)('?)/);
+    if (!match) throw new Error("Syntax error while reading path component");
+    const [fullMatch, numberString, apostrophe] = match;
+    const value = Uint53.fromString(numberString).toNumber();
+    if (value >= 2 ** 31) throw new Error("Component value too high. Must not exceed 2**31-1.");
+    if (apostrophe) out.push(Slip10RawIndex.hardened(value));
+    else out.push(Slip10RawIndex.normal(value));
+    rest = rest.slice(fullMatch.length);
+  }
+  return out;
+}
 
 // Universal private key derivation according to
 // https://github.com/satoshilabs/slips/blob/master/slip-0010.md
 export class Slip10 {
   public static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result {
-    let result = this.master(curve, seed);
-    for (const rawIndex of path) {
-      result = this.child(curve, result.privkey, result.chainCode, rawIndex);
-    }
-    return result;
+    const master = HDKey.fromMasterSeed(seed);
+    const pathStr = pathToString(path);
+    const derived: HDKey = master.derive(pathStr);
+    const privkey = derived.privateKey;
+    const chainCode = derived.chainCode;
+    assert(privkey !== null);
+    assert(chainCode !== null);
+    return { privkey, chainCode };
   }
 
   private static master(curve: Slip10Curve, seed: Uint8Array): Slip10Result {
@@ -219,31 +250,4 @@ export class Slip10 {
         throw new Error("curve not supported");
     }
   }
-}
-
-export function pathToString(path: HdPath): string {
-  return path.reduce((current, component): string => {
-    const componentString = component.isHardened()
-      ? `${component.toNumber() - 2 ** 31}'`
-      : component.toString();
-    return current + "/" + componentString;
-  }, "m");
-}
-
-export function stringToPath(input: string): HdPath {
-  if (!input.startsWith("m")) throw new Error("Path string must start with 'm'");
-  let rest = input.slice(1);
-
-  const out = new Array<Slip10RawIndex>();
-  while (rest) {
-    const match = rest.match(/^\/([0-9]+)('?)/);
-    if (!match) throw new Error("Syntax error while reading path component");
-    const [fullMatch, numberString, apostrophe] = match;
-    const value = Uint53.fromString(numberString).toNumber();
-    if (value >= 2 ** 31) throw new Error("Component value too high. Must not exceed 2**31-1.");
-    if (apostrophe) out.push(Slip10RawIndex.hardened(value));
-    else out.push(Slip10RawIndex.normal(value));
-    rest = rest.slice(fullMatch.length);
-  }
-  return out;
 }

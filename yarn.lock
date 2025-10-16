@@ -323,6 +323,7 @@ __metadata:
     "@noble/ciphers": "npm:^1.3.0"
     "@noble/curves": "npm:^1.9.2"
     "@noble/hashes": "npm:^1.8.0"
+    "@scure/bip32": "npm:^1.7.0"
     "@scure/bip39": "npm:^1.6.0"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
@@ -1163,7 +1164,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/curves@npm:^1.9.2":
+"@noble/curves@npm:^1.9.2, @noble/curves@npm:~1.9.0":
   version: 1.9.4
   resolution: "@noble/curves@npm:1.9.4"
   dependencies:
@@ -1320,6 +1321,17 @@ __metadata:
   version: 2.0.0
   resolution: "@scure/base@npm:2.0.0"
   checksum: 10c0/7d999c7bebf053bb49cb706fdc6c5366737cff0f7f7518f52d32d7f7ad7b898904f03673648a2af5c4f22396f5c05f1d8bddbf010d6595052d07ba8163d506ad
+  languageName: node
+  linkType: hard
+
+"@scure/bip32@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@scure/bip32@npm:1.7.0"
+  dependencies:
+    "@noble/curves": "npm:~1.9.0"
+    "@noble/hashes": "npm:~1.8.0"
+    "@scure/base": "npm:~1.2.5"
+  checksum: 10c0/e3d4c1f207df16abcd79babcdb74d36f89bdafc90bf02218a5140cc5cba25821d80d42957c6705f35210cc5769714ea9501d4ae34732cdd1c26c9ff182a219f7
   languageName: node
   linkType: hard
 
