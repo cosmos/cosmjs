@@ -3,13 +3,13 @@ const path = require("path");
 const webpack = require("webpack");
 
 const target = "web";
-const demodir = path.join(__dirname, "dist", "demo");
+const demodir = path.join(__dirname, "build", "demo");
 
 module.exports = [
   {
     // bundle used for Ledger demo
     target: target,
-    entry: globSync("./build/demo/web.js"),
+    entry: globSync("./dist/demo/web.js"),
     output: {
       asyncChunks: false,
       path: demodir,

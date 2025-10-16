@@ -16,9 +16,9 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "dist/web/tests.js",
+      "build/web/tests.js",
       {
-        pattern: "dist/web/dummyservice.worker.js",
+        pattern: "build/web/dummyservice.worker.js",
         included: false,
         served: true,
         watched: false,
