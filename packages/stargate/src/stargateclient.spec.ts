@@ -94,7 +94,7 @@ describe("isDeliverTxSuccess", () => {
     it("caches chain ID", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const openedClient = client as unknown as PrivateStargateClient;
-      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.cometClient!, "status");
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache

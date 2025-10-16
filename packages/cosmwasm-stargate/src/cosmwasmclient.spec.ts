@@ -55,7 +55,7 @@ interface HackatomInstance {
     it("caches chain ID", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.cometClient!, "status");
 
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from cache
@@ -251,7 +251,7 @@ interface HackatomInstance {
     it("caches downloads", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.queryClient!.wasm, "getCode").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.queryClient!.wasm, "getCode");
 
       const result1 = await client.getCodeDetails(deployedHackatom.codeId); // from network
       const result2 = await client.getCodeDetails(deployedHackatom.codeId); // from cache
