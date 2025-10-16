@@ -1,12 +1,7 @@
-import { fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
-import { secp256k1 } from "@noble/curves/secp256k1";
 import { HDKey } from "@scure/bip32";
 import { HDKey as edHDKey } from "micro-key-producer/slip10.js";
-
-import { Hmac } from "./hmac";
-import { Sha512 } from "./sha";
 
 export interface Slip10Result {
   readonly chainCode: Uint8Array;
@@ -21,18 +16,6 @@ export interface Slip10Result {
 export enum Slip10Curve {
   Secp256k1 = "Bitcoin seed",
   Ed25519 = "ed25519 seed",
-}
-
-function bytesToUnsignedBigInt(a: Uint8Array): bigint {
-  return BigInt("0x" + toHex(a));
-}
-
-function intTo32be(n: bigint): Uint8Array {
-  assert(n >= 0n);
-  assert(n < 2n ** (32n * 8n));
-  // 32 bytes is 64 hexadecimal characters
-  const hex = n.toString(16).padStart(64, "0");
-  return fromHex(hex);
 }
 
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
@@ -149,123 +132,5 @@ export class Slip10 {
     const privkey = derived.privateKey;
     const chainCode = derived.chainCode;
     return { privkey, chainCode };
-  }
-
-  private static master(curve: Slip10Curve, seed: Uint8Array): Slip10Result {
-    const i = new Hmac(Sha512, toAscii(curve)).update(seed).digest();
-    const il = i.slice(0, 32);
-    const ir = i.slice(32, 64);
-
-    if (curve !== Slip10Curve.Ed25519 && (this.isZero(il) || this.isGteN(curve, il))) {
-      return this.master(curve, i);
-    }
-
-    return {
-      chainCode: ir,
-      privkey: il,
-    };
-  }
-
-  private static child(
-    curve: Slip10Curve,
-    parentPrivkey: Uint8Array,
-    parentChainCode: Uint8Array,
-    rawIndex: Slip10RawIndex,
-  ): Slip10Result {
-    let i: Uint8Array;
-    if (rawIndex.isHardened()) {
-      const payload = new Uint8Array([0x00, ...parentPrivkey, ...rawIndex.toBytesBigEndian()]);
-      i = new Hmac(Sha512, parentChainCode).update(payload).digest();
-    } else {
-      if (curve === Slip10Curve.Ed25519) {
-        throw new Error("Normal keys are not allowed with ed25519");
-      } else {
-        // Step 1 of https://github.com/satoshilabs/slips/blob/master/slip-0010.md#private-parent-key--private-child-key
-        // Calculate I = HMAC-SHA512(Key = c_par, Data = ser_P(point(k_par)) || ser_32(i)).
-        // where the functions point() and ser_p() are defined in BIP-0032
-        const data = new Uint8Array([
-          ...Slip10.serializedPoint(curve, bytesToUnsignedBigInt(parentPrivkey)),
-          ...rawIndex.toBytesBigEndian(),
-        ]);
-        i = new Hmac(Sha512, parentChainCode).update(data).digest();
-      }
-    }
-
-    return this.childImpl(curve, parentPrivkey, parentChainCode, rawIndex, i);
-  }
-
-  /**
-   * Implementation of ser_P(point(k_par)) from BIP-0032
-   *
-   * @see https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
-   */
-  private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array {
-    switch (curve) {
-      case Slip10Curve.Secp256k1:
-        return secp256k1.Point.BASE.multiply(p).toBytes(true);
-      default:
-        throw new Error("curve not supported");
-    }
-  }
-
-  private static childImpl(
-    curve: Slip10Curve,
-    parentPrivkey: Uint8Array,
-    parentChainCode: Uint8Array,
-    rawIndex: Slip10RawIndex,
-    i: Uint8Array,
-  ): Slip10Result {
-    // step 2 (of the Private parent key → private child key algorithm)
-
-    const il = i.slice(0, 32);
-    const ir = i.slice(32, 64);
-
-    // step 3
-    const returnChainCode = ir;
-
-    // step 4
-    if (curve === Slip10Curve.Ed25519) {
-      return {
-        chainCode: returnChainCode,
-        privkey: il,
-      };
-    }
-
-    // step 5
-    const n = this.n(curve);
-    const returnChildKeyAsNumber = (bytesToUnsignedBigInt(il) + bytesToUnsignedBigInt(parentPrivkey)) % n;
-    const returnChildKey = intTo32be(returnChildKeyAsNumber);
-
-    // step 6
-    if (this.isGteN(curve, il) || this.isZero(returnChildKey)) {
-      const newI = new Hmac(Sha512, parentChainCode)
-        .update(new Uint8Array([0x01, ...ir, ...rawIndex.toBytesBigEndian()]))
-        .digest();
-      return this.childImpl(curve, parentPrivkey, parentChainCode, rawIndex, newI);
-    }
-
-    // step 7
-    return {
-      chainCode: returnChainCode,
-      privkey: returnChildKey,
-    };
-  }
-
-  private static isZero(privkey: Uint8Array): boolean {
-    return privkey.every((byte) => byte === 0);
-  }
-
-  private static isGteN(curve: Slip10Curve, privkey: Uint8Array): boolean {
-    const keyAsNumber = bytesToUnsignedBigInt(privkey);
-    return keyAsNumber >= this.n(curve);
-  }
-
-  private static n(curve: Slip10Curve): bigint {
-    switch (curve) {
-      case Slip10Curve.Secp256k1:
-        return 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
-      default:
-        throw new Error("curve not supported");
-    }
   }
 }
