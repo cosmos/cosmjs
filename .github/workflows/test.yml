@@ -48,7 +48,6 @@ jobs:
           SLOW_SIMAPP50_ENABLED: 1
           TENDERMINT_ENABLED: 1
           SOCKETSERVER_ENABLED: 1
-          SKIP_BUILD: 1
           WASMD_ENABLED: 1
         run: yarn test-chrome
 
@@ -97,7 +96,6 @@ jobs:
           SLOW_SIMAPP50_ENABLED: 1
           TENDERMINT_ENABLED: 1
           SOCKETSERVER_ENABLED: 1
-          SKIP_BUILD: 1
           WASMD_ENABLED: 1
           SES_ENABLED: 1
         run: yarn run test
@@ -145,7 +143,6 @@ jobs:
           HTTPSERVER_ENABLED: 1
           TENDERMINT_ENABLED: 1
           SOCKETSERVER_ENABLED: 1
-          SKIP_BUILD: 1
           WASMD_ENABLED: 1
         run: |
           [ "${{ matrix.simapp }}" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1

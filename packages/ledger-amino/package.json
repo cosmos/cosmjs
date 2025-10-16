@@ -6,12 +6,13 @@
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "type": "commonjs",
   "exports": {
-    "types": "./build/index.d.ts",
-    "default": "./build/index.js"
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
   },
   "files": [
-    "build/",
+    "dist/",
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
@@ -29,13 +30,13 @@
     "docs": "typedoc",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "build": "tsdown --format cjs --unbundle",
+    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
     "test-node": "yarn node jasmine-testrunner.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
-    "demo-node": "yarn build-or-skip && node ./demo/node.cjs",
+    "test": "yarn run build:test && yarn test-node",
+    "demo-node": "tsdown --format cjs src/demo/web.ts -d build/demo/ && node ./demo/node.cjs",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
+    "pack-web": "yarn run build:test && webpack --mode development --config webpack.demo.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
@@ -61,8 +62,8 @@
     "prettier": "^3.6.2",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
+    "tsdown": "^0.14.2",
     "typedoc": "^0.28",
-    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

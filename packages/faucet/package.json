@@ -7,12 +7,13 @@
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "type": "commonjs",
   "bin": {
     "cosmos-faucet": "bin/cosmos-faucet"
   },
   "files": [
     "bin/",
-    "build/",
+    "dist/",
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
@@ -30,14 +31,14 @@
     "dev-start": "yarn start-dev",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
-    "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "build": "tsdown --format cjs --unbundle src/cli.ts",
+    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
     "test-node": "yarn node jasmine-testrunner.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "start-dev": "FAUCET_ADDRESS_PREFIX=wasm FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26659\"",
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\"",
-    "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.cjs"
+    "pack-node": "yarn run build && webpack --mode production --config webpack.node.config.cjs"
   },
   "dependencies": {
     "@cosmjs/crypto": "workspace:^",
@@ -62,7 +63,7 @@
     "prettier": "^3.6.2",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
-    "typescript": "~5.9",
+    "tsdown": "^0.14.2",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }

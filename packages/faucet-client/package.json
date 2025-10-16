@@ -6,12 +6,13 @@
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "type": "commonjs",
   "exports": {
-    "types": "./build/index.d.ts",
-    "default": "./build/index.js"
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
   },
   "files": [
-    "build/",
+    "dist/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
@@ -31,11 +32,11 @@
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test": "yarn run build:test && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
+    "build": "tsdown --format cjs --unbundle",
+    "build:test": "tsdown --format cjs 'src/**/*.spec.ts' -d build/",
+    "pack-web": "yarn run build:test && webpack --mode development --config webpack.web.config.cjs"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -56,8 +57,8 @@
     "prettier": "^3.6.2",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
+    "tsdown": "^0.14.2",
     "typedoc": "^0.28",
-    "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   }
