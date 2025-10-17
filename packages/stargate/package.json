@@ -15,7 +15,7 @@
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
-    "!**/testdata/"
+    "!*testdata.*"
   ],
   "repository": {
     "type": "git",
