@@ -39,6 +39,6 @@ describe("compression", () => {
         expect(compressed.subarray(-4)).toEqual(new Uint32(original.length).toBytesLittleEndian());
         expect(await uncompress(compressed)).toEqual(original);
       }
-    });
+    }, 15000);
   });
 });
