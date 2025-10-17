@@ -4,7 +4,6 @@
 import argparse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
-import sys
 
 HOST = "0.0.0.0"
 
