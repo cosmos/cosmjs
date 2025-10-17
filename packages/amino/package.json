@@ -38,6 +38,9 @@
     "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
   },
+  "engines": {
+    "node": "^20.19 || >=22.12"
+  },
   "dependencies": {
     "@cosmjs/crypto": "workspace:^",
     "@cosmjs/encoding": "workspace:^",

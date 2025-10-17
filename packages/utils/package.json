@@ -37,6 +37,9 @@
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs"
   },
+  "engines": {
+    "node": "^20.19 || >=22.12"
+  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jasmine": "^4",

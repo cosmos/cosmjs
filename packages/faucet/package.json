@@ -39,6 +39,9 @@
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\"",
     "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.cjs"
   },
+  "engines": {
+    "node": "^20.19 || >=22.12"
+  },
   "dependencies": {
     "@cosmjs/crypto": "workspace:^",
     "@cosmjs/encoding": "workspace:^",
