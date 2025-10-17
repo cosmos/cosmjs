@@ -1,5 +1,5 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutils";
 import { HttpBatchClient } from "./httpbatchclient";
 
 (tendermintEnabled ? describe : xdescribe)("HttpBatchClient", () => {

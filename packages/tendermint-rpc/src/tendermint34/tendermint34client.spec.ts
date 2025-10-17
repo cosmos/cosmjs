@@ -13,7 +13,7 @@ import {
   tendermintEnabled,
   tendermintInstances,
   tendermintSearchIndexUpdated,
-} from "../testutil.spec";
+} from "../testutils";
 import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";

@@ -13,7 +13,7 @@ import {
   tendermintEnabled,
   tendermintInstances,
   tendermintSearchIndexUpdated,
-} from "../testutil.spec";
+} from "../testutils";
 import { Comet1Client } from "./comet1client";
 import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
