@@ -47,7 +47,7 @@
     "@cosmjs/utils": "workspace:^",
     "@koa/bodyparser": "^6.0",
     "@koa/cors": "^5.0",
-    "koa": "^2.16.1"
+    "koa": "^3.0.3"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
