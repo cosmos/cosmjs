@@ -425,15 +425,14 @@ __metadata:
     "@cosmjs/stargate": "workspace:^"
     "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
+    "@koa/bodyparser": "npm:^6.0"
     "@koa/cors": "npm:^5.0"
     "@types/jasmine": "npm:^4"
     "@types/koa": "npm:^2.15.0"
-    "@types/koa-bodyparser": "npm:^4.3"
     "@types/koa__cors": "npm:^3.3"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
     koa: "npm:^2.16.1"
-    koa-bodyparser: "npm:^4.3"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.5.3"
     ses: "npm:^1.13.0"
@@ -905,6 +904,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hapi/bourne@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@hapi/bourne@npm:3.0.0"
+  checksum: 10c0/2e2df62f6bc6f32b980ba5bbdc09200c93c55c8306399ec0f2781da088a82aab699498c89fe94fec4acf770210f9aee28c75bfc2f04044849ac01b034134e717
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -1055,6 +1061,20 @@ __metadata:
     "@jridgewell/resolve-uri": "npm:3.1.0"
     "@jridgewell/sourcemap-codec": "npm:1.4.14"
   checksum: 10c0/40b65fcbdd7cc5a60dbe0a2780b6670ebbc1a31c96e43833e0bf2fee0773b1ba5137ab7d137b28fc3f215567bd5f9d06b7b30634ba15636c13bd8a863c20ae9a
+  languageName: node
+  linkType: hard
+
+"@koa/bodyparser@npm:^6.0":
+  version: 6.0.0
+  resolution: "@koa/bodyparser@npm:6.0.0"
+  dependencies:
+    "@types/co-body": "npm:^6.1.3"
+    co-body: "npm:^6.2.0"
+    lodash.merge: "npm:^4.6.2"
+    type-is: "npm:^2.0.1"
+  peerDependencies:
+    koa: ">=2"
+  checksum: 10c0/043911661e7e960e9ea4a6a5d6d039cdead1f7b02cb7cafa9d852cab02efdca79d3e391562ca36a2d09bfb3e23cdd7059748d430d4be32bd809727e8ac13a995
   languageName: node
   linkType: hard
 
@@ -1430,6 +1450,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/co-body@npm:^6.1.3":
+  version: 6.1.3
+  resolution: "@types/co-body@npm:6.1.3"
+  dependencies:
+    "@types/node": "npm:*"
+    "@types/qs": "npm:*"
+  checksum: 10c0/3a716829b7c8fa5b3d18bc47b98756d60b2ebc302ec90601e1ac1aed34bcc1f7ee88f379b2531837a42902d14362bfa29c9ddc2a39bbc8030afc26d66e671b0d
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.34
   resolution: "@types/connect@npm:3.4.34"
@@ -1615,15 +1645,6 @@ __metadata:
   version: 1.0.2
   resolution: "@types/keygrip@npm:1.0.2"
   checksum: 10c0/95c9cc9824754baecb73c42051477c9f9dfb1a4dcaf6f51d025398e379b146adc0da2c476ed0129fe4ea157413910e5e2acb10c6dad308ef5ea8a95080229fd5
-  languageName: node
-  linkType: hard
-
-"@types/koa-bodyparser@npm:^4.3":
-  version: 4.3.7
-  resolution: "@types/koa-bodyparser@npm:4.3.7"
-  dependencies:
-    "@types/koa": "npm:*"
-  checksum: 10c0/3c37c22a94239e5a59d41db97c341f0727802c56ff37d089a9068a638566872a2f17cf2aa98d2a594f2d7cebfd5100252764926624b01259f960eb024d527268
   languageName: node
   linkType: hard
 
@@ -2890,15 +2911,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"co-body@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "co-body@npm:6.1.0"
+"co-body@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "co-body@npm:6.2.0"
   dependencies:
+    "@hapi/bourne": "npm:^3.0.0"
     inflation: "npm:^2.0.0"
     qs: "npm:^6.5.2"
     raw-body: "npm:^2.3.3"
     type-is: "npm:^1.6.16"
-  checksum: 10c0/54f5aa6e8dcc2961259a6e120807430d3ebe3d3f683e0e5b2747f547d142dfa045b7a0becbc46d13f0cb87b52e99b011090203b447cefc8587e4df1932aa9e2a
+  checksum: 10c0/3a320d8b324abc14031243f427d2584cfe8f61562204f1a45d0a08bba20fff7122a04883f4d312ba648fb455246030916cacb92c19c6f7b329aaf1de70045e37
   languageName: node
   linkType: hard
 
@@ -3020,7 +3042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-type@npm:^1.0.4, content-type@npm:~1.0.5":
+"content-type@npm:^1.0.4, content-type@npm:^1.0.5, content-type@npm:~1.0.5":
   version: 1.0.5
   resolution: "content-type@npm:1.0.5"
   checksum: 10c0/b76ebed15c000aee4678c3707e0860cb6abd4e680a598c0a26e17f0bfae723ec9cc2802f0ff1bc6e4d80603719010431d2231018373d4dde10f9ccff9dadf5af
@@ -3057,13 +3079,6 @@ __metadata:
     depd: "npm:~2.0.0"
     keygrip: "npm:~1.1.0"
   checksum: 10c0/3ffa1c0e992b62ee119adae4dd2ddd4a89166fa5434cd9bd9ff84ec4d2f14dfe2318a601280abfe32a4f64f884ec9345fb1912e488b002d188d2efa0d3919ba3
-  languageName: node
-  linkType: hard
-
-"copy-to@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "copy-to@npm:2.0.1"
-  checksum: 10c0/ee10fa7ab257ccc1fada75d8571312f7a7eb2fa6a3129d89c6e3afc9884e0eb0cbb79140a92671fd3e35fa285b1e7f27f5422f885494ff14cf4c8c56e62d9daf
   languageName: node
   linkType: hard
 
@@ -5544,16 +5559,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-bodyparser@npm:^4.3":
-  version: 4.3.0
-  resolution: "koa-bodyparser@npm:4.3.0"
-  dependencies:
-    co-body: "npm:^6.0.0"
-    copy-to: "npm:^2.0.1"
-  checksum: 10c0/1e0badca073d6425c8a0c5970583325f655225d3f995589926d9ca976c5c20b18b5040d57b98deb3d7a0e8443f574735d5c9a97e4da4140fe087165d2b101305
-  languageName: node
-  linkType: hard
-
 "koa-compose@npm:^4.1.0":
   version: 4.1.0
   resolution: "koa-compose@npm:4.1.0"
@@ -5793,6 +5798,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"media-typer@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "media-typer@npm:1.1.0"
+  checksum: 10c0/7b4baa40b25964bb90e2121ee489ec38642127e48d0cc2b6baa442688d3fde6262bfdca86d6bbf6ba708784afcac168c06840c71facac70e390f5f759ac121b9
+  languageName: node
+  linkType: hard
+
 "merge-stream@npm:^2.0.0":
   version: 2.0.0
   resolution: "merge-stream@npm:2.0.0"
@@ -5824,12 +5836,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mime-db@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "mime-db@npm:1.54.0"
+  checksum: 10c0/8d907917bc2a90fa2df842cdf5dfeaf509adc15fe0531e07bb2f6ab15992416479015828d6a74200041c492e42cce3ebf78e5ce714388a0a538ea9c53eece284
+  languageName: node
+  linkType: hard
+
 "mime-types@npm:^2.1.18, mime-types@npm:^2.1.27, mime-types@npm:~2.1.24":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
     mime-db: "npm:1.52.0"
   checksum: 10c0/82fb07ec56d8ff1fc999a84f2f217aa46cb6ed1033fefaabd5785b9a974ed225c90dc72fff460259e66b95b73648596dbcc50d51ed69cdf464af2d237d3149b2
+  languageName: node
+  linkType: hard
+
+"mime-types@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "mime-types@npm:3.0.1"
+  dependencies:
+    mime-db: "npm:^1.54.0"
+  checksum: 10c0/bd8c20d3694548089cf229016124f8f40e6a60bbb600161ae13e45f793a2d5bb40f96bbc61f275836696179c77c1d6bf4967b2a75e0a8ad40fe31f4ed5be4da5
   languageName: node
   linkType: hard
 
@@ -7769,6 +7797,17 @@ __metadata:
     media-typer: "npm:0.3.0"
     mime-types: "npm:~2.1.24"
   checksum: 10c0/a23daeb538591b7efbd61ecf06b6feb2501b683ffdc9a19c74ef5baba362b4347e42f1b4ed81f5882a8c96a3bfff7f93ce3ffaf0cbbc879b532b04c97a55db9d
+  languageName: node
+  linkType: hard
+
+"type-is@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "type-is@npm:2.0.1"
+  dependencies:
+    content-type: "npm:^1.0.5"
+    media-typer: "npm:^1.1.0"
+    mime-types: "npm:^3.0.0"
+  checksum: 10c0/7f7ec0a060b16880bdad36824ab37c26019454b67d73e8a465ed5a3587440fbe158bc765f0da68344498235c877e7dbbb1600beccc94628ed05599d667951b99
   languageName: node
   linkType: hard
 
