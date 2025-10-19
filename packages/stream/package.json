@@ -43,6 +43,7 @@
     "xstream": "^11.14.0"
   },
   "devDependencies": {
+    "@cosmjs/utils": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jasmine": "^4",
     "@types/karma-firefox-launcher": "^2",

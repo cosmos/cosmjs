@@ -1,10 +1,11 @@
+import { sleep } from "@cosmjs/utils";
 import { Producer, Stream } from "xstream";
 
 import { firstEvent, fromListPromise, toListPromise } from "./promise";
 import { asArray, countStream } from "./reducer";
 
 async function oneTickLater(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 0));
+  return sleep(0);
 }
 
 describe("promise", () => {

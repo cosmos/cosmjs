@@ -652,6 +652,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"

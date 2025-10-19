@@ -1,9 +1,10 @@
+import { sleep } from "@cosmjs/utils";
 import { Producer, Stream } from "xstream";
 
 import { concat } from "./concat";
 
 async function producerIsStopped(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 50));
+  return sleep(50);
 }
 
 describe("concat", () => {
@@ -250,41 +251,41 @@ describe("concat", () => {
 
     expect(producerActiveLog).toEqual([true]);
 
+    await sleep(3.75 * intervalDuration);
+
     // unsubscribe
-    setTimeout(async () => {
-      expect(producerActiveLog).toEqual([true]);
-      subscription.unsubscribe();
-      await producerIsStopped();
-      expect(producerActiveLog).toEqual([true, false]);
-    }, 3.75 * intervalDuration);
+    expect(producerActiveLog).toEqual([true]);
+    subscription.unsubscribe();
+    await producerIsStopped();
+    expect(producerActiveLog).toEqual([true, false]);
+
+    await sleep(2.2 * intervalDuration);
 
     // re-subscribe
-    setTimeout(() => {
-      expect(producerActiveLog).toEqual([true, false]);
+    expect(producerActiveLog).toEqual([true, false]);
 
-      const subscription2 = concatenatedStream.subscribe({
-        next: (value) => {
-          expect(value).toEqual(expected.shift()!);
-        },
-        complete: () => {
-          done.fail();
-        },
-        error: done.fail,
-      });
+    const subscription2 = concatenatedStream.subscribe({
+      next: (value) => {
+        expect(value).toEqual(expected.shift()!);
+      },
+      complete: () => {
+        done.fail();
+      },
+      error: done.fail,
+    });
 
-      expect(producerActiveLog).toEqual([true, false, true]);
+    expect(producerActiveLog).toEqual([true, false, true]);
 
-      // unsubscribe again
-      setTimeout(async () => {
-        expect(producerActiveLog).toEqual([true, false, true]);
-        subscription2.unsubscribe();
-        await producerIsStopped();
-        expect(producerActiveLog).toEqual([true, false, true, false]);
+    await sleep(3.75 * intervalDuration);
 
-        expect(expected.length).toEqual(0);
-        done();
-      }, 3.75 * intervalDuration);
-    }, 6 * intervalDuration);
+    // unsubscribe again
+    expect(producerActiveLog).toEqual([true, false, true]);
+    subscription2.unsubscribe();
+    await producerIsStopped();
+    expect(producerActiveLog).toEqual([true, false, true, false]);
+
+    expect(expected.length).toEqual(0);
+    done();
 
     return ret;
   });
