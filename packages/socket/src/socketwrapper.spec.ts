@@ -1,3 +1,5 @@
+import { sleep } from "@cosmjs/utils";
+
 import { SocketWrapper } from "./socketwrapper";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
@@ -320,7 +322,8 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     );
     socket.connect();
 
-    setTimeout(() => socket.send("Hello world"), 2 * timeoutPeriodLength);
+    await sleep(2 * timeoutPeriodLength);
+    await socket.send("Hello world");
 
     return ret;
   });

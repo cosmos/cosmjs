@@ -579,6 +579,7 @@ __metadata:
   resolution: "@cosmjs/socket@workspace:packages/socket"
   dependencies:
     "@cosmjs/stream": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
     "@types/jasmine": "npm:^4"
     "@types/karma-firefox-launcher": "npm:^2"
