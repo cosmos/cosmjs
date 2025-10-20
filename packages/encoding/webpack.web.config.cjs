@@ -15,11 +15,6 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
-    ],
     resolve: {
       fallback: {
         buffer: false,
