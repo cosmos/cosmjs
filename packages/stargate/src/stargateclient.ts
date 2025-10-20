@@ -457,16 +457,9 @@ export class StargateClient {
 
     const transactionId = await this.broadcastTxSync(tx);
 
-    return pollForTx(transactionId).then(
-      (value) => {
-        clearTimeout(txPollTimeout);
-        return value;
-      },
-      (error) => {
-        clearTimeout(txPollTimeout);
-        throw error;
-      },
-    );
+    return pollForTx(transactionId).finally(() => {
+      clearTimeout(txPollTimeout);
+    });
   }
 
   /**
