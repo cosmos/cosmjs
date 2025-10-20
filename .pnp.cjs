@@ -1047,7 +1047,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "buffer",\
-      "npm:6.0.3"\
+      "npm:5.7.1"\
     ],\
     [\
       "buffer-from",\
@@ -3708,7 +3708,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["buffer", "npm:6.0.3"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3928,7 +3927,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["buffer", "npm:6.0.3"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
