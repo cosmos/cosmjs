@@ -149,9 +149,13 @@ and this project adheres to
   ([#1761])
 - @cosmjs/amino: `parseCoins` now supports denoms with colons, periods,
   underscores and dashes ([#1763])
+- @cosmjs/crypto: Remove obsolete pbkdf2 fallback on Node's implementation from
+  `import("crypto")`. We can just use subtle crypto on all supported Node
+  versions. ([#1753])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
+[#1753]: https://github.com/cosmos/cosmjs/pull/1753
 [#1761]: https://github.com/cosmos/cosmjs/pull/1761
 [#1763]: https://github.com/cosmos/cosmjs/pull/1763
 [#1772]: https://github.com/cosmos/cosmjs/pull/1772
