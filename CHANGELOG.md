@@ -6,6 +6,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
+
 ## [0.35.0] - 2025-08-13
 
 ### Added

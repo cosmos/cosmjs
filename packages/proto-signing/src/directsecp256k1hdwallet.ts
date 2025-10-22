@@ -170,6 +170,9 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
    *
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
+   *
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public static async deserialize(serialization: string, password: string): Promise<DirectSecp256k1HdWallet> {
     const root = JSON.parse(serialization);
@@ -189,6 +192,9 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
    *
    * The caller is responsible for ensuring the key was derived with the given KDF configuration. This can be
    * done using `extractKdfConfiguration(serialization)` and `executeKdf(password, kdfConfiguration)` from this package.
+   *
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public static async deserializeWithEncryptionKey(
     serialization: string,
@@ -290,6 +296,9 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
    *
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
+   *
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public async serialize(password: string): Promise<string> {
     const kdfConfiguration = basicPasswordHashingOptions;
@@ -305,6 +314,9 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
    *
    * The caller is responsible for ensuring the key was derived with the given KDF options. If this
    * is not the case, the wallet cannot be restored with the original password.
+   *
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public async serializeWithEncryptionKey(
     encryptionKey: Uint8Array,
