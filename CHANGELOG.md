@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.35.1] - 2025-10-22
+
 ### Deprecated
 
 - The use of encrypted wallet storage is deprecated. In particular this means:
@@ -1566,6 +1568,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.35.0...HEAD
+[0.35.1]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.35.1
 [0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
 [0.34.0]: https://github.com/cosmos/cosmjs/compare/v0.33.1...v0.34.0
 [0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
