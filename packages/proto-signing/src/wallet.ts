@@ -24,6 +24,10 @@ export interface KdfConfiguration {
   readonly params: Record<string, unknown>;
 }
 
+/**
+ * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+ *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
+ */
 export async function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array> {
   switch (configuration.algorithm) {
     case "argon2id": {
@@ -59,6 +63,10 @@ export const supportedAlgorithms = {
   xchacha20poly1305Ietf: "xchacha20poly1305-ietf",
 };
 
+/**
+ * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+ *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
+ */
 export async function encrypt(
   plaintext: Uint8Array,
   encryptionKey: Uint8Array,
@@ -78,6 +86,10 @@ export async function encrypt(
   }
 }
 
+/**
+ * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+ *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
+ */
 export async function decrypt(
   ciphertext: Uint8Array,
   encryptionKey: Uint8Array,
