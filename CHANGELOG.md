@@ -56,10 +56,14 @@ and this project adheres to
 
 - The use of encrypted wallet storage is deprecated. In particular this means:
   - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey` (since 0.36.0)
-  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since 0.36.0)
-  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey` (since 0.36.0)
-  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since 0.36.0)
-  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing (since 0.36.0/0.37.0)
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since
+    0.36.0)
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey` (since
+    0.36.0)
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since
+    0.36.0)
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing (since
+    0.36.0/0.37.0)
 
   If you are using any of those methods, please comment at
   https://github.com/cosmos/cosmjs/issues/1796.
