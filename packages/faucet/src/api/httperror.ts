@@ -4,6 +4,7 @@ export class HttpError extends Error {
 
   public constructor(status: number, text: string, expose = true) {
     super(text);
+    this.name = this.constructor.name;
     this.status = status;
     this.expose = expose;
   }
