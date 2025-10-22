@@ -289,7 +289,6 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/long": "npm:^4.0.1"
     "@types/node": "npm:*"
     cosmjs-types: "npm:^0.10.1"
     glob: "npm:^11"
@@ -548,7 +547,6 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/long": "npm:^4.0.1"
     "@types/node": "npm:*"
     cosmjs-types: "npm:^0.10.1"
     glob: "npm:^11"
@@ -621,7 +619,6 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/long": "npm:^4.0.1"
     "@types/node": "npm:*"
     cosmjs-types: "npm:^0.10.1"
     glob: "npm:^11"
@@ -1661,13 +1658,6 @@ __metadata:
   version: 0.7.10
   resolution: "@types/libsodium-wrappers@npm:0.7.10"
   checksum: 10c0/d70fdb22a247244479d26067d8edb48bdfacada0711df4e0890dc014b33e62f85967c5dc917c805d2d1f29081990992cc0d8b7e7e7c4bf21e187e7f54e318c19
-  languageName: node
-  linkType: hard
-
-"@types/long@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@types/long@npm:4.0.1"
-  checksum: 10c0/5ce2ecb4d14d29f0f25eff2e2fdb4e5d2ad2a7613094722bc06514d4aaeaa60fc4819465a438aa8e7f987c2649f50da18755d87ac30e5241a127251ad06b2c80
   languageName: node
   linkType: hard
 

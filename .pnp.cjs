@@ -646,10 +646,6 @@ const RAW_RUNTIME_STATE =
       "npm:0.7.5"\
     ],\
     [\
-      "@types/long",\
-      "npm:4.0.1"\
-    ],\
-    [\
       "@types/mime",\
       "npm:1.3.2"\
     ],\
@@ -3452,7 +3448,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
@@ -3725,7 +3720,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
@@ -3802,7 +3796,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["@types/long", "npm:4.0.1"],\
           ["@types/node", "npm:22.10.6"],\
           ["cosmjs-types", "npm:0.10.1"],\
           ["glob", "npm:11.0.3"],\
@@ -5031,15 +5024,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/libsodium-wrappers", "npm:0.7.10"],\
           ["@types/libsodium-wrappers-sumo", "npm:0.7.5"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/long", [\
-      ["npm:4.0.1", {\
-        "packageLocation": "./.yarn/cache/@types-long-npm-4.0.1-022c8b6e77-5ce2ecb4d1.zip/node_modules/@types/long/",\
-        "packageDependencies": [\
-          ["@types/long", "npm:4.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
