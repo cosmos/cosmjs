@@ -100,25 +100,28 @@ export function jCheckObject<T>(value: T): T {
   return value;
 }
 
-interface Lengther {
-  readonly length: number;
-}
-
 /**
- * Throws an error if value matches the empty value for the
- * given type (array/string of length 0, number of value 0, ...)
+ * Throws an error if value is not a string or is empty.
  *
  * Otherwise returns the value.
  *
- * This implies jCheckSet.
+ * This implies jCheckString.
  */
-export function jCheckNotEmpty<T>(value: T): T {
-  jCheckSet(value);
+export function jCheckNonEmptyString(value: string): string {
+  jCheckString(value);
+  if (value.length === 0) throw new Error("Value must not be empty");
+  return value;
+}
 
-  if (typeof value === "number" && value === 0) {
-    throw new Error("must provide a non-zero value");
-  } else if ((value as any as Lengther).length === 0) {
-    throw new Error("must provide a non-empty value");
-  }
+/**
+ * Throws an error if value is not a string or is empty.
+ *
+ * Otherwise returns the value.
+ *
+ * This implies jCheckNumber.
+ */
+export function jCheckNonZeroNumber(value: number): number {
+  jCheckNumber(value);
+  if (value === 0) throw new Error("Value must not be zero");
   return value;
 }
