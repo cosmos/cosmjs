@@ -56,7 +56,6 @@
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/libsodium-wrappers-sumo": "^0.7.5",
     "@types/node": "*",
-    "buffer": "^6.0.3",
     "glob": "^11",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",

@@ -20,9 +20,6 @@ module.exports = [
         HTTPSERVER_ENABLED: "",
         TENDERMINT_ENABLED: "",
       }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
     ],
     resolve: {
       fallback: {

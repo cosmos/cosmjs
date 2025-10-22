@@ -19,9 +19,6 @@ module.exports = [
       new webpack.EnvironmentPlugin({
         WASMD_ENABLED: "",
       }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
     ],
     resolve: {
       fallback: {

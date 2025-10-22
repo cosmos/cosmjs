@@ -22,9 +22,6 @@ module.exports = [
         SIMAPP50_ENABLED: "",
         SLOW_SIMAPP50_ENABLED: "",
       }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
-      }),
     ],
     resolve: {
       fallback: {
