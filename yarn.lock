@@ -23,7 +23,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.7.5":
+"@babel/core@npm:^7.23.9":
   version: 7.28.4
   resolution: "@babel/core@npm:7.28.4"
   dependencies:
@@ -133,7 +133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.27.2, @babel/parser@npm:^7.28.3, @babel/parser@npm:^7.28.4":
+"@babel/parser@npm:^7.23.9, @babel/parser@npm:^7.27.2, @babel/parser@npm:^7.28.3, @babel/parser@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/parser@npm:7.28.4"
   dependencies:
@@ -201,7 +201,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -239,7 +239,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
@@ -277,7 +277,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -309,7 +309,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
@@ -339,7 +339,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -370,7 +370,7 @@ __metadata:
     jasmine-spec-reporter: "npm:^6"
     koa: "npm:^2.16.1"
     koa-bodyparser: "npm:^4.3"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -400,7 +400,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -432,7 +432,7 @@ __metadata:
     glob: "npm:^11"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     semver: "npm:^7.5.2"
     ses: "npm:^1.13.0"
@@ -461,7 +461,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -496,7 +496,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     protobufjs: "npm:^7.4.0"
     ses: "npm:^1.13.0"
@@ -528,7 +528,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -568,7 +568,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
@@ -598,7 +598,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -635,7 +635,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     readonly-date: "npm:^1.0.0"
     ses: "npm:^1.13.0"
@@ -666,7 +666,7 @@ __metadata:
     karma-firefox-launcher: "npm:^2.1.0"
     karma-jasmine: "npm:^5"
     karma-jasmine-html-reporter: "npm:^1.5.4"
-    nyc: "npm:^15.1.0"
+    nyc: "npm:^17.1.0"
     prettier: "npm:^3.6.2"
     ses: "npm:^1.13.0"
     source-map-support: "npm:^0.5.19"
@@ -919,7 +919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@istanbuljs/schema@npm:^0.1.2":
+"@istanbuljs/schema@npm:^0.1.2, @istanbuljs/schema@npm:^0.1.3":
   version: 0.1.3
   resolution: "@istanbuljs/schema@npm:0.1.3"
   checksum: 10c0/61c5286771676c9ca3eb2bd8a7310a9c063fb6e0e9712225c8471c582d157392c88f5353581c8c9adbe0dff98892317d2fdfc56c3499aa42e0194405206a963a
@@ -4101,7 +4101,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"foreground-child@npm:^3.3.1":
+"foreground-child@npm:^3.3.0, foreground-child@npm:^3.3.1":
   version: 3.3.1
   resolution: "foreground-child@npm:3.3.1"
   dependencies:
@@ -5113,10 +5113,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.0.0-alpha.1":
-  version: 3.0.0
-  resolution: "istanbul-lib-coverage@npm:3.0.0"
-  checksum: 10c0/29ab1980e973f169d0de899256c193caff192f30e5e4f50ec40bddac307d454c7c6493836fffea633469e7d1d1ab7fe04fa64c426f8bf8d14b17679284f5fd07
+"istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.0.0-alpha.1, istanbul-lib-coverage@npm:^3.2.0":
+  version: 3.2.2
+  resolution: "istanbul-lib-coverage@npm:3.2.2"
+  checksum: 10c0/6c7ff2106769e5f592ded1fb418f9f73b4411fd5a084387a5410538332b6567cd1763ff6b6cadca9b9eb2c443cce2f7ea7d7f1b8d315f9ce58539793b1e0922b
   languageName: node
   linkType: hard
 
@@ -5129,15 +5129,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"istanbul-lib-instrument@npm:^4.0.0":
-  version: 4.0.3
-  resolution: "istanbul-lib-instrument@npm:4.0.3"
+"istanbul-lib-instrument@npm:^6.0.2":
+  version: 6.0.3
+  resolution: "istanbul-lib-instrument@npm:6.0.3"
   dependencies:
-    "@babel/core": "npm:^7.7.5"
-    "@istanbuljs/schema": "npm:^0.1.2"
-    istanbul-lib-coverage: "npm:^3.0.0"
-    semver: "npm:^6.3.0"
-  checksum: 10c0/7f1005566a912e33e847576b2c1072d48a7c556810a54d912f3e2f0bd966171e68b30c40b0c1ce6ee9b8864de422d0c10e2d0dfd2d25b48723950cc78cd437c2
+    "@babel/core": "npm:^7.23.9"
+    "@babel/parser": "npm:^7.23.9"
+    "@istanbuljs/schema": "npm:^0.1.3"
+    istanbul-lib-coverage: "npm:^3.2.0"
+    semver: "npm:^7.5.4"
+  checksum: 10c0/a1894e060dd2a3b9f046ffdc87b44c00a35516f5e6b7baf4910369acca79e506fc5323a816f811ae23d82334b38e3ddeb8b3b331bd2c860540793b59a8689128
   languageName: node
   linkType: hard
 
@@ -6099,9 +6100,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nyc@npm:^15.1.0":
-  version: 15.1.0
-  resolution: "nyc@npm:15.1.0"
+"nyc@npm:^17.1.0":
+  version: 17.1.0
+  resolution: "nyc@npm:17.1.0"
   dependencies:
     "@istanbuljs/load-nyc-config": "npm:^1.0.0"
     "@istanbuljs/schema": "npm:^0.1.2"
@@ -6110,12 +6111,12 @@ __metadata:
     decamelize: "npm:^1.2.0"
     find-cache-dir: "npm:^3.2.0"
     find-up: "npm:^4.1.0"
-    foreground-child: "npm:^2.0.0"
+    foreground-child: "npm:^3.3.0"
     get-package-type: "npm:^0.1.0"
     glob: "npm:^7.1.6"
     istanbul-lib-coverage: "npm:^3.0.0"
     istanbul-lib-hook: "npm:^3.0.0"
-    istanbul-lib-instrument: "npm:^4.0.0"
+    istanbul-lib-instrument: "npm:^6.0.2"
     istanbul-lib-processinfo: "npm:^2.0.2"
     istanbul-lib-report: "npm:^3.0.0"
     istanbul-lib-source-maps: "npm:^4.0.0"
@@ -6132,7 +6133,7 @@ __metadata:
     yargs: "npm:^15.0.2"
   bin:
     nyc: bin/nyc.js
-  checksum: 10c0/ad0da0627b465f9e88f45105416774a04a033096115bcce8de8952fae25b6e3f3b6441ce81a484b7cd1b79c792aee271f68f57cefe9bb6d062720e61f2feed2c
+  checksum: 10c0/653497bf11c53c70d821c18a2bfb7dba310b297b8bc83e5392e560c3d60d4dc9836b6c44f060065dfa99f7dacfd49147f8f60b160dfbe3f722517d4e7e236db2
   languageName: node
   linkType: hard
 
@@ -6924,7 +6925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^6.0.0, semver@npm:^6.3.0, semver@npm:^6.3.1":
+"semver@npm:^6.0.0, semver@npm:^6.3.1":
   version: 6.3.1
   resolution: "semver@npm:6.3.1"
   bin:
@@ -6933,12 +6934,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.6.0, semver@npm:^7.7.1":
-  version: 7.7.2
-  resolution: "semver@npm:7.7.2"
+"semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.7.1":
+  version: 7.7.3
+  resolution: "semver@npm:7.7.3"
   bin:
     semver: bin/semver.js
-  checksum: 10c0/aca305edfbf2383c22571cb7714f48cadc7ac95371b4b52362fb8eeffdfbc0de0669368b82b2b15978f8848f01d7114da65697e56cd8c37b0dab8c58e543f9ea
+  checksum: 10c0/4afe5c986567db82f44c8c6faef8fe9df2a9b1d98098fc1721f57c696c4c21cebd572f297fc21002f81889492345b8470473bc6f4aff5fb032a6ea59ea2bc45e
   languageName: node
   linkType: hard
 
