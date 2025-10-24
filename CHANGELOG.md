@@ -68,6 +68,17 @@ and this project adheres to
   If you are using any of those methods, please comment at
   https://github.com/cosmos/cosmjs/issues/1796.
 
+## [0.36.2] - 2025-10-24
+
+### Fixed
+
+- @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
+
+  > Cannot find module '@noble/hashes/legacy' from
+  > '../../node_modules/@cosmjs/crypto/build/ripemd.js'
+
+  We use `@noble/hashes/legacy` for ripemd which is only available in ^1.8.0.
+
 ## [0.36.1] - 2025-10-02
 
 ### Fixed
@@ -117,6 +128,20 @@ and this project adheres to
 
 [#1797]: https://github.com/cosmos/cosmjs/pull/1797
 
+## [0.35.1] - 2025-10-22
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
+
 ## [0.35.0] - 2025-08-13
 
 ### Added
@@ -159,6 +184,20 @@ and this project adheres to
 [#1761]: https://github.com/cosmos/cosmjs/pull/1761
 [#1763]: https://github.com/cosmos/cosmjs/pull/1763
 [#1772]: https://github.com/cosmos/cosmjs/pull/1772
+
+## [0.34.1] - 2025-10-22
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
 
 ## [0.34.0] - 2025-07-11
 
@@ -1668,9 +1707,12 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.36.1...HEAD
+[0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
 [0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
+[0.35.1]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.35.1
 [0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
+[0.34.1]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.34.1
 [0.34.0]: https://github.com/cosmos/cosmjs/compare/v0.33.1...v0.34.0
 [0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
 [0.33.0]: https://github.com/cosmos/cosmjs/compare/v0.32.4...v0.33.0
