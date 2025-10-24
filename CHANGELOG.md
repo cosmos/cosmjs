@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.36.2] - 2025-10-24
+
 ### Fixed
 
 - @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
@@ -1612,6 +1614,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.36.1...HEAD
+[0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
 [0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
 [0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
