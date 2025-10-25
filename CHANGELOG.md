@@ -6,6 +6,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
+
+  > Cannot find module '@noble/hashes/legacy.js' from
+  > '../../node_modules/@cosmjs/crypto/build/ripemd.js'
+
+  We use `@noble/hashes/legacy.js` for ripemd which is only available in ^1.8.0.
+
 ## [0.35.1] - 2025-10-22
 
 ### Deprecated
