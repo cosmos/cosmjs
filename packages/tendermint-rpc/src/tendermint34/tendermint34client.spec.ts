@@ -126,7 +126,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(response.proof).toBeUndefined();
       expect(response.log).toEqual("exists");
       expect(response.info).toEqual("");
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.height?.toString()).toMatch(nonNegativeIntegerMatcher);
 
       client.disconnect();
     });
