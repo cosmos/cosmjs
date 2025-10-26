@@ -387,7 +387,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       const meta = blockchain.blockMetas[0];
 
       expect(meta.blockId).toEqual(jasmine.objectContaining({}));
-      expect(meta.blockSize).toBeInstanceOf(Number);
+      expect(typeof meta.blockSize).toBe("number");
       expect(meta.header).toEqual(
         jasmine.objectContaining({
           version: {
@@ -397,7 +397,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
           chainId: jasmine.stringMatching(expected.chainId),
         }),
       );
-      expect(meta.numTxs).toBeInstanceOf(Number);
+      expect(typeof meta.numTxs).toBe("number");
 
       client.disconnect();
     });
