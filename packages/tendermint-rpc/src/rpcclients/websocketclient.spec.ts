@@ -135,8 +135,8 @@ import { WebsocketClient } from "./websocketclient";
 
     client
       .execute(createJsonRpcRequest("status"))
-      .then((startusResponse) => {
-        expect(startusResponse).toBeTruthy();
+      .then((startupsResponse) => {
+        expect(startupsResponse).toBeTruthy();
       })
       .catch(done.fail);
 
