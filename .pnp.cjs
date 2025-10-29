@@ -2789,7 +2789,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "tmp",\
-      "npm:0.2.1"\
+      "npm:0.2.5"\
     ],\
     [\
       "to-regex-range",\
@@ -10031,7 +10031,7 @@ const RAW_RUNTIME_STATE =
           ["rimraf", "npm:3.0.2"],\
           ["socket.io", "npm:4.8.1"],\
           ["source-map", "npm:0.6.1"],\
-          ["tmp", "npm:0.2.1"],\
+          ["tmp", "npm:0.2.5"],\
           ["ua-parser-js", "npm:0.7.37"],\
           ["yargs", "npm:16.2.0"]\
         ],\
@@ -12840,11 +12840,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["tmp", [\
-      ["npm:0.2.1", {\
-        "packageLocation": "./.yarn/cache/tmp-npm-0.2.1-a9c8d9c0ca-67607aa012.zip/node_modules/tmp/",\
+      ["npm:0.2.5", {\
+        "packageLocation": "./.yarn/cache/tmp-npm-0.2.5-e146296d91-cee5bb7d67.zip/node_modules/tmp/",\
         "packageDependencies": [\
-          ["rimraf", "npm:3.0.2"],\
-          ["tmp", "npm:0.2.1"]\
+          ["tmp", "npm:0.2.5"]\
         ],\
         "linkType": "HARD"\
       }]\
