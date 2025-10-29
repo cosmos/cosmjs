@@ -1,5 +1,8 @@
 import { fixUint8Array } from "./uint8array";
 
+// Turned off in Chrome without secure context
+const hasSharedArrayBuffer = typeof SharedArrayBuffer !== "undefined";
+
 describe("fixUint8Array", () => {
   it("works for Uint8Array<ArrayBuffer>", () => {
     const input: Uint8Array<ArrayBuffer> = Uint8Array.of(1, 2, 255);
@@ -20,7 +23,7 @@ describe("fixUint8Array", () => {
     expect(fixed.buffer).toBe(buffer); // no copy must be performed in this case
   });
 
-  it("works for Uint8Array<SharedArrayBuffer>", () => {
+  (hasSharedArrayBuffer ? it : xit)("works for Uint8Array<SharedArrayBuffer>", () => {
     const sharedBuffer = new SharedArrayBuffer(8);
     const input: Uint8Array<SharedArrayBuffer> = new Uint8Array(sharedBuffer);
     const fixed = fixUint8Array(input);
@@ -28,15 +31,18 @@ describe("fixUint8Array", () => {
     expect(fixed.buffer).toBeInstanceOf(ArrayBuffer);
   });
 
-  it("works for Uint8Array<SharedArrayBuffer> where data is not using all of the buffer", () => {
-    const sharedBuffer = new SharedArrayBuffer(8);
-    const input: Uint8Array<SharedArrayBuffer> = new Uint8Array(sharedBuffer, 0, 3);
-    input[0] = 0xaa;
-    input[1] = 0xbb;
-    input[2] = 0xcc;
-    const fixed = fixUint8Array(input);
-    expect(fixed.buffer).toBeInstanceOf(ArrayBuffer);
-    expect(fixed.length).toEqual(3);
-    expect(fixed).toEqual(new Uint8Array([0xaa, 0xbb, 0xcc]));
-  });
+  (hasSharedArrayBuffer ? it : xit)(
+    "works for Uint8Array<SharedArrayBuffer> where data is not using all of the buffer",
+    () => {
+      const sharedBuffer = new SharedArrayBuffer(8);
+      const input: Uint8Array<SharedArrayBuffer> = new Uint8Array(sharedBuffer, 0, 3);
+      input[0] = 0xaa;
+      input[1] = 0xbb;
+      input[2] = 0xcc;
+      const fixed = fixUint8Array(input);
+      expect(fixed.buffer).toBeInstanceOf(ArrayBuffer);
+      expect(fixed.length).toEqual(3);
+      expect(fixed).toEqual(new Uint8Array([0xaa, 0xbb, 0xcc]));
+    },
+  );
 });
