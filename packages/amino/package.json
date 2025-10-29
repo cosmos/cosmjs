@@ -56,7 +56,7 @@
     "karma-jasmine": "^5",
     "karma-jasmine-html-reporter": "^1.5.4",
     "nyc": "^15.1.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",

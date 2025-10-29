@@ -20,7 +20,6 @@ and this project adheres to
 ### Deprecated
 
 - The use of encrypted wallet storage is deprecated. In particular this means:
-
   - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
   - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
   - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
