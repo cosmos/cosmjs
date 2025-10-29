@@ -1,15 +1,16 @@
+// See https://stackoverflow.com/q/79803845/2013738 for why this is needed
+function isUint8ArrayOfArrayBuffer(source: Uint8Array): source is Uint8Array<ArrayBuffer> {
+  return source.buffer instanceof ArrayBuffer;
+}
+
 /**
  * Safely converts a Uint8Array<T> or Uint8Array into a
  * Uint8Array<ArrayBuffer>, often without a copy at runtime.
  *
  * @see https://github.com/paulmillr/scure-base/issues/53
  */
-export function fixUint8Array<T extends ArrayBufferLike>(source: Uint8Array<T>): Uint8Array<ArrayBuffer> {
-  const buffer = source.buffer;
-  if (buffer instanceof ArrayBuffer) {
-    return new Uint8Array(buffer, source.byteOffset, source.length); // new instance just to make TS happy without unsafe cast
-  }
-
+export function fixUint8Array(source: Uint8Array<ArrayBuffer> | Uint8Array): Uint8Array<ArrayBuffer> {
+  if (isUint8ArrayOfArrayBuffer(source)) return source;
   const copy = new ArrayBuffer(source.byteLength); // allocate memory
   const out = new Uint8Array(copy);
   out.set(source); // copy data
