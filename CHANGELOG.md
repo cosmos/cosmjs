@@ -133,6 +133,17 @@ and this project adheres to
 
 [#1797]: https://github.com/cosmos/cosmjs/pull/1797
 
+## [0.35.2] - 2025-10-29
+
+### Fixed
+
+- @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
+
+  > Cannot find module '@noble/hashes/legacy.js' from
+  > '../../node_modules/@cosmjs/crypto/build/ripemd.js'
+
+  We use `@noble/hashes/legacy.js` for ripemd which is only available in ^1.8.0.
+
 ## [0.35.1] - 2025-10-22
 
 ### Deprecated
@@ -1715,6 +1726,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 [0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
 [0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
+[0.35.2]: https://github.com/cosmos/cosmjs/compare/v0.35.1...v0.35.2
 [0.35.1]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.35.1
 [0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
 [0.34.1]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.34.1
