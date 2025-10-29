@@ -1519,7 +1519,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "follow-redirects",\
-      "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"\
+      "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.11"\
     ],\
     [\
       "for-each",\
@@ -8653,19 +8653,19 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["follow-redirects", [\
-      ["npm:1.15.3", {\
-        "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.3-ca69c47b72-915a2cf22e.zip/node_modules/follow-redirects/",\
+      ["npm:1.15.11", {\
+        "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.11-ae7b2db266-d301f43054.zip/node_modules/follow-redirects/",\
         "packageDependencies": [\
-          ["follow-redirects", "npm:1.15.3"]\
+          ["follow-redirects", "npm:1.15.11"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3", {\
-        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-ff48ff82c1/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-915a2cf22e.zip/node_modules/follow-redirects/",\
+      ["virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.11", {\
+        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-828d3afbfc/0/cache/follow-redirects-npm-1.15.11-ae7b2db266-d301f43054.zip/node_modules/follow-redirects/",\
         "packageDependencies": [\
           ["@types/debug", null],\
           ["debug", null],\
-          ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"]\
+          ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.11"]\
         ],\
         "packagePeers": [\
           "@types/debug",\
@@ -9229,7 +9229,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/http-proxy-npm-1.18.1-a313c479c5-148dfa700a.zip/node_modules/http-proxy/",\
         "packageDependencies": [\
           ["eventemitter3", "npm:4.0.7"],\
-          ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.3"],\
+          ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.15.11"],\
           ["http-proxy", "npm:1.18.1"],\
           ["requires-port", "npm:1.0.0"]\
         ],\
