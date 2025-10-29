@@ -36,7 +36,7 @@ export function makeAuthInfoBytes(
   feeGranter: string | undefined,
   feePayer: string | undefined,
   signMode: SignMode = SignMode.SIGN_MODE_DIRECT,
-): Uint8Array {
+): Uint8Array<ArrayBuffer> {
   // Required arguments 4 and 5 were added in CosmJS 0.29. Use runtime checks to help our non-TS users.
   assert(
     feeGranter === undefined || typeof feeGranter === "string",
@@ -70,7 +70,12 @@ export function makeSignDoc(
   };
 }
 
-export function makeSignBytes({ accountNumber, authInfoBytes, bodyBytes, chainId }: SignDoc): Uint8Array {
+export function makeSignBytes({
+  accountNumber,
+  authInfoBytes,
+  bodyBytes,
+  chainId,
+}: SignDoc): Uint8Array<ArrayBuffer> {
   const signDoc = SignDoc.fromPartial({
     accountNumber: accountNumber,
     authInfoBytes: authInfoBytes,

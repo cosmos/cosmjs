@@ -38,7 +38,7 @@ export class Bip39 {
     return new EnglishMnemonic(entropyToMnemonic(entropy, wordlist));
   }
 
-  public static decode(mnemonic: EnglishMnemonic): Uint8Array {
+  public static decode(mnemonic: EnglishMnemonic): Uint8Array<ArrayBuffer> {
     return mnemonicToEntropy(mnemonic.toString(), wordlist);
   }
 

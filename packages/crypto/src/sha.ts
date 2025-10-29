@@ -19,13 +19,13 @@ export class Sha256 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     return this.impl.digest();
   }
 }
 
 /** Convenience function equivalent to `new Sha256(data).digest()` */
-export function sha256(data: Uint8Array): Uint8Array {
+export function sha256(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Sha256(data).digest();
 }
 
@@ -45,12 +45,12 @@ export class Sha512 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     return this.impl.digest();
   }
 }
 
 /** Convenience function equivalent to `new Sha512(data).digest()` */
-export function sha512(data: Uint8Array): Uint8Array {
+export function sha512(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Sha512(data).digest();
 }

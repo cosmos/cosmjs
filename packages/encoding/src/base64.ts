@@ -4,7 +4,7 @@ export function toBase64(data: Uint8Array): string {
   return base64js.fromByteArray(data);
 }
 
-export function fromBase64(base64String: string): Uint8Array {
+export function fromBase64(base64String: string): Uint8Array<ArrayBuffer> {
   if (!base64String.match(/^[a-zA-Z0-9+/]*={0,2}$/)) {
     throw new Error("Invalid base64 string format");
   }

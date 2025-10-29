@@ -7,14 +7,14 @@ import { assert } from "@cosmjs/utils";
  * The "Basic Address" Hash from
  * https://github.com/cosmos/cosmos-sdk/blob/v0.45.8/docs/architecture/adr-028-public-key-addresses.md
  */
-function hash(type: string, key: Uint8Array): Uint8Array {
+function hash(type: string, key: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Sha256(sha256(toAscii(type))).update(key).digest();
 }
 
 /**
  * Takes an integer [0, 2**64-1] and returns a one-byte encoding of it.
  */
-function toUint64(int: number): Uint8Array {
+function toUint64(int: number): Uint8Array<ArrayBuffer> {
   return Uint64.fromNumber(int).toBytesBigEndian();
 }
 

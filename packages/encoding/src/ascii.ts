@@ -1,4 +1,4 @@
-export function toAscii(input: string): Uint8Array {
+export function toAscii(input: string): Uint8Array<ArrayBuffer> {
   const toNums = (str: string): readonly number[] =>
     str.split("").map((x: string) => {
       const charCode = x.charCodeAt(0);

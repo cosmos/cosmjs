@@ -19,12 +19,12 @@ export class Keccak256 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     return this.impl.digest();
   }
 }
 
 /** Convenience function equivalent to `new Keccak256(data).digest()` */
-export function keccak256(data: Uint8Array): Uint8Array {
+export function keccak256(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Keccak256(data).digest();
 }

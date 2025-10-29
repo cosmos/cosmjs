@@ -22,7 +22,7 @@ export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled;
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED || !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED;
 
-export function makeRandomAddressBytes(): Uint8Array {
+export function makeRandomAddressBytes(): Uint8Array<ArrayBuffer> {
   return Random.getBytes(20);
 }
 

@@ -88,7 +88,7 @@ export function makeMultisignedTxBytes(
   fee: StdFee,
   bodyBytes: Uint8Array,
   signatures: Map<string, Uint8Array>,
-): Uint8Array {
+): Uint8Array<ArrayBuffer> {
   const signedTx = makeMultisignedTx(multisigPubkey, sequence, fee, bodyBytes, signatures);
   return Uint8Array.from(TxRaw.encode(signedTx).finish());
 }

@@ -160,7 +160,7 @@ export class Registry {
    * If the value has to be wrapped in an Any, this needs to be done
    * manually after this call. Or use `encodeAsAny` instead.
    */
-  public encode(encodeObject: EncodeObject): Uint8Array {
+  public encode(encodeObject: EncodeObject): Uint8Array<ArrayBuffer> {
     const { value, typeUrl } = encodeObject;
     if (isTxBodyEncodeObject(encodeObject)) {
       return this.encodeTxBody(value);
@@ -185,7 +185,7 @@ export class Registry {
     });
   }
 
-  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
+  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array<ArrayBuffer> {
     const wrappedMessages = txBodyFields.messages.map((message) => this.encodeAsAny(message));
     const txBody = TxBody.fromPartial({
       ...txBodyFields,

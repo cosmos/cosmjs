@@ -24,13 +24,13 @@ export function dictionaryToStringMap(obj: Record<string, unknown>): Map<string,
 // Several of these functions are inspired by https://github.com/nomic-io/js-tendermint/blob/tendermint-0.30/src/
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L193-L195
-export function encodeString(s: string): Uint8Array {
+export function encodeString(s: string): Uint8Array<ArrayBuffer> {
   const utf8 = toUtf8(s);
   return Uint8Array.from([utf8.length, ...utf8]);
 }
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L79-L87
-export function encodeUvarint(n: number): Uint8Array {
+export function encodeUvarint(n: number): Uint8Array<ArrayBuffer> {
   return n >= 0x80
     ? // eslint-disable-next-line no-bitwise
       Uint8Array.from([(n & 0xff) | 0x80, ...encodeUvarint(n >> 7)])
@@ -39,7 +39,7 @@ export function encodeUvarint(n: number): Uint8Array {
 }
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L134-L178
-export function encodeTime(time: ReadonlyDateWithNanoseconds): Uint8Array {
+export function encodeTime(time: ReadonlyDateWithNanoseconds): Uint8Array<ArrayBuffer> {
   const milliseconds = time.getTime();
   const seconds = Math.floor(milliseconds / 1000);
   const secondsArray = seconds ? [0x08, ...encodeUvarint(seconds)] : new Uint8Array();
@@ -49,13 +49,13 @@ export function encodeTime(time: ReadonlyDateWithNanoseconds): Uint8Array {
 }
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L180-L187
-export function encodeBytes(bytes: Uint8Array): Uint8Array {
+export function encodeBytes(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
   // Since we're only dealing with short byte arrays we don't need a full VarBuffer implementation yet
   if (bytes.length >= 0x80) throw new Error("Not implemented for byte arrays of length 128 or more");
   return bytes.length ? Uint8Array.from([bytes.length, ...bytes]) : new Uint8Array();
 }
 
-export function encodeVersion(version: Version): Uint8Array {
+export function encodeVersion(version: Version): Uint8Array<ArrayBuffer> {
   const blockArray = version.block
     ? Uint8Array.from([0x08, ...encodeUvarint(version.block)])
     : new Uint8Array();
@@ -63,7 +63,7 @@ export function encodeVersion(version: Version): Uint8Array {
   return Uint8Array.from([...blockArray, ...appArray]);
 }
 
-export function encodeBlockId(blockId: BlockId): Uint8Array {
+export function encodeBlockId(blockId: BlockId): Uint8Array<ArrayBuffer> {
   return Uint8Array.from([
     0x0a,
     blockId.hash.length,

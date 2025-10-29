@@ -42,7 +42,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     const innerHash = this.messageHasher.digest();
     return this.hash(new Uint8Array([...this.oKeyPad, ...innerHash]));
   }

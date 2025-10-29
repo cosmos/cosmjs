@@ -192,7 +192,7 @@ function encodeUvarint(value: number | string): number[] {
 /**
  * Encodes a public key to binary Amino.
  */
-export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
+export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array<ArrayBuffer> {
   if (isMultisigThresholdPubkey(pubkey)) {
     const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
     out.push(0x08); // TODO: What is this?

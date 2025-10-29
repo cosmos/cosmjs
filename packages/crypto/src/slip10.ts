@@ -25,7 +25,7 @@ function bytesToUnsignedBigInt(a: Uint8Array): bigint {
   return BigInt("0x" + toHex(a));
 }
 
-function intTo32be(n: bigint): Uint8Array {
+function intTo32be(n: bigint): Uint8Array<ArrayBuffer> {
   assert(n >= 0n);
   assert(n < 2n ** (32n * 8n));
   // 32 bytes is 64 hexadecimal characters
@@ -150,7 +150,7 @@ export class Slip10 {
    *
    * @see https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
    */
-  private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array {
+  private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array<ArrayBuffer> {
     switch (curve) {
       case Slip10Curve.Secp256k1:
         return secp256k1.Point.BASE.multiply(p).toBytes(true);

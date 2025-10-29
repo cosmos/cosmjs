@@ -19,12 +19,12 @@ export class Ripemd160 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     return this.impl.digest();
   }
 }
 
 /** Convenience function equivalent to `new Ripemd160(data).digest()` */
-export function ripemd160(data: Uint8Array): Uint8Array {
+export function ripemd160(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Ripemd160(data).digest();
 }

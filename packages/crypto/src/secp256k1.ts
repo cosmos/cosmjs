@@ -18,7 +18,7 @@ export interface Secp256k1Keypair {
   readonly privkey: Uint8Array;
 }
 
-function unsignedBigIntToBytes(a: bigint): Uint8Array {
+function unsignedBigIntToBytes(a: bigint): Uint8Array<ArrayBuffer> {
   assert(a >= 0n);
   let hex = a.toString(16);
   if (hex.length % 2) hex = "0" + hex;
@@ -97,7 +97,10 @@ export class Secp256k1 {
     return secp256k1.verify(encodedSig, messageHash, pubkey, { lowS: false });
   }
 
-  public static recoverPubkey(signature: ExtendedSecp256k1Signature, messageHash: Uint8Array): Uint8Array {
+  public static recoverPubkey(
+    signature: ExtendedSecp256k1Signature,
+    messageHash: Uint8Array,
+  ): Uint8Array<ArrayBuffer> {
     const pk = new secp256k1.Signature(
       bytesToUnsignedBigInt(signature.r()),
       bytesToUnsignedBigInt(signature.s()),
@@ -111,7 +114,7 @@ export class Secp256k1 {
    *
    * This function is idempotent.
    */
-  public static compressPubkey(pubkey: Uint8Array): Uint8Array {
+  public static compressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
         return pubkey;
@@ -127,7 +130,7 @@ export class Secp256k1 {
    *
    * This function is idempotent.
    */
-  public static uncompressPubkey(pubkey: Uint8Array): Uint8Array {
+  public static uncompressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
         return secp256k1.Point.fromBytes(pubkey).toBytes(false);
@@ -138,7 +141,7 @@ export class Secp256k1 {
     }
   }
 
-  public static trimRecoveryByte(signature: Uint8Array): Uint8Array {
+  public static trimRecoveryByte(signature: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (signature.length) {
       case 64:
         return signature;

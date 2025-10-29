@@ -106,7 +106,7 @@ export async function tendermintSearchIndexUpdated(): Promise<void> {
   return sleep(75);
 }
 
-export function buildKvTx(k: string, v: string): Uint8Array {
+export function buildKvTx(k: string, v: string): Uint8Array<ArrayBuffer> {
   return toAscii(`${k}=${v}`);
 }
 

@@ -12,7 +12,7 @@ import { Header } from "./responses";
 
 // hash is sha256
 // https://github.com/tendermint/tendermint/blob/master/UPGRADING.md#v0260
-export function hashTx(tx: Uint8Array): Uint8Array {
+export function hashTx(tx: Uint8Array): Uint8Array<ArrayBuffer> {
   return sha256(tx);
 }
 
@@ -22,13 +22,13 @@ function getSplitPoint(n: number): number {
   return largestPowerOf2 < n ? largestPowerOf2 : largestPowerOf2 / 2;
 }
 
-function hashLeaf(leaf: Uint8Array): Uint8Array {
+function hashLeaf(leaf: Uint8Array): Uint8Array<ArrayBuffer> {
   const hash = new Sha256(Uint8Array.from([0]));
   hash.update(leaf);
   return hash.digest();
 }
 
-function hashInner(left: Uint8Array, right: Uint8Array): Uint8Array {
+function hashInner(left: Uint8Array, right: Uint8Array): Uint8Array<ArrayBuffer> {
   const hash = new Sha256(Uint8Array.from([1]));
   hash.update(left);
   hash.update(right);
@@ -37,7 +37,7 @@ function hashInner(left: Uint8Array, right: Uint8Array): Uint8Array {
 
 // See https://github.com/tendermint/tendermint/blob/v0.31.8/docs/spec/blockchain/encoding.md#merkleroot
 // Note: the hashes input may not actually be hashes, especially before a recursive call
-function hashTree(hashes: readonly Uint8Array[]): Uint8Array {
+function hashTree(hashes: readonly Uint8Array[]): Uint8Array<ArrayBuffer> {
   switch (hashes.length) {
     case 0:
       throw new Error("Cannot hash empty tree");
@@ -52,7 +52,7 @@ function hashTree(hashes: readonly Uint8Array[]): Uint8Array {
   }
 }
 
-export function hashBlock(header: Header): Uint8Array {
+export function hashBlock(header: Header): Uint8Array<ArrayBuffer> {
   if (!header.lastBlockId) {
     throw new Error(
       "Hashing a block header with no last block ID (i.e. header at height 1) is not supported. If you need this, contributions are welcome. Please add documentation and test vectors for this case.",

@@ -1,4 +1,4 @@
-function trimLeadingNullBytes(inData: Uint8Array): Uint8Array {
+function trimLeadingNullBytes(inData: Uint8Array): Uint8Array<ArrayBuffer> {
   let numberOfLeadingNullBytes = 0;
   for (const byte of inData) {
     if (byte === 0x00) {
@@ -93,7 +93,7 @@ export class Secp256k1Signature {
     };
   }
 
-  public r(length?: number): Uint8Array {
+  public r(length?: number): Uint8Array<ArrayBuffer> {
     if (length === undefined) {
       return this.data.r;
     } else {
@@ -106,7 +106,7 @@ export class Secp256k1Signature {
     }
   }
 
-  public s(length?: number): Uint8Array {
+  public s(length?: number): Uint8Array<ArrayBuffer> {
     if (length === undefined) {
       return this.data.s;
     } else {
@@ -119,11 +119,11 @@ export class Secp256k1Signature {
     }
   }
 
-  public toFixedLength(): Uint8Array {
+  public toFixedLength(): Uint8Array<ArrayBuffer> {
     return new Uint8Array([...this.r(32), ...this.s(32)]);
   }
 
-  public toDer(): Uint8Array {
+  public toDer(): Uint8Array<ArrayBuffer> {
     // DER supports negative integers but our data is unsigned. Thus we need to prepend
     // a leading 0 byte when the highest bit is set to differentiate negative values
     const rEncoded = this.data.r[0] >= 0x80 ? new Uint8Array([0, ...this.data.r]) : this.data.r;
@@ -177,7 +177,7 @@ export class ExtendedSecp256k1Signature extends Secp256k1Signature {
    * r (32 bytes) | s (32 bytes) | recovery param (1 byte)
    * where | denotes concatenation of bonary data.
    */
-  public override toFixedLength(): Uint8Array {
+  public override toFixedLength(): Uint8Array<ArrayBuffer> {
     return new Uint8Array([...this.r(32), ...this.s(32), this.recovery]);
   }
 }

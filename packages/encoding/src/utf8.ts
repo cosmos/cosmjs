@@ -1,4 +1,4 @@
-export function toUtf8(str: string): Uint8Array {
+export function toUtf8(str: string): Uint8Array<ArrayBuffer> {
   return new TextEncoder().encode(str);
 }
 
