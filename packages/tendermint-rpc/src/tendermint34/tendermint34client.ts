@@ -19,6 +19,10 @@ type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;
 // Decoder is a generic that matches all methods of Responses
 type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
+/**
+ * @deprecated Support for Tendermint/CometBFT 0.34 will be removed in the next version of CosmJS
+ *             (https://github.com/cosmos/cosmjs/issues/1866)
+ */
 export class Tendermint34Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
