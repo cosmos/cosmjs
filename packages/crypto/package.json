@@ -41,7 +41,7 @@
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "@noble/curves": "^1.9.2",
-    "@noble/hashes": "^1",
+    "@noble/hashes": "^1.8.0",
     "libsodium-wrappers-sumo": "^0.7.11"
   },
   "devDependencies": {
