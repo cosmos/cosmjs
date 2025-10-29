@@ -95,7 +95,7 @@ export function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean {
 
 export interface BroadcastTxCommitResponse {
   readonly height: number;
-  readonly hash: Uint8Array;
+  readonly hash: Uint8Array<ArrayBuffer>;
   readonly checkTx: TxData;
   readonly deliverTx?: TxData;
 }
@@ -144,8 +144,8 @@ export interface StatusResponse {
  * Try to keep this compatible to TxEvent
  */
 export interface TxResponse {
-  readonly tx: Uint8Array;
-  readonly hash: Uint8Array;
+  readonly tx: Uint8Array<ArrayBuffer>;
+  readonly hash: Uint8Array<ArrayBuffer>;
   readonly height: number;
   readonly index: number;
   readonly result: TxData;

@@ -6,6 +6,48 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/encoding: Add `fixUint8Array` which takes an
+  `Uint8Array<ArrayBufferLike>` and returns `Uint8Array<ArrayBuffer>`. This can
+  be used in cases where a data source returns an `Uint8Array` without
+  specifying the buffer type but you need an `ArrayBuffer`. Internally it might
+  perform a copy but in the vast majority of cases it will just change the type
+  after ensuring `ArrayBuffer` is used. ([#1883])
+
+[#1883]: https://github.com/cosmos/cosmjs/issues/1883
+
+### Changed
+
+- all: return `Uint8Array<ArrayBuffer>` instead of
+  `Uint8Array = Uint8Array<ArrayBufferLike>` whenever CosmJS creates binary data
+  for users. This allows users to stick it into APIs that require `ArrayBuffer`
+  such as many APIs from Subtle crypto. You can still assign
+  `Uint8Array<ArrayBuffer>` to any `Uint8Array` in an existing codebase like
+  this:
+
+  ```ts
+  const myVar: Uint8Array = fromHex("aabb");
+  ```
+
+  That's the easy way and probably good for many use cases. However, this way
+  you lose information which buffer type is in use and you cannot trivially pass
+  it to an API requiring `Uint8Array<ArrayBuffer>` later on.
+
+  The other option is to preserve the information you are getting from CosmJS by
+  using `Uint8Array<ArrayBuffer>` too:
+
+  ```ts
+  const myVar: Uint8Array<ArrayBuffer> = fromHex("aabb");
+
+  // or inferred
+  const myVar = fromHex("aabb"); // Uint8Array<ArrayBuffer>
+  ```
+
+  This change requires users to use TypeScript 5.7 or newer. ([#1883])
+
+[#1883]: https://github.com/cosmos/cosmjs/issues/1883
+
 ## [0.37.0] - 2025-10-29
 
 ### Added

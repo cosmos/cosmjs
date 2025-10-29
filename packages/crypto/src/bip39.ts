@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { entropyToMnemonic, mnemonicToEntropy, mnemonicToSeed } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english";
 
@@ -38,8 +39,8 @@ export class Bip39 {
     return new EnglishMnemonic(entropyToMnemonic(entropy, wordlist));
   }
 
-  public static decode(mnemonic: EnglishMnemonic): Uint8Array {
-    return mnemonicToEntropy(mnemonic.toString(), wordlist);
+  public static decode(mnemonic: EnglishMnemonic): Uint8Array<ArrayBuffer> {
+    return fixUint8Array(mnemonicToEntropy(mnemonic.toString(), wordlist));
   }
 
   public static async mnemonicToSeed(mnemonic: EnglishMnemonic, password?: string): Promise<Uint8Array> {

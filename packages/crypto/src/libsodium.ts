@@ -74,7 +74,7 @@ export class Ed25519Keypair {
     this.pubkey = pubkey;
   }
 
-  public toLibsodiumPrivkey(): Uint8Array {
+  public toLibsodiumPrivkey(): Uint8Array<ArrayBuffer> {
     return new Uint8Array([...this.privkey, ...this.pubkey]);
   }
 }

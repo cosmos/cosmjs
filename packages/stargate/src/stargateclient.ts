@@ -1,5 +1,5 @@
 import { addCoins } from "@cosmjs/amino";
-import { toHex } from "@cosmjs/encoding";
+import { fixUint8Array, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
@@ -87,13 +87,16 @@ export interface IndexedTx {
    *
    * Use `decodeTxRaw` from @cosmjs/proto-signing to decode this.
    */
-  readonly tx: Uint8Array;
+  readonly tx: Uint8Array<ArrayBuffer>;
   /**
    * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
    * as `Any`s.
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
-  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly msgResponses: Array<{
+    readonly typeUrl: string;
+    readonly value: Uint8Array<ArrayBuffer>;
+  }>;
   readonly gasUsed: bigint;
   readonly gasWanted: bigint;
 }
@@ -133,7 +136,10 @@ export interface DeliverTxResponse {
    * as `Any`s.
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
-  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly msgResponses: Array<{
+    readonly typeUrl: string;
+    readonly value: Uint8Array<ArrayBuffer>;
+  }>;
   readonly gasUsed: bigint;
   readonly gasWanted: bigint;
 }
@@ -510,7 +516,10 @@ export class StargateClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
-        msgResponses: txMsgData.msgResponses,
+        msgResponses: txMsgData.msgResponses.map((mr) => ({
+          typeUrl: mr.typeUrl,
+          value: fixUint8Array(mr.value),
+        })),
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

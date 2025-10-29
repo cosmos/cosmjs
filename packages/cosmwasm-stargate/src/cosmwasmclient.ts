@@ -1,4 +1,4 @@
-import { fromUtf8, toHex } from "@cosmjs/encoding";
+import { fixUint8Array, fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
   Account,
@@ -496,7 +496,10 @@ export class CosmWasmClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
-        msgResponses: txMsgData.msgResponses,
+        msgResponses: txMsgData.msgResponses.map((mr) => ({
+          typeUrl: mr.typeUrl,
+          value: fixUint8Array(mr.value),
+        })),
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

@@ -6,7 +6,7 @@ export function toHex(data: Uint8Array): string {
   return out;
 }
 
-export function fromHex(hexstring: string): Uint8Array {
+export function fromHex(hexstring: string): Uint8Array<ArrayBuffer> {
   if (hexstring.length % 2 !== 0) {
     throw new Error("hex string length must be a multiple of 2");
   }
