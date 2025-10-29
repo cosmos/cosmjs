@@ -7,10 +7,11 @@
 export function fixUint8Array<T extends ArrayBufferLike>(source: Uint8Array<T>): Uint8Array<ArrayBuffer> {
   const buffer = source.buffer;
   if (buffer instanceof ArrayBuffer) {
-    return new Uint8Array(buffer); // new instance just to make TS happy without unsafe cast
+    return new Uint8Array(buffer, source.byteOffset, source.length); // new instance just to make TS happy without unsafe cast
   }
 
-  const copy = new ArrayBuffer(buffer.byteLength);
-  new Uint8Array(copy).set(new Uint8Array(buffer));
-  return new Uint8Array(copy);
+  const copy = new ArrayBuffer(source.byteLength); // allocate memory
+  const out = new Uint8Array(copy);
+  out.set(source); // copy data
+  return out;
 }
