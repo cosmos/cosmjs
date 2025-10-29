@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@cosmjs/encoding";
+import { fixUint8Array, fromHex, toHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
@@ -106,7 +106,7 @@ export class Secp256k1 {
       bytesToUnsignedBigInt(signature.s()),
       signature.recovery,
     ).recoverPublicKey(messageHash);
-    return pk.toBytes(false);
+    return fixUint8Array(pk.toBytes(false));
   }
 
   /**
@@ -117,9 +117,9 @@ export class Secp256k1 {
   public static compressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
-        return pubkey;
+        return fixUint8Array(pubkey);
       case 65:
-        return secp256k1.Point.fromBytes(pubkey).toBytes(true);
+        return fixUint8Array(secp256k1.Point.fromBytes(pubkey).toBytes(true));
       default:
         throw new Error("Invalid pubkey length");
     }
@@ -133,9 +133,9 @@ export class Secp256k1 {
   public static uncompressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
-        return secp256k1.Point.fromBytes(pubkey).toBytes(false);
+        return fixUint8Array(secp256k1.Point.fromBytes(pubkey).toBytes(false));
       case 65:
-        return pubkey;
+        return fixUint8Array(pubkey);
       default:
         throw new Error("Invalid pubkey length");
     }
@@ -144,7 +144,7 @@ export class Secp256k1 {
   public static trimRecoveryByte(signature: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (signature.length) {
       case 64:
-        return signature;
+        return fixUint8Array(signature);
       case 65:
         return signature.slice(0, 64);
       default:

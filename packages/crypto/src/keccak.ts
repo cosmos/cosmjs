@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { keccak_256 } from "@noble/hashes/sha3.js";
 
 import { HashFunction } from "./hash";
@@ -20,7 +21,7 @@ export class Keccak256 implements HashFunction {
   }
 
   public digest(): Uint8Array<ArrayBuffer> {
-    return this.impl.digest();
+    return fixUint8Array(this.impl.digest());
   }
 }
 

@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
@@ -53,7 +54,7 @@ export function makeAuthInfoBytes(
       payer: feePayer,
     },
   });
-  return AuthInfo.encode(authInfo).finish();
+  return fixUint8Array(AuthInfo.encode(authInfo).finish());
 }
 
 export function makeSignDoc(
@@ -82,5 +83,5 @@ export function makeSignBytes({
     bodyBytes: bodyBytes,
     chainId: chainId,
   });
-  return SignDoc.encode(signDoc).finish();
+  return fixUint8Array(SignDoc.encode(signDoc).finish());
 }

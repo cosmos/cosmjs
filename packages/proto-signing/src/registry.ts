@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { BinaryWriter } from "cosmjs-types/binary";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -170,7 +171,7 @@ export class Registry {
       isTelescopeGeneratedType(type) || isTsProtoGeneratedType(type)
         ? type.fromPartial(value)
         : type.create(value);
-    return type.encode(instance).finish();
+    return fixUint8Array(type.encode(instance).finish());
   }
 
   /**
@@ -192,7 +193,7 @@ export class Registry {
       timeoutHeight: BigInt(txBodyFields.timeoutHeight?.toString() ?? "0"),
       messages: wrappedMessages,
     });
-    return TxBody.encode(txBody).finish();
+    return fixUint8Array(TxBody.encode(txBody).finish());
   }
 
   public decode({ typeUrl, value }: DecodeObject): any {

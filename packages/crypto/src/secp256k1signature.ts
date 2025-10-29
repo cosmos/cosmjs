@@ -1,3 +1,5 @@
+import { fixUint8Array } from "@cosmjs/encoding";
+
 function trimLeadingNullBytes(inData: Uint8Array): Uint8Array<ArrayBuffer> {
   let numberOfLeadingNullBytes = 0;
   for (const byte of inData) {
@@ -74,8 +76,8 @@ export class Secp256k1Signature {
   }
 
   private readonly data: {
-    readonly r: Uint8Array;
-    readonly s: Uint8Array;
+    readonly r: Uint8Array<ArrayBuffer>;
+    readonly s: Uint8Array<ArrayBuffer>;
   };
 
   public constructor(r: Uint8Array, s: Uint8Array) {
@@ -88,8 +90,8 @@ export class Secp256k1Signature {
     }
 
     this.data = {
-      r: r,
-      s: s,
+      r: fixUint8Array(r),
+      s: fixUint8Array(s),
     };
   }
 

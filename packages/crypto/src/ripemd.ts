@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { ripemd160 as nobleRipemd160 } from "@noble/hashes/legacy.js";
 
 import { HashFunction } from "./hash";
@@ -20,7 +21,7 @@ export class Ripemd160 implements HashFunction {
   }
 
   public digest(): Uint8Array<ArrayBuffer> {
-    return this.impl.digest();
+    return fixUint8Array(this.impl.digest());
   }
 }
 

@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { sha256 as nobleSha256, sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
 import { HashFunction } from "./hash";
@@ -20,7 +21,7 @@ export class Sha256 implements HashFunction {
   }
 
   public digest(): Uint8Array<ArrayBuffer> {
-    return this.impl.digest();
+    return fixUint8Array(this.impl.digest());
   }
 }
 
@@ -46,7 +47,7 @@ export class Sha512 implements HashFunction {
   }
 
   public digest(): Uint8Array<ArrayBuffer> {
-    return this.impl.digest();
+    return fixUint8Array(this.impl.digest());
   }
 }
 

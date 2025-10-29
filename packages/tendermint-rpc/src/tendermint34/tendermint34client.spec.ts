@@ -436,13 +436,13 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("txSearch", () => {
     const txKey = randomString(); // a key used for multiple transactions
-    let tx1: Uint8Array | undefined;
+    let tx1: Uint8Array<ArrayBuffer> | undefined;
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
       const client = Tendermint34Client.create(rpcFactory());
 
-      async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
+      async function sendTx(): Promise<[Uint8Array<ArrayBuffer>, responses.BroadcastTxCommitResponse]> {
         const me = randomString();
         const tx = buildKvTx(txKey, me);
 

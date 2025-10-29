@@ -1,4 +1,4 @@
-import { fromHex, toAscii, toHex } from "@cosmjs/encoding";
+import { fixUint8Array, fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
@@ -153,7 +153,7 @@ export class Slip10 {
   private static serializedPoint(curve: Slip10Curve, p: bigint): Uint8Array<ArrayBuffer> {
     switch (curve) {
       case Slip10Curve.Secp256k1:
-        return secp256k1.Point.BASE.multiply(p).toBytes(true);
+        return fixUint8Array(secp256k1.Point.BASE.multiply(p).toBytes(true));
       default:
         throw new Error("curve not supported");
     }
