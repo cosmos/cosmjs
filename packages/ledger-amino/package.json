@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/ledger-amino",
-  "version": "0.37.0-rc.1",
+  "version": "0.37.0",
   "description": "A library for signing Amino-encoded transactions using Ledger devices",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -65,6 +65,5 @@
     "typescript": "~5.9",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
-  },
-  "stableVersion": "0.36.1"
+  }
 }

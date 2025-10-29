@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.37.0] - 2025-10-29
+
 ### Added
 
 - @cosmjs/tendermint-rpc: Add dedicated `Comet1Client` for compatibility with
@@ -1722,7 +1724,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.36.1...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.37.0...HEAD
+[0.37.0]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.37.0
 [0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
 [0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
