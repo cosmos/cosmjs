@@ -2027,7 +2027,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "koa",\
-      "npm:2.16.1"\
+      "npm:2.16.3"\
     ],\
     [\
       "koa-bodyparser",\
@@ -3440,7 +3440,7 @@ const RAW_RUNTIME_STATE =
           ["@types/koa__cors", "npm:3.3.0"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
-          ["koa", "npm:2.16.1"],\
+          ["koa", "npm:2.16.3"],\
           ["koa-bodyparser", "npm:4.3.0"],\
           ["nyc", "npm:17.1.0"],\
           ["prettier", "npm:3.6.2"],\
@@ -10142,8 +10142,8 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["koa", [\
-      ["npm:2.16.1", {\
-        "packageLocation": "./.yarn/cache/koa-npm-2.16.1-7f26717794-66beb2e4d7.zip/node_modules/koa/",\
+      ["npm:2.16.3", {\
+        "packageLocation": "./.yarn/cache/koa-npm-2.16.3-22c7284441-43d614b3e0.zip/node_modules/koa/",\
         "packageDependencies": [\
           ["accepts", "npm:1.3.7"],\
           ["cache-content-type", "npm:1.0.1"],\
@@ -10160,7 +10160,7 @@ const RAW_RUNTIME_STATE =
           ["http-assert", "npm:1.4.1"],\
           ["http-errors", "npm:1.8.0"],\
           ["is-generator-function", "npm:1.1.0"],\
-          ["koa", "npm:2.16.1"],\
+          ["koa", "npm:2.16.3"],\
           ["koa-compose", "npm:4.1.0"],\
           ["koa-convert", "npm:2.0.0"],\
           ["on-finished", "npm:2.4.1"],\
