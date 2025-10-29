@@ -98,13 +98,7 @@ export { Tendermint34Client } from "./tendermint34";
 export * as tendermint37 from "./tendermint37";
 export { Tendermint37Client } from "./tendermint37";
 export type { CometClient } from "./tendermintclient";
-export {
-  connectComet,
-  isComet1Client,
-  isComet38Client,
-  isTendermint34Client,
-  isTendermint37Client,
-} from "./tendermintclient";
+export { connectComet, isComet1Client, isComet38Client, isTendermint37Client } from "./tendermintclient";
 export type {
   CommitSignature,
   ValidatorEd25519Pubkey,
