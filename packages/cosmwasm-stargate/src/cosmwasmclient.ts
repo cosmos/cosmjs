@@ -102,7 +102,8 @@ export class CosmWasmClient {
 
   /**
    * Creates an instance from a manually created Comet client.
-   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of
+   * auto-detection.
    */
   public static create(cometClient: CometClient): CosmWasmClient {
     return new CosmWasmClient(cometClient);
