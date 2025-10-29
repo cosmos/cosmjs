@@ -4,13 +4,6 @@ import { HttpEndpoint } from "./rpcclients";
 import { Tendermint34Client } from "./tendermint34";
 import { Tendermint37Client } from "./tendermint37";
 
-/**
- * A TendermintClient is either a Tendermint34Client or a Tendermint37Client
- *
- * @deprecated use `CometClient`
- */
-export type TendermintClient = Tendermint34Client | Tendermint37Client;
-
 /** A CometClient is either a Tendermint34Client, Tendermint37Client Comet38Client or a Comet1Client */
 export type CometClient = Tendermint34Client | Tendermint37Client | Comet38Client | Comet1Client;
 

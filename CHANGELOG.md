@@ -46,7 +46,11 @@ and this project adheres to
 
   This change requires users to use TypeScript 5.7 or newer. ([#1883])
 
+- @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
+  `CometClient` or just `Tendermint37Client` instead. ([#1866])
+
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
+[#1866]: https://github.com/cosmos/cosmjs/issues/1866
 
 ## [0.37.0] - 2025-10-29
 

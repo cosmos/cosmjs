@@ -97,7 +97,7 @@ export * as tendermint34 from "./tendermint34";
 export { Tendermint34Client } from "./tendermint34";
 export * as tendermint37 from "./tendermint37";
 export { Tendermint37Client } from "./tendermint37";
-export type { CometClient, TendermintClient } from "./tendermintclient";
+export type { CometClient } from "./tendermintclient";
 export {
   connectComet,
   isComet1Client,
