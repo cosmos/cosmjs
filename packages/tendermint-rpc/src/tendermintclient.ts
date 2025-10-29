@@ -14,6 +14,10 @@ export type TendermintClient = Tendermint34Client | Tendermint37Client;
 /** A CometClient is either a Tendermint34Client, Tendermint37Client Comet38Client or a Comet1Client */
 export type CometClient = Tendermint34Client | Tendermint37Client | Comet38Client | Comet1Client;
 
+/**
+ * @deprecated Support for Tendermint/CometBFT 0.34 will be removed in the next version of CosmJS
+ *             (https://github.com/cosmos/cosmjs/issues/1866)
+ */
 export function isTendermint34Client(client: CometClient): client is Tendermint34Client {
   return client instanceof Tendermint34Client;
 }

@@ -68,6 +68,11 @@ and this project adheres to
   If you are using any of those methods, please comment at
   https://github.com/cosmos/cosmjs/issues/1796.
 
+- @cosmjs/tendermint-rpc: Deprecate the Tendermint/CometBFT 0.34 client
+  (`isTendermint34Client`/`Tendermint34Client` as well as all related types).
+  This will be removed in the next version of CosmJS:
+  https://github.com/cosmos/cosmjs/issues/1866
+
 ## [0.36.2] - 2025-10-24
 
 ### Fixed
