@@ -267,7 +267,7 @@ describe("ValueAndUpdates", () => {
       setTimeout(() => {
         producer.error(new Error("something went wrong"));
       }, 10);
-      await expectAsync(vau.waitFor(3)).toBeRejectedWithError(/something went wrong/);
+      await expect(vau.waitFor(3)).rejects.toThrowError(/something went wrong/);
     });
   });
 });

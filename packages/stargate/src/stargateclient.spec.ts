@@ -20,7 +20,6 @@ import {
   isDeliverTxSuccess,
   PrivateStargateClient,
   StargateClient,
-  TimeoutError,
 } from "./stargateclient";
 import {
   faucet,
@@ -76,7 +75,7 @@ describe("isDeliverTxSuccess", () => {
   });
 });
 
-(simappEnabled ? describe : xdescribe)("StargateClient", () => {
+(simappEnabled ? describe : describe.skip)("StargateClient", () => {
   describe("connect", () => {
     it("works", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
@@ -95,7 +94,7 @@ describe("isDeliverTxSuccess", () => {
     it("caches chain ID", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const openedClient = client as unknown as PrivateStargateClient;
-      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.cometClient!, "status");
 
       expect(await client.getChainId()).toEqual(simapp.chainId); // from network
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache
@@ -179,7 +178,7 @@ describe("isDeliverTxSuccess", () => {
     it("rejects for non-existent address", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
-      await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
+      await expect(client.getSequence(nonExistentAddress)).rejects.toThrowError(
         /account '([a-z0-9]{10,90})' does not exist on chain/i,
       );
 
@@ -193,12 +192,12 @@ describe("isDeliverTxSuccess", () => {
       const response = await client.getBlock();
 
       expect(response).toEqual(
-        jasmine.objectContaining({
-          id: jasmine.stringMatching(tendermintIdMatcher),
-          header: jasmine.objectContaining({
+        expect.objectContaining({
+          id: expect.stringMatching(tendermintIdMatcher),
+          header: expect.objectContaining({
             chainId: await client.getChainId(),
           }),
-          txs: jasmine.arrayContaining([]),
+          txs: expect.arrayContaining([]),
         }),
       );
 
@@ -217,13 +216,13 @@ describe("isDeliverTxSuccess", () => {
       const response = await client.getBlock(height - 1);
 
       expect(response).toEqual(
-        jasmine.objectContaining({
-          id: jasmine.stringMatching(tendermintIdMatcher),
-          header: jasmine.objectContaining({
+        expect.objectContaining({
+          id: expect.stringMatching(tendermintIdMatcher),
+          header: expect.objectContaining({
             height: height - 1,
             chainId: await client.getChainId(),
           }),
-          txs: jasmine.arrayContaining([]),
+          txs: expect.arrayContaining([]),
         }),
       );
 
@@ -465,7 +464,7 @@ describe("isDeliverTxSuccess", () => {
       client.disconnect();
     });
 
-    (slowSimappEnabled ? it : xit)(
+    (slowSimappEnabled ? it : it.skip)(
       "respects user timeouts rather than RPC timeouts",
       async () => {
         const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);
@@ -540,9 +539,13 @@ describe("isDeliverTxSuccess", () => {
         });
         const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
         const smallTimeoutMs = 1_000;
-        await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
-          TimeoutError,
-          /transaction with id .+ was submitted but was not yet found on the chain/i,
+        await expect(client.broadcastTx(txRawBytes2, smallTimeoutMs)).rejects.toThrowError(
+          expect.objectContaining({
+            name: "TimeoutError",
+            message: expect.stringMatching(
+              /transaction with id .+ was submitted but was not yet found on the chain/i,
+            ),
+          }),
         );
 
         client.disconnect();

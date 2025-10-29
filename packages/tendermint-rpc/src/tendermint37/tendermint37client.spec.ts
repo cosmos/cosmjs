@@ -13,7 +13,7 @@ import {
   tendermintEnabled,
   tendermintInstances,
   tendermintSearchIndexUpdated,
-} from "../testutil.spec";
+} from "../testutils";
 import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
@@ -119,7 +119,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(response.proof).toBeUndefined();
       expect(response.log).toEqual("exists");
       expect(response.info).toEqual("");
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.height?.toString()).toMatch(nonNegativeIntegerMatcher);
 
       client.disconnect();
     });
@@ -376,18 +376,18 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
       const meta = blockchain.blockMetas[0];
 
-      expect(meta.blockId).toEqual(jasmine.objectContaining({}));
-      expect(meta.blockSize).toBeInstanceOf(Number);
+      expect(meta.blockId).toEqual(expect.objectContaining({}));
+      expect(typeof meta.blockSize).toBe("number");
       expect(meta.header).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           version: {
             block: expected.blockVersion,
             app: expected.appVersion,
           },
-          chainId: jasmine.stringMatching(expected.chainId),
+          chainId: expect.stringMatching(expected.chainId),
         }),
       );
-      expect(meta.numTxs).toBeInstanceOf(Number);
+      expect(typeof meta.numTxs).toBe("number");
 
       client.disconnect();
     });
@@ -856,7 +856,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-(tendermintEnabled ? describe : xdescribe)("Tendermint37Client", () => {
+(tendermintEnabled ? describe : describe.skip)("Tendermint37Client", () => {
   const { url, expected } = tendermintInstances[37];
 
   it("can connect to a given url", async () => {

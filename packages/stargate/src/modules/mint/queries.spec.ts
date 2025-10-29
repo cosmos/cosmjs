@@ -9,7 +9,7 @@ async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintEx
   return [QueryClient.withExtensions(cometClient, setupMintExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("MintExtension", () => {
+(simappEnabled ? describe : describe.skip)("MintExtension", () => {
   describe("params", () => {
     it("works", async () => {
       const [client, cometClient] = await makeClientWithMint(simapp.tendermintUrlHttp);

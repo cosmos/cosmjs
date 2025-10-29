@@ -31,7 +31,7 @@
     "lint-fix": "eslint --max-warnings 0 --fix .",
     "test": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test",
     "test-firefox": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-firefox",
-    "test-chrome": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
+    "test-chrome": "playwright install && yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
     "coverage": "yarn workspaces foreach --all --topological-dev --parallel --verbose run coverage",
     "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
@@ -50,6 +50,7 @@
     "@eslint/js": "^9.32.0",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
+    "@vitest/browser": "^3.2.4",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^4.4.4",
@@ -57,8 +58,11 @@
     "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "globals": "^16.3.0",
+    "playwright": "^1.56.0",
     "prettier": "^3.6.2",
-    "typescript": "~5.9"
+    "ses": "^1.13.0",
+    "typescript": "~5.9",
+    "vitest": "^3.2.4"
   },
   "packageManager": "yarn@4.9.2"
 }

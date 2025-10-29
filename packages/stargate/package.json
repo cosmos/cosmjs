@@ -15,7 +15,7 @@
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
-    "!**/testdata/"
+    "!*testdata.*"
   ],
   "repository": {
     "type": "git",
@@ -31,12 +31,15 @@
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.cjs",
+    "test-node": "vitest run --no-file-parallelism",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
+  },
+  "engines": {
+    "node": "^20.19 || >=22.12"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
@@ -51,14 +54,11 @@
   "devDependencies": {
     "@cosmjs/crypto": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/jasmine": "^4",
     "@types/karma-firefox-launcher": "^2",
     "@types/karma-jasmine": "^4",
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/node": "*",
     "glob": "^11",
-    "jasmine": "^4",
-    "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
@@ -71,6 +71,7 @@
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",
     "typescript": "~5.9",
+    "vitest": "^3.2.4",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   },

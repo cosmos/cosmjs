@@ -11,7 +11,7 @@ async function makeClientWithSlashing(
   return [QueryClient.withExtensions(cometClient, setupSlashingExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("SlashingExtension", () => {
+(simappEnabled ? describe : describe.skip)("SlashingExtension", () => {
   describe("signingInfos", () => {
     it("works", async () => {
       const [client, cometClient] = await makeClientWithSlashing(simapp.tendermintUrlHttp);

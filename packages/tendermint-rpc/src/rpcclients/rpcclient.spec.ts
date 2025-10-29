@@ -1,10 +1,10 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutils";
 import { HttpClient } from "./httpclient";
 import { hasProtocol, instanceOfRpcStreamingClient } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-(tendermintEnabled ? describe : xdescribe)("RpcClient", () => {
+(tendermintEnabled ? describe : describe.skip)("RpcClient", () => {
   const httpUrl = "http://" + defaultInstance.url;
   const wsUrl = "ws://" + defaultInstance.url;
 

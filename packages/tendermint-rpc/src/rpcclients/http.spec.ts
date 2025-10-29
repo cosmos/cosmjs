@@ -1,5 +1,5 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutils";
 import { http } from "./http";
 
 const httpServerEnabled = !!globalThis.process?.env.HTTPSERVER_ENABLED;
@@ -8,15 +8,15 @@ const tendermintUrl = defaultInstance.url;
 const echoUrl = "http://localhost:5555/echo_headers";
 
 describe("http", () => {
-  (tendermintEnabled ? it : xit)("can send a health request", async () => {
+  (tendermintEnabled ? it : it.skip)("can send a health request", async () => {
     const response = await http("POST", `http://${tendermintUrl}`, undefined, createJsonRpcRequest("health"));
-    expect(response).toEqual(jasmine.objectContaining({ jsonrpc: "2.0" }));
+    expect(response).toEqual(expect.objectContaining({ jsonrpc: "2.0" }));
   });
 
-  (httpServerEnabled ? it : xit)("can POST to echo server", async () => {
+  (httpServerEnabled ? it : it.skip)("can POST to echo server", async () => {
     const response = await http("POST", echoUrl, undefined, createJsonRpcRequest("health"));
     expect(response).toEqual({
-      request_headers: jasmine.objectContaining({
+      request_headers: expect.objectContaining({
         // Basic headers from http client
         "Content-Type": "application/json",
       }),
@@ -24,12 +24,12 @@ describe("http", () => {
   });
 
   it("errors for non-open port", async () => {
-    await expectAsync(
+    await expect(
       http("POST", `http://localhost:56745`, undefined, createJsonRpcRequest("health")),
-    ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
+    ).rejects.toThrowError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
   });
 
-  (httpServerEnabled ? it : xit)("can POST to echo server with custom headers", async () => {
+  (httpServerEnabled ? it : it.skip)("can POST to echo server with custom headers", async () => {
     // With custom headers
     const response = await http(
       "POST",
@@ -38,7 +38,7 @@ describe("http", () => {
       createJsonRpcRequest("health"),
     );
     expect(response).toEqual({
-      request_headers: jasmine.objectContaining({
+      request_headers: expect.objectContaining({
         // Basic headers from http client
         "Content-Type": "application/json",
         // Custom headers

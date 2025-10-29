@@ -2,7 +2,7 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
 import { simapp } from "../../testutils";
-import * as ibcTest from "./ibctestdata.spec";
+import * as ibcTest from "./ibctestdata";
 import { IbcExtension, setupIbcExtension } from "./queries";
 
 async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExtension, CometClient]> {
@@ -11,7 +11,7 @@ async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExte
 }
 
 // We cannot test this easily anymore since the IBC module was removed from simapp
-xdescribe("IbcExtension", () => {
+describe.skip("IbcExtension", () => {
   describe("channel", () => {
     describe("channel", () => {
       it("works", async () => {
@@ -83,7 +83,7 @@ xdescribe("IbcExtension", () => {
           clientId: ibcTest.clientId,
           clientState: {
             typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-            value: jasmine.any(Uint8Array),
+            value: expect.any(Uint8Array),
           },
         });
 
@@ -92,7 +92,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         const response = await client.ibc.channel.consensusState(
@@ -104,7 +104,7 @@ xdescribe("IbcExtension", () => {
         );
         expect(response.consensusState).toEqual({
           typeUrl: "/haha",
-          value: jasmine.any(Uint8Array),
+          value: expect.any(Uint8Array),
         });
         expect(response.clientId).toEqual(ibcTest.clientId);
 
@@ -263,7 +263,7 @@ xdescribe("IbcExtension", () => {
         const response = await client.ibc.client.state(ibcTest.clientId);
         expect(response.clientState).toEqual({
           typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-          value: jasmine.any(Uint8Array),
+          value: expect.any(Uint8Array),
         });
 
         cometClient.disconnect();
@@ -280,7 +280,7 @@ xdescribe("IbcExtension", () => {
             clientId: ibcTest.clientId,
             clientState: {
               typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-              value: jasmine.any(Uint8Array),
+              value: expect.any(Uint8Array),
             },
           },
         ]);
@@ -300,7 +300,7 @@ xdescribe("IbcExtension", () => {
             clientId: ibcTest.clientId,
             clientState: {
               typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-              value: jasmine.any(Uint8Array),
+              value: expect.any(Uint8Array),
             },
           },
         ]);
@@ -316,7 +316,7 @@ xdescribe("IbcExtension", () => {
         const response = await client.ibc.client.consensusState(ibcTest.clientId);
         expect(response.consensusState).toEqual({
           typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
-          value: jasmine.any(Uint8Array),
+          value: expect.any(Uint8Array),
         });
 
         cometClient.disconnect();
@@ -329,12 +329,12 @@ xdescribe("IbcExtension", () => {
 
         const response = await client.ibc.client.consensusStates(ibcTest.clientId);
         expect(response.consensusStates).toEqual(
-          jasmine.arrayContaining([
+          expect.arrayContaining([
             {
-              height: jasmine.anything(),
+              height: expect.anything(),
               consensusState: {
                 typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
-                value: jasmine.any(Uint8Array),
+                value: expect.any(Uint8Array),
               },
             },
           ]),
@@ -350,12 +350,12 @@ xdescribe("IbcExtension", () => {
 
         const response = await client.ibc.client.allConsensusStates(ibcTest.clientId);
         expect(response.consensusStates).toEqual(
-          jasmine.arrayContaining([
+          expect.arrayContaining([
             {
-              height: jasmine.anything(),
+              height: expect.anything(),
               consensusState: {
                 typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
-                value: jasmine.any(Uint8Array),
+                value: expect.any(Uint8Array),
               },
             },
           ]),
@@ -396,8 +396,8 @@ xdescribe("IbcExtension", () => {
 
         const response = await client.ibc.client.statesTm();
         expect(response).toEqual(
-          jasmine.arrayContaining([
-            jasmine.objectContaining({
+          expect.arrayContaining([
+            expect.objectContaining({
               chainId: "ibc-1",
             }),
           ]),
@@ -413,8 +413,8 @@ xdescribe("IbcExtension", () => {
 
         const response = await client.ibc.client.allStatesTm();
         expect(response).toEqual(
-          jasmine.arrayContaining([
-            jasmine.objectContaining({
+          expect.arrayContaining([
+            expect.objectContaining({
               chainId: "ibc-1",
             }),
           ]),
@@ -429,7 +429,7 @@ xdescribe("IbcExtension", () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         const response = await client.ibc.client.consensusStateTm(ibcTest.clientId);
-        expect(response.nextValidatorsHash).toEqual(jasmine.any(Uint8Array));
+        expect(response.nextValidatorsHash).toEqual(expect.any(Uint8Array));
         // TODO: Fill out these expectations
 
         cometClient.disconnect();
@@ -497,7 +497,7 @@ xdescribe("IbcExtension", () => {
           clientId: ibcTest.clientId,
           clientState: {
             typeUrl: "/ibc.lightclients.tendermint.v1.ClientState",
-            value: jasmine.any(Uint8Array),
+            value: expect.any(Uint8Array),
           },
         });
 
@@ -506,7 +506,7 @@ xdescribe("IbcExtension", () => {
     });
 
     describe("consensusState", () => {
-      xit("works", async () => {
+      it.skip("works", async () => {
         const [client, cometClient] = await makeClientWithIbc(simapp.tendermintUrlHttp);
 
         // TODO: Find valid values
@@ -514,7 +514,7 @@ xdescribe("IbcExtension", () => {
         expect(response.clientId).toEqual(ibcTest.clientId);
         expect(response.consensusState).toEqual({
           typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState",
-          value: jasmine.any(Uint8Array),
+          value: expect.any(Uint8Array),
         });
 
         cometClient.disconnect();

@@ -13,7 +13,7 @@ describe("Integers", () => {
         expect(Uint32.fromBytes([0xff, 0xff, 0xff, 0xff]).toNumber()).toEqual(4294967295);
       });
 
-      (typeof Buffer !== "undefined" ? it : xit)("can be constructed from Buffer", () => {
+      (typeof Buffer !== "undefined" ? it : it.skip)("can be constructed from Buffer", () => {
         expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 0])).toNumber()).toEqual(0);
         expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 1])).toNumber()).toEqual(1);
         expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 42])).toNumber()).toEqual(42);

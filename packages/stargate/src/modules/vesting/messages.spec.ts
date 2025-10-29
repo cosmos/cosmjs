@@ -12,7 +12,7 @@ import {
   simappEnabled,
 } from "../../testutils";
 
-(simappEnabled ? describe : xdescribe)("vesting messages", () => {
+(simappEnabled ? describe : describe.skip)("vesting messages", () => {
   describe("MsgCreateVestingAccount", () => {
     it("works with sign mode direct", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);

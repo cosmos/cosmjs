@@ -31,7 +31,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
   return [QueryClient.withExtensions(cometClient, setupGovExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("GovExtension", () => {
+(simappEnabled ? describe : describe.skip)("GovExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -151,7 +151,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
 
       const response = await client.gov.params("deposit");
       expect(response).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           depositParams: {
             minDeposit: simapp.govMinDeposit,
             maxDepositPeriod: {
@@ -170,7 +170,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
 
       const response = await client.gov.params("tallying");
       expect(response).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           tallyParams: {
             // Why the f*** are we getting binary values here?
             quorum: toAscii("334000000000000000"), // 0.334
@@ -188,7 +188,7 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
 
       const response = await client.gov.params("voting");
       expect(response).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           votingParams: {
             votingPeriod: {
               seconds: BigInt(172800),
@@ -221,11 +221,11 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        submitTime: { seconds: expect.anything(), nanos: expect.any(Number) },
+        depositEndTime: { seconds: expect.anything(), nanos: expect.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: expect.anything(), nanos: expect.any(Number) },
+        votingEndTime: { seconds: expect.anything(), nanos: expect.any(Number) },
       });
 
       cometClient.disconnect();
@@ -246,12 +246,12 @@ async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExte
         proposalId: longify(proposalId),
         status: ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
         finalTallyResult: { yes: "0", abstain: "0", no: "0", noWithVeto: "0" },
-        // Note: jasmine.any(Bigint) does not seem to work as expected in Jasmine 4.6
-        submitTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
-        depositEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        // Note: expect.any(Bigint) does not seem to work as expected in Jasmine 4.6
+        submitTime: { seconds: expect.anything(), nanos: expect.any(Number) },
+        depositEndTime: { seconds: expect.anything(), nanos: expect.any(Number) },
         totalDeposit: initialDeposit,
-        votingStartTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
-        votingEndTime: { seconds: jasmine.anything(), nanos: jasmine.any(Number) },
+        votingStartTime: { seconds: expect.anything(), nanos: expect.any(Number) },
+        votingEndTime: { seconds: expect.anything(), nanos: expect.any(Number) },
       });
 
       cometClient.disconnect();

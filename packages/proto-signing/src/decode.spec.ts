@@ -32,7 +32,7 @@ describe("decode", () => {
 
       const decoded = decodeTxRaw(fromHex(testVector.outputs.signedTxBytes));
       expect(decoded).toEqual({
-        authInfo: jasmine.objectContaining({
+        authInfo: expect.objectContaining({
           signerInfos: [
             {
               publicKey: {

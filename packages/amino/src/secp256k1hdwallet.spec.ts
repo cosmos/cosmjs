@@ -281,9 +281,9 @@ describe("Secp256k1HdWallet", () => {
         encryption: {
           algorithm: "xchacha20poly1305-ietf",
         },
-        data: jasmine.stringMatching(base64Matcher),
+        data: expect.stringMatching(base64Matcher),
       });
-    });
+    }, 8000);
   });
 
   describe("serializeWithEncryptionKey", () => {
@@ -306,7 +306,7 @@ describe("Secp256k1HdWallet", () => {
         encryption: {
           algorithm: "xchacha20poly1305-ietf",
         },
-        data: jasmine.stringMatching(base64Matcher),
+        data: expect.stringMatching(base64Matcher),
       });
     });
   });

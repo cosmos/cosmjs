@@ -123,7 +123,7 @@ async function executeContract(
   return client.signAndBroadcast(firstAddress, [theMsg], fee, memo);
 }
 
-(wasmdEnabled ? describe : xdescribe)("WasmExtension", () => {
+(wasmdEnabled ? describe : describe.skip)("WasmExtension", () => {
   const hackatom = getHackatom();
   const hackatomConfigKey = toAscii("config");
   let hackatomCodeId: number | undefined;
@@ -206,7 +206,7 @@ async function executeContract(
       const { contractInfo } = await client.wasm.getContractInfo(myAddress);
       assert(contractInfo);
       expect(contractInfo).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           codeId: BigInt(hackatomCodeId),
           creator: alice.address0,
           label: "my escrow",
@@ -226,9 +226,7 @@ async function executeContract(
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(client.wasm.getContractInfo(nonExistentAddress)).toBeRejectedWithError(
-        /no such contract/i,
-      );
+      await expect(client.wasm.getContractInfo(nonExistentAddress)).rejects.toThrowError(/no such contract/i);
     });
   });
 
@@ -252,7 +250,7 @@ async function executeContract(
       const history = await client.wasm.getContractCodeHistory(myAddress);
       assert(history.entries);
       expect(history.entries).toContain(
-        jasmine.objectContaining({
+        expect.objectContaining({
           codeId: BigInt(hackatomCodeId),
           operation: ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
           msg: toUtf8(
@@ -291,7 +289,7 @@ async function executeContract(
     it("rejects for non-existent address", async () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(client.wasm.getAllContractState(nonExistentAddress)).toBeRejectedWithError(
+      await expect(client.wasm.getAllContractState(nonExistentAddress)).rejects.toThrowError(
         /no such contract/i,
       );
     });
@@ -318,9 +316,9 @@ async function executeContract(
     it("returns null for non-existent address", async () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
-      await expectAsync(
-        client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey),
-      ).toBeRejectedWithError(/no such contract/i);
+      await expect(client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey)).rejects.toThrowError(
+        /no such contract/i,
+      );
     });
   });
 
@@ -337,16 +335,16 @@ async function executeContract(
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
       const request = { nosuchkey: {} };
-      await expectAsync(
-        client.wasm.queryContractSmart(hackatomContractAddress, request),
-      ).toBeRejectedWithError(/Error parsing into type hackatom::msg::QueryMsg: unknown variant/i);
+      await expect(client.wasm.queryContractSmart(hackatomContractAddress, request)).rejects.toThrowError(
+        /Error parsing into type hackatom::msg::QueryMsg: unknown variant/i,
+      );
     });
 
     it("throws for non-existent address", async () => {
       const client = await makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const request = { verifier: {} };
-      await expectAsync(client.wasm.queryContractSmart(nonExistentAddress, request)).toBeRejectedWithError(
+      await expect(client.wasm.queryContractSmart(nonExistentAddress, request)).rejects.toThrowError(
         /no such contract/i,
       );
     });

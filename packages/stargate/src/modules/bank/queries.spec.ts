@@ -15,7 +15,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
   return [QueryClient.withExtensions(cometClient, setupBankExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("BankExtension", () => {
+(simappEnabled ? describe : describe.skip)("BankExtension", () => {
   describe("balance", () => {
     it("works for different existing balances", async () => {
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
@@ -99,7 +99,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
           denom: simapp.denomFee,
         },
         {
-          amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
+          amount: expect.stringMatching(nonNegativeIntegerMatcher),
           denom: simapp.denomStaking,
         },
       ]);
@@ -140,7 +140,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
 
       const metadata = await client.bank.denomMetadata("ucosm");
       expect(metadata).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           description: "The fee token of this test chain",
           denomUnits: [
             {
@@ -167,7 +167,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
     it("works for non-existent denom", async () => {
       const [client, cometClient] = await makeClientWithBank(simapp.tendermintUrlHttp);
 
-      await expectAsync(client.bank.denomMetadata("nothere")).toBeRejectedWithError(/code = NotFound/i);
+      await expect(client.bank.denomMetadata("nothere")).rejects.toThrowError(/code = NotFound/i);
 
       cometClient.disconnect();
     });
@@ -180,7 +180,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
       const metadatas = await client.bank.denomsMetadata();
       expect(metadatas.length).toEqual(1);
       expect(metadatas[0]).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           description: "The fee token of this test chain",
           denomUnits: [
             {

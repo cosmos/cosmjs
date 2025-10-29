@@ -13,7 +13,7 @@ import {
   tendermintEnabled,
   tendermintInstances,
   tendermintSearchIndexUpdated,
-} from "../testutil.spec";
+} from "../testutils";
 import { Comet1Client } from "./comet1client";
 import { hashTx } from "./hasher";
 import { buildQuery } from "./requests";
@@ -40,10 +40,10 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(genesis).toBeTruthy();
       expect(genesis.validators).toEqual([
         {
-          address: jasmine.any(Uint8Array), // changes on every chain restart
+          address: expect.any(Uint8Array), // changes on every chain restart
           pubkey: {
             algorithm: "ed25519",
-            data: jasmine.any(Uint8Array), // changes on every chain restart
+            data: expect.any(Uint8Array), // changes on every chain restart
           },
           power: 10n,
           name: "The Machine 2035",
@@ -130,7 +130,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(response.proof).toBeUndefined();
       expect(response.log).toEqual("exists");
       expect(response.info).toEqual("");
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.height?.toString()).toMatch(nonNegativeIntegerMatcher);
 
       client.disconnect();
     });
@@ -386,18 +386,18 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
       const meta = blockchain.blockMetas[0];
 
-      expect(meta.blockId).toEqual(jasmine.objectContaining({}));
-      expect(meta.blockSize).toBeInstanceOf(Number);
+      expect(meta.blockId).toEqual(expect.objectContaining({}));
+      expect(typeof meta.blockSize).toBe("number");
       expect(meta.header).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           version: {
             block: expected.blockVersion,
             app: expected.appVersion,
           },
-          chainId: jasmine.stringMatching(expected.chainId),
+          chainId: expect.stringMatching(expected.chainId),
         }),
       );
-      expect(meta.numTxs).toBeInstanceOf(Number);
+      expect(typeof meta.numTxs).toBe("number");
 
       client.disconnect();
     });
@@ -870,7 +870,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-(tendermintEnabled ? describe : xdescribe)("Comet1Client with CometBFT 1 backend", () => {
+(tendermintEnabled ? describe : describe.skip)("Comet1Client with CometBFT 1 backend", () => {
   const { url, expected } = tendermintInstances[1];
 
   it("can connect to a given url", async () => {

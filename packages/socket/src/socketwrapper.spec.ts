@@ -2,7 +2,7 @@ import { SocketWrapper } from "./socketwrapper";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-(enabled ? describe : xdescribe)("SocketWrapper", () => {
+(enabled ? describe : describe.skip)("SocketWrapper", () => {
   const socketServerUrlNonExisting = "ws://localhost:4443/websocket";
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
@@ -126,7 +126,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     socket.connect();
 
     return ret;
-  });
+  }, 6000);
 
   it("times out when establishing connection takes too long", async () => {
     const socket = new SocketWrapper(
@@ -147,7 +147,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     );
     socket.connect();
 
-    await expectAsync(socket.connected).toBeRejectedWithError(/connection attempt timed out/i);
+    await expect(socket.connected).rejects.toThrowError(/connection attempt timed out/i);
   });
 
   it("can connect and disconnect", async () => {
@@ -338,7 +338,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
         socket.disconnect();
       },
       () => {
-        done(expectAsync(socket.send("la li lu")).toBeRejectedWithError(/socket was closed/i));
+        done(expect(socket.send("la li lu")).rejects.toThrowError(/socket was closed/i));
       },
     );
     socket.connect();

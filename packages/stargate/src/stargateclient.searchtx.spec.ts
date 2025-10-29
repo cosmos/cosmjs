@@ -98,7 +98,7 @@ async function sendTokens(
   };
 }
 
-(simappEnabled ? describe : xdescribe)("StargateClient.getTx and .searchTx", () => {
+(simappEnabled ? describe : describe.skip)("StargateClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;
@@ -155,7 +155,7 @@ async function sendTokens(
       const result = await client.getTx(sendSuccessful.hash);
       assert(result);
       expect(result).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
           code: 0,
@@ -175,7 +175,7 @@ async function sendTokens(
       const result = await client.getTx(sendUnsuccessful.hash);
       assert(result);
       expect(result).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendUnsuccessful.height,
           hash: sendUnsuccessful.hash,
           code: 5,
@@ -202,7 +202,7 @@ async function sendTokens(
       const result = await client.searchTx(`tx.height=${sendSuccessful.height}`);
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result).toContain(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
           code: 0,
@@ -222,7 +222,7 @@ async function sendTokens(
       const result = await client.searchTx(`tx.height=${sendUnsuccessful.height}`);
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result).toContain(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendUnsuccessful.height,
           hash: sendUnsuccessful.hash,
           code: 5,
@@ -252,7 +252,7 @@ async function sendTokens(
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
           tx: sendSuccessful.tx,
@@ -279,7 +279,7 @@ async function sendTokens(
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
           tx: sendSuccessful.tx,
@@ -304,7 +304,7 @@ async function sendTokens(
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
           tx: sendSuccessful.tx,

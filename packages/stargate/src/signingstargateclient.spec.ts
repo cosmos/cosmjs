@@ -48,7 +48,7 @@ import {
   validator,
 } from "./testutils";
 
-(simappEnabled ? describe : xdescribe)("SigningStargateClient", () => {
+(simappEnabled ? describe : describe.skip)("SigningStargateClient", () => {
   describe("constructor", () => {
     it("can be constructed with custom registry", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
@@ -247,7 +247,7 @@ import {
   });
 
   // We cannot test this easily anymore since the IBC module was removed from simapp
-  xdescribe("sendIbcTokens", () => {
+  describe.skip("sendIbcTokens", () => {
     it("works with direct signing", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(
@@ -962,10 +962,8 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
-          jasmine.objectContaining({
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
+          expect.objectContaining({
             code: 30,
           }),
         );
@@ -1238,10 +1236,8 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(faucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
-          jasmine.objectContaining({
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
+          expect.objectContaining({
             code: 30,
           }),
         );

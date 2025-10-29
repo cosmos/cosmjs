@@ -4,7 +4,7 @@ import { StreamingSocket } from "./streamingsocket";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
-(enabled ? describe : xdescribe)("StreamingSocket", () => {
+(enabled ? describe : describe.skip)("StreamingSocket", () => {
   const socketServerUrl = "ws://localhost:4444/websocket";
   const socketServerUrlSlow = "ws://localhost:4445/websocket";
 
@@ -27,13 +27,13 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
     socket.connect();
     await socket.connected;
     socket.disconnect();
-  });
+  }, 8000);
 
   it("times out when establishing connection takes too long", async () => {
     const socket = new StreamingSocket(socketServerUrlSlow, 2_000);
     socket.connect();
 
-    await expectAsync(socket.connected).toBeRejectedWithError(/connection attempt timed out/i);
+    await expect(socket.connected).rejects.toThrowError(/connection attempt timed out/i);
   });
 
   it("can send events when connected", async () => {

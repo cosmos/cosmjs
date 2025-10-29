@@ -32,12 +32,15 @@
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.cjs",
+    "test-node": "vitest run",
     "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test",
     "start-dev": "FAUCET_ADDRESS_PREFIX=wasm FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26659\"",
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\"",
     "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.cjs"
+  },
+  "engines": {
+    "node": "^20.19 || >=22.12"
   },
   "dependencies": {
     "@cosmjs/crypto": "workspace:^",
@@ -52,17 +55,15 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/jasmine": "^4",
     "@types/koa": "^2.15.0",
     "@types/koa-bodyparser": "^4.3",
     "@types/koa__cors": "^3.3",
-    "jasmine": "^4",
-    "jasmine-spec-reporter": "^6",
     "nyc": "^17.1.0",
     "prettier": "^3.6.2",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typescript": "~5.9",
+    "vitest": "^3.2.4",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   },

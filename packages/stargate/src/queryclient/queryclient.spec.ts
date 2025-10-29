@@ -25,7 +25,7 @@ async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
   return [QueryClient.withExtensions(cometClient), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("QueryClient", () => {
+(simappEnabled ? describe : describe.skip)("QueryClient", () => {
   describe("queryAbci", () => {
     it("works via WebSockets", async () => {
       const [client, cometClient] = await makeClient(simapp.tendermintUrlWs);

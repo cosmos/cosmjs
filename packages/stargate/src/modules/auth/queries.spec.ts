@@ -13,7 +13,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
   return [QueryClient.withExtensions(cometClient, setupAuthExtension), cometClient];
 }
 
-(simappEnabled ? describe : xdescribe)("AuthExtension", () => {
+(simappEnabled ? describe : describe.skip)("AuthExtension", () => {
   describe("account", () => {
     it("works for unused account", async () => {
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
@@ -22,7 +22,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
 
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
       expect(BaseAccount.decode(account.value)).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           address: unused.address,
           accountNumber: BigInt(unused.accountNumber),
           sequence: BigInt(0),
@@ -51,7 +51,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
     it("rejects for non-existent address", async () => {
       const [client, cometClient] = await makeClientWithAuth(simapp.tendermintUrlHttp);
 
-      await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(
+      await expect(client.auth.account(nonExistentAddress)).rejects.toThrowError(
         /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
       );
 

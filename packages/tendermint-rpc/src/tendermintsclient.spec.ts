@@ -5,9 +5,9 @@ import {
   isTendermint34Client,
   isTendermint37Client,
 } from "./tendermintclient";
-import { tendermintEnabled, tendermintInstances } from "./testutil.spec";
+import { tendermintEnabled, tendermintInstances } from "./testutils";
 
-(tendermintEnabled ? describe : xdescribe)("connectComet", () => {
+(tendermintEnabled ? describe : describe.skip)("connectComet", () => {
   it("works for Tendermint 0.34", async () => {
     const client = await connectComet("http://" + tendermintInstances[34].url);
     expect(isTendermint34Client(client)).toEqual(true);

@@ -3,11 +3,11 @@ import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutils";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-(tendermintEnabled ? describe : xdescribe)("WebsocketClient", () => {
+(tendermintEnabled ? describe : describe.skip)("WebsocketClient", () => {
   const { blockTime, url } = defaultInstance;
   const tendermintUrl = "ws://" + url;
 
@@ -21,7 +21,7 @@ import { WebsocketClient } from "./websocketclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
+    await expect(client.execute(createJsonRpcRequest("no-such-method"))).rejects.toThrowError();
 
     client.disconnect();
   });
@@ -181,7 +181,7 @@ import { WebsocketClient } from "./websocketclient";
 
     client.disconnect();
 
-    await expectAsync(client.execute(createJsonRpcRequest("health"))).toBeRejectedWithError(
+    await expect(client.execute(createJsonRpcRequest("health"))).rejects.toThrowError(
       /socket has disconnected/i,
     );
   });

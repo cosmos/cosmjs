@@ -38,7 +38,7 @@ interface HackatomInstance {
   readonly address: string;
 }
 
-(wasmdEnabled ? describe : xdescribe)("CosmWasmClient", () => {
+(wasmdEnabled ? describe : describe.skip)("CosmWasmClient", () => {
   describe("connect", () => {
     it("can be constructed", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
@@ -55,7 +55,7 @@ interface HackatomInstance {
     it("caches chain ID", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.cometClient!, "status");
 
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from cache
@@ -109,7 +109,7 @@ interface HackatomInstance {
     it("rejects for missing accounts", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const missing = makeRandomAddress();
-      await expectAsync(client.getSequence(missing)).toBeRejectedWithError(
+      await expect(client.getSequence(missing)).rejects.toThrowError(
         /account '([a-z0-9]{10,90})' does not exist on chain/i,
       );
     });
@@ -243,7 +243,7 @@ interface HackatomInstance {
       };
 
       // check info
-      expect(result).toEqual(jasmine.objectContaining(expectedInfo));
+      expect(result).toEqual(expect.objectContaining(expectedInfo));
       // check data
       expect(sha256(result.data)).toEqual(fromHex(expectedInfo.checksum));
     });
@@ -251,7 +251,7 @@ interface HackatomInstance {
     it("caches downloads", async () => {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const openedClient = client as unknown as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.queryClient!.wasm, "getCode").and.callThrough();
+      const getCodeSpy = vi.spyOn(openedClient.queryClient!.wasm, "getCode");
 
       const result1 = await client.getCodeDetails(deployedHackatom.codeId); // from network
       const result2 = await client.getCodeDetails(deployedHackatom.codeId); // from cache
@@ -319,7 +319,7 @@ interface HackatomInstance {
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const contract = await client.getContract(deployedIbcReflect.instances[0].address);
       expect(contract).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           address: deployedIbcReflect.instances[0].address,
           codeId: deployedIbcReflect.codeId,
           ibcPortId: deployedIbcReflect.instances[0].ibcPortId,
@@ -375,7 +375,7 @@ interface HackatomInstance {
 
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(client.queryContractRaw(nonExistentAddress, configKey)).toBeRejectedWithError(
+      await expect(client.queryContractRaw(nonExistentAddress, configKey)).rejects.toThrowError(
         /no such contract/i,
       );
     });
@@ -422,7 +422,7 @@ interface HackatomInstance {
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(client.queryContractSmart(contract.address, { broken: {} })).toBeRejectedWithError(
+      await expect(client.queryContractSmart(contract.address, { broken: {} })).rejects.toThrowError(
         /Error parsing into type hackatom::msg::QueryMsg: unknown variant/i,
       );
     });
@@ -430,9 +430,9 @@ interface HackatomInstance {
     it("errors for non-existent contract", async () => {
       const nonExistentAddress = makeRandomAddress();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      await expectAsync(
-        client.queryContractSmart(nonExistentAddress, { verifier: {} }),
-      ).toBeRejectedWithError(/no such contract/i);
+      await expect(client.queryContractSmart(nonExistentAddress, { verifier: {} })).rejects.toThrowError(
+        /no such contract/i,
+      );
     });
   });
 });

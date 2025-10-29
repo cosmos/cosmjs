@@ -50,7 +50,7 @@ import {
   wasmdEnabled,
 } from "./testutils";
 
-(wasmdEnabled ? describe : xdescribe)("SigningCosmWasmClient", () => {
+(wasmdEnabled ? describe : describe.skip)("SigningCosmWasmClient", () => {
   describe("connectWithSigner", () => {
     it("can be constructed", async () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
@@ -143,7 +143,7 @@ import {
     });
 
     // Test disabled. Known issue: https://github.com/CosmWasm/wasmd/issues/1863
-    xit("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
+    it.skip("works with Amino JSON signer (instantiatePermission set to one address)", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -170,7 +170,7 @@ import {
     });
 
     // Test disabled. Known issue: https://github.com/CosmWasm/wasmd/issues/1863
-    xit("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
+    it.skip("works with Amino JSON signer (instantiatePermission set to everybody)", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, { prefix: wasmd.prefix });
       const client = await SigningCosmWasmClient.connectWithSigner(
         wasmd.endpoint,
@@ -1339,10 +1339,8 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
-          jasmine.objectContaining({
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
+          expect.objectContaining({
             code: 30,
           }),
         );
@@ -1615,10 +1613,8 @@ import {
         const height = await client.getHeight();
         const signed = await client.sign(alice.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
 
-        await expectAsync(
-          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
-        ).toBeRejectedWith(
-          jasmine.objectContaining({
+        await expect(client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()))).rejects.toThrowError(
+          expect.objectContaining({
             code: 30,
           }),
         );
