@@ -1,3 +1,5 @@
+import { sleep } from "@cosmjs/utils";
+
 import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
@@ -62,10 +64,11 @@ describe("QueueingStreamingSocket", () => {
       requests.forEach((request) => {
         socket.queueRequest(request);
       });
-      setTimeout(() => {
-        expect(socket.getQueueLength()).toEqual(3);
-        socket.connect();
-      }, 5_000);
+
+      await sleep(5_000);
+
+      expect(socket.getQueueLength()).toEqual(3);
+      socket.connect();
 
       return ret;
     });
@@ -183,13 +186,15 @@ describe("QueueingStreamingSocket", () => {
       });
 
       socket.connect();
-      setTimeout(() => {
-        socket.disconnect();
-        socket.reconnect();
-        setTimeout(() => {
-          socket.disconnect();
-        }, 1000);
-      }, 1000);
+
+      await sleep(1000);
+
+      socket.disconnect();
+      socket.reconnect();
+
+      await sleep(1000);
+
+      socket.disconnect();
 
       return ret;
     });

@@ -1,3 +1,4 @@
+import { sleep } from "@cosmjs/utils";
 import { Listener } from "xstream";
 
 import { DefaultValueProducer } from "./defaultvalueproducer";
@@ -183,15 +184,12 @@ describe("ValueAndUpdates", () => {
       },
     });
 
-    setTimeout(() => {
-      producer.update(22);
-    }, 10);
-    setTimeout(() => {
-      producer.update(33);
-    }, 20);
-    setTimeout(() => {
-      producer.update(44);
-    }, 30);
+    await sleep(10);
+    producer.update(22);
+    await sleep(10);
+    producer.update(33);
+    await sleep(10);
+    producer.update(44);
 
     return ret;
   });
