@@ -23,7 +23,7 @@ import {
   PrivateStargateClient,
   StargateClient,
   TimeoutError,
-} from "./stargateclient.js";
+} from "./stargateclient.ts";
 import {
   evmd,
   evmdEnabled,
@@ -39,7 +39,7 @@ import {
   tendermintIdMatcher,
   unused,
   validator,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 const resultFailure: DeliverTxResponse = {
   code: 5,

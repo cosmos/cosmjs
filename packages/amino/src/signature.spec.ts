@@ -5,7 +5,7 @@ import {
   encodeEthSecp256k1Signature,
   encodeSecp256k1Signature,
   StdSignature,
-} from "./signature.js";
+} from "./signature.ts";
 
 describe("signature", () => {
   describe("encodeSecp256k1Signature", () => {

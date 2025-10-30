@@ -1,11 +1,11 @@
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { makeCosmoshubPath } from "./paths.js";
-import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet.js";
-import { serializeSignDoc, StdSignDoc } from "./signdoc.js";
-import { base64Matcher } from "./testutils.js";
-import { executeKdf, KdfConfiguration } from "./wallet.js";
+import { makeCosmoshubPath } from "./paths.ts";
+import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet.ts";
+import { serializeSignDoc, StdSignDoc } from "./signdoc.ts";
+import { base64Matcher } from "./testutils.ts";
+import { executeKdf, KdfConfiguration } from "./wallet.ts";
 
 describe("Secp256k1HdWallet", () => {
   // m/44'/118'/0'/0/0

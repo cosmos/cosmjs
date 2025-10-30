@@ -1,10 +1,10 @@
 import { Secp256k1, Sha256 } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 
-import { rawSecp256k1PubkeyToRawAddress } from "./addresses.js";
-import { encodeSecp256k1Signature } from "./signature.js";
-import { serializeSignDoc, StdSignDoc } from "./signdoc.js";
-import { AccountData, AminoSignResponse, OfflineAminoSigner } from "./signer.js";
+import { rawSecp256k1PubkeyToRawAddress } from "./addresses.ts";
+import { encodeSecp256k1Signature } from "./signature.ts";
+import { serializeSignDoc, StdSignDoc } from "./signdoc.ts";
+import { AccountData, AminoSignResponse, OfflineAminoSigner } from "./signer.ts";
 
 /**
  * A wallet that holds a single secp256k1 keypair.

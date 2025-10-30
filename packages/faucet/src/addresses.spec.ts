@@ -1,4 +1,4 @@
-import { isValidAddress } from "./addresses.js";
+import { isValidAddress } from "./addresses.ts";
 
 describe("isValidAddress", () => {
   it("accepts account address", () => {

@@ -1,6 +1,6 @@
 import { sleep } from "@cosmjs/utils";
 
-import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket.js";
+import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket.ts";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 

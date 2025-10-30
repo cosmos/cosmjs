@@ -14,7 +14,7 @@ import { assert, assertDefined } from "@cosmjs/utils";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AbsoluteTxPosition, ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { findAttribute, SigningCosmWasmClient } from "../../signingcosmwasmclient.js";
+import { findAttribute, SigningCosmWasmClient } from "../../signingcosmwasmclient.ts";
 import {
   alice,
   bech32AddressMatcher,
@@ -25,14 +25,14 @@ import {
   makeWasmClient,
   wasmd,
   wasmdEnabled,
-} from "../../testutils.js";
+} from "../../testutils.ts";
 import {
   MsgExecuteContractEncodeObject,
   MsgInstantiateContractEncodeObject,
   MsgStoreCodeEncodeObject,
   wasmTypes,
-} from "./messages.js";
-import { JsonObject } from "./queries.js";
+} from "./messages.ts";
+import { JsonObject } from "./queries.ts";
 
 const registry = new Registry(wasmTypes);
 

@@ -1,7 +1,7 @@
 import { QueryClientImpl } from "cosmjs-types/cosmos/auth/v1beta1/query";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { createProtobufRpcClient, QueryClient } from "../../queryclient/index.js";
+import { createProtobufRpcClient, QueryClient } from "../../queryclient/index.ts";
 
 export interface AuthExtension {
   readonly auth: {

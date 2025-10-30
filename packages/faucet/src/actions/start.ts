@@ -1,10 +1,10 @@
 import { StargateClient } from "@cosmjs/stargate";
 
-import { Webserver } from "../api/webserver.js";
-import * as constants from "../constants.js";
-import { logAccountsState } from "../debugging.js";
-import { Faucet } from "../faucet.js";
-import { makePathBuilder } from "../pathbuilder.js";
+import { Webserver } from "../api/webserver.ts";
+import * as constants from "../constants.ts";
+import { logAccountsState } from "../debugging.ts";
+import { Faucet } from "../faucet.ts";
+import { makePathBuilder } from "../pathbuilder.ts";
 
 export async function start(args: readonly string[]): Promise<void> {
   if (args.length < 1) {

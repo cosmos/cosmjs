@@ -1,15 +1,15 @@
-export { type Argon2idOptions, Argon2id, isArgon2idOptions } from "./argon2.js";
-export { Bip39, EnglishMnemonic } from "./bip39.js";
-export { Ed25519, Ed25519Keypair } from "./ed25519.js";
-export type { HashFunction } from "./hash.js";
-export { Hmac } from "./hmac.js";
-export { Keccak256, keccak256 } from "./keccak.js";
-export { Random } from "./random.js";
-export { Ripemd160, ripemd160 } from "./ripemd.js";
-export { type Secp256k1Keypair, Secp256k1 } from "./secp256k1.js";
-export { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.js";
-export { Sha256, sha256, Sha512, sha512 } from "./sha.js";
-export type { HdPath, Slip10Result } from "./slip10.js";
+export { type Argon2idOptions, Argon2id, isArgon2idOptions } from "./argon2.ts";
+export { Bip39, EnglishMnemonic } from "./bip39.ts";
+export { Ed25519, Ed25519Keypair } from "./ed25519.ts";
+export type { HashFunction } from "./hash.ts";
+export { Hmac } from "./hmac.ts";
+export { Keccak256, keccak256 } from "./keccak.ts";
+export { Random } from "./random.ts";
+export { Ripemd160, ripemd160 } from "./ripemd.ts";
+export { type Secp256k1Keypair, Secp256k1 } from "./secp256k1.ts";
+export { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.ts";
+export { Sha256, sha256, Sha512, sha512 } from "./sha.ts";
+export type { HdPath, Slip10Result } from "./slip10.ts";
 export {
   pathToString,
   Slip10,
@@ -17,5 +17,5 @@ export {
   slip10CurveFromString,
   Slip10RawIndex,
   stringToPath,
-} from "./slip10.js";
-export { xchacha20NonceLength, Xchacha20poly1305Ietf } from "./xchacha20poly1305.js";
+} from "./slip10.ts";
+export { xchacha20NonceLength, Xchacha20poly1305Ietf } from "./xchacha20poly1305.ts";

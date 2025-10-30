@@ -2,9 +2,9 @@
 
 import { Producer, Stream } from "xstream";
 
-import { JsonRpcClient, SimpleMessagingConnection } from "./jsonrpcclient.js";
-import { parseJsonRpcResponse } from "./parse.js";
-import { JsonRpcRequest, JsonRpcResponse } from "./types.js";
+import { JsonRpcClient, SimpleMessagingConnection } from "./jsonrpcclient.ts";
+import { parseJsonRpcResponse } from "./parse.ts";
+import { JsonRpcRequest, JsonRpcResponse } from "./types.ts";
 
 function makeSimpleMessagingConnection(
   worker: Worker,

@@ -1,7 +1,7 @@
 import { sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 
-import { DefaultValueProducer } from "./defaultvalueproducer.js";
+import { DefaultValueProducer } from "./defaultvalueproducer.ts";
 
 async function oneTickLater(): Promise<void> {
   return sleep(0);

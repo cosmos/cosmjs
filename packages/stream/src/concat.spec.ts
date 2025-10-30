@@ -1,7 +1,7 @@
 import { sleep } from "@cosmjs/utils";
 import { Producer, Stream } from "xstream";
 
-import { concat } from "./concat.js";
+import { concat } from "./concat.ts";
 
 async function producerIsStopped(): Promise<void> {
   return sleep(50);

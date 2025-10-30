@@ -1,7 +1,7 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Decimal } from "@cosmjs/math";
 
-import { checkDynamicGasPriceSupport, multiplyDecimalByNumber, queryDynamicGasPrice } from "./feemarket.js";
+import { checkDynamicGasPriceSupport, multiplyDecimalByNumber, queryDynamicGasPrice } from "./feemarket.ts";
 
 interface MockQueryClient {
   queryAbci(path: string, data: Uint8Array, height?: number): Promise<{ value: Uint8Array }>;

@@ -13,9 +13,9 @@ import {
   TelescopeGeneratedType,
   TsProto2GeneratedType,
   TsProtoGeneratedType,
-} from "./registry.js";
-import * as tsProto1 from "./testdata/ts-proto-v1.js";
-import * as tsProto2 from "./testdata/ts-proto-v2.js";
+} from "./registry.ts";
+import * as tsProto1 from "./testdata/ts-proto-v1.ts";
+import * as tsProto2 from "./testdata/ts-proto-v2.ts";
 
 describe("registry demo", () => {
   describe("TelescopeGeneratedType", () => {

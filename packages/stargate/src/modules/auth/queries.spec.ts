@@ -5,7 +5,7 @@ import { assert } from "@cosmjs/utils";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { QueryClient } from "../../queryclient/index.js";
+import { QueryClient } from "../../queryclient/index.ts";
 import {
   evmd,
   evmdEnabled,
@@ -15,8 +15,8 @@ import {
   simappEnabled,
   unused,
   validator,
-} from "../../testutils.js";
-import { AuthExtension, setupAuthExtension } from "./queries.js";
+} from "../../testutils.ts";
+import { AuthExtension, setupAuthExtension } from "./queries.ts";
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

@@ -1,8 +1,8 @@
 import { fromBech32, fromHex, toBase64 } from "@cosmjs/encoding";
 
-import { pubkeyToAddress, pubkeyToRawAddress } from "./addresses.js";
-import { decodeBech32Pubkey } from "./encoding.js";
-import { MultisigThresholdPubkey } from "./pubkeys.js";
+import { pubkeyToAddress, pubkeyToRawAddress } from "./addresses.ts";
+import { decodeBech32Pubkey } from "./encoding.ts";
+import { MultisigThresholdPubkey } from "./pubkeys.ts";
 
 describe("addresses", () => {
   describe("pubkeyToRawAddress", () => {

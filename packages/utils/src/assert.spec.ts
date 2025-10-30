@@ -1,4 +1,4 @@
-import { assert, assertDefined, assertDefinedAndNotNull } from "./assert.js";
+import { assert, assertDefined, assertDefinedAndNotNull } from "./assert.ts";
 
 describe("assert", () => {
   describe("assert", () => {

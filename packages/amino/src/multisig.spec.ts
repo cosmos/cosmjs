@@ -1,5 +1,5 @@
-import { compareArrays, createMultisigThresholdPubkey } from "./multisig.js";
-import { test1, test2, test3, testgroup1, testgroup2, testgroup3, testgroup4 } from "./testutils.js";
+import { compareArrays, createMultisigThresholdPubkey } from "./multisig.ts";
+import { test1, test2, test3, testgroup1, testgroup2, testgroup3, testgroup4 } from "./testutils.ts";
 
 describe("multisig", () => {
   describe("compareArrays", () => {

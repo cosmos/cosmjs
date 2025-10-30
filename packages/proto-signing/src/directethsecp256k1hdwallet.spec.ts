@@ -2,9 +2,9 @@ import { coins } from "@cosmjs/amino";
 import { keccak256, Secp256k1, Secp256k1Signature, Slip10RawIndex } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { DirectEthSecp256k1HdWallet } from "./directethsecp256k1hdwallet.js";
-import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing.js";
-import { faucet, testVectors } from "./testutils.js";
+import { DirectEthSecp256k1HdWallet } from "./directethsecp256k1hdwallet.ts";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing.ts";
+import { faucet, testVectors } from "./testutils.ts";
 
 describe("DirectEthSecp256k1HdWallet", () => {
   // m/44'/60'/0'/0/0

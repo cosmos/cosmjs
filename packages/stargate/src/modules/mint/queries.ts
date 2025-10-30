@@ -7,7 +7,7 @@ import {
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
   QueryClient,
-} from "../../queryclient/index.js";
+} from "../../queryclient/index.ts";
 
 /**
  * Like Params from "cosmjs-types/cosmos/mint/v1beta1/mint"

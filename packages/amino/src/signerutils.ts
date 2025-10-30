@@ -2,9 +2,9 @@
  * Utility functions for working with signer accounts and algorithm detection.
  */
 
-import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding.js";
-import { EthSecp256k1Pubkey, Secp256k1Pubkey } from "./pubkeys.js";
-import type { AccountData } from "./signer.js";
+import { encodeEthSecp256k1Pubkey, encodeSecp256k1Pubkey } from "./encoding.ts";
+import { EthSecp256k1Pubkey, Secp256k1Pubkey } from "./pubkeys.ts";
+import type { AccountData } from "./signer.ts";
 
 /**
  * Checks if an account uses Ethereum secp256k1 keys by examining the algorithm name.

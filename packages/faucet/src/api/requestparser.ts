@@ -1,6 +1,6 @@
 import { isNonNullObject } from "@cosmjs/utils";
 
-import { HttpError } from "./httperror.js";
+import { HttpError } from "./httperror.ts";
 
 export interface CreditRequestBodyData {
   /** The base denomination */

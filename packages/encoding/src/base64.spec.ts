@@ -1,4 +1,4 @@
-import { fromBase64, toBase64 } from "./base64.js";
+import { fromBase64, toBase64 } from "./base64.ts";
 
 describe("base64", () => {
   it("encodes to base64", () => {

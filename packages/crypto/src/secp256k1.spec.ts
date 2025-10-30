@@ -1,9 +1,9 @@
 /* eslint-disable no-bitwise */
 import { fromHex } from "@cosmjs/encoding";
 
-import { Secp256k1 } from "./secp256k1.js";
-import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.js";
-import { sha256 } from "./sha.js";
+import { Secp256k1 } from "./secp256k1.ts";
+import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.ts";
+import { sha256 } from "./sha.ts";
 
 describe("Secp256k1", () => {
   // How to generate Secp256k1 test vectors:

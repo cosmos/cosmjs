@@ -1,7 +1,7 @@
-export { fromAscii, toAscii } from "./ascii.js";
-export { fromBase64, toBase64 } from "./base64.js";
-export { fromBech32, normalizeBech32, toBech32 } from "./bech32.js";
-export { fromHex, toHex } from "./hex.js";
-export { fromRfc3339, toRfc3339 } from "./rfc3339.js";
-export { fixUint8Array } from "./uint8array.js";
-export { fromUtf8, toUtf8 } from "./utf8.js";
+export { fromAscii, toAscii } from "./ascii.ts";
+export { fromBase64, toBase64 } from "./base64.ts";
+export { fromBech32, normalizeBech32, toBech32 } from "./bech32.ts";
+export { fromHex, toHex } from "./hex.ts";
+export { fromRfc3339, toRfc3339 } from "./rfc3339.ts";
+export { fixUint8Array } from "./uint8array.ts";
+export { fromUtf8, toUtf8 } from "./utf8.ts";

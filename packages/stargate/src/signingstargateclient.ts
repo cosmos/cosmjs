@@ -27,14 +27,14 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 
-import { AminoConverters, AminoTypes } from "./aminotypes.js";
-import { calculateFee, GasPrice } from "./fee.js";
+import { AminoConverters, AminoTypes } from "./aminotypes.ts";
+import { calculateFee, GasPrice } from "./fee.ts";
 import {
   DynamicGasPriceConfig,
   isDynamicGasPriceConfig,
   multiplyDecimalByNumber,
   queryDynamicGasPrice,
-} from "./feemarket.js";
+} from "./feemarket.ts";
 import {
   authzTypes,
   bankTypes,
@@ -58,8 +58,8 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
   vestingTypes,
-} from "./modules/index.js";
-import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient.js";
+} from "./modules/index.ts";
+import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient.ts";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.base.v1beta1.Coin", Coin],

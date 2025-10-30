@@ -4,9 +4,9 @@ import { assert, sleep } from "@cosmjs/utils";
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { longify } from "../../queryclient/index.js";
-import { SigningStargateClient } from "../../signingstargateclient.js";
-import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
+import { longify } from "../../queryclient/index.ts";
+import { SigningStargateClient } from "../../signingstargateclient.ts";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.ts";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -15,9 +15,9 @@ import {
   simapp50Enabled,
   simappEnabled,
   validator,
-} from "../../testutils.js";
-import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index.js";
-import { MsgVoteWeightedEncodeObject } from "./messages.js";
+} from "../../testutils.ts";
+import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index.ts";
+import { MsgVoteWeightedEncodeObject } from "./messages.ts";
 
 (simappEnabled ? describe : xdescribe)("gov messages", () => {
   const defaultFee = {

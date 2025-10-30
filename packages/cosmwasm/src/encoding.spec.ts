@@ -1,4 +1,4 @@
-import { fromBinary, toBinary } from "./encoding.js";
+import { fromBinary, toBinary } from "./encoding.ts";
 
 describe("encoding", () => {
   describe("toBinary", () => {
