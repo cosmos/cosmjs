@@ -13,7 +13,7 @@ export type {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   WasmExtension,
-} from "./modules";
+} from "./modules/index";
 export {
   createWasmAminoConverters,
   isMsgClearAdminEncodeObject,
@@ -25,7 +25,7 @@ export {
   isMsgUpdateAdminEncodeObject,
   setupWasmExtension,
   wasmTypes,
-} from "./modules";
+} from "./modules/index";
 export type {
   ChangeAdminResult,
   ExecuteInstruction,

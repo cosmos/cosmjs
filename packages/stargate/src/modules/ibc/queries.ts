@@ -46,7 +46,7 @@ import {
   ConsensusState as TendermintConsensusState,
 } from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
 
-import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient/index";
 
 function decodeTendermintClientStateAny(clientState: Any | undefined): TendermintClientState {
   if (clientState?.typeUrl !== "/ibc.lightclients.tendermint.v1.ClientState") {

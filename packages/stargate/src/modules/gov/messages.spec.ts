@@ -4,7 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { longify } from "../../queryclient";
+import { longify } from "../../queryclient/index";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
@@ -16,7 +16,7 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils";
-import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
+import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index";
 import { MsgVoteWeightedEncodeObject } from "./messages";
 
 (simappEnabled ? describe : xdescribe)("gov messages", () => {

@@ -7,7 +7,7 @@ import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { AminoConverters } from "../../aminotypes";
-import { decodeCosmosSdkDecFromProto } from "../../queryclient";
+import { decodeCosmosSdkDecFromProto } from "../../queryclient/index";
 
 /** Supports submitting arbitrary proposal content. */
 export interface AminoMsgSubmitProposal extends AminoMsg {

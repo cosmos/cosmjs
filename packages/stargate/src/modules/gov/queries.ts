@@ -12,7 +12,7 @@ import {
   QueryVotesResponse,
 } from "cosmjs-types/cosmos/gov/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, longify, QueryClient } from "../../queryclient/index";
 
 export type GovParamsType = "deposit" | "tallying" | "voting";
 

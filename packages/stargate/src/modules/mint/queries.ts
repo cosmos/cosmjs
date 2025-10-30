@@ -3,7 +3,7 @@ import { assert } from "@cosmjs/utils";
 import { Params } from "cosmjs-types/cosmos/mint/v1beta1/mint";
 import { QueryClientImpl } from "cosmjs-types/cosmos/mint/v1beta1/query";
 
-import { createProtobufRpcClient, decodeCosmosSdkDecFromProto, QueryClient } from "../../queryclient";
+import { createProtobufRpcClient, decodeCosmosSdkDecFromProto, QueryClient } from "../../queryclient/index";
 
 /**
  * Like Params from "cosmjs-types/cosmos/mint/v1beta1/mint"

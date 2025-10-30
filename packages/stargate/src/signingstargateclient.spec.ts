@@ -27,8 +27,8 @@ import {
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
   setupFeegrantExtension,
-} from "./modules";
-import { QueryClient } from "./queryclient";
+} from "./modules/index";
+import { QueryClient } from "./queryclient/index";
 import {
   PrivateSigningStargateClient,
   SigningStargateClient,
