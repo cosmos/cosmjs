@@ -4,7 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients/index";
+import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients/index.js";
 import {
   buildKvTx,
   ExpectedValues,
@@ -13,11 +13,11 @@ import {
   tendermintEnabled,
   tendermintInstances,
   tendermintSearchIndexUpdated,
-} from "../testutil.spec";
-import { Comet38Client } from "./comet38client";
-import { hashTx } from "./hasher";
-import { buildQuery } from "./requests";
-import * as responses from "./responses";
+} from "../testutil.spec.js";
+import { Comet38Client } from "./comet38client.js";
+import { hashTx } from "./hasher.js";
+import { buildQuery } from "./requests.js";
+import * as responses from "./responses.js";
 
 /**
  * Runs tests using given client. A compatible backend must be running for this suite.

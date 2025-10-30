@@ -1,4 +1,4 @@
-import { HttpError } from "./httperror";
+import { HttpError } from "./httperror.js";
 
 describe("HttpError", () => {
   it("can be constructed", () => {

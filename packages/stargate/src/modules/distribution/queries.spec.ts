@@ -3,12 +3,12 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { QueryClient } from "../../queryclient/index";
-import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
-import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils";
-import { MsgDelegateEncodeObject } from "../index";
-import { DistributionExtension, setupDistributionExtension } from "./queries";
+import { QueryClient } from "../../queryclient/index.js";
+import { SigningStargateClient } from "../../signingstargateclient.js";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
+import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils.js";
+import { MsgDelegateEncodeObject } from "../index.js";
+import { DistributionExtension, setupDistributionExtension } from "./queries.js";
 
 async function makeClientWithDistribution(
   rpcUrl: string,

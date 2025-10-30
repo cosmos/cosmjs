@@ -1,7 +1,7 @@
 import { Random } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 
-import { AminoMsg, escapeCharacters, makeSignDoc, sortedJsonStringify } from "./signdoc";
+import { AminoMsg, escapeCharacters, makeSignDoc, sortedJsonStringify } from "./signdoc.js";
 
 function makeRandomAddress(): string {
   return toBech32("cosmos", Random.getBytes(20));

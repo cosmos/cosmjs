@@ -2,10 +2,10 @@ import { coins, makeCosmoshubPath } from "@cosmjs/amino";
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet";
-import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { base64Matcher, faucet, testVectors } from "./testutils";
-import { executeKdf, KdfConfiguration } from "./wallet";
+import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet.js";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing.js";
+import { base64Matcher, faucet, testVectors } from "./testutils.js";
+import { executeKdf, KdfConfiguration } from "./wallet.js";
 
 describe("DirectSecp256k1HdWallet", () => {
   // m/44'/118'/0'/0/0

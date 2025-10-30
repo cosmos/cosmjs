@@ -1,14 +1,14 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../../queryclient/index";
+import { QueryClient } from "../../queryclient/index.js";
 import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
   simapp,
   simappEnabled,
   unused,
-} from "../../testutils";
-import { BankExtension, setupBankExtension } from "./queries";
+} from "../../testutils.js";
+import { BankExtension, setupBankExtension } from "./queries.js";
 
 async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

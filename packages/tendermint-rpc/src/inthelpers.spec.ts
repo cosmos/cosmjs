@@ -1,4 +1,4 @@
-import { apiToBigInt } from "./inthelpers";
+import { apiToBigInt } from "./inthelpers.js";
 
 describe("inthelpers", () => {
   describe("apiToBigInt", () => {

@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { pubkeyToAddress, pubkeyToRawAddress } from "./addresses";
+import { pubkeyToAddress, pubkeyToRawAddress } from "./addresses.js";
 
 // Test values from https://github.com/informalsystems/tendermint-rs/blob/v0.18.1/tendermint/src/account.rs#L153-L192
 

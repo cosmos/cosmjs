@@ -1,8 +1,8 @@
-import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
-import { HttpClient } from "./httpclient";
-import { hasProtocol, instanceOfRpcStreamingClient } from "./rpcclient";
-import { WebsocketClient } from "./websocketclient";
+import { createJsonRpcRequest } from "../jsonrpc.js";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec.js";
+import { HttpClient } from "./httpclient.js";
+import { hasProtocol, instanceOfRpcStreamingClient } from "./rpcclient.js";
+import { WebsocketClient } from "./websocketclient.js";
 
 (tendermintEnabled ? describe : xdescribe)("RpcClient", () => {
   const httpUrl = "http://" + defaultInstance.url;

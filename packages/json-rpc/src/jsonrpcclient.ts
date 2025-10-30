@@ -1,7 +1,7 @@
 import { firstEvent } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
-import { isJsonRpcErrorResponse, JsonRpcRequest, JsonRpcResponse, JsonRpcSuccessResponse } from "./types";
+import { isJsonRpcErrorResponse, JsonRpcRequest, JsonRpcResponse, JsonRpcSuccessResponse } from "./types.js";
 
 export interface SimpleMessagingConnection<Request, Response> {
   readonly responseStream: Stream<Response>;

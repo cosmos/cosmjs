@@ -2,7 +2,7 @@ import { pathToString } from "@cosmjs/crypto";
 import { DirectSecp256k1HdWallet, OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClient } from "@cosmjs/stargate";
 
-import { PathBuilder } from "./pathbuilder";
+import { PathBuilder } from "./pathbuilder.js";
 
 export async function createWallets(
   mnemonic: string,

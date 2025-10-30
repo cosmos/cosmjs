@@ -1,7 +1,7 @@
 import { toUtf8 } from "@cosmjs/encoding";
 
-import { ReadonlyDateWithNanoseconds } from "../dates";
-import { BlockId, Version } from "./responses";
+import { ReadonlyDateWithNanoseconds } from "../dates.js";
+import { BlockId, Version } from "./responses.js";
 
 // may will run the transform if value is defined, otherwise returns undefined
 export function may<T, U>(transform: (val: T) => U, value: T | null | undefined): U | undefined {

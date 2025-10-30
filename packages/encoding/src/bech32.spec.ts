@@ -1,5 +1,5 @@
-import { fromBech32, normalizeBech32, toBech32 } from "./bech32";
-import { fromHex } from "./hex";
+import { fromBech32, normalizeBech32, toBech32 } from "./bech32.js";
+import { fromHex } from "./hex.js";
 
 describe("bech32", () => {
   // test data generate using https://github.com/nym-zone/bech32

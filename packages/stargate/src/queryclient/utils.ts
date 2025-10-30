@@ -2,7 +2,7 @@ import { fromAscii, fromBech32 } from "@cosmjs/encoding";
 import { Decimal, Uint64 } from "@cosmjs/math";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 
-import { QueryClient } from "./queryclient";
+import { QueryClient } from "./queryclient.js";
 
 /**
  * Takes a bech32 encoded address and returns the data part. The prefix is ignored and discarded.

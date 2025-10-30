@@ -7,7 +7,7 @@ import {
   encodeTime,
   encodeUvarint,
   encodeVersion,
-} from "./encodings";
+} from "./encodings.js";
 
 describe("encodings", () => {
   describe("encodeString", () => {

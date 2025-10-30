@@ -1,5 +1,5 @@
-import { StdSignature } from "./signature";
-import { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
+import { StdSignature } from "./signature.js";
+import { AminoMsg, StdFee, StdSignDoc } from "./signdoc.js";
 
 /**
  * A Cosmos SDK StdTx

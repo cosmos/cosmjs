@@ -1,14 +1,14 @@
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { MsgDeposit, MsgSubmitProposal, MsgVote, MsgVoteWeighted } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 
-import { AminoTypes } from "../../aminotypes";
+import { AminoTypes } from "../../aminotypes.js";
 import {
   AminoMsgDeposit,
   AminoMsgSubmitProposal,
   AminoMsgVote,
   AminoMsgVoteWeighted,
   createGovAminoConverters,
-} from "./aminomessages";
+} from "./aminomessages.js";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

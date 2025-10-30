@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { Ripemd160, ripemd160 } from "./ripemd";
+import { Ripemd160, ripemd160 } from "./ripemd.js";
 import ripemdVectors from "./testdata/ripemd.json";
 
 describe("Ripemd160", () => {

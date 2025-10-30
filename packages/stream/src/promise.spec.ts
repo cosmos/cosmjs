@@ -1,7 +1,7 @@
 import { Producer, Stream } from "xstream";
 
-import { firstEvent, fromListPromise, toListPromise } from "./promise";
-import { asArray, countStream } from "./reducer";
+import { firstEvent, fromListPromise, toListPromise } from "./promise.js";
+import { asArray, countStream } from "./reducer.js";
 
 async function oneTickLater(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, 0));

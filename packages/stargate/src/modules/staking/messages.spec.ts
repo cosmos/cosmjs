@@ -3,9 +3,9 @@ import { Random } from "@cosmjs/crypto";
 import { fromBech32, toBase64, toBech32 } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet, encodePubkey } from "@cosmjs/proto-signing";
 
-import { calculateFee } from "../../fee";
-import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
+import { calculateFee } from "../../fee.js";
+import { SigningStargateClient } from "../../signingstargateclient.js";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
 import {
   defaultGasPrice,
   defaultSigningClientOptions,
@@ -13,8 +13,8 @@ import {
   simapp,
   simapp50Enabled,
   simappEnabled,
-} from "../../testutils";
-import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages";
+} from "../../testutils.js";
+import { MsgCreateValidatorEncodeObject, MsgEditValidatorEncodeObject } from "./messages.js";
 
 function changePrefix(address: string, newPrefix: string): string {
   return toBech32(newPrefix, fromBech32(address).data);

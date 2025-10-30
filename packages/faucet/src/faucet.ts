@@ -6,12 +6,12 @@ import {
 } from "@cosmjs/stargate";
 import { isDefined, sleep } from "@cosmjs/utils";
 
-import * as constants from "./constants";
-import { debugAccount, logAccountsState, logSendJob } from "./debugging";
-import { PathBuilder } from "./pathbuilder";
-import { createClients, createWallets } from "./profile";
-import { TokenConfiguration, TokenManager } from "./tokenmanager";
-import { MinimalAccount, SendJob } from "./types";
+import * as constants from "./constants.js";
+import { debugAccount, logAccountsState, logSendJob } from "./debugging.js";
+import { PathBuilder } from "./pathbuilder.js";
+import { createClients, createWallets } from "./profile.js";
+import { TokenConfiguration, TokenManager } from "./tokenmanager.js";
+import { MinimalAccount, SendJob } from "./types.js";
 
 export class Faucet {
   public static async make(

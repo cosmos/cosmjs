@@ -1,6 +1,11 @@
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { decodeEvent, decodeValidatorGenesis, decodeValidatorInfo, decodeValidatorUpdate } from "./responses";
+import {
+  decodeEvent,
+  decodeValidatorGenesis,
+  decodeValidatorInfo,
+  decodeValidatorUpdate,
+} from "./responses.js";
 
 describe("Responses", () => {
   describe("decodeEvent", () => {

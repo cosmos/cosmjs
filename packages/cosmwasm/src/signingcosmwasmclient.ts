@@ -48,8 +48,8 @@ import {
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { gzip } from "./compression";
-import { CosmWasmClient } from "./cosmwasmclient";
+import { gzip } from "./compression.js";
+import { CosmWasmClient } from "./cosmwasmclient.js";
 import {
   createWasmAminoConverters,
   JsonObject,
@@ -61,7 +61,7 @@ import {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   wasmTypes,
-} from "./modules/index";
+} from "./modules/index.js";
 
 export interface UploadResult {
   /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */

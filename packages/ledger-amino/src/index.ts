@@ -1,2 +1,2 @@
-export { type AddressAndPubkey, LedgerConnector } from "./ledgerconnector";
-export { LedgerSigner } from "./ledgersigner";
+export { type AddressAndPubkey, LedgerConnector } from "./ledgerconnector.js";
+export { LedgerSigner } from "./ledgersigner.js";

@@ -1,7 +1,7 @@
 // Note: all exports in this module are publicly available via
 // `import { comet38 } from "@cosmjs/tendermint-rpc"`
 
-export { Comet38Client } from "./comet38client";
+export { Comet38Client } from "./comet38client.js";
 export type {
   AbciInfoRequest,
   AbciQueryParams,
@@ -26,8 +26,8 @@ export type {
   TxSearchRequest,
   ValidatorsParams,
   ValidatorsRequest,
-} from "./requests";
-export { Method, SubscriptionEventType } from "./requests";
+} from "./requests.js";
+export { Method, SubscriptionEventType } from "./requests.js";
 export type {
   AbciInfoResponse,
   AbciQueryResponse,
@@ -72,5 +72,5 @@ export type {
   ValidatorsResponse,
   Version,
   Vote,
-} from "./responses";
-export { broadcastTxCommitSuccess, broadcastTxSyncSuccess, VoteType } from "./responses";
+} from "./responses.js";
+export { broadcastTxCommitSuccess, broadcastTxSyncSuccess, VoteType } from "./responses.js";

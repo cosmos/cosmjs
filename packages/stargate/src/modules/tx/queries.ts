@@ -11,7 +11,7 @@ import {
 import { AuthInfo, Fee, Tx, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { createProtobufRpcClient, QueryClient } from "../../queryclient/index";
+import { createProtobufRpcClient, QueryClient } from "../../queryclient/index.js";
 
 export interface TxExtension {
   readonly tx: {

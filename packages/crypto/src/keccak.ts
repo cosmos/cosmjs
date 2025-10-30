@@ -1,8 +1,8 @@
 import { fixUint8Array } from "@cosmjs/encoding";
 import { keccak_256 } from "@noble/hashes/sha3.js";
 
-import { HashFunction } from "./hash";
-import { toRealUint8Array } from "./utils";
+import { HashFunction } from "./hash.js";
+import { toRealUint8Array } from "./utils.js";
 
 export class Keccak256 implements HashFunction {
   public readonly blockSize = 512 / 8;
