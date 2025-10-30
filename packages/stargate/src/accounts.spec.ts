@@ -1,7 +1,7 @@
 import { fromBase64 } from "@cosmjs/encoding";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { accountFromAny } from "./accounts.js";
+import { accountFromAny } from "./accounts.ts";
 
 describe("accounts", () => {
   describe("accountFromAny", () => {

@@ -1,7 +1,7 @@
 import { fromAscii, fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { Bip39, EnglishMnemonic } from "./bip39.js";
-import { sha256 } from "./sha.js";
+import { Bip39, EnglishMnemonic } from "./bip39.ts";
+import { sha256 } from "./sha.ts";
 import bip39Vectors from "./testdata/bip39.json";
 import wordlists from "./testdata/bip39_wordlists.json";
 

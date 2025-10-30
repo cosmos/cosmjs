@@ -14,8 +14,8 @@ import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { ReadonlyDate } from "readonly-date";
 
-import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient.js";
-import { SigningCosmWasmClient } from "./signingcosmwasmclient.js";
+import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient.ts";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient.ts";
 import {
   alice,
   defaultInstantiateFee,
@@ -28,7 +28,7 @@ import {
   unused,
   wasmd,
   wasmdEnabled,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 interface HackatomInstance {
   readonly instantiateMsg: {

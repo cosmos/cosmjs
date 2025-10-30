@@ -1,4 +1,4 @@
-import { Uint32, Uint53, Uint64 } from "./integers.js";
+import { Uint32, Uint53, Uint64 } from "./integers.ts";
 
 // Too large values lead to massive memory usage. Limit to something sensible.
 // The largest value we need is 18 (Ether).

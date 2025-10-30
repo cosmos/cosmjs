@@ -2,7 +2,7 @@
 import { AminoMsg, Coin, omitDefault } from "@cosmjs/amino";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
-import { AminoConverters } from "../../aminotypes.js";
+import { AminoConverters } from "../../aminotypes.ts";
 
 // https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/index/core/02-client/types/client.pb.go#L297-L312
 interface AminoHeight {

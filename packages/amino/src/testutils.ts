@@ -1,5 +1,5 @@
-import { decodeBech32Pubkey } from "./encoding.js";
-import { MultisigThresholdPubkey } from "./pubkeys.js";
+import { decodeBech32Pubkey } from "./encoding.ts";
+import { MultisigThresholdPubkey } from "./pubkeys.ts";
 
 export const base64Matcher =
   /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;

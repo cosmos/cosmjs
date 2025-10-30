@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
 
-import { AminoConverters } from "../../aminotypes.js";
+import { AminoConverters } from "../../aminotypes.ts";
 
 // See https://github.com/cosmos/cosmos-sdk/blob/v0.45.1/proto/cosmos/crisis/v1beta1/tx.proto
 

@@ -17,8 +17,8 @@ import {
 import { sleep } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 
-import { LedgerSigner } from "./ledgersigner.js";
-import { faucet, ledgerEnabled, simapp, simappEnabled } from "./testutils.js";
+import { LedgerSigner } from "./ledgersigner.ts";
+import { faucet, ledgerEnabled, simapp, simappEnabled } from "./testutils.ts";
 
 const interactiveTimeout = 120_000;
 

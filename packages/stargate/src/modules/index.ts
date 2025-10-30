@@ -1,95 +1,95 @@
-export { type AuthExtension, setupAuthExtension } from "./auth/queries.js";
-export { createAuthzAminoConverters } from "./authz/aminomessages.js";
-export { authzTypes } from "./authz/messages.js";
-export { setupAuthzExtension } from "./authz/queries.js";
+export { type AuthExtension, setupAuthExtension } from "./auth/queries.ts";
+export { createAuthzAminoConverters } from "./authz/aminomessages.ts";
+export { authzTypes } from "./authz/messages.ts";
+export { setupAuthzExtension } from "./authz/queries.ts";
 export {
   type AminoMsgMultiSend,
   type AminoMsgSend,
   createBankAminoConverters,
   isAminoMsgMultiSend,
   isAminoMsgSend,
-} from "./bank/aminomessages.js";
-export { type MsgSendEncodeObject, bankTypes, isMsgSendEncodeObject } from "./bank/messages.js";
-export { type BankExtension, setupBankExtension } from "./bank/queries.js";
+} from "./bank/aminomessages.ts";
+export { type MsgSendEncodeObject, bankTypes, isMsgSendEncodeObject } from "./bank/messages.ts";
+export { type BankExtension, setupBankExtension } from "./bank/queries.ts";
 export {
   type AminoMsgVerifyInvariant,
   createCrysisAminoConverters,
   isAminoMsgVerifyInvariant,
-} from "./crisis/aminomessages.js";
+} from "./crisis/aminomessages.ts";
 export type {
   AminoMsgFundCommunityPool,
   AminoMsgSetWithdrawAddress,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
-} from "./distribution/aminomessages.js";
+} from "./distribution/aminomessages.ts";
 export {
   createDistributionAminoConverters,
   isAminoMsgFundCommunityPool,
   isAminoMsgSetWithdrawAddress,
   isAminoMsgWithdrawDelegatorReward,
   isAminoMsgWithdrawValidatorCommission,
-} from "./distribution/aminomessages.js";
+} from "./distribution/aminomessages.ts";
 export {
   type MsgWithdrawDelegatorRewardEncodeObject,
   distributionTypes,
   isMsgWithdrawDelegatorRewardEncodeObject,
-} from "./distribution/messages.js";
-export { type DistributionExtension, setupDistributionExtension } from "./distribution/queries.js";
+} from "./distribution/messages.ts";
+export { type DistributionExtension, setupDistributionExtension } from "./distribution/queries.ts";
 export {
   type AminoMsgSubmitEvidence,
   createEvidenceAminoConverters,
   isAminoMsgSubmitEvidence,
-} from "./evidence/aminomessages.js";
-export { createFeegrantAminoConverters } from "./feegrant/aminomessages.js";
-export { feegrantTypes } from "./feegrant/messages.js";
-export { type FeegrantExtension, setupFeegrantExtension } from "./feegrant/queries.js";
+} from "./evidence/aminomessages.ts";
+export { createFeegrantAminoConverters } from "./feegrant/aminomessages.ts";
+export { feegrantTypes } from "./feegrant/messages.ts";
+export { type FeegrantExtension, setupFeegrantExtension } from "./feegrant/queries.ts";
 export type {
   AminoMsgDeposit,
   AminoMsgSubmitProposal,
   AminoMsgVote,
   AminoMsgVoteWeighted,
-} from "./gov/aminomessages.js";
+} from "./gov/aminomessages.ts";
 export {
   createGovAminoConverters,
   isAminoMsgDeposit,
   isAminoMsgSubmitProposal,
   isAminoMsgVote,
   isAminoMsgVoteWeighted,
-} from "./gov/aminomessages.js";
+} from "./gov/aminomessages.ts";
 export type {
   MsgDepositEncodeObject,
   MsgSubmitProposalEncodeObject,
   MsgVoteEncodeObject,
   MsgVoteWeightedEncodeObject,
-} from "./gov/messages.js";
+} from "./gov/messages.ts";
 export {
   govTypes,
   isMsgDepositEncodeObject,
   isMsgSubmitProposalEncodeObject,
   isMsgVoteEncodeObject,
   isMsgVoteWeightedEncodeObject,
-} from "./gov/messages.js";
-export type { GovExtension, GovParamsType, GovProposalId } from "./gov/queries.js";
-export { setupGovExtension } from "./gov/queries.js";
-export { createGroupAminoConverters } from "./group/aminomessages.js";
-export { groupTypes } from "./group/messages.js";
-export { type AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages.js";
-export { type MsgTransferEncodeObject, ibcTypes, isMsgTransferEncodeObject } from "./ibc/messages.js";
-export { type IbcExtension, setupIbcExtension } from "./ibc/queries.js";
-export { type MintExtension, type MintParams, setupMintExtension } from "./mint/queries.js";
+} from "./gov/messages.ts";
+export type { GovExtension, GovParamsType, GovProposalId } from "./gov/queries.ts";
+export { setupGovExtension } from "./gov/queries.ts";
+export { createGroupAminoConverters } from "./group/aminomessages.ts";
+export { groupTypes } from "./group/messages.ts";
+export { type AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages.ts";
+export { type MsgTransferEncodeObject, ibcTypes, isMsgTransferEncodeObject } from "./ibc/messages.ts";
+export { type IbcExtension, setupIbcExtension } from "./ibc/queries.ts";
+export { type MintExtension, type MintParams, setupMintExtension } from "./mint/queries.ts";
 export {
   type AminoMsgUnjail,
   createSlashingAminoConverters,
   isAminoMsgUnjail,
-} from "./slashing/aminomessages.js";
-export { type SlashingExtension, setupSlashingExtension } from "./slashing/queries.js";
+} from "./slashing/aminomessages.ts";
+export { type SlashingExtension, setupSlashingExtension } from "./slashing/queries.ts";
 export type {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
   AminoMsgDelegate,
   AminoMsgEditValidator,
   AminoMsgUndelegate,
-} from "./staking/aminomessages.js";
+} from "./staking/aminomessages.ts";
 export {
   createStakingAminoConverters,
   isAminoMsgBeginRedelegate,
@@ -97,7 +97,7 @@ export {
   isAminoMsgDelegate,
   isAminoMsgEditValidator,
   isAminoMsgUndelegate,
-} from "./staking/aminomessages.js";
+} from "./staking/aminomessages.ts";
 export type {
   MsgBeginRedelegateEncodeObject,
   MsgCancelUnbondingDelegationEncodeObject,
@@ -105,7 +105,7 @@ export type {
   MsgDelegateEncodeObject,
   MsgEditValidatorEncodeObject,
   MsgUndelegateEncodeObject,
-} from "./staking/messages.js";
+} from "./staking/messages.ts";
 export {
   isMsgBeginRedelegateEncodeObject,
   isMsgCancelUnbondingDelegationEncodeObject,
@@ -114,12 +114,12 @@ export {
   isMsgEditValidatorEncodeObject,
   isMsgUndelegateEncodeObject,
   stakingTypes,
-} from "./staking/messages.js";
-export { type StakingExtension, setupStakingExtension } from "./staking/queries.js";
-export { type TxExtension, setupTxExtension } from "./tx/queries.js";
+} from "./staking/messages.ts";
+export { type StakingExtension, setupStakingExtension } from "./staking/queries.ts";
+export { type TxExtension, setupTxExtension } from "./tx/queries.ts";
 export {
   type AminoMsgCreateVestingAccount,
   createVestingAminoConverters,
   isAminoMsgCreateVestingAccount,
-} from "./vesting/aminomessages.js";
-export { vestingTypes } from "./vesting/messages.js";
+} from "./vesting/aminomessages.ts";
+export { vestingTypes } from "./vesting/messages.ts";

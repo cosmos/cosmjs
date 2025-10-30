@@ -6,7 +6,7 @@ import { assert } from "@cosmjs/utils";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
-import { LedgerSigner } from "../ledgersigner.js";
+import { LedgerSigner } from "../ledgersigner.ts";
 
 declare const window: any;
 declare const document: any;

@@ -23,10 +23,10 @@ import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { MsgExecuteContract, MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { gzip } from "./compression.js";
-import { instantiate2Address } from "./instantiate2.js";
-import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules/index.js";
-import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from "./signingcosmwasmclient.js";
+import { gzip } from "./compression.ts";
+import { instantiate2Address } from "./instantiate2.ts";
+import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules/index.ts";
+import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from "./signingcosmwasmclient.ts";
 import {
   alice,
   defaultClearAdminFee,
@@ -48,7 +48,7 @@ import {
   validator,
   wasmd,
   wasmdEnabled,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 (wasmdEnabled ? describe : xdescribe)("SigningCosmWasmClient", () => {
   describe("connectWithSigner", () => {

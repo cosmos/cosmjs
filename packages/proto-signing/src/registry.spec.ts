@@ -6,7 +6,7 @@ import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Field, Type } from "protobufjs";
 
-import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry.js";
+import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry.ts";
 
 describe("registry demo", () => {
   it("works with a default msg", () => {

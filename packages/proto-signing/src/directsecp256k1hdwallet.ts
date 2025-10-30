@@ -16,8 +16,8 @@ import { fromBase64, fromUtf8, toBase64, toBech32, toUtf8 } from "@cosmjs/encodi
 import { assert, isNonNullObject } from "@cosmjs/utils";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer.js";
-import { makeSignBytes } from "./signing.js";
+import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer.ts";
+import { makeSignBytes } from "./signing.ts";
 import {
   decrypt,
   encrypt,
@@ -25,7 +25,7 @@ import {
   executeKdf,
   KdfConfiguration,
   supportedAlgorithms,
-} from "./wallet.js";
+} from "./wallet.ts";
 
 interface AccountDataWithPrivkey extends AccountData {
   readonly privkey: Uint8Array;

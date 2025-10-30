@@ -1,6 +1,6 @@
 import { Stream } from "xstream";
 
-import { asArray, countStream, lastValue } from "./reducer.js";
+import { asArray, countStream, lastValue } from "./reducer.ts";
 
 describe("Test stream helpers", () => {
   it("readIntoArray returns input", async () => {

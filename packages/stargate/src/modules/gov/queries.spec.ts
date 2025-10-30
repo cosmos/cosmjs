@@ -12,9 +12,9 @@ import {
 } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { longify, QueryClient } from "../../queryclient/index.js";
-import { SigningStargateClient } from "../../signingstargateclient.js";
-import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
+import { longify, QueryClient } from "../../queryclient/index.ts";
+import { SigningStargateClient } from "../../signingstargateclient.ts";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.ts";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -22,9 +22,9 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils.js";
-import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index.js";
-import { GovExtension, setupGovExtension } from "./queries.js";
+} from "../../testutils.ts";
+import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index.ts";
+import { GovExtension, setupGovExtension } from "./queries.ts";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

@@ -1,7 +1,7 @@
-import { coins } from "./coins.js";
-import { StdSignature } from "./signature.js";
-import { makeSignDoc, StdFee } from "./signdoc.js";
-import { isStdTx, makeStdTx, StdTx } from "./stdtx.js";
+import { coins } from "./coins.ts";
+import { StdSignature } from "./signature.ts";
+import { makeSignDoc, StdFee } from "./signdoc.ts";
+import { isStdTx, makeStdTx, StdTx } from "./stdtx.ts";
 
 describe("makeStdTx", () => {
   it("can make an StdTx from a SignDoc and one signature", () => {

@@ -19,8 +19,8 @@ import {
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { CosmWasmClient } from "./cosmwasmclient.js";
-import { alice, fromOneElementArray, makeRandomAddress, wasmd, wasmdEnabled } from "./testutils.js";
+import { CosmWasmClient } from "./cosmwasmclient.ts";
+import { alice, fromOneElementArray, makeRandomAddress, wasmd, wasmdEnabled } from "./testutils.ts";
 
 interface TestTxSend {
   readonly sender: string;

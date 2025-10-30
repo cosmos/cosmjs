@@ -1,4 +1,4 @@
-import { buildQuery } from "./requests.js";
+import { buildQuery } from "./requests.ts";
 
 describe("Requests", () => {
   describe("buildQuery", () => {

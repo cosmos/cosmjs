@@ -12,8 +12,8 @@ import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { calculateFee, GasPrice } from "./fee.js";
-import { SigningStargateClientOptions } from "./signingstargateclient.js";
+import { calculateFee, GasPrice } from "./fee.ts";
+import { SigningStargateClientOptions } from "./signingstargateclient.ts";
 
 export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;

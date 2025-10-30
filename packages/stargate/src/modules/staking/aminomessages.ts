@@ -12,7 +12,7 @@ import {
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { AminoConverter } from "../../index.js";
+import { AminoConverter } from "../../index.ts";
 
 /** The initial commission rates to be used for creating a validator */
 interface CommissionRates {

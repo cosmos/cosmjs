@@ -6,14 +6,14 @@ import {
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 
-import { AminoTypes } from "../../aminotypes.js";
+import { AminoTypes } from "../../aminotypes.ts";
 import {
   AminoMsgFundCommunityPool,
   AminoMsgSetWithdrawAddress,
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
   createDistributionAminoConverters,
-} from "./aminomessages.js";
+} from "./aminomessages.ts";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

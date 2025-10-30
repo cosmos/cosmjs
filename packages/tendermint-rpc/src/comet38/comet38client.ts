@@ -8,10 +8,10 @@ import {
   RpcClient,
   SubscriptionEvent,
   WebsocketClient,
-} from "../rpcclients/index.js";
-import { Params, Responses } from "./adaptor/index.js";
-import * as requests from "./requests.js";
-import * as responses from "./responses.js";
+} from "../rpcclients/index.ts";
+import { Params, Responses } from "./adaptor/index.ts";
+import * as requests from "./requests.ts";
+import * as responses from "./responses.ts";
 
 // Encoder is a generic that matches all methods of Params
 type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;

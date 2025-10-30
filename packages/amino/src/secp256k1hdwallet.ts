@@ -14,11 +14,11 @@ import {
 import { fromBase64, fromUtf8, toBase64, toBech32, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
-import { rawSecp256k1PubkeyToRawAddress } from "./addresses.js";
-import { makeCosmoshubPath } from "./paths.js";
-import { encodeSecp256k1Signature } from "./signature.js";
-import { serializeSignDoc, StdSignDoc } from "./signdoc.js";
-import { AccountData, AminoSignResponse, OfflineAminoSigner } from "./signer.js";
+import { rawSecp256k1PubkeyToRawAddress } from "./addresses.ts";
+import { makeCosmoshubPath } from "./paths.ts";
+import { encodeSecp256k1Signature } from "./signature.ts";
+import { serializeSignDoc, StdSignDoc } from "./signdoc.ts";
+import { AccountData, AminoSignResponse, OfflineAminoSigner } from "./signer.ts";
 import {
   decrypt,
   encrypt,
@@ -26,7 +26,7 @@ import {
   executeKdf,
   KdfConfiguration,
   supportedAlgorithms,
-} from "./wallet.js";
+} from "./wallet.ts";
 
 interface AccountDataWithPrivkey extends AccountData {
   readonly privkey: Uint8Array;

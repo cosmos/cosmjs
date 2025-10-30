@@ -1,6 +1,6 @@
-import { createJsonRpcRequest } from "../jsonrpc.js";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec.js";
-import { HttpClient } from "./httpclient.js";
+import { createJsonRpcRequest } from "../jsonrpc.ts";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec.ts";
+import { HttpClient } from "./httpclient.ts";
 
 (tendermintEnabled ? describe : xdescribe)("HttpClient", () => {
   const tendermintUrl = "http://" + defaultInstance.url;

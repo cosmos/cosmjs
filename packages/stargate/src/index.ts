@@ -1,11 +1,11 @@
-export type { Account, AccountParser } from "./accounts.js";
-export { accountFromAny } from "./accounts.js";
-export type { AminoConverter, AminoConverters } from "./aminotypes.js";
-export { AminoTypes } from "./aminotypes.js";
-export type { Attribute, Event } from "./events.js";
-export { fromTendermintEvent } from "./events.js";
-export { calculateFee, GasPrice } from "./fee.js";
-export * as logs from "./logs.js";
+export type { Account, AccountParser } from "./accounts.ts";
+export { accountFromAny } from "./accounts.ts";
+export type { AminoConverter, AminoConverters } from "./aminotypes.ts";
+export { AminoTypes } from "./aminotypes.ts";
+export type { Attribute, Event } from "./events.ts";
+export { fromTendermintEvent } from "./events.ts";
+export { calculateFee, GasPrice } from "./fee.ts";
+export * as logs from "./logs.ts";
 export type {
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
@@ -51,7 +51,7 @@ export type {
   MsgWithdrawDelegatorRewardEncodeObject,
   StakingExtension,
   TxExtension,
-} from "./modules/index.js";
+} from "./modules/index.ts";
 export {
   createAuthzAminoConverters,
   createBankAminoConverters,
@@ -109,23 +109,23 @@ export {
   setupSlashingExtension,
   setupStakingExtension,
   setupTxExtension,
-} from "./modules/index.js";
-export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature.js";
-export type { ProtobufRpcClient, QueryAbciResponse, QueryStoreResponse } from "./queryclient/index.js";
+} from "./modules/index.ts";
+export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature.ts";
+export type { ProtobufRpcClient, QueryAbciResponse, QueryStoreResponse } from "./queryclient/index.ts";
 export {
   createPagination,
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
   QueryClient,
-} from "./queryclient/index.js";
-export type { SearchPair, SearchTxQuery } from "./search.js";
-export { isSearchTxQueryArray } from "./search.js";
-export type { SignerData, SigningStargateClientOptions } from "./signingstargateclient.js";
+} from "./queryclient/index.ts";
+export type { SearchPair, SearchTxQuery } from "./search.ts";
+export { isSearchTxQueryArray } from "./search.ts";
+export type { SignerData, SigningStargateClientOptions } from "./signingstargateclient.ts";
 export {
   createDefaultAminoConverters,
   defaultRegistryTypes,
   SigningStargateClient,
-} from "./signingstargateclient.js";
+} from "./signingstargateclient.ts";
 export type {
   Block,
   BlockHeader,
@@ -133,7 +133,7 @@ export type {
   IndexedTx,
   SequenceResponse,
   StargateClientOptions,
-} from "./stargateclient.js";
+} from "./stargateclient.ts";
 export {
   assertIsDeliverTxFailure,
   assertIsDeliverTxSuccess,
@@ -142,7 +142,7 @@ export {
   isDeliverTxSuccess,
   StargateClient,
   TimeoutError,
-} from "./stargateclient.js";
+} from "./stargateclient.ts";
 export type { StdFee } from "@cosmjs/amino";
 export type { Coin } from "@cosmjs/proto-signing";
 export { coin, coins, makeCosmoshubPath, parseCoins } from "@cosmjs/proto-signing";
