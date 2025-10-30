@@ -1,8 +1,8 @@
 import { toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
-import { pubkeyToRawAddress } from "./addresses";
-import { MultisigThresholdPubkey, SinglePubkey } from "./pubkeys";
+import { pubkeyToRawAddress } from "./addresses.js";
+import { MultisigThresholdPubkey, SinglePubkey } from "./pubkeys.js";
 
 /**
  * Compare arrays lexicographically.

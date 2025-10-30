@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { isNonNullObject } from "@cosmjs/utils";
 
-import { Attribute, Event } from "./events";
+import { Attribute, Event } from "./events.js";
 
 export interface Log {
   readonly msg_index: number;

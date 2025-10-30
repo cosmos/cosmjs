@@ -1,5 +1,5 @@
-import { toAscii } from "./ascii";
-import { fromUtf8, toUtf8 } from "./utf8";
+import { toAscii } from "./ascii.js";
+import { fromUtf8, toUtf8 } from "./utf8.js";
 
 describe("utf8", () => {
   it("encodes ascii strings", () => {

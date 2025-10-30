@@ -1,4 +1,4 @@
-import { addCoins, coin, coins, parseCoins } from "./coins";
+import { addCoins, coin, coins, parseCoins } from "./coins.js";
 
 describe("coins", () => {
   describe("coin", () => {

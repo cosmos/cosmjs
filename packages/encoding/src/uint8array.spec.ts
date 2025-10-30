@@ -1,4 +1,4 @@
-import { fixUint8Array } from "./uint8array";
+import { fixUint8Array } from "./uint8array.js";
 
 // Turned off in Chrome without secure context
 const hasSharedArrayBuffer = typeof SharedArrayBuffer !== "undefined";

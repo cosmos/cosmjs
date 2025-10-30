@@ -1,6 +1,6 @@
 import { isUint8Array } from "@cosmjs/utils";
 
-import { Random } from "./random";
+import { Random } from "./random.js";
 
 describe("Random", () => {
   it("returns an Uint8Array", () => {

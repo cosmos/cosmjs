@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import { fromHex } from "@cosmjs/encoding";
 
-import { Xchacha20poly1305Ietf } from "./xchacha20poly1305";
+import { Xchacha20poly1305Ietf } from "./xchacha20poly1305.js";
 
 describe("Xchacha20poly1305Ietf", () => {
   it("can encrypt and decrypt simple data", async () => {

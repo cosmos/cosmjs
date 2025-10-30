@@ -5,9 +5,9 @@ import {
   parseJsonRpcResponse,
 } from "@cosmjs/json-rpc";
 
-import { http } from "./http";
-import { HttpEndpoint } from "./httpclient";
-import { hasProtocol, RpcClient } from "./rpcclient";
+import { http } from "./http.js";
+import { HttpEndpoint } from "./httpclient.js";
+import { hasProtocol, RpcClient } from "./rpcclient.js";
 
 export interface HttpBatchClientOptions {
   /** Interval for dispatching batches (in milliseconds) */

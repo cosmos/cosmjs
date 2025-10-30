@@ -1,6 +1,6 @@
-import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
-import { http } from "./http";
+import { createJsonRpcRequest } from "../jsonrpc.js";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec.js";
+import { http } from "./http.js";
 
 const httpServerEnabled = !!globalThis.process?.env.HTTPSERVER_ENABLED;
 

@@ -1,6 +1,6 @@
 import { Int53 } from "@cosmjs/math";
 
-import { jCheckString } from "./jsonchecks";
+import { jCheckString } from "./jsonchecks.js";
 
 /**
  * Takes an integer value from the Tendermint RPC API and

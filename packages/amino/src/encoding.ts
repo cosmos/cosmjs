@@ -13,7 +13,7 @@ import {
   Pubkey,
   pubkeyType,
   Secp256k1Pubkey,
-} from "./pubkeys";
+} from "./pubkeys.js";
 
 /**
  * Takes a Secp256k1 public key as raw bytes and returns the Amino JSON

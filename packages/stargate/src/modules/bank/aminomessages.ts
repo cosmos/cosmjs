@@ -2,7 +2,7 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
-import { AminoConverters } from "../../aminotypes";
+import { AminoConverters } from "../../aminotypes.js";
 
 /** A high level transaction of the coin module */
 export interface AminoMsgSend extends AminoMsg {

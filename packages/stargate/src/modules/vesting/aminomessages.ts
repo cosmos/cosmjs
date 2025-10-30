@@ -2,7 +2,7 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 
-import { AminoConverters } from "../../aminotypes";
+import { AminoConverters } from "../../aminotypes.js";
 
 export interface AminoMsgCreateVestingAccount extends AminoMsg {
   readonly type: "cosmos-sdk/MsgCreateVestingAccount";

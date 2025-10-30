@@ -1,7 +1,7 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { Hmac } from "./hmac";
-import { Sha256, Sha512 } from "./sha";
+import { Hmac } from "./hmac.js";
+import { Sha256, Sha512 } from "./sha.js";
 
 describe("HMAC", () => {
   it("can perform HMAC(SHA256) according to Botan test vectors", () => {

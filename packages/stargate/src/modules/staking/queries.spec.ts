@@ -3,9 +3,9 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { QueryClient } from "../../queryclient/index";
-import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
+import { QueryClient } from "../../queryclient/index.js";
+import { SigningStargateClient } from "../../signingstargateclient.js";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
 import {
   defaultSigningClientOptions,
   evmd,
@@ -17,9 +17,9 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils";
-import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages";
-import { setupStakingExtension, StakingExtension } from "./queries";
+} from "../../testutils.js";
+import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages.js";
+import { setupStakingExtension, StakingExtension } from "./queries.js";
 
 async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & StakingExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);
@@ -337,7 +337,10 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
     it("works", async () => {
       const [client, cometClient] = await makeClientWithStaking(evmd.tendermintUrlHttp);
 
-      const response = await client.staking.delegatorValidator(evmfaucet.address0, evmvalidator.validatorAddress);
+      const response = await client.staking.delegatorValidator(
+        evmfaucet.address0,
+        evmvalidator.validatorAddress,
+      );
       expect(response.validator).toBeDefined();
       expect(response.validator).not.toBeNull();
 
@@ -385,7 +388,10 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
     it("works", async () => {
       const [client, cometClient] = await makeClientWithStaking(evmd.tendermintUrlHttp);
 
-      const response = await client.staking.unbondingDelegation(evmfaucet.address0, evmvalidator.validatorAddress);
+      const response = await client.staking.unbondingDelegation(
+        evmfaucet.address0,
+        evmvalidator.validatorAddress,
+      );
       expect(response.unbond).toBeDefined();
       expect(response.unbond).not.toBeNull();
 

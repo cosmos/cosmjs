@@ -1,6 +1,6 @@
 import { Stream } from "xstream";
 
-import { dropDuplicates } from "./dropduplicates";
+import { dropDuplicates } from "./dropduplicates.js";
 
 describe("dropDuplicates", () => {
   it("can be created", () => {

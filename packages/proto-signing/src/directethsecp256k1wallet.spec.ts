@@ -2,9 +2,9 @@ import { coins } from "@cosmjs/amino";
 import { keccak256, Secp256k1, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
-import { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";
-import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { testVectors } from "./testutils";
+import { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet.js";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing.js";
+import { testVectors } from "./testutils.js";
 
 describe("DirectEthSecp256k1Wallet", () => {
   const defaultPrivkey = fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e");

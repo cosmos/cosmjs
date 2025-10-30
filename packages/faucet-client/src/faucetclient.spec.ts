@@ -1,4 +1,4 @@
-import { FaucetClient } from "./faucetclient";
+import { FaucetClient } from "./faucetclient.js";
 
 const enabled = !!globalThis.process?.env.FAUCET_ENABLED;
 

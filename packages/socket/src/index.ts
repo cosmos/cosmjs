@@ -1,9 +1,9 @@
-export { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket";
-export { ReconnectingSocket } from "./reconnectingsocket";
+export { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket.js";
+export { ReconnectingSocket } from "./reconnectingsocket.js";
 export type {
   SocketWrapperCloseEvent,
   SocketWrapperErrorEvent,
   SocketWrapperMessageEvent,
-} from "./socketwrapper";
-export { SocketWrapper } from "./socketwrapper";
-export { StreamingSocket } from "./streamingsocket";
+} from "./socketwrapper.js";
+export { SocketWrapper } from "./socketwrapper.js";
+export { StreamingSocket } from "./streamingsocket.js";

@@ -1,6 +1,6 @@
 import { Coin } from "@cosmjs/stargate";
 
-import { MinimalAccount, SendJob } from "./types";
+import { MinimalAccount, SendJob } from "./types.js";
 
 /** A string representation of a coin in a human-readable format that can change at any time */
 function debugCoin(coin: Coin): string {

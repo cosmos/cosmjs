@@ -1,6 +1,6 @@
 import { toListPromise } from "@cosmjs/stream";
 
-import { StreamingSocket } from "./streamingsocket";
+import { StreamingSocket } from "./streamingsocket.js";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 

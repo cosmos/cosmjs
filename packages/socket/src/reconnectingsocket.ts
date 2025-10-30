@@ -1,8 +1,8 @@
 import { ValueAndUpdates } from "@cosmjs/stream";
 import { Listener, Producer, Stream } from "xstream";
 
-import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket";
-import { SocketWrapperMessageEvent } from "./socketwrapper";
+import { ConnectionStatus, QueueingStreamingSocket } from "./queueingstreamingsocket.js";
+import { SocketWrapperMessageEvent } from "./socketwrapper.js";
 
 /**
  * A wrapper around QueueingStreamingSocket that reconnects automatically.

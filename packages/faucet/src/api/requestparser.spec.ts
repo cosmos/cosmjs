@@ -1,4 +1,4 @@
-import { RequestParser } from "./requestparser";
+import { RequestParser } from "./requestparser.js";
 
 describe("RequestParser", () => {
   it("can process valid credit request with denom", () => {

@@ -14,8 +14,8 @@ import {
 import { toBech32 } from "@cosmjs/encoding";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer";
-import { makeSignBytes } from "./signing";
+import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer.js";
+import { makeSignBytes } from "./signing.js";
 
 interface AccountDataWithPrivkey extends AccountData {
   readonly privkey: Uint8Array;

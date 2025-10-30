@@ -3,8 +3,8 @@ import {
   parseJsonRpcId,
   parseJsonRpcResponse,
   parseJsonRpcSuccessResponse,
-} from "./parse";
-import { jsonRpcCode, JsonRpcErrorResponse, JsonRpcRequest, JsonRpcSuccessResponse } from "./types";
+} from "./parse.js";
+import { jsonRpcCode, JsonRpcErrorResponse, JsonRpcRequest, JsonRpcSuccessResponse } from "./types.js";
 
 describe("parse", () => {
   describe("parseJsonRpcId", () => {

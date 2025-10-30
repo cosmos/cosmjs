@@ -1,5 +1,5 @@
-import { Decimal } from "./decimal";
-import { Uint32, Uint53, Uint64 } from "./integers";
+import { Decimal } from "./decimal.js";
+import { Uint32, Uint53, Uint64 } from "./integers.js";
 
 describe("Decimal", () => {
   describe("fromAtomics", () => {

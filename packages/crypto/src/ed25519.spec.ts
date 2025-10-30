@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import { fromHex } from "@cosmjs/encoding";
 
-import { Ed25519, Ed25519Keypair } from "./ed25519";
+import { Ed25519, Ed25519Keypair } from "./ed25519.js";
 
 describe("Ed25519Keypair", () => {
   it("loads from Libsodium private key", () => {

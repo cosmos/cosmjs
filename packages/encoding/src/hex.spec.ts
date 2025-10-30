@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "./hex";
+import { fromHex, toHex } from "./hex.js";
 
 describe("fromHex", () => {
   it("works", () => {

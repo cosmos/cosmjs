@@ -1,4 +1,4 @@
-import { isMultisigThresholdPubkey, isSinglePubkey } from "./pubkeys";
+import { isMultisigThresholdPubkey, isSinglePubkey } from "./pubkeys.js";
 
 describe("pubkeys", () => {
   const pubkeyEd25519 = {

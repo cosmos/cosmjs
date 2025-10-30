@@ -1,6 +1,6 @@
 import { MemoryStream } from "xstream";
 
-import { DefaultValueProducer } from "./defaultvalueproducer";
+import { DefaultValueProducer } from "./defaultvalueproducer.js";
 
 export type SearchFunction<T> = (value: T) => boolean;
 

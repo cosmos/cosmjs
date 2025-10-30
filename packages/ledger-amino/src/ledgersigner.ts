@@ -11,7 +11,7 @@ import { HdPath } from "@cosmjs/crypto";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Transport from "@ledgerhq/hw-transport";
 
-import { AddressAndPubkey, LedgerConnector, LedgerConnectorOptions } from "./ledgerconnector";
+import { AddressAndPubkey, LedgerConnector, LedgerConnectorOptions } from "./ledgerconnector.js";
 
 export class LedgerSigner implements OfflineAminoSigner {
   private readonly connector: LedgerConnector;
