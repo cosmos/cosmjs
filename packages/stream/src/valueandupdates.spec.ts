@@ -1,7 +1,7 @@
 import { Listener } from "xstream";
 
-import { DefaultValueProducer } from "./defaultvalueproducer.js";
-import { ValueAndUpdates } from "./valueandupdates.js";
+import { DefaultValueProducer } from "./defaultvalueproducer.ts";
+import { ValueAndUpdates } from "./valueandupdates.ts";
 
 describe("ValueAndUpdates", () => {
   it("can be constructed", () => {

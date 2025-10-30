@@ -20,20 +20,20 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { AminoTypes } from "./aminotypes.js";
+import { AminoTypes } from "./aminotypes.ts";
 import {
   AminoMsgDelegate,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
   setupFeegrantExtension,
-} from "./modules/index.js";
-import { QueryClient } from "./queryclient/index.js";
+} from "./modules/index.ts";
+import { QueryClient } from "./queryclient/index.ts";
 import {
   PrivateSigningStargateClient,
   SigningStargateClient,
   SigningStargateClientOptions,
-} from "./signingstargateclient.js";
-import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient.js";
+} from "./signingstargateclient.ts";
+import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient.ts";
 import {
   defaultGasPrice,
   defaultSendFee,
@@ -46,7 +46,7 @@ import {
   simapp50Enabled,
   simappEnabled,
   validator,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 (simappEnabled ? describe : xdescribe)("SigningStargateClient", () => {
   describe("constructor", () => {

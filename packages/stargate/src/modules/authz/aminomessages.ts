@@ -1,4 +1,4 @@
-import { AminoConverters } from "../../aminotypes.js";
+import { AminoConverters } from "../../aminotypes.ts";
 
 export function createAuthzAminoConverters(): AminoConverters {
   return {

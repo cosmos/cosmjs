@@ -32,7 +32,7 @@ import {
 } from "cosmjs-types/cosmwasm/wasm/v1/query";
 import { ContractCodeHistoryOperationType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
-import { JsonObject, setupWasmExtension, WasmExtension } from "./modules/index.js";
+import { JsonObject, setupWasmExtension, WasmExtension } from "./modules/index.ts";
 
 export interface Code {
   readonly id: number;

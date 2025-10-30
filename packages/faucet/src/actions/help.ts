@@ -1,4 +1,4 @@
-import { binaryName } from "../constants.js";
+import { binaryName } from "../constants.ts";
 
 export function help(): void {
   const out = `

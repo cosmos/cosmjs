@@ -1,7 +1,7 @@
-import { Comet1Client } from "./comet1/index.js";
-import { Comet38Client } from "./comet38/index.js";
-import { HttpEndpoint } from "./rpcclients/index.js";
-import { Tendermint37Client } from "./tendermint37/index.js";
+import { Comet1Client } from "./comet1/index.ts";
+import { Comet38Client } from "./comet38/index.ts";
+import { HttpEndpoint } from "./rpcclients/index.ts";
+import { Tendermint37Client } from "./tendermint37/index.ts";
 
 /** A CometClient is either a Tendermint37Client Comet38Client or a Comet1Client */
 export type CometClient = Tendermint37Client | Comet38Client | Comet1Client;

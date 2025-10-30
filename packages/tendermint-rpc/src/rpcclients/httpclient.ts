@@ -5,8 +5,8 @@ import {
   parseJsonRpcResponse,
 } from "@cosmjs/json-rpc";
 
-import { http } from "./http.js";
-import { hasProtocol, RpcClient } from "./rpcclient.js";
+import { http } from "./http.ts";
+import { hasProtocol, RpcClient } from "./rpcclient.ts";
 
 export interface HttpEndpoint {
   /**

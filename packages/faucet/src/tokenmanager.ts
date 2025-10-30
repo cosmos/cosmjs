@@ -1,7 +1,7 @@
 import { Decimal, Uint53 } from "@cosmjs/math";
 import { Coin } from "@cosmjs/stargate";
 
-import { MinimalAccount } from "./types.js";
+import { MinimalAccount } from "./types.ts";
 
 const defaultCreditAmount = 10_000_000;
 

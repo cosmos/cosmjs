@@ -3,12 +3,12 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { QueryClient } from "../../queryclient/index.js";
-import { SigningStargateClient } from "../../signingstargateclient.js";
-import { assertIsDeliverTxSuccess } from "../../stargateclient.js";
-import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils.js";
-import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages.js";
-import { setupStakingExtension, StakingExtension } from "./queries.js";
+import { QueryClient } from "../../queryclient/index.ts";
+import { SigningStargateClient } from "../../signingstargateclient.ts";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.ts";
+import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils.ts";
+import { MsgDelegateEncodeObject, MsgUndelegateEncodeObject } from "./messages.ts";
+import { setupStakingExtension, StakingExtension } from "./queries.ts";
 
 async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & StakingExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

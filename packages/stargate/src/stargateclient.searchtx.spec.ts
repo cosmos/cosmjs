@@ -14,13 +14,13 @@ import { MsgSendResponse } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { isMsgSendEncodeObject } from "./modules/index.js";
+import { isMsgSendEncodeObject } from "./modules/index.ts";
 import {
   DeliverTxResponse,
   isDeliverTxFailure,
   isDeliverTxSuccess,
   StargateClient,
-} from "./stargateclient.js";
+} from "./stargateclient.ts";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -28,7 +28,7 @@ import {
   makeRandomAddress,
   simapp,
   simappEnabled,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 interface TestTxSend {
   readonly sender: string;

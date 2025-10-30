@@ -1,7 +1,7 @@
 import { GasPrice } from "@cosmjs/stargate";
 
-import { TokenConfiguration } from "./tokenmanager.js";
-import { parseBankTokens } from "./tokens.js";
+import { TokenConfiguration } from "./tokenmanager.ts";
+import { parseBankTokens } from "./tokens.ts";
 
 export const binaryName = "cosmos-faucet";
 export const memo: string | undefined = process.env.FAUCET_MEMO;

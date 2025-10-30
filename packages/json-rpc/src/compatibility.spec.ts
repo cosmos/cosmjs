@@ -1,4 +1,4 @@
-import { isJsonCompatibleArray, isJsonCompatibleDictionary, isJsonCompatibleValue } from "./compatibility.js";
+import { isJsonCompatibleArray, isJsonCompatibleDictionary, isJsonCompatibleValue } from "./compatibility.ts";
 
 describe("json", () => {
   function sum(a: number, b: number): number {

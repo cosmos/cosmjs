@@ -1,2 +1,2 @@
-export { Params } from "./requests.js";
-export { Responses } from "./responses.js";
+export { Params } from "./requests.ts";
+export { Responses } from "./responses.ts";

@@ -1,8 +1,8 @@
 import { coin } from "@cosmjs/proto-signing";
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
-import { AminoTypes } from "../../aminotypes.js";
-import { AminoMsgTransfer, createIbcAminoConverters } from "./aminomessages.js";
+import { AminoTypes } from "../../aminotypes.ts";
+import { AminoMsgTransfer, createIbcAminoConverters } from "./aminomessages.ts";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

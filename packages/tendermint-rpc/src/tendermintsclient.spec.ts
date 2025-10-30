@@ -1,5 +1,5 @@
-import { connectComet, isComet1Client, isComet38Client, isTendermint37Client } from "./tendermintclient.js";
-import { tendermintEnabled, tendermintInstances } from "./testutil.spec.js";
+import { connectComet, isComet1Client, isComet38Client, isTendermint37Client } from "./tendermintclient.ts";
+import { tendermintEnabled, tendermintInstances } from "./testutil.spec.ts";
 
 (tendermintEnabled ? describe : xdescribe)("connectComet", () => {
   it("works for Tendermint 0.37", async () => {

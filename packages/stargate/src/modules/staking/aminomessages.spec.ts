@@ -10,7 +10,7 @@ import {
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { AminoTypes } from "../../aminotypes.js";
+import { AminoTypes } from "../../aminotypes.ts";
 import {
   AminoMsgBeginRedelegate,
   AminoMsgCancelUnbondingDelegation,
@@ -20,7 +20,7 @@ import {
   AminoMsgUndelegate,
   createStakingAminoConverters,
   protoDecimalToJson,
-} from "./aminomessages.js";
+} from "./aminomessages.ts";
 
 describe("AminoTypes", () => {
   describe("protoDecimalToJson", () => {

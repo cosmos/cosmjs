@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { jCheckNonEmptyString, jCheckNonZeroNumber } from "./jsonchecks.js";
+import { jCheckNonEmptyString, jCheckNonZeroNumber } from "./jsonchecks.ts";
 
 describe("jCheckNonEmptyString", () => {
   it("throws for wrong input type", () => {

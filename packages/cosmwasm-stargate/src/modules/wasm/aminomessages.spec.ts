@@ -20,7 +20,7 @@ import {
   AminoMsgStoreCode,
   AminoMsgUpdateAdmin,
   createWasmAminoConverters,
-} from "./aminomessages.js";
+} from "./aminomessages.ts";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

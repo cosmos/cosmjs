@@ -1,4 +1,4 @@
-import { JsonCompatibleArray, JsonCompatibleDictionary, JsonCompatibleValue } from "./compatibility.js";
+import { JsonCompatibleArray, JsonCompatibleDictionary, JsonCompatibleValue } from "./compatibility.ts";
 
 export type JsonRpcId = number | string;
 

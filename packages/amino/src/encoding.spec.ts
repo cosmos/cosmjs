@@ -8,8 +8,8 @@ import {
   encodeBech32Pubkey,
   encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,
-} from "./encoding.js";
-import { Pubkey } from "./pubkeys.js";
+} from "./encoding.ts";
+import { Pubkey } from "./pubkeys.ts";
 import {
   testgroup1,
   testgroup1PubkeyBech32,
@@ -19,7 +19,7 @@ import {
   testgroup3PubkeyBech32,
   testgroup4,
   testgroup4PubkeyBech32,
-} from "./testutils.js";
+} from "./testutils.ts";
 
 describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {

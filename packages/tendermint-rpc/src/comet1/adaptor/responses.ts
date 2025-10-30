@@ -3,8 +3,8 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
-import { fromRfc3339WithNanoseconds } from "../../dates.js";
-import { apiToBigInt, apiToSmallInt } from "../../inthelpers.js";
+import { fromRfc3339WithNanoseconds } from "../../dates.ts";
+import { apiToBigInt, apiToSmallInt } from "../../inthelpers.ts";
 import {
   jCheckArray,
   jCheckBoolean,
@@ -14,12 +14,12 @@ import {
   jCheckObject,
   jCheckSet,
   jCheckString,
-} from "../../jsonchecks.js";
-import { SubscriptionEvent } from "../../rpcclients/index.js";
-import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types.js";
-import { dictionaryToStringMap, may } from "../encodings.js";
-import { hashTx } from "../hasher.js";
-import * as responses from "../responses.js";
+} from "../../jsonchecks.ts";
+import { SubscriptionEvent } from "../../rpcclients/index.ts";
+import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types.ts";
+import { dictionaryToStringMap, may } from "../encodings.ts";
+import { hashTx } from "../hasher.ts";
+import * as responses from "../responses.ts";
 
 interface AbciInfoResult {
   readonly response: RpcAbciInfoResponse;

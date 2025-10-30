@@ -8,7 +8,7 @@ import {
 } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.js";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.ts";
 
 export interface BankExtension {
   readonly bank: {

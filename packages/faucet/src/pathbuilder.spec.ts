@@ -1,7 +1,7 @@
 import { Slip10RawIndex } from "@cosmjs/crypto";
 import { makeCosmoshubPath } from "@cosmjs/proto-signing";
 
-import { makePathBuilder, PathBuilder } from "./pathbuilder.js";
+import { makePathBuilder, PathBuilder } from "./pathbuilder.ts";
 
 describe("pathbuilder", () => {
   describe("PathBuilder", () => {

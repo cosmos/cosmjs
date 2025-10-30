@@ -1,6 +1,6 @@
 import { fromBase64 } from "@cosmjs/encoding";
 
-import { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature.js";
+import { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature.ts";
 
 describe("signature", () => {
   describe("encodeSecp256k1Signature", () => {

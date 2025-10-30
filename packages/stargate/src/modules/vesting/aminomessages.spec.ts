@@ -1,8 +1,8 @@
 import { coins } from "@cosmjs/amino";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 
-import { AminoTypes } from "../../aminotypes.js";
-import { AminoMsgCreateVestingAccount, createVestingAminoConverters } from "./aminomessages.js";
+import { AminoTypes } from "../../aminotypes.ts";
+import { AminoMsgCreateVestingAccount, createVestingAminoConverters } from "./aminomessages.ts";
 
 describe("vesting Amino messages", () => {
   describe("toAmino", () => {

@@ -7,7 +7,7 @@ import {
   fromSeconds,
   toRfc3339WithNanoseconds,
   toSeconds,
-} from "./dates.js";
+} from "./dates.ts";
 
 describe("dates", () => {
   describe("fromRfc3339WithNanoseconds", () => {

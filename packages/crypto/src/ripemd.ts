@@ -1,8 +1,8 @@
 import { fixUint8Array } from "@cosmjs/encoding";
 import { ripemd160 as nobleRipemd160 } from "@noble/hashes/legacy.js";
 
-import { HashFunction } from "./hash.js";
-import { toRealUint8Array } from "./utils.js";
+import { HashFunction } from "./hash.ts";
+import { toRealUint8Array } from "./utils.ts";
 
 export class Ripemd160 implements HashFunction {
   public readonly blockSize = 512 / 8;

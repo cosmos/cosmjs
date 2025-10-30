@@ -2,10 +2,10 @@ import { Uint53 } from "@cosmjs/math";
 import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
-import { createJsonRpcRequest } from "../jsonrpc.js";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec.js";
-import { SubscriptionEvent } from "./rpcclient.js";
-import { WebsocketClient } from "./websocketclient.js";
+import { createJsonRpcRequest } from "../jsonrpc.ts";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec.ts";
+import { SubscriptionEvent } from "./rpcclient.ts";
+import { WebsocketClient } from "./websocketclient.ts";
 
 (tendermintEnabled ? describe : xdescribe)("WebsocketClient", () => {
   const { blockTime, url } = defaultInstance;
