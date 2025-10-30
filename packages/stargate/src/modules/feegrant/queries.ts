@@ -4,7 +4,7 @@ import {
   QueryClientImpl,
 } from "cosmjs-types/cosmos/feegrant/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.js";
 
 export interface FeegrantExtension {
   readonly feegrant: {

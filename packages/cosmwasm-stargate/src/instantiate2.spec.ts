@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { instantiate2Address } from "./instantiate2";
+import { instantiate2Address } from "./instantiate2.js";
 
 describe("instantiate2", () => {
   describe("instantiate2Address", () => {

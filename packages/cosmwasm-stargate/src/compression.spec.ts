@@ -1,7 +1,7 @@
 import { fromHex } from "@cosmjs/encoding";
 import { Uint32 } from "@cosmjs/math";
 
-import { gzip } from "./compression";
+import { gzip } from "./compression.js";
 
 async function uncompress(compressed: Uint8Array): Promise<Uint8Array> {
   const ds = new DecompressionStream("gzip");

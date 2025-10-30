@@ -1,6 +1,6 @@
 import { Producer, Stream } from "xstream";
 
-import { concat } from "./concat";
+import { concat } from "./concat.js";
 
 async function producerIsStopped(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, 50));

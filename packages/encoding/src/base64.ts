@@ -1,6 +1,6 @@
 import * as base64js from "base64-js";
 
-import { fixUint8Array } from "./uint8array";
+import { fixUint8Array } from "./uint8array.js";
 
 export function toBase64(data: Uint8Array): string {
   return base64js.fromByteArray(data);

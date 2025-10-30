@@ -1,4 +1,4 @@
-import { isJsonCompatibleArray, isJsonCompatibleDictionary, isJsonCompatibleValue } from "./compatibility";
+import { isJsonCompatibleArray, isJsonCompatibleDictionary, isJsonCompatibleValue } from "./compatibility.js";
 
 describe("json", () => {
   function sum(a: number, b: number): number {

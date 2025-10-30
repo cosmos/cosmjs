@@ -8,8 +8,8 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
-import { Account, accountFromAny, AccountParser } from "./accounts";
-import { Event, fromTendermintEvent } from "./events";
+import { Account, accountFromAny, AccountParser } from "./accounts.js";
+import { Event, fromTendermintEvent } from "./events.js";
 import {
   AuthExtension,
   BankExtension,
@@ -19,9 +19,9 @@ import {
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./modules/index";
-import { QueryClient } from "./queryclient/index";
-import { isSearchTxQueryArray, SearchTxQuery } from "./search";
+} from "./modules/index.js";
+import { QueryClient } from "./queryclient/index.js";
+import { isSearchTxQueryArray, SearchTxQuery } from "./search.js";
 
 export class TimeoutError extends Error {
   public readonly txId: string;

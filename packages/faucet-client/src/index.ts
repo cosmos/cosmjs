@@ -1,1 +1,1 @@
-export { FaucetClient } from "./faucetclient";
+export { FaucetClient } from "./faucetclient.js";

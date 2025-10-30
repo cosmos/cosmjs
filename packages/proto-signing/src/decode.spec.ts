@@ -4,8 +4,8 @@ import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { decodeTxRaw } from "./decode";
-import { faucet, testVectors } from "./testutils";
+import { decodeTxRaw } from "./decode.js";
+import { faucet, testVectors } from "./testutils.js";
 
 describe("decode", () => {
   describe("decodeTxRaw", () => {

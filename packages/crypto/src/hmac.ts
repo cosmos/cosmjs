@@ -1,6 +1,6 @@
 import { fixUint8Array } from "@cosmjs/encoding";
 
-import { HashFunction } from "./hash";
+import { HashFunction } from "./hash.js";
 
 export class Hmac<H extends HashFunction> implements HashFunction {
   public readonly blockSize: number;

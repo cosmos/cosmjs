@@ -1,4 +1,4 @@
-import { arrayContentEquals, arrayContentStartsWith } from "./arrays";
+import { arrayContentEquals, arrayContentStartsWith } from "./arrays.js";
 
 describe("array", () => {
   describe("arrayContentEquals", () => {

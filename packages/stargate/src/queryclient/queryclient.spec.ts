@@ -9,7 +9,7 @@ import {
   QueryBalanceResponse,
 } from "cosmjs-types/cosmos/bank/v1beta1/query";
 
-import { SigningStargateClient } from "../signingstargateclient";
+import { SigningStargateClient } from "../signingstargateclient.js";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -17,8 +17,8 @@ import {
   simapp,
   simappEnabled,
   unused,
-} from "../testutils";
-import { QueryClient } from "./queryclient";
+} from "../testutils.js";
+import { QueryClient } from "./queryclient.js";
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

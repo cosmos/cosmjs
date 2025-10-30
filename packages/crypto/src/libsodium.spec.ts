@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import { fromHex, toAscii } from "@cosmjs/encoding";
 
-import { Argon2id, Argon2idOptions, Ed25519, Ed25519Keypair, Xchacha20poly1305Ietf } from "./libsodium";
+import { Argon2id, Argon2idOptions, Ed25519, Ed25519Keypair, Xchacha20poly1305Ietf } from "./libsodium.js";
 
 describe("Libsodium", () => {
   describe("Argon2id", () => {

@@ -1,6 +1,6 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 
-import { Keccak256, keccak256 } from "./keccak";
+import { Keccak256, keccak256 } from "./keccak.js";
 import keccakVectors from "./testdata/keccak.json";
 
 describe("Keccak256", () => {

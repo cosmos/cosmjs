@@ -1,4 +1,4 @@
-import { generate, help, start, version } from "./actions/index";
+import { generate, help, start, version } from "./actions/index.js";
 
 export function main(args: readonly string[]): void {
   if (args.length < 1) {

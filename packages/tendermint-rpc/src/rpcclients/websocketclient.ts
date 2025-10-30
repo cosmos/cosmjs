@@ -10,7 +10,7 @@ import { ConnectionStatus, ReconnectingSocket, SocketWrapperMessageEvent } from 
 import { firstEvent } from "@cosmjs/stream";
 import { Listener, Producer, Stream, Subscription } from "xstream";
 
-import { hasProtocol, RpcStreamingClient, SubscriptionEvent } from "./rpcclient";
+import { hasProtocol, RpcStreamingClient, SubscriptionEvent } from "./rpcclient.js";
 
 function defaultErrorHandler(error: any): never {
   throw error;

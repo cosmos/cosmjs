@@ -1,4 +1,4 @@
-import { Int53, Uint32, Uint53, Uint64 } from "./integers";
+import { Int53, Uint32, Uint53, Uint64 } from "./integers.js";
 
 describe("Integers", () => {
   describe("Uint32", () => {

@@ -3,9 +3,9 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { QueryClient } from "../../queryclient/index";
-import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
+import { QueryClient } from "../../queryclient/index.js";
+import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient.js";
+import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient.js";
 import {
   defaultSigningClientOptions,
   faucet,
@@ -13,8 +13,8 @@ import {
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils";
-import { setupTxExtension, TxExtension } from "./queries";
+} from "../../testutils.js";
+import { setupTxExtension, TxExtension } from "./queries.js";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

@@ -1,4 +1,4 @@
-import { SocketWrapper } from "./socketwrapper";
+import { SocketWrapper } from "./socketwrapper.js";
 
 const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
 
