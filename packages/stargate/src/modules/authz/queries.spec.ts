@@ -4,7 +4,7 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 
-import { QueryClient } from "../../queryclient";
+import { QueryClient } from "../../queryclient/index";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {

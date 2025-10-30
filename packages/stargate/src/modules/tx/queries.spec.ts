@@ -3,7 +3,7 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { QueryClient } from "../../queryclient";
+import { QueryClient } from "../../queryclient/index";
 import { defaultRegistryTypes, SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess, StargateClient } from "../../stargateclient";
 import {

@@ -61,7 +61,7 @@ import {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   wasmTypes,
-} from "./modules";
+} from "./modules/index";
 
 export interface UploadResult {
   /** A hex encoded sha256 checksum of the original Wasm code (that is stored on chain) */

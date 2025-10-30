@@ -19,8 +19,8 @@ import {
   setupTxExtension,
   StakingExtension,
   TxExtension,
-} from "./modules";
-import { QueryClient } from "./queryclient";
+} from "./modules/index";
+import { QueryClient } from "./queryclient/index";
 import { isSearchTxQueryArray, SearchTxQuery } from "./search";
 
 export class TimeoutError extends Error {

@@ -51,7 +51,7 @@ export type {
   MsgWithdrawDelegatorRewardEncodeObject,
   StakingExtension,
   TxExtension,
-} from "./modules";
+} from "./modules/index";
 export {
   createAuthzAminoConverters,
   createBankAminoConverters,
@@ -109,15 +109,15 @@ export {
   setupSlashingExtension,
   setupStakingExtension,
   setupTxExtension,
-} from "./modules";
+} from "./modules/index";
 export { makeMultisignedTx, makeMultisignedTxBytes } from "./multisignature";
-export type { ProtobufRpcClient, QueryAbciResponse, QueryStoreResponse } from "./queryclient";
+export type { ProtobufRpcClient, QueryAbciResponse, QueryStoreResponse } from "./queryclient/index";
 export {
   createPagination,
   createProtobufRpcClient,
   decodeCosmosSdkDecFromProto,
   QueryClient,
-} from "./queryclient";
+} from "./queryclient/index";
 export type { SearchPair, SearchTxQuery } from "./search";
 export { isSearchTxQueryArray } from "./search";
 export type { SignerData, SigningStargateClientOptions } from "./signingstargateclient";

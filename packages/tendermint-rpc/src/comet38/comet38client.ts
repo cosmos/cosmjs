@@ -8,8 +8,8 @@ import {
   RpcClient,
   SubscriptionEvent,
   WebsocketClient,
-} from "../rpcclients";
-import { Params, Responses } from "./adaptor";
+} from "../rpcclients/index";
+import { Params, Responses } from "./adaptor/index";
 import * as requests from "./requests";
 import * as responses from "./responses";
 

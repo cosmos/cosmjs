@@ -25,7 +25,7 @@ import { AccessConfig, AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
 
 import { gzip } from "./compression";
 import { instantiate2Address } from "./instantiate2";
-import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules";
+import { MsgExecuteContractEncodeObject, MsgStoreCodeEncodeObject } from "./modules/index";
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
 import {
   alice,

@@ -47,7 +47,7 @@ import {
   MsgWithdrawDelegatorRewardEncodeObject,
   stakingTypes,
   vestingTypes,
-} from "./modules";
+} from "./modules/index";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 
 export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [

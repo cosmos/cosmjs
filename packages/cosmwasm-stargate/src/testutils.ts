@@ -22,7 +22,7 @@ import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { setupWasmExtension, WasmExtension } from "./modules";
+import { setupWasmExtension, WasmExtension } from "./modules/index";
 import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
 import hackatom from "./testdata/contract.json";
 

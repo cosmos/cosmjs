@@ -11,7 +11,7 @@ import {
   QueryValidatorSlashesResponse,
 } from "cosmjs-types/cosmos/distribution/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index";
 
 export interface DistributionExtension {
   readonly distribution: {

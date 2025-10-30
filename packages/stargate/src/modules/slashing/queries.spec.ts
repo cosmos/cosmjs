@@ -1,6 +1,6 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../../queryclient";
+import { QueryClient } from "../../queryclient/index";
 import { simapp, simappEnabled } from "../../testutils";
 import { setupSlashingExtension, SlashingExtension } from "./queries";
 
