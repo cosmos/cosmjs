@@ -4,7 +4,7 @@ import { assert } from "@cosmjs/utils";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { QueryClient } from "../../queryclient";
+import { QueryClient } from "../../queryclient/index";
 import { nonExistentAddress, simapp, simappEnabled, unused, validator } from "../../testutils";
 import { AuthExtension, setupAuthExtension } from "./queries";
 

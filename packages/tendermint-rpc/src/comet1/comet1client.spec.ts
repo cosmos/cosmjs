@@ -4,7 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
+import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients/index";
 import {
   buildKvTx,
   ExpectedValues,

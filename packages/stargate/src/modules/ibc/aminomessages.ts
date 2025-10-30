@@ -4,7 +4,7 @@ import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 
 import { AminoConverters } from "../../aminotypes";
 
-// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/core/02-client/types/client.pb.go#L297-L312
+// https://github.com/cosmos/ibc-go/blob/07b6a97b67d17fd214a83764cbdb2c2c3daef445/modules/index/core/02-client/types/client.pb.go#L297-L312
 interface AminoHeight {
   /** 0 values must be omitted (https://github.com/cosmos/cosmos-sdk/blob/v0.42.7/x/ibc/core/02-client/types/client.pb.go#L252). */
   readonly revision_number?: string;
@@ -12,7 +12,7 @@ interface AminoHeight {
   readonly revision_height?: string;
 }
 
-// https://github.com/cosmos/ibc-go/blob/a4ca39c59f770a0b6948947d5178d5f0914c3a17/modules/apps/transfer/types/tx.pb.go#L37-L56
+// https://github.com/cosmos/ibc-go/blob/a4ca39c59f770a0b6948947d5178d5f0914c3a17/modules/index/apps/transfer/types/tx.pb.go#L37-L56
 /** Transfers fungible tokens (i.e Coins) between ICS20 enabled chains */
 export interface AminoMsgTransfer extends AminoMsg {
   readonly type: "cosmos-sdk/MsgTransfer";

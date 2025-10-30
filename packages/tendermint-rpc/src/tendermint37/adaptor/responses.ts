@@ -15,7 +15,7 @@ import {
   jCheckSet,
   jCheckString,
 } from "../../jsonchecks";
-import { SubscriptionEvent } from "../../rpcclients";
+import { SubscriptionEvent } from "../../rpcclients/index";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
 import { dictionaryToStringMap, may } from "../encodings";
 import { hashTx } from "../hasher";

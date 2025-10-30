@@ -12,7 +12,7 @@ import {
 } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { longify, QueryClient } from "../../queryclient";
+import { longify, QueryClient } from "../../queryclient/index";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
 import {
@@ -23,7 +23,7 @@ import {
   simappEnabled,
   validator,
 } from "../../testutils";
-import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../";
+import { MsgDelegateEncodeObject, MsgSubmitProposalEncodeObject, MsgVoteEncodeObject } from "../index";
 import { GovExtension, setupGovExtension } from "./queries";
 
 async function makeClientWithGov(rpcUrl: string): Promise<[QueryClient & GovExtension, CometClient]> {
