@@ -212,9 +212,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/cosmwasm-stargate@workspace:^, @cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
+"@cosmjs/cosmwasm@workspace:^, @cosmjs/cosmwasm@workspace:packages/cosmwasm":
   version: 0.0.0-use.local
-  resolution: "@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate"
+  resolution: "@cosmjs/cosmwasm@workspace:packages/cosmwasm"
   dependencies:
     "@cosmjs/amino": "workspace:^"
     "@cosmjs/crypto": "workspace:^"
@@ -2942,7 +2942,7 @@ __metadata:
   resolution: "cosmjs-monorepo-root@workspace:."
   dependencies:
     "@cosmjs/amino": "workspace:^"
-    "@cosmjs/cosmwasm-stargate": "workspace:^"
+    "@cosmjs/cosmwasm": "workspace:^"
     "@cosmjs/crypto": "workspace:^"
     "@cosmjs/encoding": "workspace:^"
     "@cosmjs/proto-signing": "workspace:^"
