@@ -15,6 +15,9 @@
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
+    "!**/demo/",
+    "!**/demo-bundle/",
+    "!**/karma-bundle/",
     "!**/testdata/"
   ],
   "repository": {
@@ -35,7 +38,7 @@
     "test": "yarn build-or-skip && yarn test-node",
     "demo-node": "yarn build-or-skip && node ./demo/node.cjs",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
+    "pack-demo-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
