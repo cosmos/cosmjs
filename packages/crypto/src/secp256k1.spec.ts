@@ -133,14 +133,14 @@ describe("Secp256k1", () => {
 
     {
       // valid
-      const ok = await Secp256k1.verifySignature(signature, messageHash, keypair.pubkey);
+      const ok = Secp256k1.verifySignature(signature, messageHash, keypair.pubkey);
       expect(ok).toEqual(true);
     }
 
     {
       // messageHash corrupted
       const corruptedMessageHash = messageHash.map((x, i) => (i === 0 ? x ^ 0x01 : x));
-      const ok = await Secp256k1.verifySignature(signature, corruptedMessageHash, keypair.pubkey);
+      const ok = Secp256k1.verifySignature(signature, corruptedMessageHash, keypair.pubkey);
       expect(ok).toEqual(false);
     }
 
@@ -149,7 +149,7 @@ describe("Secp256k1", () => {
       const corruptedSignature = Secp256k1Signature.fromDer(
         signature.toDer().map((x, i) => (i === 5 ? x ^ 0x01 : x)),
       );
-      const ok = await Secp256k1.verifySignature(corruptedSignature, messageHash, keypair.pubkey);
+      const ok = Secp256k1.verifySignature(corruptedSignature, messageHash, keypair.pubkey);
       expect(ok).toEqual(false);
     }
 
@@ -157,7 +157,7 @@ describe("Secp256k1", () => {
       // wrong pubkey
       const otherPrivkey = fromHex("91099374790843e29552c3cfa5e9286d6c77e00a2c109aaf3d0a307081314a09");
       const wrongPubkey = (await Secp256k1.makeKeypair(otherPrivkey)).pubkey;
-      const ok = await Secp256k1.verifySignature(signature, messageHash, wrongPubkey);
+      const ok = Secp256k1.verifySignature(signature, messageHash, wrongPubkey);
       expect(ok).toEqual(false);
     }
   });
@@ -172,9 +172,9 @@ describe("Secp256k1", () => {
       fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9"),
     );
     const messageHash = new Uint8Array([]);
-    await expectAsync(
-      Secp256k1.verifySignature(dummySignature, messageHash, keypair.pubkey),
-    ).toBeRejectedWithError(/message hash must not be empty/i);
+    expect(() => Secp256k1.verifySignature(dummySignature, messageHash, keypair.pubkey)).toThrowError(
+      /message hash must not be empty/i,
+    );
   });
 
   it("throws for message hash longer than 32 bytes in verification", async () => {
@@ -187,9 +187,9 @@ describe("Secp256k1", () => {
       fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9"),
     );
     const messageHash = fromHex("11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff11");
-    await expectAsync(
-      Secp256k1.verifySignature(dummySignature, messageHash, keypair.privkey),
-    ).toBeRejectedWithError(/message hash length must not exceed 32 bytes/i);
+    expect(() => Secp256k1.verifySignature(dummySignature, messageHash, keypair.privkey)).toThrowError(
+      /message hash length must not exceed 32 bytes/i,
+    );
   });
 
   it("verifies unnormalized pyca/cryptography signatures", async () => {
@@ -384,7 +384,7 @@ describe("Secp256k1", () => {
     for (const [index, row] of data.entries()) {
       const pubkey = (await Secp256k1.makeKeypair(row.privkey)).pubkey;
       const messageHash = sha256(row.message);
-      const isValid = await Secp256k1.verifySignature(
+      const isValid = Secp256k1.verifySignature(
         Secp256k1Signature.fromDer(row.signature),
         messageHash,
         pubkey,
@@ -500,11 +500,11 @@ describe("Secp256k1", () => {
       const calculatedSignature = await Secp256k1.createSignature(messageHash, row.privkey);
 
       // verify calculated signature
-      const ok1 = await Secp256k1.verifySignature(calculatedSignature, messageHash, keypair.pubkey);
+      const ok1 = Secp256k1.verifySignature(calculatedSignature, messageHash, keypair.pubkey);
       expect(ok1).withContext(`(index ${index})`).toEqual(true);
 
       // verify original signature
-      const ok2 = await Secp256k1.verifySignature(
+      const ok2 = Secp256k1.verifySignature(
         Secp256k1Signature.fromDer(row.signature),
         messageHash,
         keypair.pubkey,

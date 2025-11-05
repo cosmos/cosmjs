@@ -81,11 +81,11 @@ export class Secp256k1 {
     return new ExtendedSecp256k1Signature(unsignedBigIntToBytes(r), unsignedBigIntToBytes(s), recovery);
   }
 
-  public static async verifySignature(
+  public static verifySignature(
     signature: Secp256k1Signature,
     messageHash: Uint8Array,
     pubkey: Uint8Array,
-  ): Promise<boolean> {
+  ): boolean {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }
