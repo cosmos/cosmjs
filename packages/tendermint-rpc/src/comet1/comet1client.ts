@@ -99,9 +99,6 @@ export class Comet1Client {
 
   // this should paginate through all blockSearch options to ensure it returns all results.
   // starts with page 1 or whatever was provided (eg. to start on page 7)
-  //
-  // NOTE
-  // This method will error on any node that is running a Tendermint version lower than 0.34.9.
   public async blockSearchAll(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
     let page = params.page || 1;
     const blocks: responses.BlockResponse[] = [];

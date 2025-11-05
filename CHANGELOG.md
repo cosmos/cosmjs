@@ -46,7 +46,43 @@ and this project adheres to
 
   This change requires users to use TypeScript 5.7 or newer. ([#1883])
 
+- @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
+  `CometClient` or just `Tendermint37Client` instead. ([#1866])
+- @cosmjs/tendermint-rpc: Remove `isTendermint34Client`. Remove
+  `Tendermint34Client` from `CometClient` union type. Remove
+  `Tendermint34Client`. Remove module `tendermint34`. ([#1866])
+- @cosmjs/tendermint-rpc: Remove top-level exports `broadcastTxCommitSuccess`,
+  `broadcastTxSyncSuccess`, `AbciInfoRequest`, `AbciInfoResponse`,
+  `AbciQueryParams`, `AbciQueryRequest`, `AbciQueryResponse`, `Attribute`,
+  `Block`, `BlockchainRequest`, `BlockchainResponse`, `BlockGossipParams`,
+  `BlockId`, `BlockMeta`, `BlockParams`, `BlockRequest`, `BlockResponse`,
+  `BlockResultsRequest`, `BlockResultsResponse`, `BroadcastTxAsyncResponse`,
+  `BroadcastTxCommitResponse`, `BroadcastTxParams`, `BroadcastTxRequest`,
+  `BroadcastTxSyncResponse`, `Commit`, `CommitRequest`, `CommitResponse`,
+  `ConsensusParams`, `Event`, `Evidence`, `EvidenceParams`, `GenesisRequest`,
+  `GenesisResponse`, `Header`, `HealthRequest`, `HealthResponse`, `Method`,
+  `NewBlockEvent`, `NewBlockHeaderEvent`, `NodeInfo`,
+  `NumUnconfirmedTxsRequest`, `NumUnconfirmedTxsResponse`, `ProofOp`,
+  `QueryProof`, `QueryTag`, `Request`, `Response`, `StatusRequest`,
+  `StatusResponse`, `SubscriptionEventType`, `SyncInfo`, `TxData`, `TxEvent`,
+  `TxParams`, `TxProof`, `TxRequest`, `TxResponse`, `TxSearchParams`,
+  `TxSearchRequest`, `TxSearchResponse`, `TxSizeParams`, `Validator`,
+  `ValidatorsParams`, `ValidatorsRequest`, `ValidatorsResponse`, `Version`,
+  `Vote`, `VoteType` which all came from `tendermint34`.
+
+  If you needs any of those you can import them from a version specific module,
+  such as `comet1.Version` or
+
+  ```ts
+  import { comet1, comet38, tendermint37 } from "@cosmjs/tendermint-rpc";
+
+  function convertEvent(e: tendermint37.Event | comet38.Event | comet1.Event);
+  ```
+
+  in case you want to support multiple versions. ([#1866])
+
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
+[#1866]: https://github.com/cosmos/cosmjs/issues/1866
 
 ## [0.37.0] - 2025-10-29
 

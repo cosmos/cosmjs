@@ -82,9 +82,6 @@ export class Tendermint37Client {
   /**
    * Search for events that are in a block.
    *
-   * NOTE
-   * This method will error on any node that is running a Tendermint version lower than 0.34.9.
-   *
    * @see https://docs.tendermint.com/master/rpc/#/Info/block_search
    */
   public async blockSearch(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
@@ -99,9 +96,6 @@ export class Tendermint37Client {
 
   // this should paginate through all blockSearch options to ensure it returns all results.
   // starts with page 1 or whatever was provided (eg. to start on page 7)
-  //
-  // NOTE
-  // This method will error on any node that is running a Tendermint version lower than 0.34.9.
   public async blockSearchAll(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
     let page = params.page || 1;
     const blocks: responses.BlockResponse[] = [];

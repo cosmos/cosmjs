@@ -115,7 +115,7 @@ export class SigningStargateClient extends StargateClient {
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * This uses auto-detection to decide between a CometBFT 1.x, CometBFT 0.38 and Tendermint 0.37 client.
    * To set the Comet client explicitly, use `createWithSigner`.
    */
   public static async connectWithSigner(
@@ -129,7 +129,8 @@ export class SigningStargateClient extends StargateClient {
 
   /**
    * Creates an instance from a manually created Comet client.
-   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of
+   * auto-detection.
    */
   public static createWithSigner(
     cometClient: CometClient,
