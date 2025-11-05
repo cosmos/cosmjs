@@ -4,8 +4,7 @@ command -v shellcheck >/dev/null && shellcheck "$0"
 
 gnused="$(command -v gsed || echo sed)"
 
-# Tendermint settings must be specified
-# Choose version from https://hub.docker.com/r/tendermint/tendermint/tags/
+# Settings must be specified, see all_start.sh
 for SETTING in "TENDERMINT_IMAGE" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
   if test -z "$(eval echo "\$$SETTING")"; then
     echo "\$$SETTING must be set when running this script"
@@ -26,10 +25,6 @@ docker run --rm \
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
-#
-# Tendermint <= 0.34 uses underscores
-"$gnused" -i -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
-# Tendermint 0.35 uses dashes
 "$gnused" -i -e 's/^cors-allowed-origins =.*$/cors-allowed-origins = ["*"]/' "${TMP_DIR}/config/config.toml"
 
 function inline_jq() {
