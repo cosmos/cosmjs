@@ -4,6 +4,10 @@ export {
   rawEd25519PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
 } from "./addresses";
+export * as comet1 from "./comet1";
+export { Comet1Client } from "./comet1";
+export * as comet38 from "./comet38";
+export { Comet38Client } from "./comet38";
 export {
   type ReadonlyDateWithNanoseconds,
   DateTime,
@@ -12,10 +16,6 @@ export {
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
-export * as comet1 from "./comet1";
-export { Comet1Client } from "./comet1";
-export * as comet38 from "./comet38";
-export { Comet38Client } from "./comet38";
 // The public Comet37Client/Comet38Client/Comet1Client.create constructor allows manually choosing an RpcClient.
 // This is currently the only way to switch to the HttpBatchClient (which may become default at some point).
 // Due to this API, we make RPC client implementations public.
