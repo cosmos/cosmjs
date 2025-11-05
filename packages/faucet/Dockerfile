@@ -8,7 +8,7 @@
 # During the build step the working directory must be the repo root such that the
 # app has access to all installed dependencies.
 
-FROM node:20-alpine as build-env
+FROM node:22-alpine AS build-env
 
 ADD . /app
 WORKDIR /app
@@ -21,8 +21,8 @@ RUN (cd packages/faucet && SKIP_BUILD=1 yarn pack-node)
 
 # Use Alpine and install Node.js which is 50% smaller than the -alpine version of the node
 # image (53 MB including the faucet app).
-FROM alpine:3.20
-# Installs Node.js 20 (https://pkgs.alpinelinux.org/packages?name=nodejs&branch=v3.20)
+FROM alpine:3.22
+# Installs Node.js 22 (https://pkgs.alpinelinux.org/packages?name=nodejs&branch=v3.22)
 RUN apk add --update nodejs
 
 COPY --from=build-env /app/packages/faucet /app/packages/faucet
