@@ -16,6 +16,7 @@
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
+    "!**/cli-bundle/",
     "!**/karma-bundle/",
     "!**/testdata/"
   ],
