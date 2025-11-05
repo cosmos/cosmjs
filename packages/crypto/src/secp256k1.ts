@@ -63,10 +63,7 @@ export class Secp256k1 {
    * - lowS signature
    * - DER encoded
    */
-  public static async createSignature(
-    messageHash: Uint8Array,
-    privkey: Uint8Array,
-  ): Promise<ExtendedSecp256k1Signature> {
+  public static createSignature(messageHash: Uint8Array, privkey: Uint8Array): ExtendedSecp256k1Signature {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }

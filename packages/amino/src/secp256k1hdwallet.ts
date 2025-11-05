@@ -285,7 +285,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     }
     const { privkey, pubkey } = account;
     const message = sha256(serializeSignDoc(signDoc));
-    const signature = await Secp256k1.createSignature(message, privkey);
+    const signature = Secp256k1.createSignature(message, privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
       signed: signDoc,

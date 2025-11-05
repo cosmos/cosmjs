@@ -53,7 +53,7 @@ export class DirectSecp256k1Wallet implements OfflineDirectSigner {
       throw new Error(`Address ${address} not found in wallet`);
     }
     const hashedMessage = sha256(signBytes);
-    const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
+    const signature = Secp256k1.createSignature(hashedMessage, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     const stdSignature = encodeSecp256k1Signature(this.pubkey, signatureBytes);
     return {
