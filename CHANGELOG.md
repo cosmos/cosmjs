@@ -49,7 +49,8 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
   `CometClient` or just `Tendermint37Client` instead. ([#1866])
 - @cosmjs/tendermint-rpc: Remove `isTendermint34Client`. Remove
-  `Tendermint34Client` from `CometClient` union type. ([#1866])
+  `Tendermint34Client` from `CometClient` union type. Remove
+  `Tendermint34Client`. ([#1866])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866

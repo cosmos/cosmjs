@@ -12,13 +12,13 @@ export {
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
-// The public Tendermint34Client.create constructor allows manually choosing an RpcClient.
-// This is currently the only way to switch to the HttpBatchClient (which may become default at some point).
-// Due to this API, we make RPC client implementations public.
 export * as comet1 from "./comet1";
 export { Comet1Client } from "./comet1";
 export * as comet38 from "./comet38";
 export { Comet38Client } from "./comet38";
+// The public Comet37Client/Comet38Client/Comet1Client.create constructor allows manually choosing an RpcClient.
+// This is currently the only way to switch to the HttpBatchClient (which may become default at some point).
+// Due to this API, we make RPC client implementations public.
 export type { HttpBatchClientOptions, HttpEndpoint, RpcClient } from "./rpcclients";
 export { HttpBatchClient, HttpClient, WebsocketClient } from "./rpcclients";
 export type {
@@ -94,7 +94,6 @@ export {
   VoteType,
 } from "./tendermint34";
 export * as tendermint34 from "./tendermint34";
-export { Tendermint34Client } from "./tendermint34";
 export * as tendermint37 from "./tendermint37";
 export { Tendermint37Client } from "./tendermint37";
 export type { CometClient } from "./tendermintclient";

@@ -73,4 +73,3 @@ export type {
   Vote,
 } from "./responses";
 export { broadcastTxCommitSuccess, broadcastTxSyncSuccess, VoteType } from "./responses";
-export { Tendermint34Client } from "./tendermint34client";
