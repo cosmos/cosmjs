@@ -1,5 +1,4 @@
-import { fromUtf8 } from "@cosmjs/encoding";
-import { tendermint34, tendermint37 } from "@cosmjs/tendermint-rpc";
+import { comet1, comet38, tendermint37 } from "@cosmjs/tendermint-rpc";
 
 /**
  * An event attribute.
@@ -30,17 +29,14 @@ export interface Event {
 }
 
 /**
- * Takes a Tendermint 0.34 or 0.37 event with binary encoded key and value
- * and converts it into an `Event` with string attributes.
+ * Takes a CometBFT event and converts it into an `Event` with string attributes.
+ *
+ * This is not doing much anymore because we always get string events
+ * since CometBFT 0.37+. So maybe this can be refactored away at some point.
  */
-export function fromTendermintEvent(event: tendermint34.Event | tendermint37.Event): Event {
+export function fromTendermintEvent(event: tendermint37.Event | comet38.Event | comet1.Event): Event {
   return {
     type: event.type,
-    attributes: event.attributes.map(
-      (attr): Attribute => ({
-        key: typeof attr.key == "string" ? attr.key : fromUtf8(attr.key, true),
-        value: typeof attr.value == "string" ? attr.value : fromUtf8(attr.value, true),
-      }),
-    ),
+    attributes: event.attributes.map((attr): Attribute => ({ key: attr.key, value: attr.value })),
   };
 }
