@@ -19,7 +19,7 @@ export class Secp256k1Wallet implements OfflineAminoSigner {
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
   public static async fromKey(privkey: Uint8Array, prefix = "cosmos"): Promise<Secp256k1Wallet> {
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    const uncompressed = Secp256k1.makeKeypair(privkey).pubkey;
     return new Secp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
@@ -52,7 +52,7 @@ export class Secp256k1Wallet implements OfflineAminoSigner {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
     const message = new Sha256(serializeSignDoc(signDoc)).digest();
-    const signature = await Secp256k1.createSignature(message, this.privkey);
+    const signature = Secp256k1.createSignature(message, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
       signed: signDoc,
