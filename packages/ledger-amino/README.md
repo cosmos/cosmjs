@@ -35,8 +35,8 @@ yarn demo-node
 Serve the project locally:
 
 ```sh
-# Build the package for web
-yarn pack-web
+# Build and bundle the demo for web
+yarn pack-demo-web
 
 # Host the `ledger-amino` package directory, for example using Python 3
 python3 -m http.server

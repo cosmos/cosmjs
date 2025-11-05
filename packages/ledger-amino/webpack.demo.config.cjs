@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const target = "web";
-const demodir = path.join(__dirname, "dist", "demo");
+const demoBundleDir = path.join(__dirname, "build", "demo-bundle");
 
 module.exports = [
   {
@@ -12,7 +12,7 @@ module.exports = [
     entry: globSync("./build/demo/web.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
-      path: demodir,
+      path: demoBundleDir,
       filename: "ledger.js",
     },
     plugins: [
