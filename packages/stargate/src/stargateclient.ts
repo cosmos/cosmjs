@@ -213,7 +213,7 @@ export class StargateClient {
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * This uses auto-detection to decide between a CometBFT 1.x, CometBFT 0.38 and Tendermint 0.37 client.
    * To set the Comet client explicitly, use `create`.
    */
   public static async connect(
