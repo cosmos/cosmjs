@@ -9,7 +9,7 @@ module.exports = [
   {
     // bundle used for Ledger demo
     target: target,
-    entry: globSync("./build/demo/web.js"),
+    entry: globSync("./build/demo/web.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
       path: demodir,
