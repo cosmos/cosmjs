@@ -16,6 +16,7 @@
     "*.md",
     "!*.spec.*",
     "!*testutils.*",
+    "!**/karma-bundle/",
     "!**/testdata/"
   ],
   "repository": {
