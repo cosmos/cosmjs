@@ -84,6 +84,7 @@ and this project adheres to
 - @cosmjs/crypto: Make
   `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchonous and
   let them not return a Promise.
+- @cosmjs/cosmwasm-stargate: Rename package to @cosmjs/cosmwasm.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866

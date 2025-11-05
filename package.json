@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:^",
-    "@cosmjs/cosmwasm-stargate": "workspace:^",
+    "@cosmjs/cosmwasm": "workspace:^",
     "@cosmjs/crypto": "workspace:^",
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/proto-signing": "workspace:^",

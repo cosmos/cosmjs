@@ -105,18 +105,18 @@ In the `scripts/` folder, a bunch of blockchains and other backend systems are
 started for testing purposes. Some ports need to be changed from the default in
 order to avoid conflicts. Here is an overview of the ports used:
 
-| Port  | Application                    | Usage                           |
-| ----- | ------------------------------ | ------------------------------- |
-| 1318  | simapp LCD API                 | Manual Stargate debugging       |
-| 1319  | wasmd LCD API                  | Manual Stargate debugging       |
-| 1320  | simapp slow LCD API            | Manual Stargate debugging       |
-| 4444  | socketserver                   | @cosmjs/sockets tests           |
-| 4445  | socketserver slow              | @cosmjs/sockets tests           |
-| 5555  | httpserver                     | @cosmjs/tendermint-rpc tests    |
-| 9090  | simapp gRPC                    | Manual Stargate debugging       |
-| 11101 | Standalone CometBFT 1.x RPC    | @cosmjs/tendermint-rpc tests    |
-| 11137 | Standalone Tendermint 0.37 RPC | @cosmjs/tendermint-rpc tests    |
-| 11138 | Standalone CometBFT 0.38 RPC   | @cosmjs/tendermint-rpc tests    |
-| 26658 | simapp Tendermint RPC          | Stargate client tests           |
-| 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm-stargate tests |
-| 26660 | simapp slow Tendermint RPC     | Stargate client tests           |
+| Port  | Application                    | Usage                        |
+| ----- | ------------------------------ | ---------------------------- |
+| 1318  | simapp LCD API                 | Manual Stargate debugging    |
+| 1319  | wasmd LCD API                  | Manual Stargate debugging    |
+| 1320  | simapp slow LCD API            | Manual Stargate debugging    |
+| 4444  | socketserver                   | @cosmjs/sockets tests        |
+| 4445  | socketserver slow              | @cosmjs/sockets tests        |
+| 5555  | httpserver                     | @cosmjs/tendermint-rpc tests |
+| 9090  | simapp gRPC                    | Manual Stargate debugging    |
+| 11101 | Standalone CometBFT 1.x RPC    | @cosmjs/tendermint-rpc tests |
+| 11137 | Standalone Tendermint 0.37 RPC | @cosmjs/tendermint-rpc tests |
+| 11138 | Standalone CometBFT 0.38 RPC   | @cosmjs/tendermint-rpc tests |
+| 26658 | simapp Tendermint RPC          | Stargate client tests        |
+| 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm tests       |
+| 26660 | simapp slow Tendermint RPC     | Stargate client tests        |

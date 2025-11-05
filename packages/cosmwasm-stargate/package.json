@@ -1,9 +1,10 @@
 {
-  "name": "@cosmjs/cosmwasm-stargate",
+  "name": "@cosmjs/cosmwasm",
   "version": "0.37.0",
   "description": "CosmWasm SDK",
   "contributors": [
-    "Will Clark <willclarktech@users.noreply.github.com>"
+    "Will Clark <willclarktech@users.noreply.github.com>",
+    "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "exports": {
