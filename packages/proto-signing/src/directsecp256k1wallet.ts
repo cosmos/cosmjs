@@ -19,7 +19,7 @@ export class DirectSecp256k1Wallet implements OfflineDirectSigner {
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
   public static async fromKey(privkey: Uint8Array, prefix = "cosmos"): Promise<DirectSecp256k1Wallet> {
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    const uncompressed = Secp256k1.makeKeypair(privkey).pubkey;
     return new DirectSecp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 

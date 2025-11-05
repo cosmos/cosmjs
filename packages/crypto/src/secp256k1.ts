@@ -36,7 +36,7 @@ export class Secp256k1 {
    * The resulting pubkey is uncompressed. For the use in Cosmos it should
    * be compressed first using `Secp256k1.compressPubkey`.
    */
-  public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
+  public static makeKeypair(privkey: Uint8Array): Secp256k1Keypair {
     if (privkey.length !== 32) {
       throw new Error("input data is not a valid secp256k1 private key");
     }

@@ -81,8 +81,9 @@ and this project adheres to
 
   in case you want to support multiple versions. ([#1866])
 
-- @cosmjs/crypto: Make `Secp256k1.verifySignature`/`.createSignature` synchonous
-  and let them not return a Promise.
+- @cosmjs/crypto: Make
+  `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchonous and
+  let them not return a Promise.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866

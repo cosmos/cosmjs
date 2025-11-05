@@ -349,7 +349,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
 
   private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
-    const { pubkey } = await Secp256k1.makeKeypair(privkey);
+    const { pubkey } = Secp256k1.makeKeypair(privkey);
     return {
       privkey: privkey,
       pubkey: Secp256k1.compressPubkey(pubkey),
