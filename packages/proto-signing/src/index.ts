@@ -1,5 +1,8 @@
 // This type happens to be shared between Amino and Direct sign modes
 export { type DecodedTxRaw, decodeTxRaw } from "./decode";
+export type { DirectEthSecp256k1HdWalletOptions } from "./directethsecp256k1hdwallet";
+export { DirectEthSecp256k1HdWallet } from "./directethsecp256k1hdwallet";
+export { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";
 export {
   type DirectSecp256k1HdWalletOptions,
   DirectSecp256k1HdWallet,
