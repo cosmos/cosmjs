@@ -58,7 +58,12 @@ export function parseRawLog(input: string | undefined): readonly Log[] {
   // Cosmos SDK >= 0.50 gives us an empty string here. This should be handled like undefined.
   if (!input) return [];
 
-  const logsToParse = JSON.parse(input).map(({ events }: { events: readonly unknown[] }, i: number) => ({
+  const parsedInput = JSON.parse(input);
+  if (!Array.isArray(parsedInput)) {
+    throw new Error("rawLog must be an array");
+  }
+
+  const logsToParse = parsedInput.map(({ events }: { events: readonly unknown[] }, i: number) => ({
     msg_index: i,
     events,
     log: "",
