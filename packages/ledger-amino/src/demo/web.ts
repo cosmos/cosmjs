@@ -114,7 +114,7 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     signDocTextArea.textContent = createSignDoc(accountNumber, address);
   } catch (error) {
     console.error(error);
-    accountsDiv.textContent = error;
+    accountsDiv.textContent = String(error);
   }
 };
 
@@ -142,6 +142,6 @@ window.sign = async function sign(signer: LedgerSigner | undefined): Promise<voi
     const signature = await signer.signAmino(address, signDoc);
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
   } catch (error) {
-    signatureDiv.textContent = error;
+    signatureDiv.textContent = String(error);
   }
 };
