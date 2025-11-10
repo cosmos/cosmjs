@@ -76,6 +76,8 @@ export default [
     },
 
     rules: {
+      "import/extensions": ["warn", "ignorePackages"],
+
       "no-shadow": "off",
       "no-unused-vars": "off",
 
