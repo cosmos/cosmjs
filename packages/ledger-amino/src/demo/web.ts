@@ -60,7 +60,7 @@ window.updateMessage = (accountNumberInput: unknown) => {
   signDocTextArea.textContent = createSignDoc(accountNumber, address);
 };
 
-window.setPath = (accountNumberInput: unknown) => {
+const setPath = (accountNumberInput: unknown): void => {
   assert(typeof accountNumberInput === "string");
   const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
 
@@ -68,6 +68,7 @@ window.setPath = (accountNumberInput: unknown) => {
   const pathInput = document.getElementById("path");
   pathInput.value = path;
 };
+window.setPath = setPath;
 
 // This must be called by the user an cannot be done on load (see "TransportWebUSBGestureRequired").
 window.createSigner = async function createSigner(): Promise<LedgerSigner> {
@@ -103,7 +104,7 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     // Show address block
     accountNumberInput1.max = accounts.length - 1;
     accountNumberInput1.value = accountNumber;
-    window.setPath(accountNumber.toString());
+    setPath(accountNumber.toString());
 
     // Sign block
     accountNumberInput2.max = accounts.length - 1;
