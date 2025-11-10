@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import importt from "eslint-plugin-import";
+// eslint-disable-next-line import/extensions
 import prettier from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import globals from "globals";
@@ -57,6 +58,8 @@ export default [
           },
         },
       ],
+
+      "import/extensions": ["warn", "ignorePackages"],
 
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
