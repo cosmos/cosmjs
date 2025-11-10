@@ -31,10 +31,11 @@ async function createTransport(): Promise<Transport> {
   }
   // HACK: Use a variable to get webpack to ignore this
   const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
-  const { default: TransportClass } =
+  const TransportClass: typeof Transport = (
     platform === "node"
       ? await import(nodeJsTransportPackageName)
-      : await import("@ledgerhq/hw-transport-webusb");
+      : await import("@ledgerhq/hw-transport-webusb")
+  ).default;
   return TransportClass.create(interactiveTimeout, interactiveTimeout);
 }
 
