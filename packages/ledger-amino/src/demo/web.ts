@@ -8,8 +8,6 @@ import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
 import { LedgerSigner } from "../ledgersigner";
 
-declare const window: any;
-
 const getElement = (id: string): HTMLInputElement => {
   const e = document.getElementById(id);
   assert(e instanceof HTMLInputElement, "got the wrong element!");
@@ -50,7 +48,7 @@ function createSignDoc(accountNumber: number, address: string): string {
   return JSON.stringify(signDoc, null, 2);
 }
 
-window.updateMessage = (accountNumberInput: unknown): void => {
+const updateMessage = (accountNumberInput: unknown): void => {
   assert(typeof accountNumberInput === "string");
   const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
   const account = accounts[accountNumber];
@@ -73,10 +71,9 @@ const setPath = (accountNumberInput: unknown): void => {
   const pathInput = getElement("path");
   pathInput.value = path;
 };
-window.setPath = setPath;
 
 // This must be called by the user an cannot be done on load (see "TransportWebUSBGestureRequired").
-window.createSigner = async function createSigner(): Promise<LedgerSigner> {
+const createSigner = async function createSigner(): Promise<LedgerSigner> {
   const interactiveTimeout = 120_000;
   const ledgerTransport = await TransportWebUSB.create(interactiveTimeout, interactiveTimeout);
   return new LedgerSigner(ledgerTransport, {
@@ -85,7 +82,7 @@ window.createSigner = async function createSigner(): Promise<LedgerSigner> {
   });
 };
 
-window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined): Promise<void> {
+const getAccounts = async function getAccounts(signer: LedgerSigner | undefined): Promise<void> {
   if (signer === undefined) {
     console.error("Please wait for transport to connect");
     return;
@@ -123,7 +120,7 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
   }
 };
 
-window.showAddress = async function showAddress(signer: LedgerSigner | undefined): Promise<void> {
+const showAddress = async function showAddress(signer: LedgerSigner | undefined): Promise<void> {
   if (signer === undefined) {
     console.error("Please wait for transport to connect");
     return;
@@ -132,7 +129,7 @@ window.showAddress = async function showAddress(signer: LedgerSigner | undefined
   await signer.showAddress(path);
 };
 
-window.sign = async function sign(signer: LedgerSigner | undefined): Promise<void> {
+const sign = async function sign(signer: LedgerSigner | undefined): Promise<void> {
   if (signer === undefined) {
     console.error("Please wait for transport to connect");
     return;
@@ -150,3 +147,5 @@ window.sign = async function sign(signer: LedgerSigner | undefined): Promise<voi
     signatureDiv.textContent = String(error);
   }
 };
+
+Object.assign(window, { updateMessage, setPath, createSigner, getAccounts, showAddress, sign });
