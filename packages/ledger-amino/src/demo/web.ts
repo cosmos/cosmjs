@@ -102,13 +102,13 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     const accountNumber = 0;
 
     // Show address block
-    accountNumberInput1.max = accounts.length - 1;
-    accountNumberInput1.value = accountNumber;
+    accountNumberInput1.max = String(accounts.length - 1);
+    accountNumberInput1.value = String(accountNumber);
     setPath(accountNumber.toString());
 
     // Sign block
-    accountNumberInput2.max = accounts.length - 1;
-    accountNumberInput2.value = accountNumber;
+    accountNumberInput2.max = String(accounts.length - 1);
+    accountNumberInput2.value = String(accountNumber);
     const address = accounts[0].address;
     addressInput.value = address;
     signDocTextArea.textContent = createSignDoc(accountNumber, address);
