@@ -9,7 +9,12 @@ import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { LedgerSigner } from "../ledgersigner";
 
 declare const window: any;
-declare const document: any;
+
+const getElement = (id: string): HTMLInputElement => {
+  const e = document.getElementById(id);
+  assert(e instanceof HTMLInputElement, "got the wrong element!");
+  return e;
+};
 
 const accountNumbers = [0, 1, 2, 10];
 const paths = accountNumbers.map(makeCosmoshubPath);
@@ -54,9 +59,9 @@ window.updateMessage = (accountNumberInput: unknown) => {
   }
 
   const address = accounts[accountNumber].address;
-  const addressInput = document.getElementById("address");
+  const addressInput = getElement("address");
   addressInput.value = address;
-  const signDocTextArea = document.getElementById("sign-doc");
+  const signDocTextArea = getElement("sign-doc");
   signDocTextArea.textContent = createSignDoc(accountNumber, address);
 };
 
@@ -65,7 +70,7 @@ const setPath = (accountNumberInput: unknown): void => {
   const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
 
   const path = pathToString(paths[accountNumber]);
-  const pathInput = document.getElementById("path");
+  const pathInput = getElement("path");
   pathInput.value = path;
 };
 window.setPath = setPath;
@@ -85,11 +90,11 @@ window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined
     console.error("Please wait for transport to connect");
     return;
   }
-  const accountNumberInput1 = document.getElementById("account-number1");
-  const accountNumberInput2 = document.getElementById("account-number2");
-  const addressInput = document.getElementById("address");
-  const accountsDiv = document.getElementById("accounts");
-  const signDocTextArea = document.getElementById("sign-doc");
+  const accountNumberInput1 = getElement("account-number1");
+  const accountNumberInput2 = getElement("account-number2");
+  const addressInput = getElement("address");
+  const accountsDiv = getElement("accounts");
+  const signDocTextArea = getElement("sign-doc");
   accountsDiv.textContent = "Loading...";
 
   try {
@@ -123,7 +128,7 @@ window.showAddress = async function showAddress(signer: LedgerSigner | undefined
     console.error("Please wait for transport to connect");
     return;
   }
-  const path = stringToPath(document.getElementById("path").value);
+  const path = stringToPath(getElement("path").value);
   await signer.showAddress(path);
 };
 
@@ -132,12 +137,12 @@ window.sign = async function sign(signer: LedgerSigner | undefined): Promise<voi
     console.error("Please wait for transport to connect");
     return;
   }
-  const signatureDiv = document.getElementById("signature");
+  const signatureDiv = getElement("signature");
   signatureDiv.textContent = "Loading...";
 
   try {
-    const address = document.getElementById("address").value;
-    const signDocJson = document.getElementById("sign-doc").textContent;
+    const address = getElement("address").value;
+    const signDocJson = getElement("sign-doc").textContent;
     const signDoc: StdSignDoc = JSON.parse(signDocJson);
     const signature = await signer.signAmino(address, signDoc);
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
