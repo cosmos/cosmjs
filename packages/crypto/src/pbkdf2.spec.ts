@@ -1,6 +1,6 @@
 import { fromHex, toAscii, toUtf8 } from "@cosmjs/encoding";
 
-import { getSubtle, pbkdf2Sha512, pbkdf2Sha512Noble, pbkdf2Sha512Subtle } from "./pbkdf2";
+import { getSubtle, pbkdf2Sha512, pbkdf2Sha512Noble, pbkdf2Sha512Subtle } from "./pbkdf2.ts";
 
 interface TestVector {
   secret: Uint8Array;

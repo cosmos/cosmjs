@@ -7,7 +7,7 @@ import {
   MsgWithdrawValidatorCommission,
 } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 
-import { AminoConverter } from "../..";
+import { AminoConverter } from "../../index.ts";
 
 /** Changes the withdraw address for a delegator (or validator self-delegation) */
 export interface AminoMsgSetWithdrawAddress extends AminoMsg {

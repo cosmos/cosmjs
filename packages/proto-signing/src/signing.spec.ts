@@ -3,11 +3,11 @@ import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { decodeTxRaw } from "./decode";
-import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
-import { Registry } from "./registry";
-import { makeSignBytes, makeSignDoc } from "./signing";
-import { faucet, testVectors } from "./testutils";
+import { decodeTxRaw } from "./decode.ts";
+import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet.ts";
+import { Registry } from "./registry.ts";
+import { makeSignBytes, makeSignDoc } from "./signing.ts";
+import { faucet, testVectors } from "./testutils.ts";
 
 describe("signing", () => {
   const chainId = "simd-testing";

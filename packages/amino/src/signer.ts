@@ -1,5 +1,5 @@
-import { StdSignature } from "./signature";
-import { StdSignDoc } from "./signdoc";
+import { StdSignature } from "./signature.ts";
+import { StdSignDoc } from "./signdoc.ts";
 
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
 

@@ -1,4 +1,4 @@
-import { fromAscii, toAscii } from "./ascii";
+import { fromAscii, toAscii } from "./ascii.ts";
 
 describe("ascii", () => {
   it("encodes to ascii", () => {

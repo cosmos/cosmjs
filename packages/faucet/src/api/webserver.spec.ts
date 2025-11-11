@@ -1,10 +1,10 @@
 import { makeCosmoshubPath } from "@cosmjs/stargate";
 import { sleep } from "@cosmjs/utils";
 
-import { Faucet } from "../faucet";
-import { simappEnabled } from "../testutils";
-import { TokenConfiguration } from "../tokenmanager";
-import { ChainConstants, Webserver } from "./webserver";
+import { Faucet } from "../faucet.ts";
+import { simappEnabled } from "../testutils.ts";
+import { TokenConfiguration } from "../tokenmanager.ts";
+import { ChainConstants, Webserver } from "./webserver.ts";
 
 const defaultTokenConfig: TokenConfiguration = {
   bankTokens: ["ucosm", "ustake"],

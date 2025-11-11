@@ -17,7 +17,7 @@ import {
 } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { BondStatus } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.ts";
 
 // It's an enum in Go and a string in the protobuf API. "BOND_STATUS_UNSPECIFIED"
 // is excluded and "" is supported instead 🤷.

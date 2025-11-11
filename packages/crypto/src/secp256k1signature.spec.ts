@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
+import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.ts";
 
 describe("Secp256k1Signature", () => {
   describe("fromFixedLength", () => {

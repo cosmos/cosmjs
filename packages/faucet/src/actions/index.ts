@@ -1,4 +1,4 @@
-export { generate } from "./generate";
-export { help } from "./help";
-export { start } from "./start";
-export { version } from "./version";
+export { generate } from "./generate.ts";
+export { help } from "./help.ts";
+export { start } from "./start.ts";
+export { version } from "./version.ts";

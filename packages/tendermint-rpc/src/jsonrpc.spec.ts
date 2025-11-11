@@ -1,4 +1,4 @@
-import { createJsonRpcRequest } from "./jsonrpc";
+import { createJsonRpcRequest } from "./jsonrpc.ts";
 
 describe("jsonrpc", () => {
   describe("createJsonRpcRequest", () => {

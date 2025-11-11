@@ -22,8 +22,8 @@ import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { setupWasmExtension, WasmExtension } from "./modules";
-import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient";
+import { setupWasmExtension, WasmExtension } from "./modules/index.ts";
+import { SigningCosmWasmClientOptions } from "./signingcosmwasmclient.ts";
 import hackatom from "./testdata/contract.json";
 
 export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
