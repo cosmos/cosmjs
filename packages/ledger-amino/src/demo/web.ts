@@ -50,7 +50,7 @@ function createSignDoc(accountNumber: number, address: string): string {
   return JSON.stringify(signDoc, null, 2);
 }
 
-window.updateMessage = (accountNumberInput: unknown) => {
+window.updateMessage = (accountNumberInput: unknown): void => {
   assert(typeof accountNumberInput === "string");
   const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
   const account = accounts[accountNumber];
