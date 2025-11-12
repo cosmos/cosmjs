@@ -212,6 +212,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
+  version: 0.0.0-use.local
+  resolution: "@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate"
+  dependencies:
+    "@cosmjs/cosmwasm": "workspace:^"
+    "@istanbuljs/nyc-config-typescript": "npm:^1.0.1"
+    "@types/jasmine": "npm:^4"
+    "@types/karma-firefox-launcher": "npm:^2"
+    "@types/karma-jasmine": "npm:^4"
+    "@types/karma-jasmine-html-reporter": "npm:^1"
+    "@types/node": "npm:*"
+    glob: "npm:^11"
+    jasmine: "npm:^4"
+    jasmine-spec-reporter: "npm:^6"
+    karma: "npm:^6.3.14"
+    karma-chrome-launcher: "npm:^3.1.0"
+    karma-firefox-launcher: "npm:^2.1.0"
+    karma-jasmine: "npm:^5"
+    karma-jasmine-html-reporter: "npm:^1.5.4"
+    nyc: "npm:^17.1.0"
+    prettier: "npm:^3.6.2"
+    ses: "npm:^1.13.0"
+    source-map-support: "npm:^0.5.19"
+    typedoc: "npm:^0.28"
+    typescript: "npm:~5.9"
+    webpack: "npm:^5.76.0"
+    webpack-cli: "npm:^4.6.0"
+  languageName: unknown
+  linkType: soft
+
 "@cosmjs/cosmwasm@workspace:^, @cosmjs/cosmwasm@workspace:packages/cosmwasm":
   version: 0.0.0-use.local
   resolution: "@cosmjs/cosmwasm@workspace:packages/cosmwasm"
