@@ -12,7 +12,7 @@ import {
 import { assertIsDeliverTxSuccess, coins, MsgSendEncodeObject, StdFee } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";

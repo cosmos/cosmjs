@@ -46,6 +46,16 @@ and this project adheres to
 
   This change requires users to use TypeScript 5.7 or newer. ([#1883])
 
+- all: Migrate from `readonly-date` to `readonly-date-esm` ^2 which is an ESM
+  package but otherwise equal to the previous version. If you are using
+  `ReadonlyDate` in your codebase it is recommended to also update like this to
+  avoid type mismatches:
+
+  ```diff
+  -import { ReadonlyDate } from "readonly-date";
+  +import { ReadonlyDate } from "readonly-date-esm";
+  ```
+
 - @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
   `CometClient` or just `Tendermint37Client` instead. ([#1866])
 - @cosmjs/tendermint-rpc: Remove `isTendermint34Client`. Remove
@@ -84,9 +94,11 @@ and this project adheres to
 - @cosmjs/crypto: Make
   `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchonous and
   let them not return a Promise.
+- @cosmjs/cosmwasm-stargate: Rename package to @cosmjs/cosmwasm. ([#1903])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866
+[#1903]: https://github.com/cosmos/cosmjs/pull/1903
 
 ## [0.37.0] - 2025-10-29
 

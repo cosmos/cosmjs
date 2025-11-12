@@ -1,8 +1,9 @@
 {
-  "name": "@cosmjs/stargate",
+  "name": "@cosmjs/cosmwasm",
   "version": "0.37.0",
-  "description": "Utilities for Cosmos SDK 0.40",
+  "description": "CosmWasm SDK",
   "contributors": [
+    "Will Clark <willclarktech@users.noreply.github.com>",
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
@@ -20,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/stargate"
+    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/cosmwasm"
   },
   "publishConfig": {
     "access": "public",
@@ -41,16 +42,16 @@
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",
+    "@cosmjs/crypto": "workspace:^",
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stream": "workspace:^",
+    "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
     "cosmjs-types": "^0.10.1"
   },
   "devDependencies": {
-    "@cosmjs/crypto": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jasmine": "^4",
     "@types/karma-firefox-launcher": "^2",

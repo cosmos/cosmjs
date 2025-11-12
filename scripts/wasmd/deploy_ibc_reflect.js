@@ -1,6 +1,6 @@
 #!/usr/bin/env -S yarn node
 
-const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
+const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { calculateFee, GasPrice } = require("@cosmjs/stargate");
 const fs = require("fs");

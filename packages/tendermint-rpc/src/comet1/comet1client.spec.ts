@@ -1,7 +1,7 @@
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { assert, sleep } from "@cosmjs/utils";
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 import { Stream } from "xstream";
 
 import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";

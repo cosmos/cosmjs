@@ -48,7 +48,7 @@
     "@cosmjs/socket": "workspace:^",
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "readonly-date": "^1.0.0",
+    "readonly-date-esm": "^2.0.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {

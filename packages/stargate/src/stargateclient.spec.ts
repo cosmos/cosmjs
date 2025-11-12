@@ -10,7 +10,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 
 import {
   assertIsDeliverTxSuccess,
