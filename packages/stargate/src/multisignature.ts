@@ -36,11 +36,12 @@ export function makeMultisignedTx(
 ): TxRaw {
   const addresses = Array.from(signatures.keys());
   const prefix = fromBech32(addresses[0]).prefix;
+  const pubkeys = multisigPubkey.value.pubkeys;
 
-  const signers: boolean[] = Array(multisigPubkey.value.pubkeys.length).fill(false);
+  const signers = new Array<boolean>(pubkeys.length).fill(false);
   const signaturesList = new Array<Uint8Array>();
-  for (let i = 0; i < multisigPubkey.value.pubkeys.length; i++) {
-    const signerAddress = pubkeyToAddress(multisigPubkey.value.pubkeys[i], prefix);
+  for (let i = 0; i < pubkeys.length; i++) {
+    const signerAddress = pubkeyToAddress(pubkeys[i], prefix);
     const signature = signatures.get(signerAddress);
     if (signature) {
       signers[i] = true;
