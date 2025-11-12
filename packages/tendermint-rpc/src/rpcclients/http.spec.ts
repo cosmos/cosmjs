@@ -29,6 +29,35 @@ describe("http", () => {
     ).toBeRejectedWithError(/(ECONNREFUSED|Failed to fetch|fetch failed|(request to .* failed))/i);
   });
 
+  it("includes response in error cause for bad status codes", async () => {
+    const originalFetch = globalThis.fetch;
+    const mockResponse = {
+      status: 404,
+      statusText: "Not Found",
+      ok: false,
+      text: jasmine.createSpy("text").and.resolveTo("Not Found Error Body"),
+    } as unknown as Response;
+
+    // Mock fetch to return a 404 response
+    globalThis.fetch = jasmine.createSpy("fetch").and.resolveTo(mockResponse);
+
+    try {
+      const error = await http("POST", "http://example.com", undefined, createJsonRpcRequest("health")).catch(
+        (err) => err,
+      );
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toContain("Bad status on response: 404");
+      expect(error.cause).toEqual({
+        status: 404,
+        body: "Not Found Error Body",
+      });
+      expect(mockResponse.text).toHaveBeenCalled();
+    } finally {
+      // Restore original fetch
+      globalThis.fetch = originalFetch;
+    }
+  });
+
   (httpServerEnabled ? it : xit)("can POST to echo server with custom headers", async () => {
     // With custom headers
     const response = await http(
