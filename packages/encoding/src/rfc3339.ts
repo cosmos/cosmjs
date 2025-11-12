@@ -1,4 +1,4 @@
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 
 const rfc3339Matcher =
   /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(\.\d{1,9})?((?:[+-]\d{2}:\d{2})|Z)$/;

@@ -46,6 +46,16 @@ and this project adheres to
 
   This change requires users to use TypeScript 5.7 or newer. ([#1883])
 
+- all: Migrate from `readonly-date` to `readonly-date-esm` ^2 which is an ESM
+  package but otherwise equal to the previous version. If you are using
+  `ReadonlyDate` in your codebase it is recommended to also update like this to
+  avoid type mismatches:
+
+  ```diff
+  -import { ReadonlyDate } from "readonly-date";
+  +import { ReadonlyDate } from "readonly-date-esm";
+  ```
+
 - @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
   `CometClient` or just `Tendermint37Client` instead. ([#1866])
 - @cosmjs/tendermint-rpc: Remove `isTendermint34Client`. Remove
