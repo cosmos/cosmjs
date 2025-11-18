@@ -22,79 +22,79 @@ describe("Osmosis chain ID detection", () => {
 
   describe("Osmosis production chains", () => {
     it('detects "osmosis-1" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      // Real Osmosis response: DecProto { dec: "30000000000000000" } = 0.03
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosis-1");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
 
     it('detects "osmosis-42" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosis-42");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
 
     it('detects "OSMOSIS-1" (uppercase) as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "OSMOSIS-1");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
   });
 
   describe("Osmosis test chains", () => {
     it('detects "osmo-test-4" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmo-test-4");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
 
     it('detects "osmo-test-5" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmo-test-5");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
   });
 
   describe("Osmosis local/dev chains", () => {
     it('detects "osmosislocal" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosislocal");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
 
     it('detects "osmosisdev" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosisdev");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
 
     it('detects "osmosistestnet" as Osmosis chain', async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosistestnet");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.03");
     });
   });
 
   describe("Non-Osmosis chains use feemarket", () => {
     it('treats "cosmoshub-4" as non-Osmosis chain', async () => {
-      const feemarketResponse = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      // Real feemarket response: GasPricesResponse { prices: [DecCoin { denom: "uatom", amount: "5300000000000000" }] } = 0.0053
+      const feemarketResponse = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = {
         queryAbci: async (path: string, _data: Uint8Array) => {
           if (path === "/feemarket.feemarket.v1.Query/GasPrices") {
@@ -105,13 +105,11 @@ describe("Osmosis chain ID detection", () => {
       };
 
       const result = await queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.0053");
     });
 
     it('treats "juno-1" as non-Osmosis chain', async () => {
-      const feemarketResponse = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const feemarketResponse = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = {
         queryAbci: async (path: string, _data: Uint8Array) => {
           if (path === "/feemarket.feemarket.v1.Query/GasPrices") {
@@ -122,13 +120,11 @@ describe("Osmosis chain ID detection", () => {
       };
 
       const result = await queryDynamicGasPrice(queryClient, "ujuno", "juno-1");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.0053");
     });
 
     it('does not match "osmosis" alone (no suffix)', async () => {
-      const feemarketResponse = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const feemarketResponse = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = {
         queryAbci: async (path: string, _data: Uint8Array) => {
           if (path === "/feemarket.feemarket.v1.Query/GasPrices") {
@@ -140,13 +136,11 @@ describe("Osmosis chain ID detection", () => {
 
       // "osmosis" without suffix or number should use feemarket
       const result = await queryDynamicGasPrice(queryClient, "uatom", "osmosis");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.0053");
     });
 
     it('does not match chains that merely contain "osmosis" as substring', async () => {
-      const feemarketResponse = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const feemarketResponse = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = {
         queryAbci: async (path: string, _data: Uint8Array) => {
           if (path === "/feemarket.feemarket.v1.Query/GasPrices") {
@@ -157,7 +151,7 @@ describe("Osmosis chain ID detection", () => {
       };
 
       const result = await queryDynamicGasPrice(queryClient, "uatom", "myosmosischain-1");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.0053");
     });
   });
 });
@@ -174,20 +168,19 @@ describe("queryDynamicGasPrice", () => {
 
   describe("Osmosis chain detection", () => {
     it("detects osmosis chain IDs", async () => {
-      // Create a mock Osmosis response: DecProto { dec: "0.0025" }
-      // Field tag 1 (0x0a), length 5, string "0.0025"
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
-      const chainIds = ["osmosis-1", "osmo-test-4", "osmosis-mainnet"];
+      // Only test valid Osmosis chain IDs that match the regex patterns
+      const chainIds = ["osmosis-1", "osmo-test-4", "osmosislocal"];
       for (const chainId of chainIds) {
         const result = await queryDynamicGasPrice(queryClient, "uosmo", chainId);
-        expect(result.toString()).toBe("0.0025");
+        expect(result.toString()).toBe("0.03");
       }
     });
 
     it("uses Osmosis endpoint for osmosis chains", async () => {
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
       let calledPath = "";
       const mockClient = {
@@ -205,12 +198,7 @@ describe("queryDynamicGasPrice", () => {
 
   describe("Skip feemarket chain detection", () => {
     it("uses feemarket endpoint for non-Osmosis chains", async () => {
-      // Create a mock feemarket response: GasPricesResponse { price: DecCoin { denom: "uatom", amount: "0.0025" } }
-      // Outer: Field tag 1 (0x0a), length 8, DecCoin message
-      // Inner DecCoin: Field tag 2 (0x12), length 5, string "0.0025"
-      const response = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const response = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
       let calledPath = "";
       let calledData: Uint8Array | null = null;
@@ -229,9 +217,7 @@ describe("queryDynamicGasPrice", () => {
     });
 
     it("encodes denom in request for feemarket chains", async () => {
-      const response = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const response = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       let capturedData: Uint8Array | null = null;
       const mockClient = {
         queryAbci: async (_path: string, data: Uint8Array) => {
@@ -254,20 +240,18 @@ describe("queryDynamicGasPrice", () => {
 
   describe("Osmosis response parsing", () => {
     it("parses valid Osmosis EIP-1559 response", async () => {
-      // DecProto { dec: "0.0025" }
-      // Field tag 1 (0x0a = (1 << 3) | 2), length 5, string "0.0025"
-      const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+      const response = new Uint8Array([10, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uosmo", "osmosis-1");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.025");
     });
 
     it("parses Osmosis response with different decimal values", async () => {
       const testCases = [
-        { value: "0.0001", bytes: [0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x30, 0x31] },
-        { value: "1.5", bytes: [0x0a, 0x02, 0x31, 0x2e, 0x35] },
-        { value: "100", bytes: [0x0a, 0x03, 0x31, 0x30, 0x30] },
+        { value: "0.025", bytes: [10, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
+        { value: "1.5", bytes: [10, 19, 49, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
+        { value: "100", bytes: [10, 21, 49, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
       ];
 
       for (const testCase of testCases) {
@@ -284,47 +268,34 @@ describe("queryDynamicGasPrice", () => {
       const queryClient = createMockQueryClient(emptyResponse);
 
       await expectAsync(queryDynamicGasPrice(queryClient, "uosmo", "osmosis-1")).toBeRejectedWithError(
-        /Failed to parse Osmosis EIP-1559 gas price response/i,
+        /DecProto: dec field not found/i,
       );
     });
   });
 
   describe("Skip feemarket response parsing", () => {
     it("parses valid feemarket response", async () => {
-      // GasPricesResponse { price: DecCoin { amount: "0.0025" } }
-      // Outer: Field tag 1 (0x0a), length 8, DecCoin message
-      // Inner: Field tag 2 (0x12 = (2 << 3) | 2), length 5, string "0.0025"
-      const response = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const response = new Uint8Array([10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.025");
     });
 
     it("parses feemarket response with denom field", async () => {
-      // GasPricesResponse { price: DecCoin { denom: "uatom" (field 1), amount: "0.0025" (field 2) } }
-      // Outer: Field tag 1 (0x0a), length 13
-      // Inner: Field tag 1 (0x0a), length 5, "uatom"; Field tag 2 (0x12), length 5, "0.0025"
-      const response = new Uint8Array([
-        0x0a, 0x0d, 0x0a, 0x05, 0x75, 0x61, 0x74, 0x6f, 0x6d, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32,
-        0x35,
-      ]);
+      // GasPricesResponse { prices: [DecCoin { denom: "uatom", amount: "5300000000000000" }] }
+      const response = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
       const queryClient = createMockQueryClient(response);
 
       const result = await queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4");
-      expect(result.toString()).toBe("0.0025");
+      expect(result.toString()).toBe("0.0053");
     });
 
     it("parses feemarket response with different decimal values", async () => {
       const testCases = [
-        {
-          value: "0.0001",
-          bytes: [0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x30, 0x31],
-        },
-        { value: "1.5", bytes: [0x0a, 0x05, 0x12, 0x02, 0x31, 0x2e, 0x35] },
-        { value: "100", bytes: [0x0a, 0x06, 0x12, 0x03, 0x31, 0x30, 0x30] },
+        { value: "0.025", bytes: [10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
+        { value: "1.5", bytes: [10, 21, 18, 19, 49, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
+        { value: "100", bytes: [10, 23, 18, 21, 49, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48] },
       ];
 
       for (const testCase of testCases) {
@@ -341,7 +312,7 @@ describe("queryDynamicGasPrice", () => {
       const queryClient = createMockQueryClient(emptyResponse);
 
       await expectAsync(queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4")).toBeRejectedWithError(
-        /Failed to parse feemarket gas price response/i,
+        /GasPricesResponse: amount not found/i,
       );
     });
 
@@ -353,7 +324,7 @@ describe("queryDynamicGasPrice", () => {
       const queryClient = createMockQueryClient(response);
 
       await expectAsync(queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4")).toBeRejectedWithError(
-        /Failed to find amount field in DecCoin/i,
+        /premature EOF|amount not found/i,
       );
     });
   });
@@ -361,9 +332,7 @@ describe("queryDynamicGasPrice", () => {
   describe("request encoding", () => {
     it("encodes different denoms correctly", async () => {
       const denoms = ["uatom", "uosmo", "ustake", "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"];
-      const response = new Uint8Array([
-        0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-      ]);
+      const response = new Uint8Array([10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
 
       for (const denom of denoms) {
         let capturedData: Uint8Array | null = null;
@@ -401,7 +370,7 @@ describe("queryDynamicGasPrice", () => {
 
 describe("checkDynamicGasPriceSupport", () => {
   it("returns true for Osmosis chain with EIP-1559 support", async () => {
-    const response = new Uint8Array([0x0a, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35]);
+    const response = new Uint8Array([10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
     const queryClient = {
       queryAbci: async (path: string, _data: Uint8Array) => {
         if (path === "/osmosis.txfees.v1beta1.Query/GetEipBaseFee") {
@@ -416,9 +385,7 @@ describe("checkDynamicGasPriceSupport", () => {
   });
 
   it("returns true for chain with Skip feemarket support", async () => {
-    const response = new Uint8Array([
-      0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-    ]);
+    const response = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
     const queryClient = {
       queryAbci: async (path: string, _data: Uint8Array) => {
         if (path === "/feemarket.feemarket.v1.Query/GasPrices") {
@@ -433,9 +400,7 @@ describe("checkDynamicGasPriceSupport", () => {
   });
 
   it("falls back to Skip feemarket if Osmosis endpoint fails", async () => {
-    const response = new Uint8Array([
-      0x0a, 0x08, 0x12, 0x05, 0x30, 0x2e, 0x30, 0x30, 0x32, 0x35,
-    ]);
+    const response = new Uint8Array([10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48]);
     const queryClient = {
       queryAbci: async (path: string, _data: Uint8Array) => {
         if (path === "/osmosis.txfees.v1beta1.Query/GetEipBaseFee") {

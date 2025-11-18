@@ -8,17 +8,19 @@
  *
  * Usage:
  *   1. Build the workspace: yarn build
+ *   1a. cd /packages/stargate
  *   2. Set your MNEMONIC environment variable (or hardcode below) - add ntrn and osmo tokens to the addresses
- *   3. Run: yarn node test-feemarket-multichain.mjs
+ *   3. Add ntrn and osmo tokens to the addresses
+ *   4. Run: yarn node src/test-feemarket-multichain.mjs
  */
 
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { DirectSecp256k1HdWallet } from "../../proto-signing/build/index.js";
 import {
   GasPrice,
   SigningStargateClient,
   checkDynamicGasPriceSupport,
   queryDynamicGasPrice,
-} from "@cosmjs/stargate";
+} from "../build/index.js";
 
 // ============================================================================
 // Chain Configurations
