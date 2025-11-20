@@ -4,7 +4,7 @@ import { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
 /**
  * A Cosmos SDK StdTx
  *
- * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdtx
+ * @see https://docs.cosmos.network/v0.46/core/transactions.html#sign-mode-legacy-amino-json
  */
 export interface StdTx {
   readonly msg: readonly AminoMsg[];
