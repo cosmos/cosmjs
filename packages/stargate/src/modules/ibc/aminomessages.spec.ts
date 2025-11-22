@@ -7,7 +7,7 @@ import { AminoMsgTransfer, createIbcAminoConverters } from "./aminomessages";
 describe("AminoTypes", () => {
   describe("toAmino", () => {
     it("works for MsgTransfer", () => {
-      const msg: MsgTransfer = {
+      const msg = MsgTransfer.fromPartial({
         sourcePort: "testport",
         sourceChannel: "testchannel",
         token: coin(1234, "utest"),
@@ -19,7 +19,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: BigInt("789"),
         memo: "something something",
-      };
+      });
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -45,7 +45,7 @@ describe("AminoTypes", () => {
     });
 
     it("works for MsgTransfer with empty values", () => {
-      const msg: MsgTransfer = {
+      const msg = MsgTransfer.fromPartial({
         sourcePort: "testport",
         sourceChannel: "testchannel",
         token: coin(1234, "utest"),
@@ -57,7 +57,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: BigInt(0),
         memo: "",
-      };
+      });
       const aminoTypes = new AminoTypes(createIbcAminoConverters());
       const aminoMsg = aminoTypes.toAmino({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -147,6 +147,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: BigInt("789"),
         memo: "",
+        encoding: "",
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -184,6 +185,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: BigInt("789"),
         memo: "Hack me",
+        encoding: "",
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
@@ -221,6 +223,7 @@ describe("AminoTypes", () => {
         },
         timeoutTimestamp: BigInt(0),
         memo: "",
+        encoding: "",
       };
       expect(msg).toEqual({
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",

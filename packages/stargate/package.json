@@ -47,7 +47,7 @@
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.10.1"
+    "cosmjs-types": "^0.11.0"
   },
   "devDependencies": {
     "@cosmjs/crypto": "workspace:^",

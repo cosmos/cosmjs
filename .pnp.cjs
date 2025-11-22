@@ -1148,7 +1148,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "cosmjs-types",\
-      "npm:0.10.1"\
+      "npm:0.11.0"\
     ],\
     [\
       "cross-spawn",\
@@ -3314,7 +3314,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["cosmjs-types", "npm:0.10.1"],\
+          ["cosmjs-types", "npm:0.11.0"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3599,7 +3599,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["cosmjs-types", "npm:0.10.1"],\
+          ["cosmjs-types", "npm:0.11.0"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -3675,7 +3675,7 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/node", "npm:22.10.6"],\
-          ["cosmjs-types", "npm:0.10.1"],\
+          ["cosmjs-types", "npm:0.11.0"],\
           ["glob", "npm:11.0.3"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -7301,10 +7301,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["cosmjs-types", [\
-      ["npm:0.10.1", {\
-        "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.10.1-89e1d3ec63-f114cd1a06.zip/node_modules/cosmjs-types/",\
+      ["npm:0.11.0", {\
+        "packageLocation": "./.yarn/cache/cosmjs-types-npm-0.11.0-e3115054e8-35b792ec77.zip/node_modules/cosmjs-types/",\
         "packageDependencies": [\
-          ["cosmjs-types", "npm:0.10.1"]\
+          ["cosmjs-types", "npm:0.11.0"]\
         ],\
         "linkType": "HARD"\
       }]\

@@ -49,7 +49,7 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.10.1"
+    "cosmjs-types": "^0.11.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

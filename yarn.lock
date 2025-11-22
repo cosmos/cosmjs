@@ -243,7 +243,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/node": "npm:*"
-    cosmjs-types: "npm:^0.10.1"
+    cosmjs-types: "npm:^0.11.0"
     glob: "npm:^11"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
@@ -499,7 +499,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/node": "npm:*"
-    cosmjs-types: "npm:^0.10.1"
+    cosmjs-types: "npm:^0.11.0"
     glob: "npm:^11"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
@@ -571,7 +571,7 @@ __metadata:
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/node": "npm:*"
-    cosmjs-types: "npm:^0.10.1"
+    cosmjs-types: "npm:^0.11.0"
     glob: "npm:^11"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
@@ -2975,10 +2975,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"cosmjs-types@npm:^0.10.1":
-  version: 0.10.1
-  resolution: "cosmjs-types@npm:0.10.1"
-  checksum: 10c0/f114cd1a0636034d93b97f61b049c5dc4929c81ff63855c6e56b0335be2b2d35475eee862ea5bd504288b33d3a918952dab11d4b6bed6bc2829f401cb5e6c797
+"cosmjs-types@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "cosmjs-types@npm:0.11.0"
+  checksum: 10c0/35b792ec7758c51efff7b2df9bd5d2c749eae82910349d711704582276c3262a1a9112a45f42070ba96b7e4c4d0869ee0bbd74a7c7f656cf3bf535107280c74f
   languageName: node
   linkType: hard
 
