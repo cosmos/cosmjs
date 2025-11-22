@@ -97,7 +97,10 @@ export async function queryDynamicGasPrice(
 ): Promise<Decimal> {
   if (isOsmosisChain(chainId)) {
     // Osmosis EIP-1559: GetEipBaseFee returns DecProto { dec: string }
-    const response = await queryClient.queryAbci("/osmosis.txfees.v1beta1.Query/GetEipBaseFee", new Uint8Array(0));
+    const response = await queryClient.queryAbci(
+      "/osmosis.txfees.v1beta1.Query/GetEipBaseFee",
+      new Uint8Array(0),
+    );
     return DecProto.decode(response.value);
   } else {
     // Skip feemarket: GasPrices returns GasPricesResponse { prices: [DecCoin] }

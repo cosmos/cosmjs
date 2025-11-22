@@ -724,7 +724,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       if (!gasPriceConfig) {
         throw new Error("Gas price must be set in the client options when auto gas is used.");
       }
-      if (!(gasPriceConfig instanceof GasPrice) && !("amount" in gasPriceConfig && "denom" in gasPriceConfig)) {
+      if (
+        !(gasPriceConfig instanceof GasPrice) &&
+        !("amount" in gasPriceConfig && "denom" in gasPriceConfig)
+      ) {
         throw new Error("Gas price must be a GasPrice instance when using static pricing.");
       }
       const staticGasPrice = gasPriceConfig as GasPrice;
