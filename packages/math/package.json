@@ -44,7 +44,7 @@
     "@types/karma-firefox-launcher": "^2",
     "@types/karma-jasmine": "^4",
     "@types/karma-jasmine-html-reporter": "^1",
-    "glob": "^11.1.0",
+    "glob": "^13.0.0",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",

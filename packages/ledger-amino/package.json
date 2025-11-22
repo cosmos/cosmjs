@@ -57,7 +57,7 @@
     "@ledgerhq/hw-transport-webusb": "^6.29.4",
     "@types/jasmine": "^4",
     "@types/semver": "^7.3.4",
-    "glob": "^11.1.0",
+    "glob": "^13.0.0",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "nyc": "^17.1.0",

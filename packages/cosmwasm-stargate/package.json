@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "*",
-    "glob": "^11.1.0",
+    "glob": "^13.0.0",
     "prettier": "^3.6.2",
     "typedoc": "^0.28",
     "typescript": "~5.9"
