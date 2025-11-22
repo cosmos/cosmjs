@@ -46,7 +46,7 @@
     "@cosmjs/encoding": "workspace:^",
     "@cosmjs/math": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.11.0-rc.0"
+    "cosmjs-types": "^0.11.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
