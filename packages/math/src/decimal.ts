@@ -154,6 +154,30 @@ export class Decimal {
     }
   }
 
+  /**
+   * Creates a new Decimal with the same value using the new fractional digits.
+   * Roughly speaking this can expand an 3.24 to 3.24000 or shrink a 5.4321 to 5.4.
+   *
+   * This allows you to perform arithmetic operations given two decimals
+   * with different fractional digits by normalizing them.
+   *
+   * When new fractional digis is smaller than the original value, the amount
+   * is truncated (not rounded!).
+   */
+  public adjustFractionalDigits(newFractionalDigits: number): Decimal {
+    Decimal.verifyFractionalDigits(newFractionalDigits);
+    const diff = newFractionalDigits - this.fractionalDigits;
+    if (diff > 0) {
+      // expand
+      return Decimal.fromAtomics(this.atomics + "0".repeat(diff), newFractionalDigits);
+    } else if (diff === 0) {
+      return this.clone();
+    } else {
+      // shrink
+      return Decimal.fromAtomics(this.atomics.slice(0, diff), newFractionalDigits);
+    }
+  }
+
   public toString(): string {
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
