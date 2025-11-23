@@ -1,3 +1,5 @@
+import { sleep } from "@cosmjs/utils";
+
 import { ReconnectingSocket } from "./reconnectingsocket";
 
 /** @see https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback */
@@ -17,34 +19,25 @@ describe("ReconnectingSocket", () => {
 
   (enabled ? describe : xdescribe)("connect", () => {
     it("cannot connect after being connected", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
-      });
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
       socket.events.subscribe({});
 
       socket.connect();
 
-      setTimeout(() => {
-        expect(() => {
-          socket.connect();
-        }).toThrowError(/cannot connect/i);
-        done();
-      }, 1000);
+      await sleep(1000);
 
-      return ret;
+      expect(() => {
+        socket.connect();
+      }).toThrowError(/cannot connect/i);
     });
   });
 
   (enabled ? describe : xdescribe)("disconnect", () => {
     it("ends the events stream", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
+      let done!: () => void;
+      const ret = new Promise<void>((resolve) => {
+        done = resolve;
       });
       const socket = new ReconnectingSocket(socketServerUrl);
       socket.events.subscribe({
@@ -53,34 +46,25 @@ describe("ReconnectingSocket", () => {
 
       socket.connect();
 
-      setTimeout(() => {
-        socket.disconnect();
-      }, 1000);
+      await sleep(1000);
 
+      socket.disconnect();
       return ret;
     });
 
     it("cannot connect after being disconnected", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
-      });
       const socket = new ReconnectingSocket(socketServerUrl);
       // Necessary otherwise the producer doesn’t start
       socket.events.subscribe({});
 
       socket.connect();
 
-      setTimeout(() => {
-        socket.disconnect();
-        expect(() => {
-          socket.connect();
-        }).toThrowError(/cannot connect/i);
-        done();
-      }, 1000);
+      await sleep(1000);
 
-      return ret;
+      socket.disconnect();
+      expect(() => {
+        socket.connect();
+      }).toThrowError(/cannot connect/i);
     });
 
     it("can disconnect without waiting for open", () => {

@@ -187,27 +187,15 @@ import { WebsocketClient } from "./websocketclient";
   });
 
   it("fails when listening to a disconnected client", async () => {
-    let done!: (() => void) & { fail: (e?: any) => void };
-    const ret = new Promise<void>((resolve, reject) => {
-      done = resolve as typeof done;
-      done.fail = reject;
-    });
+    const client = new WebsocketClient(tendermintUrl);
+    // dummy command to ensure client is connected
+    await client.execute(createJsonRpcRequest("health"));
 
-    // async and done does not work together with pending() in Jasmine 2.8
-    (async () => {
-      const client = new WebsocketClient(tendermintUrl);
-      // dummy command to ensure client is connected
-      await client.execute(createJsonRpcRequest("health"));
+    client.disconnect();
 
-      client.disconnect();
-
-      const query = "tm.event='NewBlockHeader'";
-      const req = createJsonRpcRequest("subscribe", { query: query });
-      expect(() => client.listen(req).subscribe({})).toThrowError(/socket has disconnected/i);
-      done();
-    })().catch(done.fail);
-
-    return ret;
+    const query = "tm.event='NewBlockHeader'";
+    const req = createJsonRpcRequest("subscribe", { query: query });
+    expect(() => client.listen(req).subscribe({})).toThrowError(/socket has disconnected/i);
   });
 
   it("cannot listen to simple requests", async () => {
