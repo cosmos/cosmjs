@@ -1,4 +1,4 @@
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 
 import {
   DateTime,

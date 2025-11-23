@@ -10,7 +10,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 
 import {
   assertIsDeliverTxSuccess,
@@ -26,16 +26,16 @@ import {
   faucet,
   makeRandomAddress,
   nonExistentAddress,
-  pendingWithoutSimapp,
-  pendingWithoutSlowSimapp,
   simapp,
   simapp47Enabled,
   simapp50Enabled,
+  simappEnabled,
   slowSimapp,
+  slowSimappEnabled,
   tendermintIdMatcher,
   unused,
   validator,
-} from "./testutils.spec";
+} from "./testutils";
 
 const resultFailure: DeliverTxResponse = {
   code: 5,
@@ -76,10 +76,9 @@ describe("isDeliverTxSuccess", () => {
   });
 });
 
-describe("StargateClient", () => {
+(simappEnabled ? describe : xdescribe)("StargateClient", () => {
   describe("connect", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       expect(client).toBeTruthy();
       client.disconnect();
@@ -88,14 +87,12 @@ describe("StargateClient", () => {
 
   describe("getChainId", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       expect(await client.getChainId()).toEqual(simapp.chainId);
       client.disconnect();
     });
 
     it("caches chain ID", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const openedClient = client as unknown as PrivateStargateClient;
       const getCodeSpy = spyOn(openedClient.cometClient!, "status").and.callThrough();
@@ -111,7 +108,6 @@ describe("StargateClient", () => {
 
   describe("getHeight", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const height1 = await client.getHeight();
@@ -127,7 +123,6 @@ describe("StargateClient", () => {
 
   describe("getAccount", () => {
     it("works for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(unused.address);
@@ -143,7 +138,6 @@ describe("StargateClient", () => {
     });
 
     it("works for account with pubkey and non-zero sequence", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(validator.delegatorAddress);
@@ -159,7 +153,6 @@ describe("StargateClient", () => {
     });
 
     it("returns null for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getAccount(nonExistentAddress);
@@ -171,7 +164,6 @@ describe("StargateClient", () => {
 
   describe("getSequence", () => {
     it("works for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const account = await client.getSequence(unused.address);
@@ -185,7 +177,6 @@ describe("StargateClient", () => {
     });
 
     it("rejects for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
@@ -198,7 +189,6 @@ describe("StargateClient", () => {
 
   describe("getBlock", () => {
     it("works for latest block", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const response = await client.getBlock();
 
@@ -222,7 +212,6 @@ describe("StargateClient", () => {
     });
 
     it("works for block by height", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
@@ -249,7 +238,6 @@ describe("StargateClient", () => {
 
   describe("getBalance", () => {
     it("works for different existing balances", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response1 = await client.getBalance(unused.address, simapp.denomFee);
@@ -267,7 +255,6 @@ describe("StargateClient", () => {
     });
 
     it("returns 0 for non-existent balance", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response = await client.getBalance(unused.address, "gintonic");
@@ -280,7 +267,6 @@ describe("StargateClient", () => {
     });
 
     it("returns 0 for non-existent address", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const response = await client.getBalance(nonExistentAddress, simapp.denomFee);
@@ -295,7 +281,6 @@ describe("StargateClient", () => {
 
   describe("getAllBalances", () => {
     it("returns all balances for unused account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const balances = await client.getAllBalances(unused.address);
@@ -314,7 +299,6 @@ describe("StargateClient", () => {
     });
 
     it("returns an empty list for non-existent account", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
 
       const balances = await client.getAllBalances(nonExistentAddress);
@@ -326,7 +310,6 @@ describe("StargateClient", () => {
 
   describe("getBalanceStaked", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const response = await client.getBalanceStaked(faucet.address0);
 
@@ -338,7 +321,6 @@ describe("StargateClient", () => {
 
   describe("broadcastTx", () => {
     it("broadcasts a transaction", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -406,7 +388,6 @@ describe("StargateClient", () => {
     });
 
     it("errors immediately for a CheckTx failure", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
@@ -465,13 +446,13 @@ describe("StargateClient", () => {
         await client.broadcastTx(txRawBytes);
         assert(false, "Expected broadcastTx to throw");
       } catch (error: any) {
-        expect(error).toMatch(
+        assert(error instanceof BroadcastTxError);
+        expect(error.message).toMatch(
           simapp47Enabled
             ? /Broadcasting transaction failed with code 7/i
             : // New error code for SDK 0.50+
               /Broadcasting transaction failed with code 4/i,
         );
-        assert(error instanceof BroadcastTxError);
         if (simapp50Enabled) {
           // New error code for SDK 0.50+
           expect(error.code).toEqual(4);
@@ -484,92 +465,94 @@ describe("StargateClient", () => {
       client.disconnect();
     });
 
-    it("respects user timeouts rather than RPC timeouts", async () => {
-      pendingWithoutSlowSimapp();
-      const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-      const pubkey = encodePubkey({
-        type: "tendermint/PubKeySecp256k1",
-        value: toBase64(pubkeyBytes),
-      });
-      const registry = new Registry();
-      const txBodyFields: TxBodyEncodeObject = {
-        typeUrl: "/cosmos.tx.v1beta1.TxBody",
-        value: {
-          messages: [
-            {
-              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-              value: {
-                fromAddress: address,
-                toAddress: makeRandomAddress(),
-                amount: [
-                  {
-                    denom: "ucosm",
-                    amount: "1234567",
-                  },
-                ],
+    (slowSimappEnabled ? it : xit)(
+      "respects user timeouts rather than RPC timeouts",
+      async () => {
+        const client = await StargateClient.connect(slowSimapp.tendermintUrlHttp);
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+        const pubkey = encodePubkey({
+          type: "tendermint/PubKeySecp256k1",
+          value: toBase64(pubkeyBytes),
+        });
+        const registry = new Registry();
+        const txBodyFields: TxBodyEncodeObject = {
+          typeUrl: "/cosmos.tx.v1beta1.TxBody",
+          value: {
+            messages: [
+              {
+                typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+                value: {
+                  fromAddress: address,
+                  toAddress: makeRandomAddress(),
+                  amount: [
+                    {
+                      denom: "ucosm",
+                      amount: "1234567",
+                    },
+                  ],
+                },
               },
-            },
-          ],
-        },
-      };
-      const txBodyBytes = registry.encode(txBodyFields);
-      const chainId = await client.getChainId();
-      const feeAmount = coins(2000, "ucosm");
-      const gasLimit = 200000;
-      const feeGranter = undefined;
-      const feePayer = undefined;
+            ],
+          },
+        };
+        const txBodyBytes = registry.encode(txBodyFields);
+        const chainId = await client.getChainId();
+        const feeAmount = coins(2000, "ucosm");
+        const gasLimit = 200000;
+        const feeGranter = undefined;
+        const feePayer = undefined;
 
-      const { accountNumber: accountNumber1, sequence: sequence1 } = await client.getSequence(address);
-      const authInfoBytes1 = makeAuthInfoBytes(
-        [{ pubkey, sequence: sequence1 }],
-        feeAmount,
-        gasLimit,
-        feeGranter,
-        feePayer,
-      );
-      const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
-      const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
-      const txRaw1 = TxRaw.fromPartial({
-        bodyBytes: txBodyBytes,
-        authInfoBytes: authInfoBytes1,
-        signatures: [fromBase64(signature1.signature)],
-      });
-      const txRawBytes1 = Uint8Array.from(TxRaw.encode(txRaw1).finish());
-      const largeTimeoutMs = 30_000;
-      const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
-      assertIsDeliverTxSuccess(txResult);
+        const { accountNumber: accountNumber1, sequence: sequence1 } = await client.getSequence(address);
+        const authInfoBytes1 = makeAuthInfoBytes(
+          [{ pubkey, sequence: sequence1 }],
+          feeAmount,
+          gasLimit,
+          feeGranter,
+          feePayer,
+        );
+        const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
+        const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
+        const txRaw1 = TxRaw.fromPartial({
+          bodyBytes: txBodyBytes,
+          authInfoBytes: authInfoBytes1,
+          signatures: [fromBase64(signature1.signature)],
+        });
+        const txRawBytes1 = Uint8Array.from(TxRaw.encode(txRaw1).finish());
+        const largeTimeoutMs = 30_000;
+        const txResult = await client.broadcastTx(txRawBytes1, largeTimeoutMs);
+        assertIsDeliverTxSuccess(txResult);
 
-      const { accountNumber: accountNumber2, sequence: sequence2 } = await client.getSequence(address);
-      const authInfoBytes2 = makeAuthInfoBytes(
-        [{ pubkey, sequence: sequence2 }],
-        feeAmount,
-        gasLimit,
-        feeGranter,
-        feePayer,
-      );
-      const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
-      const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
-      const txRaw2 = TxRaw.fromPartial({
-        bodyBytes: txBodyBytes,
-        authInfoBytes: authInfoBytes2,
-        signatures: [fromBase64(signature2.signature)],
-      });
-      const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
-      const smallTimeoutMs = 1_000;
-      await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
-        TimeoutError,
-        /transaction with id .+ was submitted but was not yet found on the chain/i,
-      );
+        const { accountNumber: accountNumber2, sequence: sequence2 } = await client.getSequence(address);
+        const authInfoBytes2 = makeAuthInfoBytes(
+          [{ pubkey, sequence: sequence2 }],
+          feeAmount,
+          gasLimit,
+          feeGranter,
+          feePayer,
+        );
+        const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
+        const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
+        const txRaw2 = TxRaw.fromPartial({
+          bodyBytes: txBodyBytes,
+          authInfoBytes: authInfoBytes2,
+          signatures: [fromBase64(signature2.signature)],
+        });
+        const txRawBytes2 = Uint8Array.from(TxRaw.encode(txRaw2).finish());
+        const smallTimeoutMs = 1_000;
+        await expectAsync(client.broadcastTx(txRawBytes2, smallTimeoutMs)).toBeRejectedWithError(
+          TimeoutError,
+          /transaction with id .+ was submitted but was not yet found on the chain/i,
+        );
 
-      client.disconnect();
-    }, 30_000);
+        client.disconnect();
+      },
+      30_000,
+    );
   });
 
   describe("broadcastTxSync", () => {
     it("broadcasts sync a transaction, to get transaction hash", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();

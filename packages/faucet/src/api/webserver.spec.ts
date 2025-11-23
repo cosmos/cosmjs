@@ -2,7 +2,7 @@ import { makeCosmoshubPath } from "@cosmjs/stargate";
 import { sleep } from "@cosmjs/utils";
 
 import { Faucet } from "../faucet";
-import { simappEnabled } from "../testutils.spec";
+import { simappEnabled } from "../testutils";
 import { TokenConfiguration } from "../tokenmanager";
 import { ChainConstants, Webserver } from "./webserver";
 

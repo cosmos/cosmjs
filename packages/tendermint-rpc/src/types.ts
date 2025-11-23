@@ -29,7 +29,7 @@ export enum BlockIdFlag {
 export interface CommitSignature {
   /** If this is BlockIdFlag.Absent, all other fields are expected to be unset */
   blockIdFlag: BlockIdFlag;
-  validatorAddress: Uint8Array | undefined;
+  validatorAddress: Uint8Array<ArrayBuffer> | undefined;
   timestamp: ReadonlyDateWithNanoseconds | undefined;
-  signature: Uint8Array | undefined;
+  signature: Uint8Array<ArrayBuffer> | undefined;
 }

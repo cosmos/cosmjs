@@ -1,9 +1,9 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.36.1",
-  "description": "CosmWasm SDK",
+  "version": "0.38.0",
+  "description": "Old name of @cosmjs/cosmwasm. Use @cosmjs/cosmwasm instead.",
   "contributors": [
-    "Will Clark <willclarktech@users.noreply.github.com>"
+    "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "exports": {
@@ -14,6 +14,8 @@
     "build/",
     "*.md",
     "!*.spec.*",
+    "!*testutils.*",
+    "!**/karma-bundle/",
     "!**/testdata/"
   ],
   "repository": {
@@ -29,51 +31,21 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.cjs",
-    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
+    "test-node": "exit 0",
+    "test-firefox": "exit 0",
+    "test-chrome": "exit 0",
     "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.cjs"
+    "coverage": "exit 0"
   },
   "dependencies": {
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "workspace:^",
-    "@cosmjs/stargate": "workspace:^",
-    "@cosmjs/tendermint-rpc": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.10.1",
-    "pako": "^2.1.0"
+    "@cosmjs/cosmwasm": "workspace:^"
   },
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/jasmine": "^4",
-    "@types/karma-firefox-launcher": "^2",
-    "@types/karma-jasmine": "^4",
-    "@types/karma-jasmine-html-reporter": "^1",
-    "@types/long": "^4.0.1",
     "@types/node": "*",
-    "@types/pako": "^2.0.3",
-    "glob": "^11",
-    "jasmine": "^4",
-    "jasmine-spec-reporter": "^6",
-    "karma": "^6.3.14",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-firefox-launcher": "^2.1.0",
-    "karma-jasmine": "^5",
-    "karma-jasmine-html-reporter": "^1.5.4",
-    "nyc": "^15.1.0",
-    "prettier": "^3.5.3",
-    "readonly-date": "^1.0.0",
-    "ses": "^1.13.0",
-    "source-map-support": "^0.5.19",
+    "glob": "^13.0.0",
+    "prettier": "^3.6.2",
     "typedoc": "^0.28",
-    "typescript": "~5.9",
-    "webpack": "^5.76.0",
-    "webpack-cli": "^4.6.0"
+    "typescript": "~5.9"
   }
 }

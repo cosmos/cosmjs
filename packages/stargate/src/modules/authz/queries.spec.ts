@@ -11,10 +11,9 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { AuthzExtension, setupAuthzExtension } from "./queries";
 
 async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & AuthzExtension, CometClient]> {
@@ -22,7 +21,7 @@ async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & Authz
   return [QueryClient.withExtensions(cometClient, setupAuthzExtension), cometClient];
 }
 
-describe("AuthzExtension", () => {
+(simappEnabled ? describe : xdescribe)("AuthzExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -33,51 +32,48 @@ describe("AuthzExtension", () => {
   const grantedMsg = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 
   beforeAll(async () => {
-    if (simappEnabled) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
-        // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
-        // This must match `voterAddress` above.
-        hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
-      });
-      const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrlHttp,
-        wallet,
-        defaultSigningClientOptions,
-      );
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, {
+      // Use address 1 and 2 instead of 0 to avoid conflicts with other delegation tests
+      // This must match `voterAddress` above.
+      hdPaths: [makeCosmoshubPath(1), makeCosmoshubPath(2)],
+    });
+    const client = await SigningStargateClient.connectWithSigner(
+      simapp.tendermintUrlHttp,
+      wallet,
+      defaultSigningClientOptions,
+    );
 
-      const grantMsg = {
-        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-        value: {
-          granter: granter1Address,
-          grantee: grantee1Address,
-          grant: {
-            authorization: {
-              typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
-              value: GenericAuthorization.encode(
-                GenericAuthorization.fromPartial({
-                  msg: grantedMsg,
-                }),
-              ).finish(),
-            },
+    const grantMsg = {
+      typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+      value: {
+        granter: granter1Address,
+        grantee: grantee1Address,
+        grant: {
+          authorization: {
+            typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            value: GenericAuthorization.encode(
+              GenericAuthorization.fromPartial({
+                msg: grantedMsg,
+              }),
+            ).finish(),
           },
         },
-      };
-      const grantResult = await client.signAndBroadcast(
-        granter1Address,
-        [grantMsg],
-        defaultFee,
-        "Test grant for simd",
-      );
-      assertIsDeliverTxSuccess(grantResult);
-      await sleep(75); // wait until transactions are indexed
+      },
+    };
+    const grantResult = await client.signAndBroadcast(
+      granter1Address,
+      [grantMsg],
+      defaultFee,
+      "Test grant for simd",
+    );
+    assertIsDeliverTxSuccess(grantResult);
+    await sleep(75); // wait until transactions are indexed
 
-      client.disconnect();
-    }
+    client.disconnect();
   });
 
   describe("grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.grants(granter1Address, grantee1Address, "");
       expect(response.grants.length).toEqual(1);
@@ -101,7 +97,6 @@ describe("AuthzExtension", () => {
 
   describe("granter grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granterGrants(granter1Address);
       expect(response.grants.length).toBeGreaterThanOrEqual(1);
@@ -132,7 +127,6 @@ describe("AuthzExtension", () => {
 
   describe("grantee grants", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       const [client, cometClient] = await makeClientWithAuthz(simapp.tendermintUrlHttp);
       const response = await client.authz.granteeGrants(grantee1Address);
       expect(response.grants.length).toEqual(1);

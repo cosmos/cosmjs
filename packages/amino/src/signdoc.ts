@@ -96,7 +96,7 @@ export function escapeCharacters(input: string): string {
   return input.replace(amp, "\\u0026").replace(lt, "\\u003c").replace(gt, "\\u003e");
 }
 
-export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
+export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array<ArrayBuffer> {
   const serialized = escapeCharacters(sortedJsonStringify(signDoc));
   return toUtf8(serialized);
 }

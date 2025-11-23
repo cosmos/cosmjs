@@ -77,7 +77,7 @@ export class Uint32 implements Integer, WithByteConverters {
     this.data = input;
   }
 
-  public toBytesBigEndian(): Uint8Array {
+  public toBytesBigEndian(): Uint8Array<ArrayBuffer> {
     // Use division instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
     return new Uint8Array([
@@ -88,7 +88,7 @@ export class Uint32 implements Integer, WithByteConverters {
     ]);
   }
 
-  public toBytesLittleEndian(): Uint8Array {
+  public toBytesLittleEndian(): Uint8Array<ArrayBuffer> {
     // Use division instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
     return new Uint8Array([
@@ -248,11 +248,11 @@ export class Uint64 implements Integer, WithByteConverters {
     this.data = data;
   }
 
-  public toBytesBigEndian(): Uint8Array {
+  public toBytesBigEndian(): Uint8Array<ArrayBuffer> {
     return this.toBytesLittleEndian().reverse();
   }
 
-  public toBytesLittleEndian(): Uint8Array {
+  public toBytesLittleEndian(): Uint8Array<ArrayBuffer> {
     const bytes = new Uint8Array(8);
     let value = this.data;
     for (let i = 0; i < bytes.length; i++) {

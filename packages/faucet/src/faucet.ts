@@ -128,22 +128,22 @@ export class Faucet {
 
     const jobs: SendJob[] = [];
     for (const denom of availableTokenDenoms) {
-      const refillDistibutors = distributorAccounts.filter((account) =>
+      const refillDistributors = distributorAccounts.filter((account) =>
         this.tokenManager.needsRefill(account, denom),
       );
 
       if (this.logging) {
         console.info(`Refilling ${denom} of:`);
         console.info(
-          refillDistibutors.length
-            ? refillDistibutors.map((r) => `  ${debugAccount(r)}`).join("\n")
+          refillDistributors.length
+            ? refillDistributors.map((r) => `  ${debugAccount(r)}`).join("\n")
             : "  none",
         );
       }
-      for (const refillDistibutor of refillDistibutors) {
+      for (const refillDistributor of refillDistributors) {
         jobs.push({
           sender: this.holderAddress,
-          recipient: refillDistibutor.address,
+          recipient: refillDistributor.address,
           amount: this.tokenManager.refillAmount(denom),
         });
       }

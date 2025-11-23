@@ -1,4 +1,5 @@
-import { sha256 as nobleSha256, sha512 as nobleSha512 } from "@noble/hashes/sha2";
+import { fixUint8Array } from "@cosmjs/encoding";
+import { sha256 as nobleSha256, sha512 as nobleSha512 } from "@noble/hashes/sha2.js";
 
 import { HashFunction } from "./hash";
 import { toRealUint8Array } from "./utils";
@@ -19,13 +20,13 @@ export class Sha256 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
-    return this.impl.digest();
+  public digest(): Uint8Array<ArrayBuffer> {
+    return fixUint8Array(this.impl.digest());
   }
 }
 
 /** Convenience function equivalent to `new Sha256(data).digest()` */
-export function sha256(data: Uint8Array): Uint8Array {
+export function sha256(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Sha256(data).digest();
 }
 
@@ -45,12 +46,12 @@ export class Sha512 implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
-    return this.impl.digest();
+  public digest(): Uint8Array<ArrayBuffer> {
+    return fixUint8Array(this.impl.digest());
   }
 }
 
 /** Convenience function equivalent to `new Sha512(data).digest()` */
-export function sha512(data: Uint8Array): Uint8Array {
+export function sha512(data: Uint8Array): Uint8Array<ArrayBuffer> {
   return new Sha512(data).digest();
 }

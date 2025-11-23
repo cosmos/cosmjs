@@ -21,14 +21,7 @@ import { WebsocketClient } from "./websocketclient";
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await client
-      .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => {
-        throw new Error("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toBeTruthy();
-      });
+    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
 
     client.disconnect();
   });
@@ -142,8 +135,8 @@ import { WebsocketClient } from "./websocketclient";
 
     client
       .execute(createJsonRpcRequest("status"))
-      .then((startusResponse) => {
-        expect(startusResponse).toBeTruthy();
+      .then((statusResponse) => {
+        expect(statusResponse).toBeTruthy();
       })
       .catch(done.fail);
 
@@ -188,14 +181,9 @@ import { WebsocketClient } from "./websocketclient";
 
     client.disconnect();
 
-    await client
-      .execute(createJsonRpcRequest("health"))
-      .then(() => {
-        throw new Error("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toMatch(/socket has disconnected/i);
-      });
+    await expectAsync(client.execute(createJsonRpcRequest("health"))).toBeRejectedWithError(
+      /socket has disconnected/i,
+    );
   });
 
   it("fails when listening to a disconnected client", async () => {

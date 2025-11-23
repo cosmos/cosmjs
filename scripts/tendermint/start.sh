@@ -4,8 +4,7 @@ command -v shellcheck >/dev/null && shellcheck "$0"
 
 gnused="$(command -v gsed || echo sed)"
 
-# Tendermint settings must be specified
-# Choose version from https://hub.docker.com/r/tendermint/tendermint/tags/
+# Settings must be specified, see all_start.sh
 for SETTING in "TENDERMINT_IMAGE" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
   if test -z "$(eval echo "\$$SETTING")"; then
     echo "\$$SETTING must be set when running this script"
@@ -22,15 +21,28 @@ docker run --rm \
   --user="$UID" \
   -v "${TMP_DIR}:${TENDERMINT_ROOT}" \
   "${TENDERMINT_IMAGE}" \
-  init validator
+  init
 
 # make sure we allow cors origins, only possible by modifying the config file
 # https://github.com/tendermint/tendermint/issues/3216
-#
-# Tendermint <= 0.34 uses underscores
-"$gnused" -i -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' "${TMP_DIR}/config/config.toml"
-# Tendermint 0.35 uses dashes
 "$gnused" -i -e 's/^cors-allowed-origins =.*$/cors-allowed-origins = ["*"]/' "${TMP_DIR}/config/config.toml"
+
+function inline_jq() {
+  local IN_OUT_PATH="$1"
+  shift
+  local TMP_DIR
+  local TMP_FILE
+  TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/inline_jq.XXXXXXXXX")
+  TMP_FILE="$TMP_DIR/$(basename "$IN_OUT_PATH")"
+  jq "$@" <"$IN_OUT_PATH" >"$TMP_FILE"
+  if ! mv "$TMP_FILE" "$IN_OUT_PATH"; then
+    echo >&2 "Temp file '$TMP_FILE' could not be deleted. If it contains sensitive data, you might want to delete it manually."
+    exit 3
+  fi
+}
+
+# Set validator name
+inline_jq "${TMP_DIR}/config/genesis.json" '.validators[0].name = "The Machine 2035"'
 
 # must enable tx index for search and subscribe
 docker run --rm \

@@ -39,20 +39,6 @@ export interface TendermintInstance {
  *   docker container kill <container id from 1st column>
  */
 export const tendermintInstances: Record<number, TendermintInstance> = {
-  34: {
-    url: "localhost:11134",
-    version: "0.34.x",
-    blockTime: 500,
-    expected: {
-      chainId: /^[-a-zA-Z0-9]{3,30}$/,
-      version: /^$/, // Unfortunately we don't get info here
-      appCreator: "Cosmoshi Netowoko",
-      p2pVersion: 8,
-      blockVersion: 11,
-      appVersion: 1,
-      bug5219: false,
-    },
-  },
   37: {
     url: "localhost:11137",
     version: "0.37.x",
@@ -97,7 +83,7 @@ export const tendermintInstances: Record<number, TendermintInstance> = {
   },
 };
 
-export const defaultInstance: TendermintInstance = tendermintInstances[34];
+export const defaultInstance: TendermintInstance = tendermintInstances[38];
 
 export const tendermintEnabled: boolean = !!globalThis.process?.env.TENDERMINT_ENABLED;
 
@@ -106,7 +92,7 @@ export async function tendermintSearchIndexUpdated(): Promise<void> {
   return sleep(75);
 }
 
-export function buildKvTx(k: string, v: string): Uint8Array {
+export function buildKvTx(k: string, v: string): Uint8Array<ArrayBuffer> {
   return toAscii(`${k}=${v}`);
 }
 

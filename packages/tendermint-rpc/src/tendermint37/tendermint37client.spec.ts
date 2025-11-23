@@ -1,7 +1,7 @@
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { assert, sleep } from "@cosmjs/utils";
-import { ReadonlyDate } from "readonly-date";
+import { ReadonlyDate } from "readonly-date-esm";
 import { Stream } from "xstream";
 
 import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
@@ -253,27 +253,25 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("blockSearch", () => {
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Tendermint37Client.create(rpcFactory());
+      const client = Tendermint37Client.create(rpcFactory());
 
-        async function sendTx(): Promise<void> {
-          const tx = buildKvTx(randomString(), randomString());
+      async function sendTx(): Promise<void> {
+        const tx = buildKvTx(randomString(), randomString());
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).not.toEqual(0);
-        }
-
-        // send 3 txs
-        await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).not.toEqual(0);
       }
+
+      // send 3 txs
+      await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("can paginate over blockSearch results", async () => {
@@ -432,33 +430,31 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
 
   describe("txSearch", () => {
     const txKey = randomString(); // a key used for multiple transactions
-    let tx1: Uint8Array | undefined;
+    let tx1: Uint8Array<ArrayBuffer> | undefined;
     let broadcast1: responses.BroadcastTxCommitResponse | undefined;
 
     beforeAll(async () => {
-      if (tendermintEnabled) {
-        const client = Tendermint37Client.create(rpcFactory());
+      const client = Tendermint37Client.create(rpcFactory());
 
-        async function sendTx(): Promise<[Uint8Array, responses.BroadcastTxCommitResponse]> {
-          const me = randomString();
-          const tx = buildKvTx(txKey, me);
+      async function sendTx(): Promise<[Uint8Array<ArrayBuffer>, responses.BroadcastTxCommitResponse]> {
+        const me = randomString();
+        const tx = buildKvTx(txKey, me);
 
-          const txRes = await client.broadcastTxCommit({ tx: tx });
-          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-          expect(txRes.height).toBeTruthy();
-          expect(txRes.hash.length).toEqual(32);
-          return [tx, txRes];
-        }
-
-        // send 3 txs
-        [tx1, broadcast1] = await sendTx();
-        await sendTx();
-        await sendTx();
-
-        client.disconnect();
-
-        await tendermintSearchIndexUpdated();
+        const txRes = await client.broadcastTxCommit({ tx: tx });
+        expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+        expect(txRes.height).toBeTruthy();
+        expect(txRes.hash.length).toEqual(32);
+        return [tx, txRes];
       }
+
+      // send 3 txs
+      [tx1, broadcast1] = await sendTx();
+      await sendTx();
+      await sendTx();
+
+      client.disconnect();
+
+      await tendermintSearchIndexUpdated();
     });
 
     it("finds a single tx by hash", async () => {
@@ -672,6 +668,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const events: responses.NewBlockEvent[] = [];
     const client = Tendermint37Client.create(rpcFactory());
     const stream = client.subscribeNewBlock();
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.header.chainId).toMatch(expected.chainId);
@@ -693,7 +690,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 
         events.push(event);
       },
-      error: fail,
+      error: (e) => {
+        errored = `${e}`;
+      },
     });
 
     await client.broadcastTxCommit({ tx: transactionData1 });
@@ -709,6 +708,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // with txs.
     const eventsWithTx = events.filter((e) => e.txs.length > 0);
 
+    expect(errored).toEqual(undefined);
     expect(eventsWithTx.length).toEqual(2);
     // Block body
     expect(eventsWithTx[0].txs.length).toEqual(1);
@@ -729,6 +729,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const events: responses.TxEvent[] = [];
     const client = Tendermint37Client.create(rpcFactory());
     const stream = client.subscribeTx();
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
@@ -741,7 +742,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           subscription.unsubscribe();
         }
       },
-      error: fail,
+      error: (e) => {
+        errored = `${e}`;
+      },
     });
 
     const transactionData1 = buildKvTx(randomString(), randomString());
@@ -753,6 +756,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // wait for events to be processed
     await sleep(50);
 
+    expect(errored).toEqual(undefined);
     expect(events.length).toEqual(2);
     // Meta
     expect(events[1].height).toBeGreaterThan(events[0].height);
@@ -773,6 +777,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const query = buildQuery({ tags: [{ key: "app.creator", value: expected.appCreator }] });
     const stream = client.subscribeTx(query);
     expect(stream).toBeTruthy();
+    let errored: string | undefined;
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
@@ -784,7 +789,9 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
           subscription.unsubscribe();
         }
       },
-      error: fail,
+      error: (e) => {
+        errored = `${e}`;
+      },
     });
 
     await client.broadcastTxCommit({ tx: transactionData1 });
@@ -793,6 +800,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     // wait for events to be processed
     await sleep(50);
 
+    expect(errored).toEqual(undefined);
     expect(events.length).toEqual(2);
     // Meta
     expect(events[1].height).toBeGreaterThan(events[0].height);
@@ -848,10 +856,10 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
   });
 }
 
-describe("Tendermint37Client", () => {
+(tendermintEnabled ? describe : xdescribe)("Tendermint37Client", () => {
   const { url, expected } = tendermintInstances[37];
 
-  (tendermintEnabled ? it : xit)("can connect to a given url", async () => {
+  it("can connect to a given url", async () => {
     // http connection
     {
       const client = await Tendermint37Client.connect("http://" + url);
@@ -869,14 +877,12 @@ describe("Tendermint37Client", () => {
     }
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With HttpClient", () => {
+  describe("With HttpClient", () => {
     defaultTestSuite(() => new HttpClient("http://" + url), expected);
   });
 
-  (tendermintEnabled ? describe : xdescribe)("With WebsocketClient", () => {
-    // don't print out WebSocket errors if marked pending
-    const onError = globalThis.process?.env.TENDERMINT_ENABLED ? console.error : () => 0;
-    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, onError);
+  describe("With WebsocketClient", () => {
+    const factory = (): WebsocketClient => new WebsocketClient("ws://" + url, console.error);
     defaultTestSuite(factory, expected);
     websocketTestSuite(factory, expected);
   });

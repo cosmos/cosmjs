@@ -1,14 +1,14 @@
 import { ripemd160, sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 
-export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 32) {
     throw new Error(`Invalid Ed25519 pubkey length: ${pubkeyData.length}`);
   }
   return sha256(pubkeyData).slice(0, 20);
 }
 
-export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 33) {
     throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
   }
@@ -24,7 +24,7 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
  *
  * For secp256k1 this assumes we already have a compressed pubkey, which is the default in Cosmos.
  */
-export function pubkeyToRawAddress(type: "ed25519" | "secp256k1", data: Uint8Array): Uint8Array {
+export function pubkeyToRawAddress(type: "ed25519" | "secp256k1", data: Uint8Array): Uint8Array<ArrayBuffer> {
   switch (type) {
     case "ed25519":
       return rawEd25519PubkeyToRawAddress(data);

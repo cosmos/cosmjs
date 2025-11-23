@@ -1,5 +1,7 @@
 import { bech32 } from "@scure/base";
 
+import { fixUint8Array } from "./uint8array";
+
 export function toBech32(prefix: string, data: Uint8Array, limit?: number): string {
   const address = bech32.encode(prefix, bech32.toWords(data), limit);
   return address;
@@ -12,7 +14,7 @@ function hasBech32Separator(input: string): input is `${string}1${string}` {
 export function fromBech32(
   address: string,
   limit = Infinity,
-): { readonly prefix: string; readonly data: Uint8Array } {
+): { readonly prefix: string; readonly data: Uint8Array<ArrayBuffer> } {
   // This extra check can be removed once
   // https://github.com/paulmillr/scure-base/pull/45 is merged and published.
   if (!hasBech32Separator(address)) throw new Error(`No bech32 separator found`);
@@ -20,7 +22,7 @@ export function fromBech32(
   const decodedAddress = bech32.decode(address, limit);
   return {
     prefix: decodedAddress.prefix,
-    data: new Uint8Array(bech32.fromWords(decodedAddress.words)),
+    data: fixUint8Array(bech32.fromWords(decodedAddress.words)),
   };
 }
 

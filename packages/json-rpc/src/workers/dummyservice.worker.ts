@@ -23,7 +23,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
       id: requestId,
       error: {
         code: jsonRpcCode.invalidRequest,
-        message: error.toString(),
+        message: String(error),
       },
     };
     return errorResponse;

@@ -79,13 +79,9 @@ describe("promise", () => {
     });
 
     it("rejects for simple stream with less events than count", async () => {
-      await toListPromise(Stream.fromArray([1, 6, 92]), 5)
-        .then(() => {
-          throw new Error("must not resolve");
-        })
-        .catch((error) => {
-          expect(error).toMatch(/stream completed before all events could be collected/i);
-        });
+      await expectAsync(toListPromise(Stream.fromArray([1, 6, 92]), 5)).toBeRejectedWithError(
+        /stream completed before all events could be collected/i,
+      );
     });
 
     it("works for async stream", async () => {
@@ -119,13 +115,9 @@ describe("promise", () => {
     });
 
     it("rejects for stream with no events", async () => {
-      await firstEvent(Stream.fromArray([]))
-        .then(() => {
-          throw new Error("must not resolve");
-        })
-        .catch((error) => {
-          expect(error).toMatch(/stream completed before all events could be collected/i);
-        });
+      await expectAsync(firstEvent(Stream.fromArray([]))).toBeRejectedWithError(
+        /stream completed before all events could be collected/i,
+      );
     });
 
     it("works for async stream", async () => {

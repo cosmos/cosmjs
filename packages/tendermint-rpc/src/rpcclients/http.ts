@@ -1,6 +1,12 @@
-function filterBadStatus(res: Response): Response {
+async function filterBadStatus(res: Response): Promise<Response> {
   if (res.status >= 400) {
-    throw new Error(`Bad status on response: ${res.status}`);
+    const body = await res.text().catch(() => "Unable to retrieve body content");
+    throw new Error(`Bad status on response: ${res.status}`, {
+      cause: {
+        status: res.status,
+        body,
+      },
+    });
   }
   return res;
 }

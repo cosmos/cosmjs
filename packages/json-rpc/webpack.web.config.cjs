@@ -2,7 +2,7 @@ const { globSync } = require("glob");
 const path = require("path");
 
 const target = "web";
-const distdir = path.join(__dirname, "dist", "web");
+const bundleDir = path.join(__dirname, "build", "karma-bundle");
 
 module.exports = [
   {
@@ -11,7 +11,7 @@ module.exports = [
     entry: "./build/workers/dummyservice.worker.js",
     output: {
       asyncChunks: false,
-      path: distdir,
+      path: bundleDir,
       filename: "dummyservice.worker.js",
     },
   },
@@ -21,7 +21,7 @@ module.exports = [
     entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
-      path: distdir,
+      path: bundleDir,
       filename: "tests.js",
     },
   },

@@ -18,7 +18,7 @@ import { sleep } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
-import { faucet, ledgerEnabled, simapp, simappEnabled } from "./testutils.spec";
+import { faucet, ledgerEnabled, simapp, simappEnabled } from "./testutils";
 
 const interactiveTimeout = 120_000;
 
@@ -31,10 +31,11 @@ async function createTransport(): Promise<Transport> {
   }
   // HACK: Use a variable to get webpack to ignore this
   const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
-  const { default: TransportClass } =
+  const TransportClass: typeof Transport = (
     platform === "node"
       ? await import(nodeJsTransportPackageName)
-      : await import("@ledgerhq/hw-transport-webusb");
+      : await import("@ledgerhq/hw-transport-webusb")
+  ).default;
   return TransportClass.create(interactiveTimeout, interactiveTimeout);
 }
 
@@ -137,7 +138,7 @@ async function createTransport(): Promise<Transport> {
         );
         const { signed, signature } = await signer.signAmino(firstAccount.address, signDoc);
         expect(signed).toEqual(signDoc);
-        const valid = await Secp256k1.verifySignature(
+        const valid = Secp256k1.verifySignature(
           Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
           sha256(serializeSignDoc(signed)),
           firstAccount.pubkey,

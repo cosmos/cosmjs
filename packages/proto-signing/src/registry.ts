@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { BinaryWriter } from "cosmjs-types/binary";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -160,7 +161,7 @@ export class Registry {
    * If the value has to be wrapped in an Any, this needs to be done
    * manually after this call. Or use `encodeAsAny` instead.
    */
-  public encode(encodeObject: EncodeObject): Uint8Array {
+  public encode(encodeObject: EncodeObject): Uint8Array<ArrayBuffer> {
     const { value, typeUrl } = encodeObject;
     if (isTxBodyEncodeObject(encodeObject)) {
       return this.encodeTxBody(value);
@@ -170,7 +171,7 @@ export class Registry {
       isTelescopeGeneratedType(type) || isTsProtoGeneratedType(type)
         ? type.fromPartial(value)
         : type.create(value);
-    return type.encode(instance).finish();
+    return fixUint8Array(type.encode(instance).finish());
   }
 
   /**
@@ -185,14 +186,14 @@ export class Registry {
     });
   }
 
-  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
+  public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array<ArrayBuffer> {
     const wrappedMessages = txBodyFields.messages.map((message) => this.encodeAsAny(message));
     const txBody = TxBody.fromPartial({
       ...txBodyFields,
       timeoutHeight: BigInt(txBodyFields.timeoutHeight?.toString() ?? "0"),
       messages: wrappedMessages,
     });
-    return TxBody.encode(txBody).finish();
+    return fixUint8Array(TxBody.encode(txBody).finish());
   }
 
   public decode({ typeUrl, value }: DecodeObject): any {
