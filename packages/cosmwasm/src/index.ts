@@ -1,7 +1,7 @@
-export type { Code, CodeDetails, Contract, ContractCodeHistoryEntry } from "./cosmwasmclient";
-export { CosmWasmClient } from "./cosmwasmclient";
-export { fromBinary, toBinary } from "./encoding";
-export { _instantiate2AddressIntermediate, instantiate2Address } from "./instantiate2";
+export type { Code, CodeDetails, Contract, ContractCodeHistoryEntry } from "./cosmwasmclient.ts";
+export { CosmWasmClient } from "./cosmwasmclient.ts";
+export { fromBinary, toBinary } from "./encoding.ts";
+export { _instantiate2AddressIntermediate, instantiate2Address } from "./instantiate2.ts";
 export type {
   JsonObject,
   MsgClearAdminEncodeObject,
@@ -12,7 +12,7 @@ export type {
   MsgStoreCodeEncodeObject,
   MsgUpdateAdminEncodeObject,
   WasmExtension,
-} from "./modules";
+} from "./modules/index.ts";
 export {
   createWasmAminoConverters,
   isMsgClearAdminEncodeObject,
@@ -24,7 +24,7 @@ export {
   isMsgUpdateAdminEncodeObject,
   setupWasmExtension,
   wasmTypes,
-} from "./modules";
+} from "./modules/index.ts";
 export type {
   ChangeAdminResult,
   ExecuteInstruction,
@@ -34,8 +34,8 @@ export type {
   MigrateResult,
   SigningCosmWasmClientOptions,
   UploadResult,
-} from "./signingcosmwasmclient";
-export { SigningCosmWasmClient } from "./signingcosmwasmclient";
+} from "./signingcosmwasmclient.ts";
+export { SigningCosmWasmClient } from "./signingcosmwasmclient.ts";
 
 // Re-exported because this is part of the CosmWasmClient/SigningCosmWasmClient APIs
 export type { Attribute, DeliverTxResponse, Event, IndexedTx } from "@cosmjs/stargate";

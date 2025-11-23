@@ -1,4 +1,4 @@
-import { parseBankToken, parseBankTokens } from "./tokens";
+import { parseBankToken, parseBankTokens } from "./tokens.ts";
 
 describe("tokens", () => {
   describe("parseBankToken", () => {

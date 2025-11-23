@@ -2,7 +2,7 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
-import { Coin } from "./coins";
+import { Coin } from "./coins.ts";
 
 export interface AminoMsg {
   readonly type: string;

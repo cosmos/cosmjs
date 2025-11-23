@@ -2,7 +2,7 @@ import { fixUint8Array, fromHex, toHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
-import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
+import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature.ts";
 
 export interface Secp256k1Keypair {
   /** A 32 byte private key */

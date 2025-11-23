@@ -1,4 +1,4 @@
-import { AminoConverters } from "../../aminotypes";
+import { AminoConverters } from "../../aminotypes.ts";
 
 export function createFeegrantAminoConverters(): AminoConverters {
   return {

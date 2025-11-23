@@ -1,4 +1,4 @@
-import { omitDefault } from "./omitdefault";
+import { omitDefault } from "./omitdefault.ts";
 
 describe("omitDefault", () => {
   it("works for numbers", () => {

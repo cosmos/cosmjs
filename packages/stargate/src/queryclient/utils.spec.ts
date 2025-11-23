@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { decodeCosmosSdkDecFromProto } from "./utils";
+import { decodeCosmosSdkDecFromProto } from "./utils.ts";
 
 describe("utils", () => {
   describe("decodeCosmosSdkDecFromProto", () => {

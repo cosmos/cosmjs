@@ -5,7 +5,7 @@ import {
   QueryGrantsResponse,
 } from "cosmjs-types/cosmos/authz/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.ts";
 
 export interface AuthzExtension {
   readonly authz: {

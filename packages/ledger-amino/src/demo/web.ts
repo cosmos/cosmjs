@@ -6,7 +6,7 @@ import { assert } from "@cosmjs/utils";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
-import { LedgerSigner } from "../ledgersigner";
+import { LedgerSigner } from "../ledgersigner.ts";
 
 const getElement = (id: string): HTMLInputElement => {
   const e = document.getElementById(id);

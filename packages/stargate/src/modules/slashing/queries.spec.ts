@@ -1,8 +1,8 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../../queryclient";
-import { simapp, simappEnabled } from "../../testutils";
-import { setupSlashingExtension, SlashingExtension } from "./queries";
+import { QueryClient } from "../../queryclient/index.ts";
+import { simapp, simappEnabled } from "../../testutils.ts";
+import { setupSlashingExtension, SlashingExtension } from "./queries.ts";
 
 async function makeClientWithSlashing(
   rpcUrl: string,

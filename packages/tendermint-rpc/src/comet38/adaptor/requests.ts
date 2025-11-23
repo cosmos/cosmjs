@@ -2,11 +2,11 @@
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-import { smallIntToApi } from "../../inthelpers";
-import { jCheckNonEmptyString } from "../../jsonchecks";
-import { createJsonRpcRequest } from "../../jsonrpc";
-import { may } from "../encodings";
-import * as requests from "../requests";
+import { smallIntToApi } from "../../inthelpers.ts";
+import { jCheckNonEmptyString } from "../../jsonchecks.ts";
+import { createJsonRpcRequest } from "../../jsonrpc.ts";
+import { may } from "../encodings.ts";
+import * as requests from "../requests.ts";
 
 interface HeightParam {
   readonly height?: number;

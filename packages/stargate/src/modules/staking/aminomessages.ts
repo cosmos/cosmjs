@@ -12,7 +12,7 @@ import {
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
-import { AminoConverter } from "../..";
+import { AminoConverter } from "../../index.ts";
 
 /** The initial commission rates to be used for creating a validator */
 interface CommissionRates {
@@ -93,7 +93,7 @@ export function isAminoMsgEditValidator(msg: AminoMsg): msg is AminoMsgEditValid
 /**
  * Performs a delegation from a delegate to a validator.
  *
- * @see https://docs.cosmos.network/main/build/modules/staking#msgdelegate
+ * @see https://docs.cosmos.network/main/build/modules/index/staking#msgdelegate
  */
 export interface AminoMsgDelegate extends AminoMsg {
   readonly type: "cosmos-sdk/MsgDelegate";

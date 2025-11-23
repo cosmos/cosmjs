@@ -1,4 +1,4 @@
-import { fixUint8Array } from "./uint8array";
+import { fixUint8Array } from "./uint8array.ts";
 
 export function toUtf8(str: string): Uint8Array<ArrayBuffer> {
   return fixUint8Array(new TextEncoder().encode(str));

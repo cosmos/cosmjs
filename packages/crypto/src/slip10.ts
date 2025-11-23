@@ -3,8 +3,8 @@ import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
-import { Hmac } from "./hmac";
-import { Sha512 } from "./sha";
+import { Hmac } from "./hmac.ts";
+import { Sha512 } from "./sha.ts";
 
 export interface Slip10Result {
   readonly chainCode: Uint8Array;

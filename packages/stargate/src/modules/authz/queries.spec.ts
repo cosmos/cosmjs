@@ -4,17 +4,17 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assertDefined, sleep } from "@cosmjs/utils";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 
-import { QueryClient } from "../../queryclient";
-import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
+import { QueryClient } from "../../queryclient/index.ts";
+import { SigningStargateClient } from "../../signingstargateclient.ts";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.ts";
 import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
   simapp,
   simappEnabled,
-} from "../../testutils";
-import { AuthzExtension, setupAuthzExtension } from "./queries";
+} from "../../testutils.ts";
+import { AuthzExtension, setupAuthzExtension } from "./queries.ts";
 
 async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & AuthzExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

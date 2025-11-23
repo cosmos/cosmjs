@@ -1,4 +1,4 @@
-import { makeJsonRpcId } from "./id";
+import { makeJsonRpcId } from "./id.ts";
 
 describe("id", () => {
   describe("makeJsonRpcId", () => {

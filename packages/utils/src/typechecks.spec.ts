@@ -1,4 +1,4 @@
-import { isDefined, isNonNullObject, isUint8Array } from "./typechecks";
+import { isDefined, isNonNullObject, isUint8Array } from "./typechecks.ts";
 
 describe("typechecks", () => {
   describe("isNonNullObject", () => {

@@ -1,6 +1,6 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 
-import { Sha256, sha256 } from "./sha";
+import { Sha256, sha256 } from "./sha.ts";
 import shaVectors from "./testdata/sha.json";
 
 describe("Sha256", () => {

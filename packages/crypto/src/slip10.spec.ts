@@ -8,7 +8,7 @@ import {
   slip10CurveFromString,
   Slip10RawIndex,
   stringToPath,
-} from "./slip10";
+} from "./slip10.ts";
 
 describe("Slip10", () => {
   it("has working slip10CurveFromString()", () => {

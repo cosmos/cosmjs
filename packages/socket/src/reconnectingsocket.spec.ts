@@ -1,4 +1,4 @@
-import { ReconnectingSocket } from "./reconnectingsocket";
+import { ReconnectingSocket } from "./reconnectingsocket.ts";
 
 /** @see https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback */
 type Exec = (command: string, callback: (error: null | (Error & { readonly code?: number })) => void) => void;
