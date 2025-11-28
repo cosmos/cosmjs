@@ -14,8 +14,11 @@ and this project adheres to
   specifying the buffer type but you need an `ArrayBuffer`. Internally it might
   perform a copy but in the vast majority of cases it will just change the type
   after ensuring `ArrayBuffer` is used. ([#1883])
+- @cosmjs/math: Add `Decimal.adjustFractionalDigits` which allows you to change
+  the fractional digits of a Decimal without changing its value. ([#1916])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
+[#1916]: https://github.com/cosmos/cosmjs/pull/1916
 
 ### Changed
 

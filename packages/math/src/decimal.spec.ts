@@ -225,6 +225,64 @@ describe("Decimal", () => {
     });
   });
 
+  describe("adjustFractionalDigits", () => {
+    it("can expand", () => {
+      const a = Decimal.fromUserInput("1.23", 2);
+      const aa = a.adjustFractionalDigits(2);
+      const aaa = a.adjustFractionalDigits(3);
+      const aaaa = a.adjustFractionalDigits(4);
+      expect(aa.toString()).toEqual("1.23");
+      expect(aa.fractionalDigits).toEqual(2);
+      expect(aaa.toString()).toEqual("1.23");
+      expect(aaa.fractionalDigits).toEqual(3);
+      expect(aaaa.toString()).toEqual("1.23");
+      expect(aaaa.fractionalDigits).toEqual(4);
+    });
+
+    it("can shrink", () => {
+      const a = Decimal.fromUserInput("1.23456789", 8);
+      const a8 = a.adjustFractionalDigits(8);
+      const a7 = a.adjustFractionalDigits(7);
+      const a6 = a.adjustFractionalDigits(6);
+      const a5 = a.adjustFractionalDigits(5);
+      const a4 = a.adjustFractionalDigits(4);
+      const a3 = a.adjustFractionalDigits(3);
+      const a2 = a.adjustFractionalDigits(2);
+      const a1 = a.adjustFractionalDigits(1);
+      const a0 = a.adjustFractionalDigits(0);
+      expect(a8.toString()).toEqual("1.23456789");
+      expect(a8.fractionalDigits).toEqual(8);
+      expect(a7.toString()).toEqual("1.2345678");
+      expect(a7.fractionalDigits).toEqual(7);
+      expect(a6.toString()).toEqual("1.234567");
+      expect(a6.fractionalDigits).toEqual(6);
+      expect(a5.toString()).toEqual("1.23456");
+      expect(a5.fractionalDigits).toEqual(5);
+      expect(a4.toString()).toEqual("1.2345");
+      expect(a4.fractionalDigits).toEqual(4);
+      expect(a3.toString()).toEqual("1.234");
+      expect(a3.fractionalDigits).toEqual(3);
+      expect(a2.toString()).toEqual("1.23");
+      expect(a2.fractionalDigits).toEqual(2);
+      expect(a1.toString()).toEqual("1.2");
+      expect(a1.fractionalDigits).toEqual(1);
+      expect(a0.toString()).toEqual("1");
+      expect(a0.fractionalDigits).toEqual(0);
+    });
+
+    it("allows arithmetic between different fractional difits", () => {
+      const a = Decimal.fromUserInput("5.33", 2);
+      const b = Decimal.fromUserInput("2.1", 1);
+      expect(() => a.plus(b)).toThrowError(/Fractional digits do not match/i); // maybe not convenient but this is what we expect
+
+      const bb = b.adjustFractionalDigits(a.fractionalDigits);
+      expect(a.plus(bb).toString()).toEqual("7.43");
+
+      const aa = a.adjustFractionalDigits(b.fractionalDigits);
+      expect(aa.plus(b).toString()).toEqual("7.4");
+    });
+  });
+
   describe("toString", () => {
     it("displays no decimal point for full numbers", () => {
       expect(Decimal.fromUserInput("44", 0).toString()).toEqual("44");
