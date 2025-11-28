@@ -49,14 +49,19 @@ export class Decimal {
       throw new Error("Got more fractional digits than supported");
     }
 
-    const quantity = `${whole}${fractional.padEnd(fractionalDigits, "0")}`;
+    const quantity = BigInt(`${whole}${fractional.padEnd(fractionalDigits, "0")}`);
 
     return new Decimal(quantity, fractionalDigits);
   }
 
   public static fromAtomics(atomics: string, fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
-    return new Decimal(atomics, fractionalDigits);
+    if (!atomics.match(/^[0-9]+$/)) {
+      throw new Error(
+        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      );
+    }
+    return new Decimal(BigInt(atomics), fractionalDigits);
   }
 
   /**
@@ -67,7 +72,7 @@ export class Decimal {
    */
   public static zero(fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
-    return new Decimal("0", fractionalDigits);
+    return new Decimal(0n, fractionalDigits);
   }
 
   /**
@@ -78,7 +83,7 @@ export class Decimal {
    */
   public static one(fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
-    return new Decimal("1" + "0".repeat(fractionalDigits), fractionalDigits);
+    return new Decimal(10n ** BigInt(fractionalDigits), fractionalDigits);
   }
 
   private static verifyFractionalDigits(fractionalDigits: number): void {
@@ -110,22 +115,16 @@ export class Decimal {
     readonly fractionalDigits: number;
   };
 
-  private constructor(atomics: string, fractionalDigits: number) {
-    if (!atomics.match(/^[0-9]+$/)) {
-      throw new Error(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
-      );
-    }
-
+  private constructor(atomics: bigint, fractionalDigits: number) {
     this.data = {
-      atomics: BigInt(atomics),
+      atomics: atomics,
       fractionalDigits: fractionalDigits,
     };
   }
 
   /** Creates a new instance with the same value */
   private clone(): Decimal {
-    return new Decimal(this.atomics, this.fractionalDigits);
+    return new Decimal(this.data.atomics, this.data.fractionalDigits);
   }
 
   /** Returns the greatest decimal <= this which has no fractional part (rounding down) */
@@ -137,7 +136,7 @@ export class Decimal {
     if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics((whole * factor).toString(), this.fractionalDigits);
+      return new Decimal(whole * factor, this.fractionalDigits);
     }
   }
 
@@ -150,7 +149,7 @@ export class Decimal {
     if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics(((whole + 1n) * factor).toString(), this.fractionalDigits);
+      return new Decimal((whole + 1n) * factor, this.fractionalDigits);
     }
   }
 
@@ -169,12 +168,12 @@ export class Decimal {
     const diff = newFractionalDigits - this.fractionalDigits;
     if (diff > 0) {
       // expand
-      return Decimal.fromAtomics(this.atomics + "0".repeat(diff), newFractionalDigits);
+      return new Decimal(this.data.atomics * 10n ** BigInt(diff), newFractionalDigits);
     } else if (diff === 0) {
       return this.clone();
     } else {
       // shrink
-      return Decimal.fromAtomics(this.atomics.slice(0, diff), newFractionalDigits);
+      return new Decimal(this.data.atomics / 10n ** BigInt(-diff), newFractionalDigits);
     }
   }
 
@@ -210,7 +209,7 @@ export class Decimal {
   public plus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const sum = this.data.atomics + b.data.atomics;
-    return new Decimal(sum.toString(), this.fractionalDigits);
+    return new Decimal(sum, this.fractionalDigits);
   }
 
   /**
@@ -223,7 +222,7 @@ export class Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const difference = this.data.atomics - b.data.atomics;
     if (difference < 0n) throw new Error("Difference must not be negative");
-    return new Decimal(difference.toString(), this.fractionalDigits);
+    return new Decimal(difference, this.fractionalDigits);
   }
 
   /**
@@ -233,7 +232,7 @@ export class Decimal {
    */
   public multiply(b: Uint32 | Uint53 | Uint64): Decimal {
     const product = this.data.atomics * b.toBigInt();
-    return new Decimal(product.toString(), this.fractionalDigits);
+    return new Decimal(product, this.fractionalDigits);
   }
 
   public equals(b: Decimal): boolean {
