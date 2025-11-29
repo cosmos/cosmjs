@@ -1,4 +1,4 @@
-import { isMultisigThresholdPubkey, isSinglePubkey } from "./pubkeys";
+import { isEd25519Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, isSinglePubkey } from "./pubkeys";
 
 describe("pubkeys", () => {
   const pubkeyEd25519 = {
@@ -47,6 +47,22 @@ describe("pubkeys", () => {
       expect(isMultisigThresholdPubkey(pubkeyEd25519)).toEqual(false);
       expect(isMultisigThresholdPubkey(pubkeySecp256k1)).toEqual(false);
       expect(isMultisigThresholdPubkey(pubkeyMultisigThreshold)).toEqual(true);
+    });
+  });
+
+  describe("isEd25519Pubkey", () => {
+    it("works", () => {
+      expect(isEd25519Pubkey(pubkeyEd25519)).toEqual(true);
+      expect(isEd25519Pubkey(pubkeySecp256k1)).toEqual(false);
+      expect(isEd25519Pubkey(pubkeyMultisigThreshold)).toEqual(false);
+    });
+  });
+
+  describe("isSecp256k1Pubkey", () => {
+    it("works", () => {
+      expect(isSecp256k1Pubkey(pubkeyEd25519)).toEqual(false);
+      expect(isSecp256k1Pubkey(pubkeySecp256k1)).toEqual(true);
+      expect(isSecp256k1Pubkey(pubkeyMultisigThreshold)).toEqual(false);
     });
   });
 });
