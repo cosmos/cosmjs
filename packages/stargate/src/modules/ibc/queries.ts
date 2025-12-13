@@ -1,8 +1,8 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
 import {
   QueryClientImpl as TransferQuery,
-  QueryDenomTraceResponse,
-  QueryDenomTracesResponse,
+  QueryDenomResponse,
+  QueryDenomsResponse,
   QueryParamsResponse as QueryTransferParamsResponse,
 } from "cosmjs-types/ibc/applications/transfer/v1/query";
 import {
@@ -157,9 +157,9 @@ export interface IbcExtension {
       ) => Promise<QueryConnectionConsensusStateResponse>;
     };
     readonly transfer: {
-      readonly denomTrace: (hash: string) => Promise<QueryDenomTraceResponse>;
-      readonly denomTraces: (paginationKey?: Uint8Array) => Promise<QueryDenomTracesResponse>;
-      readonly allDenomTraces: () => Promise<QueryDenomTracesResponse>;
+      readonly denomTrace: (hash: string) => Promise<QueryDenomResponse>;
+      readonly denomTraces: (paginationKey?: Uint8Array) => Promise<QueryDenomsResponse>;
+      readonly allDenomTraces: () => Promise<QueryDenomsResponse>;
       readonly params: () => Promise<QueryTransferParamsResponse>;
     };
   };
@@ -460,24 +460,24 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           ),
       },
       transfer: {
-        denomTrace: async (hash: string) => transferQueryService.DenomTrace({ hash: hash }),
+        denomTrace: async (hash: string) => transferQueryService.Denom({ hash: hash }),
         denomTraces: async (paginationKey?: Uint8Array) =>
-          transferQueryService.DenomTraces({
+          transferQueryService.Denoms({
             pagination: createPagination(paginationKey),
           }),
         allDenomTraces: async () => {
           const denomTraces = [];
-          let response: QueryDenomTracesResponse;
+          let response: QueryDenomsResponse;
           let key: Uint8Array | undefined;
           do {
-            response = await transferQueryService.DenomTraces({
+            response = await transferQueryService.Denoms({
               pagination: createPagination(key),
             });
-            denomTraces.push(...response.denomTraces);
+            denomTraces.push(...response.denoms);
             key = response.pagination?.nextKey;
           } while (key && key.length);
-          return QueryDenomTracesResponse.fromPartial({
-            denomTraces: denomTraces,
+          return QueryDenomsResponse.fromPartial({
+            denoms: denomTraces,
           });
         },
         params: async () => transferQueryService.Params({}),

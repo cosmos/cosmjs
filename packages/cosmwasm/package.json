@@ -49,7 +49,7 @@
     "@cosmjs/stargate": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.10.1"
+    "cosmjs-types": "^0.11.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -58,7 +58,7 @@
     "@types/karma-jasmine": "^4",
     "@types/karma-jasmine-html-reporter": "^1",
     "@types/node": "*",
-    "glob": "^11",
+    "glob": "^13.0.0",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",

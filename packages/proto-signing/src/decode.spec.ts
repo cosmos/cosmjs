@@ -58,6 +58,8 @@ describe("decode", () => {
         body: {
           memo: "",
           timeoutHeight: BigInt(0),
+          timeoutTimestamp: undefined,
+          unordered: false,
           messages: [expectedMsg],
           extensionOptions: [],
           nonCriticalExtensionOptions: [],
