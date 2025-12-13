@@ -83,7 +83,7 @@ and this project adheres to
   `ValidatorsParams`, `ValidatorsRequest`, `ValidatorsResponse`, `Version`,
   `Vote`, `VoteType` which all came from `tendermint34`.
 
-  If you needs any of those you can import them from a version specific module,
+  If you need any of those you can import them from a version specific module,
   such as `comet1.Version` or
 
   ```ts
@@ -95,7 +95,7 @@ and this project adheres to
   in case you want to support multiple versions. ([#1866])
 
 - @cosmjs/crypto: Make
-  `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchonous and
+  `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchronous and
   let them not return a Promise.
 - @cosmjs/cosmwasm-stargate: Rename package to @cosmjs/cosmwasm. ([#1903])
 
@@ -187,13 +187,13 @@ and this project adheres to
 
 ### Fixed
 
-- @cosmjs/crypto: Fix import path of @noble/hashes to avoid bunding issue
+- @cosmjs/crypto: Fix import path of @noble/hashes to avoid bundling issue
 
   > Error \[ERR_PACKAGE_PATH_NOT_EXPORTED\]: Package subpath './sha2.js' is not
   > defined by "exports" in …
 
   In @noble/hashes version >=1.0.0 <1.8.0 the import paths must not contain the
-  .js suffix. This issue was intoduced in CosmJS 0.35.0 but only affects users
+  .js suffix. This issue was introduced in CosmJS 0.35.0 but only affects users
   who have @noble/hashes lower than 1.8.0 in their lockfile. ([#1817])
 
 [#1817]: https://github.com/cosmos/cosmjs/pull/1817
@@ -747,7 +747,7 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
   supporting batch RPC requests ([#1300]).
 - @cosmjs/encoding: Add `lossy` parameter to `fromUtf8` allowing the use of a
-  replacement charater instead of throwing.
+  replacement character instead of throwing.
 - @cosmjs/stargate: Add structured `Events`s to `IndexTx.events` and
   `DeliverTxResponse.events`.
 - @cosmjs/cosmwasm-stargate: Add structured `Events`s field to
