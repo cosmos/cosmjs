@@ -114,7 +114,7 @@ export class SigningStargateClient extends StargateClient {
   // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
   private readonly defaultGasMultiplier = 1.4;
   // Default multiplier for dynamic gas price (applied on top of queried price)
-  private readonly defaultDynamicGasMultiplier = 1.3;
+  private readonly defaultDynamicGasPriceMultiplier = 1.3;
 
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
@@ -369,6 +369,7 @@ export class SigningStargateClient extends StargateClient {
   ): Promise<StdFee> {
     const gasEstimation = await this.simulate(signerAddress, messages, memo);
     const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
+    const gasLimit = Math.ceil(gasEstimation * multiplier);
 
     const gasPriceConfig = this.gasPrice;
 
@@ -376,7 +377,7 @@ export class SigningStargateClient extends StargateClient {
     if (gasPriceConfig && "minGasPrice" in gasPriceConfig) {
       // Dynamic gas price config
       const dynamicGasConfig = gasPriceConfig;
-      const multiplierValue = dynamicGasConfig.multiplier ?? this.defaultDynamicGasMultiplier;
+      const multiplierValue = dynamicGasConfig.multiplier ?? this.defaultDynamicGasPriceMultiplier;
       const minGasPrice = dynamicGasConfig.minGasPrice;
       const maxGasPrice = dynamicGasConfig.maxGasPrice;
 
@@ -412,10 +413,10 @@ export class SigningStargateClient extends StargateClient {
             : normalizedMaxGasPrice;
         }
         const dynamicGasPriceObj = new GasPrice(finalGasPrice, dynamicGasConfig.denom);
-        return calculateFee(Math.round(gasEstimation * multiplier), dynamicGasPriceObj);
+        return calculateFee(gasLimit, dynamicGasPriceObj);
       } catch (error) {
         // Fallback to minGasPrice if query fails
-        return calculateFee(Math.round(gasEstimation * multiplier), minGasPrice);
+        return calculateFee(gasLimit, minGasPrice);
       }
     } else {
       // Static gas price
@@ -429,7 +430,7 @@ export class SigningStargateClient extends StargateClient {
         throw new Error("Gas price must be a GasPrice instance when using static pricing.");
       }
       const staticGasPrice = gasPriceConfig as GasPrice;
-      return calculateFee(Math.round(gasEstimation * multiplier), staticGasPrice);
+      return calculateFee(gasLimit, staticGasPrice);
     }
   }
 

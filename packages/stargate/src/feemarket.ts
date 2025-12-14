@@ -21,18 +21,21 @@ export interface DynamicGasPriceConfig {
 /**
  * Multiplies a Decimal by a number multiplier.
  * This is needed because Decimal.multiply() only accepts integers.
+ *
+ * Uses decimal arithmetic to avoid floating point precision issues.
  */
 export function multiplyDecimalByNumber(
   value: Decimal,
   multiplier: number,
   fractionalDigits: number,
 ): Decimal {
-  const normalizedValue =
-    value.fractionalDigits === fractionalDigits
-      ? value
-      : Decimal.fromUserInput(value.toString(), fractionalDigits);
+  // Normalize value to target fractional digits
+  const normalizedValue = value.adjustFractionalDigits(fractionalDigits);
 
+  // Convert multiplier to Decimal with same fractional digits
   const multiplierDecimal = Decimal.fromUserInput(multiplier.toString(), fractionalDigits);
+
+  // Multiply: (value * multiplier) / 10^fractionalDigits
   const factor = BigInt(10) ** BigInt(fractionalDigits);
   const product = (BigInt(normalizedValue.atomics) * BigInt(multiplierDecimal.atomics)) / factor;
 
