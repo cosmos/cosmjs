@@ -95,7 +95,7 @@ as soon as there is
 ### Working with docker
 
 **Note:** The Dockerfile in this repo is for demonstration purposes only. If you
-chose to deploy the faucet via docker, make sure to copy the Dockerfile and keep
+choose to deploy the faucet via docker, make sure to copy the Dockerfile and keep
 it up-to-date.
 
 - Build an artifact (from monorepo root)
@@ -139,7 +139,7 @@ curl --header "Content-Type: application/json" \
   http://localhost:8000/credit
 ```
 
-### Checking the faucets status
+### Checking the faucet's status
 
 The faucet provides a simple status check in the form of an http GET request. As
 above, make sure to adjust the URL as necessary.
