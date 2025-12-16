@@ -476,7 +476,7 @@ and this project adheres to
   to supported cases where users put very high gas values in there ([#1465]).
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
 - @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
-  anymore by haing a dedicated client for each backend.
+  anymore by having a dedicated client for each backend.
 - @cosmjs/tendermint-rpc: Add
   `CometClient = Tendermint34Client | Tendermint37Client | Comet38Client` and
   `connectComet` for auto-detecting the right client for a provided endpoint.
