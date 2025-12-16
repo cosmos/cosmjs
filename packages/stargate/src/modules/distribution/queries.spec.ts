@@ -6,7 +6,14 @@ import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { QueryClient } from "../../queryclient";
 import { SigningStargateClient } from "../../signingstargateclient";
 import { assertIsDeliverTxSuccess } from "../../stargateclient";
-import { defaultSigningClientOptions, faucet, simapp, simappEnabled, validator } from "../../testutils";
+import {
+  defaultSigningClientOptions,
+  externalCommunityPool,
+  faucet,
+  simapp,
+  simappEnabled,
+  validator,
+} from "../../testutils";
 import { MsgDelegateEncodeObject } from "../";
 import { DistributionExtension, setupDistributionExtension } from "./queries";
 
@@ -51,9 +58,15 @@ async function makeClientWithDistribution(
     it("works", async () => {
       const [client, cometClient] = await makeClientWithDistribution(simapp.tendermintUrlHttp);
 
-      const response = await client.distribution.communityPool();
-      expect(response.pool).toBeDefined();
-      expect(response.pool).not.toBeNull();
+      if (externalCommunityPool) {
+        await expectAsync(client.distribution.communityPool()).toBeRejectedWithError(
+          /external community pool is enabled - use the CommunityPool query exposed by the external community pool/i,
+        );
+      } else {
+        const response = await client.distribution.communityPool();
+        expect(response.pool).toBeDefined();
+        expect(response.pool).not.toBeNull();
+      }
 
       cometClient.disconnect();
     });

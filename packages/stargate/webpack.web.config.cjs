@@ -21,6 +21,8 @@ module.exports = [
         SLOW_SIMAPP47_ENABLED: "",
         SIMAPP50_ENABLED: "",
         SLOW_SIMAPP50_ENABLED: "",
+        SIMAPP53_ENABLED: "",
+        SLOW_SIMAPP53_ENABLED: "",
       }),
     ],
     resolve: {

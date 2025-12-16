@@ -43,7 +43,7 @@ import {
   ModifyingDirectSecp256k1HdWallet,
   ModifyingSecp256k1HdWallet,
   simapp,
-  simapp50Enabled,
+  simapp47Enabled,
   simappEnabled,
   validator,
 } from "./testutils";
@@ -118,10 +118,10 @@ import {
       );
       assertIsDeliverTxSuccess(result);
 
-      if (simapp50Enabled) {
-        expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
-      } else {
+      if (simapp47Enabled) {
         expect(result.rawLog).toBeTruthy();
+      } else {
+        expect(result.rawLog).toEqual(""); // empty for 0.50+ (https://github.com/cosmos/cosmos-sdk/pull/15845)
       }
       expect(result.events.length).toBeGreaterThanOrEqual(1);
 
@@ -159,10 +159,10 @@ import {
       );
       assertIsDeliverTxSuccess(result);
 
-      if (simapp50Enabled) {
-        expect(result.rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
-      } else {
+      if (simapp47Enabled) {
         expect(result.rawLog).toBeTruthy();
+      } else {
+        expect(result.rawLog).toEqual(""); // empty for 0.50+ (https://github.com/cosmos/cosmos-sdk/pull/15845)
       }
       expect(result.events.length).toBeGreaterThanOrEqual(1);
 

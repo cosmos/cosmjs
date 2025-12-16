@@ -28,7 +28,6 @@ import {
   nonExistentAddress,
   simapp,
   simapp47Enabled,
-  simapp50Enabled,
   simappEnabled,
   slowSimapp,
   slowSimappEnabled,
@@ -377,10 +376,10 @@ describe("isDeliverTxSuccess", () => {
 
       const { gasUsed, rawLog, transactionHash } = txResult;
       expect(gasUsed).toBeGreaterThan(0);
-      if (simapp50Enabled) {
-        expect(rawLog).toEqual(""); // empty now (https://github.com/cosmos/cosmos-sdk/pull/15845)
-      } else {
+      if (simapp47Enabled) {
         expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
+      } else {
+        expect(rawLog).toEqual(""); // empty for 0.50+ (https://github.com/cosmos/cosmos-sdk/pull/15845)
       }
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
 
@@ -453,11 +452,11 @@ describe("isDeliverTxSuccess", () => {
             : // New error code for SDK 0.50+
               /Broadcasting transaction failed with code 4/i,
         );
-        if (simapp50Enabled) {
+        if (simapp47Enabled) {
+          expect(error.code).toEqual(7);
+        } else {
           // New error code for SDK 0.50+
           expect(error.code).toEqual(4);
-        } else {
-          expect(error.code).toEqual(7);
         }
         expect(error.codespace).toEqual("sdk");
       }

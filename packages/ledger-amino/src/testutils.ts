@@ -11,7 +11,9 @@ export const faucet = {
 export const ledgerEnabled: boolean = !!globalThis.process?.env.LEDGER_ENABLED;
 
 export const simappEnabled: boolean = !!(
-  globalThis.process?.env.SIMAPP47_ENABLED || globalThis.process?.env.SIMAPP50_ENABLED
+  globalThis.process?.env.SIMAPP47_ENABLED ||
+  globalThis.process?.env.SIMAPP50_ENABLED ||
+  globalThis.process?.env.SIMAPP53_ENABLED
 );
 
 export const simapp = {
