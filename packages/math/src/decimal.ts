@@ -51,17 +51,39 @@ export class Decimal {
 
     const quantity = BigInt(`${whole}${fractional.padEnd(fractionalDigits, "0")}`);
 
+    // We can remove this restriction, but then need to test and update arithmetic operations.
+    // See also https://github.com/cosmos/cosmjs/issues/1897
+    if (quantity < 0n) throw new Error("Only non-negative values supported.");
+
     return new Decimal(quantity, fractionalDigits);
   }
 
-  public static fromAtomics(atomics: string, fractionalDigits: number): Decimal {
-    Decimal.verifyFractionalDigits(fractionalDigits);
-    if (!atomics.match(/^[0-9]+$/)) {
-      throw new Error(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
-      );
+  /**
+   * Constructs a decimal given the atomic units and the fractional digits.
+   *
+   * Atomics units are the smallest unit you operate with.
+   * E.g. for EUR this could be Euro cents and for BTC this would be Satishi.
+   *
+   * To create the decimal value 12.60 (EUR) you would use atomics=1260, fractionalDigits=2.
+   * To create the decimal value 3.4 (BTC) you would use atomics=340000000, fractionalDigits=8.
+   *
+   * In order to perform arithmetic operations on Decimal, all values must have the same `fractionalDigits` value.
+   * So this should be fixed once per currency, not different per value.
+   */
+  public static fromAtomics(atomics: string | bigint, fractionalDigits: number): Decimal {
+    if (typeof atomics === "string") {
+      if (!atomics.match(/^(\-)?[0-9]+$/)) {
+        throw new Error("Invalid string format. Only integers in decimal representation supported.");
+      }
+      return Decimal.fromAtomics(BigInt(atomics), fractionalDigits);
     }
-    return new Decimal(BigInt(atomics), fractionalDigits);
+
+    // We can remove this restriction, but then need to test and update arithmetic operations.
+    // See also https://github.com/cosmos/cosmjs/issues/1897
+    if (atomics < 0n) throw new Error("Only non-negative values supported.");
+
+    Decimal.verifyFractionalDigits(fractionalDigits);
+    return new Decimal(atomics, fractionalDigits);
   }
 
   /**

@@ -98,6 +98,10 @@ and this project adheres to
   `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchronous and
   let them not return a Promise.
 - @cosmjs/cosmwasm-stargate: Rename package to @cosmjs/cosmwasm. ([#1903])
+- @cosmjs/math: `Decimal.fromAtomics` now accepts atomics as `string | bigint`
+  such that you can pass in BigInts directly. This is more performant than going
+  through strings in cases where you have a BitInt already. Strings remain
+  supported for convenient usage with coins.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866
