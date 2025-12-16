@@ -25,6 +25,9 @@ export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED ||
   !!globalThis.process?.env.SLOW_SIMAPP53_ENABLED;
 
+// Starting with Cosmos SDK 0.53, an external community pool is used which causes some distribution queries to fail
+export const externalCommunityPool = !simapp47Enabled && !simapp50Enabled;
+
 export function makeRandomAddressBytes(): Uint8Array<ArrayBuffer> {
   return Random.getBytes(20);
 }
