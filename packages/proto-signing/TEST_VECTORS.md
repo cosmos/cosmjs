@@ -55,15 +55,15 @@ This uses the testgen mnemonic:
 ## Create the transactions
 
 First we create the unsigned transaction template we will be signing. We want to
-use the same flags as the testvectors create manually.
+use the same flags as the test vectors created manually.
 
 ```
 ./build/simd tx bank send --generate-only --chain-id simd-testing --fees 2000ucosm $(./build/simd keys show -a testgen) cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm > unsigned_tx.json
 ```
 
 This is what I get from `jq . unsigned_tx.json`, which is slightly different
-that the current test vector, in that I added a non-empty fee amount to properly
-test that:
+from the current test vector because I added a non-empty fee amount to properly
+test that case:
 
 ```json
 {
