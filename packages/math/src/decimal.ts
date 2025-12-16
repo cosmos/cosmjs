@@ -72,7 +72,7 @@ export class Decimal {
    */
   public static fromAtomics(atomics: string | bigint, fractionalDigits: number): Decimal {
     if (typeof atomics === "string") {
-      if (!atomics.match(/^(\-)?[0-9]+$/)) {
+      if (!atomics.match(/^-?[0-9]+$/)) {
         throw new Error("Invalid string format. Only integers in decimal representation supported.");
       }
       return Decimal.fromAtomics(BigInt(atomics), fractionalDigits);
