@@ -92,7 +92,7 @@ and
 ### Step 3
 
 In Step 2 we saw how the codec is generated (i.e. the TypeScript code
-generation). Now we look into using this codec. This section is split in
+generation). Now we look into using this codec. This section is split into
 
 - Step 3a: custom messages
 - Step 3b: custom queries
