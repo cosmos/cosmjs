@@ -17,10 +17,13 @@ import { SigningStargateClientOptions } from "./signingstargateclient";
 
 export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
-export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled;
+export const simapp53Enabled: boolean = !!globalThis.process?.env.SIMAPP53_ENABLED;
+export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled || simapp53Enabled;
 
 export const slowSimappEnabled: boolean =
-  !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED || !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED;
+  !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED ||
+  !!globalThis.process?.env.SLOW_SIMAPP50_ENABLED ||
+  !!globalThis.process?.env.SLOW_SIMAPP53_ENABLED;
 
 export function makeRandomAddressBytes(): Uint8Array<ArrayBuffer> {
   return Random.getBytes(20);
