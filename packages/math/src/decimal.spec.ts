@@ -3,11 +3,12 @@ import { Uint32, Uint53, Uint64 } from "./integers";
 
 describe("Decimal", () => {
   describe("fromAtomics", () => {
-    it("leads to correct atomics value", () => {
+    it("leads to correct atomics value (string)", () => {
       expect(Decimal.fromAtomics("1", 0).atomics).toEqual("1");
       expect(Decimal.fromAtomics("1", 1).atomics).toEqual("1");
       expect(Decimal.fromAtomics("1", 2).atomics).toEqual("1");
 
+      expect(Decimal.fromAtomics("0", 5).atomics).toEqual("0");
       expect(Decimal.fromAtomics("1", 5).atomics).toEqual("1");
       expect(Decimal.fromAtomics("2", 5).atomics).toEqual("2");
       expect(Decimal.fromAtomics("3", 5).atomics).toEqual("3");
@@ -24,24 +25,51 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("00044", 5).atomics).toEqual("44");
     });
 
+    it("leads to correct atomics value (bigint)", () => {
+      expect(Decimal.fromAtomics(1n, 0).atomics).toEqual("1");
+      expect(Decimal.fromAtomics(1n, 1).atomics).toEqual("1");
+      expect(Decimal.fromAtomics(1n, 2).atomics).toEqual("1");
+
+      expect(Decimal.fromAtomics(0n, 5).atomics).toEqual("0");
+      expect(Decimal.fromAtomics(1n, 5).atomics).toEqual("1");
+      expect(Decimal.fromAtomics(2n, 5).atomics).toEqual("2");
+      expect(Decimal.fromAtomics(3n, 5).atomics).toEqual("3");
+      expect(Decimal.fromAtomics(10n, 5).atomics).toEqual("10");
+      expect(Decimal.fromAtomics(20n, 5).atomics).toEqual("20");
+      expect(Decimal.fromAtomics(30n, 5).atomics).toEqual("30");
+      expect(Decimal.fromAtomics(100000000000000000000000n, 5).atomics).toEqual("100000000000000000000000");
+      expect(Decimal.fromAtomics(200000000000000000000000n, 5).atomics).toEqual("200000000000000000000000");
+      expect(Decimal.fromAtomics(300000000000000000000000n, 5).atomics).toEqual("300000000000000000000000");
+    });
+
     it("reads fractional digits correctly", () => {
       expect(Decimal.fromAtomics("44", 0).toString()).toEqual("44");
       expect(Decimal.fromAtomics("44", 1).toString()).toEqual("4.4");
       expect(Decimal.fromAtomics("44", 2).toString()).toEqual("0.44");
       expect(Decimal.fromAtomics("44", 3).toString()).toEqual("0.044");
       expect(Decimal.fromAtomics("44", 4).toString()).toEqual("0.0044");
+      expect(Decimal.fromAtomics(44n, 0).toString()).toEqual("44");
+      expect(Decimal.fromAtomics(44n, 1).toString()).toEqual("4.4");
+      expect(Decimal.fromAtomics(44n, 2).toString()).toEqual("0.44");
+      expect(Decimal.fromAtomics(44n, 3).toString()).toEqual("0.044");
+      expect(Decimal.fromAtomics(44n, 4).toString()).toEqual("0.0044");
     });
 
     it("throws for atomics that are not non-negative integers", () => {
       expect(() => Decimal.fromAtomics("0xAA", 0)).toThrowError(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
+        "Invalid string format. Only integers in decimal representation supported.",
       );
       expect(() => Decimal.fromAtomics("", 0)).toThrowError(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
+        "Invalid string format. Only integers in decimal representation supported.",
       );
-      expect(() => Decimal.fromAtomics("-1", 0)).toThrowError(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
+      expect(() => Decimal.fromAtomics("--2", 0)).toThrowError(
+        "Invalid string format. Only integers in decimal representation supported.",
       );
+      expect(() => Decimal.fromAtomics("0.7", 0)).toThrowError(
+        "Invalid string format. Only integers in decimal representation supported.",
+      );
+
+      expect(() => Decimal.fromAtomics("-1", 0)).toThrowError("Only non-negative values supported.");
     });
   });
 
