@@ -133,6 +133,15 @@ and this project adheres to
   +import { toBech32 } from "@cosmjs/encoding"
   ```
 
+  If you are using the TypeScript setting `moduleResolution` with value
+  `node10`/`node`/`classic` in your project, this will lead to errors. Please
+  consider upgrading to a supported value like `node16` or `nodenext`.
+  `moduleResolution` is implied by `module` if unset. See
+  <https://www.typescriptlang.org/tsconfig/#moduleResolution> and
+  <https://www.typescriptlang.org/docs/handbook/modules/reference.html#the-moduleresolution-compiler-option>.
+  If this is not possible, please comment in
+  <https://github.com/cosmos/cosmjs/issues/1917>.
+
   ([#1819])
 
 - Replace bech32 implementation by @scure/base. This changes a bunch of error
