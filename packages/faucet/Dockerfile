@@ -1,12 +1,17 @@
-# Confio hosts a faucet build at https://hub.docker.com/r/confio/faucet
+# Confio hosted a faucet build at https://hub.docker.com/r/confio/faucet
+# until 2025. However, this is not provided anymore. If you need a dockerized
+# version of this app, you can build and publish it yourself from source using
+# this Dockerfile. The dummyorg/faucet is an arbitrary image name you need to replace.
 #
 # Build:
-#   docker build --pull -t confio/faucet:manual -f packages/faucet/Dockerfile .
+#   docker build --pull -t dummyorg/faucet:manual -f packages/faucet/Dockerfile .
 # Run:
-#   docker run --rm confio/faucet:manual version
+#   docker run --rm dummyorg/faucet:manual version
 #
 # During the build step the working directory must be the repo root such that the
-# app has access to all installed dependencies.
+# app has access to all local @cosmjs/* dependencies.
+#
+# For releases the "manual" tag should be replaced with a specific version.
 
 FROM node:22-alpine AS build-env
 
