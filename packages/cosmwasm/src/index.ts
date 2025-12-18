@@ -1,4 +1,5 @@
 export type { Code, CodeDetails, Contract, ContractCodeHistoryEntry } from "./cosmwasmclient";
+export type { CosmWasmClientOptions } from "./cosmwasmclient";
 export { CosmWasmClient } from "./cosmwasmclient";
 export { fromBinary, toBinary } from "./encoding";
 export { _instantiate2AddressIntermediate, instantiate2Address } from "./instantiate2";
