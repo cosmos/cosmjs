@@ -531,6 +531,7 @@ describe("multiplyDecimalByNumber", () => {
     const value = Decimal.fromUserInput("0.025", 6);
     const result = multiplyDecimalByNumber(value, 2.0, 18);
     expect(result.toString()).toBe("0.05");
+    expect(result.fractionalDigits).toEqual(18);
   });
 
   it("handles integer multipliers", () => {
@@ -570,7 +571,17 @@ describe("multiplyDecimalByNumber", () => {
   it("handles very small multipliers with large numbers", () => {
     // Test precision isn't lost when multiplying large numbers by small multipliers
     const value = Decimal.fromUserInput("1000000000000", 18);
-    const result = multiplyDecimalByNumber(value, 0.001, 18);
-    expect(result.toString()).toBe("1000000000");
+    expect(multiplyDecimalByNumber(value, 0.1, 18).toString()).toEqual("100000000000");
+    expect(multiplyDecimalByNumber(value, 0.01, 18).toString()).toEqual("10000000000");
+    expect(multiplyDecimalByNumber(value, 0.001, 18).toString()).toEqual("1000000000");
+    expect(multiplyDecimalByNumber(value, 0.0001, 18).toString()).toEqual("100000000");
+    expect(multiplyDecimalByNumber(value, 0.00001, 18).toString()).toEqual("10000000");
+    expect(multiplyDecimalByNumber(value, 0.000001, 18).toString()).toEqual("1000000");
+    // This starts failing because Number.toString uses scientific notation.
+    // If this becomes a problem we need to give up some precision and migrate to float math
+    // entirely.
+    // expect(multiplyDecimalByNumber(value, 0.0000001, 18).toString()).toEqual("100000");
+    // expect(multiplyDecimalByNumber(value, 0.00000001, 18).toString()).toEqual("10000");
+    // expect(multiplyDecimalByNumber(value, 0.000000001, 18).toString()).toEqual("1000");
   });
 });
