@@ -46,7 +46,7 @@ export function multiplyDecimalByNumber(
   const factor = BigInt(10) ** BigInt(fractionalDigits);
   const product = (BigInt(normalizedValue.atomics) * BigInt(multiplierDecimal.atomics)) / factor;
 
-  return Decimal.fromAtomics(product.toString(), fractionalDigits);
+  return Decimal.fromAtomics(product, fractionalDigits);
 }
 
 /**
