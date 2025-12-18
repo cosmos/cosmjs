@@ -16,10 +16,10 @@
 
 import { DirectSecp256k1HdWallet } from "../../proto-signing/build/index.js";
 import {
-  GasPrice,
-  SigningStargateClient,
   checkDynamicGasPriceSupport,
+  GasPrice,
   queryDynamicGasPrice,
+  SigningStargateClient,
 } from "../build/index.js";
 
 // ============================================================================
@@ -64,8 +64,7 @@ const CHAINS = {
 // Replace with your mnemonic or set MNEMONIC env var
 // WARNING: Never commit real mnemonics to git!
 const MNEMONIC =
-  process.env.MNEMONIC ||
-  "furnace hammer kite tent baby settle bonus decade draw never juice myth";
+  process.env.MNEMONIC || "furnace hammer kite tent baby settle bonus decade draw never juice myth";
 
 // Amount to send (in smallest unit)
 const AMOUNT = "1000";
@@ -138,8 +137,7 @@ async function testChain(chainConfig) {
 
         // Calculate what the multiplied price will be
         const multipliedPrice =
-          parseFloat(baseGasPrice.toString()) *
-          (chainConfig.dynamicGasPriceConfig.multiplier || 1.3);
+          parseFloat(baseGasPrice.toString()) * (chainConfig.dynamicGasPriceConfig.multiplier || 1.3);
         console.log(
           `   After ${chainConfig.dynamicGasPriceConfig.multiplier}x multiplier: ${multipliedPrice.toFixed(18)} ${chainConfig.dynamicGasPriceConfig.denom}`,
         );
@@ -156,9 +154,7 @@ async function testChain(chainConfig) {
       }
     } catch (error) {
       console.log(`   ⚠️  Could not query gas price: ${error.message}`);
-      console.log(
-        `   Will use fallback: ${chainConfig.dynamicGasPriceConfig.minGasPrice.toString()}`,
-      );
+      console.log(`   Will use fallback: ${chainConfig.dynamicGasPriceConfig.minGasPrice.toString()}`);
     }
     console.log();
 

@@ -5,12 +5,12 @@ export { AminoTypes } from "./aminotypes";
 export type { Attribute, Event } from "./events";
 export { fromTendermintEvent } from "./events";
 export { calculateFee, GasPrice } from "./fee";
+export type { DynamicGasPriceConfig } from "./feemarket";
 export {
   checkDynamicGasPriceSupport,
-  DynamicGasPriceConfig,
+  isDynamicGasPriceConfig,
   multiplyDecimalByNumber,
   queryDynamicGasPrice,
-  isDynamicGasPriceConfig,
 } from "./feemarket";
 export * as logs from "./logs";
 export type {

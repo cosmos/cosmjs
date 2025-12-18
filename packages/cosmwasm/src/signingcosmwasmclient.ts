@@ -24,6 +24,7 @@ import {
   Event,
   GasPrice,
   isDeliverTxFailure,
+  isDynamicGasPriceConfig,
   logs,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
@@ -33,7 +34,6 @@ import {
   queryDynamicGasPrice,
   SignerData,
   StdFee,
-  isDynamicGasPriceConfig,
 } from "@cosmjs/stargate";
 import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
