@@ -20,14 +20,18 @@ import {
   createDefaultAminoConverters,
   defaultRegistryTypes as defaultStargateTypes,
   DeliverTxResponse,
+  DynamicGasPriceConfig,
   Event,
   GasPrice,
   isDeliverTxFailure,
+  isDynamicGasPriceConfig,
   logs,
   MsgDelegateEncodeObject,
   MsgSendEncodeObject,
   MsgUndelegateEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
+  multiplyDecimalByNumber,
+  queryDynamicGasPrice,
   SignerData,
   StdFee,
 } from "@cosmjs/stargate";
@@ -190,7 +194,8 @@ export interface SigningCosmWasmClientOptions {
   readonly aminoTypes?: AminoTypes;
   readonly broadcastTimeoutMs?: number;
   readonly broadcastPollIntervalMs?: number;
-  readonly gasPrice?: GasPrice;
+  /** Gas price configuration. Can be a static GasPrice or a DynamicGasPriceConfig for dynamic pricing. */
+  readonly gasPrice?: GasPrice | DynamicGasPriceConfig;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
@@ -200,10 +205,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   private readonly signer: OfflineSigner;
   private readonly aminoTypes: AminoTypes;
-  private readonly gasPrice: GasPrice | undefined;
+  private readonly gasPrice: GasPrice | DynamicGasPriceConfig | undefined;
   // Starting with Cosmos SDK 0.47, we see many cases in which 1.3 is not enough anymore
   // E.g. https://github.com/cosmos/cosmos-sdk/issues/16020
   private readonly defaultGasMultiplier = 1.4;
+  // Default multiplier for dynamic gas price (applied on top of queried price)
+  private readonly defaultDynamicGasPriceMultiplier = 1.3;
 
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
@@ -615,10 +622,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<DeliverTxResponse> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
-      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
-      const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
-      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
+      usedFee = await this.calculateFeeForTransaction(signerAddress, messages, memo, fee);
     } else {
       usedFee = fee;
     }
@@ -651,16 +655,80 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<string> {
     let usedFee: StdFee;
     if (fee == "auto" || typeof fee === "number") {
-      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
-      const gasEstimation = await this.simulate(signerAddress, messages, memo);
-      const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
-      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
+      usedFee = await this.calculateFeeForTransaction(signerAddress, messages, memo, fee);
     } else {
       usedFee = fee;
     }
     const txRaw = await this.sign(signerAddress, messages, usedFee, memo, undefined, timeoutHeight);
     const txBytes = TxRaw.encode(txRaw).finish();
     return this.broadcastTxSync(txBytes);
+  }
+
+  private async calculateFeeForTransaction(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    memo: string,
+    fee: "auto" | number,
+  ): Promise<StdFee> {
+    const gasEstimation = await this.simulate(signerAddress, messages, memo);
+    const multiplier = typeof fee === "number" ? fee : this.defaultGasMultiplier;
+    const gasLimit = Math.ceil(gasEstimation * multiplier);
+
+    const gasPriceConfig = this.gasPrice;
+
+    if (!gasPriceConfig) {
+      throw new Error("Gas price must be set in the client options when auto gas is used.");
+    }
+
+    // Check if gasPrice is dynamic config or static GasPrice
+    if (isDynamicGasPriceConfig(gasPriceConfig)) {
+      const dynamicGasConfig = gasPriceConfig;
+      const multiplierValue = dynamicGasConfig.multiplier ?? this.defaultDynamicGasPriceMultiplier;
+      const minGasPrice = dynamicGasConfig.minGasPrice;
+      const maxGasPrice = dynamicGasConfig.maxGasPrice;
+
+      try {
+        const chainId = await this.getChainId();
+        const queryClient = this.forceGetQueryClient();
+        const dynamicGasPriceDecimal = await queryDynamicGasPrice(
+          queryClient,
+          dynamicGasConfig.denom,
+          chainId,
+        );
+
+        // Multiply by multiplier 18 fractional digits for Dec type
+        const fractionalDigits = minGasPrice.amount.fractionalDigits;
+        const adjustedGasPrice = multiplyDecimalByNumber(
+          dynamicGasPriceDecimal,
+          multiplierValue,
+          fractionalDigits,
+        );
+
+        // Apply min and max constraints using comparison methods
+        let finalGasPrice = adjustedGasPrice.isGreaterThan(minGasPrice.amount)
+          ? adjustedGasPrice
+          : minGasPrice.amount;
+        if (maxGasPrice) {
+          // Normalize maxGasPrice to same fractional digits if needed (user might create it differently)
+          const normalizedMaxGasPrice = maxGasPrice.amount.adjustFractionalDigits(fractionalDigits);
+          finalGasPrice = finalGasPrice.isLessThan(normalizedMaxGasPrice)
+            ? finalGasPrice
+            : normalizedMaxGasPrice;
+        }
+        const dynamicGasPriceObj = new GasPrice(finalGasPrice, dynamicGasConfig.denom);
+        return calculateFee(gasLimit, dynamicGasPriceObj);
+      } catch (_error) {
+        // Fallback to minGasPrice if query fails
+        return calculateFee(gasLimit, minGasPrice);
+      }
+    } else {
+      // Static gas price
+      assert(
+        gasPriceConfig instanceof GasPrice,
+        "Gas price must be a GasPrice instance when using static pricing.",
+      );
+      return calculateFee(gasLimit, gasPriceConfig);
+    }
   }
 
   public async sign(
