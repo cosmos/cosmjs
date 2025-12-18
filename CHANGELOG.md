@@ -16,9 +16,15 @@ and this project adheres to
   after ensuring `ArrayBuffer` is used. ([#1883])
 - @cosmjs/math: Add `Decimal.adjustFractionalDigits` which allows you to change
   the fractional digits of a Decimal without changing its value. ([#1916])
+- @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Add option to configure dynamic
+  gas price in `SigningCosmWasmClientOptions` and `SigningStargateClientOptions`
+  using the `DynamicGasPriceConfig` interface for `gasPrice`. This then uses
+  Osmosis' EIP-1559 implementation or the Skip fee market module to get the gas
+  price from the chain. ([#1926])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1916]: https://github.com/cosmos/cosmjs/pull/1916
+[#1926]: https://github.com/cosmos/cosmjs/pull/1926
 
 ### Changed
 
