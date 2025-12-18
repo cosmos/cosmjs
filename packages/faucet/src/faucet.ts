@@ -95,7 +95,7 @@ export class Faucet {
     await this.send(job);
   }
 
-  /** Returns a list to token denoms which are configured */
+  /** Returns a list of token denoms which are configured */
   public configuredTokens(): string[] {
     return Array.from(this.tokenConfig.bankTokens);
   }

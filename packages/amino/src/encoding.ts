@@ -28,7 +28,7 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
 }
 
 /**
- * Takes an Edd25519 public key as raw bytes and returns the Amino JSON
+ * Takes an Ed25519 public key as raw bytes and returns the Amino JSON
  * representation of it (the type/value wrapper object).
  */
 export function encodeEd25519Pubkey(pubkey: Uint8Array): Ed25519Pubkey {
