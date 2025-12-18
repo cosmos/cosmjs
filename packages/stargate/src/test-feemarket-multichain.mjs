@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /**
  * Multi-chain test script for dynamic feemarket integration with CosmJS
  *

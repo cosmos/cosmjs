@@ -1,12 +1,18 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Decimal } from "@cosmjs/math";
 
-import { GasPrice } from "./fee";
 import { checkDynamicGasPriceSupport, multiplyDecimalByNumber, queryDynamicGasPrice } from "./feemarket";
+
+interface MockQueryClient {
+  queryAbci(path: string, data: Uint8Array, height?: number): Promise<{ value: Uint8Array }>;
+}
 
 describe("Osmosis chain ID detection", () => {
   // Helper to create a mock queryClient
-  function createMockQueryClient(osmosisResponse: Uint8Array, feemarketResponse?: Uint8Array) {
+  function createMockQueryClient(
+    osmosisResponse: Uint8Array,
+    feemarketResponse?: Uint8Array,
+  ): MockQueryClient {
     return {
       queryAbci: async (path: string, _data: Uint8Array) => {
         if (path === "/osmosis.txfees.v1beta1.Query/GetEipBaseFee") {
@@ -186,7 +192,7 @@ describe("Osmosis chain ID detection", () => {
 
 describe("queryDynamicGasPrice", () => {
   // Helper to create a mock queryClient
-  function createMockQueryClient(responseValue: Uint8Array) {
+  function createMockQueryClient(responseValue: Uint8Array): MockQueryClient {
     return {
       queryAbci: async (_path: string, _data: Uint8Array) => {
         return { value: responseValue };
@@ -213,9 +219,8 @@ describe("queryDynamicGasPrice", () => {
       const response = new Uint8Array([
         10, 17, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
       ]);
-      const queryClient = createMockQueryClient(response);
       let calledPath = "";
-      const mockClient = {
+      const mockClient: MockQueryClient = {
         queryAbci: async (path: string, data: Uint8Array) => {
           calledPath = path;
           expect(data.length).toBe(0); // Osmosis uses empty request
@@ -234,10 +239,9 @@ describe("queryDynamicGasPrice", () => {
         10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
         48, 48,
       ]);
-      const queryClient = createMockQueryClient(response);
       let calledPath = "";
       let calledData: Uint8Array | null = null;
-      const mockClient = {
+      const mockClient: MockQueryClient = {
         queryAbci: async (path: string, data: Uint8Array) => {
           calledPath = path;
           calledData = data;

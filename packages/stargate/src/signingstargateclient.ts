@@ -422,7 +422,7 @@ export class SigningStargateClient extends StargateClient {
         }
         const dynamicGasPriceObj = new GasPrice(finalGasPrice, dynamicGasConfig.denom);
         return calculateFee(gasLimit, dynamicGasPriceObj);
-      } catch (error) {
+      } catch (_error) {
         // Fallback to minGasPrice if query fails
         return calculateFee(gasLimit, minGasPrice);
       }

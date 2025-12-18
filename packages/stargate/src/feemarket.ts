@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define, no-bitwise */
 import { Decimal } from "@cosmjs/math";
 import { BinaryReader, BinaryWriter } from "cosmjs-types/binary";
 
@@ -125,6 +126,7 @@ export async function queryDynamicGasPrice(
 // These are not available in cosmjs-types, so we define them here
 
 /** Osmosis DecProto message */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const DecProto = {
   decode(input: Uint8Array): Decimal {
     const reader = new BinaryReader(input);
@@ -151,6 +153,7 @@ const DecProto = {
 };
 
 /** Skip feemarket GasPricesRequest message */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const GasPricesRequest = {
   encode(message: { denom: string }): Uint8Array {
     const writer = new BinaryWriter();
@@ -167,6 +170,7 @@ interface DecCoin {
   amount: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const DecCoin = {
   decode(input: Uint8Array): DecCoin {
     const reader = new BinaryReader(input);
@@ -192,6 +196,7 @@ const DecCoin = {
 };
 
 /** Skip feemarket GasPricesResponse message */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const GasPricesResponse = {
   decode(input: Uint8Array): Decimal {
     const reader = new BinaryReader(input);
