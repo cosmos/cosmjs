@@ -33,6 +33,7 @@ import {
   queryDynamicGasPrice,
   SignerData,
   StdFee,
+  isDynamicGasPriceConfig,
 } from "@cosmjs/stargate";
 import { CometClient, connectComet, HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
@@ -675,9 +676,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const gasPriceConfig = this.gasPrice;
 
+    if (!gasPriceConfig) {
+      throw new Error("Gas price must be set in the client options when auto gas is used.");
+    }
+
     // Check if gasPrice is dynamic config or static GasPrice
-    if (gasPriceConfig && "minGasPrice" in gasPriceConfig) {
-      // Dynamic gas price config
+    if (isDynamicGasPriceConfig(gasPriceConfig)) {
       const dynamicGasConfig = gasPriceConfig;
       const multiplierValue = dynamicGasConfig.multiplier ?? this.defaultDynamicGasPriceMultiplier;
       const minGasPrice = dynamicGasConfig.minGasPrice;
@@ -722,9 +726,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       }
     } else {
       // Static gas price
-      if (!gasPriceConfig) {
-        throw new Error("Gas price must be set in the client options when auto gas is used.");
-      }
       assert(
         gasPriceConfig instanceof GasPrice,
         "Gas price must be a GasPrice instance when using static pricing.",

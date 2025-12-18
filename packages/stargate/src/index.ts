@@ -10,6 +10,7 @@ export {
   DynamicGasPriceConfig,
   multiplyDecimalByNumber,
   queryDynamicGasPrice,
+  isDynamicGasPriceConfig,
 } from "./feemarket";
 export * as logs from "./logs";
 export type {

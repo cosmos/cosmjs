@@ -18,6 +18,12 @@ export interface DynamicGasPriceConfig {
   readonly maxGasPrice?: GasPrice;
 }
 
+export function isDynamicGasPriceConfig(
+  config: GasPrice | DynamicGasPriceConfig,
+): config is DynamicGasPriceConfig {
+  return "minGasPrice" in config;
+}
+
 /**
  * Multiplies a Decimal by a number multiplier.
  * This is needed because Decimal.multiply() only accepts integers.

@@ -24,7 +24,12 @@ import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 
 import { AminoConverters, AminoTypes } from "./aminotypes";
 import { calculateFee, GasPrice } from "./fee";
-import { DynamicGasPriceConfig, multiplyDecimalByNumber, queryDynamicGasPrice } from "./feemarket";
+import {
+  DynamicGasPriceConfig,
+  isDynamicGasPriceConfig,
+  multiplyDecimalByNumber,
+  queryDynamicGasPrice,
+} from "./feemarket";
 import {
   authzTypes,
   bankTypes,
@@ -373,9 +378,12 @@ export class SigningStargateClient extends StargateClient {
 
     const gasPriceConfig = this.gasPrice;
 
+    if (!gasPriceConfig) {
+      throw new Error("Gas price must be set in the client options when auto gas is used.");
+    }
+
     // Check if gasPrice is dynamic config or static GasPrice
-    if (gasPriceConfig && "minGasPrice" in gasPriceConfig) {
-      // Dynamic gas price config
+    if (isDynamicGasPriceConfig(gasPriceConfig)) {
       const dynamicGasConfig = gasPriceConfig;
       const multiplierValue = dynamicGasConfig.multiplier ?? this.defaultDynamicGasPriceMultiplier;
       const minGasPrice = dynamicGasConfig.minGasPrice;
@@ -419,10 +427,6 @@ export class SigningStargateClient extends StargateClient {
         return calculateFee(gasLimit, minGasPrice);
       }
     } else {
-      // Static gas price
-      if (!gasPriceConfig) {
-        throw new Error("Gas price must be set in the client options when auto gas is used.");
-      }
       assert(
         gasPriceConfig instanceof GasPrice,
         "Gas price must be a GasPrice instance when using static pricing.",
