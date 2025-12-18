@@ -95,8 +95,8 @@ as soon as there is
 ### Working with docker
 
 **Note:** The Dockerfile in this repo is for demonstration purposes only. If you
-choose to deploy the faucet via docker, make sure to copy the Dockerfile and keep
-it up-to-date.
+choose to deploy the faucet via docker, make sure to copy the Dockerfile and
+keep it up-to-date.
 
 - Build an artifact (from monorepo root)
 
