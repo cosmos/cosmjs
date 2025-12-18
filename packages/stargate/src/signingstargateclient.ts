@@ -1,6 +1,6 @@
 import { encodeSecp256k1Pubkey, makeSignDoc as makeSignDocAmino, StdFee } from "@cosmjs/amino";
 import { fromBase64 } from "@cosmjs/encoding";
-import { Decimal, Int53, Uint53 } from "@cosmjs/math";
+import { Int53, Uint53 } from "@cosmjs/math";
 import {
   EncodeObject,
   encodePubkey,
@@ -412,10 +412,7 @@ export class SigningStargateClient extends StargateClient {
           : minGasPrice.amount;
         if (maxGasPrice) {
           // Normalize maxGasPrice to same fractional digits if needed (user might create it differently)
-          const normalizedMaxGasPrice =
-            maxGasPrice.amount.fractionalDigits === fractionalDigits
-              ? maxGasPrice.amount
-              : Decimal.fromUserInput(maxGasPrice.amount.toString(), fractionalDigits);
+          const normalizedMaxGasPrice = maxGasPrice.amount.adjustFractionalDigits(fractionalDigits);
           finalGasPrice = finalGasPrice.isLessThan(normalizedMaxGasPrice)
             ? finalGasPrice
             : normalizedMaxGasPrice;
