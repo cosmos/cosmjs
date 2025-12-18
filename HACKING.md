@@ -3,7 +3,7 @@
 Welcome to CosmJS, glad to see you here. This document explains all you need to
 work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 
-## Prerequisite
+## Prerequisites
 
 - A UNIX-like development environment
 - Node.js 20+, Docker and yarn
