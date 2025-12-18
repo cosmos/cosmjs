@@ -423,14 +423,11 @@ export class SigningStargateClient extends StargateClient {
       if (!gasPriceConfig) {
         throw new Error("Gas price must be set in the client options when auto gas is used.");
       }
-      if (
-        !(gasPriceConfig instanceof GasPrice) &&
-        !("amount" in gasPriceConfig && "denom" in gasPriceConfig)
-      ) {
-        throw new Error("Gas price must be a GasPrice instance when using static pricing.");
-      }
-      const staticGasPrice = gasPriceConfig as GasPrice;
-      return calculateFee(gasLimit, staticGasPrice);
+      assert(
+        gasPriceConfig instanceof GasPrice,
+        "Gas price must be a GasPrice instance when using static pricing.",
+      );
+      return calculateFee(gasLimit, gasPriceConfig);
     }
   }
 
