@@ -182,7 +182,7 @@ export class Decimal {
    * This allows you to perform arithmetic operations given two decimals
    * with different fractional digits by normalizing them.
    *
-   * When new fractional digis is smaller than the original value, the amount
+   * When new fractional digits is smaller than the original value, the amount
    * is truncated (not rounded!).
    */
   public adjustFractionalDigits(newFractionalDigits: number): Decimal {

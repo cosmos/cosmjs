@@ -250,7 +250,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   private readonly secret: EnglishMnemonic;
   /** BIP39 seed */
   private readonly seed: Uint8Array;
-  /** Derivation instruction */
+  /** Derivation instructions */
   private readonly accounts: readonly DerivationInfo[];
 
   protected constructor(mnemonic: EnglishMnemonic, options: Secp256k1HdWalletConstructorOptions) {
