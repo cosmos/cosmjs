@@ -194,6 +194,11 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput(".1", 3).atomics).toEqual("100");
       expect(Decimal.fromUserInput(".12", 3).atomics).toEqual("120");
       expect(Decimal.fromUserInput(".123", 3).atomics).toEqual("123");
+
+      // ⬇️ strange style but JavaScript supports it too 🤷‍♂️
+      expect(Decimal.fromUserInput("-.1", 3).atomics).toEqual("-100");
+      expect(Decimal.fromUserInput("-.12", 3).atomics).toEqual("-120");
+      expect(Decimal.fromUserInput("-.123", 3).atomics).toEqual("-123");
     });
   });
 
