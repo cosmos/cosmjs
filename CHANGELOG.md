@@ -22,11 +22,12 @@ and this project adheres to
   Osmosis' EIP-1559 implementation or the Skip fee market module to get the gas
   price from the chain. ([#1926])
 - @cosmjs/cosmwasm-stargate: Add the ability to specify a custom account parser
-  for `CosmWasmClient`.
+  for `CosmWasmClient`. ([#1928])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1916]: https://github.com/cosmos/cosmjs/pull/1916
 [#1926]: https://github.com/cosmos/cosmjs/pull/1926
+[#1928]: https://github.com/cosmos/cosmjs/pull/1928
 
 ### Changed
 
