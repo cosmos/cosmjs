@@ -49,24 +49,6 @@ describe("signature", () => {
     });
   });
 
-  describe("decodeSecp256k1Signature", () => {
-    it("works for secp256k1", () => {
-      const signature: StdSignature = {
-        pub_key: {
-          type: "tendermint/PubKeySecp256k1",
-          value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
-        },
-        signature: "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
-      };
-      expect(decodeSignature(signature)).toEqual({
-        pubkey: fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP"),
-        signature: fromBase64(
-          "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
-        ),
-      });
-    });
-  });
-
   describe("encodeEthSecp256k1Signature", () => {
     it("encodes a full signature", () => {
       const pubkey = fromBase64("AywEwHmedyGF0jQ11+SY/dLGn/QwoN+cf09VWFAfUxUs");
@@ -108,7 +90,23 @@ describe("signature", () => {
     });
   });
 
-  describe("decodeEthSecp256k1Signature", () => {
+  describe("decodeSignature", () => {
+    it("works for secp256k1", () => {
+      const signature: StdSignature = {
+        pub_key: {
+          type: "tendermint/PubKeySecp256k1",
+          value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
+        },
+        signature: "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
+      };
+      expect(decodeSignature(signature)).toEqual({
+        pubkey: fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP"),
+        signature: fromBase64(
+          "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
+        ),
+      });
+    });
+
     it("works for ethsecp256k1", () => {
       const signature: StdSignature = {
         pub_key: {

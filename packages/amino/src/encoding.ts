@@ -61,6 +61,8 @@ export function encodeEthSecp256k1Pubkey(pubkey: Uint8Array): EthSecp256k1Pubkey
 // Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
 // Last bytes is varint-encoded length prefix
 const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae987" + "21" /* fixed length */);
+// See https://github.com/tendermint/go-amino/blob/8e779b71f40d175cd1302d3cd41a75b005225a7a/README.md#computing-the-prefix-and-disambiguation-bytes
+// for how this is computed
 const pubkeyAminoPrefixEthSecp256k1 = fromHex("5D7423DF" + "21" /* fixed length */);
 const pubkeyAminoPrefixEd25519 = fromHex("1624de64" + "20" /* fixed length */);
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005" + "20" /* fixed length */);

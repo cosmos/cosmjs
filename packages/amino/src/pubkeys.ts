@@ -26,6 +26,7 @@ export function isSecp256k1Pubkey(pubkey: Pubkey): pubkey is Secp256k1Pubkey {
 
 export interface EthSecp256k1Pubkey extends SinglePubkey {
   readonly type: "os/PubKeyEthSecp256k1";
+  /** Compressed (33 bytes) secp256k1 public key in base64 encoding */
   readonly value: string;
 }
 
