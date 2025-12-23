@@ -13,19 +13,27 @@ export class Decimal {
   public static fromUserInput(input: string, fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
 
-    const badCharacter = input.match(/[^0-9.]/);
+    if (input === "") return Decimal.zero(fractionalDigits);
+
+    let testString: string;
+    let characterOffset: number;
+    if (input.startsWith("-")) {
+      testString = input.substring(1);
+      characterOffset = 2;
+    } else {
+      testString = input;
+      characterOffset = 1;
+    }
+    const badCharacter = testString.match(/[^0-9.]/);
     if (badCharacter) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      throw new Error(`Invalid character at position ${badCharacter.index! + 1}`);
+      throw new Error(`Invalid character at position ${badCharacter.index! + characterOffset}`);
     }
 
     let whole: string;
     let fractional: string;
 
-    if (input === "") {
-      whole = "0";
-      fractional = "";
-    } else if (input.search(/\./) === -1) {
+    if (input.search(/\./) === -1) {
       // integer format, no separator
       whole = input;
       fractional = "";
@@ -49,12 +57,30 @@ export class Decimal {
       throw new Error("Got more fractional digits than supported");
     }
 
-    const quantity = `${whole}${fractional.padEnd(fractionalDigits, "0")}`;
-
+    const quantity = BigInt(`${whole}${fractional.padEnd(fractionalDigits, "0")}`);
     return new Decimal(quantity, fractionalDigits);
   }
 
-  public static fromAtomics(atomics: string, fractionalDigits: number): Decimal {
+  /**
+   * Constructs a decimal given the atomic units and the fractional digits.
+   *
+   * Atomics units are the smallest unit you operate with.
+   * E.g. for EUR this could be Euro cents and for BTC this would be Satishi.
+   *
+   * To create the decimal value 12.60 (EUR) you would use atomics=1260, fractionalDigits=2.
+   * To create the decimal value 3.4 (BTC) you would use atomics=340000000, fractionalDigits=8.
+   *
+   * In order to perform arithmetic operations on Decimal, all values must have the same `fractionalDigits` value.
+   * So this should be fixed once per currency, not different per value.
+   */
+  public static fromAtomics(atomics: string | bigint, fractionalDigits: number): Decimal {
+    if (typeof atomics === "string") {
+      if (!atomics.match(/^-?[0-9]+$/)) {
+        throw new Error("Invalid string format. Only integers in decimal representation supported.");
+      }
+      return Decimal.fromAtomics(BigInt(atomics), fractionalDigits);
+    }
+
     Decimal.verifyFractionalDigits(fractionalDigits);
     return new Decimal(atomics, fractionalDigits);
   }
@@ -67,7 +93,7 @@ export class Decimal {
    */
   public static zero(fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
-    return new Decimal("0", fractionalDigits);
+    return new Decimal(0n, fractionalDigits);
   }
 
   /**
@@ -78,7 +104,7 @@ export class Decimal {
    */
   public static one(fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
-    return new Decimal("1" + "0".repeat(fractionalDigits), fractionalDigits);
+    return new Decimal(10n ** BigInt(fractionalDigits), fractionalDigits);
   }
 
   private static verifyFractionalDigits(fractionalDigits: number): void {
@@ -110,26 +136,23 @@ export class Decimal {
     readonly fractionalDigits: number;
   };
 
-  private constructor(atomics: string, fractionalDigits: number) {
-    if (!atomics.match(/^[0-9]+$/)) {
-      throw new Error(
-        "Invalid string format. Only non-negative integers in decimal representation supported.",
-      );
-    }
-
+  private constructor(atomics: bigint, fractionalDigits: number) {
     this.data = {
-      atomics: BigInt(atomics),
+      atomics: atomics,
       fractionalDigits: fractionalDigits,
     };
   }
 
   /** Creates a new instance with the same value */
   private clone(): Decimal {
-    return new Decimal(this.atomics, this.fractionalDigits);
+    return new Decimal(this.data.atomics, this.data.fractionalDigits);
   }
 
   /** Returns the greatest decimal <= this which has no fractional part (rounding down) */
   public floor(): Decimal {
+    if (this.isNegative()) return this.neg().ceil().neg();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -137,12 +160,15 @@ export class Decimal {
     if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics((whole * factor).toString(), this.fractionalDigits);
+      return new Decimal(whole * factor, this.fractionalDigits);
     }
   }
 
   /** Returns the smallest decimal >= this which has no fractional part (rounding up) */
   public ceil(): Decimal {
+    if (this.isNegative()) return this.neg().floor().neg();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -150,11 +176,38 @@ export class Decimal {
     if (fractional === 0n) {
       return this.clone();
     } else {
-      return Decimal.fromAtomics(((whole + 1n) * factor).toString(), this.fractionalDigits);
+      return new Decimal((whole + 1n) * factor, this.fractionalDigits);
+    }
+  }
+
+  /**
+   * Creates a new Decimal with the same value using the new fractional digits.
+   * Roughly speaking this can expand an 3.24 to 3.24000 or shrink a 5.4321 to 5.4.
+   *
+   * This allows you to perform arithmetic operations given two decimals
+   * with different fractional digits by normalizing them.
+   *
+   * When new fractional digits is smaller than the original value, the amount
+   * is truncated (not rounded!).
+   */
+  public adjustFractionalDigits(newFractionalDigits: number): Decimal {
+    Decimal.verifyFractionalDigits(newFractionalDigits);
+    const diff = newFractionalDigits - this.fractionalDigits;
+    if (diff > 0) {
+      // expand
+      return new Decimal(this.data.atomics * 10n ** BigInt(diff), newFractionalDigits);
+    } else if (diff === 0) {
+      return this.clone();
+    } else {
+      // shrink
+      return new Decimal(this.data.atomics / 10n ** BigInt(-diff), newFractionalDigits);
     }
   }
 
   public toString(): string {
+    if (this.isNegative()) return "-" + this.neg().toString();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -186,7 +239,7 @@ export class Decimal {
   public plus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const sum = this.data.atomics + b.data.atomics;
-    return new Decimal(sum.toString(), this.fractionalDigits);
+    return new Decimal(sum, this.fractionalDigits);
   }
 
   /**
@@ -198,8 +251,7 @@ export class Decimal {
   public minus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const difference = this.data.atomics - b.data.atomics;
-    if (difference < 0n) throw new Error("Difference must not be negative");
-    return new Decimal(difference.toString(), this.fractionalDigits);
+    return new Decimal(difference, this.fractionalDigits);
   }
 
   /**
@@ -209,11 +261,31 @@ export class Decimal {
    */
   public multiply(b: Uint32 | Uint53 | Uint64): Decimal {
     const product = this.data.atomics * b.toBigInt();
-    return new Decimal(product.toString(), this.fractionalDigits);
+    return new Decimal(product, this.fractionalDigits);
+  }
+
+  /** Negates the value */
+  public neg(): Decimal {
+    return new Decimal(-this.data.atomics, this.data.fractionalDigits);
+  }
+
+  /** Returns the absolute value */
+  public abs(): Decimal {
+    return this.isNegative() ? this.neg() : this.clone();
   }
 
   public equals(b: Decimal): boolean {
     return Decimal.compare(this, b) === 0;
+  }
+
+  /**
+   * Returns true if and only if value is < 0.
+   *
+   * Please note that in contrast to numbers, -0 cannot be represented. I.e.
+   * an input of "-0" is always normalized to "0" and is non-negative.
+   */
+  public isNegative(): boolean {
+    return this.data.atomics < 0n;
   }
 
   public isLessThan(b: Decimal): boolean {

@@ -1,6 +1,12 @@
-function filterBadStatus(res: any): any {
+async function filterBadStatus(res: Response): Promise<Response> {
   if (res.status >= 400) {
-    throw new Error(`Bad status on response: ${res.status}`);
+    const body = await res.text().catch(() => "Unable to retrieve body content");
+    throw new Error(`Bad status on response: ${res.status}`, {
+      cause: {
+        status: res.status,
+        body,
+      },
+    });
   }
   return res;
 }
@@ -28,5 +34,5 @@ export async function http(
   };
   return fetch(url, settings)
     .then(filterBadStatus)
-    .then((res: any) => res.json());
+    .then((res) => res.json());
 }

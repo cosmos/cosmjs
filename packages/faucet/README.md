@@ -1,6 +1,11 @@
 # @cosmjs/faucet
 
+![typescript](https://img.shields.io/npm/types/@cosmjs/faucet.svg)
 [![npm version](https://img.shields.io/npm/v/@cosmjs/faucet.svg)](https://www.npmjs.com/package/@cosmjs/faucet)
+[![license](https://img.shields.io/npm/l/@cosmjs/faucet.svg)](https://github.com/cosmos/cosmjs/blob/v0.35.0/LICENSE)
+![minimum node version](https://img.shields.io/node/v/@cosmjs/faucet.svg)
+![minified size](https://img.shields.io/bundlephobia/min/@cosmjs/faucet.svg)
+![monthly downloads](https://img.shields.io/npm/dm/@cosmjs/faucet.svg)
 
 The faucet is built as part of the monorepo. In the repo root do:
 
@@ -90,8 +95,8 @@ as soon as there is
 ### Working with docker
 
 **Note:** The Dockerfile in this repo is for demonstration purposes only. If you
-chose to deploy the faucet via docker, make sure to copy the Dockerfile and keep
-it up-to-date.
+choose to deploy the faucet via docker, make sure to copy the Dockerfile and
+keep it up-to-date.
 
 - Build an artifact (from monorepo root)
 
@@ -134,7 +139,7 @@ curl --header "Content-Type: application/json" \
   http://localhost:8000/credit
 ```
 
-### Checking the faucets status
+### Checking the faucet's status
 
 The faucet provides a simple status check in the form of an http GET request. As
 above, make sure to adjust the URL as necessary.

@@ -6,7 +6,7 @@ most helpful: although it purports to guide you through the process in
 [a single document](https://yarnpkg.com/getting-started/migration), the
 information you need is actually spread across multiple pages in quite a
 confusing way, not helped by the poor English throughout. There is also an
-[introductory blogpost](https://dev.to/arcanis/introducing-yarn-2-4eh1) which
+[introductory blog post](https://dev.to/arcanis/introducing-yarn-2-4eh1) which
 you may find helpful.
 
 This document is intended broadly as a replacement for the official
@@ -128,7 +128,7 @@ this ignore list when we revisit Plug‘n’Play.
 
 ## Step 8: Update Yarn CLI invocations and options in scripts
 
-If are using the Yarn CLI tool in any scripts you will need to update some
+If you are using the Yarn CLI tool in any scripts you will need to update some
 command and option names which have changed from v1 to v2. For example
 `--frozen-lockfile` has been deprecated in favour of `--immutable`. Other option
 changes weren’t covered in the official documentation, so have fun finding out
@@ -309,7 +309,7 @@ Remove what you put there before and add these:
 !.yarn/versions
 ```
 
-Basically we’re adding the cache and the `.pnp.js` file to VCS. It might seems
+Basically we’re adding the cache and the `.pnp.js` file to VCS. It might seem
 weird to add all those zip files to version control, but the reasoning is in the
 article listed above.
 

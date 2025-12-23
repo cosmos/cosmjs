@@ -62,4 +62,33 @@ describe("base64", () => {
     // wrong number of =
     expect(() => fromBase64("a===")).toThrow();
   });
+
+  it("passes ChALkeR tests", () => {
+    // From https://github.com/paulmillr/scure-base/issues/42, potentially containing duplicates
+    // with above but just copy/pasted for the sake of checking the documented issue.
+    // The non-strict case is disabled (see test below)
+    const invalid = [
+      "====", // excessive padding
+      "aQ=", // incomplete padding
+      "aQ===", // excessive padding
+      "aaaa====", // excessive padding
+      "a", // invalid group of length 1
+      "a===", // invalid group of length 1, padded
+      "a==", // invalid group of length 1 + incomplete padding
+      "aaaaa", // invalid group of length 1 after group of length 4
+      // "aa==", // non-strict, should be aQ==
+    ];
+    for (const input of invalid) {
+      expect(() => fromBase64(input))
+        .withContext(`invalid input: '${input}'`)
+        .toThrow();
+    }
+  });
+
+  it("decodes non-strict base64", () => {
+    // There is currently no good reason to allow or forbid non-canonical base64 encodings. But since the library
+    // always behaved like this, we better do not silently change behaviour.
+    const data = fromBase64("aa==");
+    expect(toBase64(data)).toEqual("aQ==");
+  });
 });

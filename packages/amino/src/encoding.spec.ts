@@ -19,7 +19,7 @@ import {
   testgroup3PubkeyBech32,
   testgroup4,
   testgroup4PubkeyBech32,
-} from "./testutils.spec";
+} from "./testutils";
 
 describe("encoding", () => {
   describe("encodeSecp256k1Pubkey", () => {
@@ -81,8 +81,8 @@ describe("encoding", () => {
       });
     });
 
-    it("works for sr25519", () => {
-      pending("No test data available");
+    xit("works for sr25519", () => {
+      // No test data available
     });
 
     it("works for multisig", () => {

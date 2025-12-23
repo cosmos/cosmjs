@@ -1,6 +1,6 @@
 import { Int53 } from "@cosmjs/math";
 
-import { assertString } from "./tendermint34/encodings";
+import { jCheckString } from "./jsonchecks";
 
 /**
  * Takes an integer value from the Tendermint RPC API and
@@ -20,7 +20,7 @@ export function apiToSmallInt(input: string | number): number {
  * This supports the full uint64 and int64 ranges.
  */
 export function apiToBigInt(input: string): bigint {
-  assertString(input); // Runtime check on top of TypeScript just to be safe for semi-trusted API types
+  jCheckString(input); // Runtime check on top of TypeScript just to be safe for semi-trusted API types
   if (!input.match(/^-?[0-9]+$/)) {
     throw new Error("Invalid string format");
   }

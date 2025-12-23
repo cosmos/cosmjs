@@ -127,41 +127,25 @@ describe("Libsodium", () => {
       };
 
       // 8 bytes
-      await Argon2id.execute(password, fromHex("aabbccddeeff0011"), options)
-        .then(() => {
-          fail("Argon2id with invalid salt length must not resolve");
-        })
-        .catch((e) => {
-          expect(e).toMatch(/invalid salt length/);
-        });
+      await expectAsync(
+        Argon2id.execute(password, fromHex("aabbccddeeff0011"), options),
+      ).toBeRejectedWithError(/invalid salt length/);
       // 15 bytes
-      await Argon2id.execute(password, fromHex("aabbccddeeff001122334455667788"), options)
-        .then(() => {
-          fail("Argon2id with invalid salt length must not resolve");
-        })
-        .catch((e) => {
-          expect(e).toMatch(/invalid salt length/);
-        });
+      await expectAsync(
+        Argon2id.execute(password, fromHex("aabbccddeeff001122334455667788"), options),
+      ).toBeRejectedWithError(/invalid salt length/);
       // 17 bytes
-      await Argon2id.execute(password, fromHex("aabbccddeeff00112233445566778899aa"), options)
-        .then(() => {
-          fail("Argon2id with invalid salt length must not resolve");
-        })
-        .catch((e) => {
-          expect(e).toMatch(/invalid salt length/);
-        });
+      await expectAsync(
+        Argon2id.execute(password, fromHex("aabbccddeeff00112233445566778899aa"), options),
+      ).toBeRejectedWithError(/invalid salt length/);
       // 32 bytes
-      await Argon2id.execute(
-        password,
-        fromHex("aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"),
-        options,
-      )
-        .then(() => {
-          fail("Argon2id with invalid salt length must not resolve");
-        })
-        .catch((e) => {
-          expect(e).toMatch(/invalid salt length/);
-        });
+      await expectAsync(
+        Argon2id.execute(
+          password,
+          fromHex("aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"),
+          options,
+        ),
+      ).toBeRejectedWithError(/invalid salt length/);
     });
   });
 
@@ -233,25 +217,13 @@ describe("Libsodium", () => {
       {
         // seed too short
         const seed = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0");
-        await Ed25519.makeKeypair(seed)
-          .then(() => {
-            fail("promise must not resolve");
-          })
-          .catch((error) => {
-            expect(error.message).toContain("key of length 32 expected");
-          });
+        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(/key of length 32 expected/);
       }
 
       {
         // seed too long
         const seed = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9aa");
-        await Ed25519.makeKeypair(seed)
-          .then(() => {
-            fail("promise must not resolve");
-          })
-          .catch((error) => {
-            expect(error.message).toContain("key of length 32 expected");
-          });
+        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(/key of length 32 expected/);
       }
     });
 
@@ -421,48 +393,32 @@ describe("Libsodium", () => {
       {
         // empty
         const key = fromHex("");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => {
-            fail("encryption must not succeed");
-          })
-          .catch((error) => {
-            expect(error).toMatch(/key, got length=0/);
-          });
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=0/,
+        );
       }
       {
         // 31 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => {
-            fail("encryption must not succeed");
-          })
-          .catch((error) => {
-            expect(error).toMatch(/key, got length=31/);
-          });
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=31/,
+        );
       }
       {
         // 33 bytes
         const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => {
-            fail("encryption must not succeed");
-          })
-          .catch((error) => {
-            expect(error).toMatch(/key, got length=33/);
-          });
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=33/,
+        );
       }
       {
         // 64 bytes
         const key = fromHex(
           "1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d81324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8",
         );
-        await Xchacha20poly1305Ietf.encrypt(message, key, nonce)
-          .then(() => {
-            fail("encryption must not succeed");
-          })
-          .catch((error) => {
-            expect(error).toMatch(/key, got length=64/);
-          });
+        await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
+          /key, got length=64/,
+        );
       }
     });
 
@@ -482,38 +438,23 @@ describe("Libsodium", () => {
       {
         // corrupted ciphertext
         const corruptedCiphertext = ciphertext.map((x, i) => (i === 0 ? x ^ 0x01 : x));
-        await Xchacha20poly1305Ietf.decrypt(corruptedCiphertext, key, nonce).then(
-          () => {
-            fail("promise must not resolve");
-          },
-          (error) => {
-            expect(error.message).toMatch(/invalid tag/i);
-          },
-        );
+        await expectAsync(
+          Xchacha20poly1305Ietf.decrypt(corruptedCiphertext, key, nonce),
+        ).toBeRejectedWithError(/invalid tag/i);
       }
       {
         // corrupted key
         const corruptedKey = key.map((x, i) => (i === 0 ? x ^ 0x01 : x));
-        await Xchacha20poly1305Ietf.decrypt(ciphertext, corruptedKey, nonce).then(
-          () => {
-            fail("promise must not resolve");
-          },
-          (error) => {
-            expect(error.message).toMatch(/invalid tag/i);
-          },
-        );
+        await expectAsync(
+          Xchacha20poly1305Ietf.decrypt(ciphertext, corruptedKey, nonce),
+        ).toBeRejectedWithError(/invalid tag/i);
       }
       {
         // corrupted nonce
         const corruptedNonce = nonce.map((x, i) => (i === 0 ? x ^ 0x01 : x));
-        await Xchacha20poly1305Ietf.decrypt(ciphertext, key, corruptedNonce).then(
-          () => {
-            fail("promise must not resolve");
-          },
-          (error) => {
-            expect(error.message).toMatch(/invalid tag/i);
-          },
-        );
+        await expectAsync(
+          Xchacha20poly1305Ietf.decrypt(ciphertext, key, corruptedNonce),
+        ).toBeRejectedWithError(/invalid tag/i);
       }
     });
 

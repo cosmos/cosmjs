@@ -21,10 +21,9 @@ import {
   faucet,
   fromOneElementArray,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
-} from "./testutils.spec";
+} from "./testutils";
 
 interface TestTxSend {
   readonly sender: string;
@@ -99,61 +98,58 @@ async function sendTokens(
   };
 }
 
-describe("StargateClient.getTx and .searchTx", () => {
+(simappEnabled ? describe : xdescribe)("StargateClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;
   let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled()) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await StargateClient.connect(simapp.tendermintUrlHttp);
-      const unsuccessfulRecipient = makeRandomAddress();
-      const successfulRecipient = makeRandomAddress();
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+    const client = await StargateClient.connect(simapp.tendermintUrlHttp);
+    const unsuccessfulRecipient = makeRandomAddress();
+    const successfulRecipient = makeRandomAddress();
 
-      const unsuccessfulResult = await sendTokens(
-        client,
-        registry,
-        wallet,
-        unsuccessfulRecipient,
-        coins(123456700000000, "ucosm"),
-        "Sending more than I can afford",
-      );
-      if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
-        sendUnsuccessful = {
-          sender: faucet.address0,
-          recipient: unsuccessfulRecipient,
-          hash: unsuccessfulResult.broadcastResponse.transactionHash,
-          height: unsuccessfulResult.broadcastResponse.height,
-          tx: unsuccessfulResult.tx,
-        };
-      }
-      const successfulResult = await sendTokens(
-        client,
-        registry,
-        wallet,
-        successfulRecipient,
-        coins(1234567, "ucosm"),
-        "Something I can afford",
-      );
-      if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
-        sendSuccessful = {
-          sender: faucet.address0,
-          recipient: successfulRecipient,
-          hash: successfulResult.broadcastResponse.transactionHash,
-          height: successfulResult.broadcastResponse.height,
-          tx: successfulResult.tx,
-        };
-      }
-
-      await sleep(75); // wait until transactions are indexed
+    const unsuccessfulResult = await sendTokens(
+      client,
+      registry,
+      wallet,
+      unsuccessfulRecipient,
+      coins(123456700000000, "ucosm"),
+      "Sending more than I can afford",
+    );
+    if (isDeliverTxFailure(unsuccessfulResult.broadcastResponse)) {
+      sendUnsuccessful = {
+        sender: faucet.address0,
+        recipient: unsuccessfulRecipient,
+        hash: unsuccessfulResult.broadcastResponse.transactionHash,
+        height: unsuccessfulResult.broadcastResponse.height,
+        tx: unsuccessfulResult.tx,
+      };
     }
+    const successfulResult = await sendTokens(
+      client,
+      registry,
+      wallet,
+      successfulRecipient,
+      coins(1234567, "ucosm"),
+      "Something I can afford",
+    );
+    if (isDeliverTxSuccess(successfulResult.broadcastResponse)) {
+      sendSuccessful = {
+        sender: faucet.address0,
+        recipient: successfulRecipient,
+        hash: successfulResult.broadcastResponse.transactionHash,
+        height: successfulResult.broadcastResponse.height,
+        tx: successfulResult.tx,
+      };
+    }
+
+    await sleep(75); // wait until transactions are indexed
   });
 
   describe("getTx", () => {
     it("can get successful tx by ID", async () => {
-      pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const result = await client.getTx(sendSuccessful.hash);
@@ -174,7 +170,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("can get unsuccessful tx by ID", async () => {
-      pendingWithoutSimapp();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const result = await client.getTx(sendUnsuccessful.hash);
@@ -193,7 +188,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("can get by ID (non existent)", async () => {
-      pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
       const result = await client.getTx(nonExistentId);
@@ -203,7 +197,6 @@ describe("StargateClient.getTx and .searchTx", () => {
 
   describe("searchTx", () => {
     it("can search successful tx by height", async () => {
-      pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const result = await client.searchTx(`tx.height=${sendSuccessful.height}`);
@@ -224,7 +217,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("can search unsuccessful tx by height", async () => {
-      pendingWithoutSimapp();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const result = await client.searchTx(`tx.height=${sendUnsuccessful.height}`);
@@ -240,7 +232,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("can search by sender", async () => {
-      pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       // Since Cosmos SDK 0.47 we can only combine attributes of a single event
@@ -270,7 +261,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("can search by recipient", async () => {
-      pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const results = await client.searchTx(`transfer.recipient='${sendSuccessful.recipient}'`);
@@ -298,7 +288,6 @@ describe("StargateClient.getTx and .searchTx", () => {
     });
 
     it("works with tags", async () => {
-      pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);
       const results = await client.searchTx([{ key: "transfer.recipient", value: sendSuccessful.recipient }]);

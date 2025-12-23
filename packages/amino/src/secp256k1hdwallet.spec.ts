@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { makeCosmoshubPath } from "./paths";
 import { extractKdfConfiguration, Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { serializeSignDoc, StdSignDoc } from "./signdoc";
-import { base64Matcher } from "./testutils.spec";
+import { base64Matcher } from "./testutils";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("Secp256k1HdWallet", () => {
@@ -255,7 +255,7 @@ describe("Secp256k1HdWallet", () => {
       };
       const { signed, signature } = await wallet.signAmino(defaultAddress, signDoc);
       expect(signed).toEqual(signDoc);
-      const valid = await Secp256k1.verifySignature(
+      const valid = Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         sha256(serializeSignDoc(signed)),
         defaultPubkey,

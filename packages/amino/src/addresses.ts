@@ -12,14 +12,14 @@ import {
   Pubkey,
 } from "./pubkeys";
 
-export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 32) {
     throw new Error(`Invalid Ed25519 pubkey length: ${pubkeyData.length}`);
   }
   return sha256(pubkeyData).slice(0, 20);
 }
 
-export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 33) {
     throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
   }
@@ -37,7 +37,7 @@ export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8
 }
 
 // For secp256k1 this assumes we already have a compressed pubkey.
-export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array {
+export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array<ArrayBuffer> {
   if (isSecp256k1Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     return rawSecp256k1PubkeyToRawAddress(pubkeyData);

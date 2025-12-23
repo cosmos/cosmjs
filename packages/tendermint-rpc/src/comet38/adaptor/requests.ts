@@ -3,8 +3,9 @@ import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
 import { smallIntToApi } from "../../inthelpers";
+import { jCheckNonEmptyString } from "../../jsonchecks";
 import { createJsonRpcRequest } from "../../jsonrpc";
-import { assertNotEmpty, may } from "../encodings";
+import { may } from "../encodings";
 import * as requests from "../requests";
 
 interface HeightParam {
@@ -56,7 +57,7 @@ interface RpcAbciQueryParams {
 
 function encodeAbciQueryParams(params: requests.AbciQueryParams): RpcAbciQueryParams {
   return {
-    path: assertNotEmpty(params.path),
+    path: jCheckNonEmptyString(params.path),
     data: toHex(params.data),
     height: may(smallIntToApi, params.height),
     prove: params.prove,
@@ -69,7 +70,7 @@ interface RpcBroadcastTxParams {
 }
 function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadcastTxParams {
   return {
-    tx: toBase64(assertNotEmpty(params.tx)),
+    tx: toBase64(params.tx),
   };
 }
 
@@ -80,7 +81,7 @@ interface RpcTxParams {
 }
 function encodeTxParams(params: requests.TxParams): RpcTxParams {
   return {
-    hash: toBase64(assertNotEmpty(params.hash)),
+    hash: toBase64(params.hash),
     prove: params.prove,
   };
 }

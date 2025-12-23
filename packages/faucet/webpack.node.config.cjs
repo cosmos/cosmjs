@@ -1,15 +1,14 @@
 const path = require("path");
 
-const target = "node";
-const distdir = path.join(__dirname, "dist", target);
+const cliBundleDir = path.join(__dirname, "build", "cli-bundle");
 
 module.exports = [
   {
-    target: target,
+    target: "node",
     entry: "./build/cli.js",
     output: {
       asyncChunks: false,
-      path: distdir,
+      path: cliBundleDir,
       filename: "cli.js",
       library: {
         type: "commonjs",

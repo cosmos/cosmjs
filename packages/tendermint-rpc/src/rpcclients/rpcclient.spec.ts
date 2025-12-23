@@ -1,22 +1,14 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { HttpClient } from "./httpclient";
 import { hasProtocol, instanceOfRpcStreamingClient } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
-  }
-}
-
-describe("RpcClient", () => {
+(tendermintEnabled ? describe : xdescribe)("RpcClient", () => {
   const httpUrl = "http://" + defaultInstance.url;
   const wsUrl = "ws://" + defaultInstance.url;
 
   it("has working instanceOfRpcStreamingClient()", async () => {
-    pendingWithoutTendermint();
-
     const httpClient = new HttpClient(httpUrl);
     const wsClient = new WebsocketClient(wsUrl);
 
@@ -29,8 +21,6 @@ describe("RpcClient", () => {
   });
 
   it("should also work with trailing slashes", async () => {
-    pendingWithoutTendermint();
-
     const statusRequest = createJsonRpcRequest("status");
 
     const httpClient = new HttpClient(httpUrl + "/");

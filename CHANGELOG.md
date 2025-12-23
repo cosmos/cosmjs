@@ -6,13 +6,228 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/encoding: Add `fixUint8Array` which takes an
+  `Uint8Array<ArrayBufferLike>` and returns `Uint8Array<ArrayBuffer>`. This can
+  be used in cases where a data source returns an `Uint8Array` without
+  specifying the buffer type but you need an `ArrayBuffer`. Internally it might
+  perform a copy but in the vast majority of cases it will just change the type
+  after ensuring `ArrayBuffer` is used. ([#1883])
+- @cosmjs/math: Add `Decimal.adjustFractionalDigits` which allows you to change
+  the fractional digits of a Decimal without changing its value. ([#1916])
+- @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Add option to configure dynamic
+  gas price in `SigningCosmWasmClientOptions` and `SigningStargateClientOptions`
+  using the `DynamicGasPriceConfig` interface for `gasPrice`. This then uses
+  Osmosis' EIP-1559 implementation or the Skip fee market module to get the gas
+  price from the chain. ([#1926])
+- @cosmjs/cosmwasm-stargate: Add the ability to specify a custom account parser
+  for `CosmWasmClient`. ([#1928])
+
+[#1883]: https://github.com/cosmos/cosmjs/issues/1883
+[#1916]: https://github.com/cosmos/cosmjs/pull/1916
+[#1926]: https://github.com/cosmos/cosmjs/pull/1926
+[#1928]: https://github.com/cosmos/cosmjs/pull/1928
+
+### Changed
+
+- all: return `Uint8Array<ArrayBuffer>` instead of
+  `Uint8Array = Uint8Array<ArrayBufferLike>` whenever CosmJS creates binary data
+  for users. This allows users to stick it into APIs that require `ArrayBuffer`
+  such as many APIs from Subtle crypto. You can still assign
+  `Uint8Array<ArrayBuffer>` to any `Uint8Array` in an existing codebase like
+  this:
+
+  ```ts
+  const myVar: Uint8Array = fromHex("aabb");
+  ```
+
+  That's the easy way and probably good for many use cases. However, this way
+  you lose information which buffer type is in use and you cannot trivially pass
+  it to an API requiring `Uint8Array<ArrayBuffer>` later on.
+
+  The other option is to preserve the information you are getting from CosmJS by
+  using `Uint8Array<ArrayBuffer>` too:
+
+  ```ts
+  const myVar: Uint8Array<ArrayBuffer> = fromHex("aabb");
+
+  // or inferred
+  const myVar = fromHex("aabb"); // Uint8Array<ArrayBuffer>
+  ```
+
+  This change requires users to use TypeScript 5.7 or newer. ([#1883])
+
+- all: Migrate from `readonly-date` to `readonly-date-esm` ^2 which is an ESM
+  package but otherwise equal to the previous version. If you are using
+  `ReadonlyDate` in your codebase it is recommended to also update like this to
+  avoid type mismatches:
+
+  ```diff
+  -import { ReadonlyDate } from "readonly-date";
+  +import { ReadonlyDate } from "readonly-date-esm";
+  ```
+
+- @cosmjs/tendermint-rpc: Remove union type `TendermintClient`. Use
+  `CometClient` or just `Tendermint37Client` instead. ([#1866])
+- @cosmjs/tendermint-rpc: Remove `isTendermint34Client`. Remove
+  `Tendermint34Client` from `CometClient` union type. Remove
+  `Tendermint34Client`. Remove module `tendermint34`. ([#1866])
+- @cosmjs/tendermint-rpc: Remove top-level exports `broadcastTxCommitSuccess`,
+  `broadcastTxSyncSuccess`, `AbciInfoRequest`, `AbciInfoResponse`,
+  `AbciQueryParams`, `AbciQueryRequest`, `AbciQueryResponse`, `Attribute`,
+  `Block`, `BlockchainRequest`, `BlockchainResponse`, `BlockGossipParams`,
+  `BlockId`, `BlockMeta`, `BlockParams`, `BlockRequest`, `BlockResponse`,
+  `BlockResultsRequest`, `BlockResultsResponse`, `BroadcastTxAsyncResponse`,
+  `BroadcastTxCommitResponse`, `BroadcastTxParams`, `BroadcastTxRequest`,
+  `BroadcastTxSyncResponse`, `Commit`, `CommitRequest`, `CommitResponse`,
+  `ConsensusParams`, `Event`, `Evidence`, `EvidenceParams`, `GenesisRequest`,
+  `GenesisResponse`, `Header`, `HealthRequest`, `HealthResponse`, `Method`,
+  `NewBlockEvent`, `NewBlockHeaderEvent`, `NodeInfo`,
+  `NumUnconfirmedTxsRequest`, `NumUnconfirmedTxsResponse`, `ProofOp`,
+  `QueryProof`, `QueryTag`, `Request`, `Response`, `StatusRequest`,
+  `StatusResponse`, `SubscriptionEventType`, `SyncInfo`, `TxData`, `TxEvent`,
+  `TxParams`, `TxProof`, `TxRequest`, `TxResponse`, `TxSearchParams`,
+  `TxSearchRequest`, `TxSearchResponse`, `TxSizeParams`, `Validator`,
+  `ValidatorsParams`, `ValidatorsRequest`, `ValidatorsResponse`, `Version`,
+  `Vote`, `VoteType` which all came from `tendermint34`.
+
+  If you need any of those you can import them from a version specific module,
+  such as `comet1.Version` or
+
+  ```ts
+  import { comet1, comet38, tendermint37 } from "@cosmjs/tendermint-rpc";
+
+  function convertEvent(e: tendermint37.Event | comet38.Event | comet1.Event);
+  ```
+
+  in case you want to support multiple versions. ([#1866])
+
+- @cosmjs/crypto: Make
+  `Secp256k1.verifySignature`/`.createSignature`/`.makeKeypair` synchronous and
+  let them not return a Promise.
+- @cosmjs/cosmwasm-stargate: Rename package to @cosmjs/cosmwasm. ([#1903])
+- @cosmjs/math: `Decimal.fromAtomics` now accepts atomics as `string | bigint`
+  such that you can pass in BigInts directly. This is more performant than going
+  through strings in cases where you have a BitInt already. Strings remain
+  supported for convenient usage with coins.
+- @cosmjs/math: `Decimal` now supports negative values. ([#1930])
+
+[#1883]: https://github.com/cosmos/cosmjs/issues/1883
+[#1866]: https://github.com/cosmos/cosmjs/issues/1866
+[#1903]: https://github.com/cosmos/cosmjs/pull/1903
+[#1930]: https://github.com/cosmos/cosmjs/pull/1930
+
+## [0.37.0] - 2025-10-29
+
+### Added
+
+- @cosmjs/tendermint-rpc: Add dedicated `Comet1Client` for compatibility with
+  CometBFT 1.x RPC. The module `comet1` contains all CometBFT 1.x specific
+  types. `connectComet` now uses this client automatically when connecting to a
+  1.x RPC backend. Before CosmJS 0.37 the `Comet38Client` was used for both 0.38
+  and 1.0 backends. However it turned out that there are breaking API changes
+  between those versions. ([#1787])
+
+[#1787]: https://github.com/cosmos/cosmjs/issues/1787
+
+### Changed
+
+- all: The `package.json`s now all use the modern `exports` field instead of the
+  classic `main`/`types` to define the entry points. This ensures only symbols
+  from the top level module can be imported (like
+  `import { toBech32 } from "@cosmjs/encoding"`). Other import paths like
+  `import { toBech32 } from "@cosmjs/encoding/src/bech32"` are not allowed
+  anymore. As all public interfaces used to be exported from the top level for a
+  long time, this should not affect most users. However, if you accidentally
+  imported a subpath before you will get an error now. This can typically be
+  resolved like this:
+
+  ```diff
+  -import { toBech32 } from "@cosmjs/encoding/src/bech32"
+  +import { toBech32 } from "@cosmjs/encoding"
+  ```
+
+  If you are using the TypeScript setting `moduleResolution` with value
+  `node10`/`node`/`classic` in your project, this will lead to errors. Please
+  consider upgrading to a supported value like `node16` or `nodenext`.
+  `moduleResolution` is implied by `module` if unset. See
+  <https://www.typescriptlang.org/tsconfig/#moduleResolution> and
+  <https://www.typescriptlang.org/docs/handbook/modules/reference.html#the-moduleresolution-compiler-option>.
+  If this is not possible, please comment in
+  <https://github.com/cosmos/cosmjs/issues/1917>.
+
+  ([#1819])
+
+- Replace bech32 implementation by @scure/base. This changes a bunch of error
+  messages but is otherwise not breaking user code. ([#1825])
+- Replace bip39 implementation by @scure/bip39. This changes a bunch of error
+  messages but is otherwise not breaking user code. ([#1843])
+- @cosmjs/tendermint-rpc: `connectComet` now returns a `Comet1Client` when a
+  CometBFT 1.x RPC is found. `CometClient` now includes `Comet1Client`.
+  ([#1827])
+- @cosmjs/cosmwasm-stargate: use native compression APIs instead of pako for
+  gzip. ([#1764])
+
+[#1764]: https://github.com/cosmos/cosmjs/issues/1764
+[#1819]: https://github.com/cosmos/cosmjs/pull/1819
+[#1825]: https://github.com/cosmos/cosmjs/pull/1825
+[#1827]: https://github.com/cosmos/cosmjs/pull/1827
+[#1843]: https://github.com/cosmos/cosmjs/pull/1843
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey` (since 0.36.0)
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since
+    0.36.0)
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey` (since
+    0.36.0)
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey` (since
+    0.36.0)
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing (since
+    0.36.0/0.37.0)
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
+
+- @cosmjs/tendermint-rpc: Deprecate the Tendermint/CometBFT 0.34 client
+  (`isTendermint34Client`/`Tendermint34Client` as well as all related types).
+  This will be removed in the next version of CosmJS:
+  https://github.com/cosmos/cosmjs/issues/1866
+
+## [0.36.2] - 2025-10-24
+
+### Fixed
+
+- @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
+
+  > Cannot find module '@noble/hashes/legacy' from
+  > '../../node_modules/@cosmjs/crypto/build/ripemd.js'
+
+  We use `@noble/hashes/legacy` for ripemd which is only available in ^1.8.0.
+
+## [0.36.1] - 2025-10-02
+
+### Fixed
+
+- @cosmjs/crypto: Fix import path of @noble/hashes to avoid bundling issue
+
+  > Error \[ERR_PACKAGE_PATH_NOT_EXPORTED\]: Package subpath './sha2.js' is not
+  > defined by "exports" in …
+
+  In @noble/hashes version >=1.0.0 <1.8.0 the import paths must not contain the
+  .js suffix. This issue was introduced in CosmJS 0.35.0 but only affects users
+  who have @noble/hashes lower than 1.8.0 in their lockfile. ([#1817])
+
+[#1817]: https://github.com/cosmos/cosmjs/pull/1817
+
 ## [0.36.0] - 2025-08-14
 
 ### Changed
 
 - Migrate from libsodium to different implementation in order to reduce bundle
   size and improve compatibility.
-
   - ed25519 now uses @noble/curves
   - xchacha20poly1305 now uses @noble/ciphers
   - Argon2 now uses hash-wasm
@@ -24,7 +239,6 @@ and this project adheres to
 ### Deprecated
 
 - The use of encrypted wallet storage is deprecated. In particular this means:
-
   - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
   - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
   - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
@@ -41,6 +255,31 @@ and this project adheres to
   ([#1797])
 
 [#1797]: https://github.com/cosmos/cosmjs/pull/1797
+
+## [0.35.2] - 2025-10-29
+
+### Fixed
+
+- @cosmjs/crypto: Set min version of @noble/hashes to 1.8.0 to avoid errors like
+
+  > Cannot find module '@noble/hashes/legacy.js' from
+  > '../../node_modules/@cosmjs/crypto/build/ripemd.js'
+
+  We use `@noble/hashes/legacy.js` for ripemd which is only available in ^1.8.0.
+
+## [0.35.1] - 2025-10-22
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
 
 ## [0.35.0] - 2025-08-13
 
@@ -74,12 +313,30 @@ and this project adheres to
   ([#1761])
 - @cosmjs/amino: `parseCoins` now supports denoms with colons, periods,
   underscores and dashes ([#1763])
+- @cosmjs/crypto: Remove obsolete pbkdf2 fallback on Node's implementation from
+  `import("crypto")`. We can just use subtle crypto on all supported Node
+  versions. ([#1753])
 
 [#1597]: https://github.com/cosmos/cosmjs/pull/1597
 [#1720]: https://github.com/cosmos/cosmjs/pull/1720
+[#1753]: https://github.com/cosmos/cosmjs/pull/1753
 [#1761]: https://github.com/cosmos/cosmjs/pull/1761
 [#1763]: https://github.com/cosmos/cosmjs/pull/1763
 [#1772]: https://github.com/cosmos/cosmjs/pull/1772
+
+## [0.34.1] - 2025-10-22
+
+### Deprecated
+
+- The use of encrypted wallet storage is deprecated. In particular this means:
+  - `Secp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `Secp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.serialize`/`.serializeWithEncryptionKey`
+  - `DirectSecp256k1HdWallet.deserialize`/`.deserializeWithEncryptionKey`
+  - `executeKdf` from @cosmjs/amino and @cosmjs/proto-signing
+
+  If you are using any of those methods, please comment at
+  https://github.com/cosmos/cosmjs/issues/1796.
 
 ## [0.34.0] - 2025-07-11
 
@@ -243,7 +500,7 @@ and this project adheres to
   to supported cases where users put very high gas values in there ([#1465]).
 - Drop support for Node.js 14 and add support for Node.js 20. ([#1421])
 - @cosmjs/tendermint-rpc: Remove `Adaptor` abstractions which are not needed
-  anymore by haing a dedicated client for each backend.
+  anymore by having a dedicated client for each backend.
 - @cosmjs/tendermint-rpc: Add
   `CometClient = Tendermint34Client | Tendermint37Client | Comet38Client` and
   `connectComet` for auto-detecting the right client for a provided endpoint.
@@ -514,7 +771,7 @@ and this project adheres to
 - @cosmjs/tendermint-rpc: Add `HttpBatchClient`, which implements `RpcClient`,
   supporting batch RPC requests ([#1300]).
 - @cosmjs/encoding: Add `lossy` parameter to `fromUtf8` allowing the use of a
-  replacement charater instead of throwing.
+  replacement character instead of throwing.
 - @cosmjs/stargate: Add structured `Events`s to `IndexTx.events` and
   `DeliverTxResponse.events`.
 - @cosmjs/cosmwasm-stargate: Add structured `Events`s field to
@@ -1452,11 +1709,11 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
   create a strict decoder.
-- @cosmjs/faucet: Environmental variable `FAUCET_FEE` renamed to
-  `FAUCET_GAS_PRICE` and now only accepts one token. Environmental variable
+- @cosmjs/faucet: Environment variable `FAUCET_FEE` renamed to
+  `FAUCET_GAS_PRICE` and now only accepts one token. Environment variable
   `FAUCET_GAS` renamed to `FAUCET_GAS_LIMIT`.
 - @cosmjs/faucet: `/credit` API now expects `denom` (base token) instead of
-  `ticker` (unit token). Environmental variables specifying credit amounts now
+  `ticker` (unit token). Environment variables specifying credit amounts now
   need to use uppercase denom.
 - @cosmjs/launchpad: Rename `FeeTable` type to `CosmosFeeTable` and export a new
   more generic type `FeeTable`.
@@ -1588,9 +1845,15 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.36.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.37.0...HEAD
+[0.37.0]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.37.0
+[0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
+[0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.36.0
+[0.35.2]: https://github.com/cosmos/cosmjs/compare/v0.35.1...v0.35.2
+[0.35.1]: https://github.com/cosmos/cosmjs/compare/v0.35.0...v0.35.1
 [0.35.0]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.35.0
+[0.34.1]: https://github.com/cosmos/cosmjs/compare/v0.34.0...v0.34.1
 [0.34.0]: https://github.com/cosmos/cosmjs/compare/v0.33.1...v0.34.0
 [0.33.1]: https://github.com/cosmos/cosmjs/compare/v0.33.0...v0.33.1
 [0.33.0]: https://github.com/cosmos/cosmjs/compare/v0.32.4...v0.33.0

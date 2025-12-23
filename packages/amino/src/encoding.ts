@@ -30,7 +30,7 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
 }
 
 /**
- * Takes an Edd25519 public key as raw bytes and returns the Amino JSON
+ * Takes an Ed25519 public key as raw bytes and returns the Amino JSON
  * representation of it (the type/value wrapper object).
  */
 export function encodeEd25519Pubkey(pubkey: Uint8Array): Ed25519Pubkey {
@@ -209,7 +209,7 @@ function encodeUvarint(value: number | string): number[] {
 /**
  * Encodes a public key to binary Amino.
  */
-export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
+export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array<ArrayBuffer> {
   if (isMultisigThresholdPubkey(pubkey)) {
     const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
     out.push(0x08); // TODO: What is this?

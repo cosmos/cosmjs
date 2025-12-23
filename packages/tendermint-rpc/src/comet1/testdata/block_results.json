@@ -1,0 +1,3431 @@
+{
+  "height": "137512194",
+  "txs_results": [
+    {
+      "code": 0,
+      "data": "EusCCiUvY29zbW9zLmF1dGh6LnYxYmV0YTEuTXNnRXhlY1Jlc3BvbnNlEsECCr4CIkIweDE1ZDY4Yzk1ZDgyOWNmNTlmZWY4ZGU3YWNkNDJlOWRkZGNmNDNkNTY0OWI2ZWEzZmQ2YTQyMjFhNDMwNTQ3MzAiQjB4ZmExM2IzZGUxZjllNzdiYmMyZTIwNDY0YTFhODYzNDMwZmFhY2U4ZmE1MGIyMDRjYzk1YTU4NWI2M2UyMWEyYiJCMHhjYThhYTRmNGQ3YWQzZDM0YzVlNGRhNzRkMDIzNTc3ZDIxNDUzNGRjYzIyYWZiYjk2NGI3YTg0YjY1ZTY2MmU1SiQ4N2NmYzQwNS0xZDcxLTRjMDEtYjVjZi1lNjVmNzQ5NzNiNDBKJDEyMjIyNmMxLWQwOWYtNDYxOS04ZGExLTVjZjFmODdmOTRkNUokMzA1OWY5YTEtOTUwMC00YjRhLWIyODYtYTVmYTExYWMxNTZi",
+      "log": "",
+      "info": "",
+      "gas_wanted": "466059",
+      "gas_used": "422143",
+      "events": [
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "74569440000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "74569440000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "74569440000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "fee",
+              "value": "74569440000000inj",
+              "index": true
+            },
+            {
+              "key": "fee_payer",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "acc_seq",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2/298573",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "signature",
+              "value": "yrSyDrShhN6wBt0llnxiLQ3Q3BdXeR+NiEpiI2vVIvNfEue4kso4HRza4RryCiWQBNxKCHIKlBIX3qglRoFDVA==",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "/cosmos.authz.v1beta1.MsgExec",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1sa2kskl0jg0cjmd9adga3lag8fstz4vrh5jeu2",
+              "index": true
+            },
+            {
+              "key": "module",
+              "value": "authz",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"272.630000000000000000\",\"quantity\":\"36.679000000000000000\",\"cid\":\"ed6c14a5-3791-4c20-ba4c-e2437c24b83c\"},\"order_type\":\"BUY_PO\",\"margin\":\"999.000000000000000000\",\"fillable\":\"36.679000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"Oz46kz83gZmJXT9eTIpOWeeNJXeQUDdfUF+V1pbP+Pw=\",\"expiration_block\":\"0\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"272630000.000000000000000000\",\"quantity\":\"36.679000000000000000\",\"cid\":\"ed6c14a5-3791-4c20-ba4c-e2437c24b83c\"},\"order_type\":\"BUY_PO\",\"margin\":\"999000000.000000000000000000\",\"fillable\":\"36.679000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"Oz46kz83gZmJXT9eTIpOWeeNJXeQUDdfUF+V1pbP+Pw=\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"333.210000000000000000\",\"quantity\":\"30.010000000000000000\",\"cid\":\"233a1e0d-9432-4419-a5b3-66e2d13eb12a\"},\"order_type\":\"SELL_PO\",\"margin\":\"999.000000000000000000\",\"fillable\":\"30.010000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"grgWPWy8xKHT3LqfnHVJmeEqcArubSVGC3aTcXxxNdk=\",\"expiration_block\":\"0\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"333210000.000000000000000000\",\"quantity\":\"30.010000000000000000\",\"cid\":\"233a1e0d-9432-4419-a5b3-66e2d13eb12a\"},\"order_type\":\"SELL_PO\",\"margin\":\"999000000.000000000000000000\",\"fillable\":\"30.010000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"grgWPWy8xKHT3LqfnHVJmeEqcArubSVGC3aTcXxxNdk=\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"314.790000000000000000\",\"quantity\":\"75.440000000000000000\",\"cid\":\"f9e49510-1e38-4fdc-82e3-af9a30821c37\"},\"order_type\":\"SELL_PO\",\"margin\":\"0.000000000000000000\",\"fillable\":\"75.440000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"lTkyQwKKln/9Cq3Pel/vizY3oU9n61jYEtL3EaexYmg=\",\"expiration_block\":\"0\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventCancelDerivativeOrder",
+          "attributes": [
+            {
+              "key": "isLimitCancel",
+              "value": "true",
+              "index": true
+            },
+            {
+              "key": "limit_order",
+              "value": "{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"314790000.000000000000000000\",\"quantity\":\"75.440000000000000000\",\"cid\":\"f9e49510-1e38-4fdc-82e3-af9a30821c37\"},\"order_type\":\"SELL_PO\",\"margin\":\"0.000000000000000000\",\"fillable\":\"75.440000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"lTkyQwKKln/9Cq3Pel/vizY3oU9n61jYEtL3EaexYmg=\"}",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "market_order_cancel",
+              "value": "null",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"314.790000000000000000\",\"quantity\":\"75.440000000000000000\",\"cid\":\"87cfc405-1d71-4c01-b5cf-e65f74973b40\"},\"order_type\":\"SELL_PO\",\"margin\":\"0.000000000000000000\",\"fillable\":\"75.440000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"FdaMldgpz1n++N56zULp3dz0PVZJtuo/1qQiGkMFRzA=\",\"expiration_block\":\"0\"}]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"314790000.000000000000000000\",\"quantity\":\"75.440000000000000000\",\"cid\":\"87cfc405-1d71-4c01-b5cf-e65f74973b40\"},\"order_type\":\"SELL_PO\",\"margin\":\"0.000000000000000000\",\"fillable\":\"75.440000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"FdaMldgpz1n++N56zULp3dz0PVZJtuo/1qQiGkMFRzA=\"}]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"333.240000000000000000\",\"quantity\":\"30.007000000000000000\",\"cid\":\"122226c1-d09f-4619-8da1-5cf1f87f94d5\"},\"order_type\":\"SELL_PO\",\"margin\":\"999.000000000000000000\",\"fillable\":\"30.007000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"+hOz3h+ed7vC4gRkoahjQw+qzo+lCyBMyVpYW2PiGis=\",\"expiration_block\":\"0\"}]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"333240000.000000000000000000\",\"quantity\":\"30.007000000000000000\",\"cid\":\"122226c1-d09f-4619-8da1-5cf1f87f94d5\"},\"order_type\":\"SELL_PO\",\"margin\":\"999000000.000000000000000000\",\"fillable\":\"30.007000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"+hOz3h+ed7vC4gRkoahjQw+qzo+lCyBMyVpYW2PiGis=\"}]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"272.650000000000000000\",\"quantity\":\"36.676000000000000000\",\"cid\":\"3059f9a1-9500-4b4a-b286-a5fa11ac156b\"},\"order_type\":\"BUY_PO\",\"margin\":\"999.000000000000000000\",\"fillable\":\"36.676000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"yoqk9NetPTTF5Np00CNXfSFFNNzCKvu5ZLeoS2XmYuU=\",\"expiration_block\":\"0\"}]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventNewDerivativeOrders",
+          "attributes": [
+            {
+              "key": "buy_orders",
+              "value": "[{\"order_info\":{\"subaccount_id\":\"0xfab98406008efdd158eb8dde157f8200f3f6485b000000000000000000000006\",\"fee_recipient\":\"inj1l2ucgpsq3m7azk8t3h0p2luzqrelvjzmumnj6m\",\"price\":\"272650000.000000000000000000\",\"quantity\":\"36.676000000000000000\",\"cid\":\"3059f9a1-9500-4b4a-b286-a5fa11ac156b\"},\"order_type\":\"BUY_PO\",\"margin\":\"999000000.000000000000000000\",\"fillable\":\"36.676000000000000000\",\"trigger_price\":\"0.000000000000000000\",\"order_hash\":\"yoqk9NetPTTF5Np00CNXfSFFNNzCKvu5ZLeoS2XmYuU=\"}]",
+              "index": true
+            },
+            {
+              "key": "market_id",
+              "value": "\"0x9f70beeed6a8ea48b1eab7a608a2af600d432ee6eda7fba2965875a8e9702b77\"",
+              "index": true
+            },
+            {
+              "key": "sell_orders",
+              "value": "[]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        }
+      ],
+      "codespace": ""
+    },
+    {
+      "code": 0,
+      "data": "En8KJS9jb3Ntb3MuYXV0aHoudjFiZXRhMS5Nc2dFeGVjUmVzcG9uc2USVgpUIgIyNiICMjZSJDFhZjBjZmJmLTk2YjctNDMzNC1iMmUwLTE1NjE0MjVhZWQ1ZFIkNTIwMTA3YTMtYTEzMS00YWFhLWEwZjAtZTkxMDQ2ZTY4OWUx",
+      "log": "",
+      "info": "",
+      "gas_wanted": "401000",
+      "gas_used": "134590",
+      "events": [
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "64160000000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "64160000000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "64160000000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "fee",
+              "value": "64160000000000inj",
+              "index": true
+            },
+            {
+              "key": "fee_payer",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "acc_seq",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d/89957525",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "signature",
+              "value": "lVBpxQzbRqVyTcqXuHNFCianYWJcW0vC3CqBzCMxr3VD4VuCvWvUCIq3c9VXcRRNqQlYgYEXXj1RLDK6D0WhWA==",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "/cosmos.authz.v1beta1.MsgExec",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1lfycr67vur5gayrakw6xj06sx86f4zf7qex26d",
+              "index": true
+            },
+            {
+              "key": "module",
+              "value": "authz",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v2.EventOrderFail",
+          "attributes": [
+            {
+              "key": "account",
+              "value": "\"7YxMQ+A+JLfxKXVHLadxzi+LhXw=\"",
+              "index": true
+            },
+            {
+              "key": "cids",
+              "value": "[\"1af0cfbf-96b7-4334-b2e0-1561425aed5d\",\"520107a3-a131-4aaa-a0f0-e91046e689e1\"]",
+              "index": true
+            },
+            {
+              "key": "flags",
+              "value": "[26,26]",
+              "index": true
+            },
+            {
+              "key": "hashes",
+              "value": "[\"a+O4W7aUG5qfYoKl5yOuwGjPfB3+D54GtGebc7WSkQM=\",\"rJmB9Yh20Poc91RWDKz0x7RhSEcvyW3AoWQsOJhmeUQ=\"]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "injective.exchange.v1beta1.EventOrderFail",
+          "attributes": [
+            {
+              "key": "account",
+              "value": "\"7YxMQ+A+JLfxKXVHLadxzi+LhXw=\"",
+              "index": true
+            },
+            {
+              "key": "cids",
+              "value": "[\"1af0cfbf-96b7-4334-b2e0-1561425aed5d\",\"520107a3-a131-4aaa-a0f0-e91046e689e1\"]",
+              "index": true
+            },
+            {
+              "key": "flags",
+              "value": "[26,26]",
+              "index": true
+            },
+            {
+              "key": "hashes",
+              "value": "[\"a+O4W7aUG5qfYoKl5yOuwGjPfB3+D54GtGebc7WSkQM=\",\"rJmB9Yh20Poc91RWDKz0x7RhSEcvyW3AoWQsOJhmeUQ=\"]",
+              "index": true
+            },
+            {
+              "key": "authz_msg_index",
+              "value": "0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        }
+      ],
+      "codespace": ""
+    },
+    {
+      "code": 0,
+      "data": "ElwKLS9jb3Ntb3Muc3Rha2luZy52MWJldGExLk1zZ1VuZGVsZWdhdGVSZXNwb25zZRIrCgwIvZqtyAYQ04f9wQMSGwoDaW5qEhQ0NTkwOTgyMjUzNzAwMDAwMDAwMA==",
+      "log": "",
+      "info": "",
+      "gas_wanted": "279413",
+      "gas_used": "271653",
+      "events": [
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "139706500000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "139706500000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "139706500000000inj",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "fee",
+              "value": "139706500000000inj",
+              "index": true
+            },
+            {
+              "key": "fee_payer",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "acc_seq",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg/64",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "signature",
+              "value": "0Rk1JJX++SwbdTAvsatUUAN2ujNneQeMRgE2IfLwpj5lhGqXXwWFpTRXL84TdqCVzVTZPwI4dtw/85YJKBAFnA==",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "/cosmos.staking.v1beta1.MsgUndelegate",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "module",
+              "value": "staking",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "inj1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8dkncm8",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "197643202602405085inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "197643202602405085inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8dkncm8",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "197643202602405085inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "inj1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8dkncm8",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "withdraw_rewards",
+          "attributes": [
+            {
+              "key": "amount",
+              "value": "197643202602405085inj",
+              "index": true
+            },
+            {
+              "key": "validator",
+              "value": "injvaloper1hsxaln75wjs033t3spd8a0gawl4jvxawn6v849",
+              "index": true
+            },
+            {
+              "key": "delegator",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "inj1fl48vsnmsdzcv85q5d2q4z5ajdha8yu3lj7tt0",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "45909822537000000000inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "inj1tygms3xhhs3yv487phx3dw4a95jn7t7ltjz6am",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "45909822537000000000inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "inj1tygms3xhhs3yv487phx3dw4a95jn7t7ltjz6am",
+              "index": true
+            },
+            {
+              "key": "sender",
+              "value": "inj1fl48vsnmsdzcv85q5d2q4z5ajdha8yu3lj7tt0",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "45909822537000000000inj",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "inj1fl48vsnmsdzcv85q5d2q4z5ajdha8yu3lj7tt0",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        },
+        {
+          "type": "unbond",
+          "attributes": [
+            {
+              "key": "validator",
+              "value": "injvaloper1hsxaln75wjs033t3spd8a0gawl4jvxawn6v849",
+              "index": true
+            },
+            {
+              "key": "delegator",
+              "value": "inj1wgd6mj5pr3cvuac5n6wrjzsp3kpcckssk080kg",
+              "index": true
+            },
+            {
+              "key": "amount",
+              "value": "45909822537000000000inj",
+              "index": true
+            },
+            {
+              "key": "completion_time",
+              "value": "2025-11-05T13:12:29Z",
+              "index": true
+            },
+            {
+              "key": "msg_index",
+              "value": "0",
+              "index": true
+            }
+          ]
+        }
+      ],
+      "codespace": ""
+    }
+  ],
+  "finalize_block_events": [
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "receiver",
+          "value": "inj1m3h30wlvsf8llruxtpukdvsy0km2kum8zcsu4c",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coinbase",
+      "attributes": [
+        {
+          "key": "minter",
+          "value": "inj1m3h30wlvsf8llruxtpukdvsy0km2kum8zcsu4c",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_spent",
+      "attributes": [
+        {
+          "key": "spender",
+          "value": "inj1m3h30wlvsf8llruxtpukdvsy0km2kum8zcsu4c",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "receiver",
+          "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "recipient",
+          "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+          "index": true
+        },
+        {
+          "key": "sender",
+          "value": "inj1m3h30wlvsf8llruxtpukdvsy0km2kum8zcsu4c",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "sender",
+          "value": "inj1m3h30wlvsf8llruxtpukdvsy0km2kum8zcsu4c",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "mint",
+      "attributes": [
+        {
+          "key": "bonded_ratio",
+          "value": "0.511024679245432796",
+          "index": true
+        },
+        {
+          "key": "inflation",
+          "value": "0.088750000000000000",
+          "index": true
+        },
+        {
+          "key": "annual_provisions",
+          "value": "9431900705944092466671845.305000000000000000",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149541804698504763",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_spent",
+      "attributes": [
+        {
+          "key": "spender",
+          "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149948271898504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "receiver",
+          "value": "inj1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8dkncm8",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149948271898504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "recipient",
+          "value": "inj1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8dkncm8",
+          "index": true
+        },
+        {
+          "key": "sender",
+          "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+          "index": true
+        },
+        {
+          "key": "amount",
+          "value": "149948271898504763inj",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "sender",
+          "value": "inj17xpfvakm2amg962yls6f84z3kell8c5l6s5ye9",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "588932266908159.703938923093548797inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper13v0sulppc8pgtk4907p3vaqgq54vyl9yqmf7av",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "11778645338163194.078778461870975948inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper13v0sulppc8pgtk4907p3vaqgq54vyl9yqmf7av",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "489765823456720.896990754858130165inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10xhy8xurfwts9ckjkq0ga92mrjz9txyygymqzp",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "9795316469134417.939815097162603306inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10xhy8xurfwts9ckjkq0ga92mrjz9txyygymqzp",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "455563275929766.782023637972143064inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1g4d6dmvnpg7w7yugy6kplndp7jpfmf3krtschp",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "9111265518595335.640472759442861278inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1g4d6dmvnpg7w7yugy6kplndp7jpfmf3krtschp",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "421431679610138.342310959500104207inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper19a77dzm2lrxt2gehqca3nyzq077kq7qsgvmrp4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "8428633592202766.846219190002084136inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper19a77dzm2lrxt2gehqca3nyzq077kq7qsgvmrp4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "554534308477480.556585886164970324inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1lsuqpgm8kgwpq96ewyew26xnfwyn3lh3ncrkrk",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "7921918692535436.522655516642433205inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1lsuqpgm8kgwpq96ewyew26xnfwyn3lh3ncrkrk",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "580801861830623.138823189925689590inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper134dct56cq5v7uerxcy2cn4m06mqf4dxrlgpp24",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "5808018618306231.388231899256895902inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper134dct56cq5v7uerxcy2cn4m06mqf4dxrlgpp24",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "524627390977781.226242898098400241inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vgu49xjgle9k84smvrwlyuc38u0cakuz7q3a5f",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "5246273909777812.262428980984002413inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vgu49xjgle9k84smvrwlyuc38u0cakuz7q3a5f",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "468371083612238.366819880506093120inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1w3psm8a9td2qz06s46cxss03mz5umxaxegvhhs",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "4683710836122383.668198805060931200inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1w3psm8a9td2qz06s46cxss03mz5umxaxegvhhs",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "207355493576415.096634331689274256inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nxq05qdle8w5gm6fagda56euwt4rgvv4ktddcc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "4147109871528301.932686633785485114inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nxq05qdle8w5gm6fagda56euwt4rgvv4ktddcc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "267873332422254.003333618478669022inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nngrhnm65wm8pu7wkah6hfs3vpd0xw463ydd65",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "3826761891746485.761908835409557456inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nngrhnm65wm8pu7wkah6hfs3vpd0xw463ydd65",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "178212514676848.845437975690746761inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1rvqzf9u2uxttmshn302anlknfgsatrh5v7fl7e",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "3564250293536976.908759513814935217inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1rvqzf9u2uxttmshn302anlknfgsatrh5v7fl7e",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "175014202120377.506591012380772275inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1yljq5pdnx84kkg30jfmz6ddu4eyp7twyp4z40f",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "3500284042407550.131820247615445496inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1yljq5pdnx84kkg30jfmz6ddu4eyp7twyp4z40f",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "164287192691933.656541167854706195inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10pe4avat38u38yzj5hvnw235uecfff6c73s8fn",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "3285743853838673.130823357094123896inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10pe4avat38u38yzj5hvnw235uecfff6c73s8fn",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "202254416525517.850164927206370758inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1u8npsgrcyk4csp0cpzecwkvcqw4e6thqzcrvp7",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2696725553673571.335532362751610111inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1u8npsgrcyk4csp0cpzecwkvcqw4e6thqzcrvp7",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "211873892033916.399118484516226497inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1pkyycsewsfclqq4vshge540hwnqpqvlj3p80an",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2648423650423954.988981056452831216inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1pkyycsewsfclqq4vshge540hwnqpqvlj3p80an",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "131044388113610.259291456887976390inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1xwsnq88kc8wcrp34qenxf3dvhl5n02yj93u755",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2620887762272205.185829137759527791inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1xwsnq88kc8wcrp34qenxf3dvhl5n02yj93u755",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "128939589728453.889151036482659753inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nq37nq79w2j76xj8qhjzcn6vh0wlx0qk2r7zm6",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2578791794569077.783020729653195053inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1nq37nq79w2j76xj8qhjzcn6vh0wlx0qk2r7zm6",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "128422341000741.459115583054289924inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper125fkz3mq6qxxpkmphdl3ep92t0d3y9695mhclt",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2568446820014829.182311661085798483inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper125fkz3mq6qxxpkmphdl3ep92t0d3y9695mhclt",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "185855441681133.103251795021551134inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper14yeq3lkajldaggj28hmq8xng9xux7x5g46hezv",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2478072555748441.376690600287348458inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper14yeq3lkajldaggj28hmq8xng9xux7x5g46hezv",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "122481849527500.562618244191124374inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1esud09zs5754g5nlkmrgxsfdj276xm64cgmd3w",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2449636990550011.252364883822487477inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1esud09zs5754g5nlkmrgxsfdj276xm64cgmd3w",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "193968482729372.222580512538043860inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1ntn4j2lsu3k60g8xj9pqshqvdj2q5tygyvczpy",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2424606034117152.782256406725548244inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1ntn4j2lsu3k60g8xj9pqshqvdj2q5tygyvczpy",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "120894693314829.214453045192442949inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1mlsg82x0mnw88u2teg0kceautjktgcl08tqfs4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2417893866296584.289060903848858987inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1mlsg82x0mnw88u2teg0kceautjktgcl08tqfs4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "115393810800840.867309807409607932inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1acgud5qpn3frwzjrayqcdsdr9vkl3p6hrz34ts",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2307876216016817.346196148192158637inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1acgud5qpn3frwzjrayqcdsdr9vkl3p6hrz34ts",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "179171392046979.842369280478354874inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper177zqwtsnuhax28w5xpmf33wsl7l2xxf6y6xshc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2239642400587248.029616005979435927inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper177zqwtsnuhax28w5xpmf33wsl7l2xxf6y6xshc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "107645047152727.009452882628405685inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1hsxaln75wjs033t3spd8a0gawl4jvxawn6v849",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "2152900943054540.189057652568113691inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1hsxaln75wjs033t3spd8a0gawl4jvxawn6v849",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "97497975319096.634526600776073280inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1845wspsvm3z95a2zycz3t49gn7celq48dlyscc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1949959506381932.690532015521465607inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1845wspsvm3z95a2zycz3t49gn7celq48dlyscc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "193355285936448.227614890674483891inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vm2gflv53mzy9ak4f8cr9ml3xus980wywe9fx2",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1933552859364482.276148906744838913inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vm2gflv53mzy9ak4f8cr9ml3xus980wywe9fx2",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "95198815216275.501389620848481482inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1ffsdugrhfzdyxltjve8v68n6aazyc6p97uhfn0",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1903976304325510.027792416969629630inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1ffsdugrhfzdyxltjve8v68n6aazyc6p97uhfn0",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "171006835963181.531920577706838295inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1zpy3qf7us3m0pxpqkp72gzjv55t70huy33t47x",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1710068359631815.319205777068382947inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1zpy3qf7us3m0pxpqkp72gzjv55t70huy33t47x",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "79466663687320.223858424257272174inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper145cktyaw3ec7nwt3nyawvx5yy9l58ppy9fhltx",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1589333273746404.477168485145443480inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper145cktyaw3ec7nwt3nyawvx5yy9l58ppy9fhltx",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "157826436081057.061033934826525420inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1rf0fczrw2gnhuju86kmjtku4dvf9dcc2mpe7pe",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1578264360810570.610339348265254198inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1rf0fczrw2gnhuju86kmjtku4dvf9dcc2mpe7pe",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "75292870391314.140698733053655199inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper14w4qu60azpz5zkw5yrcvmaxqh6xg5sny7qm6rm",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1505857407826282.813974661073103986inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper14w4qu60azpz5zkw5yrcvmaxqh6xg5sny7qm6rm",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "74026633964827.457138330578667664inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qzu3s7uzydpj0vcgrgp04j7u48pgkesy7zl7t3",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1480532679296549.142766611573353287inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qzu3s7uzydpj0vcgrgp04j7u48pgkesy7zl7t3",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "72865971885655.301644040529132616inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1f2kdg34689x93cvw2y59z7y46dvz2fk8lhddfz",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1457319437713106.032880810582652323inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1f2kdg34689x93cvw2y59z7y46dvz2fk8lhddfz",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "111404044739805.900000537797660743inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper18cyc7wxru3g9de3emwy9pdh5x0vevxp3p2623y",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1392550559247573.750006722470759284inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper18cyc7wxru3g9de3emwy9pdh5x0vevxp3p2623y",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "133519942622814.050857312498522506inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1fqrdtx7pyps6eytn3356j9cs4f8zl0eevlt3rt",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1335199426228140.508573124985225057inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1fqrdtx7pyps6eytn3356j9cs4f8zl0eevlt3rt",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "66159049995388.176762968999561336inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qkwpk4pf6txgazfs8lnjzj75pc47z9g26lww7r",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1323180999907763.535259379991226725inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qkwpk4pf6txgazfs8lnjzj75pc47z9g26lww7r",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "131426291839548.027843443926810272inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qndvee93f30q3ra2hncasphm22k97vpr89zusa",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1314262918395480.278434439268102720inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1qndvee93f30q3ra2hncasphm22k97vpr89zusa",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "126198197701229.522502739801178432inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1dyntafvjynns5zyltwgyktej0y5zt84y3npkt4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1261981977012295.225027398011784324inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1dyntafvjynns5zyltwgyktej0y5zt84y3npkt4",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "53786785676185.605806043455051798inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper17mudupc8qlwpnegqwulz6ajlkhsfta6zg2wg55",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1075735713523712.116120869101035950inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper17mudupc8qlwpnegqwulz6ajlkhsfta6zg2wg55",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "53500751326504.876673728340576002inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper155yk4wfn0xqye80exlsr6hu4qdfsvsgwg3jckk",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1070015026530097.533474566811520035inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper155yk4wfn0xqye80exlsr6hu4qdfsvsgwg3jckk",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1048748025088452.666486147565339917inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vumvzchlgfsu9fnj5xn2zpf7w888sdmjuu33qe",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1048748025088452.666486147565339917inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1vumvzchlgfsu9fnj5xn2zpf7w888sdmjuu33qe",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "101750064124850.265845676788529810inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper15y9lns6gnhcp8jlkfqmxqgtlff4racajqst5ar",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "1017500641248502.658456767885298098inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper15y9lns6gnhcp8jlkfqmxqgtlff4racajqst5ar",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "46121038875090.506223862949558356inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1da0shwz2mcup5rxkykquc9a7mh4s2hkeah9wuc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "922420777501810.124477258991167111inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1da0shwz2mcup5rxkykquc9a7mh4s2hkeah9wuc",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "89961409551672.099342244200020626inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1an6hyf4h2au53aa3tuy6yjjr4edsd2xvg5kc2p",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "899614095516720.993422442000206258inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1an6hyf4h2au53aa3tuy6yjjr4edsd2xvg5kc2p",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "85107874836869.496771123633510334inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1pff5lusdc9htm0z96l02a0yh9e6erphrllndet",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "851078748368694.967711236335103345inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1pff5lusdc9htm0z96l02a0yh9e6erphrllndet",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "78751118794217.018835673626646653inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1guh04j8x8fxpax3ghf7wlf798xey8576kyfwza",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "787511187942170.188356736266466532inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1guh04j8x8fxpax3ghf7wlf798xey8576kyfwza",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "78708889055291.210458245822537249inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10gunj074eyp4l8n5kta4w7960nxer2ucvfrdsv",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "787088890552912.104582458225372490inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper10gunj074eyp4l8n5kta4w7960nxer2ucvfrdsv",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "786900037062063.699968079550602465inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1hf2y3x956cw9v43ruj060zjdamwh9xs2ezja8p",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "786900037062063.699968079550602465inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1hf2y3x956cw9v43ruj060zjdamwh9xs2ezja8p",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "commission",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "786367575136477.451394176434349005inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1xnhwtlx47guamp36wkmnk6h4y7eqqn7jr8xcve",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "rewards",
+      "attributes": [
+        {
+          "key": "amount",
+          "value": "786367575136477.451394176434349005inj",
+          "index": true
+        },
+        {
+          "key": "validator",
+          "value": "injvaloper1xnhwtlx47guamp36wkmnk6h4y7eqqn7jr8xcve",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "BeginBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "block_bloom",
+      "attributes": [
+        {
+          "key": "bloom",
+          "value": "",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "injective.exchange.v2.EventBatchDepositUpdate",
+      "attributes": [
+        {
+          "key": "deposit_updates",
+          "value": "[{\"denom\":\"peggy0xdAC17F958D2ee523a2206206994597C13D831ec7\",\"deposits\":[{\"subaccount_id\":\"+rmEBgCO/dFY643eFX+CAPP2SFsAAAAAAAAAAAAAAAY=\",\"deposit\":{\"available_balance\":\"404933080368.654704481808645558\",\"total_balance\":\"487981880368.654704482701645558\"}}]}]",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "injective.exchange.v1beta1.EventBatchDepositUpdate",
+      "attributes": [
+        {
+          "key": "deposit_updates",
+          "value": "[{\"denom\":\"peggy0xdAC17F958D2ee523a2206206994597C13D831ec7\",\"deposits\":[{\"subaccount_id\":\"+rmEBgCO/dFY643eFX+CAPP2SFsAAAAAAAAAAAAAAAY=\",\"deposit\":{\"available_balance\":\"404933080368.654704481808645558\",\"total_balance\":\"487981880368.654704482701645558\"}}]}]",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "injective.exchange.v2.EventOrderbookUpdate",
+      "attributes": [
+        {
+          "key": "derivative_updates",
+          "value": "[{\"seq\":\"2248126\",\"orderbook\":{\"market_id\":\"n3C+7tao6kix6remCKKvYA1DLubtp/uillh1qOlwK3c=\",\"buy_levels\":[{\"p\":\"272.630000000000000000\",\"q\":\"0.000000000000000000\"},{\"p\":\"272.650000000000000000\",\"q\":\"36.676000000000000000\"}],\"sell_levels\":[{\"p\":\"314.790000000000000000\",\"q\":\"75.440000000000000000\"},{\"p\":\"333.210000000000000000\",\"q\":\"0.000000000000000000\"},{\"p\":\"333.240000000000000000\",\"q\":\"30.007000000000000000\"}]}}]",
+          "index": true
+        },
+        {
+          "key": "spot_updates",
+          "value": "[]",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "injective.exchange.v1beta1.EventOrderbookUpdate",
+      "attributes": [
+        {
+          "key": "derivative_updates",
+          "value": "[{\"seq\":\"2248126\",\"orderbook\":{\"market_id\":\"n3C+7tao6kix6remCKKvYA1DLubtp/uillh1qOlwK3c=\",\"buy_levels\":[{\"p\":\"272630000.000000000000000000\",\"q\":\"0.000000000000000000\"},{\"p\":\"272650000.000000000000000000\",\"q\":\"36.676000000000000000\"}],\"sell_levels\":[{\"p\":\"314790000.000000000000000000\",\"q\":\"75.440000000000000000\"},{\"p\":\"333210000.000000000000000000\",\"q\":\"0.000000000000000000\"},{\"p\":\"333240000.000000000000000000\",\"q\":\"30.007000000000000000\"}]}}]",
+          "index": true
+        },
+        {
+          "key": "spot_updates",
+          "value": "[]",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "cosmos.bank.v1beta1.EventSetBalances",
+      "attributes": [
+        {
+          "key": "balance_updates",
+          "value": "[{\"addr\":\"T+p2QnuDRYYegKNUCoqdk2/Tk5E=\",\"denom\":\"aW5q\",\"amt\":\"54309069954175784219556681\"},{\"addr\":\"WRG4RNe8IkZU/g3NFrq9LSU/L98=\",\"denom\":\"aW5q\",\"amt\":\"3234322813874809771997993\"},{\"addr\":\"chutyoEccM53FJ6cOQoBjYOMWhA=\",\"denom\":\"aW5q\",\"amt\":\"1899889125617191032\"},{\"addr\":\"h1VoW++SH4ltpetR2P+oOmCxVYM=\",\"denom\":\"aW5q\",\"amt\":\"9586655252320000000\"},{\"addr\":\"kzVIRQMCdM1L8WhqvWCrKOxS4ac=\",\"denom\":\"aW5q\",\"amt\":\"1298247460185856697568386\"},{\"addr\":\"3G8Xu+yCT/+Phlh5ZrIEfbarc2c=\",\"denom\":\"aW5q\",\"amt\":\"0\"},{\"addr\":\"8YKWdttXdoLpRPw0k9RRtn/z4p8=\",\"denom\":\"aW5q\",\"amt\":\"278435940000000\"},{\"addr\":\"+kmB68zg6I6QfbO0aT9QMfSaiT4=\",\"denom\":\"aW5q\",\"amt\":\"2267519089131520000001\"}]",
+          "index": true
+        },
+        {
+          "key": "mode",
+          "value": "EndBlock",
+          "index": true
+        }
+      ]
+    }
+  ],
+  "validator_updates": [
+    {
+      "power": "820743",
+      "pub_key_bytes": "mT+Z0UTq93hWl7FhJSpZcc+b07F0OUMcsddSDjJvqLk=",
+      "pub_key_type": "ed25519"
+    }
+  ],
+  "consensus_param_updates": {
+    "block": {
+      "max_bytes": "4194304",
+      "max_gas": "150000000"
+    },
+    "evidence": {
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000",
+      "max_bytes": "1048576"
+    },
+    "validator": {
+      "pub_key_types": [
+        "ed25519"
+      ]
+    },
+    "version": {},
+    "abci": {}
+  },
+  "app_hash": "JeplJC9p5m7Lyja3w/lupuNctRo63xoFkxunWflxT+w="
+}

@@ -47,7 +47,7 @@ describe("Test stream helpers", () => {
     try {
       const result = asArray<number>(stream);
       await result.finished();
-      fail("This should have thrown an error");
+      throw new Error("This should have thrown an error");
     } catch (err) {
       expect(err).toEqual("error");
     }

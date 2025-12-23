@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectSecp256k1HdWallet, extractKdfConfiguration } from "./directsecp256k1hdwallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { base64Matcher, faucet, testVectors } from "./testutils.spec";
+import { base64Matcher, faucet, testVectors } from "./testutils";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("DirectSecp256k1HdWallet", () => {
@@ -197,7 +197,6 @@ describe("DirectSecp256k1HdWallet", () => {
         const accounts = await deserialized.getAccounts();
 
         expect(deserialized.mnemonic).toEqual(mnemonic);
-        expect(deserialized.mnemonic).toEqual(mnemonic);
         // These values are taken from the generate_addresses.js script in the scripts/wasmd directory
         expect(accounts).toEqual([
           {
@@ -272,7 +271,7 @@ describe("DirectSecp256k1HdWallet", () => {
       );
       const signDocBytes = makeSignBytes(signDoc);
       const { signature } = await wallet.signDirect(faucet.address, signDoc);
-      const valid = await Secp256k1.verifySignature(
+      const valid = Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         sha256(signDocBytes),
         pubkey.value,

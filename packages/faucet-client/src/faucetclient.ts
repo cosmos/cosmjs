@@ -22,15 +22,6 @@ export class FaucetClient {
       denom: denom,
     };
 
-    try {
-      await fetch(this.baseUrl + "/credit", { method: "POST", body: JSON.stringify(body) });
-    } catch (error: any) {
-      if (error.response) {
-        // append response body to error message
-        throw new Error(`${error}; response body: ${JSON.stringify(error.response.data)}`);
-      } else {
-        throw error;
-      }
-    }
+    await fetch(this.baseUrl + "/credit", { method: "POST", body: JSON.stringify(body) });
   }
 }

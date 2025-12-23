@@ -1,7 +1,7 @@
+import bodyParser from "@koa/bodyparser";
 import cors from "@koa/cors";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Koa from "koa";
-import bodyParser from "koa-bodyparser";
 
 import { isValidAddress } from "../addresses";
 import * as constants from "../constants";
@@ -58,7 +58,7 @@ export class Webserver {
           }
 
           // context.request.body is set by the bodyParser() plugin
-          const requestBody = (context.request as any).body;
+          const requestBody = context.request.body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
           const { address, denom } = creditBody;
 

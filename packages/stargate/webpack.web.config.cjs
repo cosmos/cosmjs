@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const target = "web";
-const distdir = path.join(__dirname, "dist", "web");
+const bundleDir = path.join(__dirname, "build", "karma-bundle");
 
 module.exports = [
   {
@@ -12,7 +12,7 @@ module.exports = [
     entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
-      path: distdir,
+      path: bundleDir,
       filename: "tests.js",
     },
     plugins: [
@@ -21,9 +21,8 @@ module.exports = [
         SLOW_SIMAPP47_ENABLED: "",
         SIMAPP50_ENABLED: "",
         SLOW_SIMAPP50_ENABLED: "",
-      }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
+        SIMAPP53_ENABLED: "",
+        SLOW_SIMAPP53_ENABLED: "",
       }),
     ],
     resolve: {

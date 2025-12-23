@@ -5,19 +5,19 @@ import { assert } from "@cosmjs/utils";
 
 import { fromRfc3339WithNanoseconds } from "../../dates";
 import { apiToBigInt, apiToSmallInt } from "../../inthelpers";
+import {
+  jCheckArray,
+  jCheckBoolean,
+  jCheckNonEmptyString,
+  jCheckNonZeroNumber,
+  jCheckNumber,
+  jCheckObject,
+  jCheckSet,
+  jCheckString,
+} from "../../jsonchecks";
 import { SubscriptionEvent } from "../../rpcclients";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
-import {
-  assertArray,
-  assertBoolean,
-  assertNotEmpty,
-  assertNumber,
-  assertObject,
-  assertSet,
-  assertString,
-  dictionaryToStringMap,
-  may,
-} from "../encodings";
+import { dictionaryToStringMap, may } from "../encodings";
 import { hashTx } from "../hasher";
 import * as responses from "../responses";
 
@@ -92,15 +92,15 @@ interface RpcAbciQueryResponse {
 
 function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryResponse {
   return {
-    key: fromBase64(assertString(data.key ?? "")),
-    value: fromBase64(assertString(data.value ?? "")),
+    key: fromBase64(jCheckString(data.key ?? "")),
+    value: fromBase64(jCheckString(data.value ?? "")),
     proof: may(decodeQueryProof, data.proofOps),
     height: may(apiToSmallInt, data.height),
     code: may(apiToSmallInt, data.code),
-    codespace: assertString(data.codespace ?? ""),
+    codespace: jCheckString(data.codespace ?? ""),
     index: may(apiToSmallInt, data.index),
     log: data.log,
-    info: assertString(data.info ?? ""),
+    info: jCheckString(data.info ?? ""),
   };
 }
 
@@ -115,13 +115,13 @@ interface RpcEventAttribute {
 
 function decodeEventAttribute(attribute: RpcEventAttribute): responses.EventAttribute {
   return {
-    key: assertNotEmpty(attribute.key),
+    key: jCheckNonEmptyString(attribute.key),
     value: attribute.value ?? "",
   };
 }
 
 function decodeAttributes(attributes: readonly RpcEventAttribute[]): responses.EventAttribute[] {
-  return assertArray(attributes).map(decodeEventAttribute);
+  return jCheckArray(attributes).map(decodeEventAttribute);
 }
 
 interface RpcEvent {
@@ -138,7 +138,7 @@ export function decodeEvent(event: RpcEvent): responses.Event {
 }
 
 function decodeEvents(events: readonly RpcEvent[]): readonly responses.Event[] {
-  return assertArray(events).map(decodeEvent);
+  return jCheckArray(events).map(decodeEvent);
 }
 
 interface RpcTxData {
@@ -154,7 +154,7 @@ interface RpcTxData {
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    code: apiToSmallInt(assertNumber(data.code ?? 0)),
+    code: apiToSmallInt(jCheckNumber(data.code ?? 0)),
     codespace: data.codespace,
     log: data.log,
     data: may(fromBase64, data.data),
@@ -188,7 +188,7 @@ function decodePubkey(data: RpcPubkey): ValidatorPubkey {
     assert(algorithm === "ed25519" || algorithm === "secp256k1", `unknown pubkey type: ${algorithm}`);
     return {
       algorithm,
-      data: fromBase64(assertNotEmpty(value)),
+      data: fromBase64(jCheckNonEmptyString(value)),
     };
   } else {
     switch (data.type) {
@@ -196,12 +196,12 @@ function decodePubkey(data: RpcPubkey): ValidatorPubkey {
       case "tendermint/PubKeyEd25519":
         return {
           algorithm: "ed25519",
-          data: fromBase64(assertNotEmpty(data.value)),
+          data: fromBase64(jCheckNonEmptyString(data.value)),
         };
       case "tendermint/PubKeySecp256k1":
         return {
           algorithm: "secp256k1",
-          data: fromBase64(assertNotEmpty(data.value)),
+          data: fromBase64(jCheckNonEmptyString(data.value)),
         };
       default:
         throw new Error(`unknown pubkey type: ${data.type}`);
@@ -222,8 +222,8 @@ interface RpcBlockParams {
  */
 function decodeBlockParams(data: RpcBlockParams): responses.BlockParams {
   return {
-    maxBytes: apiToSmallInt(assertNotEmpty(data.max_bytes)),
-    maxGas: apiToSmallInt(assertNotEmpty(data.max_gas)),
+    maxBytes: apiToSmallInt(jCheckNonEmptyString(data.max_bytes)),
+    maxGas: apiToSmallInt(jCheckNonEmptyString(data.max_gas)),
   };
 }
 
@@ -234,8 +234,8 @@ interface RpcEvidenceParams {
 
 function decodeEvidenceParams(data: RpcEvidenceParams): responses.EvidenceParams {
   return {
-    maxAgeNumBlocks: apiToSmallInt(assertNotEmpty(data.max_age_num_blocks)),
-    maxAgeDuration: apiToSmallInt(assertNotEmpty(data.max_age_duration)),
+    maxAgeNumBlocks: apiToSmallInt(jCheckNonEmptyString(data.max_age_num_blocks)),
+    maxAgeDuration: apiToSmallInt(jCheckNonEmptyString(data.max_age_duration)),
   };
 }
 
@@ -267,8 +267,8 @@ interface RpcConsensusParams {
 
 function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusParams {
   return {
-    block: data.block ? decodeBlockParams(assertObject(data.block)) : undefined,
-    evidence: data.evidence ? decodeEvidenceParams(assertObject(data.evidence)) : undefined,
+    block: data.block ? decodeBlockParams(jCheckObject(data.block)) : undefined,
+    evidence: data.evidence ? decodeEvidenceParams(jCheckObject(data.evidence)) : undefined,
   };
 }
 
@@ -281,7 +281,7 @@ interface RpcValidatorUpdate {
 
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
-    pubkey: decodePubkey(assertObject(data.pub_key)),
+    pubkey: decodePubkey(jCheckObject(data.pub_key)),
     votingPower: apiToBigInt(data.power ?? "0"),
   };
 }
@@ -296,7 +296,7 @@ interface RpcBlockResultsResponse {
 
 function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
   return {
-    height: apiToSmallInt(assertNotEmpty(data.height)),
+    height: apiToSmallInt(jCheckNonEmptyString(data.height)),
     results: (data.txs_results || []).map(decodeTxData),
     validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
@@ -316,10 +316,10 @@ interface RpcBlockId {
 
 function decodeBlockId(data: RpcBlockId): responses.BlockId {
   return {
-    hash: fromHex(assertNotEmpty(data.hash)),
+    hash: fromHex(jCheckNonEmptyString(data.hash)),
     parts: {
-      total: assertNotEmpty(data.parts.total),
-      hash: fromHex(assertNotEmpty(data.parts.hash)),
+      total: jCheckNonZeroNumber(data.parts.total),
+      hash: fromHex(jCheckNonEmptyString(data.parts.hash)),
     },
   };
 }
@@ -369,25 +369,25 @@ interface RpcHeader {
 function decodeHeader(data: RpcHeader): responses.Header {
   return {
     version: decodeBlockVersion(data.version),
-    chainId: assertNotEmpty(data.chain_id),
-    height: apiToSmallInt(assertNotEmpty(data.height)),
-    time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
+    chainId: jCheckNonEmptyString(data.chain_id),
+    height: apiToSmallInt(jCheckNonEmptyString(data.height)),
+    time: fromRfc3339WithNanoseconds(jCheckNonEmptyString(data.time)),
 
     // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
     // { hash: '', parts: { total: 0, hash: '' } }
     lastBlockId: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
 
-    lastCommitHash: fromHex(assertSet(data.last_commit_hash)),
-    dataHash: fromHex(assertSet(data.data_hash)),
+    lastCommitHash: fromHex(jCheckSet(data.last_commit_hash)),
+    dataHash: fromHex(jCheckSet(data.data_hash)),
 
-    validatorsHash: fromHex(assertSet(data.validators_hash)),
-    nextValidatorsHash: fromHex(assertSet(data.next_validators_hash)),
-    consensusHash: fromHex(assertSet(data.consensus_hash)),
-    appHash: fromHex(assertSet(data.app_hash)),
-    lastResultsHash: fromHex(assertSet(data.last_results_hash)),
+    validatorsHash: fromHex(jCheckSet(data.validators_hash)),
+    nextValidatorsHash: fromHex(jCheckSet(data.next_validators_hash)),
+    consensusHash: fromHex(jCheckSet(data.consensus_hash)),
+    appHash: fromHex(jCheckSet(data.app_hash)),
+    lastResultsHash: fromHex(jCheckSet(data.last_results_hash)),
 
-    evidenceHash: fromHex(assertSet(data.evidence_hash)),
-    proposerAddress: fromHex(assertNotEmpty(data.proposer_address)),
+    evidenceHash: fromHex(jCheckSet(data.evidence_hash)),
+    proposerAddress: fromHex(jCheckNonEmptyString(data.proposer_address)),
   };
 }
 
@@ -401,9 +401,9 @@ interface RpcBlockMeta {
 function decodeBlockMeta(data: RpcBlockMeta): responses.BlockMeta {
   return {
     blockId: decodeBlockId(data.block_id),
-    blockSize: apiToSmallInt(assertNotEmpty(data.block_size)),
+    blockSize: apiToSmallInt(jCheckNonEmptyString(data.block_size)),
     header: decodeHeader(data.header),
-    numTxs: apiToSmallInt(assertNotEmpty(data.num_txs)),
+    numTxs: apiToSmallInt(jCheckNonEmptyString(data.num_txs)),
   };
 }
 
@@ -414,8 +414,8 @@ interface RpcBlockchainResponse {
 
 function decodeBlockchain(data: RpcBlockchainResponse): responses.BlockchainResponse {
   return {
-    lastHeight: apiToSmallInt(assertNotEmpty(data.last_height)),
-    blockMetas: assertArray(data.block_metas).map(decodeBlockMeta),
+    lastHeight: apiToSmallInt(jCheckNonEmptyString(data.last_height)),
+    blockMetas: jCheckArray(data.block_metas).map(decodeBlockMeta),
   };
 }
 
@@ -427,7 +427,7 @@ interface RpcBroadcastTxSyncResponse extends RpcTxData {
 function decodeBroadcastTxSync(data: RpcBroadcastTxSyncResponse): responses.BroadcastTxSyncResponse {
   return {
     ...decodeTxData(data),
-    hash: fromHex(assertNotEmpty(data.hash)),
+    hash: fromHex(jCheckNonEmptyString(data.hash)),
   };
 }
 
@@ -443,8 +443,8 @@ function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.
   const txResult = data.tx_result ? decodeTxData(data.tx_result) : undefined;
   return {
     height: apiToSmallInt(data.height),
-    hash: fromHex(assertNotEmpty(data.hash)),
-    checkTx: decodeTxData(assertObject(data.check_tx)),
+    hash: fromHex(jCheckNonEmptyString(data.hash)),
+    checkTx: decodeTxData(jCheckObject(data.check_tx)),
     deliverTx: txResult,
     txResult: txResult,
   };
@@ -485,10 +485,10 @@ interface RpcCommit {
 
 export function decodeCommit(data: RpcCommit): responses.Commit {
   return {
-    blockId: decodeBlockId(assertObject(data.block_id)),
-    height: apiToSmallInt(assertNotEmpty(data.height)),
+    blockId: decodeBlockId(jCheckObject(data.block_id)),
+    height: apiToSmallInt(jCheckNonEmptyString(data.height)),
     round: apiToSmallInt(data.round),
-    signatures: data.signatures ? assertArray(data.signatures).map(decodeCommitSignature) : [],
+    signatures: data.signatures ? jCheckArray(data.signatures).map(decodeCommitSignature) : [],
   };
 }
 
@@ -502,7 +502,7 @@ interface RpcCommitResponse {
 
 function decodeCommitResponse(data: RpcCommitResponse): responses.CommitResponse {
   return {
-    canonical: assertBoolean(data.canonical),
+    canonical: jCheckBoolean(data.canonical),
     header: decodeHeader(data.signed_header.header),
     commit: decodeCommit(data.signed_header.commit),
   };
@@ -518,9 +518,11 @@ interface RpcValidatorGenesis {
 
 export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
   return {
-    address: fromHex(assertNotEmpty(data.address)),
-    pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToBigInt(assertNotEmpty(data.power)),
+    address: fromHex(jCheckNonEmptyString(data.address)),
+    pubkey: decodePubkey(jCheckObject(data.pub_key)),
+    votingPower: apiToBigInt(jCheckNonEmptyString(data.power)),
+    // Field `name` is omitted because return type `responses.Validator` doesn't have it. Fixed
+    // in comet1 adapter. We could backport this change but want to avoid unnecessary breakage.
   };
 }
 
@@ -542,11 +544,11 @@ interface GenesisResult {
 
 function decodeGenesis(data: RpcGenesisResponse): responses.GenesisResponse {
   return {
-    genesisTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.genesis_time)),
-    chainId: assertNotEmpty(data.chain_id),
+    genesisTime: fromRfc3339WithNanoseconds(jCheckNonEmptyString(data.genesis_time)),
+    chainId: jCheckNonEmptyString(data.chain_id),
     consensusParams: decodeConsensusParams(data.consensus_params),
-    validators: data.validators ? assertArray(data.validators).map(decodeValidatorGenesis) : [],
-    appHash: fromHex(assertSet(data.app_hash)), // empty string in kvstore app
+    validators: data.validators ? jCheckArray(data.validators).map(decodeValidatorGenesis) : [],
+    appHash: fromHex(jCheckSet(data.app_hash)), // empty string in kvstore app
     appState: data.app_state,
   };
 }
@@ -562,9 +564,9 @@ interface RpcValidatorInfo {
 
 export function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
   return {
-    pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: apiToBigInt(assertNotEmpty(data.voting_power)),
-    address: fromHex(assertNotEmpty(data.address)),
+    pubkey: decodePubkey(jCheckObject(data.pub_key)),
+    votingPower: apiToBigInt(jCheckNonEmptyString(data.voting_power)),
+    address: fromHex(jCheckNonEmptyString(data.address)),
     proposerPriority: data.proposer_priority ? apiToSmallInt(data.proposer_priority) : undefined,
   };
 }
@@ -595,17 +597,17 @@ interface RpcNodeInfo {
 
 function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
   return {
-    id: fromHex(assertNotEmpty(data.id)),
-    listenAddr: assertNotEmpty(data.listen_addr),
-    network: assertNotEmpty(data.network),
-    version: assertString(data.version), // Can be empty (https://github.com/cosmos/cosmos-sdk/issues/7963)
-    channels: assertString(data.channels), // can be empty
-    moniker: assertNotEmpty(data.moniker),
+    id: fromHex(jCheckNonEmptyString(data.id)),
+    listenAddr: jCheckNonEmptyString(data.listen_addr),
+    network: jCheckNonEmptyString(data.network),
+    version: jCheckString(data.version), // Can be empty (https://github.com/cosmos/cosmos-sdk/issues/7963)
+    channels: jCheckString(data.channels), // can be empty
+    moniker: jCheckNonEmptyString(data.moniker),
     other: dictionaryToStringMap(data.other),
     protocolVersion: {
-      app: apiToSmallInt(assertNotEmpty(data.protocol_version.app)),
-      block: apiToSmallInt(assertNotEmpty(data.protocol_version.block)),
-      p2p: apiToSmallInt(assertNotEmpty(data.protocol_version.p2p)),
+      app: apiToSmallInt(jCheckNonEmptyString(data.protocol_version.app)),
+      block: apiToSmallInt(jCheckNonEmptyString(data.protocol_version.block)),
+      p2p: apiToSmallInt(jCheckNonEmptyString(data.protocol_version.p2p)),
     },
   };
 }
@@ -639,11 +641,11 @@ function decodeSyncInfo(data: RpcSyncInfo): responses.SyncInfo {
     earliestBlockHash: data.earliest_block_hash ? fromHex(data.earliest_block_hash) : undefined,
     earliestBlockHeight: earliestBlockHeight || undefined,
     earliestBlockTime: earliestBlockTime?.getTime() ? earliestBlockTime : undefined,
-    latestBlockHash: fromHex(assertNotEmpty(data.latest_block_hash)),
-    latestAppHash: fromHex(assertNotEmpty(data.latest_app_hash)),
-    latestBlockTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.latest_block_time)),
-    latestBlockHeight: apiToSmallInt(assertNotEmpty(data.latest_block_height)),
-    catchingUp: assertBoolean(data.catching_up),
+    latestBlockHash: fromHex(jCheckNonEmptyString(data.latest_block_hash)),
+    latestAppHash: fromHex(jCheckNonEmptyString(data.latest_app_hash)),
+    latestBlockTime: fromRfc3339WithNanoseconds(jCheckNonEmptyString(data.latest_block_time)),
+    latestBlockHeight: apiToSmallInt(jCheckNonEmptyString(data.latest_block_height)),
+    catchingUp: jCheckBoolean(data.catching_up),
   };
 }
 
@@ -691,13 +693,13 @@ interface RpcTxProof {
 
 function decodeTxProof(data: RpcTxProof): responses.TxProof {
   return {
-    data: fromBase64(assertNotEmpty(data.data)),
-    rootHash: fromHex(assertNotEmpty(data.root_hash)),
+    data: fromBase64(jCheckNonEmptyString(data.data)),
+    rootHash: fromHex(jCheckNonEmptyString(data.root_hash)),
     proof: {
-      total: apiToSmallInt(assertNotEmpty(data.proof.total)),
-      index: apiToSmallInt(assertNotEmpty(data.proof.index)),
-      leafHash: fromBase64(assertNotEmpty(data.proof.leaf_hash)),
-      aunts: assertArray(data.proof.aunts).map(fromBase64),
+      total: apiToSmallInt(jCheckNonEmptyString(data.proof.total)),
+      index: apiToSmallInt(jCheckNonEmptyString(data.proof.index)),
+      leafHash: fromBase64(jCheckNonEmptyString(data.proof.leaf_hash)),
+      aunts: jCheckArray(data.proof.aunts).map(fromBase64),
     },
   };
 }
@@ -715,11 +717,11 @@ interface RpcTxResponse {
 
 function decodeTxResponse(data: RpcTxResponse): responses.TxResponse {
   return {
-    tx: fromBase64(assertNotEmpty(data.tx)),
-    result: decodeTxData(assertObject(data.tx_result)),
-    height: apiToSmallInt(assertNotEmpty(data.height)),
-    index: apiToSmallInt(assertNumber(data.index)),
-    hash: fromHex(assertNotEmpty(data.hash)),
+    tx: fromBase64(jCheckNonEmptyString(data.tx)),
+    result: decodeTxData(jCheckObject(data.tx_result)),
+    height: apiToSmallInt(jCheckNonEmptyString(data.height)),
+    index: apiToSmallInt(jCheckNumber(data.index)),
+    hash: fromHex(jCheckNonEmptyString(data.hash)),
     proof: may(decodeTxProof, data.proof),
   };
 }
@@ -731,8 +733,8 @@ interface RpcTxSearchResponse {
 
 function decodeTxSearch(data: RpcTxSearchResponse): responses.TxSearchResponse {
   return {
-    totalCount: apiToSmallInt(assertNotEmpty(data.total_count)),
-    txs: assertArray(data.txs).map(decodeTxResponse),
+    totalCount: apiToSmallInt(jCheckNonEmptyString(data.total_count)),
+    txs: jCheckArray(data.txs).map(decodeTxResponse),
   };
 }
 
@@ -744,12 +746,12 @@ interface RpcTxEvent {
 }
 
 function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
-  const tx = fromBase64(assertNotEmpty(data.tx));
+  const tx = fromBase64(jCheckNonEmptyString(data.tx));
   return {
     tx: tx,
     hash: hashTx(tx),
     result: decodeTxData(data.result),
-    height: apiToSmallInt(assertNotEmpty(data.height)),
+    height: apiToSmallInt(jCheckNonEmptyString(data.height)),
   };
 }
 
@@ -762,10 +764,10 @@ interface RpcValidatorsResponse {
 
 function decodeValidators(data: RpcValidatorsResponse): responses.ValidatorsResponse {
   return {
-    blockHeight: apiToSmallInt(assertNotEmpty(data.block_height)),
-    validators: assertArray(data.validators).map(decodeValidatorInfo),
-    count: apiToSmallInt(assertNotEmpty(data.count)),
-    total: apiToSmallInt(assertNotEmpty(data.total)),
+    blockHeight: apiToSmallInt(jCheckNonEmptyString(data.block_height)),
+    validators: jCheckArray(data.validators).map(decodeValidatorInfo),
+    count: apiToSmallInt(jCheckNonEmptyString(data.count)),
+    total: apiToSmallInt(jCheckNonEmptyString(data.total)),
   };
 }
 
@@ -789,11 +791,11 @@ interface RpcBlock {
 
 function decodeBlock(data: RpcBlock): responses.Block {
   return {
-    header: decodeHeader(assertObject(data.header)),
+    header: decodeHeader(jCheckObject(data.header)),
     // For the block at height 1, last commit is not set. This is represented in an empty object like this:
     // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
-    lastCommit: data.last_commit.block_id.hash ? decodeCommit(assertObject(data.last_commit)) : null,
-    txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
+    lastCommit: data.last_commit.block_id.hash ? decodeCommit(jCheckObject(data.last_commit)) : null,
+    txs: data.data.txs ? jCheckArray(data.data.txs).map(fromBase64) : [],
     // Lift up .evidence.evidence to just .evidence
     // See https://github.com/tendermint/tendermint/issues/7697
     evidence: data.evidence?.evidence ?? [],
@@ -819,8 +821,8 @@ interface RpcBlockSearchResponse {
 
 function decodeBlockSearch(data: RpcBlockSearchResponse): responses.BlockSearchResponse {
   return {
-    totalCount: apiToSmallInt(assertNotEmpty(data.total_count)),
-    blocks: assertArray(data.blocks).map(decodeBlockResponse),
+    totalCount: apiToSmallInt(jCheckNonEmptyString(data.total_count)),
+    blocks: jCheckArray(data.blocks).map(decodeBlockResponse),
   };
 }
 
@@ -831,18 +833,18 @@ interface RpcNumUnconfirmedTxsResponse {
 
 function decodeNumUnconfirmedTxs(data: RpcNumUnconfirmedTxsResponse): responses.NumUnconfirmedTxsResponse {
   return {
-    total: apiToSmallInt(assertNotEmpty(data.total)),
-    totalBytes: apiToSmallInt(assertNotEmpty(data.total_bytes)),
+    total: apiToSmallInt(jCheckNonEmptyString(data.total)),
+    totalBytes: apiToSmallInt(jCheckNonEmptyString(data.total_bytes)),
   };
 }
 
 export class Responses {
   public static decodeAbciInfo(response: JsonRpcSuccessResponse): responses.AbciInfoResponse {
-    return decodeAbciInfo(assertObject((response.result as AbciInfoResult).response));
+    return decodeAbciInfo(jCheckObject((response.result as AbciInfoResult).response));
   }
 
   public static decodeAbciQuery(response: JsonRpcSuccessResponse): responses.AbciQueryResponse {
-    return decodeAbciQuery(assertObject((response.result as AbciQueryResult).response));
+    return decodeAbciQuery(jCheckObject((response.result as AbciQueryResult).response));
   }
 
   public static decodeBlock(response: JsonRpcSuccessResponse): responses.BlockResponse {
@@ -880,7 +882,7 @@ export class Responses {
   }
 
   public static decodeGenesis(response: JsonRpcSuccessResponse): responses.GenesisResponse {
-    return decodeGenesis(assertObject((response.result as GenesisResult).genesis));
+    return decodeGenesis(jCheckObject((response.result as GenesisResult).genesis));
   }
 
   public static decodeHealth(): responses.HealthResponse {

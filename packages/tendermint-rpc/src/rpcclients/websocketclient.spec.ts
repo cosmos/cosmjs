@@ -3,23 +3,15 @@ import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { SubscriptionEvent } from "./rpcclient";
 import { WebsocketClient } from "./websocketclient";
 
-function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
-  }
-}
-
-describe("WebsocketClient", () => {
+(tendermintEnabled ? describe : xdescribe)("WebsocketClient", () => {
   const { blockTime, url } = defaultInstance;
   const tendermintUrl = "ws://" + url;
 
   it("can make a simple call", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const healthResponse = await client.execute(createJsonRpcRequest("health"));
@@ -29,20 +21,17 @@ describe("WebsocketClient", () => {
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await client
-      .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => {
-        fail("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toBeTruthy();
-      });
+    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
 
     client.disconnect();
   });
 
-  it("can listen to events", (done) => {
-    pendingWithoutTendermint();
+  it("can listen to events", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -79,11 +68,11 @@ describe("WebsocketClient", () => {
         }
       },
     });
+
+    return ret;
   });
 
   it("can listen to the same query twice", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const newBlockHeaderQuery = "tm.event='NewBlockHeader'";
@@ -106,8 +95,12 @@ describe("WebsocketClient", () => {
     client.disconnect();
   });
 
-  it("can execute commands while listening to events", (done) => {
-    pendingWithoutTendermint();
+  it("can execute commands while listening to events", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -142,14 +135,20 @@ describe("WebsocketClient", () => {
 
     client
       .execute(createJsonRpcRequest("status"))
-      .then((startusResponse) => {
-        expect(startusResponse).toBeTruthy();
+      .then((statusResponse) => {
+        expect(statusResponse).toBeTruthy();
       })
       .catch(done.fail);
+
+    return ret;
   });
 
-  it("can end event listening by disconnecting", (done) => {
-    pendingWithoutTendermint();
+  it("can end event listening by disconnecting", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
 
     const client = new WebsocketClient(tendermintUrl);
 
@@ -171,48 +170,35 @@ describe("WebsocketClient", () => {
         done();
       },
     });
+
+    return ret;
   });
 
   it("fails when executing on a disconnected client", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
     // dummy command to ensure client is connected
     await client.execute(createJsonRpcRequest("health"));
 
     client.disconnect();
 
-    await client
-      .execute(createJsonRpcRequest("health"))
-      .then(() => {
-        fail("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toMatch(/socket has disconnected/i);
-      });
+    await expectAsync(client.execute(createJsonRpcRequest("health"))).toBeRejectedWithError(
+      /socket has disconnected/i,
+    );
   });
 
-  it("fails when listening to a disconnected client", (done) => {
-    pendingWithoutTendermint();
+  it("fails when listening to a disconnected client", async () => {
+    const client = new WebsocketClient(tendermintUrl);
+    // dummy command to ensure client is connected
+    await client.execute(createJsonRpcRequest("health"));
 
-    // async and done does not work together with pending() in Jasmine 2.8
-    (async () => {
-      const client = new WebsocketClient(tendermintUrl);
-      // dummy command to ensure client is connected
-      await client.execute(createJsonRpcRequest("health"));
+    client.disconnect();
 
-      client.disconnect();
-
-      const query = "tm.event='NewBlockHeader'";
-      const req = createJsonRpcRequest("subscribe", { query: query });
-      expect(() => client.listen(req).subscribe({})).toThrowError(/socket has disconnected/i);
-      done();
-    })().catch(done.fail);
+    const query = "tm.event='NewBlockHeader'";
+    const req = createJsonRpcRequest("subscribe", { query: query });
+    expect(() => client.listen(req).subscribe({})).toThrowError(/socket has disconnected/i);
   });
 
   it("cannot listen to simple requests", async () => {
-    pendingWithoutTendermint();
-
     const client = new WebsocketClient(tendermintUrl);
 
     const req = createJsonRpcRequest("health");

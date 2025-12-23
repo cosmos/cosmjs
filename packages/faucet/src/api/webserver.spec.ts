@@ -2,15 +2,9 @@ import { makeCosmoshubPath } from "@cosmjs/stargate";
 import { sleep } from "@cosmjs/utils";
 
 import { Faucet } from "../faucet";
+import { simappEnabled } from "../testutils";
 import { TokenConfiguration } from "../tokenmanager";
 import { ChainConstants, Webserver } from "./webserver";
-
-function pendingWithoutSimapp(): void {
-  if (!process.env.SIMAPP47_ENABLED && !process.env.SIMAPP50_ENABLED) {
-    pending("Set SIMAPP{47,50}_ENABLED to enabled Stargate node-based tests");
-    return;
-  }
-}
 
 const defaultTokenConfig: TokenConfiguration = {
   bankTokens: ["ucosm", "ustake"],
@@ -22,7 +16,7 @@ const faucetMnemonic =
 
 const testingPort = 62222;
 
-describe("Webserver", () => {
+(simappEnabled ? describe : xdescribe)("Webserver", () => {
   const pathBuilder = makeCosmoshubPath;
 
   const rpcUrl = "http://localhost:26658";
@@ -38,7 +32,6 @@ describe("Webserver", () => {
   });
 
   it("can be constructed and started", async () => {
-    pendingWithoutSimapp();
     const faucet = await Faucet.make(
       rpcUrl,
       defaultAddressPrefix,

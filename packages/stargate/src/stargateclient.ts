@@ -1,5 +1,5 @@
 import { addCoins } from "@cosmjs/amino";
-import { toHex } from "@cosmjs/encoding";
+import { fixUint8Array, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
 import { assert, sleep } from "@cosmjs/utils";
@@ -28,6 +28,7 @@ export class TimeoutError extends Error {
 
   public constructor(message: string, txId: string) {
     super(message);
+    this.name = this.constructor.name;
     this.txId = txId;
   }
 }
@@ -86,13 +87,16 @@ export interface IndexedTx {
    *
    * Use `decodeTxRaw` from @cosmjs/proto-signing to decode this.
    */
-  readonly tx: Uint8Array;
+  readonly tx: Uint8Array<ArrayBuffer>;
   /**
    * The message responses of the [TxMsgData](https://github.com/cosmos/cosmos-sdk/blob/v0.46.3/proto/cosmos/base/abci/v1beta1/abci.proto#L128-L140)
    * as `Any`s.
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
-  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly msgResponses: Array<{
+    readonly typeUrl: string;
+    readonly value: Uint8Array<ArrayBuffer>;
+  }>;
   readonly gasUsed: bigint;
   readonly gasWanted: bigint;
 }
@@ -132,7 +136,10 @@ export interface DeliverTxResponse {
    * as `Any`s.
    * This field is an empty list for chains running Cosmos SDK < 0.46.
    */
-  readonly msgResponses: Array<{ readonly typeUrl: string; readonly value: Uint8Array }>;
+  readonly msgResponses: Array<{
+    readonly typeUrl: string;
+    readonly value: Uint8Array<ArrayBuffer>;
+  }>;
   readonly gasUsed: bigint;
   readonly gasWanted: bigint;
 }
@@ -179,6 +186,7 @@ export class BroadcastTxError extends Error {
 
   public constructor(code: number, codespace: string, log: string | undefined) {
     super(`Broadcasting transaction failed with code ${code} (codespace: ${codespace}). Log: ${log}`);
+    this.name = this.constructor.name;
     this.code = code;
     this.codespace = codespace;
     this.log = log;
@@ -205,7 +213,7 @@ export class StargateClient {
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
    *
-   * This uses auto-detection to decide between a CometBFT 0.38, Tendermint 0.37 and 0.34 client.
+   * This uses auto-detection to decide between a CometBFT 1.x, CometBFT 0.38 and Tendermint 0.37 client.
    * To set the Comet client explicitly, use `create`.
    */
   public static async connect(
@@ -218,7 +226,8 @@ export class StargateClient {
 
   /**
    * Creates an instance from a manually created Comet client.
-   * Use this to use `Comet38Client` or `Tendermint37Client` instead of `Tendermint34Client`.
+   * Use this to use `Comet38Client` or `Tendermint37Client` instead of
+   * auto-detection.
    */
   public static create(cometClient: CometClient, options: StargateClientOptions = {}): StargateClient {
     return new StargateClient(cometClient, options);
@@ -287,7 +296,8 @@ export class StargateClient {
     try {
       const account = await this.forceGetQueryClient().auth.account(searchAddress);
       return account ? this.accountParser(account) : null;
-    } catch (error: any) {
+    } catch (error) {
+      assert(error instanceof Error);
       if (/rpc error: code = NotFound/i.test(error.toString())) {
         return null;
       }
@@ -369,7 +379,8 @@ export class StargateClient {
       delegatedAmount = (
         await this.forceGetQueryClient().staking.delegation(delegatorAddress, validatorAddress)
       ).delegationResponse?.balance;
-    } catch (e: any) {
+    } catch (e) {
+      assert(e instanceof Error);
       if (e.toString().includes("key not found")) {
         // ignore, `delegatedAmount` remains undefined
       } else {
@@ -455,18 +466,9 @@ export class StargateClient {
 
     const transactionId = await this.broadcastTxSync(tx);
 
-    return new Promise((resolve, reject) =>
-      pollForTx(transactionId).then(
-        (value) => {
-          clearTimeout(txPollTimeout);
-          resolve(value);
-        },
-        (error) => {
-          clearTimeout(txPollTimeout);
-          reject(error);
-        },
-      ),
-    );
+    return pollForTx(transactionId).finally(() => {
+      clearTimeout(txPollTimeout);
+    });
   }
 
   /**
@@ -506,7 +508,10 @@ export class StargateClient {
         events: tx.result.events.map(fromTendermintEvent),
         rawLog: tx.result.log || "",
         tx: tx.tx,
-        msgResponses: txMsgData.msgResponses,
+        msgResponses: txMsgData.msgResponses.map((mr) => ({
+          typeUrl: mr.typeUrl,
+          value: fixUint8Array(mr.value),
+        })),
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
       };

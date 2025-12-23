@@ -172,7 +172,8 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    *
-   * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public static async deserialize(serialization: string, password: string): Promise<Secp256k1HdWallet> {
     const root = JSON.parse(serialization);
@@ -194,7 +195,8 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
    * The caller is responsible for ensuring the key was derived with the given KDF configuration. This can be
    * done using `extractKdfConfiguration(serialization)` and `executeKdf(password, kdfConfiguration)` from this package.
    *
-   * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public static async deserializeWithEncryptionKey(
     serialization: string,
@@ -202,7 +204,9 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   ): Promise<Secp256k1HdWallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
-    const untypedRoot: any = root;
+    // This cast is safe because `root` comes from a valid JSON document and `root` is a non-null object.
+    // I.e. it can only be a JSON object, not an arbitrary JS object.
+    const untypedRoot: Record<string, any> = root;
     switch (untypedRoot.type) {
       case serializationTypeV1: {
         const decryptedBytes = await decrypt(
@@ -246,7 +250,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   private readonly secret: EnglishMnemonic;
   /** BIP39 seed */
   private readonly seed: Uint8Array;
-  /** Derivation instruction */
+  /** Derivation instructions */
   private readonly accounts: readonly DerivationInfo[];
 
   protected constructor(mnemonic: EnglishMnemonic, options: Secp256k1HdWalletConstructorOptions) {
@@ -265,7 +269,7 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
-    const accountsWithPrivkeys = await this.getAccountsWithPrivkeys();
+    const accountsWithPrivkeys = this.getAccountsWithPrivkeys();
     return accountsWithPrivkeys.map(({ algo, pubkey, address }) => ({
       algo: algo,
       pubkey: pubkey,
@@ -274,14 +278,14 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
   }
 
   public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
-    const accounts = await this.getAccountsWithPrivkeys();
+    const accounts = this.getAccountsWithPrivkeys();
     const account = accounts.find(({ address }) => address === signerAddress);
     if (account === undefined) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
     const { privkey, pubkey } = account;
     const message = sha256(serializeSignDoc(signDoc));
-    const signature = await Secp256k1.createSignature(message, privkey);
+    const signature = Secp256k1.createSignature(message, privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
       signed: signDoc,
@@ -295,7 +299,8 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    *
-   * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public async serialize(password: string): Promise<string> {
     const kdfConfiguration = basicPasswordHashingOptions;
@@ -312,7 +317,8 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
    * The caller is responsible for ensuring the key was derived with the given KDF options. If this
    * is not the case, the wallet cannot be restored with the original password.
    *
-   * @deprecated Encryption support may be removed from CosmJS in a future version. If you actually use this, comment at https://github.com/cosmos/cosmjs/issues/1796
+   * @deprecated Wallet encryption support will be removed from CosmJS in a future version.
+   *             If you actually use this, please comment at https://github.com/cosmos/cosmjs/issues/1796.
    */
   public async serializeWithEncryptionKey(
     encryptionKey: Uint8Array,
@@ -341,27 +347,25 @@ export class Secp256k1HdWallet implements OfflineAminoSigner {
     return JSON.stringify(out);
   }
 
-  private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
+  private getKeyPair(hdPath: HdPath): Secp256k1Keypair {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
-    const { pubkey } = await Secp256k1.makeKeypair(privkey);
+    const { pubkey } = Secp256k1.makeKeypair(privkey);
     return {
       privkey: privkey,
       pubkey: Secp256k1.compressPubkey(pubkey),
     };
   }
 
-  private async getAccountsWithPrivkeys(): Promise<readonly AccountDataWithPrivkey[]> {
-    return Promise.all(
-      this.accounts.map(async ({ hdPath, prefix }) => {
-        const { privkey, pubkey } = await this.getKeyPair(hdPath);
-        const address = toBech32(prefix, rawSecp256k1PubkeyToRawAddress(pubkey));
-        return {
-          algo: "secp256k1" as const,
-          privkey: privkey,
-          pubkey: pubkey,
-          address: address,
-        };
-      }),
-    );
+  private getAccountsWithPrivkeys(): readonly AccountDataWithPrivkey[] {
+    return this.accounts.map(({ hdPath, prefix }) => {
+      const { privkey, pubkey } = this.getKeyPair(hdPath);
+      const address = toBech32(prefix, rawSecp256k1PubkeyToRawAddress(pubkey));
+      return {
+        algo: "secp256k1" as const,
+        privkey: privkey,
+        pubkey: pubkey,
+        address: address,
+      };
+    });
   }
 }

@@ -1,10 +1,6 @@
 import { FaucetClient } from "./faucetclient";
 
-function pendingWithoutFaucet(): void {
-  if (!process.env.FAUCET_ENABLED) {
-    pending("Set FAUCET_ENABLED to enable tests that need a faucet");
-  }
-}
+const enabled = !!globalThis.process?.env.FAUCET_ENABLED;
 
 describe("FaucetClient", () => {
   const faucetUrl = "http://localhost:8000";
@@ -25,43 +21,33 @@ describe("FaucetClient", () => {
     expect(new FaucetClient("https://localhost/")).toBeTruthy();
   });
 
-  it("can be used to credit a wallet", async () => {
-    pendingWithoutFaucet();
+  (enabled ? it : xit)("should throw error if the base URL does not start with http:// or https://", () => {
+    expect(() => new FaucetClient("ftp://example.com")).toThrowError(
+      "Expected base url to start with http:// or https://",
+    );
+  });
+
+  (enabled ? it : xit)("can be used to credit a wallet", async () => {
     const faucet = new FaucetClient(faucetUrl);
     await faucet.credit(defaultAddress, primaryToken);
   });
 
-  it("can be used to credit a wallet with a different token", async () => {
-    pendingWithoutFaucet();
+  (enabled ? it : xit)("can be used to credit a wallet with a different token", async () => {
     const faucet = new FaucetClient(faucetUrl);
     await faucet.credit(defaultAddress, secondaryToken);
   });
 
-  it("throws for invalid ticker", async () => {
-    pendingWithoutFaucet();
+  (enabled ? it : xit)("throws for invalid ticker", async () => {
     const faucet = new FaucetClient(faucetUrl);
-    await faucet.credit(defaultAddress, "ETH").then(
-      () => {
-        fail("must not resolve");
-      },
-      (error) => {
-        expect(error).toMatch(/token is not available/i);
-      },
-    );
+    await expectAsync(faucet.credit(defaultAddress, "ETH")).toBeRejectedWithError(/token is not available/i);
   });
 
-  it("throws for invalid address", async () => {
-    pendingWithoutFaucet();
+  (enabled ? it : xit)("throws for invalid address", async () => {
     const faucet = new FaucetClient(faucetUrl);
 
     for (const address of ["be5cc2cc05db2cdb4313c18306a5157291cfdcd1", "1234L"]) {
-      await faucet.credit(address, primaryToken).then(
-        () => {
-          fail("must not resolve");
-        },
-        (error) => {
-          expect(error).toMatch(/address is not in the expected format for this chain/i);
-        },
+      await expectAsync(faucet.credit(address, primaryToken)).toBeRejectedWithError(
+        /address is not in the expected format for this chain/i,
       );
     }
   });

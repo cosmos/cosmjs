@@ -1,3 +1,5 @@
+import { fixUint8Array } from "@cosmjs/encoding";
+
 import { HashFunction } from "./hash";
 
 export class Hmac<H extends HashFunction> implements HashFunction {
@@ -6,7 +8,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
   private readonly messageHasher: H;
   private readonly oKeyPad: Uint8Array;
   private readonly iKeyPad: Uint8Array;
-  private readonly hash: (data: Uint8Array) => Uint8Array;
+  private readonly hash: (data: Uint8Array) => Uint8Array<ArrayBuffer>;
 
   public constructor(hashFunctionConstructor: new () => H, originalKey: Uint8Array) {
     // This implementation is based on https://en.wikipedia.org/wiki/HMAC#Implementation
@@ -15,7 +17,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
 
     const blockSize = new hashFunctionConstructor().blockSize;
 
-    this.hash = (data) => new hashFunctionConstructor().update(data).digest();
+    this.hash = (data) => fixUint8Array(new hashFunctionConstructor().update(data).digest());
 
     let key = originalKey;
     if (key.length > blockSize) {
@@ -42,7 +44,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
     return this;
   }
 
-  public digest(): Uint8Array {
+  public digest(): Uint8Array<ArrayBuffer> {
     const innerHash = this.messageHasher.digest();
     return this.hash(new Uint8Array([...this.oKeyPad, ...innerHash]));
   }

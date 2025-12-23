@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@cosmjs/encoding";
+import { fixUint8Array, fromHex, toHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
@@ -18,7 +18,7 @@ export interface Secp256k1Keypair {
   readonly privkey: Uint8Array;
 }
 
-function unsignedBigIntToBytes(a: bigint): Uint8Array {
+function unsignedBigIntToBytes(a: bigint): Uint8Array<ArrayBuffer> {
   assert(a >= 0n);
   let hex = a.toString(16);
   if (hex.length % 2) hex = "0" + hex;
@@ -36,7 +36,7 @@ export class Secp256k1 {
    * The resulting pubkey is uncompressed. For the use in Cosmos it should
    * be compressed first using `Secp256k1.compressPubkey`.
    */
-  public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
+  public static makeKeypair(privkey: Uint8Array): Secp256k1Keypair {
     if (privkey.length !== 32) {
       throw new Error("input data is not a valid secp256k1 private key");
     }
@@ -63,10 +63,7 @@ export class Secp256k1 {
    * - lowS signature
    * - DER encoded
    */
-  public static async createSignature(
-    messageHash: Uint8Array,
-    privkey: Uint8Array,
-  ): Promise<ExtendedSecp256k1Signature> {
+  public static createSignature(messageHash: Uint8Array, privkey: Uint8Array): ExtendedSecp256k1Signature {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }
@@ -81,11 +78,11 @@ export class Secp256k1 {
     return new ExtendedSecp256k1Signature(unsignedBigIntToBytes(r), unsignedBigIntToBytes(s), recovery);
   }
 
-  public static async verifySignature(
+  public static verifySignature(
     signature: Secp256k1Signature,
     messageHash: Uint8Array,
     pubkey: Uint8Array,
-  ): Promise<boolean> {
+  ): boolean {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
     }
@@ -97,13 +94,16 @@ export class Secp256k1 {
     return secp256k1.verify(encodedSig, messageHash, pubkey, { lowS: false });
   }
 
-  public static recoverPubkey(signature: ExtendedSecp256k1Signature, messageHash: Uint8Array): Uint8Array {
+  public static recoverPubkey(
+    signature: ExtendedSecp256k1Signature,
+    messageHash: Uint8Array,
+  ): Uint8Array<ArrayBuffer> {
     const pk = new secp256k1.Signature(
       bytesToUnsignedBigInt(signature.r()),
       bytesToUnsignedBigInt(signature.s()),
       signature.recovery,
     ).recoverPublicKey(messageHash);
-    return pk.toBytes(false);
+    return fixUint8Array(pk.toBytes(false));
   }
 
   /**
@@ -111,12 +111,12 @@ export class Secp256k1 {
    *
    * This function is idempotent.
    */
-  public static compressPubkey(pubkey: Uint8Array): Uint8Array {
+  public static compressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
-        return pubkey;
+        return fixUint8Array(pubkey);
       case 65:
-        return secp256k1.Point.fromBytes(pubkey).toBytes(true);
+        return fixUint8Array(secp256k1.Point.fromBytes(pubkey).toBytes(true));
       default:
         throw new Error("Invalid pubkey length");
     }
@@ -127,21 +127,21 @@ export class Secp256k1 {
    *
    * This function is idempotent.
    */
-  public static uncompressPubkey(pubkey: Uint8Array): Uint8Array {
+  public static uncompressPubkey(pubkey: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (pubkey.length) {
       case 33:
-        return secp256k1.Point.fromBytes(pubkey).toBytes(false);
+        return fixUint8Array(secp256k1.Point.fromBytes(pubkey).toBytes(false));
       case 65:
-        return pubkey;
+        return fixUint8Array(pubkey);
       default:
         throw new Error("Invalid pubkey length");
     }
   }
 
-  public static trimRecoveryByte(signature: Uint8Array): Uint8Array {
+  public static trimRecoveryByte(signature: Uint8Array): Uint8Array<ArrayBuffer> {
     switch (signature.length) {
       case 64:
-        return signature;
+        return fixUint8Array(signature);
       case 65:
         return signature.slice(0, 64);
       default:

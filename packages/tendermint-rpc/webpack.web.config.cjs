@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const target = "web";
-const distdir = path.join(__dirname, "dist", "web");
+const bundleDir = path.join(__dirname, "build", "karma-bundle");
 
 module.exports = [
   {
@@ -12,16 +12,13 @@ module.exports = [
     entry: globSync("./build/**/*.spec.js", { dotRelative: true }).sort(),
     output: {
       asyncChunks: false,
-      path: distdir,
+      path: bundleDir,
       filename: "tests.js",
     },
     plugins: [
       new webpack.EnvironmentPlugin({
         HTTPSERVER_ENABLED: "",
         TENDERMINT_ENABLED: "",
-      }),
-      new webpack.ProvidePlugin({
-        Buffer: ["buffer", "Buffer"],
       }),
     ],
     resolve: {

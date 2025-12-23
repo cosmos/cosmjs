@@ -7,7 +7,7 @@ import { decodeTxRaw } from "./decode";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
 import { Registry } from "./registry";
 import { makeSignBytes, makeSignDoc } from "./signing";
-import { faucet, testVectors } from "./testutils.spec";
+import { faucet, testVectors } from "./testutils";
 
 describe("signing", () => {
   const chainId = "simd-testing";

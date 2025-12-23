@@ -1,7 +1,5 @@
-import { fixupPluginRules } from "@eslint/compat";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
 import importt from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
@@ -13,11 +11,10 @@ export default [
   },
   js.configs.recommended,
   prettier,
-  // importt.flatConfigs.recommended,
+  importt.flatConfigs.recommended,
   {
     plugins: {
       "simple-import-sort": simpleImportSort,
-      import: fixupPluginRules(importt),
     },
 
     languageOptions: {
@@ -28,6 +25,12 @@ export default [
       },
 
       ecmaVersion: 2022,
+    },
+
+    settings: {
+      "import/resolver": {
+        typescript: {},
+      },
     },
 
     rules: {
@@ -55,20 +58,16 @@ export default [
         },
       ],
 
-      "import/no-cycle": "off",
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
     },
   },
+  { files: ["**/*.ts"], ...importt.flatConfigs.typescript },
+  ...typescriptEslint.configs["flat/strict-type-checked"].map((c) => ({ files: ["**/*.ts"], ...c })),
   {
     files: ["**/*.ts"],
 
-    plugins: {
-      "@typescript-eslint": fixupPluginRules(typescriptEslint),
-    },
-
     languageOptions: {
-      parser: tsParser,
       ecmaVersion: 2022,
 
       parserOptions: {
@@ -76,20 +75,9 @@ export default [
       },
     },
 
-    settings: {
-      "import/resolver": {
-        typescript: {},
-      },
-    },
-
     rules: {
       "no-shadow": "off",
       "no-unused-vars": "off",
-      ...typescriptEslint.configs["flat/strict-type-checked"].reduce(
-        (obj, c) => Object.assign(obj, c.rules),
-        {},
-      ),
-      ...importt.flatConfigs.typescript.rules,
 
       // lints from 'strict-type-checked' config
       "@typescript-eslint/no-deprecated": "off",
@@ -157,7 +145,6 @@ export default [
       "@typescript-eslint/no-shadow": "warn",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-unsafe-return": "off",
 

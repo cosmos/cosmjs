@@ -10,11 +10,10 @@ import {
   defaultSigningClientOptions,
   faucet,
   makeRandomAddress,
-  pendingWithoutSimapp,
   simapp,
   simappEnabled,
   validator,
-} from "../../testutils.spec";
+} from "../../testutils";
 import { setupTxExtension, TxExtension } from "./queries";
 
 async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtension, CometClient]> {
@@ -22,7 +21,7 @@ async function makeClientWithTx(rpcUrl: string): Promise<[QueryClient & TxExtens
   return [QueryClient.withExtensions(cometClient, setupTxExtension), cometClient];
 }
 
-describe("TxExtension", () => {
+(simappEnabled ? describe : xdescribe)("TxExtension", () => {
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -31,35 +30,32 @@ describe("TxExtension", () => {
   let memo: string | undefined;
 
   beforeAll(async () => {
-    if (simappEnabled()) {
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(
-        simapp.tendermintUrlHttp,
-        wallet,
-        defaultSigningClientOptions,
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+    const client = await SigningStargateClient.connectWithSigner(
+      simapp.tendermintUrlHttp,
+      wallet,
+      defaultSigningClientOptions,
+    );
+
+    {
+      const recipient = makeRandomAddress();
+      memo = `Test tx ${Date.now()}`;
+      const result = await client.sendTokens(
+        faucet.address0,
+        recipient,
+        coins(25000, "ucosm"),
+        defaultFee,
+        memo,
       );
-
-      {
-        const recipient = makeRandomAddress();
-        memo = `Test tx ${Date.now()}`;
-        const result = await client.sendTokens(
-          faucet.address0,
-          recipient,
-          coins(25000, "ucosm"),
-          defaultFee,
-          memo,
-        );
-        assertIsDeliverTxSuccess(result);
-        txHash = result.transactionHash;
-      }
-
-      await sleep(75); // wait until transactions are indexed
+      assertIsDeliverTxSuccess(result);
+      txHash = result.transactionHash;
     }
+
+    await sleep(75); // wait until transactions are indexed
   });
 
   describe("getTx", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
       const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);
@@ -73,7 +69,6 @@ describe("TxExtension", () => {
 
   describe("simulate", () => {
     it("works", async () => {
-      pendingWithoutSimapp();
       assertDefined(txHash);
       assertDefined(memo);
       const [client, cometClient] = await makeClientWithTx(simapp.tendermintUrlHttp);

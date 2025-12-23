@@ -1,3 +1,4 @@
+import { fixUint8Array } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
@@ -35,8 +36,8 @@ export function makeAuthInfoBytes(
   gasLimit: number,
   feeGranter: string | undefined,
   feePayer: string | undefined,
-  signMode = SignMode.SIGN_MODE_DIRECT,
-): Uint8Array {
+  signMode: SignMode = SignMode.SIGN_MODE_DIRECT,
+): Uint8Array<ArrayBuffer> {
   // Required arguments 4 and 5 were added in CosmJS 0.29. Use runtime checks to help our non-TS users.
   assert(
     feeGranter === undefined || typeof feeGranter === "string",
@@ -53,7 +54,7 @@ export function makeAuthInfoBytes(
       payer: feePayer,
     },
   });
-  return AuthInfo.encode(authInfo).finish();
+  return fixUint8Array(AuthInfo.encode(authInfo).finish());
 }
 
 export function makeSignDoc(
@@ -70,12 +71,17 @@ export function makeSignDoc(
   };
 }
 
-export function makeSignBytes({ accountNumber, authInfoBytes, bodyBytes, chainId }: SignDoc): Uint8Array {
+export function makeSignBytes({
+  accountNumber,
+  authInfoBytes,
+  bodyBytes,
+  chainId,
+}: SignDoc): Uint8Array<ArrayBuffer> {
   const signDoc = SignDoc.fromPartial({
     accountNumber: accountNumber,
     authInfoBytes: authInfoBytes,
     bodyBytes: bodyBytes,
     chainId: chainId,
   });
-  return SignDoc.encode(signDoc).finish();
+  return fixUint8Array(SignDoc.encode(signDoc).finish());
 }

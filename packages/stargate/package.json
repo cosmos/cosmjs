@@ -1,17 +1,21 @@
 {
   "name": "@cosmjs/stargate",
-  "version": "0.36.0",
+  "version": "0.37.0",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "exports": {
+    "types": "./build/index.d.ts",
+    "default": "./build/index.js"
+  },
   "files": [
     "build/",
     "*.md",
     "!*.spec.*",
+    "!*testutils.*",
+    "!**/karma-bundle/",
     "!**/testdata/"
   ],
   "repository": {
@@ -23,11 +27,11 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "docs": "typedoc --options typedoc.cjs",
+    "docs": "typedoc",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
     "test-node": "yarn node jasmine-testrunner.cjs",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox karma.conf.cjs",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
@@ -43,7 +47,7 @@
     "@cosmjs/stream": "workspace:^",
     "@cosmjs/tendermint-rpc": "workspace:^",
     "@cosmjs/utils": "workspace:^",
-    "cosmjs-types": "^0.10.1"
+    "cosmjs-types": "^0.11.0"
   },
   "devDependencies": {
     "@cosmjs/crypto": "workspace:^",
@@ -52,9 +56,8 @@
     "@types/karma-firefox-launcher": "^2",
     "@types/karma-jasmine": "^4",
     "@types/karma-jasmine-html-reporter": "^1",
-    "@types/long": "^4.0.1",
     "@types/node": "*",
-    "glob": "^11",
+    "glob": "^13.0.0",
     "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "karma": "^6.3.14",
@@ -62,9 +65,9 @@
     "karma-firefox-launcher": "^2.1.0",
     "karma-jasmine": "^5",
     "karma-jasmine-html-reporter": "^1.5.4",
-    "nyc": "^15.1.0",
-    "prettier": "^3.5.3",
-    "readonly-date": "^1.0.0",
+    "nyc": "^17.1.0",
+    "prettier": "^3.6.2",
+    "readonly-date-esm": "^2.0.0",
     "ses": "^1.13.0",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.28",

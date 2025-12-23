@@ -1,18 +1,11 @@
 import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance } from "../testutil.spec";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec";
 import { HttpClient } from "./httpclient";
 
-function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
-    pending("Set TENDERMINT_ENABLED to enable Tendermint RPC tests");
-  }
-}
-
-describe("HttpClient", () => {
+(tendermintEnabled ? describe : xdescribe)("HttpClient", () => {
   const tendermintUrl = "http://" + defaultInstance.url;
 
   it("can make a simple call", async () => {
-    pendingWithoutTendermint();
     const client = new HttpClient(tendermintUrl);
 
     const healthResponse = await client.execute(createJsonRpcRequest("health"));
@@ -22,14 +15,7 @@ describe("HttpClient", () => {
     expect(statusResponse.result).toBeTruthy();
     expect(statusResponse.result.node_info).toBeTruthy();
 
-    await client
-      .execute(createJsonRpcRequest("no-such-method"))
-      .then(() => {
-        fail("must not resolve");
-      })
-      .catch((error) => {
-        expect(error).toBeTruthy();
-      });
+    await expectAsync(client.execute(createJsonRpcRequest("no-such-method"))).toBeRejected();
 
     client.disconnect();
   });

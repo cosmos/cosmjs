@@ -1,3 +1,4 @@
+import { sleep } from "@cosmjs/utils";
 import { Listener } from "xstream";
 
 import { DefaultValueProducer } from "./defaultvalueproducer";
@@ -73,7 +74,12 @@ describe("ValueAndUpdates", () => {
     }
   });
 
-  it("emits initial value to new listeners", (done) => {
+  it("emits initial value to new listeners", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const vau = new ValueAndUpdates(new DefaultValueProducer(123));
 
     const listener2: Listener<number> = {
@@ -103,9 +109,16 @@ describe("ValueAndUpdates", () => {
     };
 
     vau.updates.addListener(listener1);
+
+    return ret;
   });
 
-  it("emits current value to new listeners", (done) => {
+  it("emits current value to new listeners", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const producer = new DefaultValueProducer(123);
     const vau = new ValueAndUpdates(producer);
     producer.update(99);
@@ -137,9 +150,16 @@ describe("ValueAndUpdates", () => {
     };
 
     vau.updates.addListener(listener1);
+
+    return ret;
   });
 
-  it("emits updates to listener", (done) => {
+  it("emits updates to listener", async () => {
+    let done!: (() => void) & { fail: (e?: any) => void };
+    const ret = new Promise<void>((resolve, reject) => {
+      done = resolve as typeof done;
+      done.fail = reject;
+    });
     const producer = new DefaultValueProducer(11);
     const vau = new ValueAndUpdates(producer);
 
@@ -164,15 +184,14 @@ describe("ValueAndUpdates", () => {
       },
     });
 
-    setTimeout(() => {
-      producer.update(22);
-    }, 10);
-    setTimeout(() => {
-      producer.update(33);
-    }, 20);
-    setTimeout(() => {
-      producer.update(44);
-    }, 30);
+    await sleep(10);
+    producer.update(22);
+    await sleep(10);
+    producer.update(33);
+    await sleep(10);
+    producer.update(44);
+
+    return ret;
   });
 
   it("can wait for value", async () => {
@@ -246,14 +265,7 @@ describe("ValueAndUpdates", () => {
       setTimeout(() => {
         producer.error(new Error("something went wrong"));
       }, 10);
-      await vau.waitFor(3).then(
-        () => {
-          fail("must not resolve");
-        },
-        (error) => {
-          expect(error).toMatch(/something went wrong/);
-        },
-      );
+      await expectAsync(vau.waitFor(3)).toBeRejectedWithError(/something went wrong/);
     });
   });
 });
