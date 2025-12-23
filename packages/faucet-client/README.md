@@ -23,7 +23,7 @@ cd packages/faucet
 yarn start-dev
 ```
 
-The tests need to be told you are running the faucet via an environmental
+The tests need to be told you are running the faucet via an environment
 variable:
 
 ```sh

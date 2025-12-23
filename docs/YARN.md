@@ -6,7 +6,7 @@ most helpful: although it purports to guide you through the process in
 [a single document](https://yarnpkg.com/getting-started/migration), the
 information you need is actually spread across multiple pages in quite a
 confusing way, not helped by the poor English throughout. There is also an
-[introductory blogpost](https://dev.to/arcanis/introducing-yarn-2-4eh1) which
+[introductory blog post](https://dev.to/arcanis/introducing-yarn-2-4eh1) which
 you may find helpful.
 
 This document is intended broadly as a replacement for the official

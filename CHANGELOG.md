@@ -1709,11 +1709,11 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
   create a strict decoder.
-- @cosmjs/faucet: Environmental variable `FAUCET_FEE` renamed to
-  `FAUCET_GAS_PRICE` and now only accepts one token. Environmental variable
+- @cosmjs/faucet: Environment variable `FAUCET_FEE` renamed to
+  `FAUCET_GAS_PRICE` and now only accepts one token. Environment variable
   `FAUCET_GAS` renamed to `FAUCET_GAS_LIMIT`.
 - @cosmjs/faucet: `/credit` API now expects `denom` (base token) instead of
-  `ticker` (unit token). Environmental variables specifying credit amounts now
+  `ticker` (unit token). Environment variables specifying credit amounts now
   need to use uppercase denom.
 - @cosmjs/launchpad: Rename `FeeTable` type to `CosmosFeeTable` and export a new
   more generic type `FeeTable`.

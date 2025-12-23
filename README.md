@@ -97,7 +97,7 @@ can work on a solution with swappable implementations.
 
 ## Webpack Configs
 
-With WebPack 5, you have to be explicit about the usage of Node.js types and
+With Webpack 5, you have to be explicit about the usage of Node.js types and
 modules that were simply replaced with re-implementations for browsers in
 Webpack 4.
 
