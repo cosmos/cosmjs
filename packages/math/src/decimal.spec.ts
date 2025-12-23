@@ -96,6 +96,9 @@ describe("Decimal", () => {
       expect(() => Decimal.fromUserInput("44.123456", 5)).toThrowError(
         /got more fractional digits than supported/i,
       );
+      expect(() => Decimal.fromUserInput("44.000001", 5)).toThrowError(
+        /got more fractional digits than supported/i,
+      );
       expect(() => Decimal.fromUserInput("44.1", 0)).toThrowError(
         /got more fractional digits than supported/i,
       );
@@ -155,6 +158,8 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("4.120", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.1200", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.12000", 5).atomics).toEqual("412000");
+      // The following cases may be controversial and you could argue they should throw. But
+      // this has been the behaviour for a long time.
       expect(Decimal.fromUserInput("4.120000", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.1200000", 5).atomics).toEqual("412000");
     });
