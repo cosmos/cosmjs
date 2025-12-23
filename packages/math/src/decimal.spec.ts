@@ -634,6 +634,22 @@ describe("Decimal", () => {
     });
   });
 
+  describe("abs", () => {
+    it("works", () => {
+      // There is only one zero which negates to itself
+      expect(Decimal.zero(2).abs()).toEqual(Decimal.zero(2));
+      expect(Decimal.fromUserInput("-0", 4).abs()).toEqual(Decimal.fromUserInput("0", 4));
+
+      // positive input
+      expect(Decimal.fromAtomics(1n, 4).abs()).toEqual(Decimal.fromAtomics(1n, 4));
+      expect(Decimal.fromAtomics(8743181344348n, 4).abs()).toEqual(Decimal.fromAtomics(8743181344348n, 4));
+
+      // negative input
+      expect(Decimal.fromAtomics(-1n, 4).neg()).toEqual(Decimal.fromAtomics(1n, 4));
+      expect(Decimal.fromAtomics(-41146784348412n, 4).neg()).toEqual(Decimal.fromAtomics(41146784348412n, 4));
+    });
+  });
+
   describe("equals", () => {
     it("returns correct values", () => {
       const zero = Decimal.fromUserInput("0", 5);

@@ -269,6 +269,11 @@ export class Decimal {
     return new Decimal(-this.data.atomics, this.data.fractionalDigits);
   }
 
+  /** Returns the absolute value */
+  public abs(): Decimal {
+    return this.isNegative() ? this.neg() : this.clone();
+  }
+
   public equals(b: Decimal): boolean {
     return Decimal.compare(this, b) === 0;
   }
