@@ -1,10 +1,16 @@
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 
-import { ripemd160, sha256 } from "@cosmjs/crypto";
+import { keccak256, ripemd160, Secp256k1, sha256 } from "@cosmjs/crypto";
 import { fromBase64, toBech32 } from "@cosmjs/encoding";
 
 import { encodeAminoPubkey } from "./encoding";
-import { isEd25519Pubkey, isMultisigThresholdPubkey, isSecp256k1Pubkey, Pubkey } from "./pubkeys";
+import {
+  isEd25519Pubkey,
+  isEthSecp256k1Pubkey,
+  isMultisigThresholdPubkey,
+  isSecp256k1Pubkey,
+  Pubkey,
+} from "./pubkeys";
 
 export function rawEd25519PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 32) {
@@ -20,11 +26,24 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
   return ripemd160(sha256(pubkeyData));
 }
 
+export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
+  if (pubkeyData.length !== 33) {
+    throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
+  }
+  const uncompressed = Secp256k1.uncompressPubkey(pubkeyData);
+  const pubkeyWithoutPrefix = uncompressed.slice(1);
+  const hash = keccak256(pubkeyWithoutPrefix);
+  return hash.slice(-20);
+}
+
 // For secp256k1 this assumes we already have a compressed pubkey.
 export function pubkeyToRawAddress(pubkey: Pubkey): Uint8Array<ArrayBuffer> {
   if (isSecp256k1Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     return rawSecp256k1PubkeyToRawAddress(pubkeyData);
+  } else if (isEthSecp256k1Pubkey(pubkey)) {
+    const pubkeyData = fromBase64(pubkey.value);
+    return rawEthSecp256k1PubkeyToRawAddress(pubkeyData);
   } else if (isEd25519Pubkey(pubkey)) {
     const pubkeyData = fromBase64(pubkey.value);
     return rawEd25519PubkeyToRawAddress(pubkeyData);

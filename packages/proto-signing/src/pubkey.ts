@@ -1,7 +1,9 @@
 import {
   encodeEd25519Pubkey,
+  encodeEthSecp256k1Pubkey,
   encodeSecp256k1Pubkey,
   isEd25519Pubkey,
+  isEthSecp256k1Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
   MultisigThresholdPubkey,
@@ -28,6 +30,21 @@ export function encodePubkey(pubkey: Pubkey): Any {
     });
     return Any.fromPartial({
       typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+      value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkeyProto).finish()),
+    });
+  } else if (isEthSecp256k1Pubkey(pubkey)) {
+    // Note: This code block is hacky because we should use the correct EVM proto type
+    // https://github.com/cosmos/evm/blob/v1.0.0-rc2/proto/cosmos/evm/crypto/v1/ethsecp256k1/keys.proto#L12-L17.
+    // However, we do not have that available here or in cosmjs-types yet and the classic secp256k1 pubkey has the same structure except for documentation and annotations:
+    // https://github.com/cosmos/cosmos-sdk/blob/v0.53.4/proto/cosmos/crypto/secp256k1/keys.proto#L14-L30
+    //
+    // Actually this type is so simple we should just have an Anybuf for TS instead of code generation (https://github.com/webmaster128/anybuf)
+
+    const pubkeyProto = CosmosCryptoSecp256k1Pubkey.fromPartial({
+      key: fromBase64(pubkey.value),
+    });
+    return Any.fromPartial({
+      typeUrl: "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
       value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkeyProto).finish()),
     });
   } else if (isEd25519Pubkey(pubkey)) {
@@ -64,6 +81,10 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
       const { key } = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
       return encodeSecp256k1Pubkey(key);
     }
+    case "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey": {
+      const { key } = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
+      return encodeEthSecp256k1Pubkey(key);
+    }
     case "/cosmos.crypto.ed25519.PubKey": {
       const { key } = CosmosCryptoEd25519Pubkey.decode(pubkey.value);
       return encodeEd25519Pubkey(key);
@@ -81,6 +102,7 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
 export function decodePubkey(pubkey: Any): Pubkey {
   switch (pubkey.typeUrl) {
     case "/cosmos.crypto.secp256k1.PubKey":
+    case "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey":
     case "/cosmos.crypto.ed25519.PubKey": {
       return anyToSinglePubkey(pubkey);
     }
