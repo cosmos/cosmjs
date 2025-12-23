@@ -26,7 +26,7 @@ export function rawSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Arr
   return ripemd160(sha256(pubkeyData));
 }
 
-export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array {
+export function rawEthSecp256k1PubkeyToRawAddress(pubkeyData: Uint8Array): Uint8Array<ArrayBuffer> {
   if (pubkeyData.length !== 33) {
     throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyData.length}`);
   }

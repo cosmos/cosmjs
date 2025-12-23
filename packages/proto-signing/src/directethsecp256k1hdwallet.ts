@@ -289,7 +289,7 @@ export class DirectEthSecp256k1HdWallet implements OfflineDirectSigner {
     const signBytes = makeSignBytes(signDoc);
     const hashedMessage = keccak256(signBytes);
 
-    const signature = await Secp256k1.createSignature(hashedMessage, privkey);
+    const signature = Secp256k1.createSignature(hashedMessage, privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     const stdSignature = encodeEthSecp256k1Signature(pubkey, signatureBytes);
     return {
@@ -348,7 +348,7 @@ export class DirectEthSecp256k1HdWallet implements OfflineDirectSigner {
 
   private async getKeyPair(hdPath: HdPath): Promise<Secp256k1Keypair> {
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, this.seed, hdPath);
-    const { pubkey } = await Secp256k1.makeKeypair(privkey);
+    const { pubkey } = Secp256k1.makeKeypair(privkey);
     return {
       privkey: privkey,
       pubkey: Secp256k1.compressPubkey(pubkey),

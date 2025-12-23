@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectEthSecp256k1Wallet } from "./directethsecp256k1wallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { testVectors } from "./testutils.spec";
+import { testVectors } from "./testutils";
 
 describe("DirectEthSecp256k1Wallet", () => {
   const defaultPrivkey = fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e");
@@ -53,7 +53,7 @@ describe("DirectEthSecp256k1Wallet", () => {
       );
       const signDocBytes = makeSignBytes(signDoc);
       const { signature } = await wallet.signDirect(accounts[0].address, signDoc);
-      const valid = await Secp256k1.verifySignature(
+      const valid = Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         keccak256(signDocBytes),
         pubkey.value,

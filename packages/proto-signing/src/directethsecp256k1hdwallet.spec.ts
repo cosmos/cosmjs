@@ -4,7 +4,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { DirectEthSecp256k1HdWallet, extractKdfConfiguration } from "./directethsecp256k1hdwallet";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
-import { base64Matcher, faucet, testVectors } from "./testutils.spec";
+import { base64Matcher, faucet, testVectors } from "./testutils";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("DirectEthSecp256k1HdWallet", () => {
@@ -186,7 +186,7 @@ describe("DirectEthSecp256k1HdWallet", () => {
       const signDocBytes = makeSignBytes(signDoc);
       const [account] = await wallet.getAccounts();
       const { signature } = await wallet.signDirect(account.address, signDoc);
-      const valid = await Secp256k1.verifySignature(
+      const valid = Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         keccak256(signDocBytes),
         account.pubkey,
