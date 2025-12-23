@@ -111,10 +111,12 @@ and this project adheres to
   such that you can pass in BigInts directly. This is more performant than going
   through strings in cases where you have a BitInt already. Strings remain
   supported for convenient usage with coins.
+- @cosmjs/math: `Decimal` now supports negative values. ([#1930])
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866
 [#1903]: https://github.com/cosmos/cosmjs/pull/1903
+[#1930]: https://github.com/cosmos/cosmjs/pull/1930
 
 ## [0.37.0] - 2025-10-29
 

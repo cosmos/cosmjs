@@ -23,6 +23,10 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("044", 5).atomics).toEqual("44");
       expect(Decimal.fromAtomics("0044", 5).atomics).toEqual("44");
       expect(Decimal.fromAtomics("00044", 5).atomics).toEqual("44");
+
+      expect(Decimal.fromAtomics("-1", 5).atomics).toEqual("-1");
+      expect(Decimal.fromAtomics("-20", 5).atomics).toEqual("-20");
+      expect(Decimal.fromAtomics("-335465464384483", 5).atomics).toEqual("-335465464384483");
     });
 
     it("leads to correct atomics value (bigint)", () => {
@@ -40,6 +44,10 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics(100000000000000000000000n, 5).atomics).toEqual("100000000000000000000000");
       expect(Decimal.fromAtomics(200000000000000000000000n, 5).atomics).toEqual("200000000000000000000000");
       expect(Decimal.fromAtomics(300000000000000000000000n, 5).atomics).toEqual("300000000000000000000000");
+
+      expect(Decimal.fromAtomics(-1n, 5).atomics).toEqual("-1");
+      expect(Decimal.fromAtomics(-20n, 5).atomics).toEqual("-20");
+      expect(Decimal.fromAtomics(-335465464384483n, 5).atomics).toEqual("-335465464384483");
     });
 
     it("reads fractional digits correctly", () => {
@@ -55,7 +63,7 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics(44n, 4).toString()).toEqual("0.0044");
     });
 
-    it("throws for atomics that are not non-negative integers", () => {
+    it("throws for atomics that are not integers", () => {
       expect(() => Decimal.fromAtomics("0xAA", 0)).toThrowError(
         "Invalid string format. Only integers in decimal representation supported.",
       );
@@ -68,8 +76,6 @@ describe("Decimal", () => {
       expect(() => Decimal.fromAtomics("0.7", 0)).toThrowError(
         "Invalid string format. Only integers in decimal representation supported.",
       );
-
-      expect(() => Decimal.fromAtomics("-1", 0)).toThrowError("Only non-negative values supported.");
     });
   });
 
@@ -80,6 +86,8 @@ describe("Decimal", () => {
       expect(() => Decimal.fromUserInput("13-", 5)).toThrowError(/invalid character at position 3/i);
       expect(() => Decimal.fromUserInput("13/", 5)).toThrowError(/invalid character at position 3/i);
       expect(() => Decimal.fromUserInput("13\\", 5)).toThrowError(/invalid character at position 3/i);
+      expect(() => Decimal.fromUserInput("--13", 5)).toThrowError(/invalid character at position 2/i);
+      expect(() => Decimal.fromUserInput("-1-3", 5)).toThrowError(/invalid character at position 3/i);
     });
 
     it("throws for more than one separator", () => {
@@ -94,6 +102,9 @@ describe("Decimal", () => {
 
     it("throws for more fractional digits than supported", () => {
       expect(() => Decimal.fromUserInput("44.123456", 5)).toThrowError(
+        /got more fractional digits than supported/i,
+      );
+      expect(() => Decimal.fromUserInput("44.000001", 5)).toThrowError(
         /got more fractional digits than supported/i,
       );
       expect(() => Decimal.fromUserInput("44.1", 0)).toThrowError(
@@ -155,6 +166,8 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("4.120", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.1200", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.12000", 5).atomics).toEqual("412000");
+      // The following cases may be controversial and you could argue they should throw. But
+      // this has been the behaviour for a long time.
       expect(Decimal.fromUserInput("4.120000", 5).atomics).toEqual("412000");
       expect(Decimal.fromUserInput("4.1200000", 5).atomics).toEqual("412000");
     });
@@ -166,10 +179,26 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("", 3).atomics).toEqual("0");
     });
 
+    it("works for negative", () => {
+      expect(Decimal.fromUserInput("-5", 0).atomics).toEqual("-5");
+      expect(Decimal.fromUserInput("-5.1", 1).atomics).toEqual("-51");
+      expect(Decimal.fromUserInput("-5.35", 2).atomics).toEqual("-535");
+      expect(Decimal.fromUserInput("-5.765", 3).atomics).toEqual("-5765");
+      expect(Decimal.fromUserInput("-545", 0).atomics).toEqual("-545");
+      expect(Decimal.fromUserInput("-545.1", 1).atomics).toEqual("-5451");
+      expect(Decimal.fromUserInput("-545.35", 2).atomics).toEqual("-54535");
+      expect(Decimal.fromUserInput("-545.765", 3).atomics).toEqual("-545765");
+    });
+
     it("accepts american notation with skipped leading zero", () => {
       expect(Decimal.fromUserInput(".1", 3).atomics).toEqual("100");
       expect(Decimal.fromUserInput(".12", 3).atomics).toEqual("120");
       expect(Decimal.fromUserInput(".123", 3).atomics).toEqual("123");
+
+      // ⬇️ strange style but JavaScript supports it too 🤷‍♂️
+      expect(Decimal.fromUserInput("-.1", 3).atomics).toEqual("-100");
+      expect(Decimal.fromUserInput("-.12", 3).atomics).toEqual("-120");
+      expect(Decimal.fromUserInput("-.123", 3).atomics).toEqual("-123");
     });
   });
 
@@ -223,15 +252,21 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("0", 0).floor().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1", 0).floor().toString()).toEqual("1");
       expect(Decimal.fromUserInput("44", 0).floor().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("-2", 0).floor().toString()).toEqual("-2");
       expect(Decimal.fromUserInput("0", 3).floor().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1", 3).floor().toString()).toEqual("1");
       expect(Decimal.fromUserInput("44", 3).floor().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("-2", 3).floor().toString()).toEqual("-2");
 
       // with fractional part
       expect(Decimal.fromUserInput("0.001", 3).floor().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1.999", 3).floor().toString()).toEqual("1");
       expect(Decimal.fromUserInput("0.000000000000000001", 18).floor().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1.999999999999999999", 18).floor().toString()).toEqual("1");
+      expect(Decimal.fromUserInput("-0.001", 3).floor().toString()).toEqual("-1");
+      expect(Decimal.fromUserInput("-1.999", 3).floor().toString()).toEqual("-2");
+      expect(Decimal.fromUserInput("-0.000000000000000001", 18).floor().toString()).toEqual("-1");
+      expect(Decimal.fromUserInput("-1.999999999999999999", 18).floor().toString()).toEqual("-2");
     });
   });
 
@@ -241,15 +276,19 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("0", 0).ceil().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1", 0).ceil().toString()).toEqual("1");
       expect(Decimal.fromUserInput("44", 0).ceil().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("-2", 0).ceil().toString()).toEqual("-2");
       expect(Decimal.fromUserInput("0", 3).ceil().toString()).toEqual("0");
       expect(Decimal.fromUserInput("1", 3).ceil().toString()).toEqual("1");
       expect(Decimal.fromUserInput("44", 3).ceil().toString()).toEqual("44");
+      expect(Decimal.fromUserInput("-2", 3).ceil().toString()).toEqual("-2");
 
       // with fractional part
       expect(Decimal.fromUserInput("0.001", 3).ceil().toString()).toEqual("1");
       expect(Decimal.fromUserInput("1.999", 3).ceil().toString()).toEqual("2");
       expect(Decimal.fromUserInput("0.000000000000000001", 18).ceil().toString()).toEqual("1");
       expect(Decimal.fromUserInput("1.999999999999999999", 18).ceil().toString()).toEqual("2");
+      expect(Decimal.fromUserInput("-0.001", 3).ceil().toString()).toEqual("0");
+      expect(Decimal.fromUserInput("-1.5", 3).ceil().toString()).toEqual("-1");
     });
   });
 
@@ -265,6 +304,17 @@ describe("Decimal", () => {
       expect(aaa.fractionalDigits).toEqual(3);
       expect(aaaa.toString()).toEqual("1.23");
       expect(aaaa.fractionalDigits).toEqual(4);
+
+      const n = Decimal.fromUserInput("-1.23", 2);
+      const nn = n.adjustFractionalDigits(2);
+      const nnn = n.adjustFractionalDigits(3);
+      const nnnn = n.adjustFractionalDigits(4);
+      expect(nn.toString()).toEqual("-1.23");
+      expect(nn.fractionalDigits).toEqual(2);
+      expect(nnn.toString()).toEqual("-1.23");
+      expect(nnn.fractionalDigits).toEqual(3);
+      expect(nnnn.toString()).toEqual("-1.23");
+      expect(nnnn.fractionalDigits).toEqual(4);
     });
 
     it("can shrink", () => {
@@ -296,6 +346,35 @@ describe("Decimal", () => {
       expect(a1.fractionalDigits).toEqual(1);
       expect(a0.toString()).toEqual("1");
       expect(a0.fractionalDigits).toEqual(0);
+
+      const b = Decimal.fromUserInput("-1.23456789", 8);
+      const b8 = b.adjustFractionalDigits(8);
+      const b7 = b.adjustFractionalDigits(7);
+      const b6 = b.adjustFractionalDigits(6);
+      const b5 = b.adjustFractionalDigits(5);
+      const b4 = b.adjustFractionalDigits(4);
+      const b3 = b.adjustFractionalDigits(3);
+      const b2 = b.adjustFractionalDigits(2);
+      const b1 = b.adjustFractionalDigits(1);
+      const b0 = b.adjustFractionalDigits(0);
+      expect(b8.toString()).toEqual("-1.23456789");
+      expect(b8.fractionalDigits).toEqual(8);
+      expect(b7.toString()).toEqual("-1.2345678");
+      expect(b7.fractionalDigits).toEqual(7);
+      expect(b6.toString()).toEqual("-1.234567");
+      expect(b6.fractionalDigits).toEqual(6);
+      expect(b5.toString()).toEqual("-1.23456");
+      expect(b5.fractionalDigits).toEqual(5);
+      expect(b4.toString()).toEqual("-1.2345");
+      expect(b4.fractionalDigits).toEqual(4);
+      expect(b3.toString()).toEqual("-1.234");
+      expect(b3.fractionalDigits).toEqual(3);
+      expect(b2.toString()).toEqual("-1.23");
+      expect(b2.fractionalDigits).toEqual(2);
+      expect(b1.toString()).toEqual("-1.2");
+      expect(b1.fractionalDigits).toEqual(1);
+      expect(b0.toString()).toEqual("-1");
+      expect(b0.fractionalDigits).toEqual(0);
     });
 
     it("allows arithmetic between different fractional difits", () => {
@@ -335,6 +414,13 @@ describe("Decimal", () => {
       expect(Decimal.fromAtomics("3", 2).toString()).toEqual("0.03");
       expect(Decimal.fromAtomics("3", 3).toString()).toEqual("0.003");
     });
+
+    it("works for negative", () => {
+      expect(Decimal.fromAtomics(-3n, 0).toString()).toEqual("-3");
+      expect(Decimal.fromAtomics(-3n, 1).toString()).toEqual("-0.3");
+      expect(Decimal.fromAtomics(-3n, 2).toString()).toEqual("-0.03");
+      expect(Decimal.fromAtomics(-3n, 3).toString()).toEqual("-0.003");
+    });
   });
 
   describe("toFloatApproximation", () => {
@@ -343,6 +429,11 @@ describe("Decimal", () => {
       expect(Decimal.fromUserInput("1", 5).toFloatApproximation()).toEqual(1);
       expect(Decimal.fromUserInput("1.5", 5).toFloatApproximation()).toEqual(1.5);
       expect(Decimal.fromUserInput("0.1", 5).toFloatApproximation()).toEqual(0.1);
+
+      expect(Decimal.fromUserInput("-0", 5).toFloatApproximation()).toEqual(0); // -0 cannot be represented in Decimal
+      expect(Decimal.fromUserInput("-1", 5).toFloatApproximation()).toEqual(-1);
+      expect(Decimal.fromUserInput("-1.5", 5).toFloatApproximation()).toEqual(-1.5);
+      expect(Decimal.fromUserInput("-0.1", 5).toFloatApproximation()).toEqual(-0.1);
 
       expect(Decimal.fromUserInput("1234500000000000", 5).toFloatApproximation()).toEqual(1.2345e15);
       expect(Decimal.fromUserInput("1234500000000000.002", 5).toFloatApproximation()).toEqual(1.2345e15);
@@ -365,6 +456,13 @@ describe("Decimal", () => {
       expect(one.plus(Decimal.fromUserInput("2.8", 5)).toString()).toEqual("3.8");
       expect(one.plus(Decimal.fromUserInput("0.12345", 5)).toString()).toEqual("1.12345");
 
+      const minusOne = Decimal.fromUserInput("-1", 5);
+      expect(minusOne.plus(Decimal.fromUserInput("0", 5)).toString()).toEqual("-1");
+      expect(minusOne.plus(Decimal.fromUserInput("1", 5)).toString()).toEqual("0");
+      expect(minusOne.plus(Decimal.fromUserInput("2", 5)).toString()).toEqual("1");
+      expect(minusOne.plus(Decimal.fromUserInput("2.8", 5)).toString()).toEqual("1.8");
+      expect(minusOne.plus(Decimal.fromUserInput("0.12345", 5)).toString()).toEqual("-0.87655");
+
       const oneDotFive = Decimal.fromUserInput("1.5", 5);
       expect(oneDotFive.plus(Decimal.fromUserInput("0", 5)).toString()).toEqual("1.5");
       expect(oneDotFive.plus(Decimal.fromUserInput("1", 5)).toString()).toEqual("2.5");
@@ -375,6 +473,7 @@ describe("Decimal", () => {
       // original value remain unchanged
       expect(zero.toString()).toEqual("0");
       expect(one.toString()).toEqual("1");
+      expect(minusOne.toString()).toEqual("-1");
       expect(oneDotFive.toString()).toEqual("1.5");
     });
 
@@ -430,11 +529,11 @@ describe("Decimal", () => {
       expect(() => Decimal.fromUserInput("1", 7).minus(zero)).toThrowError(/do not match/i);
     });
 
-    it("throws for negative results", () => {
+    it("works for negative results", () => {
       const one = Decimal.fromUserInput("1", 5);
-      expect(() => Decimal.fromUserInput("0", 5).minus(one)).toThrowError(/must not be negative/i);
-      expect(() => Decimal.fromUserInput("0.5", 5).minus(one)).toThrowError(/must not be negative/i);
-      expect(() => Decimal.fromUserInput("0.98765", 5).minus(one)).toThrowError(/must not be negative/i);
+      expect(Decimal.fromUserInput("0", 5).minus(one).toString()).toEqual("-1");
+      expect(Decimal.fromUserInput("0.5", 5).minus(one).toString()).toEqual("-0.5");
+      expect(Decimal.fromUserInput("0.98765", 5).minus(one).toString()).toEqual("-0.01235");
     });
   });
 
@@ -519,6 +618,38 @@ describe("Decimal", () => {
     });
   });
 
+  describe("neg", () => {
+    it("works", () => {
+      // There is only one zero which negates to itself
+      expect(Decimal.zero(2).neg()).toEqual(Decimal.zero(2));
+      expect(Decimal.fromUserInput("-0", 4).neg()).toEqual(Decimal.fromUserInput("0", 4));
+
+      // positive to negative
+      expect(Decimal.fromAtomics(1n, 4).neg()).toEqual(Decimal.fromAtomics(-1n, 4));
+      expect(Decimal.fromAtomics(8743181344348n, 4).neg()).toEqual(Decimal.fromAtomics(-8743181344348n, 4));
+
+      // negative to positive
+      expect(Decimal.fromAtomics(-1n, 4).neg()).toEqual(Decimal.fromAtomics(1n, 4));
+      expect(Decimal.fromAtomics(-41146784348412n, 4).neg()).toEqual(Decimal.fromAtomics(41146784348412n, 4));
+    });
+  });
+
+  describe("abs", () => {
+    it("works", () => {
+      // There is only one zero which negates to itself
+      expect(Decimal.zero(2).abs()).toEqual(Decimal.zero(2));
+      expect(Decimal.fromUserInput("-0", 4).abs()).toEqual(Decimal.fromUserInput("0", 4));
+
+      // positive input
+      expect(Decimal.fromAtomics(1n, 4).abs()).toEqual(Decimal.fromAtomics(1n, 4));
+      expect(Decimal.fromAtomics(8743181344348n, 4).abs()).toEqual(Decimal.fromAtomics(8743181344348n, 4));
+
+      // negative input
+      expect(Decimal.fromAtomics(-1n, 4).neg()).toEqual(Decimal.fromAtomics(1n, 4));
+      expect(Decimal.fromAtomics(-41146784348412n, 4).neg()).toEqual(Decimal.fromAtomics(41146784348412n, 4));
+    });
+  });
+
   describe("equals", () => {
     it("returns correct values", () => {
       const zero = Decimal.fromUserInput("0", 5);
@@ -543,10 +674,25 @@ describe("Decimal", () => {
       expect(oneDotFive.equals(Decimal.fromUserInput("2.8", 5))).toEqual(false);
       expect(oneDotFive.equals(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
 
+      const minusTwoDotEight = Decimal.fromUserInput("-2.8", 5);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("1.5", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-0", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-1", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-1.5", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-2", 5))).toEqual(false);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-2.8", 5))).toEqual(true);
+      expect(minusTwoDotEight.equals(Decimal.fromUserInput("-0.12345", 5))).toEqual(false);
+
       // original value remain unchanged
       expect(zero.toString()).toEqual("0");
       expect(one.toString()).toEqual("1");
       expect(oneDotFive.toString()).toEqual("1.5");
+      expect(minusTwoDotEight.toString()).toEqual("-2.8");
     });
 
     it("throws for different fractional digits", () => {

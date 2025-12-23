@@ -13,19 +13,27 @@ export class Decimal {
   public static fromUserInput(input: string, fractionalDigits: number): Decimal {
     Decimal.verifyFractionalDigits(fractionalDigits);
 
-    const badCharacter = input.match(/[^0-9.]/);
+    if (input === "") return Decimal.zero(fractionalDigits);
+
+    let testString: string;
+    let characterOffset: number;
+    if (input.startsWith("-")) {
+      testString = input.substring(1);
+      characterOffset = 2;
+    } else {
+      testString = input;
+      characterOffset = 1;
+    }
+    const badCharacter = testString.match(/[^0-9.]/);
     if (badCharacter) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      throw new Error(`Invalid character at position ${badCharacter.index! + 1}`);
+      throw new Error(`Invalid character at position ${badCharacter.index! + characterOffset}`);
     }
 
     let whole: string;
     let fractional: string;
 
-    if (input === "") {
-      whole = "0";
-      fractional = "";
-    } else if (input.search(/\./) === -1) {
+    if (input.search(/\./) === -1) {
       // integer format, no separator
       whole = input;
       fractional = "";
@@ -50,11 +58,6 @@ export class Decimal {
     }
 
     const quantity = BigInt(`${whole}${fractional.padEnd(fractionalDigits, "0")}`);
-
-    // We can remove this restriction, but then need to test and update arithmetic operations.
-    // See also https://github.com/cosmos/cosmjs/issues/1897
-    if (quantity < 0n) throw new Error("Only non-negative values supported.");
-
     return new Decimal(quantity, fractionalDigits);
   }
 
@@ -77,10 +80,6 @@ export class Decimal {
       }
       return Decimal.fromAtomics(BigInt(atomics), fractionalDigits);
     }
-
-    // We can remove this restriction, but then need to test and update arithmetic operations.
-    // See also https://github.com/cosmos/cosmjs/issues/1897
-    if (atomics < 0n) throw new Error("Only non-negative values supported.");
 
     Decimal.verifyFractionalDigits(fractionalDigits);
     return new Decimal(atomics, fractionalDigits);
@@ -151,6 +150,9 @@ export class Decimal {
 
   /** Returns the greatest decimal <= this which has no fractional part (rounding down) */
   public floor(): Decimal {
+    if (this.isNegative()) return this.neg().ceil().neg();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -164,6 +166,9 @@ export class Decimal {
 
   /** Returns the smallest decimal >= this which has no fractional part (rounding up) */
   public ceil(): Decimal {
+    if (this.isNegative()) return this.neg().floor().neg();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -200,6 +205,9 @@ export class Decimal {
   }
 
   public toString(): string {
+    if (this.isNegative()) return "-" + this.neg().toString();
+
+    // only non-negative values possible from here
     const factor = 10n ** BigInt(this.data.fractionalDigits);
     const whole = this.data.atomics / factor;
     const fractional = this.data.atomics % factor;
@@ -243,7 +251,6 @@ export class Decimal {
   public minus(b: Decimal): Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const difference = this.data.atomics - b.data.atomics;
-    if (difference < 0n) throw new Error("Difference must not be negative");
     return new Decimal(difference, this.fractionalDigits);
   }
 
@@ -257,8 +264,28 @@ export class Decimal {
     return new Decimal(product, this.fractionalDigits);
   }
 
+  /** Negates the value */
+  public neg(): Decimal {
+    return new Decimal(-this.data.atomics, this.data.fractionalDigits);
+  }
+
+  /** Returns the absolute value */
+  public abs(): Decimal {
+    return this.isNegative() ? this.neg() : this.clone();
+  }
+
   public equals(b: Decimal): boolean {
     return Decimal.compare(this, b) === 0;
+  }
+
+  /**
+   * Returns true if and only if value is < 0.
+   *
+   * Please note that in contrast to numbers, -0 cannot be represented. I.e.
+   * an input of "-0" is always normalized to "0" and is non-negative.
+   */
+  public isNegative(): boolean {
+    return this.data.atomics < 0n;
   }
 
   public isLessThan(b: Decimal): boolean {
