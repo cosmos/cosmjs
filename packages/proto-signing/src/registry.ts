@@ -34,6 +34,11 @@ export interface TsProtoGeneratedType {
   // Methods from ts-proto types we don't need
   // readonly fromJSON: (object: any) => any;
   // readonly toJSON: (message: any | { [k: string]: any }) => unknown;
+
+  // This was added at some point in 2023 and looks pretty compatible to the PbjsGeneratedType constructor.
+  // but we don't need it as long as Telescope does not have it. `fromPartial` is widespread and works well.
+  // See https://github.com/stephenh/ts-proto/pull/760
+  // readonly create: (object?: any) => any;
 }
 
 /**
