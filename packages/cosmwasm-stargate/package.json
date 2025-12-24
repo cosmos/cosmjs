@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.38.0-rc.0",
+  "version": "0.38.0-rc.1",
   "description": "Old name of @cosmjs/cosmwasm. Use @cosmjs/cosmwasm instead.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
