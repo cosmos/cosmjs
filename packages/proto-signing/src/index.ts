@@ -16,10 +16,11 @@ export type {
   EncodeObject,
   GeneratedType,
   PbjsGeneratedType,
+  TsProto2GeneratedType,
   TsProtoGeneratedType,
   TxBodyEncodeObject,
 } from "./registry";
-export { isPbjsGeneratedType, isTsProtoGeneratedType, isTxBodyEncodeObject, Registry } from "./registry";
+export { hasCreate, hasFromPartial, isTxBodyEncodeObject, Registry } from "./registry";
 export type { AccountData, Algo, DirectSignResponse, OfflineDirectSigner, OfflineSigner } from "./signer";
 export { isOfflineDirectSigner } from "./signer";
 export { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";

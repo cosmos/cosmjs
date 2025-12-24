@@ -167,6 +167,10 @@ const RAW_RUNTIME_STATE =
       "npm:7.28.4"\
     ],\
     [\
+      "@bufbuild/protobuf",\
+      "npm:2.10.2"\
+    ],\
+    [\
       "@cosmjs/amino",\
       "workspace:packages/amino"\
     ],\
@@ -3261,6 +3265,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@bufbuild/protobuf", [\
+      ["npm:2.10.2", {\
+        "packageLocation": "./.yarn/cache/@bufbuild-protobuf-npm-2.10.2-590393a75c-970c4020bf.zip/node_modules/@bufbuild/protobuf/",\
+        "packageDependencies": [\
+          ["@bufbuild/protobuf", "npm:2.10.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@cosmjs/amino", [\
       ["workspace:packages/amino", {\
         "packageLocation": "./packages/amino/",\
@@ -3587,6 +3600,7 @@ const RAW_RUNTIME_STATE =
       ["workspace:packages/proto-signing", {\
         "packageLocation": "./packages/proto-signing/",\
         "packageDependencies": [\
+          ["@bufbuild/protobuf", "npm:2.10.2"],\
           ["@cosmjs/amino", "workspace:packages/amino"],\
           ["@cosmjs/crypto", "workspace:packages/crypto"],\
           ["@cosmjs/encoding", "workspace:packages/encoding"],\

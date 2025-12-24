@@ -6,17 +6,47 @@ import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Field, Type } from "protobufjs";
 
-import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry";
+import {
+  hasCreate,
+  hasFromPartial,
+  Registry,
+  TelescopeGeneratedType,
+  TsProto2GeneratedType,
+  TsProtoGeneratedType,
+} from "./registry";
+import * as tsProto1 from "./testdata/ts-proto-v1";
+import * as tsProto2 from "./testdata/ts-proto-v2";
 
 describe("registry demo", () => {
+  describe("TelescopeGeneratedType", () => {
+    it("is compatible with cosmjs-types generated types", () => {
+      const t: TelescopeGeneratedType = TxBody;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
+  describe("TsProtoGeneratedType", () => {
+    it("is compatible with ts-proto v1 generated types", () => {
+      const t: TsProtoGeneratedType = tsProto1.Record;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
+  describe("TsProto2GeneratedType", () => {
+    it("is compatible with ts-proto v2 generated types", () => {
+      const t: TsProto2GeneratedType = tsProto2.Record;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
   it("works with a default msg", () => {
     const registry = new Registry();
     const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin");
     const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend");
     assert(Coin);
     assert(MsgSend);
-    assert(isTsProtoGeneratedType(Coin));
-    assert(isTsProtoGeneratedType(MsgSend));
+    assert(hasFromPartial(Coin));
+    assert(hasFromPartial(MsgSend));
 
     const coin = Coin.fromPartial({
       denom: "ucosm",
@@ -67,7 +97,7 @@ describe("registry demo", () => {
     registry.register(typeUrl, MsgCreatePostOriginal);
     const MsgCreatePost = registry.lookupType(typeUrl);
     assert(MsgCreatePost);
-    assert(isPbjsGeneratedType(MsgCreatePost));
+    assert(hasCreate(MsgCreatePost));
 
     const msgDemo = MsgCreatePost.create({
       creator: "Me",

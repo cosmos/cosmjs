@@ -24,7 +24,12 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add the ability to specify a custom account parser
   for `CosmWasmClient`. ([#1928])
 - Add support for Cosmos EVM key handling and signing. ([#1932])
+- @cosmjs/proto-signing: Add support for ts-proto v2 through the newly added
+  `TsProto2GeneratedType` interface. As long as the existing
+  `TsProtoGeneratedType` is not removed, ts-proto v1 remains supported.
+  ([#1613])
 
+[#1613]: https://github.com/cosmos/cosmjs/issues/1613
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1916]: https://github.com/cosmos/cosmjs/pull/1916
 [#1926]: https://github.com/cosmos/cosmjs/pull/1926
@@ -114,6 +119,13 @@ and this project adheres to
   through strings in cases where you have a BitInt already. Strings remain
   supported for convenient usage with coins.
 - @cosmjs/math: `Decimal` now supports negative values. ([#1930])
+- @cosmjs/proto-signing: Remove `isTelescopeGeneratedType`,
+  `isTsProtoGeneratedType` and `isPbjsGeneratedType` because they are
+  unreliable. E.g. the `typeUrl` in Telescope may or may not exist depending on
+  the configuration. The newly added `hasFromPartial`/`hasCreate` allow you to
+  check for `TelescopeGeneratedType | TsProtoGeneratedType`/`PbjsGeneratedType`
+  such that you can create instanes through
+  `MyMessage.fromPartial()`/`MyMessage.create()`.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866
