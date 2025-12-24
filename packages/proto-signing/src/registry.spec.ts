@@ -6,9 +6,16 @@ import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Field, Type } from "protobufjs";
 
-import { hasCreate, hasFromPartial, Registry } from "./registry";
+import { hasCreate, hasFromPartial, Registry, TelescopeGeneratedType } from "./registry";
 
 describe("registry demo", () => {
+  describe("TelescopeGeneratedType", () => {
+    it("is compatible with cosmjs-types generated types", () => {
+      const t: TelescopeGeneratedType = TxBody;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
   it("works with a default msg", () => {
     const registry = new Registry();
     const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin");
