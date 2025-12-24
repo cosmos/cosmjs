@@ -24,7 +24,12 @@ and this project adheres to
 - @cosmjs/cosmwasm-stargate: Add the ability to specify a custom account parser
   for `CosmWasmClient`. ([#1928])
 - Add support for Cosmos EVM key handling and signing. ([#1932])
+- @cosmjs/proto-signing: Add support for ts-proto v2 through the newly added
+  `TsProto2GeneratedType` interface. As long as the existing
+  `TsProtoGeneratedType` is not removed, ts-proto v1 remains supported.
+  ([#1613])
 
+[#1613]: https://github.com/cosmos/cosmjs/issues/1613
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1916]: https://github.com/cosmos/cosmjs/pull/1916
 [#1926]: https://github.com/cosmos/cosmjs/pull/1926

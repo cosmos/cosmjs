@@ -180,6 +180,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bufbuild/protobuf@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "@bufbuild/protobuf@npm:2.10.2"
+  checksum: 10c0/970c4020bfc4769baa13eb5b2622d6e59962bfff54dbf8b5fc7499e8dc0b6ec1ee80be85148eb545f70d7e5b058bd178a5dc5c0b7409a96a510114fb3bfbb631
+  languageName: node
+  linkType: hard
+
 "@cosmjs/amino@workspace:^, @cosmjs/amino@workspace:packages/amino":
   version: 0.0.0-use.local
   resolution: "@cosmjs/amino@workspace:packages/amino"
@@ -488,6 +495,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/proto-signing@workspace:packages/proto-signing"
   dependencies:
+    "@bufbuild/protobuf": "npm:^2.10.2"
     "@cosmjs/amino": "workspace:^"
     "@cosmjs/crypto": "workspace:^"
     "@cosmjs/encoding": "workspace:^"

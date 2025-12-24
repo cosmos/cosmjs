@@ -6,12 +6,35 @@ import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Field, Type } from "protobufjs";
 
-import { hasCreate, hasFromPartial, Registry, TelescopeGeneratedType } from "./registry";
+import {
+  hasCreate,
+  hasFromPartial,
+  Registry,
+  TelescopeGeneratedType,
+  TsProto2GeneratedType,
+  TsProtoGeneratedType,
+} from "./registry";
+import * as tsProto1 from "./testdata/ts-proto-v1";
+import * as tsProto2 from "./testdata/ts-proto-v2";
 
 describe("registry demo", () => {
   describe("TelescopeGeneratedType", () => {
     it("is compatible with cosmjs-types generated types", () => {
       const t: TelescopeGeneratedType = TxBody;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
+  describe("TsProtoGeneratedType", () => {
+    it("is compatible with ts-proto v1 generated types", () => {
+      const t: TsProtoGeneratedType = tsProto1.Record;
+      expect(typeof t.fromPartial).toEqual("function");
+    });
+  });
+
+  describe("TsProto2GeneratedType", () => {
+    it("is compatible with ts-proto v2 generated types", () => {
+      const t: TsProto2GeneratedType = tsProto2.Record;
       expect(typeof t.fromPartial).toEqual("function");
     });
   });

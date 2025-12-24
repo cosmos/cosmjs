@@ -16,6 +16,7 @@ export type {
   EncodeObject,
   GeneratedType,
   PbjsGeneratedType,
+  TsProto2GeneratedType,
   TsProtoGeneratedType,
   TxBodyEncodeObject,
 } from "./registry";
