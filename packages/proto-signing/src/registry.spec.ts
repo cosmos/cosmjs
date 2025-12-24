@@ -6,7 +6,7 @@ import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Field, Type } from "protobufjs";
 
-import { isPbjsGeneratedType, isTsProtoGeneratedType, Registry } from "./registry";
+import { hasCreate, hasFromPartial, Registry } from "./registry";
 
 describe("registry demo", () => {
   it("works with a default msg", () => {
@@ -15,8 +15,8 @@ describe("registry demo", () => {
     const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend");
     assert(Coin);
     assert(MsgSend);
-    assert(isTsProtoGeneratedType(Coin));
-    assert(isTsProtoGeneratedType(MsgSend));
+    assert(hasFromPartial(Coin));
+    assert(hasFromPartial(MsgSend));
 
     const coin = Coin.fromPartial({
       denom: "ucosm",
@@ -67,7 +67,7 @@ describe("registry demo", () => {
     registry.register(typeUrl, MsgCreatePostOriginal);
     const MsgCreatePost = registry.lookupType(typeUrl);
     assert(MsgCreatePost);
-    assert(isPbjsGeneratedType(MsgCreatePost));
+    assert(hasCreate(MsgCreatePost));
 
     const msgDemo = MsgCreatePost.create({
       creator: "Me",

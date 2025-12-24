@@ -114,6 +114,13 @@ and this project adheres to
   through strings in cases where you have a BitInt already. Strings remain
   supported for convenient usage with coins.
 - @cosmjs/math: `Decimal` now supports negative values. ([#1930])
+- @cosmjs/proto-signing: Remove `isTelescopeGeneratedType`,
+  `isTsProtoGeneratedType` and `isPbjsGeneratedType` because they are
+  unreliable. E.g. the `typeUrl` in Telescope may or may not exist depending on
+  the configuration. The newly added `hasFromPartial`/`hasCreate` allow you to
+  check for `TelescopeGeneratedType | TsProtoGeneratedType`/`PbjsGeneratedType`
+  such that you can create instanes through
+  `MyMessage.fromPartial()`/`MyMessage.create()`.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
 [#1866]: https://github.com/cosmos/cosmjs/issues/1866

@@ -50,17 +50,12 @@ export interface PbjsGeneratedType {
 
 export type GeneratedType = TelescopeGeneratedType | TsProtoGeneratedType | PbjsGeneratedType;
 
-export function isTelescopeGeneratedType(type: GeneratedType): type is TelescopeGeneratedType {
-  const casted = type as TelescopeGeneratedType;
-  return typeof casted.fromPartial === "function" && typeof casted.typeUrl == "string";
+export function hasFromPartial(type: GeneratedType): type is TelescopeGeneratedType | TsProtoGeneratedType {
+  return typeof (type as TelescopeGeneratedType | TsProtoGeneratedType).fromPartial === "function";
 }
 
-export function isTsProtoGeneratedType(type: GeneratedType): type is TsProtoGeneratedType {
-  return typeof (type as TsProtoGeneratedType).fromPartial === "function";
-}
-
-export function isPbjsGeneratedType(type: GeneratedType): type is PbjsGeneratedType {
-  return !isTsProtoGeneratedType(type);
+export function hasCreate(type: GeneratedType): type is PbjsGeneratedType {
+  return typeof (type as PbjsGeneratedType).create === "function";
 }
 
 const defaultTypeUrls = {
@@ -137,7 +132,7 @@ export class Registry {
    *
    * const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin");
    * assert(Coin); // Ensures not unset
-   * assert(isTsProtoGeneratedType(Coin)); // Ensures this is the type we expect
+   * assert(hasFromPartial(Coin)); // Ensures this is the type we expect
    *
    * // Coin is typed TsProtoGeneratedType now.
    * ```
@@ -167,10 +162,7 @@ export class Registry {
       return this.encodeTxBody(value);
     }
     const type = this.lookupTypeWithError(typeUrl);
-    const instance =
-      isTelescopeGeneratedType(type) || isTsProtoGeneratedType(type)
-        ? type.fromPartial(value)
-        : type.create(value);
+    const instance = hasFromPartial(type) ? type.fromPartial(value) : type.create(value);
     return fixUint8Array(type.encode(instance).finish());
   }
 
