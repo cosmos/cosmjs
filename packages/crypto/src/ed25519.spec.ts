@@ -72,13 +72,17 @@ describe("Libsodium", () => {
       {
         // seed too short
         const seed = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0");
-        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(/key of length 32 expected/);
+        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(
+          /"secretKey" expected Uint8Array of length 32, got length=31/,
+        );
       }
 
       {
         // seed too long
         const seed = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9aa");
-        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(/key of length 32 expected/);
+        await expectAsync(Ed25519.makeKeypair(seed)).toBeRejectedWithError(
+          /"secretKey" expected Uint8Array of length 32, got length=33/,
+        );
       }
     });
 

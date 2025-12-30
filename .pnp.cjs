@@ -412,15 +412,15 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "@noble/ciphers",\
-      "npm:1.3.0"\
+      "npm:2.1.1"\
     ],\
     [\
       "@noble/curves",\
-      "npm:1.9.2"\
+      "npm:2.0.1"\
     ],\
     [\
       "@noble/hashes",\
-      "npm:1.8.0"\
+      "npm:2.0.1"\
     ],\
     [\
       "@nodelib/fs.scandir",\
@@ -3373,9 +3373,9 @@ const RAW_RUNTIME_STATE =
           ["@cosmjs/math", "workspace:packages/math"],\
           ["@cosmjs/utils", "workspace:packages/utils"],\
           ["@istanbuljs/nyc-config-typescript", "virtual:4f1584ad4aba8733a24be7c8aebbffafef25607f2d00f4b314cf96717145c692763628a31c2b85d4686fbb091ff21ebffa3cc337399c042c19a32b9bdb786464#npm:1.0.1"],\
-          ["@noble/ciphers", "npm:1.3.0"],\
-          ["@noble/curves", "npm:1.9.2"],\
-          ["@noble/hashes", "npm:1.8.0"],\
+          ["@noble/ciphers", "npm:2.1.1"],\
+          ["@noble/curves", "npm:2.0.1"],\
+          ["@noble/hashes", "npm:2.0.1"],\
           ["@scure/bip39", "npm:1.6.0"],\
           ["@types/jasmine", "npm:4.6.1"],\
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
@@ -4369,20 +4369,20 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@noble/ciphers", [\
-      ["npm:1.3.0", {\
-        "packageLocation": "./.yarn/cache/@noble-ciphers-npm-1.3.0-73a7db337f-3ba6da645c.zip/node_modules/@noble/ciphers/",\
+      ["npm:2.1.1", {\
+        "packageLocation": "./.yarn/cache/@noble-ciphers-npm-2.1.1-624aa44155-f026627234.zip/node_modules/@noble/ciphers/",\
         "packageDependencies": [\
-          ["@noble/ciphers", "npm:1.3.0"]\
+          ["@noble/ciphers", "npm:2.1.1"]\
         ],\
         "linkType": "HARD"\
       }]\
     ]],\
     ["@noble/curves", [\
-      ["npm:1.9.2", {\
-        "packageLocation": "./.yarn/cache/@noble-curves-npm-1.9.2-2584df26a7-21d049ae45.zip/node_modules/@noble/curves/",\
+      ["npm:2.0.1", {\
+        "packageLocation": "./.yarn/cache/@noble-curves-npm-2.0.1-cd0988b6b8-e0b329eb92.zip/node_modules/@noble/curves/",\
         "packageDependencies": [\
-          ["@noble/curves", "npm:1.9.2"],\
-          ["@noble/hashes", "npm:1.8.0"]\
+          ["@noble/curves", "npm:2.0.1"],\
+          ["@noble/hashes", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4392,6 +4392,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@noble-hashes-npm-1.8.0-a397449e64-06a0b52c81.zip/node_modules/@noble/hashes/",\
         "packageDependencies": [\
           ["@noble/hashes", "npm:1.8.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:2.0.1", {\
+        "packageLocation": "./.yarn/cache/@noble-hashes-npm-2.0.1-3deaaa8c92-e81769ce21.zip/node_modules/@noble/hashes/",\
+        "packageDependencies": [\
+          ["@noble/hashes", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
