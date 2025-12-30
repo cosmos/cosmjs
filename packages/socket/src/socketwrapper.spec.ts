@@ -59,7 +59,7 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
       (error) => {
         if (error.message) {
           // error message only available in nodejs
-          expect(error.message).toMatch(/ECONNREFUSED/i);
+          expect(error.message).toMatch(/network error or non-101 status code/i);
         }
         done();
       },
