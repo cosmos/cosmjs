@@ -9,6 +9,9 @@ and this project adheres to
 ### Changed
 
 - all: Drop support for Node.js < 22.
+- @cosmjs/socket: Remove isomorphic-ws dependency ([#1810])
+
+[#1810]: https://github.com/cosmos/cosmjs/issues/1810
 
 ## [0.38.0] - 2025-12-30
 

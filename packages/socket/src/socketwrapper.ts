@@ -1,14 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import WebSocket from "isomorphic-ws";
-
-function environmentIsNodeJs(): boolean {
-  return (
-    typeof process !== "undefined" &&
-    typeof process.versions !== "undefined" &&
-    typeof process.versions.node !== "undefined"
-  );
-}
-
 export interface SocketWrapperCloseEvent {
   readonly wasClean: boolean;
   readonly code: number;
@@ -29,7 +18,7 @@ export interface SocketWrapperMessageEvent {
 }
 
 /**
- * A thin wrapper around isomorphic-ws' WebSocket class that adds
+ * A thin wrapper around WebSocket that adds
  * - constant message/error/open/close handlers
  * - explicit connection via a connect() method
  * - type support for events
@@ -159,32 +148,21 @@ export class SocketWrapper {
   }
 
   public async send(data: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!this.socket) {
-        throw new Error("Socket undefined. This must be called after connecting.");
-      }
+    if (!this.socket) {
+      throw new Error("Socket undefined. This must be called after connecting.");
+    }
 
-      if (this.closed) {
-        throw new Error("Socket was closed, so no data can be sent anymore.");
-      }
+    if (this.closed) {
+      throw new Error("Socket was closed, so no data can be sent anymore.");
+    }
 
-      // this exception should be thrown by send() automatically according to
-      // https://developer.mozilla.org/de/docs/Web/API/WebSocket#send() but it does not work in browsers
-      if (this.socket.readyState !== WebSocket.OPEN) {
-        throw new Error("Websocket is not open");
-      }
+    // this exception should be thrown by send() automatically according to
+    // https://developer.mozilla.org/de/docs/Web/API/WebSocket#send() but it does not work in browsers
+    if (this.socket.readyState !== WebSocket.OPEN) {
+      throw new Error("Websocket is not open");
+    }
 
-      if (environmentIsNodeJs()) {
-        this.socket.send(data, (err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      } else {
-        // Browser websocket send method does not accept a callback
-        this.socket.send(data);
-        resolve();
-      }
-    });
+    this.socket.send(data);
   }
 
   /**

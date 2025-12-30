@@ -1915,10 +1915,6 @@ const RAW_RUNTIME_STATE =
       "npm:3.0.1"\
     ],\
     [\
-      "isomorphic-ws",\
-      "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1"\
-    ],\
-    [\
       "istanbul-lib-coverage",\
       "npm:3.2.2"\
     ],\
@@ -3001,7 +2997,7 @@ const RAW_RUNTIME_STATE =
     ],\
     [\
       "ws",\
-      "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10"\
+      "virtual:1d61fc58e3bfe6abc91b3453689f077c31362697bd0dc94bc6dc09bf7c6a0b9c4d4d14474fc7aada28132044c44f3822836470d62594826815ec3c32a8ff4838#npm:8.17.1"\
     ],\
     [\
       "xstream",\
@@ -3649,7 +3645,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
           ["@types/ws", "npm:6.0.4"],\
           ["glob", "npm:13.0.0"],\
-          ["isomorphic-ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
           ["karma", "npm:6.3.16"],\
@@ -3665,7 +3660,6 @@ const RAW_RUNTIME_STATE =
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
           ["webpack", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:5.102.1"],\
           ["webpack-cli", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.7.0"],\
-          ["ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10"],\
           ["xstream", "npm:11.14.0"]\
         ],\
         "linkType": "SOFT"\
@@ -9758,28 +9752,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["isomorphic-ws", [\
-      ["npm:4.0.1", {\
-        "packageLocation": "./.yarn/cache/isomorphic-ws-npm-4.0.1-aa39192848-7cb90dc2f0.zip/node_modules/isomorphic-ws/",\
-        "packageDependencies": [\
-          ["isomorphic-ws", "npm:4.0.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1", {\
-        "packageLocation": "./.yarn/__virtual__/isomorphic-ws-virtual-493f91fda7/0/cache/isomorphic-ws-npm-4.0.1-aa39192848-7cb90dc2f0.zip/node_modules/isomorphic-ws/",\
-        "packageDependencies": [\
-          ["@types/ws", "npm:6.0.4"],\
-          ["isomorphic-ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:4.0.1"],\
-          ["ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10"]\
-        ],\
-        "packagePeers": [\
-          "@types/ws",\
-          "ws"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["istanbul-lib-coverage", [\
       ["npm:3.2.2", {\
         "packageLocation": "./.yarn/cache/istanbul-lib-coverage-npm-3.2.2-5c0526e059-6c7ff21067.zip/node_modules/istanbul-lib-coverage/",\
@@ -14716,13 +14688,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["ws", [\
-      ["npm:7.5.10", {\
-        "packageLocation": "./.yarn/cache/ws-npm-7.5.10-878ccb886b-bd7d5f4aaf.zip/node_modules/ws/",\
-        "packageDependencies": [\
-          ["ws", "npm:7.5.10"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
       ["npm:8.17.1", {\
         "packageLocation": "./.yarn/cache/ws-npm-8.17.1-f57fb24a2c-f4a49064af.zip/node_modules/ws/",\
         "packageDependencies": [\
@@ -14738,23 +14703,6 @@ const RAW_RUNTIME_STATE =
           ["bufferutil", null],\
           ["utf-8-validate", null],\
           ["ws", "virtual:1d61fc58e3bfe6abc91b3453689f077c31362697bd0dc94bc6dc09bf7c6a0b9c4d4d14474fc7aada28132044c44f3822836470d62594826815ec3c32a8ff4838#npm:8.17.1"]\
-        ],\
-        "packagePeers": [\
-          "@types/bufferutil",\
-          "@types/utf-8-validate",\
-          "bufferutil",\
-          "utf-8-validate"\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10", {\
-        "packageLocation": "./.yarn/__virtual__/ws-virtual-7051cf986b/0/cache/ws-npm-7.5.10-878ccb886b-bd7d5f4aaf.zip/node_modules/ws/",\
-        "packageDependencies": [\
-          ["@types/bufferutil", null],\
-          ["@types/utf-8-validate", null],\
-          ["bufferutil", null],\
-          ["utf-8-validate", null],\
-          ["ws", "virtual:992e8a49329af27dec1603ba7ec6f83173fb73e1d5752e95d78d0bec9ff8e148a218f65e20742125a49b958677fd4d6119ec35f9c56f9b4ea72f0e32f53b591b#npm:7.5.10"]\
         ],\
         "packagePeers": [\
           "@types/bufferutil",\
