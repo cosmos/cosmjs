@@ -20,26 +20,26 @@ describe("Bip39", () => {
 
     it("throws for invalid input", () => {
       // invalid input length
-      expect(() => Bip39.encode(fromHex(""))).toThrowError(/got length/);
-      expect(() => Bip39.encode(fromHex("00"))).toThrowError(/got length/);
+      expect(() => Bip39.encode(fromHex(""))).toThrowError(/invalid entropy length/);
+      expect(() => Bip39.encode(fromHex("00"))).toThrowError(/invalid entropy length/);
       expect(() => Bip39.encode(fromHex("000000000000000000000000000000"))).toThrowError(
-        /expected of length .*, got length=15/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("0000000000000000000000000000000000"))).toThrowError(
-        /expected of length .*, got length=17/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("0000000000000000000000000000000000000000000000"))).toThrowError(
-        /got length/,
+        /invalid entropy length/,
       );
       expect(() => Bip39.encode(fromHex("00000000000000000000000000000000000000000000000000"))).toThrowError(
-        /got length/,
+        /invalid entropy length/,
       );
       expect(() =>
         Bip39.encode(fromHex("00000000000000000000000000000000000000000000000000000000000000")),
-      ).toThrowError(/got length/);
+      ).toThrowError(/invalid entropy length/);
       expect(() =>
         Bip39.encode(fromHex("000000000000000000000000000000000000000000000000000000000000000000")),
-      ).toThrowError(/got length/);
+      ).toThrowError(/invalid entropy length/);
     });
   });
 
