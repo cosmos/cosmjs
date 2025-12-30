@@ -3,7 +3,8 @@
   "version": "0.38.0-rc.1",
   "description": "Math helpers for blockchain projects",
   "contributors": [
-    "IOV SAS <admin@iov.one>"
+    "IOV SAS <admin@iov.one>",
+    "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "exports": {

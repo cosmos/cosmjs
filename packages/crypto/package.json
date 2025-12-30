@@ -4,7 +4,7 @@
   "description": "Cryptography resources for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>",
-    "Simon Warta"
+    "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "exports": {
