@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- all: Drop support for Node.js < 22.
+
 ## [0.38.0] - 2025-12-30
 
 ### Added
