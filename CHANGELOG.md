@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.38.0] - 2025-12-30
+
 ### Added
 
 - @cosmjs/encoding: Add `fixUint8Array` which takes an
@@ -1859,7 +1861,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.37.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.38.0...HEAD
+[0.38.0]: https://github.com/cosmos/cosmjs/compare/v0.37.0...v0.38.0
 [0.37.0]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.37.0
 [0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
 [0.36.1]: https://github.com/cosmos/cosmjs/compare/v0.36.0...v0.36.1

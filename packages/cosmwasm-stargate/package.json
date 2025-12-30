@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.38.0-rc.1",
+  "version": "0.39.0",
   "description": "Old name of @cosmjs/cosmwasm. Use @cosmjs/cosmwasm instead.",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -47,6 +47,5 @@
     "prettier": "^3.6.2",
     "typedoc": "^0.28",
     "typescript": "~5.9"
-  },
-  "stableVersion": "0.38.0"
+  }
 }
