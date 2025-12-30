@@ -539,7 +539,6 @@ __metadata:
     "@types/karma-firefox-launcher": "npm:^2"
     "@types/karma-jasmine": "npm:^4"
     "@types/karma-jasmine-html-reporter": "npm:^1"
-    "@types/ws": "npm:^6.0.1"
     glob: "npm:^13.0.0"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
@@ -1694,15 +1693,6 @@ __metadata:
   version: 1.0.10
   resolution: "@types/w3c-web-usb@npm:1.0.10"
   checksum: 10c0/3df5733a334c5fd22ef3fa1e97a70c029542591058d11905d1304c26bab8705d975168818b5b7ec21fef5591cdea776dbdb31d4c04aa433e7fe7d61dd7ebdecf
-  languageName: node
-  linkType: hard
-
-"@types/ws@npm:^6.0.1":
-  version: 6.0.4
-  resolution: "@types/ws@npm:6.0.4"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/fa958e64596ca9487c3ed6012834de70b47f25d971f1950cfb8e6a99cb77ff340ae82ac7627744e01b58010674ef8ede07d5a2ac29ca9ad0d67a430fcc69ae14
   languageName: node
   linkType: hard
 

@@ -671,10 +671,6 @@ const RAW_RUNTIME_STATE =
       "npm:1.0.10"\
     ],\
     [\
-      "@types/ws",\
-      "npm:6.0.4"\
-    ],\
-    [\
       "@typescript-eslint/eslint-plugin",\
       "virtual:5e84e7553054e678344c9584f8c875c24d817f4c617606b54c4b4cc7ac3f929af81710850c40f70a573fe1c4c8107e4e9bf2f796bbaaed428c1211083577d86f#npm:8.46.2"\
     ],\
@@ -3643,7 +3639,6 @@ const RAW_RUNTIME_STATE =
           ["@types/karma-firefox-launcher", "npm:2.1.0"],\
           ["@types/karma-jasmine", "npm:4.0.2"],\
           ["@types/karma-jasmine-html-reporter", "npm:1.5.1"],\
-          ["@types/ws", "npm:6.0.4"],\
           ["glob", "npm:13.0.0"],\
           ["jasmine", "npm:4.6.0"],\
           ["jasmine-spec-reporter", "npm:6.0.0"],\
@@ -5013,16 +5008,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-w3c-web-usb-npm-1.0.10-82b33e05cb-3df5733a33.zip/node_modules/@types/w3c-web-usb/",\
         "packageDependencies": [\
           ["@types/w3c-web-usb", "npm:1.0.10"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/ws", [\
-      ["npm:6.0.4", {\
-        "packageLocation": "./.yarn/cache/@types-ws-npm-6.0.4-4b7cc6a57b-fa958e6459.zip/node_modules/@types/ws/",\
-        "packageDependencies": [\
-          ["@types/node", "npm:22.10.6"],\
-          ["@types/ws", "npm:6.0.4"]\
         ],\
         "linkType": "HARD"\
       }]\
