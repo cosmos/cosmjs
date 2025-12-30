@@ -1,16 +1,9 @@
+export { type Argon2idOptions, Argon2id, isArgon2idOptions } from "./argon2";
 export { Bip39, EnglishMnemonic } from "./bip39";
+export { Ed25519, Ed25519Keypair } from "./ed25519";
 export type { HashFunction } from "./hash";
 export { Hmac } from "./hmac";
 export { Keccak256, keccak256 } from "./keccak";
-export {
-  type Argon2idOptions,
-  Argon2id,
-  Ed25519,
-  Ed25519Keypair,
-  isArgon2idOptions,
-  xchacha20NonceLength,
-  Xchacha20poly1305Ietf,
-} from "./libsodium";
 export { Random } from "./random";
 export { Ripemd160, ripemd160 } from "./ripemd";
 export { type Secp256k1Keypair, Secp256k1 } from "./secp256k1";
@@ -25,3 +18,4 @@ export {
   Slip10RawIndex,
   stringToPath,
 } from "./slip10";
+export { xchacha20NonceLength, Xchacha20poly1305Ietf } from "./xchacha20poly1305";
