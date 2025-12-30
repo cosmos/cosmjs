@@ -68,6 +68,13 @@ const enabled = !!globalThis.process?.env.SOCKETSERVER_ENABLED;
         subscription.unsubscribe();
         done();
       },
+      error: (err) => {
+        // err is an ErrorEvent but we don't get types for that
+        const error = err.error;
+        done.fail(
+          `Unexpected error in events stream: "${error.message}" / "${error.message}" / "${error.stack}" / JSON=${JSON.stringify(err)} (${err})`,
+        );
+      },
     });
 
     (async () => {
