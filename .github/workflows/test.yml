@@ -55,7 +55,7 @@ jobs:
   test:
     strategy:
       matrix:
-        node-version: [20, 22, 24]
+        node-version: [22, 24, 25]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
