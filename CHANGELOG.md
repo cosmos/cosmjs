@@ -6,7 +6,11 @@ and this project adheres to
 
 ## [Unreleased]
 
-- Bring back main/types fields for bundlephobia support
+## [0.38.1] - 2025-12-31
+
+- Bring back main/types fields for bundlephobia support. ([#1942])
+
+[#1942]: https://github.com/cosmos/cosmjs/pull/1942
 
 ## [0.38.0] - 2025-12-30
 
@@ -1864,6 +1868,7 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
 [unreleased]: https://github.com/cosmos/cosmjs/compare/v0.38.0...HEAD
+[0.38.1]: https://github.com/cosmos/cosmjs/compare/v0.38.0...v0.38.1
 [0.38.0]: https://github.com/cosmos/cosmjs/compare/v0.37.0...v0.38.0
 [0.37.0]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.37.0
 [0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2
