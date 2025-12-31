@@ -6,6 +6,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+- Bring back main/types fields for bundlephobia support
+
 ## [0.38.0] - 2025-12-30
 
 ### Added
