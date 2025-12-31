@@ -9,6 +9,10 @@ and this project adheres to
 ### Changed
 
 - all: Drop support for Node.js < 22.
+- @cosmjs/crypto: Upgrade dependencies @noble/ciphers, @noble/curves,
+  @noble/hashes and @scure/bip39 to v2. ([#1935])
+
+[#1935]: https://github.com/cosmos/cosmjs/pull/1935
 
 ## [0.38.0] - 2025-12-30
 

@@ -1,7 +1,7 @@
 import { fixUint8Array, fromHex, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint32, Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
-import { secp256k1 } from "@noble/curves/secp256k1";
+import { secp256k1 } from "@noble/curves/secp256k1.js";
 
 import { Hmac } from "./hmac";
 import { Sha512 } from "./sha";

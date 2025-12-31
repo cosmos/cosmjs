@@ -1,6 +1,6 @@
 import { fixUint8Array, fromHex, toHex } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
-import { secp256k1 } from "@noble/curves/secp256k1";
+import { secp256k1 } from "@noble/curves/secp256k1.js";
 
 import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
 
@@ -41,7 +41,7 @@ export class Secp256k1 {
       throw new Error("input data is not a valid secp256k1 private key");
     }
 
-    if (!secp256k1.utils.isValidPrivateKey(privkey)) {
+    if (!secp256k1.utils.isValidSecretKey(privkey)) {
       // not strictly smaller than N
       throw new Error("input data is not a valid secp256k1 private key");
     }
@@ -71,9 +71,15 @@ export class Secp256k1 {
       throw new Error("Message hash length must not exceed 32 bytes");
     }
 
-    const { recovery, r, s } = secp256k1.sign(messageHash, privkey, {
-      lowS: true,
-    });
+    const signature = secp256k1.Signature.fromBytes(
+      secp256k1.sign(messageHash, privkey, {
+        prehash: false,
+        lowS: true,
+        format: "recovered",
+      }),
+      "recovered",
+    );
+    const { recovery, r, s } = signature;
     if (typeof recovery !== "number") throw new Error("Recovery param missing");
     return new ExtendedSecp256k1Signature(unsignedBigIntToBytes(r), unsignedBigIntToBytes(s), recovery);
   }
@@ -90,8 +96,11 @@ export class Secp256k1 {
       throw new Error("Message hash length must not exceed 32 bytes");
     }
 
-    const encodedSig = secp256k1.Signature.fromDER(signature.toDer());
-    return secp256k1.verify(encodedSig, messageHash, pubkey, { lowS: false });
+    return secp256k1.verify(signature.toDer(), messageHash, pubkey, {
+      prehash: false,
+      lowS: false,
+      format: "der",
+    });
   }
 
   public static recoverPubkey(

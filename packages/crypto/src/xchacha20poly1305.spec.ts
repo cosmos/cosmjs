@@ -26,21 +26,21 @@ describe("Xchacha20poly1305Ietf", () => {
       // empty
       const key = fromHex("");
       await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
-        /key, got length=0/,
+        /"arx key" expected Uint8Array of length 32, got length=0/,
       );
     }
     {
       // 31 bytes
       const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916");
       await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
-        /key, got length=31/,
+        /"arx key" expected Uint8Array of length 32, got length=31/,
       );
     }
     {
       // 33 bytes
       const key = fromHex("1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8aa");
       await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
-        /key, got length=33/,
+        /"arx key" expected Uint8Array of length 32, got length=33/,
       );
     }
     {
@@ -49,7 +49,7 @@ describe("Xchacha20poly1305Ietf", () => {
         "1324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d81324cdddc4b94e625bbabcac862c9429ba011e2184a1ccad60e7c3f6ff4916d8",
       );
       await expectAsync(Xchacha20poly1305Ietf.encrypt(message, key, nonce)).toBeRejectedWithError(
-        /key, got length=64/,
+        /"arx key" expected Uint8Array of length 32, got length=64/,
       );
     }
   });

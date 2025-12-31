@@ -1,6 +1,6 @@
 import { fixUint8Array } from "@cosmjs/encoding";
 import { entropyToMnemonic, mnemonicToEntropy, mnemonicToSeed } from "@scure/bip39";
-import { wordlist } from "@scure/bip39/wordlists/english";
+import { wordlist } from "@scure/bip39/wordlists/english.js";
 
 export class EnglishMnemonic {
   public static readonly wordlist: readonly string[] = wordlist;
