@@ -6,6 +6,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+- Bring back main/types fields for bundlephobia support ([#1940])
+
+[#1940]: https://github.com/cosmos/cosmjs/pull/1940
+
 ## [0.37.0] - 2025-10-29
 
 ### Added
