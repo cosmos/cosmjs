@@ -1,6 +1,10 @@
 import { isNonNullObject } from "@cosmjs/utils";
 import { argon2id, ArgonOpts } from "@noble/hashes/argon2.js";
 
+/**
+ * @deprecated This is just a thin wrapper around argon2id from @noble/hashes and will likely be removed.
+ * @see https://github.com/cosmos/cosmjs/issues/1796
+ */
 export interface Argon2idOptions {
   /** Output length in bytes */
   readonly outputLength: number;
@@ -20,6 +24,10 @@ export interface Argon2idOptions {
   readonly memLimitKib: number;
 }
 
+/**
+ * @deprecated This is just a thin wrapper around argon2id from @noble/hashes and will likely be removed.
+ * @see https://github.com/cosmos/cosmjs/issues/1796
+ */
 export function isArgon2idOptions(thing: unknown): thing is Argon2idOptions {
   if (!isNonNullObject(thing)) return false;
   if (typeof (thing as Argon2idOptions).outputLength !== "number") return false;
@@ -28,6 +36,10 @@ export function isArgon2idOptions(thing: unknown): thing is Argon2idOptions {
   return true;
 }
 
+/**
+ * @deprecated This is just a thin wrapper around argon2id from @noble/hashes and will likely be removed.
+ * @see https://github.com/cosmos/cosmjs/issues/1796
+ */
 export class Argon2id {
   // This is async for historic reasons. If we switch to a Wasm implementation or get argon2 in WebCrypto,
   // this is needed again.
