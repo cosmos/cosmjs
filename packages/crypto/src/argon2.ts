@@ -1,5 +1,5 @@
-import { assert, isNonNullObject } from "@cosmjs/utils";
-import { type IArgon2Options, argon2id } from "hash-wasm";
+import { isNonNullObject } from "@cosmjs/utils";
+import { argon2id, ArgonOpts } from "@noble/hashes/argon2.js";
 
 export interface Argon2idOptions {
   /** Output length in bytes */
@@ -29,28 +29,24 @@ export function isArgon2idOptions(thing: unknown): thing is Argon2idOptions {
 }
 
 export class Argon2id {
+  // This is async for historic reasons. If we switch to a Wasm implementation or get argon2 in WebCrypto,
+  // this is needed again.
   public static async execute(
     password: string,
     salt: Uint8Array,
     options: Argon2idOptions,
   ): Promise<Uint8Array> {
-    const opts: IArgon2Options = {
-      password,
-      salt,
-      outputType: "binary",
-      iterations: options.opsLimit,
-      memorySize: options.memLimitKib,
-      parallelism: 1, // no parallelism allowed, just like libsodium
-      hashLength: options.outputLength,
+    const opts: ArgonOpts = {
+      t: options.opsLimit, // Time cost, iterations count
+      m: options.memLimitKib, // Memory cost (in KB)
+      p: 1, // parallelism
+      dkLen: options.outputLength, // Desired number of returned bytes
     };
 
     if (salt.length !== 16) {
       throw new Error(`Got invalid salt length ${salt.length}. Must be 16.`);
     }
 
-    const hash = await argon2id(opts);
-    // guaranteed by outputType: 'binary'
-    assert(typeof hash !== "string");
-    return hash;
+    return argon2id(password, salt, opts);
   }
 }

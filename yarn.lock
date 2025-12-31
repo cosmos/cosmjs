@@ -289,7 +289,6 @@ __metadata:
     "@types/karma-jasmine-html-reporter": "npm:^1"
     "@types/node": "npm:*"
     glob: "npm:^13.0.0"
-    hash-wasm: "npm:^4.12.0"
     jasmine: "npm:^4"
     jasmine-spec-reporter: "npm:^6"
     karma: "npm:^6.3.14"
@@ -4418,13 +4417,6 @@ __metadata:
     readable-stream: "npm:^3.6.0"
     safe-buffer: "npm:^5.2.0"
   checksum: 10c0/663eabcf4173326fbb65a1918a509045590a26cc7e0964b754eef248d281305c6ec9f6b31cb508d02ffca383ab50028180ce5aefe013e942b44a903ac8dc80d0
-  languageName: node
-  linkType: hard
-
-"hash-wasm@npm:^4.12.0":
-  version: 4.12.0
-  resolution: "hash-wasm@npm:4.12.0"
-  checksum: 10c0/6cb95055319810b6f673de755289960683a9831807690795f0e8918b2fd7e6ae5b82a9dc47cbace171cf2814b412ef68c315a0ead0b4d96bd3e56a05e4bde136
   languageName: node
   linkType: hard
 
