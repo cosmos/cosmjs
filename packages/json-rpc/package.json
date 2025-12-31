@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@cosmjs/stream": "workspace:^",
+    "@cosmjs/utils": "workspace:^",
     "xstream": "^11.14.0"
   },
   "devDependencies": {

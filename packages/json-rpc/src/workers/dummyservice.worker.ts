@@ -2,7 +2,8 @@
 
 // for testing only
 
-import { isJsonCompatibleDictionary } from "../compatibility";
+import { isJsonObject } from "@cosmjs/utils";
+
 import { parseJsonRpcId, parseJsonRpcRequest } from "../parse";
 import {
   jsonRpcCode,
@@ -31,7 +32,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
 
   // This is just a text representation of the request. It can be lossy as it is not needed for further processing.
   let paramsString: string;
-  if (isJsonCompatibleDictionary(request.params)) {
+  if (isJsonObject(request.params)) {
     paramsString = JSON.stringify(request.params);
   } else {
     paramsString = request.params
@@ -44,7 +45,7 @@ function handleRequest(event: MessageEvent): JsonRpcResponse {
           return `"${p}"`;
         } else {
           // Nested arrays or dictionaries. No need to traverse.
-          return isJsonCompatibleDictionary(p) ? "{ … }" : "[ … ]";
+          return isJsonObject(p) ? "{ … }" : "[ … ]";
         }
       })
       .join(", ");
