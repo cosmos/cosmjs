@@ -17,6 +17,9 @@ and this project adheres to
   wallet serialization/deserialization which is not needed anymore after
   [#1938].
 - Bring back main/types fields for bundlephobia support
+- @cosmjs/crypto: Deprecate `Argon2id`/`Argon2idOptions`/`isArgon2idOptions`
+  because it will likely be removed when wallet serialization/deserialization is
+  removed.
 
 [#1935]: https://github.com/cosmos/cosmjs/pull/1935
 [#1938]: https://github.com/cosmos/cosmjs/issues/1938
