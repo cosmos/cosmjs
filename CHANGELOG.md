@@ -16,6 +16,7 @@ and this project adheres to
 - @cosmjs/amino, @cosmjs/proto-signing: Remove scream test around argon2 call in
   wallet serialization/deserialization which is not needed anymore after
   [#1938].
+- Bring back main/types fields for bundlephobia support
 
 [#1935]: https://github.com/cosmos/cosmjs/pull/1935
 [#1938]: https://github.com/cosmos/cosmjs/issues/1938
