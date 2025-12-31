@@ -13,6 +13,9 @@ and this project adheres to
   @noble/hashes and @scure/bip39 to v2. ([#1935])
 - @cosmjs/crypto: Use pure-JS implementation of Argon2id from @noble/hashes.
   ([#1938])
+- @cosmjs/amino, @cosmjs/proto-signing: Remove scream test around argon2 call in
+  wallet serialization/deserialization which is not needed anymore after
+  [#1938].
 
 [#1935]: https://github.com/cosmos/cosmjs/pull/1935
 [#1938]: https://github.com/cosmos/cosmjs/issues/1938
