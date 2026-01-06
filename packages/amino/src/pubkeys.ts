@@ -12,7 +12,7 @@ export interface Ed25519Pubkey extends SinglePubkey {
 }
 
 export function isEd25519Pubkey(pubkey: Pubkey): pubkey is Ed25519Pubkey {
-  return (pubkey as Ed25519Pubkey).type === "tendermint/PubKeyEd25519";
+  return pubkey.type === "tendermint/PubKeyEd25519";
 }
 
 export interface Secp256k1Pubkey extends SinglePubkey {
@@ -21,7 +21,7 @@ export interface Secp256k1Pubkey extends SinglePubkey {
 }
 
 export function isSecp256k1Pubkey(pubkey: Pubkey): pubkey is Secp256k1Pubkey {
-  return (pubkey as Secp256k1Pubkey).type === "tendermint/PubKeySecp256k1";
+  return pubkey.type === "tendermint/PubKeySecp256k1";
 }
 
 export interface EthSecp256k1Pubkey extends SinglePubkey {
@@ -84,5 +84,5 @@ export interface MultisigThresholdPubkey extends Pubkey {
 }
 
 export function isMultisigThresholdPubkey(pubkey: Pubkey): pubkey is MultisigThresholdPubkey {
-  return (pubkey as MultisigThresholdPubkey).type === "tendermint/PubKeyMultisigThreshold";
+  return pubkey.type === "tendermint/PubKeyMultisigThreshold";
 }
