@@ -19,6 +19,12 @@ jobs:
           node-version: 24
           cache: 'yarn'
 
+      - name: Build evmd
+        run: ./scripts/evmd/build.sh
+      - name: Start evmd
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
+      - name: Start slow evmd
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
@@ -38,11 +44,15 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Initialize evmd
+        run: ./scripts/evmd/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
       - name: Test with coverage
         env:
+          EVMD_ENABLED: 1
+          SLOW_EVMD_ENABLED: 1
           HTTPSERVER_ENABLED: 1
           SIMAPP50_ENABLED: 1
           SLOW_SIMAPP50_ENABLED: 1
