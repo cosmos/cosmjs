@@ -95,7 +95,7 @@ import {
         value: MsgCreateVestingAccount.fromPartial({
           fromAddress: evmfaucet.address0,
           toAddress: recipient,
-          amount: coins(1234, "atest"),
+          amount: coins(1234, evmd.denomFee),
           endTime: BigInt("1838718434"),
           delayed: true,
         }),
@@ -103,8 +103,8 @@ import {
 
       const result = await client.signAndBroadcast(evmfaucet.address0, [vestingMsg], "auto", memo);
       assertIsDeliverTxSuccess(result);
-      const balance = await client.getBalance(recipient, "atest");
-      expect(balance).toEqual(coin(1234, "atest"));
+      const balance = await client.getBalance(recipient, evmd.denomFee);
+      expect(balance).toEqual(coin(1234, evmd.denomFee));
 
       client.disconnect();
     });

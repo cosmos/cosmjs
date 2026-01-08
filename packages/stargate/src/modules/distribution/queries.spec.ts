@@ -179,7 +179,7 @@ async function makeClientWithDistribution(
 
 (evmdEnabled ? describe : xdescribe)("DistributionExtension (evmd)", () => {
   const defaultFee = {
-    amount: coins(25000, "atest"),
+    amount: coins(25000, evmd.denomFee),
     gas: "1500000", // 1.5 million
   };
 
@@ -194,7 +194,7 @@ async function makeClientWithDistribution(
     const msg: MsgDelegate = {
       delegatorAddress: evmfaucet.address0,
       validatorAddress: evmvalidator.validatorAddress,
-      amount: coin(25000, "atest"),
+      amount: coin(25000, evmd.denomStaking),
     };
     const msgAny: MsgDelegateEncodeObject = {
       typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",

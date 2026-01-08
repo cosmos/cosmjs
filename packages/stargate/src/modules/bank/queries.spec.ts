@@ -214,8 +214,8 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
     it("works for existing balance", async () => {
       const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
 
-      const response = await client.bank.balance(evmfaucet.address0, "atest");
-      expect(response.denom).toEqual("atest");
+      const response = await client.bank.balance(evmfaucet.address0, evmd.denomFee);
+      expect(response.denom).toEqual(evmd.denomFee);
       const balanceAmount = Number(BigInt(response.amount));
       expect(balanceAmount).toBeGreaterThan(0);
 
@@ -237,10 +237,10 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
     it("returns zero for non-existent address", async () => {
       const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
 
-      const response = await client.bank.balance(nonExistentAddress, "atest");
+      const response = await client.bank.balance(nonExistentAddress, evmd.denomFee);
       expect(response).toEqual({
         amount: "0",
-        denom: "atest",
+        denom: evmd.denomFee,
       });
 
       cometClient.disconnect();
@@ -255,7 +255,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
       expect(balances.length).toBeGreaterThanOrEqual(1);
       expect(balances).toContain(
         jasmine.objectContaining({
-          denom: "atest",
+          denom: evmd.denomFee,
         }),
       );
 
@@ -280,7 +280,7 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
       expect(supply.length).toBeGreaterThanOrEqual(1);
       expect(supply).toContain(
         jasmine.objectContaining({
-          denom: "atest",
+          denom: evmd.denomFee,
         }),
       );
 
@@ -292,8 +292,8 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
     it("works for existing denom", async () => {
       const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
 
-      const response = await client.bank.supplyOf("atest");
-      expect(response.denom).toEqual("atest");
+      const response = await client.bank.supplyOf(evmd.denomFee);
+      expect(response.denom).toEqual(evmd.denomFee);
       const supplyAmount = Number(BigInt(response.amount));
       expect(supplyAmount).toBeGreaterThan(0);
 

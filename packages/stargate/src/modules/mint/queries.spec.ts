@@ -60,7 +60,7 @@ async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintEx
       const params = await client.mint.params();
       expect(Number(params.blocksPerYear)).toBeGreaterThan(100_000);
       expect(Number(params.blocksPerYear)).toBeLessThan(100_000_000);
-      expect(params.mintDenom).toEqual("atest");
+      expect(params.mintDenom).toEqual(evmd.denomFee);
 
       cometClient.disconnect();
     });

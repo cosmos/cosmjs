@@ -76,17 +76,17 @@ export const evmd = {
   tendermintUrlWs: "ws://localhost:26661",
   tendermintUrlHttp: "http://localhost:26661",
   chainId: "9001",
-  denomStaking: "astake",
-  denomFee: "aatom",
+  denomStaking: "atest",
+  denomFee: "atest",
   blockTime: 1_000, // ms
 };
 
 export const slowEvmd = {
   tendermintUrlWs: "ws://localhost:26662",
   tendermintUrlHttp: "http://localhost:26662",
-  chainId: "evmd-testing",
-  denomStaking: "astake",
-  denomFee: "aatom",
+  chainId: "9001",
+  denomStaking: "atest",
+  denomFee: "atest",
   blockTime: 10_000, // ms
 };
 

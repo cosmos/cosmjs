@@ -159,7 +159,7 @@ async function makeClientWithAuthz(rpcUrl: string): Promise<[QueryClient & Authz
 
 (evmdEnabled ? describe : xdescribe)("AuthzExtension (evmd)", () => {
   const defaultFee = {
-    amount: coins(25000, "atest"),
+    amount: coins(25000, evmd.denomFee),
     gas: "1500000", // 1.5 million
   };
   const granter1Address = evmfaucet.address0;

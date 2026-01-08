@@ -1270,14 +1270,14 @@ import {
         evmSigningClientOptions,
       );
 
-      const amount = coins(7890, "atest");
+      const amount = coins(7890, evmd.denomFee);
       const beneficiaryAddress = makeRandomAddress();
       const memo = "for dinner";
 
       // no tokens here
-      const before = await client.getBalance(beneficiaryAddress, "atest");
+      const before = await client.getBalance(beneficiaryAddress, evmd.denomFee);
       expect(before).toEqual({
-        denom: "atest",
+        denom: evmd.denomFee,
         amount: "0",
       });
 
@@ -1294,7 +1294,7 @@ import {
       expect(result.events.length).toBeGreaterThanOrEqual(1);
 
       // got tokens
-      const after = await client.getBalance(beneficiaryAddress, "atest");
+      const after = await client.getBalance(beneficiaryAddress, evmd.denomFee);
       expect(after).toEqual(amount[0]);
 
       client.disconnect();
@@ -1316,14 +1316,14 @@ import {
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: evmfaucet.address0,
           validatorAddress: evmvalidator.validatorAddress,
-          amount: coin(1234, "atest"),
+          amount: coin(1234, evmd.denomStaking),
         });
         const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
@@ -1349,14 +1349,14 @@ import {
           fromAddress: evmfaucet.address0,
           toAddress: makeRandomAddress(),
           // Use amount larger than faucet balance (faucet has ~10^26 atest)
-          amount: [{ denom: "atest", amount: "999999999999999999999999999999" }],
+          amount: [{ denom: evmd.denomFee, amount: "999999999999999999999999999999" }],
         });
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msg,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "120000", // evmd requires more gas
         };
         const result = await client.signAndBroadcast(evmfaucet.address0, [msgAny], fee);
@@ -1379,7 +1379,7 @@ import {
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: evmfaucet.address0,
           validatorAddress: evmvalidator.validatorAddress,
-          amount: coin(1234, "atest"),
+          amount: coin(1234, evmd.denomStaking),
         });
         const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
@@ -1408,7 +1408,7 @@ import {
         const msgSend: MsgSend = {
           fromAddress: evmfaucet.address0,
           toAddress: makeRandomAddress(),
-          amount: coins(1234, "atest"),
+          amount: coins(1234, evmd.denomFee),
         };
 
         const msgAny: MsgSendEncodeObject = {
@@ -1416,7 +1416,7 @@ import {
           value: msgSend,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
@@ -1439,7 +1439,7 @@ import {
         const msgSend: MsgSend = {
           fromAddress: evmfaucet.address0,
           toAddress: makeRandomAddress(),
-          amount: coins(1234, "atest"),
+          amount: coins(1234, evmd.denomFee),
         };
 
         const msgAny: MsgSendEncodeObject = {
@@ -1472,14 +1472,14 @@ import {
         const msg = MsgDelegate.fromPartial({
           delegatorAddress: evmfaucet.address0,
           validatorAddress: evmvalidator.validatorAddress,
-          amount: coin(1234, "atest"),
+          amount: coin(1234, evmd.denomStaking),
         });
         const msgAny: MsgDelegateEncodeObject = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
@@ -1503,14 +1503,14 @@ import {
         const msg = MsgSend.fromPartial({
           fromAddress: evmfaucet.address0,
           toAddress: evmfaucet.address0,
-          amount: [coin(1, "atest")],
+          amount: [coin(1, evmd.denomFee)],
         });
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msg,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";
@@ -1542,14 +1542,14 @@ import {
         const msg = MsgSend.fromPartial({
           fromAddress: evmfaucet.address0,
           toAddress: evmfaucet.address0,
-          amount: [coin(1, "atest")],
+          amount: [coin(1, evmd.denomFee)],
         });
         const msgAny: MsgSendEncodeObject = {
           typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: msg,
         };
         const fee = {
-          amount: coins(2000, "atest"),
+          amount: coins(2000, evmd.denomFee),
           gas: "222000", // 222k
         };
         const memo = "Use your power wisely";

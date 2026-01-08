@@ -764,10 +764,10 @@ describe("isDeliverTxSuccess", () => {
     it("works for different existing balances", async () => {
       const client = await StargateClient.connect(evmd.tendermintUrlHttp);
 
-      const response = await client.getBalance(evmfaucet.address0, "atest");
+      const response = await client.getBalance(evmfaucet.address0, evmd.denomFee);
       expect(response).toEqual(
         jasmine.objectContaining({
-          denom: "atest",
+          denom: evmd.denomFee,
         }),
       );
       const balanceAmount = Number(BigInt(response.amount));
@@ -791,9 +791,9 @@ describe("isDeliverTxSuccess", () => {
     it("returns 0 for non-existent address", async () => {
       const client = await StargateClient.connect(evmd.tendermintUrlHttp);
 
-      const response = await client.getBalance(nonExistentAddress, "atest");
+      const response = await client.getBalance(nonExistentAddress, evmd.denomFee);
       expect(response).toEqual({
-        denom: "atest",
+        denom: evmd.denomFee,
         amount: "0",
       });
 
@@ -809,7 +809,7 @@ describe("isDeliverTxSuccess", () => {
       expect(balances.length).toBeGreaterThanOrEqual(1);
       expect(balances).toContain(
         jasmine.objectContaining({
-          denom: "atest",
+          denom: evmd.denomFee,
         }),
       );
 
@@ -832,7 +832,7 @@ describe("isDeliverTxSuccess", () => {
       const response = await client.getBalanceStaked(evmfaucet.address0);
 
       assert(response);
-      expect(response.denom).toEqual("atest");
+      expect(response.denom).toEqual(evmd.denomStaking);
       // Balance can be 0 or greater
       const balanceAmount = Number(BigInt(response.amount));
       expect(balanceAmount).toBeGreaterThanOrEqual(0);
@@ -858,7 +858,7 @@ describe("isDeliverTxSuccess", () => {
               value: {
                 fromAddress: address,
                 toAddress: makeRandomAddress(),
-                amount: coins(1234567, "atest"),
+                amount: coins(1234567, evmd.denomFee),
               },
             },
           ],
@@ -866,7 +866,7 @@ describe("isDeliverTxSuccess", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const { accountNumber, sequence } = await client.getSequence(address);
-      const feeAmount = coins(2000, "atest");
+      const feeAmount = coins(2000, evmd.denomFee);
       const gasLimit = 200000;
       const feeGranter = undefined;
       const feePayer = undefined;
@@ -915,7 +915,7 @@ describe("isDeliverTxSuccess", () => {
               value: {
                 fromAddress: address,
                 toAddress: invalidRecipientAddress,
-                amount: coins(1234567, "atest"),
+                amount: coins(1234567, evmd.denomFee),
               },
             },
           ],
@@ -923,7 +923,7 @@ describe("isDeliverTxSuccess", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const { accountNumber, sequence } = await client.getSequence(address);
-      const feeAmount = coins(2000, "atest");
+      const feeAmount = coins(2000, evmd.denomFee);
       const gasLimit = 200000;
       const feeGranter = undefined;
       const feePayer = undefined;
@@ -977,7 +977,7 @@ describe("isDeliverTxSuccess", () => {
               value: {
                 fromAddress: address,
                 toAddress: makeRandomAddress(),
-                amount: coins(1234567, "atest"),
+                amount: coins(1234567, evmd.denomFee),
               },
             },
           ],
@@ -985,7 +985,7 @@ describe("isDeliverTxSuccess", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const { accountNumber, sequence } = await client.getSequence(address);
-      const feeAmount = coins(2000, "atest");
+      const feeAmount = coins(2000, evmd.denomFee);
       const gasLimit = 200000;
       const feeGranter = undefined;
       const feePayer = undefined;
