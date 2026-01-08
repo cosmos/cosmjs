@@ -1,5 +1,5 @@
 import { AccountData, StdSignDoc } from "@cosmjs/amino";
-import { pathToString, stringToPath, HdPath } from "@cosmjs/crypto";
+import { HdPath, pathToString, stringToPath } from "@cosmjs/crypto";
 import { toBase64 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
