@@ -2,6 +2,9 @@ import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
 import {
+  evmd,
+  evmdEnabled,
+  evmfaucet,
   nonExistentAddress,
   nonNegativeIntegerMatcher,
   simapp,
@@ -200,6 +203,111 @@ async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankEx
           symbol: "",
         }),
       );
+
+      cometClient.disconnect();
+    });
+  });
+});
+
+(evmdEnabled ? describe : xdescribe)("BankExtension (evmd)", () => {
+  describe("balance", () => {
+    it("works for existing balance", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const response = await client.bank.balance(evmfaucet.address0, "atest");
+      expect(response.denom).toEqual("atest");
+      const balanceAmount = Number(BigInt(response.amount));
+      expect(balanceAmount).toBeGreaterThan(0);
+
+      cometClient.disconnect();
+    });
+
+    it("returns zero for non-existent balance", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const response = await client.bank.balance(evmfaucet.address0, "gintonic");
+      expect(response).toEqual({
+        amount: "0",
+        denom: "gintonic",
+      });
+
+      cometClient.disconnect();
+    });
+
+    it("returns zero for non-existent address", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const response = await client.bank.balance(nonExistentAddress, "atest");
+      expect(response).toEqual({
+        amount: "0",
+        denom: "atest",
+      });
+
+      cometClient.disconnect();
+    });
+  });
+
+  describe("allBalances", () => {
+    it("returns all balances for account", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const balances = await client.bank.allBalances(evmfaucet.address0);
+      expect(balances.length).toBeGreaterThanOrEqual(1);
+      expect(balances).toContain(
+        jasmine.objectContaining({
+          denom: "atest",
+        }),
+      );
+
+      cometClient.disconnect();
+    });
+
+    it("returns an empty list for non-existent account", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const balances = await client.bank.allBalances(nonExistentAddress);
+      expect(balances).toEqual([]);
+
+      cometClient.disconnect();
+    });
+  });
+
+  describe("totalSupply", () => {
+    it("works", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const { supply } = await client.bank.totalSupply();
+      expect(supply.length).toBeGreaterThanOrEqual(1);
+      expect(supply).toContain(
+        jasmine.objectContaining({
+          denom: "atest",
+        }),
+      );
+
+      cometClient.disconnect();
+    });
+  });
+
+  describe("supplyOf", () => {
+    it("works for existing denom", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const response = await client.bank.supplyOf("atest");
+      expect(response.denom).toEqual("atest");
+      const supplyAmount = Number(BigInt(response.amount));
+      expect(supplyAmount).toBeGreaterThan(0);
+
+      cometClient.disconnect();
+    });
+
+    it("returns zero for non-existent denom", async () => {
+      const [client, cometClient] = await makeClientWithBank(evmd.tendermintUrlHttp);
+
+      const response = await client.bank.supplyOf("gintonic");
+      expect(response).toEqual({
+        amount: "0",
+        denom: "gintonic",
+      });
 
       cometClient.disconnect();
     });

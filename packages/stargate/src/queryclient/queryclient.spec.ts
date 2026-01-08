@@ -1,5 +1,5 @@
 import { coin } from "@cosmjs/amino";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { DirectEthSecp256k1HdWallet, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import {
@@ -12,6 +12,10 @@ import {
 import { SigningStargateClient } from "../signingstargateclient";
 import {
   defaultSigningClientOptions,
+  evmd,
+  evmdEnabled,
+  evmfaucet,
+  evmSigningClientOptions,
   faucet,
   makeRandomAddress,
   simapp,
@@ -111,6 +115,100 @@ async function makeClient(rpcUrl: string): Promise<[QueryClient, CometClient]> {
         );
         const response = QueryBalanceResponse.decode(value);
         expect(response.balance).toEqual({ amount: "0", denom: simapp.denomFee });
+        expect(height).toEqual(h1);
+      }
+
+      cometClient.disconnect();
+    });
+  });
+});
+
+(evmdEnabled ? describe : xdescribe)("QueryClient (evmd)", () => {
+  describe("queryAbci", () => {
+    it("works via WebSockets", async () => {
+      const [client, cometClient] = await makeClient(evmd.tendermintUrlWs);
+
+      const requestData = Uint8Array.from(
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: evmfaucet.address0 }),
+        ).finish(),
+      );
+      const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
+      const response = QueryAllBalancesResponse.decode(value);
+      expect(response.balances.length).toBeGreaterThanOrEqual(1);
+
+      cometClient.disconnect();
+    });
+
+    it("works via http", async () => {
+      const [client, cometClient] = await makeClient(evmd.tendermintUrlHttp);
+
+      const requestData = Uint8Array.from(
+        QueryAllBalancesRequest.encode(
+          QueryAllBalancesRequest.fromPartial({ address: evmfaucet.address0 }),
+        ).finish(),
+      );
+      const { value } = await client.queryAbci(`/cosmos.bank.v1beta1.Query/AllBalances`, requestData);
+      const response = QueryAllBalancesResponse.decode(value);
+      expect(response.balances.length).toBeGreaterThanOrEqual(1);
+
+      cometClient.disconnect();
+    });
+
+    it("works for height", async () => {
+      const [queryClient, cometClient] = await makeClient(evmd.tendermintUrlHttp);
+
+      const joe = makeRandomAddress();
+      const h1 = (await cometClient.status()).syncInfo.latestBlockHeight;
+
+      // Send tokens to `recipient`
+      const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(
+        evmd.tendermintUrlHttp,
+        wallet,
+        evmSigningClientOptions,
+      );
+      const amount = coin(332211, "atest");
+      await client.sendTokens(evmfaucet.address0, joe, [amount], "auto");
+
+      const h2 = (await cometClient.status()).syncInfo.latestBlockHeight;
+      assert(h1 < h2);
+
+      // Query with no height
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: "atest" }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual(amount);
+        expect(height).toEqual(h2);
+      }
+
+      // Query at h2 (after send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: "atest" }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+          h2,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual(amount);
+        expect(height).toEqual(h2);
+      }
+
+      // Query at h1 (before send)
+      {
+        const requestData = QueryBalanceRequest.encode({ address: joe, denom: "atest" }).finish();
+        const { value, height } = await queryClient.queryAbci(
+          `/cosmos.bank.v1beta1.Query/Balance`,
+          requestData,
+          h1,
+        );
+        const response = QueryBalanceResponse.decode(value);
+        expect(response.balance).toEqual({ amount: "0", denom: "atest" });
         expect(height).toEqual(h1);
       }
 

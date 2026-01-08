@@ -664,6 +664,53 @@ describe("isDeliverTxSuccess", () => {
     });
   });
 
+  describe("getAccount", () => {
+    it("works for account with pubkey and non-zero sequence", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const account = await client.getAccount(evmfaucet.address0);
+      assert(account);
+      expect(account.address).toEqual(evmfaucet.address0);
+      expect(account.pubkey).toBeTruthy();
+      expect(account.accountNumber).toBeGreaterThanOrEqual(0);
+      expect(account.sequence).toBeGreaterThanOrEqual(0);
+
+      client.disconnect();
+    });
+
+    it("returns null for non-existent address", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const account = await client.getAccount(nonExistentAddress);
+      expect(account).toBeNull();
+
+      client.disconnect();
+    });
+  });
+
+  describe("getSequence", () => {
+    it("works for account", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const account = await client.getSequence(evmfaucet.address0);
+      assert(account);
+      expect(account.accountNumber).toBeGreaterThanOrEqual(0);
+      expect(account.sequence).toBeGreaterThanOrEqual(0);
+
+      client.disconnect();
+    });
+
+    it("rejects for non-existent address", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      await expectAsync(client.getSequence(nonExistentAddress)).toBeRejectedWithError(
+        /account '([a-z0-9]{10,90})' does not exist on chain/i,
+      );
+
+      client.disconnect();
+    });
+  });
+
   describe("getBlock", () => {
     it("works for latest block", async () => {
       const client = await StargateClient.connect(evmd.tendermintUrlHttp);
@@ -708,6 +755,87 @@ describe("isDeliverTxSuccess", () => {
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
+
+      client.disconnect();
+    });
+  });
+
+  describe("getBalance", () => {
+    it("works for different existing balances", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const response = await client.getBalance(evmfaucet.address0, "atest");
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          denom: "atest",
+        }),
+      );
+      const balanceAmount = Number(BigInt(response.amount));
+      expect(balanceAmount).toBeGreaterThan(0);
+
+      client.disconnect();
+    });
+
+    it("returns 0 for non-existent balance", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const response = await client.getBalance(evmfaucet.address0, "gintonic");
+      expect(response).toEqual({
+        denom: "gintonic",
+        amount: "0",
+      });
+
+      client.disconnect();
+    });
+
+    it("returns 0 for non-existent address", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const response = await client.getBalance(nonExistentAddress, "atest");
+      expect(response).toEqual({
+        denom: "atest",
+        amount: "0",
+      });
+
+      client.disconnect();
+    });
+  });
+
+  describe("getAllBalances", () => {
+    it("returns all balances for account", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const balances = await client.getAllBalances(evmfaucet.address0);
+      expect(balances.length).toBeGreaterThanOrEqual(1);
+      expect(balances).toContain(
+        jasmine.objectContaining({
+          denom: "atest",
+        }),
+      );
+
+      client.disconnect();
+    });
+
+    it("returns an empty list for non-existent account", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+
+      const balances = await client.getAllBalances(nonExistentAddress);
+      expect(balances).toEqual([]);
+
+      client.disconnect();
+    });
+  });
+
+  describe("getBalanceStaked", () => {
+    it("works", async () => {
+      const client = await StargateClient.connect(evmd.tendermintUrlHttp);
+      const response = await client.getBalanceStaked(evmfaucet.address0);
+
+      assert(response);
+      expect(response.denom).toEqual("atest");
+      // Balance can be 0 or greater
+      const balanceAmount = Number(BigInt(response.amount));
+      expect(balanceAmount).toBeGreaterThanOrEqual(0);
 
       client.disconnect();
     });
