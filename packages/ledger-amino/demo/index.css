@@ -22,3 +22,7 @@ textarea {
   width: 32em;
   height: 28em;
 }
+
+#accounts {
+  white-space: pre-wrap;
+}

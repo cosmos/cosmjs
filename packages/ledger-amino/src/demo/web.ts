@@ -112,7 +112,7 @@ const getAccounts = async function getAccounts(signer: LedgerSigner | undefined)
       ...account,
       pubkey: toBase64(account.pubkey),
     }));
-    accountsDiv.textContent = JSON.stringify(prettyAccounts, null, "\n");
+    accountsDiv.textContent = prettyAccounts.map((pa) => JSON.stringify(pa, null, 4)).join("\n\n");
     const accountNumber = 0;
 
     // Show address block
