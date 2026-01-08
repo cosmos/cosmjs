@@ -125,7 +125,7 @@ jobs:
   test-backends:
     strategy:
       matrix:
-        simapp: ["simapp47", "simapp50", "simapp53"]
+        backend: ["simapp47", "simapp50", "simapp53", "evmd"]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -139,17 +139,22 @@ jobs:
           cache: 'yarn'
 
       - name: Build evmd
+        if: matrix.backend == 'evmd'
         run: ./scripts/evmd/build.sh
       - name: Start evmd
+        if: matrix.backend == 'evmd'
         run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
       - name: Start slow evmd
+        if: matrix.backend == 'evmd'
         run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
-        run: RUNNER_TRACKING_ID="" && ./scripts/${{ matrix.simapp }}/start.sh &
+        if: startsWith(matrix.backend, 'simapp')
+        run: RUNNER_TRACKING_ID="" && ./scripts/${{ matrix.backend }}/start.sh &
       - name: Start slow simapp
-        run: RUNNER_TRACKING_ID="" && ./scripts/${{ matrix.simapp }}/slow_start.sh &
+        if: startsWith(matrix.backend, 'simapp')
+        run: RUNNER_TRACKING_ID="" && ./scripts/${{ matrix.backend }}/slow_start.sh &
       - name: Start Tendermint blockchains
         run: RUNNER_TRACKING_ID="" && ./scripts/tendermint/all_start.sh &
       - name: Start socket server
@@ -164,21 +169,21 @@ jobs:
         run: yarn build
 
       - name: Initialize evmd
+        if: matrix.backend == 'evmd'
         run: ./scripts/evmd/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
       - name: Test
         env:
-          EVMD_ENABLED: 1
-          SLOW_EVMD_ENABLED: 1
           HTTPSERVER_ENABLED: 1
           TENDERMINT_ENABLED: 1
           SOCKETSERVER_ENABLED: 1
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
         run: |
-          [ "${{ matrix.simapp }}" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
-          [ "${{ matrix.simapp }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
-          [ "${{ matrix.simapp }}" = "simapp53" ] && export SIMAPP53_ENABLED=1 SLOW_SIMAPP53_ENABLED=1
+          [ "${{ matrix.backend }}" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
+          [ "${{ matrix.backend }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
+          [ "${{ matrix.backend }}" = "simapp53" ] && export SIMAPP53_ENABLED=1 SLOW_SIMAPP53_ENABLED=1
+          [ "${{ matrix.backend }}" = "evmd" ] && export EVMD_ENABLED=1 SLOW_EVMD_ENABLED=1
           yarn run test
