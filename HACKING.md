@@ -60,6 +60,12 @@ export WASMD_ENABLED=1
 ./scripts/simapp50/start.sh
 export SIMAPP50_ENABLED=1
 
+# Start evmd (build Docker image first time only)
+./scripts/evmd/build.sh  # Only needed once
+./scripts/evmd/start.sh
+./scripts/evmd/init.sh
+export EVMD_ENABLED=1
+
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
 export TENDERMINT_ENABLED=1
@@ -79,12 +85,14 @@ yarn test
 unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
+unset EVMD_ENABLED
 unset SIMAPP50_ENABLED
 unset WASMD_ENABLED
 ./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh
-./scripts/simapp/stop.sh
+./scripts/evmd/stop.sh
+./scripts/simapp50/stop.sh
 ./scripts/wasmd/stop.sh
 ```
 
@@ -110,13 +118,19 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 1318  | simapp LCD API                 | Manual Stargate debugging    |
 | 1319  | wasmd LCD API                  | Manual Stargate debugging    |
 | 1320  | simapp slow LCD API            | Manual Stargate debugging    |
+| 1321  | evmd REST API                  | EVM chain tests              |
+| 1322  | evmd slow REST API             | EVM chain tests              |
 | 4444  | socketserver                   | @cosmjs/sockets tests        |
 | 4445  | socketserver slow              | @cosmjs/sockets tests        |
 | 5555  | httpserver                     | @cosmjs/tendermint-rpc tests |
 | 9090  | simapp gRPC                    | Manual Stargate debugging    |
+| 9091  | evmd gRPC                      | EVM chain tests              |
+| 9092  | evmd slow gRPC                 | EVM chain tests              |
 | 11101 | Standalone CometBFT 1.x RPC    | @cosmjs/tendermint-rpc tests |
 | 11137 | Standalone Tendermint 0.37 RPC | @cosmjs/tendermint-rpc tests |
 | 11138 | Standalone CometBFT 0.38 RPC   | @cosmjs/tendermint-rpc tests |
 | 26658 | simapp Tendermint RPC          | Stargate client tests        |
 | 26659 | wasmd Tendermint RPC           | @cosmjs/cosmwasm tests       |
 | 26660 | simapp slow Tendermint RPC     | Stargate client tests        |
+| 26661 | evmd Tendermint RPC            | EVM chain tests              |
+| 26662 | evmd slow Tendermint RPC       | EVM chain tests              |

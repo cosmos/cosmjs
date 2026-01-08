@@ -15,10 +15,13 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
+export const evmdEnabled: boolean = !!globalThis.process?.env.EVMD_ENABLED;
 export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
 export const simapp53Enabled: boolean = !!globalThis.process?.env.SIMAPP53_ENABLED;
 export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled || simapp53Enabled;
+
+export const slowEvmdEnabled: boolean = !!globalThis.process?.env.SLOW_EVMD_ENABLED;
 
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED ||
@@ -45,6 +48,9 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
 export const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 export const defaultSendFee = calculateFee(100_000, defaultGasPrice);
 
+export const evmGasPrice = GasPrice.fromString("0.025atest");
+export const evmSendFee = calculateFee(120_000, evmGasPrice); // evmd requires more gas than standard simapp
+
 export const simapp = {
   tendermintUrlWs: "ws://localhost:26658",
   tendermintUrlHttp: "http://localhost:26658",
@@ -66,11 +72,35 @@ export const slowSimapp = {
   totalSupply: 21000000000, // ucosm
 };
 
+export const evmd = {
+  tendermintUrlWs: "ws://localhost:26661",
+  tendermintUrlHttp: "http://localhost:26661",
+  chainId: "9001",
+  denomStaking: "astake",
+  denomFee: "aatom",
+  blockTime: 1_000, // ms
+};
+
+export const slowEvmd = {
+  tendermintUrlWs: "ws://localhost:26662",
+  tendermintUrlHttp: "http://localhost:26662",
+  chainId: "evmd-testing",
+  denomStaking: "astake",
+  denomFee: "aatom",
+  blockTime: 10_000, // ms
+};
+
 /** Setting to speed up testing */
 export const defaultSigningClientOptions: SigningStargateClientOptions = {
   broadcastPollIntervalMs: 300,
   broadcastTimeoutMs: 8_000,
   gasPrice: GasPrice.fromString("0.01ucosm"),
+};
+
+export const evmSigningClientOptions: SigningStargateClientOptions = {
+  broadcastPollIntervalMs: 300,
+  broadcastTimeoutMs: 8_000,
+  gasPrice: GasPrice.fromString("0.01atest"),
 };
 
 export const faucet = {
@@ -101,6 +131,12 @@ export const faucet = {
   address2: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
   address3: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
   address4: "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx",
+};
+
+export const evmfaucet = {
+  mnemonic:
+    "copper push brief egg scan entry inform record adjust fossil boss egg comic alien upon aspect dry avoid interest fury window hint race symptom",
+  address0: "cosmos1cml96vmptgw99syqrrz8az79xer2pcgp95srxm",
 };
 
 /** Unused account */
@@ -144,6 +180,17 @@ export const validator = {
    * ```
    */
   validatorAddress: "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
+  accountNumber: 0,
+  sequence: 1,
+};
+
+export const evmvalidator = {
+  pubkey: {
+    type: "cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
+    value: "A5LuwPzowaWjWd3y1cekZnOLw/w4twRtgbgU05gR1a/d",
+  },
+  delegatorAddress: "cosmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwsjskvv",
+  validatorAddress: "cosmosvaloper10jmp6sgh4cc6zt3e8gw05wavvejgr5pw4xyrql",
   accountNumber: 0,
   sequence: 1,
 };

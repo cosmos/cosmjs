@@ -4,6 +4,7 @@ import {
   coin,
   coins,
   decodeTxRaw,
+  DirectEthSecp256k1HdWallet,
   DirectSecp256k1HdWallet,
   makeCosmoshubPath,
   Registry,
@@ -38,6 +39,13 @@ import {
   defaultGasPrice,
   defaultSendFee,
   defaultSigningClientOptions,
+  evmd,
+  evmdEnabled,
+  evmfaucet,
+  evmGasPrice,
+  evmSendFee,
+  evmSigningClientOptions,
+  evmvalidator,
   faucet,
   makeRandomAddress,
   ModifyingDirectSecp256k1HdWallet,
@@ -1249,5 +1257,304 @@ import {
         client.disconnect();
       });
     });
+  });
+});
+
+(evmdEnabled ? describe : xdescribe)("SigningStargateClient (evmd)", () => {
+  describe("sendTokens", () => {
+    it("works with direct signer", async () => {
+      const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(
+        evmd.tendermintUrlHttp,
+        wallet,
+        evmSigningClientOptions,
+      );
+
+      const amount = coins(7890, "atest");
+      const beneficiaryAddress = makeRandomAddress();
+      const memo = "for dinner";
+
+      // no tokens here
+      const before = await client.getBalance(beneficiaryAddress, "atest");
+      expect(before).toEqual({
+        denom: "atest",
+        amount: "0",
+      });
+
+      // send
+      const result = await client.sendTokens(evmfaucet.address0, beneficiaryAddress, amount, evmSendFee, memo);
+      assertIsDeliverTxSuccess(result);
+      expect(result.rawLog).toEqual(""); // empty for 0.50+
+      expect(result.events.length).toBeGreaterThanOrEqual(1);
+
+      // got tokens
+      const after = await client.getBalance(beneficiaryAddress, "atest");
+      expect(after).toEqual(amount[0]);
+
+      client.disconnect();
+    });
+
+    // Amino mode not supported for evmd - requires EthSecp256k1HdWallet which doesn't exist for Amino
+  });
+
+  describe("signAndBroadcast", () => {
+    describe("direct mode", () => {
+      it("works", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: evmfaucet.address0,
+          validatorAddress: evmvalidator.validatorAddress,
+          amount: coin(1234, "atest"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(evmfaucet.address0, [msgAny], fee, memo);
+        assertIsDeliverTxSuccess(result);
+        expect(result.code).toEqual(0);
+        expect(result.gasWanted).toEqual(222_000n);
+        expect(Number(result.gasUsed)).toBeLessThanOrEqual(222_000);
+        expect(Number(result.gasUsed)).toBeGreaterThan(100_000);
+
+        client.disconnect();
+      });
+
+      it("returns DeliverTxFailure on DeliverTx failure", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: evmfaucet.address0,
+          toAddress: makeRandomAddress(),
+          // Use amount larger than faucet balance (faucet has ~10^26 atest)
+          amount: [{ denom: "atest", amount: "999999999999999999999999999999" }],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "120000", // evmd requires more gas
+        };
+        const result = await client.signAndBroadcast(evmfaucet.address0, [msgAny], fee);
+        assertIsDeliverTxFailure(result);
+        expect(result.code).toBeGreaterThan(0);
+        expect(result.gasWanted).toEqual(120_000n);
+        // evmd uses more gas than standard simapp, so adjust expectations
+        expect(Number(result.gasUsed)).toBeGreaterThan(40_000);
+
+        client.disconnect();
+      });
+
+      it("works with auto gas", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(evmd.tendermintUrlHttp, wallet, {
+          ...evmSigningClientOptions,
+          gasPrice: evmGasPrice,
+        });
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: evmfaucet.address0,
+          validatorAddress: evmvalidator.validatorAddress,
+          amount: coin(1234, "atest"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const result = await client.signAndBroadcast(evmfaucet.address0, [msgAny], "auto");
+        assertIsDeliverTxSuccess(result);
+
+        client.disconnect();
+      });
+    });
+
+    // Amino mode not supported for evmd - requires EthSecp256k1HdWallet which doesn't exist for Amino
+  });
+
+  describe("signAndBroadcastSync", () => {
+    describe("direct mode", () => {
+      it("works", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msgSend: MsgSend = {
+          fromAddress: evmfaucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "atest"),
+        };
+
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const transactionHash = await client.signAndBroadcastSync(evmfaucet.address0, [msgAny], fee, memo);
+
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(evmd.blockTime * 1.5);
+
+        client.disconnect();
+      });
+
+      it("works with auto gas", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(evmd.tendermintUrlHttp, wallet, {
+          ...evmSigningClientOptions,
+          gasPrice: evmGasPrice,
+        });
+
+        const msgSend: MsgSend = {
+          fromAddress: evmfaucet.address0,
+          toAddress: makeRandomAddress(),
+          amount: coins(1234, "atest"),
+        };
+
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msgSend,
+        };
+        const transactionHash = await client.signAndBroadcastSync(evmfaucet.address0, [msgAny], "auto");
+
+        expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+        await sleep(evmd.blockTime * 1.5);
+
+        client.disconnect();
+      });
+    });
+
+    // Amino mode not supported for evmd - requires EthSecp256k1HdWallet which doesn't exist for Amino
+  });
+
+  describe("sign", () => {
+    describe("direct mode", () => {
+      it("works", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msg = MsgDelegate.fromPartial({
+          delegatorAddress: evmfaucet.address0,
+          validatorAddress: evmvalidator.validatorAddress,
+          amount: coin(1234, "atest"),
+        });
+        const msgAny: MsgDelegateEncodeObject = {
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const signed = await client.sign(evmfaucet.address0, [msgAny], fee, memo);
+
+        // ensure signature is valid
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        assertIsDeliverTxSuccess(result);
+
+        client.disconnect();
+      });
+
+      it("works with custom timeoutHeight", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: evmfaucet.address0,
+          toAddress: evmfaucet.address0,
+          amount: [coin(1, "atest")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(evmfaucet.address0, [msgAny], fee, memo, undefined, BigInt(height + 3));
+
+        // ensure signature is valid
+        const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+        assertIsDeliverTxSuccess(result);
+
+        client.disconnect();
+      });
+
+      it("fails with past timeoutHeight", async () => {
+        const wallet = await DirectEthSecp256k1HdWallet.fromMnemonic(evmfaucet.mnemonic);
+        const client = await SigningStargateClient.connectWithSigner(
+          evmd.tendermintUrlHttp,
+          wallet,
+          evmSigningClientOptions,
+        );
+
+        const msg = MsgSend.fromPartial({
+          fromAddress: evmfaucet.address0,
+          toAddress: evmfaucet.address0,
+          amount: [coin(1, "atest")],
+        });
+        const msgAny: MsgSendEncodeObject = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "atest"),
+          gas: "222000", // 222k
+        };
+        const memo = "Use your power wisely";
+        const height = await client.getHeight();
+        const signed = await client.sign(evmfaucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
+
+        await expectAsync(
+          client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
+        ).toBeRejectedWith(
+          jasmine.objectContaining({
+            code: 30,
+          }),
+        );
+
+        client.disconnect();
+      });
+    });
+
+    // Amino mode not supported for evmd - requires EthSecp256k1HdWallet which doesn't exist for Amino
   });
 });
