@@ -1282,7 +1282,13 @@ import {
       });
 
       // send
-      const result = await client.sendTokens(evmfaucet.address0, beneficiaryAddress, amount, evmSendFee, memo);
+      const result = await client.sendTokens(
+        evmfaucet.address0,
+        beneficiaryAddress,
+        amount,
+        evmSendFee,
+        memo,
+      );
       assertIsDeliverTxSuccess(result);
       expect(result.rawLog).toEqual(""); // empty for 0.50+
       expect(result.events.length).toBeGreaterThanOrEqual(1);
@@ -1509,7 +1515,14 @@ import {
         };
         const memo = "Use your power wisely";
         const height = await client.getHeight();
-        const signed = await client.sign(evmfaucet.address0, [msgAny], fee, memo, undefined, BigInt(height + 3));
+        const signed = await client.sign(
+          evmfaucet.address0,
+          [msgAny],
+          fee,
+          memo,
+          undefined,
+          BigInt(height + 3),
+        );
 
         // ensure signature is valid
         const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
@@ -1541,7 +1554,14 @@ import {
         };
         const memo = "Use your power wisely";
         const height = await client.getHeight();
-        const signed = await client.sign(evmfaucet.address0, [msgAny], fee, memo, undefined, BigInt(height - 1));
+        const signed = await client.sign(
+          evmfaucet.address0,
+          [msgAny],
+          fee,
+          memo,
+          undefined,
+          BigInt(height - 1),
+        );
 
         await expectAsync(
           client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish())),
