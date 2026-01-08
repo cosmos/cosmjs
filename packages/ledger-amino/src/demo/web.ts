@@ -1,5 +1,5 @@
-import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/amino";
-import { pathToString, stringToPath } from "@cosmjs/crypto";
+import { AccountData, StdSignDoc } from "@cosmjs/amino";
+import { pathToString, stringToPath, HdPath } from "@cosmjs/crypto";
 import { toBase64 } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
@@ -26,8 +26,15 @@ function getTextAreaElement(id: string): HTMLTextAreaElement {
   return e;
 }
 
-const accountNumbers = [0, 1, 2, 10];
-const paths = accountNumbers.map(makeCosmoshubPath);
+const paths: HdPath[] = [
+  stringToPath("m/44'/118'/0'/0/0"),
+  stringToPath("m/44'/118'/1'/0/0"),
+  stringToPath("m/44'/118'/2'/0/0"),
+  stringToPath("m/44'/118'/3'/0/0"),
+  stringToPath("m/44'/118'/4'/0/0"),
+  stringToPath("m/44'/118'/5'/0/0"),
+  stringToPath("m/44'/118'/6'/0/0"),
+];
 
 let accounts: readonly AccountData[] = [];
 
