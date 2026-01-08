@@ -1,0 +1,6 @@
+# Build locally using the Dockerfile in this directory
+# To build: docker build -t cosmjs/evmd:v0.5.1 -f Dockerfile .
+REPOSITORY="cosmjs/evmd"
+VERSION="v0.5.1"
+CONTAINER_NAME="evmd"
+CONTAINER_NAME_SLOW="evmd-slow"

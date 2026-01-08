@@ -1,7 +1,7 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../../queryclient";
-import { simapp, simappEnabled } from "../../testutils";
+import { evmd, evmdEnabled, simapp, simappEnabled } from "../../testutils";
 import { MintExtension, setupMintExtension } from "./queries";
 
 async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintExtension, CometClient]> {
@@ -46,6 +46,43 @@ async function makeClientWithMint(rpcUrl: string): Promise<[QueryClient & MintEx
       const annualProvisions = await client.mint.annualProvisions();
       expect(annualProvisions.toFloatApproximation()).toBeGreaterThan(5_400_000_000);
       expect(annualProvisions.toFloatApproximation()).toBeLessThan(5_500_000_000);
+
+      cometClient.disconnect();
+    });
+  });
+});
+
+(evmdEnabled ? describe : xdescribe)("MintExtension (evmd)", () => {
+  describe("params", () => {
+    it("works", async () => {
+      const [client, cometClient] = await makeClientWithMint(evmd.tendermintUrlHttp);
+
+      const params = await client.mint.params();
+      expect(Number(params.blocksPerYear)).toBeGreaterThan(100_000);
+      expect(Number(params.blocksPerYear)).toBeLessThan(100_000_000);
+      expect(params.mintDenom).toEqual(evmd.denomFee);
+
+      cometClient.disconnect();
+    });
+  });
+
+  describe("inflation", () => {
+    it("works", async () => {
+      const [client, cometClient] = await makeClientWithMint(evmd.tendermintUrlHttp);
+
+      const inflation = await client.mint.inflation();
+      expect(inflation.toFloatApproximation()).toBeGreaterThanOrEqual(0);
+
+      cometClient.disconnect();
+    });
+  });
+
+  describe("annualProvisions", () => {
+    it("works", async () => {
+      const [client, cometClient] = await makeClientWithMint(evmd.tendermintUrlHttp);
+
+      const annualProvisions = await client.mint.annualProvisions();
+      expect(annualProvisions.toFloatApproximation()).toBeGreaterThanOrEqual(0);
 
       cometClient.disconnect();
     });

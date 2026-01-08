@@ -5,7 +5,16 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { QueryClient } from "../../queryclient";
-import { nonExistentAddress, simapp, simappEnabled, unused, validator } from "../../testutils";
+import {
+  evmd,
+  evmdEnabled,
+  evmfaucet,
+  nonExistentAddress,
+  simapp,
+  simappEnabled,
+  unused,
+  validator,
+} from "../../testutils";
 import { AuthExtension, setupAuthExtension } from "./queries";
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, CometClient]> {
@@ -54,6 +63,32 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
       await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(
         /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
       );
+
+      cometClient.disconnect();
+    });
+  });
+});
+
+(evmdEnabled ? describe : xdescribe)("AuthExtension (evmd)", () => {
+  describe("account", () => {
+    it("works for account with pubkey and non-zero sequence", async () => {
+      const [client, cometClient] = await makeClientWithAuth(evmd.tendermintUrlHttp);
+      const account = await client.auth.account(evmfaucet.address0);
+      assert(account);
+
+      expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
+      const decoded = BaseAccount.decode(account.value);
+      expect(decoded.address).toEqual(evmfaucet.address0);
+      expect(Number(decoded.accountNumber)).toBeGreaterThanOrEqual(0);
+      expect(Number(decoded.sequence)).toBeGreaterThanOrEqual(0);
+
+      cometClient.disconnect();
+    });
+
+    it("rejects for non-existent address", async () => {
+      const [client, cometClient] = await makeClientWithAuth(evmd.tendermintUrlHttp);
+
+      await expectAsync(client.auth.account(nonExistentAddress)).toBeRejectedWithError(/not found/i);
 
       cometClient.disconnect();
     });

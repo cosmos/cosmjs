@@ -41,6 +41,13 @@ export interface ContractUploadInstructions {
   readonly data: Uint8Array;
 }
 
+export const evmd = {
+  blockTime: 1_000, // ms
+  chainId: "evmd-testing",
+  endpoint: "http://localhost:26661",
+  prefix: "evmos",
+};
+
 export const wasmd = {
   blockTime: 1_000, // ms
   chainId: "testing",
@@ -144,6 +151,7 @@ export const deployedIbcReflect = {
   ],
 };
 
+export const evmdEnabled: boolean = !!globalThis.process?.env.EVMD_ENABLED;
 export const wasmdEnabled: boolean = !!globalThis.process?.env.WASMD_ENABLED;
 
 /** Returns first element. Throws if array has a different length than 1. */
