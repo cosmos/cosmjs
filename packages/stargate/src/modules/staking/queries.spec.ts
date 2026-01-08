@@ -337,7 +337,10 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
     it("works", async () => {
       const [client, cometClient] = await makeClientWithStaking(evmd.tendermintUrlHttp);
 
-      const response = await client.staking.delegatorValidator(evmfaucet.address0, evmvalidator.validatorAddress);
+      const response = await client.staking.delegatorValidator(
+        evmfaucet.address0,
+        evmvalidator.validatorAddress,
+      );
       expect(response.validator).toBeDefined();
       expect(response.validator).not.toBeNull();
 
@@ -385,7 +388,10 @@ async function makeClientWithStaking(rpcUrl: string): Promise<[QueryClient & Sta
     it("works", async () => {
       const [client, cometClient] = await makeClientWithStaking(evmd.tendermintUrlHttp);
 
-      const response = await client.staking.unbondingDelegation(evmfaucet.address0, evmvalidator.validatorAddress);
+      const response = await client.staking.unbondingDelegation(
+        evmfaucet.address0,
+        evmvalidator.validatorAddress,
+      );
       expect(response.unbond).toBeDefined();
       expect(response.unbond).not.toBeNull();
 
