@@ -1,4 +1,3 @@
-import { getAminoPubkey } from "@cosmjs/amino";
 import { encodePubkey } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";

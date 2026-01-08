@@ -4,7 +4,6 @@ import {
   coins,
   DirectEthSecp256k1HdWallet,
   DirectSecp256k1HdWallet,
-  encodePubkey,
   Registry,
 } from "@cosmjs/proto-signing";
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
