@@ -1,7 +1,5 @@
 section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 500px;
   margin: auto;
   padding: 0.5em;
 }
@@ -20,5 +18,9 @@ input {
 
 textarea {
   width: 32em;
-  height: 28em;
+  height: 5em;
+}
+
+#accounts {
+  white-space: pre-wrap;
 }
