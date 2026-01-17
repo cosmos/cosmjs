@@ -144,7 +144,7 @@ and this project adheres to
   unreliable. E.g. the `typeUrl` in Telescope may or may not exist depending on
   the configuration. The newly added `hasFromPartial`/`hasCreate` allow you to
   check for `TelescopeGeneratedType | TsProtoGeneratedType`/`PbjsGeneratedType`
-  such that you can create instanes through
+  such that you can create instances through
   `MyMessage.fromPartial()`/`MyMessage.create()`.
 
 [#1883]: https://github.com/cosmos/cosmjs/issues/1883
@@ -600,7 +600,7 @@ and this project adheres to
 ### Changed
 
 - @cosmjs/stargate, @cosmjs/cosmwasm-stargate: Change default multiplier for gas
-  simulation from 1.3 to 1.4 to avoid out of case cases starting with Cosmos SDK
+  simulation from 1.3 to 1.4 to avoid out of gas cases starting with Cosmos SDK
   0.47.
 - @cosmjs/cosmwasm-stargate: Reduce default gas multiplier for
   `SigningCosmWasmClient.upload` to 1.1. ([#1360])
@@ -937,7 +937,7 @@ and this project adheres to
 - @cosmjs/proto-signing: `makeAuthInfoBytes` now expects a fee granter and fee
   payer argument in position 4 and 5.
 - @cosmjs/stargate: Rename exported function `createFreegrantAminoConverters` to
-  `createFeegrantAminoConverters` due to a typo ([#1261).
+  `createFeegrantAminoConverters` due to a typo ([#1261]).
 
 [#1131]: https://github.com/cosmos/cosmjs/pull/1131
 [#1168]: https://github.com/cosmos/cosmjs/pull/1168
