@@ -73,7 +73,7 @@ export type { GovExtension, GovParamsType, GovProposalId } from "./gov/queries";
 export { setupGovExtension } from "./gov/queries";
 export { createGroupAminoConverters } from "./group/aminomessages";
 export { groupTypes } from "./group/messages";
-export { type AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";
+export { createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";
 export { type MsgTransferEncodeObject, ibcTypes, isMsgTransferEncodeObject } from "./ibc/messages";
 export { type IbcExtension, setupIbcExtension } from "./ibc/queries";
 export { type MintExtension, type MintParams, setupMintExtension } from "./mint/queries";
