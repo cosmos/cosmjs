@@ -13,11 +13,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Build evmd
         run: ./scripts/evmd/build.sh
@@ -39,10 +42,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         run: ./scripts/evmd/init.sh
@@ -60,7 +63,7 @@ jobs:
           SOCKETSERVER_ENABLED: 1
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
-        run: yarn coverage
+        run: pnpm coverage
 
       - uses: codecov/codecov-action@v5
         with:

@@ -13,11 +13,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Build evmd
         run: ./scripts/evmd/build.sh
@@ -39,10 +42,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         run: ./scripts/evmd/init.sh
@@ -60,7 +63,7 @@ jobs:
           SOCKETSERVER_ENABLED: 1
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
-        run: yarn test-chrome
+        run: pnpm test-chrome
 
   test:
     strategy:
@@ -72,11 +75,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: "${{ matrix.node-version }}"
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Build evmd
         run: ./scripts/evmd/build.sh
@@ -98,10 +104,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         run: ./scripts/evmd/init.sh
@@ -120,7 +126,7 @@ jobs:
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
           SES_ENABLED: 1
-        run: yarn run test
+        run: pnpm run test
 
   test-backends:
     strategy:
@@ -132,11 +138,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Build evmd
         if: matrix.backend == 'evmd'
@@ -163,10 +172,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         if: matrix.backend == 'evmd'
@@ -186,4 +195,4 @@ jobs:
           [ "${{ matrix.backend }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
           [ "${{ matrix.backend }}" = "simapp53" ] && export SIMAPP53_ENABLED=1 SLOW_SIMAPP53_ENABLED=1
           [ "${{ matrix.backend }}" = "evmd" ] && export EVMD_ENABLED=1 SLOW_EVMD_ENABLED=1
-          yarn run test
+          pnpm run test
