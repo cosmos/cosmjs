@@ -27,7 +27,7 @@ Connect the Ledger device via USB, open the Cosmos app, then run the demo (this
 will also build the package):
 
 ```sh
-yarn demo-node
+pnpm run demo-node
 ```
 
 ### Browser
@@ -36,7 +36,7 @@ Serve the project locally:
 
 ```sh
 # Build and bundle the demo for web
-yarn pack-demo-web
+pnpm run pack-demo-web
 
 # Host the `ledger-amino` package directory, for example using Python 3
 python3 -m http.server
@@ -67,7 +67,7 @@ and execute:
 ```sh
 export LEDGER_ENABLED=1
 export SIMAPP50_ENABLED=1
-yarn test
+pnpm test
 ```
 
 ## License

@@ -20,7 +20,7 @@ You will also need a faucet. From the root directory of this repository:
 
 ```sh
 cd packages/faucet
-yarn start-dev
+pnpm run start-dev
 ```
 
 The tests need to be told you are running the faucet via an environment
@@ -33,7 +33,7 @@ export FAUCET_ENABLED=1
 Finally run the tests from this directory:
 
 ```sh
-yarn test
+pnpm test
 ```
 
 ## License

@@ -10,15 +10,15 @@
 The faucet is built as part of the monorepo. In the repo root do:
 
 ```
-yarn install
-yarn build
+pnpm install
+pnpm build
 ```
 
 Then start it for a Wasmd development blockchain using:
 
 ```
 cd packages/faucet
-yarn dev-start
+pnpm run dev-start
 ```
 
 Advanced users that want to provide their custom config can start as follows:

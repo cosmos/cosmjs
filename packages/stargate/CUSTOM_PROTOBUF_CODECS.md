@@ -69,25 +69,12 @@ Note that the available `ts-proto` options are described
 script we used for the `@cosmjs/stargate` package
 [here](https://github.com/cosmos/cosmjs/blob/v0.25.6/packages/stargate/scripts/define-proto.sh).
 
-### Working with Yarn 2+
+### Working with pnpm
 
-The binary `./node_modules/.bin/protoc-gen-ts_proto` is not easily available
-when using Yarn 2 or higher. You also need to execute `node` through `yarn`. In
-such cases an executable wrapper script `bin/protoc-gen-ts_proto_yarn_2` with
-
-```
-#!/usr/bin/env -S yarn node
-require('ts-proto/build/plugin')
-```
-
-helps. The name of the script renames the protoc plugin from `ts_proto` to
-`ts_proto_yarn_2` and the `protoc` must now be prefixed accordingly, like
-`--ts_proto_yarn_2_opt="…"`.
-
-A full example is available in the cosmjs-types repo:
-[protoc-gen-ts_proto_yarn_2](https://github.com/confio/cosmjs-types/blob/v0.2.1/bin/protoc-gen-ts_proto_yarn_2)
-and
-[codegen.sh](https://github.com/confio/cosmjs-types/blob/v0.2.1/scripts/codegen.sh).
+Since pnpm uses a standard node_modules layout, protobuf tooling works without
+any special configuration. The binary `./node_modules/.bin/protoc-gen-ts_proto`
+is available as expected, and `node` can be invoked directly. The Yarn 2 PnP
+workarounds described in older documentation are no longer needed.
 
 ### Step 3
 
