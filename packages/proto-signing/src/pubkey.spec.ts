@@ -1,4 +1,6 @@
 import { fromBase64 } from "@cosmjs/encoding";
+import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { decodePubkey, encodePubkey } from "./pubkey";
@@ -61,6 +63,42 @@ describe("pubkey", () => {
       expect(decodePubkey(pubkey)).toEqual({
         type: "tendermint/PubKeyEd25519",
         value: ed25519PubkeyBase64,
+      });
+    });
+
+    it("works for multisig (LegacyAminoPubKey)", () => {
+      const pubkey1Proto = CosmosCryptoSecp256k1Pubkey.fromPartial({
+        key: defaultPubkeyBytes,
+      });
+      const pubkey2Proto = CosmosCryptoSecp256k1Pubkey.fromPartial({
+        key: ed25519PubkeyBytes,
+      });
+      const multisigProto = LegacyAminoPubKey.fromPartial({
+        threshold: 2,
+        publicKeys: [
+          Any.fromPartial({
+            typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+            value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkey1Proto).finish()),
+          }),
+          Any.fromPartial({
+            typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+            value: Uint8Array.from(CosmosCryptoSecp256k1Pubkey.encode(pubkey2Proto).finish()),
+          }),
+        ],
+      });
+      const pubkey = Any.fromPartial({
+        typeUrl: "/cosmos.crypto.multisig.LegacyAminoPubKey",
+        value: Uint8Array.from(LegacyAminoPubKey.encode(multisigProto).finish()),
+      });
+      expect(decodePubkey(pubkey)).toEqual({
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "2",
+          pubkeys: [
+            { type: "tendermint/PubKeySecp256k1", value: defaultPubkeyBase64 },
+            { type: "tendermint/PubKeySecp256k1", value: ed25519PubkeyBase64 },
+          ],
+        },
       });
     });
 
