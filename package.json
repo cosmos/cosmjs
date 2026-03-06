@@ -25,21 +25,21 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "yarn workspaces foreach --all --topological-dev --parallel --verbose run format",
-    "format-text": "prettier --write \"./*.md\" \"./docs/*.md\" && yarn workspaces foreach --all --topological-dev --parallel --verbose run format-text",
+    "format": "pnpm -r run format",
+    "format-text": "prettier --write \"./*.md\" \"./docs/*.md\" && pnpm -r run format-text",
     "format-shell": "shfmt -w scripts packages",
     "lint": "eslint --max-warnings 0 .",
     "lint-fix": "eslint --max-warnings 0 --fix .",
-    "test": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test",
-    "test-firefox": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-firefox",
-    "test-chrome": "yarn workspaces foreach --all --topological-dev --parallel --verbose run test-chrome",
-    "coverage": "yarn workspaces foreach --all --topological-dev --parallel --verbose run coverage",
-    "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
-    "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
-    "pack-web": "yarn workspaces foreach --all --topological-dev --parallel --verbose run pack-web",
-    "publish-next": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag next",
-    "publish-backports": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag backports-unsorted",
-    "publish-latest": "yarn workspaces foreach --all --no-private exec yarn npm publish"
+    "test": "pnpm -r run test",
+    "test-firefox": "pnpm -r run test-firefox",
+    "test-chrome": "pnpm -r run test-chrome",
+    "coverage": "pnpm -r run coverage",
+    "build": "pnpm -r run build",
+    "docs": "pnpm -r run docs",
+    "pack-web": "pnpm -r run pack-web",
+    "publish-next": "pnpm -r publish --tag next --no-git-checks",
+    "publish-backports": "pnpm -r publish --tag backports-unsorted --no-git-checks",
+    "publish-latest": "pnpm -r publish --no-git-checks"
   },
   "devDependencies": {
     "@cosmjs/amino": "workspace:^",

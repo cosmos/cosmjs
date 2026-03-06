@@ -1,4 +1,4 @@
-#!/usr/bin/env -S yarn node
+#!/usr/bin/env node
 
 const { coins } = require("@cosmjs/amino");
 const { Random } = require("@cosmjs/crypto");
