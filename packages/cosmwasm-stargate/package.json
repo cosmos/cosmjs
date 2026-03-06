@@ -33,11 +33,11 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || pnpm run build",
     "test-node": "exit 0",
     "test-firefox": "exit 0",
     "test-chrome": "exit 0",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test": "pnpm run build-or-skip && pnpm run test-node",
     "coverage": "exit 0"
   },
   "dependencies": {
