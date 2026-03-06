@@ -44,7 +44,7 @@
     "@cosmjs/cosmwasm": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "*",
+    "@types/node": "catalog:",
     "glob": "^13.0.0",
     "prettier": "^3.6.2",
     "typedoc": "^0.28",
