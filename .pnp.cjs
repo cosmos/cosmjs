@@ -11281,7 +11281,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["protobufjs", [\
       ["npm:7.4.0", {\
-        "packageLocation": "./.yarn/unplugged/protobufjs-npm-7.4.0-12c56a3adc/node_modules/protobufjs/",\
+        "packageLocation": "./.yarn/cache/protobufjs-npm-7.4.0-12c56a3adc-a5460a63fe.zip/node_modules/protobufjs/",\
         "packageDependencies": [\
           ["@protobufjs/aspromise", "npm:1.1.2"],\
           ["@protobufjs/base64", "npm:1.1.2"],\
@@ -13159,7 +13159,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["unrs-resolver", [\
       ["npm:1.11.1", {\
-        "packageLocation": "./.yarn/unplugged/unrs-resolver-npm-1.11.1-9828edd1f1/node_modules/unrs-resolver/",\
+        "packageLocation": "./.yarn/cache/unrs-resolver-npm-1.11.1-9828edd1f1-c91b112c71.zip/node_modules/unrs-resolver/",\
         "packageDependencies": [\
           ["@unrs/resolver-binding-android-arm-eabi", "npm:1.11.1"],\
           ["@unrs/resolver-binding-android-arm64", "npm:1.11.1"],\
