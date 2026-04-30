@@ -23,11 +23,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
 
       - name: Build evmd
-        run: ./scripts/evmd/build.sh
+        run: ./scripts/evmd051/build.sh
       - name: Start evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/start.sh &
       - name: Start slow evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
@@ -48,14 +48,14 @@ jobs:
         run: yarn build
 
       - name: Initialize evmd
-        run: ./scripts/evmd/init.sh
+        run: ./scripts/evmd051/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
       - name: Test
         env:
-          EVMD_ENABLED: 1
-          SLOW_EVMD_ENABLED: 1
+          EVMD051_ENABLED: 1
+          SLOW_EVMD051_ENABLED: 1
           HTTPSERVER_ENABLED: 1
           SIMAPP50_ENABLED: 1
           SLOW_SIMAPP50_ENABLED: 1
@@ -85,11 +85,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
 
       - name: Build evmd
-        run: ./scripts/evmd/build.sh
+        run: ./scripts/evmd051/build.sh
       - name: Start evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/start.sh &
       - name: Start slow evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
@@ -110,14 +110,14 @@ jobs:
         run: yarn build
 
       - name: Initialize evmd
-        run: ./scripts/evmd/init.sh
+        run: ./scripts/evmd051/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
       - name: Test
         env:
-          EVMD_ENABLED: 1
-          SLOW_EVMD_ENABLED: 1
+          EVMD051_ENABLED: 1
+          SLOW_EVMD051_ENABLED: 1
           HTTPSERVER_ENABLED: 1
           SIMAPP50_ENABLED: 1
           SLOW_SIMAPP50_ENABLED: 1
@@ -131,7 +131,7 @@ jobs:
   test-backends:
     strategy:
       matrix:
-        backend: ["simapp47", "simapp50", "simapp53", "evmd"]
+        backend: ["simapp47", "simapp50", "simapp53", "evmd051"]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -148,14 +148,14 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
 
       - name: Build evmd
-        if: matrix.backend == 'evmd'
-        run: ./scripts/evmd/build.sh
+        if: matrix.backend == 'evmd051'
+        run: ./scripts/evmd051/build.sh
       - name: Start evmd
-        if: matrix.backend == 'evmd'
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
+        if: matrix.backend == 'evmd051'
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/start.sh &
       - name: Start slow evmd
-        if: matrix.backend == 'evmd'
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
+        if: matrix.backend == 'evmd051'
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
@@ -178,8 +178,8 @@ jobs:
         run: yarn build
 
       - name: Initialize evmd
-        if: matrix.backend == 'evmd'
-        run: ./scripts/evmd/init.sh
+        if: matrix.backend == 'evmd051'
+        run: ./scripts/evmd051/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
@@ -194,5 +194,5 @@ jobs:
           [ "${{ matrix.backend }}" = "simapp47" ] && export SIMAPP47_ENABLED=1 SLOW_SIMAPP47_ENABLED=1
           [ "${{ matrix.backend }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
           [ "${{ matrix.backend }}" = "simapp53" ] && export SIMAPP53_ENABLED=1 SLOW_SIMAPP53_ENABLED=1
-          [ "${{ matrix.backend }}" = "evmd" ] && export EVMD_ENABLED=1 SLOW_EVMD_ENABLED=1
+          [ "${{ matrix.backend }}" = "evmd051" ] && export EVMD051_ENABLED=1 SLOW_EVMD051_ENABLED=1
           yarn run test

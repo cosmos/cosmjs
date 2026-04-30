@@ -15,13 +15,14 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
-export const evmdEnabled: boolean = !!globalThis.process?.env.EVMD_ENABLED;
+export const evmd051Enabled: boolean = !!globalThis.process?.env.EVMD051_ENABLED;
+export const evmdEnabled: boolean = evmd051Enabled;
 export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
 export const simapp53Enabled: boolean = !!globalThis.process?.env.SIMAPP53_ENABLED;
 export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled || simapp53Enabled;
 
-export const slowEvmdEnabled: boolean = !!globalThis.process?.env.SLOW_EVMD_ENABLED;
+export const slowEvmdEnabled: boolean = !!globalThis.process?.env.SLOW_EVMD051_ENABLED;
 
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED ||

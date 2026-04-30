@@ -151,7 +151,8 @@ export const deployedIbcReflect = {
   ],
 };
 
-export const evmdEnabled: boolean = !!globalThis.process?.env.EVMD_ENABLED;
+export const evmd051Enabled: boolean = !!globalThis.process?.env.EVMD051_ENABLED;
+export const evmdEnabled: boolean = evmd051Enabled;
 export const wasmdEnabled: boolean = !!globalThis.process?.env.WASMD_ENABLED;
 
 /** Returns first element. Throws if array has a different length than 1. */
