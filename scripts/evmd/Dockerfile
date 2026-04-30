@@ -1,4 +1,8 @@
-FROM golang:alpine AS builder
+# Pinned to 1.24 because cosmos/evm v0.5.1 transitively depends on
+# bytedance/sonic v1.14.2, which fails to compile on Go 1.25+ ("undefined:
+# GoMapIterator"). cosmos/evm's go.mod declares `go 1.23.8`, so 1.24 is
+# safely within range.
+FROM golang:1.24-alpine AS builder
 
 # Install dependencies
 RUN apk add --no-cache git make gcc musl-dev linux-headers ca-certificates
