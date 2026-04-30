@@ -148,7 +148,7 @@ export const unused = {
     value: "ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ",
   },
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-  accountNumber: 16,
+  accountNumber: 16n,
   sequence: 0,
   balanceStaking: "2000000000", // 2000 STAKE
   balanceFee: "1000000000", // 1000 COSM
@@ -182,7 +182,7 @@ export const validator = {
    * ```
    */
   validatorAddress: "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
-  accountNumber: 0,
+  accountNumber: 0n,
   sequence: 1,
 };
 
@@ -193,7 +193,7 @@ export const evmvalidator = {
   },
   delegatorAddress: "cosmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwsjskvv",
   validatorAddress: "cosmosvaloper10jmp6sgh4cc6zt3e8gw05wavvejgr5pw4xyrql",
-  accountNumber: 0,
+  accountNumber: 0n,
   sequence: 1,
 };
 

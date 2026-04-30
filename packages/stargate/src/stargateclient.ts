@@ -102,7 +102,7 @@ export interface IndexedTx {
 }
 
 export interface SequenceResponse {
-  readonly accountNumber: number;
+  readonly accountNumber: bigint;
   readonly sequence: number;
 }
 

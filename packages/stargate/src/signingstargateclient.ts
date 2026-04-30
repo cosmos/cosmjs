@@ -80,7 +80,7 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
  * @see https://github.com/cosmos/cosmos-sdk/blob/v0.42.2/x/auth/signing/sign_mode_handler.go#L23-L37
  */
 export interface SignerData {
-  readonly accountNumber: number;
+  readonly accountNumber: bigint;
   readonly sequence: number;
   readonly chainId: string;
 }

@@ -15,7 +15,11 @@ export interface Account {
   /** Bech32 account address */
   readonly address: string;
   readonly pubkey: Pubkey | null;
-  readonly accountNumber: number;
+  /**
+   * The account number as `bigint`. Cosmos SDK 0.53+ `GenerateID()` accounts can exceed
+   * `Number.MAX_SAFE_INTEGER`, so this is a `bigint` to preserve precision.
+   */
+  readonly accountNumber: bigint;
   readonly sequence: number;
 }
 
@@ -29,7 +33,7 @@ function accountFromBaseAccount(input: BaseAccount): Account {
   return {
     address: address,
     pubkey: pubkey,
-    accountNumber: uint64FromProto(accountNumber).toNumber(),
+    accountNumber: uint64FromProto(accountNumber).toBigInt(),
     sequence: uint64FromProto(sequence).toNumber(),
   };
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toUtf8 } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
+import { Uint53, Uint64 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
 
@@ -60,13 +60,13 @@ export function makeSignDoc(
   fee: StdFee,
   chainId: string,
   memo: string | undefined,
-  accountNumber: number | string,
+  accountNumber: number | string | bigint,
   sequence: number | string,
   timeout_height?: bigint,
 ): StdSignDoc {
   return {
     chain_id: chainId,
-    account_number: Uint53.fromString(accountNumber.toString()).toString(),
+    account_number: Uint64.fromString(accountNumber.toString()).toString(),
     sequence: Uint53.fromString(sequence.toString()).toString(),
     fee: fee,
     msgs: msgs,

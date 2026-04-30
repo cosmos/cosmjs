@@ -33,7 +33,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
       expect(BaseAccount.decode(account.value)).toEqual(
         jasmine.objectContaining({
           address: unused.address,
-          accountNumber: BigInt(unused.accountNumber),
+          accountNumber: unused.accountNumber,
           sequence: BigInt(0),
         }),
       );
@@ -79,7 +79,7 @@ async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthEx
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
       const decoded = BaseAccount.decode(account.value);
       expect(decoded.address).toEqual(evmfaucet.address0);
-      expect(Number(decoded.accountNumber)).toBeGreaterThanOrEqual(0);
+      expect(decoded.accountNumber >= 0n).toBe(true);
       expect(Number(decoded.sequence)).toBeGreaterThanOrEqual(0);
 
       cometClient.disconnect();
