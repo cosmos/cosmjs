@@ -22,7 +22,8 @@ export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABL
 export const simapp53Enabled: boolean = !!globalThis.process?.env.SIMAPP53_ENABLED;
 export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled || simapp53Enabled;
 
-export const slowEvmdEnabled: boolean = !!globalThis.process?.env.SLOW_EVMD051_ENABLED;
+export const slowEvmd051Enabled: boolean = !!globalThis.process?.env.SLOW_EVMD051_ENABLED;
+export const slowEvmdEnabled: boolean = slowEvmd051Enabled;
 
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED ||
