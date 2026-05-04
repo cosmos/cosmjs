@@ -6,23 +6,55 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.39.0] - 2026-05-04
+
 ### Changed
 
-- all: Drop support for Node.js < 22.
+- all: Drop support for Node.js < 22. Node.js 20 reached end-of-life on 2025-04
+  and the crypto stack (@noble/\*, @scure/bip39 v2) relies on APIs that only
+  ship in Node 22+. If you are still on an older Node, upgrade before taking
+  this release.
 - @cosmjs/crypto: Upgrade dependencies @noble/ciphers, @noble/curves,
-  @noble/hashes and @scure/bip39 to v2. ([#1935])
-- @cosmjs/crypto: Use pure-JS implementation of Argon2id from @noble/hashes.
-  ([#1938])
+  @noble/hashes and @scure/bip39 to v2. These upgrades are otherwise transparent
+  to users of the high-level `@cosmjs/crypto` API, but direct consumers of the
+  underlying libraries should consult their respective migration notes.
+  ([#1935])
+- @cosmjs/crypto: Use pure-JS implementation of Argon2id from @noble/hashes
+  instead of the WASM-based `hash-wasm` implementation. This removes the
+  `hash-wasm` runtime dependency and makes `Argon2id.execute` fully
+  synchronous-capable without requiring a WASM instantiation. ([#1938])
 - @cosmjs/amino, @cosmjs/proto-signing: Remove scream test around argon2 call in
   wallet serialization/deserialization which is not needed anymore after
   [#1938].
-- Bring back main/types fields for bundlephobia support
+- all: Bring back the classic `main`/`types` fields in `package.json` alongside
+  the `exports` field so tools like bundlephobia that do not understand
+  `exports` can still resolve the package entry points. ([#1944])
+- @cosmjs/stargate: Change `Account.accountNumber` from `number` to `bigint`.
+  Cosmos SDK 0.53+ can assign account numbers via `GenerateID()` that exceed
+  `Number.MAX_SAFE_INTEGER` (2^53 − 1), which would silently lose precision when
+  represented as a JavaScript `number`. Using `bigint` preserves the full 64-bit
+  range. **Breaking change** for anyone reading `accountNumber` off `Account`
+  (e.g. from `StargateClient.getAccount()`): you will typically need to either
+  coerce back with `Number(account.accountNumber)` where you know the value is
+  safe, or keep using `bigint` end-to-end. ([#1956])
+- @cosmjs/amino: `makeSignDoc` now accepts `number | string | bigint` for
+  `accountNumber` (previously `number | string`) and encodes the value via
+  `Uint64` instead of `Uint53` so large account numbers no longer overflow when
+  building a sign doc. ([#1956])
 - @cosmjs/crypto: Deprecate `Argon2id`/`Argon2idOptions`/`isArgon2idOptions`
   because it will likely be removed when wallet serialization/deserialization is
   removed.
+- @cosmjs/faucet: Upgrade `koa` to ^3.1.2 to address the host header injection
+  advisory GHSA-7gcc-r8m5-44qm. Same-major bump, no API changes. ([#1959])
+- @cosmjs/proto-signing: Upgrade `protobufjs` to ^7.5.5 to address the arbitrary
+  code execution advisory GHSA-xq3m-2v4x-88gg. Same-major bump, no API changes.
+  ([#1959])
 
 [#1935]: https://github.com/cosmos/cosmjs/pull/1935
 [#1938]: https://github.com/cosmos/cosmjs/issues/1938
+[#1944]: https://github.com/cosmos/cosmjs/pull/1944
+[#1956]: https://github.com/cosmos/cosmjs/pull/1956
+[#1959]: https://github.com/cosmos/cosmjs/pull/1959
 
 ## [0.38.0] - 2025-12-30
 
@@ -1879,7 +1911,8 @@ CHANGELOG entries missing. Please see [the diff][0.24.1].
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
 - @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
 
-[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.38.0...HEAD
+[unreleased]: https://github.com/cosmos/cosmjs/compare/v0.39.0...HEAD
+[0.39.0]: https://github.com/cosmos/cosmjs/compare/v0.38.0...v0.39.0
 [0.38.0]: https://github.com/cosmos/cosmjs/compare/v0.37.0...v0.38.0
 [0.37.0]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.37.0
 [0.36.2]: https://github.com/cosmos/cosmjs/compare/v0.36.1...v0.36.2

@@ -37,9 +37,9 @@
     "build": "yarn workspaces foreach --all --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --all --topological-dev --parallel --verbose run docs",
     "pack-web": "yarn workspaces foreach --all --topological-dev --parallel --verbose run pack-web",
-    "publish-next": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag next",
-    "publish-backports": "yarn workspaces foreach --all --no-private exec yarn npm publish --tag backports-unsorted",
-    "publish-latest": "yarn workspaces foreach --all --no-private exec yarn npm publish"
+    "publish-next": "yarn workspaces foreach --all --no-private --exclude '@cosmjs/cosmwasm-stargate' exec yarn npm publish --tag next",
+    "publish-backports": "yarn workspaces foreach --all --no-private --exclude '@cosmjs/cosmwasm-stargate' exec yarn npm publish --tag backports-unsorted",
+    "publish-latest": "yarn workspaces foreach --all --no-private --exclude '@cosmjs/cosmwasm-stargate' exec yarn npm publish"
   },
   "resolutions": {
     "@isaacs/brace-expansion": "^5.0.1",
