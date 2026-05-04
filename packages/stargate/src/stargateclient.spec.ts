@@ -672,7 +672,7 @@ describe("isDeliverTxSuccess", () => {
       assert(account);
       expect(account.address).toEqual(evmfaucet.address0);
       expect(account.pubkey).toBeTruthy();
-      expect(account.accountNumber).toBeGreaterThanOrEqual(0);
+      expect(account.accountNumber >= 0n).toBe(true);
       expect(account.sequence).toBeGreaterThanOrEqual(0);
 
       client.disconnect();
@@ -694,7 +694,7 @@ describe("isDeliverTxSuccess", () => {
 
       const account = await client.getSequence(evmfaucet.address0);
       assert(account);
-      expect(account.accountNumber).toBeGreaterThanOrEqual(0);
+      expect(account.accountNumber >= 0n).toBe(true);
       expect(account.sequence).toBeGreaterThanOrEqual(0);
 
       client.disconnect();

@@ -61,7 +61,7 @@ export function makeSignDoc(
   bodyBytes: Uint8Array,
   authInfoBytes: Uint8Array,
   chainId: string,
-  accountNumber: number,
+  accountNumber: number | bigint,
 ): SignDoc {
   return {
     bodyBytes: bodyBytes,

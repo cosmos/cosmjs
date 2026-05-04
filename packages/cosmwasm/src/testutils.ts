@@ -102,7 +102,7 @@ export const unused = {
     value: "ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ",
   },
   address: "wasm1cjsxept9rkggzxztslae9ndgpdyt240842kpxh",
-  accountNumber: 16,
+  accountNumber: 16n,
   sequence: 0,
 };
 
@@ -113,7 +113,7 @@ export const validator = {
    * `jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/wasmd/template/.wasmd/config/genesis.json`
    */
   validatorAddress: "wasmvaloper1k2vfqeu2upskfv7awn29g5kvxxnmugkzy6rch0",
-  accountNumber: 0,
+  accountNumber: 0n,
   sequence: 1,
 };
 
