@@ -23,11 +23,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
 
       - name: Build evmd
-        run: ./scripts/evmd/build.sh
+        run: ./scripts/evmd051/build.sh
       - name: Start evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/start.sh &
       - name: Start slow evmd
-        run: RUNNER_TRACKING_ID="" && ./scripts/evmd/slow_start.sh &
+        run: RUNNER_TRACKING_ID="" && ./scripts/evmd051/slow_start.sh &
       - name: Start wasmd
         run: RUNNER_TRACKING_ID="" && ./scripts/wasmd/start.sh &
       - name: Start simapp
@@ -48,14 +48,14 @@ jobs:
         run: yarn build
 
       - name: Initialize evmd
-        run: ./scripts/evmd/init.sh
+        run: ./scripts/evmd051/init.sh
       - name: Initialize wasmd (deploy contracts and friends)
         run: ./scripts/wasmd/init.sh
 
       - name: Test with coverage
         env:
-          EVMD_ENABLED: 1
-          SLOW_EVMD_ENABLED: 1
+          EVMD051_ENABLED: 1
+          SLOW_EVMD051_ENABLED: 1
           HTTPSERVER_ENABLED: 1
           SIMAPP50_ENABLED: 1
           SLOW_SIMAPP50_ENABLED: 1
