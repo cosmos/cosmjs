@@ -1,37 +1,31 @@
 /**
  * A single JSON value. This is the missing return type of JSON.parse().
  */
-export type JsonCompatibleValue =
-  | JsonCompatibleDictionary
-  | JsonCompatibleArray
-  | string
-  | number
-  | boolean
-  | null;
+export type JsonValue = JsonObject | JsonArray | string | number | boolean | null;
 
 /**
- * An array of JsonCompatibleValue
+ * An array of JsonValue
  */
 // Use interface extension instead of type alias to make circular declaration possible.
-export interface JsonCompatibleArray extends ReadonlyArray<JsonCompatibleValue> {}
+export interface JsonArray extends ReadonlyArray<JsonValue> {}
 
 /**
  * A string to json value dictionary.
  */
-export interface JsonCompatibleDictionary {
-  readonly [key: string]: JsonCompatibleValue | readonly JsonCompatibleValue[];
+export interface JsonObject {
+  readonly [key: string]: JsonValue;
 }
 
-export function isJsonCompatibleValue(value: unknown): value is JsonCompatibleValue {
+export function isJsonValue(value: unknown): value is JsonValue {
   if (
     typeof value === "string" ||
     typeof value === "number" ||
     typeof value === "boolean" ||
     value === null ||
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    isJsonCompatibleArray(value) ||
+    isJsonArray(value) ||
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    isJsonCompatibleDictionary(value)
+    isJsonObject(value)
   ) {
     return true;
   } else {
@@ -39,13 +33,13 @@ export function isJsonCompatibleValue(value: unknown): value is JsonCompatibleVa
   }
 }
 
-export function isJsonCompatibleArray(value: unknown): value is JsonCompatibleArray {
+export function isJsonArray(value: unknown): value is JsonArray {
   if (!Array.isArray(value)) {
     return false;
   }
 
   for (const item of value) {
-    if (!isJsonCompatibleValue(item)) {
+    if (!isJsonValue(item)) {
       return false;
     }
   }
@@ -54,7 +48,7 @@ export function isJsonCompatibleArray(value: unknown): value is JsonCompatibleAr
   return true;
 }
 
-export function isJsonCompatibleDictionary(value: unknown): value is JsonCompatibleDictionary {
+export function isJsonObject(value: unknown): value is JsonObject {
   if (typeof value !== "object" || value === null) {
     // value must be a non-null object
     return false;
@@ -67,5 +61,5 @@ export function isJsonCompatibleDictionary(value: unknown): value is JsonCompati
     return false;
   }
 
-  return Object.values(value).every(isJsonCompatibleValue);
+  return Object.values(value).every(isJsonValue);
 }
