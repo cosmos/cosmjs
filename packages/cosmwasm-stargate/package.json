@@ -49,5 +49,9 @@
     "prettier": "^3.6.2",
     "typedoc": "^0.28",
     "typescript": "~5.9"
+  },
+  "homepage": "https://github.com/cosmos/cosmjs",
+  "bugs": {
+    "url": "https://github.com/cosmos/cosmjs/issues"
   }
 }
