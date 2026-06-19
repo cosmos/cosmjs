@@ -158,6 +158,10 @@ describe("RFC3339", () => {
     expect(fromRfc3339("2002-10-02 11:12:13Z")).toEqual(new Date(Date.UTC(2002, 9, 2, 11, 12, 13)));
   });
 
+  it("parses leap days", () => {
+    expect(fromRfc3339("2000-02-29T11:12:13Z")).toEqual(new Date(Date.UTC(2000, 1, 29, 11, 12, 13)));
+  });
+
   it("throws for invalid format", () => {
     // extra whitespace
     expect(() => fromRfc3339(" 2002-10-02T11:12:13Z")).toThrow();
@@ -190,6 +194,17 @@ describe("RFC3339", () => {
     // wrong fractional seconds
     expect(() => fromRfc3339("2018-07-30T19:21:12345Z")).toThrow();
     expect(() => fromRfc3339("2018-07-30T19:21:12.Z")).toThrow();
+  });
+
+  it("throws for out-of-range date and time components", () => {
+    expect(() => fromRfc3339("2002-00-02T11:12:13Z")).toThrow();
+    expect(() => fromRfc3339("2002-13-02T11:12:13Z")).toThrow();
+    expect(() => fromRfc3339("2002-02-30T11:12:13Z")).toThrow();
+    expect(() => fromRfc3339("2001-02-29T11:12:13Z")).toThrow();
+    expect(() => fromRfc3339("2002-10-02T24:12:13Z")).toThrow();
+    expect(() => fromRfc3339("2002-10-02T11:60:13Z")).toThrow();
+    expect(() => fromRfc3339("2002-10-02T11:12:13+24:00")).toThrow();
+    expect(() => fromRfc3339("2002-10-02T11:12:13+01:60")).toThrow();
   });
 
   it("encodes dates", () => {
