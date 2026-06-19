@@ -7,6 +7,25 @@ function padded(integer: number, length = 2): string {
   return integer.toString().padStart(length, "0");
 }
 
+function getLastDayOfMonth(year: number, month: number): number {
+  const date = new Date(0);
+  date.setUTCFullYear(year, month, 0);
+  date.setUTCHours(0, 0, 0, 0);
+  return date.getUTCDate();
+}
+
+function isValidDate(year: number, month: number, day: number): boolean {
+  return month >= 1 && month <= 12 && day >= 1 && day <= getLastDayOfMonth(year, month);
+}
+
+function isValidTime(hour: number, minute: number, second: number): boolean {
+  return hour <= 23 && minute <= 59 && second <= 59;
+}
+
+function isValidTimezoneOffset(hours: number, minutes: number): boolean {
+  return hours <= 23 && minutes <= 59;
+}
+
 export function fromRfc3339(str: string): Date {
   const matches = rfc3339Matcher.exec(str);
   if (!matches) {
@@ -38,9 +57,17 @@ export function fromRfc3339(str: string): Date {
     tzOffsetMinutes = +matches[8].substring(4, 6);
   }
 
+  if (
+    !isValidDate(year, month, day) ||
+    !isValidTime(hour, minute, second) ||
+    !isValidTimezoneOffset(tzOffsetHours, tzOffsetMinutes)
+  ) {
+    throw new Error("Date string is not in RFC3339 format");
+  }
+
   const tzOffset = tzOffsetSign * (tzOffsetHours * 60 + tzOffsetMinutes) * 60; // seconds
 
-  const date = new Date();
+  const date = new Date(0);
   date.setUTCFullYear(year, month - 1, day);
   date.setUTCHours(hour, minute, second, milliSeconds);
 
