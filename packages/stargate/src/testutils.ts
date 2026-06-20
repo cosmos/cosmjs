@@ -15,13 +15,15 @@ import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { calculateFee, GasPrice } from "./fee";
 import { SigningStargateClientOptions } from "./signingstargateclient";
 
-export const evmdEnabled: boolean = !!globalThis.process?.env.EVMD_ENABLED;
+export const evmd051Enabled: boolean = !!globalThis.process?.env.EVMD051_ENABLED;
+export const evmdEnabled: boolean = evmd051Enabled;
 export const simapp47Enabled: boolean = !!globalThis.process?.env.SIMAPP47_ENABLED;
 export const simapp50Enabled: boolean = !!globalThis.process?.env.SIMAPP50_ENABLED;
 export const simapp53Enabled: boolean = !!globalThis.process?.env.SIMAPP53_ENABLED;
 export const simappEnabled: boolean = simapp47Enabled || simapp50Enabled || simapp53Enabled;
 
-export const slowEvmdEnabled: boolean = !!globalThis.process?.env.SLOW_EVMD_ENABLED;
+export const slowEvmd051Enabled: boolean = !!globalThis.process?.env.SLOW_EVMD051_ENABLED;
+export const slowEvmdEnabled: boolean = slowEvmd051Enabled;
 
 export const slowSimappEnabled: boolean =
   !!globalThis.process?.env.SLOW_SIMAPP47_ENABLED ||
@@ -146,7 +148,7 @@ export const unused = {
     value: "ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ",
   },
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-  accountNumber: 16,
+  accountNumber: 16n,
   sequence: 0,
   balanceStaking: "2000000000", // 2000 STAKE
   balanceFee: "1000000000", // 1000 COSM
@@ -180,7 +182,7 @@ export const validator = {
    * ```
    */
   validatorAddress: "cosmosvaloper12nt2hqjps8r065wc02qks88tvqzdeua06e982h",
-  accountNumber: 0,
+  accountNumber: 0n,
   sequence: 1,
 };
 
@@ -191,7 +193,7 @@ export const evmvalidator = {
   },
   delegatorAddress: "cosmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwsjskvv",
   validatorAddress: "cosmosvaloper10jmp6sgh4cc6zt3e8gw05wavvejgr5pw4xyrql",
-  accountNumber: 0,
+  accountNumber: 0n,
   sequence: 1,
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "description": "The faucet",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -50,7 +50,7 @@
     "@cosmjs/utils": "workspace:^",
     "@koa/bodyparser": "^6.0.0",
     "@koa/cors": "^5.0",
-    "koa": "^3.1.1"
+    "koa": "^3.1.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

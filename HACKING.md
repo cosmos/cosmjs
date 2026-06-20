@@ -61,10 +61,10 @@ export WASMD_ENABLED=1
 export SIMAPP50_ENABLED=1
 
 # Start evmd (build Docker image first time only)
-./scripts/evmd/build.sh  # Only needed once
-./scripts/evmd/start.sh
-./scripts/evmd/init.sh
-export EVMD_ENABLED=1
+./scripts/evmd051/build.sh  # Only needed once
+./scripts/evmd051/start.sh
+./scripts/evmd051/init.sh
+export EVMD051_ENABLED=1
 
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
@@ -85,13 +85,13 @@ pnpm test
 unset HTTPSERVER_ENABLED
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
-unset EVMD_ENABLED
+unset EVMD051_ENABLED
 unset SIMAPP50_ENABLED
 unset WASMD_ENABLED
 ./scripts/httpserver/stop.sh
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh
-./scripts/evmd/stop.sh
+./scripts/evmd051/stop.sh
 ./scripts/simapp50/stop.sh
 ./scripts/wasmd/stop.sh
 ```

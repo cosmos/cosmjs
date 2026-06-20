@@ -5,7 +5,7 @@
 Since evmd doesn't have a pre-built Docker container, you need to build it first:
 
 ```bash
-cd scripts/evmd
+cd scripts/evmd051
 ./build.sh
 ```
 
@@ -54,7 +54,7 @@ The template directory is generated once and reused. To regenerate it (e.g., aft
 After building the image, run the following:
 
 ```bash
-cd scripts/evmd
+cd scripts/evmd051
 ./start.sh && ./init.sh
 ```
 
@@ -133,25 +133,25 @@ To enable evmd tests in your CosmJS test suite:
 
 ```bash
 # Build evmd Docker image (first time only)
-./scripts/evmd/build.sh
+./scripts/evmd051/build.sh
 
 # Start evmd
-./scripts/evmd/start.sh
-./scripts/evmd/init.sh
-export EVMD_ENABLED=1
+./scripts/evmd051/start.sh
+./scripts/evmd051/init.sh
+export EVMD051_ENABLED=1
 
 # Optionally start slow evmd (for testing slow block times)
-./scripts/evmd/slow_start.sh
-export SLOW_EVMD_ENABLED=1
+./scripts/evmd051/slow_start.sh
+export SLOW_EVMD051_ENABLED=1
 
 # Run tests
 pnpm test
 
 # Stop evmd
-unset SLOW_EVMD_ENABLED
-unset EVMD_ENABLED
-./scripts/evmd/slow_stop.sh  # if slow evmd was started
-./scripts/evmd/stop.sh
+unset SLOW_EVMD051_ENABLED
+unset EVMD051_ENABLED
+./scripts/evmd051/slow_stop.sh  # if slow evmd was started
+./scripts/evmd051/stop.sh
 ```
 
 ## Slow EVM Test Network

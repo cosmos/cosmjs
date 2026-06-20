@@ -21,7 +21,7 @@ describe("accounts", () => {
           type: "tendermint/PubKeySecp256k1",
           value: "A/XsdhwSIKU73TltD9STcaS07FNw0szR4a+oDLr6vika",
         },
-        accountNumber: 56,
+        accountNumber: 56n,
         sequence: 27,
       });
     });
