@@ -145,7 +145,7 @@ export EVMD051_ENABLED=1
 export SLOW_EVMD051_ENABLED=1
 
 # Run tests
-yarn test
+pnpm test
 
 # Stop evmd
 unset SLOW_EVMD051_ENABLED

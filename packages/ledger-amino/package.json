@@ -36,12 +36,12 @@
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
-    "demo-node": "yarn build-or-skip && node ./demo/node.cjs",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-demo-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || pnpm run build",
+    "test-node": "node jasmine-testrunner.cjs",
+    "test": "pnpm run build-or-skip && pnpm run test-node",
+    "demo-node": "pnpm run build-or-skip && node ./demo/node.cjs",
+    "coverage": "nyc --reporter=text --reporter=lcov pnpm run test --quiet",
+    "pack-demo-web": "pnpm run build-or-skip && webpack --mode development --config webpack.demo.config.cjs"
   },
   "dependencies": {
     "@cosmjs/amino": "workspace:^",

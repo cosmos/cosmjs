@@ -1,4 +1,4 @@
-#!/usr/bin/env -S yarn node
+#!/usr/bin/env node
 
 const { encodeSecp256k1Pubkey, makeCosmoshubPath, Secp256k1HdWallet } = require("@cosmjs/amino");
 

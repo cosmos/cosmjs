@@ -29,17 +29,17 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "dev-start": "yarn start-dev",
+    "dev-start": "pnpm run start-dev",
     "format": "prettier --write --log-level warn \"./src/**/*.ts\"",
     "format-text": "prettier --write \"./*.md\"",
     "build": "rm -rf ./build && tsc",
-    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || yarn build",
-    "test-node": "yarn node jasmine-testrunner.cjs",
-    "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "build-or-skip": "[ -n \"${SKIP_BUILD:-}\" ] || pnpm run build",
+    "test-node": "node jasmine-testrunner.cjs",
+    "test": "pnpm run build-or-skip && pnpm run test-node",
+    "coverage": "nyc --reporter=text --reporter=lcov pnpm run test --quiet",
     "start-dev": "FAUCET_ADDRESS_PREFIX=wasm FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26659\"",
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\"",
-    "pack-node": "yarn build-or-skip && webpack --mode production --config webpack.node.config.cjs"
+    "pack-node": "pnpm run build-or-skip && webpack --mode production --config webpack.node.config.cjs"
   },
   "dependencies": {
     "@cosmjs/crypto": "workspace:^",

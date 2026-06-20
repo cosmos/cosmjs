@@ -1,0 +1,5 @@
+packages:
+  - packages/*
+
+catalog:
+  "@types/node": ~24

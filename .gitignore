@@ -44,4 +44,8 @@ coverage/
 .yarn/cache/fsevents-patch-*-*.zip
 .yarn/cache/@unrs-resolver-binding-*-*.zip
 
+# pnpm
+pnpm-debug.log*
+
+
 AGENTS.md

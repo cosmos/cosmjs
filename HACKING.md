@@ -6,7 +6,7 @@ work on CosmJS, i.e. modify it. It is not intended for users of CosmJS.
 ## Prerequisites
 
 - A UNIX-like development environment
-- Node.js 22+, Docker and yarn
+- Node.js 22+, Docker and pnpm
 - `sha256sum`, which you
   [can get on macOS as well](https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos)
 - `gsed`, which you
@@ -34,15 +34,15 @@ sha256sum -c checksums.sha256
 
 ## Installation
 
-1. Install dependencies: `yarn install`
-2. Install SDKs (to make IDE integration work): `yarn dlx @yarnpkg/sdks`
+1. Install dependencies: `pnpm install`
+2. IDE integration works out of the box with pnpm's node_modules layout.
 
 ## Running tests
 
 For unit tests that don't connect to any blockchain, just do:
 
 ```sh
-yarn test
+pnpm test
 ```
 
 To run the entire test suite, you need to run some local blockchain to test
@@ -79,7 +79,7 @@ export SOCKETSERVER_ENABLED=1
 export HTTPSERVER_ENABLED=1
 
 # now more tests are running that were marked as "pending" before
-yarn test
+pnpm test
 
 # And at the end of the day
 unset HTTPSERVER_ENABLED
@@ -101,10 +101,10 @@ unset WASMD_ENABLED
 After you modified a file, check if the linter is happy:
 
 ```sh
-yarn lint
+pnpm lint
 
 # or if you want linting plus automatic fixing
-yarn lint-fix
+pnpm lint-fix
 ```
 
 ## Ports

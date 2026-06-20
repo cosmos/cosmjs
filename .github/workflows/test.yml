@@ -13,11 +13,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
@@ -42,10 +45,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         run: ./scripts/evmd051/init.sh
@@ -63,7 +66,7 @@ jobs:
           SOCKETSERVER_ENABLED: 1
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
-        run: yarn test-chrome
+        run: pnpm test-chrome
 
   test:
     strategy:
@@ -75,11 +78,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: "${{ matrix.node-version }}"
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
@@ -104,10 +110,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         run: ./scripts/evmd051/init.sh
@@ -126,7 +132,7 @@ jobs:
           SKIP_BUILD: 1
           WASMD_ENABLED: 1
           SES_ENABLED: 1
-        run: yarn run test
+        run: pnpm run test
 
   test-backends:
     strategy:
@@ -138,11 +144,14 @@ jobs:
         with:
           lfs: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
@@ -172,10 +181,10 @@ jobs:
         run: RUNNER_TRACKING_ID="" && ./scripts/httpserver/start.sh &
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Initialize evmd
         if: matrix.backend == 'evmd051'
@@ -195,4 +204,4 @@ jobs:
           [ "${{ matrix.backend }}" = "simapp50" ] && export SIMAPP50_ENABLED=1 SLOW_SIMAPP50_ENABLED=1
           [ "${{ matrix.backend }}" = "simapp53" ] && export SIMAPP53_ENABLED=1 SLOW_SIMAPP53_ENABLED=1
           [ "${{ matrix.backend }}" = "evmd051" ] && export EVMD051_ENABLED=1 SLOW_EVMD051_ENABLED=1
-          yarn run test
+          pnpm run test

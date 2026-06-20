@@ -1,4 +1,4 @@
-#!/usr/bin/env -S yarn node
+#!/usr/bin/env node
 
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
