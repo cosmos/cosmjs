@@ -30,7 +30,6 @@ describe("http", () => {
   });
 
   it("includes response in error cause for bad status codes", async () => {
-    const originalFetch = globalThis.fetch;
     const mockResponse = {
       status: 404,
       statusText: "Not Found",
@@ -39,23 +38,22 @@ describe("http", () => {
     } as unknown as Response;
 
     // Mock fetch to return a 404 response
-    globalThis.fetch = jasmine.createSpy("fetch").and.resolveTo(mockResponse);
+    spyOn(globalThis, "fetch").and.resolveTo(mockResponse);
 
-    try {
-      const error = await http("POST", "http://example.com", undefined, createJsonRpcRequest("health")).catch(
-        (err) => err,
-      );
-      expect(error).toBeInstanceOf(Error);
-      expect((error as Error).message).toContain("Bad status on response: 404");
-      expect(error.cause).toEqual({
-        status: 404,
-        body: "Not Found Error Body",
-      });
-      expect(mockResponse.text).toHaveBeenCalled();
-    } finally {
-      // Restore original fetch
-      globalThis.fetch = originalFetch;
-    }
+    const res = http("POST", "http://example.com", undefined, createJsonRpcRequest("health"));
+    await expectAsync(res).toBeRejectedWithError(/Bad status on response: 404/);
+
+    const error: Error = await res.catch((err) => err);
+    expect(error).toEqual(
+      jasmine.objectContaining({
+        message: "Bad status on response: 404",
+        cause: {
+          status: 404,
+          body: "Not Found Error Body",
+        },
+      }),
+    );
+    expect(mockResponse.text).toHaveBeenCalled();
   });
 
   (httpServerEnabled ? it : xit)("can POST to echo server with custom headers", async () => {
