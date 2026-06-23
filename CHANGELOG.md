@@ -18,8 +18,7 @@ and this project adheres to
   ([#1935])
 - @cosmjs/crypto: Use pure-JS implementation of Argon2id from @noble/hashes
   instead of the WASM-based `hash-wasm` implementation. This removes the
-  `hash-wasm` runtime dependency and makes `Argon2id.execute` fully
-  synchronous-capable without requiring a WASM instantiation. ([#1938])
+  `hash-wasm` runtime dependency. ([#1938])
 - @cosmjs/amino, @cosmjs/proto-signing: Remove scream test around argon2 call in
   wallet serialization/deserialization which is not needed anymore after
   [#1938].
