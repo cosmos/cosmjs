@@ -44,7 +44,7 @@ describe("http", () => {
       (err) => err,
     );
     expect(error).toBeInstanceOf(Error);
-    expect((error as Error).message).toContain("Bad status on response: 404");
+    expect(error.message).toContain("Bad status on response: 404");
     expect(error.cause).toEqual({
       status: 404,
       body: "Not Found Error Body",
