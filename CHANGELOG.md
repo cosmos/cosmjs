@@ -10,19 +10,12 @@ and this project adheres to
 
 ### Changed
 
-- all: Drop support for Node.js < 22. Node.js 20 reached end-of-life on 2025-04
-  and the crypto stack (@noble/\*, @scure/bip39 v2) relies on APIs that only
-  ship in Node 22+. If you are still on an older Node, upgrade before taking
-  this release.
+- all: Drop support for Node.js < 22. Node.js 20 reached end-of-life on 2026-04.
 - @cosmjs/crypto: Upgrade dependencies @noble/ciphers, @noble/curves,
-  @noble/hashes and @scure/bip39 to v2. These upgrades are otherwise transparent
-  to users of the high-level `@cosmjs/crypto` API, but direct consumers of the
-  underlying libraries should consult their respective migration notes.
-  ([#1935])
+  @noble/hashes and @scure/bip39 to v2. ([#1935])
 - @cosmjs/crypto: Use pure-JS implementation of Argon2id from @noble/hashes
   instead of the WASM-based `hash-wasm` implementation. This removes the
-  `hash-wasm` runtime dependency and makes `Argon2id.execute` fully
-  synchronous-capable without requiring a WASM instantiation. ([#1938])
+  `hash-wasm` runtime dependency. ([#1938])
 - @cosmjs/amino, @cosmjs/proto-signing: Remove scream test around argon2 call in
   wallet serialization/deserialization which is not needed anymore after
   [#1938].
