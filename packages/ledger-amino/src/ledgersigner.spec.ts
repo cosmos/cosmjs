@@ -49,20 +49,21 @@ async function createTransport(): Promise<Transport> {
   let transport: Transport;
 
   beforeAll(async () => {
-    if (simappEnabled) {
-      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, wallet);
-      const amount = coins(226644, "ucosm");
-      const memo = "Ensure chain has my pubkey";
-      const sendResult = await client.sendTokens(
-        faucet.address,
-        defaultLedgerAddress,
-        amount,
-        defaultFee,
-        memo,
-      );
-      assertIsDeliverTxSuccessStargate(sendResult);
+    if (!simappEnabled) {
+      return;
     }
+    const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+    const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, wallet);
+    const amount = coins(226644, "ucosm");
+    const memo = "Ensure chain has my pubkey";
+    const sendResult = await client.sendTokens(
+      faucet.address,
+      defaultLedgerAddress,
+      amount,
+      defaultFee,
+      memo,
+    );
+    assertIsDeliverTxSuccessStargate(sendResult);
   });
 
   beforeEach(async () => {
