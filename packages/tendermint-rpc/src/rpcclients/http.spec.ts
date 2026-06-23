@@ -40,10 +40,10 @@ describe("http", () => {
     // Mock fetch to return a 404 response
     spyOn(globalThis, "fetch").and.resolveTo(mockResponse);
 
-    const error = await http("POST", "http://example.com", undefined, createJsonRpcRequest("health")).catch(
-      (err) => err,
-    );
-    expect(error).toBeInstanceOf(Error);
+    const res = http("POST", "http://example.com", undefined, createJsonRpcRequest("health"));
+    await expectAsync(res).toBeRejectedWithError(/Bad status on response: 404/);
+
+    const error: Error = await res.catch((err) => err);
     expect(error.message).toContain("Bad status on response: 404");
     expect(error.cause).toEqual({
       status: 404,
