@@ -14,10 +14,9 @@ describe("QueueingStreamingSocket", () => {
 
   (enabled ? describe : xdescribe)("queueRequest", () => {
     it("can queue and process requests with a connection", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
+      let done!: () => void;
+      const ret = new Promise<void>((resolve) => {
+        done = resolve;
       });
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -42,10 +41,9 @@ describe("QueueingStreamingSocket", () => {
     });
 
     it("can queue requests without a connection and process them later", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
+      let done!: () => void;
+      const ret = new Promise<void>((resolve) => {
+        done = resolve;
       });
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -104,10 +102,9 @@ describe("QueueingStreamingSocket", () => {
     });
 
     it("can reconnect and process remaining queue", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
+      let done!: () => void;
+      const ret = new Promise<void>((resolve) => {
+        done = resolve;
       });
       const socket = new QueueingStreamingSocket(socketServerUrl);
       const requests = ["request 1", "request 2", "request 3"] as const;
@@ -136,10 +133,9 @@ describe("QueueingStreamingSocket", () => {
     });
 
     it("notifies on reconnection via a callback", async () => {
-      let done!: (() => void) & { fail: (e?: any) => void };
-      const ret = new Promise<void>((resolve, reject) => {
-        done = resolve as typeof done;
-        done.fail = reject;
+      let done!: () => void;
+      const ret = new Promise<void>((resolve) => {
+        done = resolve;
       });
       const socket = new QueueingStreamingSocket(socketServerUrl, undefined, done);
 
