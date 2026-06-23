@@ -10,10 +10,7 @@ and this project adheres to
 
 ### Changed
 
-- all: Drop support for Node.js < 22. Node.js 20 reached end-of-life on 2025-04
-  and the crypto stack (@noble/\*, @scure/bip39 v2) relies on APIs that only
-  ship in Node 22+. If you are still on an older Node, upgrade before taking
-  this release.
+- all: Drop support for Node.js < 22. Node.js 20 reached end-of-life on 2026-04.
 - @cosmjs/crypto: Upgrade dependencies @noble/ciphers, @noble/curves,
   @noble/hashes and @scure/bip39 to v2. These upgrades are otherwise transparent
   to users of the high-level `@cosmjs/crypto` API, but direct consumers of the
