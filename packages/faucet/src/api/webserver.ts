@@ -3,11 +3,11 @@ import cors from "@koa/cors";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Koa from "koa";
 
-import { isValidAddress } from "../addresses";
-import * as constants from "../constants";
-import { Faucet } from "../faucet";
-import { HttpError } from "./httperror";
-import { RequestParser } from "./requestparser";
+import { isValidAddress } from "../addresses.ts";
+import * as constants from "../constants.ts";
+import { Faucet } from "../faucet.ts";
+import { HttpError } from "./httperror.ts";
+import { RequestParser } from "./requestparser.ts";
 
 /** This will be passed 1:1 to the user */
 export interface ChainConstants {

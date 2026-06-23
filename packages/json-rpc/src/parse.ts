@@ -4,7 +4,7 @@ import {
   isJsonCompatibleValue,
   JsonCompatibleDictionary,
   JsonCompatibleValue,
-} from "./compatibility";
+} from "./compatibility.ts";
 import {
   JsonRpcError,
   JsonRpcErrorResponse,
@@ -12,7 +12,7 @@ import {
   JsonRpcRequest,
   JsonRpcResponse,
   JsonRpcSuccessResponse,
-} from "./types";
+} from "./types.ts";
 
 /**
  * Extracts ID field from request or response object.

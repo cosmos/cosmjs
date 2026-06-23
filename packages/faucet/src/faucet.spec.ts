@@ -3,9 +3,9 @@ import { toBech32 } from "@cosmjs/encoding";
 import { makeCosmoshubPath, StargateClient } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
 
-import { Faucet } from "./faucet";
-import { simappEnabled } from "./testutils";
-import { TokenConfiguration } from "./tokenmanager";
+import { Faucet } from "./faucet.ts";
+import { simappEnabled } from "./testutils.ts";
+import { TokenConfiguration } from "./tokenmanager.ts";
 
 const defaultTokenConfig: TokenConfiguration = {
   bankTokens: ["ucosm", "ustake"],

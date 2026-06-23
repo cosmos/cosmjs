@@ -12,8 +12,8 @@ import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { AuthInfo, SignDoc, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
-import { calculateFee, GasPrice } from "./fee";
-import { SigningStargateClientOptions } from "./signingstargateclient";
+import { calculateFee, GasPrice } from "./fee.ts";
+import { SigningStargateClientOptions } from "./signingstargateclient.ts";
 
 export const evmd051Enabled: boolean = !!globalThis.process?.env.EVMD051_ENABLED;
 export const evmdEnabled: boolean = evmd051Enabled;

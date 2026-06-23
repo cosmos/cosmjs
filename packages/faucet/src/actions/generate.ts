@@ -1,8 +1,8 @@
 import { Bip39, Random } from "@cosmjs/crypto";
 
-import * as constants from "../constants";
-import { makePathBuilder } from "../pathbuilder";
-import { createWallets } from "../profile";
+import * as constants from "../constants.ts";
+import { makePathBuilder } from "../pathbuilder.ts";
+import { createWallets } from "../profile.ts";
 
 export async function generate(args: readonly string[]): Promise<void> {
   if (args.length > 0) {

@@ -1,9 +1,9 @@
 import { CometClient, connectComet } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../../queryclient";
-import { simapp } from "../../testutils";
-import * as ibcTest from "./ibctestdata.spec";
-import { IbcExtension, setupIbcExtension } from "./queries";
+import { QueryClient } from "../../queryclient/index.ts";
+import { simapp } from "../../testutils.ts";
+import * as ibcTest from "./ibctestdata.spec.ts";
+import { IbcExtension, setupIbcExtension } from "./queries.ts";
 
 async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExtension, CometClient]> {
   const cometClient = await connectComet(rpcUrl);

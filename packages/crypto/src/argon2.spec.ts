@@ -1,6 +1,6 @@
 import { fromHex, toAscii } from "@cosmjs/encoding";
 
-import { Argon2id, Argon2idOptions } from "./argon2";
+import { Argon2id, Argon2idOptions } from "./argon2.ts";
 
 describe("Argon2id", () => {
   // we use relatively week values here to avoid slowing down test execution

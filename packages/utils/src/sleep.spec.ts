@@ -1,4 +1,4 @@
-import { sleep } from "./sleep";
+import { sleep } from "./sleep.ts";
 
 describe("sleep", () => {
   it("resolves after at least x milliseconds", async () => {

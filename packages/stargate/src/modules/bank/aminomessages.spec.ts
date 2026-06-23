@@ -1,8 +1,8 @@
 import { coins } from "@cosmjs/proto-signing";
 import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
-import { AminoTypes } from "../../aminotypes";
-import { AminoMsgMultiSend, AminoMsgSend, createBankAminoConverters } from "./aminomessages";
+import { AminoTypes } from "../../aminotypes.ts";
+import { AminoMsgMultiSend, AminoMsgSend, createBankAminoConverters } from "./aminomessages.ts";
 
 describe("AminoTypes", () => {
   describe("toAmino", () => {

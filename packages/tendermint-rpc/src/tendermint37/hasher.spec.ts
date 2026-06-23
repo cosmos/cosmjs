@@ -1,8 +1,8 @@
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { ReadonlyDate } from "readonly-date-esm";
 
-import { ReadonlyDateWithNanoseconds } from "../dates";
-import { hashBlock, hashTx } from "./hasher";
+import { ReadonlyDateWithNanoseconds } from "../dates.ts";
+import { hashBlock, hashTx } from "./hasher.ts";
 
 describe("Hasher", () => {
   it("creates transaction hash equal to local test", () => {

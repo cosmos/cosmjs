@@ -5,7 +5,7 @@ import {
   QuerySigningInfosResponse,
 } from "cosmjs-types/cosmos/slashing/v1beta1/query";
 
-import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient";
+import { createPagination, createProtobufRpcClient, QueryClient } from "../../queryclient/index.ts";
 
 export interface SlashingExtension {
   readonly slashing: {

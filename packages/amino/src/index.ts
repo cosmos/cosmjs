@@ -4,9 +4,9 @@ export {
   rawEd25519PubkeyToRawAddress,
   rawEthSecp256k1PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
-} from "./addresses";
-export type { Coin } from "./coins";
-export { addCoins, coin, coins, parseCoins } from "./coins";
+} from "./addresses.ts";
+export type { Coin } from "./coins.ts";
+export { addCoins, coin, coins, parseCoins } from "./coins.ts";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
@@ -15,10 +15,10 @@ export {
   encodeEd25519Pubkey,
   encodeEthSecp256k1Pubkey,
   encodeSecp256k1Pubkey,
-} from "./encoding";
-export { createMultisigThresholdPubkey } from "./multisig";
-export { omitDefault } from "./omitdefault";
-export { makeCosmoshubPath } from "./paths";
+} from "./encoding.ts";
+export { createMultisigThresholdPubkey } from "./multisig.ts";
+export { omitDefault } from "./omitdefault.ts";
+export { makeCosmoshubPath } from "./paths.ts";
 export type {
   Ed25519Pubkey,
   EthSecp256k1Pubkey,
@@ -26,7 +26,7 @@ export type {
   Pubkey,
   Secp256k1Pubkey,
   SinglePubkey,
-} from "./pubkeys";
+} from "./pubkeys.ts";
 export {
   isEd25519Pubkey,
   isEthSecp256k1Pubkey,
@@ -34,22 +34,22 @@ export {
   isSecp256k1Pubkey,
   isSinglePubkey,
   pubkeyType,
-} from "./pubkeys";
+} from "./pubkeys.ts";
 export {
   type Secp256k1HdWalletOptions,
   extractKdfConfiguration,
   Secp256k1HdWallet,
-} from "./secp256k1hdwallet";
-export { Secp256k1Wallet } from "./secp256k1wallet";
+} from "./secp256k1hdwallet.ts";
+export { Secp256k1Wallet } from "./secp256k1wallet.ts";
 export {
   type StdSignature,
   decodeSignature,
   encodeEthSecp256k1Signature,
   encodeSecp256k1Signature,
-} from "./signature";
-export type { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
-export { makeSignDoc, serializeSignDoc } from "./signdoc";
-export type { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";
-export { getAminoPubkey, isEthereumSecp256k1Account } from "./signerutils";
-export { type StdTx, isStdTx, makeStdTx } from "./stdtx";
-export { type KdfConfiguration, executeKdf } from "./wallet";
+} from "./signature.ts";
+export type { AminoMsg, StdFee, StdSignDoc } from "./signdoc.ts";
+export { makeSignDoc, serializeSignDoc } from "./signdoc.ts";
+export type { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer.ts";
+export { getAminoPubkey, isEthereumSecp256k1Account } from "./signerutils.ts";
+export { type StdTx, isStdTx, makeStdTx } from "./stdtx.ts";
+export { type KdfConfiguration, executeKdf } from "./wallet.ts";

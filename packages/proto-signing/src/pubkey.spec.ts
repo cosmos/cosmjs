@@ -1,7 +1,7 @@
 import { fromBase64 } from "@cosmjs/encoding";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { decodePubkey, encodePubkey } from "./pubkey";
+import { decodePubkey, encodePubkey } from "./pubkey.ts";
 
 describe("pubkey", () => {
   const defaultPubkeyBase64 = "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP";

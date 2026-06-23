@@ -1,4 +1,4 @@
-import { fromRfc3339, toRfc3339 } from "./rfc3339";
+import { fromRfc3339, toRfc3339 } from "./rfc3339.ts";
 
 describe("RFC3339", () => {
   it("parses dates with different time zones", () => {

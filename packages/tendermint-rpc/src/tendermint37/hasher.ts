@@ -7,8 +7,8 @@ import {
   encodeTime,
   encodeUvarint,
   encodeVersion,
-} from "./encodings";
-import { Header } from "./responses";
+} from "./encodings.ts";
+import { Header } from "./responses.ts";
 
 // hash is sha256
 // https://github.com/tendermint/tendermint/blob/master/UPGRADING.md#v0260

@@ -1,12 +1,12 @@
-export { makeJsonRpcId } from "./id";
-export { type SimpleMessagingConnection, JsonRpcClient } from "./jsonrpcclient";
+export { makeJsonRpcId } from "./id.ts";
+export { type SimpleMessagingConnection, JsonRpcClient } from "./jsonrpcclient.ts";
 export {
   parseJsonRpcErrorResponse,
   parseJsonRpcId,
   parseJsonRpcRequest,
   parseJsonRpcResponse,
   parseJsonRpcSuccessResponse,
-} from "./parse";
+} from "./parse.ts";
 export type {
   JsonRpcError,
   JsonRpcErrorResponse,
@@ -14,5 +14,5 @@ export type {
   JsonRpcRequest,
   JsonRpcResponse,
   JsonRpcSuccessResponse,
-} from "./types";
-export { isJsonRpcErrorResponse, isJsonRpcSuccessResponse, jsonRpcCode } from "./types";
+} from "./types.ts";
+export { isJsonRpcErrorResponse, isJsonRpcSuccessResponse, jsonRpcCode } from "./types.ts";

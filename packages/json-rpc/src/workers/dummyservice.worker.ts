@@ -2,15 +2,15 @@
 
 // for testing only
 
-import { isJsonCompatibleDictionary } from "../compatibility";
-import { parseJsonRpcId, parseJsonRpcRequest } from "../parse";
+import { isJsonCompatibleDictionary } from "../compatibility.ts";
+import { parseJsonRpcId, parseJsonRpcRequest } from "../parse.ts";
 import {
   jsonRpcCode,
   JsonRpcErrorResponse,
   JsonRpcRequest,
   JsonRpcResponse,
   JsonRpcSuccessResponse,
-} from "../types";
+} from "../types.ts";
 
 function handleRequest(event: MessageEvent): JsonRpcResponse {
   let request: JsonRpcRequest;

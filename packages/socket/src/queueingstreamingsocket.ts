@@ -1,8 +1,8 @@
 import { DefaultValueProducer, ValueAndUpdates } from "@cosmjs/stream";
 import { Listener, Producer, Stream } from "xstream";
 
-import { SocketWrapperMessageEvent } from "./socketwrapper";
-import { StreamingSocket } from "./streamingsocket";
+import { SocketWrapperMessageEvent } from "./socketwrapper.ts";
+import { StreamingSocket } from "./streamingsocket.ts";
 
 export enum ConnectionStatus {
   Unconnected,

@@ -2,8 +2,8 @@ import { coin, coins, Secp256k1HdWallet } from "@cosmjs/amino";
 import { DirectEthSecp256k1HdWallet, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { MsgCreateVestingAccount } from "cosmjs-types/cosmos/vesting/v1beta1/tx";
 
-import { SigningStargateClient } from "../../signingstargateclient";
-import { assertIsDeliverTxSuccess } from "../../stargateclient";
+import { SigningStargateClient } from "../../signingstargateclient.ts";
+import { assertIsDeliverTxSuccess } from "../../stargateclient.ts";
 import {
   defaultSigningClientOptions,
   evmd,
@@ -14,7 +14,7 @@ import {
   makeRandomAddress,
   simapp,
   simappEnabled,
-} from "../../testutils";
+} from "../../testutils.ts";
 
 (simappEnabled ? describe : xdescribe)("vesting messages", () => {
   describe("MsgCreateVestingAccount", () => {

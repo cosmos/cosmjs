@@ -2,8 +2,8 @@
 import { Decimal } from "@cosmjs/math";
 import { BinaryReader, BinaryWriter } from "cosmjs-types/binary";
 
-import { GasPrice } from "./fee";
-import { decodeCosmosSdkDecFromProto } from "./queryclient/utils";
+import { GasPrice } from "./fee.ts";
+import { decodeCosmosSdkDecFromProto } from "./queryclient/utils.ts";
 
 /**
  * Configuration for dynamic gas price queries from feemarket modules.

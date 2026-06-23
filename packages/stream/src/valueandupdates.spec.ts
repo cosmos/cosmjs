@@ -1,8 +1,8 @@
 import { sleep } from "@cosmjs/utils";
 import { Listener } from "xstream";
 
-import { DefaultValueProducer } from "./defaultvalueproducer";
-import { ValueAndUpdates } from "./valueandupdates";
+import { DefaultValueProducer } from "./defaultvalueproducer.ts";
+import { ValueAndUpdates } from "./valueandupdates.ts";
 
 describe("ValueAndUpdates", () => {
   it("can be constructed", () => {

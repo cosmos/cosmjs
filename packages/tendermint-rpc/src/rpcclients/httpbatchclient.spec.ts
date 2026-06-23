@@ -1,6 +1,6 @@
-import { createJsonRpcRequest } from "../jsonrpc";
-import { defaultInstance, tendermintEnabled } from "../testutil.spec";
-import { HttpBatchClient } from "./httpbatchclient";
+import { createJsonRpcRequest } from "../jsonrpc.ts";
+import { defaultInstance, tendermintEnabled } from "../testutil.spec.ts";
+import { HttpBatchClient } from "./httpbatchclient.ts";
 
 (tendermintEnabled ? describe : xdescribe)("HttpBatchClient", () => {
   const tendermintUrl = "http://" + defaultInstance.url;
