@@ -44,11 +44,15 @@ describe("http", () => {
     await expectAsync(res).toBeRejectedWithError(/Bad status on response: 404/);
 
     const error: Error = await res.catch((err) => err);
-    expect(error.message).toContain("Bad status on response: 404");
-    expect(error.cause).toEqual({
-      status: 404,
-      body: "Not Found Error Body",
-    });
+    expect(error).toEqual(
+      jasmine.objectContaining({
+        message: "Bad status on response: 404",
+        cause: {
+          status: 404,
+          body: "Not Found Error Body",
+        },
+      }),
+    );
     expect(mockResponse.text).toHaveBeenCalled();
   });
 
