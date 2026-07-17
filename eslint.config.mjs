@@ -143,7 +143,6 @@ export default [
         },
       ],
 
-      "@typescript-eslint/no-dynamic-delete": "warn",
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-misused-promises": "off",
