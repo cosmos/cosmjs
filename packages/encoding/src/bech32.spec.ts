@@ -49,6 +49,7 @@ describe("bech32", () => {
       expect(fromBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw")).toEqual({
         prefix: "eth",
         data: ethAddressRaw,
+        encoding: "bech32",
       });
     });
 
@@ -58,6 +59,7 @@ describe("bech32", () => {
       expect(fromBech32("ETH1N48G2MJH9EZZ7ZJTYA37WTGG5R5EMR0DRKWLGW")).toEqual({
         prefix: "eth",
         data: ethAddressRaw,
+        encoding: "bech32",
       });
     });
 
@@ -132,6 +134,47 @@ describe("bech32", () => {
       expect(() => normalizeBech32("eth1n48g2mjh9Ezz7zjtya37wtgg5r5emr0drkwlgw")).toThrowError(
         /must be lowercase or uppercase/i,
       );
+    });
+  });
+
+  describe("bech32m variant", () => {
+    // Same data as the bech32 case above; only the checksum constant differs.
+    const ethBech32m = "eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0dk27ndv";
+
+    it("toBech32 encodes bech32m when requested", () => {
+      expect(toBech32("eth", ethAddressRaw, undefined, "bech32m")).toEqual(ethBech32m);
+      // ... and differs from the default bech32 encoding of the same data
+      expect(toBech32("eth", ethAddressRaw)).not.toEqual(ethBech32m);
+    });
+
+    it("fromBech32 auto-detects the bech32m variant", () => {
+      expect(fromBech32(ethBech32m)).toEqual({
+        prefix: "eth",
+        data: ethAddressRaw,
+        encoding: "bech32m",
+      });
+    });
+
+    it("reports the bech32 variant for a bech32 address", () => {
+      expect(fromBech32("eth1n48g2mjh9ezz7zjtya37wtgg5r5emr0drkwlgw").encoding).toEqual("bech32");
+    });
+
+    it("round-trips bech32m data", () => {
+      const encoded = toBech32("juno", ethAddressRaw, undefined, "bech32m");
+      const { data, encoding } = fromBech32(encoded);
+      expect(encoding).toEqual("bech32m");
+      expect(data).toEqual(ethAddressRaw);
+    });
+
+    it("normalizeBech32 preserves the bech32m variant", () => {
+      // Must not silently re-encode a bech32m address as bech32, which would
+      // change the checksum and therefore the address.
+      expect(normalizeBech32(ethBech32m.toUpperCase())).toEqual(ethBech32m);
+    });
+
+    it("decodes a BIP350 test vector", () => {
+      // From https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki
+      expect(fromBech32("abcdef1l7aum6echk45nj3s0wdvt2fg8x9yrzpqzd3ryx").encoding).toEqual("bech32m");
     });
   });
 });
