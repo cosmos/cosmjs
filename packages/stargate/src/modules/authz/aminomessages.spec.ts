@@ -108,6 +108,87 @@ describe("authz amino converters", () => {
         aminoTypes.toAmino({ typeUrl: "/cosmos.authz.v1beta1.MsgGrant", value: msg }),
       ).toThrowError(/Unsupported authorization type/i);
     });
+
+    it("omits allow_list for a SendAuthorization without an allow list (the common case)", () => {
+      // The SDK tags AllowList `json:",omitempty"`, so an empty allow list must
+      // produce no `allow_list` key at all - a stray `allow_list: []` would sign
+      // different bytes than the chain expects.
+      const msg: MsgGrant = {
+        granter: granter,
+        grantee: grantee,
+        grant: {
+          authorization: {
+            typeUrl: "/cosmos.bank.v1beta1.SendAuthorization",
+            value: SendAuthorization.encode(
+              SendAuthorization.fromPartial({
+                spendLimit: [{ denom: "ustake", amount: "1000000" }],
+                allowList: [],
+              }),
+            ).finish(),
+          },
+          expiration: undefined,
+        },
+      };
+      const aminoMsg = aminoTypes.toAmino({
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: msg,
+      }) as AminoMsgGrant;
+      expect(aminoMsg.value.grant.authorization.value).toEqual({
+        spend_limit: [{ denom: "ustake", amount: "1000000" }],
+      });
+      expect("allow_list" in aminoMsg.value.grant.authorization.value).toBe(false);
+      // Byte-level pin of the emitted amino JSON structure.
+      expect(JSON.stringify(aminoMsg)).toEqual(
+        JSON.stringify({
+          type: "cosmos-sdk/MsgGrant",
+          value: {
+            granter: granter,
+            grantee: grantee,
+            grant: {
+              authorization: {
+                type: "cosmos-sdk/SendAuthorization",
+                value: { spend_limit: [{ denom: "ustake", amount: "1000000" }] },
+              },
+            },
+          },
+        }),
+      );
+      const back = aminoTypes.fromAmino(aminoMsg);
+      expect(back).toEqual({ typeUrl: "/cosmos.authz.v1beta1.MsgGrant", value: MsgGrant.fromPartial(msg) });
+    });
+
+    it("renders a sub-second expiration as a trimmed RFC3339 fraction", () => {
+      const base: MsgGrant = {
+        granter: granter,
+        grantee: grantee,
+        grant: {
+          authorization: {
+            typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            value: GenericAuthorization.encode(
+              GenericAuthorization.fromPartial({ msg: "/cosmos.bank.v1beta1.MsgSend" }),
+            ).finish(),
+          },
+          expiration: { seconds: BigInt(1596300), nanos: 123456789 },
+        },
+      };
+      const nanosMsg = aminoTypes.toAmino({
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: base,
+      }) as AminoMsgGrant;
+      // Full nanosecond precision, matching Go's RFC3339Nano.
+      expect(nanosMsg.value.grant.expiration).toEqual("1970-01-19T11:25:00.123456789Z");
+      // Trailing zeros are trimmed (5_000_000 ns -> .005Z), and it round-trips.
+      const trimMsg = aminoTypes.toAmino({
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: {
+          ...base,
+          grant: { ...base.grant, expiration: { seconds: BigInt(1596300), nanos: 5_000_000 } },
+        },
+      }) as AminoMsgGrant;
+      expect(trimMsg.value.grant.expiration).toEqual("1970-01-19T11:25:00.005Z");
+      const back = aminoTypes.fromAmino(nanosMsg);
+      expect(back).toEqual({ typeUrl: "/cosmos.authz.v1beta1.MsgGrant", value: MsgGrant.fromPartial(base) });
+    });
   });
 
   describe("MsgRevoke", () => {

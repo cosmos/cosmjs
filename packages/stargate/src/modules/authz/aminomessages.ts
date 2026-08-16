@@ -94,6 +94,8 @@ function authorizationFromAmino(authorization: AminoAuthorization): Any {
     }
     case "cosmos-sdk/SendAuthorization": {
       const { spend_limit, allow_list } = authorization.value;
+      assert(Array.isArray(spend_limit));
+      if (allow_list !== undefined) assert(Array.isArray(allow_list));
       return Any.fromPartial({
         typeUrl: "/cosmos.bank.v1beta1.SendAuthorization",
         value: SendAuthorization.encode(
@@ -136,6 +138,7 @@ export function createAuthzAminoConverters(): AminoConverters {
         };
       },
       fromAmino: ({ granter, grantee, grant }: AminoMsgGrant["value"]): MsgGrant => {
+        assertDefinedAndNotNull(grant);
         return {
           granter: granter,
           grantee: grantee,
