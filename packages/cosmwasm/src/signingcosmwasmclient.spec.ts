@@ -673,6 +673,8 @@ import {
       expect(result.height).toBeGreaterThan(0);
       expect(result.gasWanted).toBeGreaterThan(0);
       expect(result.gasUsed).toBeGreaterThan(0);
+      // One MsgExecuteContractResponse (and thus one `data` entry) per instruction.
+      expect(result.data.length).toEqual(1);
       const wasmEvent = result.events.find((e) => e.type === "wasm");
       assert(wasmEvent, "Event of type wasm expected");
       expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
@@ -794,6 +796,8 @@ import {
       const { events } = result;
       const wasmEvents = events.filter((e) => e.type == "wasm");
       expect(wasmEvents.length).toEqual(2);
+      // One `data` entry per instruction, in order.
+      expect(result.data.length).toEqual(2);
       const [wasmEvent1, wasmEvent2] = wasmEvents;
       expect(wasmEvent1.type).toEqual("wasm");
       expect(wasmEvent1.attributes).toContain({ key: "action", value: "release" });

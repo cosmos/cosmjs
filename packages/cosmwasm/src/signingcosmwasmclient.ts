@@ -44,6 +44,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {
   MsgClearAdmin,
   MsgExecuteContract,
+  MsgExecuteContractResponse,
   MsgInstantiateContract,
   MsgInstantiateContract2,
   MsgMigrateContract,
@@ -163,6 +164,12 @@ export interface ExecuteResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly events: readonly Event[];
+  /**
+   * The `data` bytes each executed contract returned via `Response::set_data`,
+   * one entry per instruction in the same order. Empty for chains running
+   * Cosmos SDK < 0.46, which do not expose message responses.
+   */
+  readonly data: readonly Uint8Array[];
   readonly gasWanted: bigint;
   readonly gasUsed: bigint;
 }
@@ -540,6 +547,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       height: result.height,
       transactionHash: result.transactionHash,
       events: result.events,
+      // Each MsgExecuteContract produces a MsgExecuteContractResponse whose
+      // `data` field carries what the contract set via `Response::set_data`.
+      data: result.msgResponses.map(
+        (msgResponse) => MsgExecuteContractResponse.decode(msgResponse.value).data,
+      ),
       gasWanted: result.gasWanted,
       gasUsed: result.gasUsed,
     };
