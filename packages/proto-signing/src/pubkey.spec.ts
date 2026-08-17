@@ -64,6 +64,25 @@ describe("pubkey", () => {
       });
     });
 
+    it("works for multisig threshold pubkeys", () => {
+      // Build a 2-of-2 multisig over the secp256k1 and ed25519 keys above,
+      // encode it to protobuf, then check decodePubkey reconstructs it. This
+      // covers the LegacyAminoPubKey branch on both encode and decode.
+      const multisigPubkey = {
+        type: "tendermint/PubKeyMultisigThreshold",
+        value: {
+          threshold: "2",
+          pubkeys: [
+            { type: "tendermint/PubKeySecp256k1", value: defaultPubkeyBase64 },
+            { type: "tendermint/PubKeyEd25519", value: ed25519PubkeyBase64 },
+          ],
+        },
+      };
+      const encoded = encodePubkey(multisigPubkey);
+      expect(encoded.typeUrl).toEqual("/cosmos.crypto.multisig.LegacyAminoPubKey");
+      expect(decodePubkey(encoded)).toEqual(multisigPubkey);
+    });
+
     it("throws for unsupported pubkey types", () => {
       const pubkey = {
         typeUrl: "/cosmos.crypto.unknown.PubKey",
