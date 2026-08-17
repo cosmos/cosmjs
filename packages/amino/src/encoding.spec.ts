@@ -7,6 +7,7 @@ import {
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeEd25519Pubkey,
+  encodeEthSecp256k1Pubkey,
   encodeSecp256k1Pubkey,
 } from "./encoding";
 import { Pubkey } from "./pubkeys";
@@ -171,6 +172,23 @@ describe("encoding", () => {
     });
   });
 
+  describe("encodeEthSecp256k1Pubkey", () => {
+    it("encodes a compressed pubkey", () => {
+      const pubkey = fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP");
+      expect(encodeEthSecp256k1Pubkey(pubkey)).toEqual({
+        type: "os/PubKeyEthSecp256k1",
+        value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
+      });
+    });
+
+    it("throws for uncompressed public keys", () => {
+      const pubkey = fromBase64(
+        "BE8EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQE7WHpoHoNswYeoFkuYpYSKK4mzFzMV/dB0DVAy4lnNU=",
+      );
+      expect(() => encodeEthSecp256k1Pubkey(pubkey)).toThrowError(/must be compressed secp256k1/i);
+    });
+  });
+
   describe("encodeAminoPubkey", () => {
     it("works for secp256k1", () => {
       const pubkey: Pubkey = {
@@ -193,6 +211,16 @@ describe("encoding", () => {
       const expected = fromBech32(
         "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq",
       ).data;
+      expect(encodeAminoPubkey(pubkey)).toEqual(expected);
+    });
+
+    it("works for ethsecp256k1", () => {
+      const pubkey: Pubkey = {
+        type: "os/PubKeyEthSecp256k1",
+        value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
+      };
+      // 5D7423DF21 amino prefix followed by the 33-byte compressed pubkey
+      const expected = new Uint8Array([...fromHex("5D7423DF21"), ...fromBase64(pubkey.value)]);
       expect(encodeAminoPubkey(pubkey)).toEqual(expected);
     });
   });
