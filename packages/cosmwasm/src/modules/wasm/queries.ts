@@ -43,11 +43,11 @@ export interface WasmExtension {
       paginationKey?: Uint8Array,
     ) => Promise<QueryContractsByCreatorResponse>;
     /**
-     * Returns null when contract was not found at this address.
+     * Throws when no contract was found at this address.
      */
     readonly getContractInfo: (address: string) => Promise<QueryContractInfoResponse>;
     /**
-     * Returns null when contract history was not found for this address.
+     * Throws when no contract was found at this address.
      */
     readonly getContractCodeHistory: (
       address: string,
