@@ -1,5 +1,6 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Decimal } from "@cosmjs/math";
+import { BinaryWriter } from "cosmjs-types/binary";
 
 import { checkDynamicGasPriceSupport, multiplyDecimalByNumber, queryDynamicGasPrice } from "./feemarket";
 
@@ -134,9 +135,10 @@ describe("Osmosis chain ID detection", () => {
     });
 
     it('treats "juno-1" as non-Osmosis chain', async () => {
+      // GasPricesResponse { prices: [DecCoin { denom: "ujuno", amount: "5300000000000000" }] }
       const feemarketResponse = new Uint8Array([
-        10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
-        48, 48,
+        10, 25, 10, 5, 117, 106, 117, 110, 111, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 48,
       ]);
       const queryClient = {
         queryAbci: async (path: string, _data: Uint8Array) => {
@@ -328,8 +330,10 @@ describe("queryDynamicGasPrice", () => {
 
   describe("Skip feemarket response parsing", () => {
     it("parses valid feemarket response", async () => {
+      // GasPricesResponse { prices: [DecCoin { denom: "uatom", amount: "25000000000000000" }] }
       const response = new Uint8Array([
-        10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        10, 26, 10, 5, 117, 97, 116, 111, 109, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 48,
       ]);
       const queryClient = createMockQueryClient(response);
 
@@ -350,20 +354,27 @@ describe("queryDynamicGasPrice", () => {
     });
 
     it("parses feemarket response with different decimal values", async () => {
+      // Each entry is GasPricesResponse { prices: [DecCoin { denom: "uatom", amount: <value> }] }
       const testCases = [
         {
           value: "0.025",
-          bytes: [10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48],
+          bytes: [
+            10, 26, 10, 5, 117, 97, 116, 111, 109, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+            48, 48, 48, 48,
+          ],
         },
         {
           value: "1.5",
-          bytes: [10, 21, 18, 19, 49, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48],
+          bytes: [
+            10, 28, 10, 5, 117, 97, 116, 111, 109, 18, 19, 49, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+            48, 48, 48, 48, 48, 48,
+          ],
         },
         {
           value: "100",
           bytes: [
-            10, 23, 18, 21, 49, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
-            48,
+            10, 30, 10, 5, 117, 97, 116, 111, 109, 18, 21, 49, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+            48, 48, 48, 48, 48, 48, 48, 48,
           ],
         },
       ];
@@ -382,7 +393,7 @@ describe("queryDynamicGasPrice", () => {
       const queryClient = createMockQueryClient(emptyResponse);
 
       await expectAsync(queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4")).toBeRejectedWithError(
-        /GasPricesResponse: amount not found/i,
+        /no price found for denom "uatom"/i,
       );
     });
 
@@ -397,6 +408,36 @@ describe("queryDynamicGasPrice", () => {
         /premature EOF|amount not found/i,
       );
     });
+
+    it("picks the entry matching the requested denom, not the last one in the list", async () => {
+      // GasPricesResponse { prices: [
+      //   DecCoin { denom: "uatom", amount: "5300000000000000" },   // 0.0053
+      //   DecCoin { denom: "uosmo", amount: "25000000000000000000" }, // 25.0
+      // ] }
+      const response = new Uint8Array([
+        10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 10, 29, 10, 5, 117, 111, 115, 109, 111, 18, 20, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 48, 48, 48, 48, 48, 48, 48,
+      ]);
+      const queryClient = createMockQueryClient(response);
+
+      const result = await queryDynamicGasPrice(queryClient, "uatom", "cosmoshub-4");
+      expect(result.toString()).toBe("0.0053");
+    });
+
+    it("throws a denom-specific error when the requested denom is absent from the response", async () => {
+      // Same two-entry response as above (uatom, uosmo), but requesting a denom present in neither
+      const response = new Uint8Array([
+        10, 25, 10, 5, 117, 97, 116, 111, 109, 18, 16, 53, 51, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 10, 29, 10, 5, 117, 111, 115, 109, 111, 18, 20, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48,
+        48, 48, 48, 48, 48, 48, 48, 48, 48,
+      ]);
+      const queryClient = createMockQueryClient(response);
+
+      await expectAsync(queryDynamicGasPrice(queryClient, "ujuno", "cosmoshub-4")).toBeRejectedWithError(
+        /no price found for denom "ujuno"/i,
+      );
+    });
   });
 
   describe("request encoding", () => {
@@ -407,12 +448,22 @@ describe("queryDynamicGasPrice", () => {
         "ustake",
         "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
       ];
-      const response = new Uint8Array([
-        10, 19, 18, 17, 50, 53, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,
-      ]);
+
+      // Builds a GasPricesResponse { prices: [DecCoin { denom, amount: "25000000000000000" }] }
+      // matching the requested denom, since decode() now requires a denom match.
+      function encodeGasPricesResponseFixture(denom: string): Uint8Array {
+        const decCoinWriter = new BinaryWriter();
+        decCoinWriter.uint32(10).string(denom);
+        decCoinWriter.uint32(18).string("25000000000000000");
+
+        const responseWriter = new BinaryWriter();
+        responseWriter.uint32(10).bytes(decCoinWriter.finish());
+        return responseWriter.finish();
+      }
 
       for (const denom of denoms) {
         let capturedData: Uint8Array | null = null;
+        const response = encodeGasPricesResponseFixture(denom);
         const mockClient = {
           queryAbci: async (_path: string, data: Uint8Array) => {
             capturedData = data;
