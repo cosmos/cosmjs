@@ -118,7 +118,7 @@ export async function queryDynamicGasPrice(
       "/feemarket.feemarket.v1.Query/GasPrices",
       GasPricesRequest.encode({ denom: gasPriceDenom }),
     );
-    return GasPricesResponse.decode(response.value);
+    return GasPricesResponse.decode(response.value, gasPriceDenom);
   }
 }
 
@@ -198,17 +198,21 @@ const DecCoin = {
 /** Skip feemarket GasPricesResponse message */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const GasPricesResponse = {
-  decode(input: Uint8Array): Decimal {
+  decode(input: Uint8Array, expectedDenom: string): Decimal {
     const reader = new BinaryReader(input);
     let decCoin: DecCoin | undefined;
 
     while (reader.pos < reader.len) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          // prices field (repeated DecCoin) - we only need the first one
-          decCoin = DecCoin.decode(reader.bytes());
+        case 1: {
+          // prices field (repeated DecCoin) - keep the one matching the requested denom
+          const candidate = DecCoin.decode(reader.bytes());
+          if (candidate.denom === expectedDenom) {
+            decCoin = candidate;
+          }
           break;
+        }
         default:
           reader.skipType(tag & 7);
           break;
@@ -216,7 +220,7 @@ const GasPricesResponse = {
     }
 
     if (!decCoin?.amount) {
-      throw new Error("GasPricesResponse: amount not found");
+      throw new Error(`GasPricesResponse: no price found for denom "${expectedDenom}"`);
     }
 
     return decodeCosmosSdkDecFromProto(decCoin.amount);

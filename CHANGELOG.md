@@ -6,6 +6,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/stargate: `queryDynamicGasPrice` now selects the feemarket price entry
+  matching the requested denom instead of the last entry in the response
+  ([#1979])
+
 ## [0.39.0] - 2026-05-04
 
 ### Changed
@@ -51,6 +57,7 @@ and this project adheres to
   ([#1959])
 
 [#1935]: https://github.com/cosmos/cosmjs/pull/1935
+[#1979]: https://github.com/cosmos/cosmjs/pull/1979
 [#1938]: https://github.com/cosmos/cosmjs/issues/1938
 [#1944]: https://github.com/cosmos/cosmjs/pull/1944
 [#1956]: https://github.com/cosmos/cosmjs/pull/1956
