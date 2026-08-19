@@ -191,6 +191,77 @@ describe("isDeliverTxSuccess", () => {
     });
   });
 
+  describe("simulate", () => {
+    it("works without a signer for an account with a known pubkey", async () => {
+      const client = await StargateClient.connect(simapp.tendermintUrlHttp);
+
+      const gasUsed = await client.simulate(
+        validator.delegatorAddress,
+        [
+          {
+            typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+            value: {
+              fromAddress: validator.delegatorAddress,
+              toAddress: makeRandomAddress(),
+              amount: coins(1234567, simapp.denomFee),
+            },
+          },
+        ],
+        "simulate without a signer",
+      );
+
+      expect(gasUsed).toBeGreaterThan(0);
+
+      client.disconnect();
+    });
+
+    it("rejects for an account without a pubkey on chain", async () => {
+      const client = await StargateClient.connect(simapp.tendermintUrlHttp);
+
+      await expectAsync(
+        client.simulate(
+          unused.address,
+          [
+            {
+              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+              value: {
+                fromAddress: unused.address,
+                toAddress: makeRandomAddress(),
+                amount: coins(1234567, simapp.denomFee),
+              },
+            },
+          ],
+          undefined,
+        ),
+      ).toBeRejectedWithError(/has no pubkey on chain yet/i);
+
+      client.disconnect();
+    });
+
+    it("rejects for non-existent address", async () => {
+      const client = await StargateClient.connect(simapp.tendermintUrlHttp);
+
+      await expectAsync(
+        client.simulate(
+          nonExistentAddress,
+          [
+            {
+              typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+              value: {
+                fromAddress: nonExistentAddress,
+                toAddress: makeRandomAddress(),
+                amount: coins(1234567, simapp.denomFee),
+              },
+            },
+          ],
+          undefined,
+        ),
+      ).toBeRejectedWithError(/account '([a-z0-9]{10,90})' does not exist on chain/i);
+
+      client.disconnect();
+    });
+  });
+
   describe("getBlock", () => {
     it("works for latest block", async () => {
       const client = await StargateClient.connect(simapp.tendermintUrlHttp);

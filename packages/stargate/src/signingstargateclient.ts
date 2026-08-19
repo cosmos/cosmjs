@@ -188,7 +188,7 @@ export class SigningStargateClient extends StargateClient {
     this.gasPrice = options.gasPrice;
   }
 
-  public async simulate(
+  public override async simulate(
     signerAddress: string,
     messages: readonly EncodeObject[],
     memo: string | undefined,
