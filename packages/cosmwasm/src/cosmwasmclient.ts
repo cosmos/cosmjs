@@ -14,6 +14,7 @@ import {
   IndexedTx,
   isSearchTxQueryArray,
   QueryClient,
+  searchPairsToQueryString,
   SearchTxQuery,
   SequenceResponse,
   setupAuthExtension,
@@ -229,13 +230,7 @@ export class CosmWasmClient {
     if (typeof query === "string") {
       rawQuery = query;
     } else if (isSearchTxQueryArray(query)) {
-      rawQuery = query
-        .map((t) => {
-          // numeric values must not have quotes https://github.com/cosmos/cosmjs/issues/1462
-          if (typeof t.value === "string") return `${t.key}='${t.value}'`;
-          else return `${t.key}=${t.value}`;
-        })
-        .join(" AND ");
+      rawQuery = searchPairsToQueryString(query);
     } else {
       throw new Error("Got unsupported query type. See CosmJS 0.31 CHANGELOG for API breaking changes here.");
     }

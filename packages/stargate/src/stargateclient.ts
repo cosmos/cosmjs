@@ -21,7 +21,7 @@ import {
   TxExtension,
 } from "./modules";
 import { QueryClient } from "./queryclient";
-import { isSearchTxQueryArray, SearchTxQuery } from "./search";
+import { isSearchTxQueryArray, searchPairsToQueryString, SearchTxQuery } from "./search";
 
 export class TimeoutError extends Error {
   public readonly txId: string;
@@ -400,13 +400,7 @@ export class StargateClient {
     if (typeof query === "string") {
       rawQuery = query;
     } else if (isSearchTxQueryArray(query)) {
-      rawQuery = query
-        .map((t) => {
-          // numeric values must not have quotes https://github.com/cosmos/cosmjs/issues/1462
-          if (typeof t.value === "string") return `${t.key}='${t.value}'`;
-          else return `${t.key}=${t.value}`;
-        })
-        .join(" AND ");
+      rawQuery = searchPairsToQueryString(query);
     } else {
       throw new Error("Got unsupported query type. See CosmJS 0.31 CHANGELOG for API breaking changes here.");
     }
