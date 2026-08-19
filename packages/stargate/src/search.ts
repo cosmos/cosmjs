@@ -12,6 +12,12 @@ export interface SearchPair {
    *
    * Combine multiple `SearchPair`s with `>`/`>=`/`<`/`<=` on the same key to
    * express range queries, e.g. `tx.height > 5 AND tx.height <= 10`.
+   *
+   * The CometBFT query grammar only accepts ordering operators (`>`, `>=`,
+   * `<`, `<=`) against number, date or time operands. A generic (non-date)
+   * string `value` combined with an ordering operator will be rejected by the
+   * node's query parser at request time; only use ordering operators with
+   * numeric or date/time values.
    */
   readonly operator?: SearchPairOperator;
 }

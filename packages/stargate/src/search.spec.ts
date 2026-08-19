@@ -37,11 +37,6 @@ describe("search", () => {
       expect(query).toEqual("tx.height=5");
     });
 
-    it("keeps quotes around string values with a comparison operator", () => {
-      const query = searchPairsToQueryString([{ key: "message.sender", value: "cosmos1abc", operator: ">" }]);
-      expect(query).toEqual("message.sender>'cosmos1abc'");
-    });
-
     it("supports bigint values with a comparison operator", () => {
       const query = searchPairsToQueryString([{ key: "tx.height", value: 5n, operator: ">=" }]);
       expect(query).toEqual("tx.height>=5");

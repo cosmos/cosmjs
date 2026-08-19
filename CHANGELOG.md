@@ -12,7 +12,9 @@ and this project adheres to
   (`"="` | `">"` | `">="` | `"<"` | `"<="`), defaulting to `"="`, so
   `searchTx` can express range queries like `tx.height > 5` against a
   composite key. Fully backward compatible: existing `SearchPair`s built with
-  just `{ key, value }` keep querying by equality. ([#1580])
+  just `{ key, value }` keep querying by equality. `@cosmjs/cosmwasm`'s
+  `CosmWasmClient.searchTx` shares the same `SearchPair` type and picks up
+  operator support too. ([#1580])
 
 [#1580]: https://github.com/cosmos/cosmjs/issues/1580
 
