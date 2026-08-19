@@ -6,6 +6,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- @cosmjs/stargate: Add `simulate()` to the base `StargateClient`, deriving the
+  pubkey from the chain via `getAccount()` instead of a signer, plus a
+  `registry` option on `StargateClientOptions`. ([#1568])
+
+[#1568]: https://github.com/cosmos/cosmjs/issues/1568
+
 ## [0.39.0] - 2026-05-04
 
 ### Changed
