@@ -1,8 +1,9 @@
 import { addCoins } from "@cosmjs/amino";
 import { fixUint8Array, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
+import { EncodeObject, Registry } from "@cosmjs/proto-signing";
 import { CometClient, connectComet, HttpEndpoint, toRfc3339WithNanoseconds } from "@cosmjs/tendermint-rpc";
-import { assert, sleep } from "@cosmjs/utils";
+import { assert, assertDefined, sleep } from "@cosmjs/utils";
 import { MsgData, TxMsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
@@ -200,6 +201,15 @@ export interface PrivateStargateClient {
 
 export interface StargateClientOptions {
   readonly accountParser?: AccountParser;
+  /**
+   * The registry used to encode messages passed to {@link StargateClient.simulate}.
+   *
+   * Defaults to a plain `Registry` (which only knows `Coin` and `MsgSend`). If you want to
+   * simulate other message types, pass a `Registry` that has those types registered, e.g.
+   * `new Registry(defaultRegistryTypes)` from `SigningStargateClient`, extended with your own
+   * custom types if needed.
+   */
+  readonly registry?: Registry;
 }
 
 export class StargateClient {
@@ -209,6 +219,7 @@ export class StargateClient {
     | undefined;
   private chainId: string | undefined;
   private readonly accountParser: AccountParser;
+  private readonly messageRegistry: Registry;
 
   /**
    * Creates an instance by connecting to the given CometBFT RPC endpoint.
@@ -244,8 +255,9 @@ export class StargateClient {
         setupTxExtension,
       );
     }
-    const { accountParser = accountFromAny } = options;
+    const { accountParser = accountFromAny, registry = new Registry() } = options;
     this.accountParser = accountParser;
+    this.messageRegistry = registry;
   }
 
   protected getCometClient(): CometClient | undefined {
@@ -316,6 +328,47 @@ export class StargateClient {
       accountNumber: account.accountNumber,
       sequence: account.sequence,
     };
+  }
+
+  /**
+   * Simulates the given messages and returns the estimated gas usage, without requiring a
+   * signer. This is useful for read-only gas estimation / fee simulation tooling that knows an
+   * account's address but does not have signing access to it.
+   *
+   * Since there is no signer to derive a pubkey from, the account's pubkey is looked up on
+   * chain instead (via {@link StargateClient.getAccount}). This means the account must already
+   * have a pubkey revealed on chain, i.e. it must have broadcast at least one transaction
+   * before. Use `SigningStargateClient.simulate` instead if you have signer access and the
+   * account's pubkey is not yet known to the chain.
+   *
+   * To simulate messages other than `MsgSend`, construct this client with a `registry` option
+   * (see {@link StargateClientOptions.registry}) that has those message types registered.
+   */
+  public async simulate(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    memo: string | undefined,
+  ): Promise<number> {
+    const anyMsgs = messages.map((m) => this.messageRegistry.encodeAsAny(m));
+    const account = await this.getAccount(signerAddress);
+    if (!account) {
+      throw new Error(
+        `Account '${signerAddress}' does not exist on chain. Send some tokens there before trying to simulate.`,
+      );
+    }
+    if (!account.pubkey) {
+      throw new Error(
+        `Account '${signerAddress}' has no pubkey on chain yet. It must broadcast at least one transaction before it can be used to simulate without a signer.`,
+      );
+    }
+    const { gasInfo } = await this.forceGetQueryClient().tx.simulate(
+      anyMsgs,
+      memo,
+      account.pubkey,
+      account.sequence,
+    );
+    assertDefined(gasInfo);
+    return Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
   }
 
   public async getBlock(height?: number): Promise<Block> {
