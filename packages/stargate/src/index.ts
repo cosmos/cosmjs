@@ -125,8 +125,8 @@ export {
   decodeCosmosSdkDecFromProto,
   QueryClient,
 } from "./queryclient";
-export type { SearchPair, SearchTxQuery } from "./search";
-export { isSearchTxQueryArray } from "./search";
+export type { SearchPair, SearchPairOperator, SearchTxQuery } from "./search";
+export { isSearchTxQueryArray, searchPairsToQueryString } from "./search";
 export type { SignerData, SigningStargateClientOptions } from "./signingstargateclient";
 export {
   createDefaultAminoConverters,
