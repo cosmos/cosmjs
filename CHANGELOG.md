@@ -6,6 +6,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- @cosmjs/encoding: `fromBech32` no longer passes `Infinity` as the default
+  `limit` to `@scure/base`'s `bech32.decode`, which throws a `RangeError` on
+  `@scure/base` >= 2.3.0. It now passes `false`, `@scure/base`'s own way to
+  disable the length limit, so decoding long bech32 strings still works.
+  ([#1982])
+
 ## [0.39.0] - 2026-05-04
 
 ### Changed
@@ -55,6 +63,7 @@ and this project adheres to
 [#1944]: https://github.com/cosmos/cosmjs/pull/1944
 [#1956]: https://github.com/cosmos/cosmjs/pull/1956
 [#1959]: https://github.com/cosmos/cosmjs/pull/1959
+[#1982]: https://github.com/cosmos/cosmjs/issues/1982
 
 ## [0.38.0] - 2025-12-30
 

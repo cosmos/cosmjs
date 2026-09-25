@@ -13,13 +13,15 @@ function hasBech32Separator(input: string): input is `${string}1${string}` {
 
 export function fromBech32(
   address: string,
-  limit = Infinity,
+  limit?: number,
 ): { readonly prefix: string; readonly data: Uint8Array<ArrayBuffer> } {
   // This extra check can be removed once
   // https://github.com/paulmillr/scure-base/pull/45 is merged and published.
   if (!hasBech32Separator(address)) throw new Error(`No bech32 separator found`);
 
-  const decodedAddress = bech32.decode(address, limit);
+  // `false` is @scure/base's own way to say "no limit". The previous default of `Infinity`
+  // is rejected by @scure/base >= 2.3.0, which requires a safe integer or `false`.
+  const decodedAddress = bech32.decode(address, limit === undefined || limit === Infinity ? false : limit);
   return {
     prefix: decodedAddress.prefix,
     data: fixUint8Array(bech32.fromWords(decodedAddress.words)),

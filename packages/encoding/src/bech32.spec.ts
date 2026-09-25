@@ -70,6 +70,16 @@ describe("bech32", () => {
       ).not.toThrow();
     });
 
+    it("works for addresses which exceed the specification limit of 90 characters if Infinity is passed explicitly", () => {
+      // Example from https://github.com/cosmos/cosmos-sdk/pull/6237#issuecomment-658116534
+      expect(() =>
+        fromBech32(
+          "cosmospub1ytql0csgqvfzd666axrjzqmn5q2ucztcyxw8hvlzen94ay05tegaerkug5pn3xn8wqdymt598ufzd666axrjzqsxllmwacap3f6xyc4x30jl8ecrcs2tze3zzgxkmthcsqxnqxhwwgfzd666axrjzqs2rlu3wz5gnslgpprszjr8r65n0d6y39q657th77eyvengtk3z0y6h2pnk",
+          Infinity,
+        ),
+      ).not.toThrow();
+    });
+
     it("throws for addresses which exceed the specification limit of 90 characters if a limit is specified", () => {
       // Example from https://github.com/cosmos/cosmos-sdk/pull/6237#issuecomment-658116534
       expect(() =>
